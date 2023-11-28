@@ -1,0 +1,308 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Overview
+    style: >
+      --popup-max-width: calc(450px + 450px + 450px);
+    card_mod:
+      style:
+        .: |
+
+        layout-card$grid-layout$:
+          .: |
+            #root > * {
+              margin: 0px !important;
+            }
+          hui-markdown-card:
+            $: |
+              ha-card {
+                {% if is_state('sensor.seventeentrack_packages_in_transit', '0') %}
+                  display: none;
+                {% endif %}
+              }
+          hui-entities-card:
+            $: |
+              ha-card {
+                border-right: 0.1vw solid rgba(58, 69, 73, 0.2);
+                border-radius: 0;
+                transition: none;
+              }
+              /* portrait */
+              @media screen and (max-width: 800px) {
+                ha-card {
+                  border-right: none;
+                  border-bottom: 0.1vw solid rgba(58, 69, 73, 1);
+                }
+              }
+    content:
+      type: custom:layout-card
+      layout_type: custom:grid-layout
+      layout:
+        margin: 0
+        gap: 5%
+        grid-template-columns: 450px 1fr 1fr
+
+        mediaquery:
+          #phone
+          '(max-width: 800px)':
+            grid-template-columns: 1fr
+      cards:
+        - type: entities
+          title: Entities
+          show_header_toggle: false
+          card_mod:
+            class: header
+          entities:
+            - type: custom:apexcharts-card
+              header:
+                show: false
+              chart_type: donut
+              apex_config:
+                fill:
+                  type: gradient
+                  gradient:
+                    shade: dark
+                    shadeIntensity: 0.1
+                    opacityFrom: 0.9
+                    opacityTo: 0.85
+                    stops:
+                      - 0
+                      - 90
+                      - 100
+                chart:
+                  fontFamily: SF Pro Text
+                legend:
+                  position: right
+                  fontSize: 13px
+                  fontWeight: 300
+                  markers:
+                    width: 16
+                    height: 25
+                    customHTML:
+                      - |-
+                        EVAL:() => {
+                          return `<ha-icon icon="hass:robot" style="--mdc-icon-size: 14px;"></ha-icon>`
+                        }
+                      - |-
+                        EVAL:() => {
+                          return `<ha-icon icon="hass:radiobox-blank" style="--mdc-icon-size: 14px;"></ha-icon>`
+                        }
+                      - |-
+                        EVAL:() => {
+                          return `<ha-icon icon="hass:account" style="--mdc-icon-size: 14px;"></ha-icon>`
+                        }
+                      - |-
+                        EVAL:() => {
+                          return `<ha-icon icon="hass:lightbulb" style="--mdc-icon-size: 14px;"></ha-icon>`
+                        }
+                      - |-
+                        EVAL:() => {
+                          return `<ha-icon icon="hass:cast" style="--mdc-icon-size: 14px;"></ha-icon>`
+                        }
+                      - |-
+                        EVAL:() => {
+                          return `<ha-icon icon="hass:eye" style="--mdc-icon-size: 14px;"></ha-icon>`
+                        }
+                      - |-
+                        EVAL:() => {
+                          return `<ha-icon icon="hass:flash" style="--mdc-icon-size: 14px;"></ha-icon>`
+                        }
+                      - |-
+                        EVAL:() => {
+                          return `<ha-icon icon="hass:home-assistant" style="--mdc-icon-size: 14px;"></ha-icon>`
+                        }
+                    fillColors:
+                      - none
+                      - none
+                      - none
+                      - none
+                      - none
+                      - none
+                      - none
+                      - none
+                stroke:
+                  show: true
+                  width: 0.4
+                dataLabels:
+                  enabled: false
+                  style:
+                    fontSize: 14px
+                    fontWeight: 700
+                  dropShadow:
+                    enabled: true
+                    top: 0
+                    left: 0
+                    blur: 3
+                    color: black
+                    opacity: 0.1
+                plotOptions:
+                  pie:
+                    startAngle: 0
+                    endAngle: 360
+                    expandOnClick: true
+                    offsetX: 0
+                    offsetY: 0
+                    customScale: 1
+                    dataLabels:
+                      offset: 0
+                      minAngleToShowLabel: 10
+                    donut:
+                      size: 65%
+                      background: transparent
+                      labels:
+                        show: true
+                        value:
+                          fontSize: 1.5em
+                          fontWeight: 700
+                          offsetY: 16
+                        total:
+                          show: true
+                          label: Entities
+                          fontSize: 15px
+                          fontWeight: 800
+                          color: '#ffffff50'
+              series:
+                - entity: sensor.template_domain_counter
+                  attribute: automation
+                  name: Automations
+                - entity: sensor.template_domain_counter
+                  attribute: binary_sensor
+                  name: Binary sensors
+                - entity: sensor.template_domain_counter
+                  attribute: device_tracker
+                  name: Device trackers
+                - entity: sensor.template_domain_counter
+                  attribute: light
+                  name: Lights
+                - entity: sensor.template_domain_counter
+                  attribute: media_player
+                  name: Media players
+                - entity: sensor.template_domain_counter
+                  attribute: sensor
+                  name: Sensors
+                - entity: sensor.template_domain_counter
+                  attribute: switch
+                  name: Switches
+                - entity: sensor.template_domain_counter
+                  attribute: other
+                  name: Other
+        - type: entities
+          title: Devices state
+          show_header_toggle: false
+          card_mod:
+            class: header
+          entities:
+            - type: custom:auto-entities
+              filter:
+                include:
+                  - attributes:
+                      device_class: battery
+                    state: < 30
+                    options:
+                      type: custom:mushroom-template-card
+                      primary: '{{ states(entity) }}%'
+                      secondary: "{{ state_attr(entity, 'friendly_name') | title }}"
+                      icon: >
+                        {% set battery_level = (states(entity) | int / 10) |
+                        round(0) | int * 10 %} {% if battery_level == 100 %}
+                          mdi:battery
+                        {% elif battery_level > 0 %}
+                          mdi:battery-{{ battery_level }}
+                        {% else %}
+                          mdi:battery-outline
+                        {% endif %}
+                      icon_color: |-
+                        {% set battery_level = states(entity) | int %}
+                        {% if battery_level > 90 %}
+                          green
+                        {% elif battery_level > 60 %}
+                          light-green
+                        {% elif battery_level > 50 %}
+                          lime
+                        {% elif battery_level > 40 %}
+                          yellow
+                        {% elif battery_level > 30 %}
+                          amber
+                        {% elif battery_level > 20 %}
+                          orange
+                        {% elif battery_level > 10 %}
+                          deep-orange
+                        {% else %}
+                          red
+                        {% endif %}
+                      layout: horizontal
+                      tap_action:
+                        action: none
+                      badge_icon: |-
+                        {% set battery_level = states(entity) | int %}
+                        {% if battery_level < 10 %}
+                          mdi:exclamation-thick
+                        {% endif %}
+                      badge_color: red
+                      card_mod:
+                        style: |
+                          ha-card {
+                            padding: 4px 12px !important;
+                          }
+                exclude: null
+              show_empty: false
+              card:
+                type: custom:layout-card
+                cards: []
+                layout_type: masonry
+              sort:
+                method: friendly_name
+
+        - type: markdown
+          title: 'Packages'
+          card_mod:
+            class: header
+          content: >
+            {% set status = [
+              {
+                  "sensor": "seventeentrack_packages_expired",
+                  "icon": "mdi:restore-alert"
+              },
+              {
+                  "sensor": "seventeentrack_packages_undelivered",
+                  "icon": "mdi:alert-decagram"
+              },
+              {
+                  "sensor": "seventeentrack_packages_in_transit",
+                  "icon": "mdi:truck-delivery"
+              },
+              {
+                  "sensor": "seventeentrack_packages_returned",
+                  "icon": "mdi:alert"
+              },
+              {
+                  "sensor": "seventeentrack_packages_ready_to_be_picked_up",
+                  "icon": "mdi:flag"
+              },
+              {
+                  "sensor": "seventeentrack_packages_delivered",
+                  "icon": "mdi:package"
+              }
+            ]
+            %}
+            {%- for state in status %}
+            {%- if states['sensor'][state.sensor].state != '0' %}
+
+            {% for package in
+            states.sensor.seventeentrack_packages_in_transit.attributes.packages %}
+
+
+            ### <ha-icon icon="{{ state.icon }}" style="color: '#b8860b';"></ha-icon> {{ package.friendly_name }} *({{ package.tracking_number }})*
+
+
+            - {{package.info_text }}
+
+            - {{package.status }}
+
+
+            > *Update: {{ as_timestamp(package.timestamp) | timestamp_custom("%a, %d %b %Y %H:%M")}} - {{ relative_time(package.timestamp)}} ago*
+
+            {% endfor %}
+            {% endif -%}
+            {% endfor %}

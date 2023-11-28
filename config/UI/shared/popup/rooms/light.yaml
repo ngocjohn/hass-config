@@ -1,0 +1,32 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Kitchen
+    style: >
+      --tablet-popup-header-color: rgba(0, 0, 0, 0);
+      --popup-background-color: rgba(0, 0, 0, 0);
+      --popup-border-width: 0;
+      --button-card-border-radius: 5%;
+    card_mod:
+      style:
+        .: |
+        hui-grid-card:
+          $: |
+            #root {
+              margin: 0.3vw 0.3vw;
+            }
+    content:
+      type: grid
+      columns: 2
+      cards:
+        - type: custom:button-card
+          entity: light.aqara_hub
+          name: Table light
+          template:
+            - light_slider
+        - type: custom:button-card
+          entity: light.aqara_hub
+          name: Table light
+          template:
+            - light_slider

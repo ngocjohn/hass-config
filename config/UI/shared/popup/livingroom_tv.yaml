@@ -1,0 +1,153 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Living Room TV
+    card_mod:
+      style:
+        #popup header
+        .:
+    content:
+      type: vertical-stack
+      cards:
+        - type: entities
+          state_color: true
+          show_header_toggle: false
+          card_mod:
+            class: content
+          entities:
+            - type: custom:more-info-card
+              entity: media_player.living_room_tv
+              card_mod:
+                style:
+                  # hide everything but ha-select
+                  $: |
+                    h1 {
+                      display: none !important;
+                    }
+                  .: |
+                    .card-content {
+                      padding: {{ is_state(config.entity, 'off') | iif('0', '1.2em 0 0.5em 0') }};
+                    }
+                  more-info-media_player$:
+                    .: |
+                      div.volume, div.controls {
+                        display: none;
+                      }
+                    ha-select$:
+                      # fix transparent menu background color
+                      mwc-menu$: |
+                        mwc-list {
+                          background: var(--card-background-color);
+                        }
+
+        - type: custom:mod-card
+          card_mod:
+            style:
+              hui-horizontal-stack-card$: |
+                #root {
+                  justify-content: space-evenly !important;
+                  padding: var(--tablet-popup-button-padding);
+                }
+          card:
+            type: horizontal-stack
+            cards:
+              - type: custom:button-card
+                entity: media_player.living_room_tv
+                icon: mdi:power
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                    entity_id: script.atv_turn_on_off
+                template: icon_only
+
+              - type: custom:button-card
+                entity: media_player.living_room_tv
+                icon: mdi:volume-mute
+                tap_action:
+                  action: call-service
+                  service: media_player.volume_mute
+                  service_data:
+                    entity_id: >
+                      [[[ return entity.entity_id; ]]]
+                    is_volume_muted: >
+                      [[[ return entity.attributes.is_volume_muted === 'false' ? 'true' : 'false'; ]]]
+                template: icon_only
+
+              - type: custom:button-card
+                entity: media_player.living_room_tv
+                icon: mdi:volume-minus
+                tap_action:
+                  action: call-service
+                  service: media_player.volume_down
+                  service_data:
+                    entity_id: >
+                      [[[ return entity.entity_id; ]]]
+                template: icon_only
+
+              - type: custom:button-card
+                entity: media_player.living_room_tv
+                icon: mdi:volume-plus
+                tap_action:
+                  action: call-service
+                  service: media_player.volume_up
+                  service_data:
+                    entity_id: >
+                      [[[ return entity.entity_id; ]]]
+                template: icon_only
+        - type: custom:mod-card
+          card_mod:
+            style:
+              hui-horizontal-stack-card$: |
+                #root {
+                  justify-content: space-evenly !important;
+                  padding: var(--tablet-popup-button-padding);
+                }
+          card:
+            type: horizontal-stack
+            cards:
+              - type: custom:button-card
+                entity: media_player.living_room_tv
+                icon: mdi:power
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                    entity_id: script.atv_turn_on_off
+                template: icon_only
+
+              - type: custom:button-card
+                entity: media_player.living_room_tv
+                icon: mdi:volume-mute
+                tap_action:
+                  action: call-service
+                  service: media_player.volume_mute
+                  service_data:
+                    entity_id: >
+                      [[[ return entity.entity_id; ]]]
+                    is_volume_muted: >
+                      [[[ return entity.attributes.is_volume_muted === 'false' ? 'true' : 'false'; ]]]
+                template: icon_only
+
+              - type: custom:button-card
+                entity: media_player.living_room_tv
+                icon: mdi:volume-minus
+                tap_action:
+                  action: call-service
+                  service: media_player.volume_down
+                  service_data:
+                    entity_id: >
+                      [[[ return entity.entity_id; ]]]
+                template: icon_only
+
+              - type: custom:button-card
+                entity: media_player.living_room_tv
+                icon: mdi:volume-plus
+                tap_action:
+                  action: call-service
+                  service: media_player.volume_up
+                  service_data:
+                    entity_id: >
+                      [[[ return entity.entity_id; ]]]
+                template: icon_only

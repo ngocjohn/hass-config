@@ -1,0 +1,51 @@
+action: call-service
+service: honeycomb
+service_data:
+  audio: /local/sound/popup.m4a
+  autoclose: true
+  buttons:
+    #0
+    - icon: phu:ensis-up
+      position: 0
+      show: true
+      entity: light.kitchen_table_light
+      active: '[[[ return entity.state != "off" ]]]'
+      tap_action:
+        action: call-service
+        service: light.toggle
+        service_data:
+          entity_id: entity
+
+    #1
+    - icon: phu:ceiling-adore-flush
+      show: true
+      position: 1
+      entity: light.kitchen_main_light
+      active: '[[[ return entity.state != "off" ]]]'
+      tap_action:
+        action: call-service
+        service: light.toggle
+        service_data:
+          entity_id: entity
+    #2
+    - icon: mdi:light-recessed
+      show: true
+      position: 2
+      entity: light.digestor_lighting
+      active: '[[[ return entity.state != "off" ]]]'
+      tap_action:
+        action: call-service
+        service: light.toggle
+        service_data:
+          entity_id: entity
+    #3
+    - icon: phu:smoke-detector
+      show: true
+      position: 3
+      entity: fan.digestor_power_state
+      active: '[[[ return entity.state != "off" ]]]'
+      tap_action:
+        action: call-service
+        service: homeassistant.toggle
+        service_data:
+          entity_id: fan.digestor_power_state

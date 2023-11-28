@@ -1,0 +1,41 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: 'ATV Remote'
+    style: >
+      --popup-background-color: rgba(21,25,35,1);
+    card_mod:
+      style:
+        .: |
+          ha-dialog>ha-dialog-header {
+            display: none;
+          }
+          @media (max-width: 450px), (max-height: 500px) {
+            .content .container {
+              margin: 0 6.8% !important;
+            }
+            ha-dialog {
+              --mdc-dialog-min-width: 100vw !important;
+              --mdc-dialog-min-height: 100vh !important;
+              --popup-border-radius: 0 !important;
+            }
+            ha-dialog>ha-dialog-header {
+              display: block !important;
+            }
+          }
+    content:
+      type: custom:apple-tv-card
+      background: 'linear-gradient(155deg, rgba(60,66,80,1) 0%, rgba(23,26,37,1) 42%, rgba(21,25,35,1) 100%)'
+      entity: media_player.atv
+      full_screen: true
+      remote: remote.atv
+      sources:
+        - source_name: Infuse
+        - source_name: Disney+
+        - source_name: Netflix
+        - source_name: Prime Video
+        - image: /local/community/Apple-Tv-Card/logo/Prime Video.png
+          source_name: YouTube
+        - image: /local/community/Apple-Tv-Card/logo/DAZN.png
+          source_name: DAZN

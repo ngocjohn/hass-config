@@ -1,0 +1,76 @@
+type: custom:grid-layout
+icon: mdi:view-dashboard
+theme: tablet
+path: security
+layout:
+  default:
+  margin: 0
+  grid-gap: 1.8vw
+  grid-template-columns: 0 1fr 1fr 0
+  grid-template-rows: fit-content(100%)
+  grid-template-areas: |
+    ". security   cameras  ."
+
+#################################################
+#                                               #
+#                    DASHBOARD                  #
+#                                               #
+#################################################
+
+cards:
+  #################################################
+  #                                               #
+  #                  CAMERAS                      #
+  #                                               #
+  #################################################
+
+  - type: grid
+    title: Cameras
+    view_layout:
+      grid-area: cameras
+    columns: 2
+    cards:
+      # CAM DOOR
+      - type: custom:decluttering-card
+        template: grid_cam_door
+
+      # CAM KIDS ROOM
+      - type: custom:decluttering-card
+        template: grid_cam_kids
+
+      # CAM TERRACE
+      - type: custom:decluttering-card
+        template: grid_cam_terrace
+
+      # CAM GARDEN
+      - type: custom:decluttering-card
+        template: grid_cam_garden
+
+  #################################################
+  #                                               #
+  #                     SECURITY                  #
+  #                                               #
+  #################################################
+
+  - type: grid
+    title: Security
+    view_layout:
+      grid-area: security
+    columns: 2
+    cards:
+      # ALARM
+      - type: custom:decluttering-card
+        template: grid_alarm
+
+      # FRONT DOOR
+      - type: custom:decluttering-card
+        template: grid_front_door
+
+      # MOTION SENSORS
+      - type: custom:decluttering-card
+        template: grid_motion_sensors
+
+      #  CONTACT SENSORS
+      - type: custom:decluttering-card
+        template: grid_contact_sensors
+

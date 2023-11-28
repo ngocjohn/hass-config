@@ -1,0 +1,1182 @@
+#################################################
+#                                               #
+#                  ROOMS                        #
+#                                               #
+#################################################w
+
+room_group:
+  template:
+    - base
+  variables:
+    light_entity: ''
+    circle_input: >
+      [[[ return entity === undefined || Math.round(entity.attributes.brightness / 2.54); ]]]
+  state_display: >
+    [[[ return variables.state == 'no' ? 'Off' : 'On'; ]]]
+  hold_action:
+    action: call-service
+    service: light.toggle
+    service_data:
+      entity_id: >
+        [[[ return variables.light_entity; ]]]
+  double_tap_action:
+    action: fire-dom-event
+    browser_mod:
+      service: popup
+      data:
+        title: >
+          [[[
+            return states[variables.light_entity].attributes.friendly_name;
+          ]]]
+        style: >
+          --popup-background-color: transparent;
+        content:
+          type: custom:mod-card
+          card_mod:
+            style: |
+              #states {
+                padding-top: 0.5em;
+              }
+          card:
+            type: custom:light-popup-card
+            entity: >
+              [[[ return variables.light_entity; ]]]
+            icon: none
+            fullscreen: false
+            brightnessWidth: 130px
+            brightnessHeight: 360px
+            borderRadius: 1.7em
+            sliderColor: '#c7c7c7'
+            sliderTrackColor: rgba(25, 25, 25, 0.9)
+            displayType: slider
+            actionSize: 4.5em
+            actionsInARow: 2
+
+#################################################
+#                                               #
+#                  SECTOR                       #
+#                                               #
+#################################################
+
+rooms_base:
+  template:
+    - base
+  triggers_update: all
+  variables:
+    light_entity: ''
+    active: ''
+    state_on: >
+      [[[ return ['yes', 'occupied', 'cleaning','washing','cooking', 'dishwashing', 'on'].indexOf(entity === undefined || entity.state) !== -1; ]]]
+    washing_on: >
+      [[[ return ['washing'].indexOf(entity === undefined || entity.state) !== -1; ]]]
+    dishwashing_on: >
+      [[[ return ['dishwashing'].indexOf(entity === undefined || entity.state) !== -1; ]]]
+    cooking_on: >
+      [[[ return ['cooking'].indexOf(entity === undefined || entity.state) !== -1; ]]]
+  tap_action:
+    action: call-service
+    service: light.toggle
+    service_data:
+      entity_id: >
+        [[[ return variables.light_entity; ]]]
+  state_display: >
+    [[[
+      if (entity) {
+        if (!variables.state_on || variables.state == 'off') {
+          return ' ';
+        }
+        /*else if (variables.state == 'dishwashing') {
+          return entity.attributes.dishwasher_remain;
+        }*/
+        else if (variables.state == 'occupied') {
+          return 'occupied';
+        }
+        else if (variables.state == 'washing') {
+          return entity.attributes.washdryer_remain;
+        }
+        else if (variables.state_on || variables.state == 'yes' && variables.active !== undefined) {
+          let num = states[variables.active].attributes.lights_on.length;
+            if (num == '1') {
+              return '1 light';
+            } else {
+              return num === '0'
+                ? 'On'
+                : num + ' lights';
+            }
+        }
+        else {
+          return variables.state;
+        }
+      }
+    ]]]
+
+  styles:
+    card:
+      - background: >
+          [[[
+            if (variables.washing_on) {
+              return variables.washing_on
+                ? `linear-gradient(to top, rgba(250, 250, 250, 0.75) 0%, rgba(10,14,34,0.8) 100%)`
+                : 'rgba(115, 115, 115, 0.2)';
+            }
+            else {
+              return variables.state_on
+                ? 'rgba(250, 250, 250, 0.75)'
+                : 'rgba(115, 115, 115, 0.2)';
+            }
+          ]]]
+      # - --mdc-ripple-color: blue
+      # - --mdc-ripple-press-opacity: 0.5
+    state:
+      - color: >
+          [[[
+            return variables.state_on
+              ? 'rgb(139, 51, 51)'
+              : 'rgba(255, 255, 255, 0.3)';
+          ]]]
+
+# MOTION CIRCLE
+motion:
+  custom_fields:
+    motion: >
+      [[[
+        if (states[variables.motion].state == 'on')
+          return '<ha-icon icon="mdi:motion-sensor" style="width:100%;display:flex; color:var(--state-icon-active-color);"></ha-icon>'
+      ]]]
+  styles:
+    custom_fields:
+      motion:
+        - position: absolute
+        - height: auto
+        - border-radius: 50%
+        - right: 1%
+        - padding: 5%
+        - margin: -10%
+        - width: 15%
+        # - background: >
+        #     [[[
+        #       return variables.state_on
+        #         ? 'rgba(255, 255, 255, 0.4)'
+        #         : 'rgba(255, 255, 255, 0.8)';
+        #     ]]]
+
+# MOTION CIRCLE
+babycam:
+  custom_fields:
+    babycam: >
+      [[[
+        if (states[variables.babycam].state == 'on')
+          return '<ha-icon icon="phu:arlo-cam" style="width:100%;display:flex; ;"></ha-icon>'
+      ]]]
+  styles:
+    custom_fields:
+      babycam:
+        - position: absolute
+        - height: auto
+        - border-radius: 50%
+        - right: 1%
+        - padding: 5%
+        - margin: -10%
+        - width: 15%
+        # - background: >
+        #     [[[
+        #       return variables.state_on
+        #         ? 'rgba(255, 255, 255, 0.4)'
+        #         : 'rgba(255, 255, 255, 0.8)';
+        #     ]]]
+
+# SERVER CIRCLE
+server:
+  custom_fields:
+    server: >
+      [[[
+        return (states[variables.server].state == 'on')
+          ? '<ha-icon icon="mdi:server-network" style="width:100%;display:flex; color:var(--state-icon-active-color);"></ha-icon>'
+          : (states[variables.server].attributes.Idle == true)
+            ? '<ha-icon icon="mdi:server-network" style="width:100%;display:flex;"></ha-icon>'
+            : (states[variables.server].attributes.Sleeping == true)
+              ? '<ha-icon icon="mdi:server-network-off" style="width:100%;display:flex; color: #fa0000;"></ha-icon>'
+              : null;
+      ]]]
+  styles:
+    custom_fields:
+      server:
+        - position: absolute
+        - height: auto
+        - border-radius: 50%
+        - right: 1%
+        - padding: 5%
+        - margin: -10%
+        - top: >
+            [[[
+              return (states[variables.motion].state == 'on') ? '30%' : null;
+            ]]]
+        - width: 15%
+        - transition: top 250ms ease-out
+        # - background: >
+        #     [[[
+        #       return variables.state_on
+        #         ? 'rgba(255, 255, 255, 0.4)'
+        #         : '#3082b787';
+        #     ]]]
+
+# AIR DIFFUSER CIRCLE
+air_diffuser_circle:
+  custom_fields:
+    air_diffuser_circle: >
+      [[[
+        return (states[variables.air_diffuser_circle].state == 'on')
+          ? '<ha-icon icon="fas:spray-can-sparkles" style="width:100%;display:flex;"></ha-icon>'
+          : null;
+      ]]]
+  styles:
+    custom_fields:
+      air_diffuser_circle:
+        - position: absolute
+        - height: auto
+        - border-radius: 50%
+        - right: 1%
+        - padding: 5%
+        - margin: -10%
+        - width: 15%
+        - transition: top 250ms ease-out
+        # - background: >
+        #     [[[
+        #       return variables.state_on
+        #         ? 'rgba(255, 255, 255, 0.4)'
+        #         : '#3082b787';
+        #     ]]]
+
+# MACBOOK CIRCLE
+macbook:
+  custom_fields:
+    macbook: >
+      [[[
+        return (states[variables.macbook].state == 'on')
+          ? '<ha-icon icon="cil:laptop-mac" style="width:100%;display:flex; color:var(--state-icon-active-color);"></ha-icon>'
+          : null;
+      ]]]
+  styles:
+    custom_fields:
+      macbook:
+        - position: absolute
+        - height: auto
+        - border-radius: 50%
+        - right: 1%
+        - padding: 5%
+        - margin: -10%
+        - top: 30%
+        - width: 15%
+        - transition: top 250ms ease-out
+        # - background: >
+        #     [[[
+        #       return variables.state_on
+        #         ? 'rgba(255, 255, 255, 0.4)'
+        #         : '#3082b787';
+        #     ]]]
+
+# DOOR STATE CIRCLE
+door_state:
+  custom_fields:
+    door: >
+      [[[
+        if (states[variables.door].state == 'off')
+          return '<ha-icon icon="mdi:door" style="width:100%; display:flex; color:var(--state-icon-active-color);"></ha-icon>'
+      ]]]
+  styles:
+    custom_fields:
+      door:
+        - position: absolute
+        - height: auto
+        - border-radius: 50%
+        - right: 1%
+        - padding: 5%
+        - margin: -10%
+        - top: >
+            [[[
+              return states[variables.motion].state == 'on'
+                ? '30%'
+                : '0';
+            ]]]
+        - width: 15%
+        - background: >
+            [[[
+              return states[variables.door].state == 'off'
+                ? 'rgba(255, 255, 255, 0.4)'
+                : null;
+            ]]]
+
+icon_fanrotate:
+  template:
+    - rooms_base
+  timeout: >
+    [[[ return !entity || Date.now() - Date.parse(entity.last_changed); ]]]
+  styles:
+    custom_fields:
+      icon_fanrotate:
+        - width: 25%
+        - justify-self: end
+
+  custom_fields:
+    icon_fanrotate: >
+      [[[
+        let path = `
+          <circle cx="25" cy="25" r="6.6"/>
+          <path d="M31.9 30.4c-.5.6-1.1 1.1-1.7 1.5-1.4 1.1-3.2 1.7-5.2 1.7-2.3 0-4.5-.9-6-2.4-.9 1.1-1.6 2.3-2.3 3.2l-4.9 5.4c-1.8 2.7.3 5.6 2.5 7 3.9 2.4 9.8 3.1 14.1 1.9 4.6-1.3 7.9-4.7 7.4-9.7-.2-3.4-1.9-6-3.9-8.6zM17 28.3c-.4-1-.6-2.1-.6-3.3a8.7 8.7 0 0 1 6.4-8.4l-1.6-3.5L19 6.2c-1.5-2.8-5-2.5-7.3-1.2-4 2.2-7.5 6.9-8.7 11.3-1.2 4.6.2 9.2 4.7 11.3 3.1 1.3 6.1 1.2 9.3.7zm26.9-17.6c-3.3-3.4-8-4.6-12.1-1.8-2.8 1.8-4.2 4.6-5.5 7.5 4.2.6 7.4 4.2 7.4 8.6 0 .9-.1 1.7-.4 2.5 1.3.2 2.8.3 3.8.4 2.3.4 4.7 1.3 7.1 1.7 3.2.3 4.7-3 4.8-5.6.3-4.6-1.9-10.1-5.1-13.3z"/>
+        `,
+        style = `
+          <svg viewBox="0 0 50 50">
+            <style>
+              @keyframes rotate {
+                0% {
+                  visibility: visible;
+                  transform: rotate(0deg) translateZ(0);
+                }
+                100% {
+                  transform: rotate(1080deg) translateZ(0);
+                }
+              }
+              .start {
+                animation: rotate 2.8s ease-in;
+                transform-origin: center;
+                fill: #5daeea;
+                visibility: hidden;
+                will-change: transform;
+              }
+              .on {
+                animation: rotate 1.8s linear infinite;
+                transform-origin: center;
+                fill: #5daeea;
+                animation-delay: 2.8s;
+                visibility: hidden;
+                will-change: transform;
+              }
+              .end {
+                animation: rotate 2.8s;
+                transform-origin: center;
+                fill: #9ca2a5;
+                animation-timing-function: cubic-bezier(0.61, 1, 0.88, 1);
+                will-change: transform;
+              }
+              .start_timeout {
+                animation: rotate 1.8s linear infinite;
+                transform-origin: center;
+                fill: #5daeea;
+                visibility: hidden;
+                will-change: transform;
+              }
+              .end_timeout {
+                fill: #9ca2a5;
+              }
+            </style>
+        `;
+        if (entity) {
+          if (variables.state_on && variables.timeout < 2000) {
+            return `${style}<g class="start">${path}</g><g class="on">${path}</g></svg>`;
+          }
+          if (variables.state === 'off' && variables.timeout < 2000) {
+              return `${style}<g class="end">${path}</g></svg>`;
+          }
+          if (variables.state_on && variables.timeout > 2000) {
+            return `${style}<g class="start_timeout">${path}</g></svg>`;
+          } else {
+            return `${style}<g class="end_timeout">${path}</g></svg>`;
+          }
+        }
+      ]]]
+
+# APPLIANCE CIRCLE
+appliance_circle:
+  template:
+    - circle
+  variables:
+    appliance: ' '
+  custom_fields:
+    circle: >
+      [[[
+          let input = states[variables.appliance].state,
+            radius = 20.5,
+            circumference = radius * 2 * Math.PI;
+          var color = "rgba(48, 128, 181, 0.8)";
+          if (input <= 20) {
+            color = "#FDD60F";
+          } else if (input <= 40) {
+            color = "rgba(48, 128, 181, 0.8)";
+          }
+          else {
+            color = "#27C950";
+          }
+          return `
+            <svg viewBox="0 0 50 50">
+              <style>
+                circle {
+                  transform: rotate(-90deg);
+                  transform-origin: 50% 50%;
+                  stroke-dasharray: ${circumference};
+                  stroke-dashoffset: ${circumference - input / 100 * circumference};
+                }
+                tspan {
+                  font-size: 10px;
+                }
+              </style>
+              <circle cx="25" cy="25" r="${radius}" stroke="${color}" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <text x="50%" y="54%" fill="#8d8e90" font-size="14" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle">${input}<tspan font-size="10">%</tspan></text>
+            </svg>
+          `;
+      ]]]
+
+# FAN STATE CIRCLE
+fan_circle:
+  template:
+    - rooms_base
+  custom_fields:
+    fan_circle: >
+      [[[
+        return states[variables.fan_circle].state == 'on'
+          ? '<ha-icon icon="phu:smoke-detector" style="width:100%;display:flex;color:var(--state-icon-active-color);"></ha-icon>'
+          : null;
+      ]]]
+  styles:
+    custom_fields:
+      fan_circle:
+        - position: absolute
+        - height: auto
+        - border-radius: 50%
+        - width: 15%
+        - padding: 5%
+        - top: >
+            [[[
+              return states[variables.motion].state == 'on'
+                ? '30%'
+                : '0';
+            ]]]
+        - margin: >
+            [[[
+              return variables.dishwashing_on
+                ? `20% -5% 0px 0px`
+                : `-5% -5% 0px 0px`;
+            ]]]
+        - border: 0.12vw solid rgba(48, 128, 181, 0.4)
+        - justify-self: end
+        - background: >
+            [[[
+              return states[variables.motion].state == 'on'
+                ? 'rgba(255, 255, 255, 0.15)'
+                : null;
+            ]]]
+
+# CIRCLE STATE
+cooking_state:
+  template:
+    - base
+    - circle
+  triggers_update: sensor.time
+  custom_fields:
+    circle: >
+      [[[
+        if (entity) {
+            let r = 20.5,
+                c = r * 2 * Math.PI,
+                tspan = '<tspan dx=".2" dy="-.4">',
+                domain = entity.entity_id.split('.')[0],
+                state = variables.state_on,
+                input = variables.circle_input || ' ',
+                unit = variables.circle_input_unit || ' ';
+
+           /* * * * * * * * * * * * * * * * * *
+            *                                 *
+            *             CIRCLE              *
+            *                                 *
+            * * * * * * * * * * * * * * * * * */
+
+            let circle = (state, input, unit) => {
+                return `
+                  <svg viewBox="0 0 50 50">
+                    <style>
+                      circle {
+                        transform: rotate(-90deg);
+                        transform-origin: 50% 50%;
+                        stroke-dasharray: ${c};
+                        stroke-linecap: round;
+                        fill: ${state ? 'var(--c-fill-color-on)' : 'var(--c-fill-color-off)'};
+                      }
+                      text {
+                        font-size: var(--c-font-size);
+                        font-weight: var(--c-font-weight);
+                        letter-spacing: var(--c-letter-spacing);
+                        fill: var(--c-font-color);
+                      }
+                      tspan {
+                        font-size: var(--c-unit-font-size);
+                      }
+                      #circle_value, tspan {
+                        text-anchor: middle;
+                        dominant-baseline: central;
+                      }
+                    </style>
+                    <circle id="circle_stroke_bg" cx="25" cy="25" r="${r}" opacity="0.5" stroke-width="var(--c-stroke-width)" stroke="#b8b8b8"/>
+                    <circle id="circle_stroke_prev" cx="25" cy="25" r="${r}" opacity="1" stroke-width="2.5" stroke="#ffd945"  stroke-dashoffset="${typeof input === 'number' && c - input / 100 * c}" stroke-dasharray="${c}"/>
+                    <circle id="circle_stroke" cx="25" cy="25" r="${r}" opacity="1.0" stroke-width="var(--c-stroke-width)" stroke="${state ? 'var(--c-stroke-color-on)' : 'var(--c-stroke-color-off)'}" stroke-dashoffset="${typeof input === 'number' && c - input / 100 * c}" stroke-dasharray="${c}"/>
+                    <text id="circle_value" x="50%" y="52%" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle">${input}${tspan}${unit}</tspan></text>
+                  </svg>
+                  ${(domain === 'sensor') && `
+                      <input id="circle_slider" type="range" min="0" max="100" value="${input}">
+                  `}
+                `;
+            }
+        }
+      ]]]
+
+kitchensensor:
+  template:
+    - base
+    - circle
+    - loader
+
+  state_display: >
+    [[[
+      return variables.state == 'off' ? " " : null;
+    ]]]
+  variables:
+    state_on: >
+      [[[ return ['on', 'idle', 'playing', 'paused','standby'].indexOf(!entity || entity.state) !== -1; ]]]
+    circle_input: >
+      [[[
+        if (entity) {
+        let time = states['sensor.011040386626003828_bsh_common_option_programprogress'].state
+        return time === 0 && entity.state !== 'off'
+        ? 1
+        : time
+        }
+      ]]]
+    circle_input_unit: '%'
+
+#################################################
+#                                               #
+#                     LIGHTS                    #
+#                                               #
+#################################################
+
+light:
+  template:
+    - base
+    - circle
+    - loader
+  variables:
+    circle_input: >
+      [[[
+        if (entity) {
+            // if light group get brightness from child to remove bounce
+            let child = entity.attributes.entity_id,
+                brightness = child && states[child[0]].attributes.brightness
+                    ? Math.round(states[child[0]].attributes.brightness / 2.54)
+                    : Math.round(entity.attributes.brightness / 2.54);
+            return brightness === 0 && entity.state !== 'off'
+                ? 1
+                : brightness
+        }
+      ]]]
+
+    circle_input_unit: '%'
+
+  double_tap_action:
+    action: fire-dom-event
+    browser_mod:
+      service: browser_mod.popup
+      data:
+        title: >
+          [[[
+            return !entity || entity.attributes.friendly_name;
+          ]]]
+        style: >
+          --tablet-popup-header-color: rgba(0, 0, 0, 0);
+          --popup-background-color: rgba(0, 0, 0, 0);
+          --popup-border-width: 0;
+        card_mod:
+          style:
+            .: |
+              ha-header-bar {
+                display: none !important;
+              }
+
+        content:
+          type: entities
+          card_mod:
+            style: |
+              #states {
+                padding-top: 0.5em;
+              }
+          entities: >
+            [[[
+              if (entity) {
+                  let lights = [],
+                      id = Boolean(entity.attributes.entity_id)
+                          ? [entity.entity_id].concat(entity.attributes.entity_id)
+                          : [entity.entity_id];
+
+                  for (let i = 0; i < id.length; i++) {
+                      lights.push({
+                          "type": "custom:mushroom-light-card",
+                          "entity": id[i],
+                          "fill_container": false,
+                          "primary_info": "name",
+                          "secondary_info": "state",
+                          "icon_type": "icon",
+                          "show_brightness_control": true,
+                          "use_light_color": true,
+                          "show_color_temp_control": true,
+                          "show_color_control": true,
+                          "collapsible_controls": false
+                      });
+                  }
+                  return lights;
+              }
+            ]]]
+
+light_slider:
+  template:
+    - extra_styles
+  variables:
+    state_on: >
+      [[[ return ['on', 'home', 'cool', 'fan_only', 'unlocked', 'open', 'streaming', 'yes', 'Blažičkova'].indexOf(!entity || entity.state) !== -1; ]]]
+  show_name: true
+  tap_action:
+    action: toggle
+    haptic: medium
+  hold_action:
+    action: more-info
+    haptic: medium
+  custom_fields:
+    slider:
+      card:
+        type: custom:my-slider-v2
+        entity: >
+          [[[ return entity.entity_id; ]]]
+        colorMode: brightness
+        styles:
+          container:
+            - background: none
+            - border-radius: 100px
+            - overflow: visible
+          card:
+            - height: 16px
+            - padding: 0 8px
+            - background: >
+                [[[
+                  return variables.state_on
+                    ? 'linear-gradient(90deg, rgba(255,255,255, 0.3) 0%, rgba(255,255,255, 1) 100%)'
+                    : '#000000';
+                ]]]
+            - border-radius: 12px
+          track:
+            - overflow: visible
+            - background: none
+          progress:
+            - background: none
+          thumb:
+            - background: |
+                [[[
+                  return variables.state_on
+                    ? '#000000'
+                    : '#535865';
+                ]]]
+            - top: 2px
+            - right: '-8px'
+            - height: 12px
+            - width: 12px
+            - border-radius: 100px
+  styles:
+    grid:
+      - grid-template-areas: |
+          "n i"
+          ". ."
+          "slider slider"
+      - grid-template-columns: 1fr min-content
+      - grid-template-rows: 1fr 5px min-content
+    card:
+      - border-radius: 12px
+      - border-width: 0
+      - transition: none
+      - box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.15)
+      - overflow: hidden
+      - padding: 7%
+      - background: >
+          [[[
+              return variables.state_on
+                ? 'rgba(255, 218, 120, 0.75)'
+                : 'rgba(115, 115, 115, 0.2)';
+          ]]]
+      - --mdc-ripple-color: >
+          [[[
+            return variables.state_on
+                ? 'rgb(0, 0, 0)'
+                : '#97989c';
+          ]]]
+    img_cell:
+      - justify-self: start
+      - width: 24px
+    icon:
+      - width: 24px
+      - height: 24px
+      - color: >
+          [[[
+            return variables.state_on
+                ? '#000000'
+                : '#97989c';
+          ]]]
+    name:
+      - justify-self: start
+      - padding: 5% 3%
+      - line-height: 130%
+      - color: >
+          [[[
+            return variables.state_on
+                ? '#000000'
+                : '#A4A9B6';
+          ]]]
+
+svetla:
+  template:
+    - base
+  double_tap_action:
+    action: fire-dom-event
+    browser_mod:
+      service: browser_mod.popup
+      data:
+        title: >
+          [[[
+            return !entity || entity.attributes.friendly_name;
+          ]]]
+        style: >
+          --tablet-popup-header-color: rgba(0, 0, 0, 0);
+          --popup-background-color: rgba(0, 0, 0, 0);
+          --popup-border-width: 0;
+          --button-card-border-radius: 10%;
+          --grid-card-gap: 5%;
+          --tablet-popup-button-padding: 0.1em 2em 1.8em 2em;
+          //--tablet-popup-content-padding: 1.4em 2.2em 1.6em 1.5em;
+        content:
+          type: vertical-stack
+          cards:
+            - type: entities
+              state_color: true
+              show_header_toggle: false
+              card_mod:
+                class: content
+              entities:
+                - type: custom:more-info-card
+                  entity: >
+                    [[[ return entity.entity_id ]]]
+                  card_mod:
+                    style:
+                      # hide everything but ha-select
+                      $: |
+                        h1 {
+                          display: none !important;
+                        }
+                      .: |
+                        h1, state-card-content {
+                          display: none !important;
+                        }
+                        .card-content {
+                          padding: {{ is_state(config.entity, 'off') | iif('0', '1.2em 0 0.5em 0') }};
+                        }
+                      more-info-light$:
+                        .: |
+                          ha-more-info-state-header {
+                            display: none !important;
+                          }
+                          ha-attributes {
+                            display: none !important;
+                          }
+
+lightpop:
+  template:
+    - base
+  double_tap_action:
+    action: fire-dom-event
+    browser_mod:
+      service: browser_mod.popup
+      data:
+        # title: >
+        #   [[[
+        #     return !entity || entity.attributes.friendly_name;
+        #   ]]]
+        title: ' '
+        style: >
+          --popup-background-color: rgba(0, 0, 0, 0);
+          --popup-border-width: 0px;
+          --tablet-popup-header-color: rgba(0, 0, 0, 0);
+        card_mod:
+          style:
+            #popup header
+            .: |
+              ha-dialog>ha-dialog-header {
+                display: none;
+              }
+              @media (max-width: 450px), (max-height: 500px) {
+                ha-dialog>ha-dialog-header {
+                  display: block;
+                  background-color: var(--tablet-popup-header-color) !important;
+                }
+              }
+
+        content:
+          type: entities
+          card_mod:
+            class: content
+          entities:
+            - type: custom:more-info-card
+              entity: >
+                [[[ return entity.entity_id; ]]]
+              title: ' '
+              card_mod:
+                style: |
+                  state-card-content {
+                    display: none !important;
+                  }
+                  ha-card {
+                    border: none !important;
+                  }
+
+#################################################
+#                                               #
+#                     PERSON                    #
+#                                               #
+#################################################
+
+person:
+  template:
+    - base
+    - circle
+  state_display: >
+    [[[
+      if (entity) {
+          return variables.state === 'home'
+              ? variables.translate_home
+              : variables.state === 'not_home'
+                  ? variables.translate_not_home
+                  : variables.state;
+      }
+      return variables.translate_unknown;
+    ]]]
+  triggers_update: sensor.time
+  tap_action:
+    action: call-service
+    service: homeassistant.update_entity
+    service_data:
+      entity_id: >
+        [[[ return variables.entity_id ]]]
+  styles:
+    custom_fields:
+      icon:
+        - clip-path: circle()
+        - width: 82%
+        - pointer-events: none
+        - display: grid
+        - filter: >
+            [[[
+                return variables.state === 'not_home'
+                  ? `grayscale(1)`
+                  : null;
+            ]]]
+  custom_fields:
+    icon: >
+      [[[
+        return entity && variables.entity_picture
+            ? `<img src="${variables.entity_picture}" width="100%">`
+            : null;
+      ]]]
+
+#################################################
+#                                               #
+#                  SECURITY                     #
+#                                               #
+#################################################
+
+# ALARM
+alarm:
+  template:
+    - base
+  variables:
+    state_on: >
+      [[[ return ['armed', 'armed_night', 'armed_away'].indexOf(entity === undefined || entity.state) !== -1; ]]]
+  state_display: >
+    [[[
+      if (entity)
+        if (entity.state === 'armed_night')
+          return 'Night'
+        if (entity.state === 'armed_away')
+          return 'Away'
+    ]]]
+  name: >
+    [[[
+      return variables.state_on
+        ? 'Armed'
+        : 'Alarm';
+    ]]]
+  styles:
+    state:
+      - color: >
+          [[[
+            return variables.state_on
+              ? 'rgb(139, 51, 51)'
+              : 'rgba(255, 255, 255, 0.3)';
+          ]]]
+  tap_action:
+    action: more-info
+
+front_door:
+  template:
+    - base
+  styles:
+    state:
+      - color: >
+          [[[
+            return variables.state_on
+              ? 'rgb(139, 51, 51)'
+              : 'rgba(255, 255, 255, 0.3)';
+          ]]]
+  hold_action:
+    action: >
+      [[[
+        return variables.state_on
+            ? 'call-service'
+            : 'none';
+      ]]]
+    service: lock.lock
+    service_data:
+      entity_id: >
+        [[[
+          return variables.entity_id;
+        ]]]
+
+# SENSORS
+sensors:
+  template:
+    - base
+  variables:
+    state_on: >
+      [[[ return ['on', 'Detected'].indexOf(!entity || entity.state) !== -1; ]]]
+  styles:
+    state:
+      - color: >
+          [[[
+            return variables.state_on
+              ? 'rgb(139, 51, 51)'
+              : 'rgba(255, 255, 255, 0.3)';
+          ]]]
+  name: >
+    [[[
+      if (variables.state_on) {
+        let sen = entity.attributes.motion_detected.length;
+          if (sen == '1') {
+            return entity.attributes.motion_detected;
+          } else {
+            return sen === '0'
+              ? 'Sensors'
+              : sen + ' Sensors';
+          }
+      }
+      return 'Sensors';
+    ]]]
+
+# DOORS
+doors:
+  template:
+    - base
+  variables:
+    state_on: >
+      [[[ return ['open', 'unlocked'].indexOf.indexOf(!entity || entity.state) !== -1; ]]]
+  styles:
+    state:
+      - color: >
+          [[[
+            return variables.state_on
+              ? 'rgb(139, 51, 51)'
+              : 'rgba(255, 255, 255, 0.3)';
+          ]]]
+  name: >
+    [[[
+      if (variables.state_on) {
+        let num = entity.attributes.doors_open.length;
+          if (num == '1') {
+            return entity.attributes.doors_open;
+        } else {
+          return num === '0'
+            ? 'Door'
+            : num + ' Doors';
+        }
+      }
+      return 'Doors';
+    ]]]
+
+#################################################
+#                                               #
+#                    CAMERA                     #
+#                                               #
+#################################################
+
+camera:
+  template:
+    - base
+    - circle
+    - icon_spot_cam
+  variables:
+    camera_on: >
+      [[[ return !entity || ['streaming'].indexOf(entity.state) !== -1; ]]]
+    camera_off: >
+      [[[ return !entity || ['off', 'standby', 'unknown', 'unavailable', 'idle'].indexOf(entity.state) !== -1; ]]]
+    is_bellow_horrizon: >
+      [[[
+        if (states['sun.sun'].state == 'below_horizon') {
+            return true;
+        }
+      ]]]
+    battery: ''
+  tap_action:
+    action: call-service
+    service: automation.trigger
+    service_data:
+      entity_id: automation.camera_snapshot
+  tooltip: >
+    [[[
+      return states[variables.battery].state+' %';
+    ]]]
+  double_tap_action:
+    action: fire-dom-event
+    browser_mod:
+      service: browser_mod.popup
+      data:
+        title: ' '
+        style: |
+          --popup-border-width: 0;
+          --tablet-popup-header-color: rgba(0, 0, 0, 0);
+          --popup-background-color: rgba(0, 0, 0, 0);
+          --popup-max-width: 600px;
+        card_mod:
+          style:
+            .: |
+              @media screen and (min-width: 800px) {
+                ha-dialog>ha-dialog-header {
+                  display: none !important;
+                }
+              }
+              @media (max-width: 450px), (max-height: 500px) {
+                ha-dialog {
+                  --mdc-dialog-min-width: 100vw !important;
+                  --mdc-dialog-min-height: 100vh !important;
+                  --popup-border-radius: 0 !important;
+                }
+              }
+        content:
+          type: picture-entity
+          entity: >
+            [[[ return variables.entity_id;]]]
+          image: >
+            [[[
+                return `/local/tmp/${variables.entity_id}-latest.jpg`;
+            ]]]
+          show_info: true
+          show_state: true
+          show_name: false
+          camera_view: auto
+          tap_action:
+            action: call-service
+            service: >
+              [[[
+                return variables.state == 'idle'
+                  ? 'camera.turn_on'
+                  : 'camera.turn_off';
+              ]]]
+            service_data:
+              entity_id: >
+                [[[
+                  return entity.entity_id;
+                ]]]
+          card_mod:
+            style: |
+              ha-card {
+                border-radius: 16px !important;
+              }
+  styles:
+    card:
+      - padding: 8%
+      - background-color: none
+      - background-size: cover
+      # - background-position: center
+      - background-repeat: no-repeat
+      - background-image: >
+          [[[
+              return `linear-gradient(0deg, rgba(0,0,0,.3) 0%, rgba(0,0,0,0) 100%), url(${variables.entity_picture})`;
+          ]]]
+    # [[[
+    #   return `linear-gradient(0deg, rgba(0,0,0,.5) 0%, rgba(0,0,0,0) 100%), url(/local/tmp/${variables.entity_id}-latest.jpg)`;
+    # ]]]
+    custom_fields:
+      circle:
+        - width: 50%
+  custom_fields:
+    circle: >
+      [[[
+        if (entity.state === 'streaming' || entity.state === 'idle') {
+          let time = c => {
+              let s = (c/1e3),
+                  m = (c/6e4),
+                  h = (c/36e5),
+                  d = (c/864e5);
+              return s < 60
+                  ? parseInt(s) + 's'
+                  : m < 60 ? parseInt(m) + 'm'
+                  : h < 24 ? parseInt(h) + 'h'
+                  : parseInt(d) + 'd';
+          };
+            let last_changed = time(Date.now() - Date.parse(entity.last_changed)),
+              stroke = variables.state === 'streaming' || variables.state === 'on'  ? '#000000' : 'rgba(255,255,255,0.1)',
+              fill = variables.is_bellow_horrizon && variables.state === 'idle' || variables.state === 'off' ? 'rgba(255,255,255,0.1)' : '#efefef95',
+              text = variables.is_bellow_horrizon && variables.state === 'idle' || variables.state === 'off' ? '#8d8e90' : '#000000';
+        if (entity) {
+        return `
+          <svg viewBox="0 0 50 50">
+            <circle cx="25" cy="25" r="20.5" stroke="${stroke}" stroke-width="2.5" fill="${fill}" />
+            <text x="50%" y="54%" fill="${text}" font-size="14" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle">${last_changed}</text>
+          </svg>
+        `;
+        }}
+      ]]]
+
+# CIRCLE STATE
+circle_state:
+  template:
+    - base
+    - circle
+  triggers_update: sensor.time
+  custom_fields:
+    circle: >
+      [[[
+        if (entity.state === 'open' || entity.state === 'on') {
+          let time = c => {
+              let s = (c/1e3),
+                  m = (c/6e4),
+                  h = (c/36e5),
+                  d = (c/864e5);
+              return s < 60
+                  ? parseInt(s) + 's'
+                  : m < 60 ? parseInt(m) + 'm'
+                  : h < 24 ? parseInt(h) + 'h'
+                  : parseInt(d) + 'd';
+          };
+          let last_changed = states[variables.retain] == null || states[variables.retain].state == 'unavailable'
+                ? time(Date.now() - Date.parse(states[entity.entity_id].last_changed))
+                : time(Date.now() - Date.parse(states[variables.retain].state)),
+              stroke = variables.state === 'open' || variables.state === 'on' ? '#b2b2b2' : 'none',
+              fill = variables.state === 'closed' || variables.state === 'off' ? 'rgba(255,255,255,0.04)' : 'none';
+
+        return `
+          <svg viewBox="0 0 50 50">
+            <circle cx="25" cy="25" r="20.5" stroke="${stroke}" stroke-width="2.5" fill="${fill}" />
+            <text x="50%" y="54%" fill="#8d8e90" font-size="14" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle">${last_changed}</text>
+          </svg>
+        `;
+        }
+      ]]]

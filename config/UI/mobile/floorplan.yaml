@@ -1,0 +1,45 @@
+type: custom:grid-layout
+icon: mdi:view-dashboard
+theme: tablet
+path: floorplan
+layout:
+  default:
+  margin: 0
+  grid-gap: 1.8vw
+  grid-template-columns: 0 1fr 1fr 0
+  grid-template-rows: fit-content(100%)
+  grid-template-areas: |
+    ". floorplan   floorplan  ."
+
+#################################################
+#                                               #
+#                    DASHBOARD                  #
+#                                               #
+#################################################
+
+cards:
+  #################################################
+  #                                               #
+  #           FLOORPLAN PORTRAIT                  #
+  #                                               #
+  #################################################
+  - type: horizontal-stack
+    view_layout:
+      grid-area: floorplan
+    cards:
+      - type: custom:floorplan-card
+        # full_height: true
+        style: |
+          ha-card {
+            margin: 0 !important;
+            padding: 0 14vw;
+          }
+        config:
+          image: /local/hafloor/plan_opt.svg
+          stylesheet: /local/hafloor/style.css
+          defaults:
+            hover_action: false
+            tap_action: false
+          # log_level: info
+          # console_log_level: info
+          rules: !include_dir_merge_list /config/UI/floorplan/

@@ -1,0 +1,42 @@
+type: custom:grid-layout
+icon: mdi:chart-box
+theme: tablet
+path: system
+layout:
+  default:
+  margin: 0
+  grid-gap: 0% 1.3%
+  grid-template-columns: 0 1fr 1fr 1fr 1fr 1fr 1fr 0
+  grid-template-rows: 8px min-content fit-content(100%) fit-content(100%) fit-content(100%) 0fr
+  grid-template-areas: |
+    ". .         .          .         .        .          .          ."
+    ". chips     chips      chips     chips    .          .          ."
+    ". cc        cc         cc        cc       c2         c2         ."
+    ". cc        cc         cc        cc       c2         c2         ."
+    ". footer    footer     footer    footer   nowplaying nowplaying ."
+    ". .         .          .         .        .          .          ."
+  mediaquery:
+    # phone
+    '(max-width: 800px)':
+      # grid-gap: calc(var(--custom-layout-card-padding) * 1.7)
+      grid-gap: 1.8vw
+      margin: 0
+      # grid-template-columns: 0 repeat(2, 1fr) 0
+      grid-template-columns: 0 1fr 1fr 0
+      grid-template-rows: 0 min-content min-content 1fr fit-content(100%)fit-content(100%) 0fr
+      grid-template-areas: |
+        ". .           .         ."
+        ". header      weather   ."
+        ". chips       chips     ."
+        ". cc          cc        ."
+        ". c2          c2        ."
+        ". footer      footer    ."
+        ". nav         nav       ."
+
+#################################################
+#                                               #
+#                    DASHBOARD                  #
+#                                               #
+#################################################
+
+cards: !include_dir_merge_list system-grid/

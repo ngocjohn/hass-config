@@ -1,0 +1,35 @@
+#################################################
+#                                               #
+#                    ROOMS 2                    #
+#                                               #
+#################################################
+
+- type: grid
+  title: Rooms
+  view_layout:
+    grid-area: other
+  columns: 2
+  cards:
+    # SHOWER ROOM
+    - type: custom:decluttering-card
+      template: grid_shower
+
+    # BATHROOM
+    - type: custom:decluttering-card
+      template: grid_bathroom
+
+    # UTILITY NORMAL
+    - type: custom:decluttering-card
+      template: grid_utility_normal
+
+    # UTILITY VACUUM
+    - type: custom:decluttering-card
+      template: grid_utility_vacuum
+
+    # UTILITY VACUUM
+    - type: custom:decluttering-card
+      template: grid_utility_washing
+
+    # HALLWAY
+    - type: custom:decluttering-card
+      template: grid_hallway

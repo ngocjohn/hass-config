@@ -1,0 +1,55 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Lights
+    style: >
+      --popup-min-width: 800px;
+      --tablet-popup-header-color: rgba(0, 0, 0, 0) !important;
+      --popup-background-color: rgba(0, 0, 0, 0);
+      --popup-border-width: 0;
+    card_mod:
+      style:
+        .: |
+
+    content:
+      type: custom:auto-entities
+      filter:
+        include:
+          - entity_id: group.light_all
+            state: 'on'
+            options:
+              type: custom:mushroom-light-card
+              show_brightness_control: true
+              secondary_info: none
+              layout: horizontal
+              tap_action:
+                action: toggle
+              use_light_color: true
+
+          - group: group.light_all
+            state: 'on'
+            options:
+              type: custom:mushroom-light-card
+              layout: horizontal
+              secondary_info: last-changed
+              tap_action:
+                action: toggle
+          - group: group.light_all
+            state: 'off'
+            options:
+              type: custom:mushroom-light-card
+              layout: horizontal
+              secondary_info: last-changed
+              tap_action:
+                action: toggle
+        exclude: []
+      card:
+        type: custom:layout-card
+        cards: []
+        layout_type: custom:masonry-layout
+        layout:
+          width: 250
+          max_cols: 4
+      sort:
+        method: name

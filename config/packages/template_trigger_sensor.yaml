@@ -1,0 +1,34 @@
+template:
+  - trigger:
+      - platform: time_pattern
+        hours: /1
+    action:
+      - service: weather.get_forecast
+        data:
+          type: hourly
+        target:
+          entity_id: weather.prague_smichov
+        response_variable: hourly
+    sensor:
+      - name: Weather Smichov Forecast Hourly
+        unique_id: weather_smichov_forecast_hourly
+        state: '{{ now().isoformat() }}'
+        attributes:
+          forecast: '{{ hourly.forecast }}'
+  - trigger:
+      - platform: time_pattern
+        hours: /1
+    action:
+      - service: weather.get_forecast
+        data:
+          type: daily
+        target:
+          entity_id: weather.prague_smichov
+        response_variable: daily
+    sensor:
+      - name: Weather Smichov Forecast Daily
+        unique_id: weather_smichov_forecast_daily
+        state: '{{ today_at().isoformat() }}'
+        attributes:
+          forecast: '{{ daily.forecast }}'
+ 

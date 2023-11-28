@@ -1,0 +1,206 @@
+type: custom:grid-layout
+icon: mdi:view-dashboard
+theme: tablet
+path: office
+layout:
+  default:
+  margin: 0
+  grid-gap: 1.8vw
+  grid-template-columns: 0 1fr 1fr 0
+  grid-template-rows: fit-content(100%)
+  grid-template-areas: |
+    ". sidebar   office  ."
+
+#################################################
+#                                               #
+#                    DASHBOARD                  #
+#                                               #
+#################################################
+
+cards:
+  #################################################
+  #                                               #
+  #                     Office                    #
+  #                                               #
+  #################################################
+  - type: grid
+    title: Office
+    view_layout:
+      grid-area: office
+    columns: 2
+    cards:
+      # OFFICE
+      - type: custom:decluttering-card
+        template: grid_office
+
+      # MacBook
+      - type: custom:button-card
+        entity: switch.macbook
+        name: MacBook
+        template:
+          - base
+          - loader
+          - icon_imac
+        lock:
+          enabled: >
+            [[[ return entity.state === "on"; ]]]
+          duration: 5
+          unlock: hold
+        styles:
+          lock:
+            - color: >
+                [[[
+                  return variables.state_on
+                      ? '#4b5254'
+                      : '#97989c';
+                ]]]
+      # BRMA
+      - type: custom:button-card
+        entity: input_boolean.brma
+        template:
+          - base
+          - icon_brma
+
+      # Sensors
+      - type: custom:decluttering-card
+        template: grid_motion_sensors
+
+  # - type: vertical-stack
+  #   view_layout:
+  #     grid-area: sidebar
+  #   cards:
+  #     - type: custom:button-card
+  #       entity: sensor.template_sidebar
+  #       template:
+  #         - timesidebar
+  #################################################
+  #                                               #
+  #                     MEDIA                     #
+  #                                               #
+  #################################################
+
+  - type: grid
+    title: 'Neklanka'
+    view_layout:
+      grid-area: sidebar
+    columns: 1
+    cards:
+      #Conditional Media
+      - type: custom:swipe-card
+        start_card: 1
+        parameters:
+          pagination:
+            type: bullets
+            clickable: true
+          direction: horizontal
+          roundLengths: true
+          effect: coverflow
+          speed: 650
+          spaceBetween: 20
+          threshold: 7
+          coverflowEffect:
+            rotate: 80
+            depth: 300
+          observer: true
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: conditional
+                conditions:
+                  - entity: select.conditional_media
+                    state: Recently added
+                card:
+                  type: custom:button-card
+                  entity: sensor.template_sidebar
+                  template:
+                    - timesidebar
+              - type: conditional
+                conditions:
+                  - entity: select.conditional_media
+                    state: Living Room TV
+                card:
+                  type: custom:button-card
+                  entity: media_player.living_room_tv
+                  name: Apple TV
+                  triggers_update: sensor.youtube_watching
+                  template:
+                    - conditional_media
+                    - icon_apple_tv
+                    - progress_bar
+
+              - type: conditional
+                conditions:
+                  - entity: select.conditional_media
+                    state: Bedroom TV
+                card:
+                  type: custom:button-card
+                  entity: media_player.shieldtv_kodi
+                  name: Shield TV
+                  triggers_update: sensor.shieldtv_youtube_watching
+                  template:
+                    - conditional_media
+                    - icon_shieldtv_text
+                    - progress_bar
+
+              - type: conditional
+                conditions:
+                  - entity: select.conditional_media
+                    state: Spotify
+                card:
+                  type: custom:button-card
+                  entity: media_player.spotify
+                  name: ' '
+                  double_tap_action: !include ../popup/spotify_playlist.yaml
+                  template:
+                    - currently_playing
+                    # - conditional_media
+
+              # - type: conditional
+              #   conditions:
+              #     - entity: select.conditional_media
+              #       state: Trakt Upcoming Shows
+              #   card:
+              #     type: custom:button-card
+              #     entity: sensor.trakt_next_to_watch_only_upcoming
+              #     triggers_update: sensor.trakt_next_to_watch_only_upcoming
+              #     template:
+              #       - conditional_media_shows
+              #     tap_action:
+              #       action: call-service
+              #       service: input_boolean.toggle
+              #       service_data:
+              #         entity_id: input_boolean.upcoming_shows
+
+              - type: conditional
+                conditions:
+                  - entity: select.conditional_media
+                    state: PS5 Activity
+                card:
+                  type: custom:button-card
+                  entity: sensor.ps5_activity
+                  template:
+                    - conditional_media
+                    - icon_playstation
+
+              - type: conditional
+                conditions:
+                  - entity: select.conditional_media
+                    state: Homepod MASS
+                card:
+                  type: custom:button-card
+                  entity: media_player.homepod_mass
+                  name: ' '
+                  double_tap_action:
+                    action: fire-dom-event
+                    browser_mod:
+                      service: browser_mod.popup
+                      data:
+                        title: 'MASS'
+                        size: wide
+                        content:
+                          type: iframe
+                          # aspect_ratio: '100%'
+                          url: /api/hassio_ingress/vY3Npsvoa2MxygW4H78Jr2ZEpMXsTJtX8DuZsXbT6mE/#/home
+                  template:
+                    - currently_playing
+                    # - conditional_media

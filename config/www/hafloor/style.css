@@ -1,0 +1,257 @@
+@keyframes fade-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+@keyframes fadeOut {
+	0% {
+		opacity: 1;
+	}
+	99% {
+		opacity: 0.01;
+		width: 100%;
+		height: 100%;
+	}
+	100% {
+		opacity: 0;
+		width: 0;
+		height: 0;
+	}
+}
+@keyframes flickerAnimation {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+@keyframes rainbow {
+	0% {
+		stroke-dashoffset: 0;
+		stroke: red;
+	}
+	16% {
+		stroke: orange;
+	}
+	32% {
+		stroke: yellow;
+	}
+	48% {
+		stroke: green;
+	}
+	64% {
+		stroke: blue;
+	}
+	80% {
+		stroke: indigo;
+	}
+	100% {
+		stroke: violet;
+		stroke-dashoffset: -800; /* Should be the total length of the path */
+	}
+}
+@keyframes active-pulse {
+	0% {
+		filter: unset;
+		stroke-opacity: 1;
+		stroke-width: 1px;
+	}
+	15% {
+		stroke-opacity: 1;
+	}
+	100% {
+		filter: unset;
+		stroke-opacity: 0;
+		stroke-width: 15px;
+	}
+}
+@keyframes coverClosing {
+	0% {
+		opacity: 0;
+		transform: scaleY(0.5);
+	}
+	100% {
+		transform: scaleY(1);
+		fill: #000000;
+		fill-opacity: 0.6;
+	}
+}
+svg,
+svg * {
+	pointer-events: all !important;
+	cursor: auto;
+}
+
+svg path {
+	fill: inherit;
+	stroke: inherit;
+	stroke-width: inherit;
+}
+g#cover,
+g#doors,
+g#motions {
+	fill: none;
+	stroke: none;
+}
+
+#motions .motion-on {
+	fill: #4caf50;
+	filter: blur(1px);
+	animation: fade-in 1s infinite alternate;
+}
+
+g#temphumid.temphumid-off {
+	display: none;
+}
+
+#light-overlays image {
+	display: none;
+	/* transform: translate3d(0, 0, 0);
+	mix-blend-mode: lighten; */
+	animation: 0.75s fade-in linear forwards;
+}
+
+#light-overlays image.light-on {
+	display: block;
+	/* transform: translate3d(0, 0, 0); */
+	/* mix-blend-mode: lighten; */
+}
+
+#areas path {
+	fill: none;
+	cursor: grab;
+}
+
+#areas .light-on {
+	stroke-width: 3px;
+	stroke-opacity: 0.6;
+	stroke: #8eb2e1;
+}
+
+#areas .motion-on {
+	fill: #ff00002e;
+	stroke: #ff000087;
+	stroke-width: 3px;
+	stroke-opacity: 1;
+	filter: unset;
+	animation: fade-in 1s infinite alternate;
+}
+
+g path:active,
+g use:active,
+.light-on:active,
+g#entities > g:active path:not(.touch-area) {
+	stroke: #9ed8ff99 !important;
+	stroke-width: 4px;
+	stroke-opacity: 0.7;
+}
+
+/* g#entities path,
+g#entities ellipse {
+	stroke: var(--paper-item-icon-color);
+	stroke-width: 1px;
+	stroke-opacity: 1;
+	fill: none;
+} */
+
+/* g#entities .light-on {
+	stroke: var(--paper-item-icon-active-color);
+} */
+#tv_overlays image.media-player-tv.media-player-idle,
+#tv_overlays image.media-player-tv.media-player-standby,
+#tv_overlays image.media-player-tv.media-player-paused {
+	display: block;
+	mix-blend-mode: normal;
+	animation: 2s fade-in both;
+}
+
+#tv_overlays image,
+#tv_overlays image.media-player-tv.media-player-playing {
+	display: none;
+	cursor: pointer !important;
+}
+g#icons path#icon-front-door,
+g#entities path#media_player\.living_room_tv,
+g#entities path#media_player\.bedroom_tv {
+	cursor: context-menu !important;
+}
+g#icons g#icon-phone-rotate {
+	cursor: pointer !important;
+}
+
+g#entities .media-player-tv.media-player-idle,
+g#entities .media-player-tv.media-player-standby,
+g#entities .media-player-tv.media-player-paused {
+	fill: #2196f3;
+	stroke: #212121;
+	stroke-width: 3px;
+	stroke-opacity: 1;
+}
+
+g#entities .media-player-tv.living-idle,
+g#entities .media-player-tv.living-standby,
+g#entities .media-player-tv.living-paused {
+	/* fill: #2196f3; */
+	stroke: #212121;
+	stroke-width: 3px;
+	stroke-opacity: 1;
+}
+g#entities .media-player-tv.living-playing,
+g#entities .media-player-tv.media-player-playing {
+	stroke: #9c27b0;
+	animation: 2s rainbow infinite;
+	filter: blur(2px);
+}
+#entities path {
+	fill: none;
+	stroke-opacity: 0;
+}
+
+#doors .door-on {
+	fill: #ff00002e;
+	stroke: #ff000087;
+	stroke-width: 3px;
+	stroke-opacity: 1;
+	filter: unset;
+	animation: fade-in 1s infinite alternate;
+}
+
+#doors .door-locked {
+	stroke: #ff0000;
+	stroke-width: 2px;
+	stroke-opacity: 0.3;
+	filter: sepia(1);
+}
+g#cover path:hover {
+	cursor: move !important;
+}
+#cover .cover-closed {
+	fill: #000000;
+	fill-opacity: 0.6;
+}
+#cover .cover-closing {
+	animation: coverClosing 10s;
+	transform-origin: 50% 50%;
+	animation-fill-mode: forwards;
+}
+
+.cover-closed:hover,
+g#cover > g:hover path:not(.touch-area) {
+	stroke: #a37e79 !important;
+	stroke-width: 4px;
+	stroke-opacity: 0.3;
+}
+
+.light-off:hover,
+g#areas > g:hover path:not(.touch-area) {
+	stroke: #e1e1e126 !important;
+	stroke-width: 4px !important;
+	stroke-opacity: 1;
+}

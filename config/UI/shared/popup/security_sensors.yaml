@@ -1,0 +1,109 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Sensors
+    style: >
+      --popup-max-width: calc(450px + 450px);
+    card_mod:
+      style:
+        layout-card:
+          $grid-layout$:
+            # card divider border
+            .: |
+              #root > * {
+                margin: 0px !important;
+              }
+            hui-entities-card:
+              $: |
+                ha-card {
+                  border-right: 0.1vw solid rgba(58, 69, 73, 0.2);
+                  border-radius: 0;
+                  transition: none;
+                }
+                /* portrait */
+                @media screen and (max-width: 1400px) {
+                  ha-card {
+                    border-right: none;
+                    border-bottom: 0.1vw solid rgba(58, 69, 73, 0.2);
+                  }
+                }
+    content:
+      type: custom:layout-card
+      layout_type: custom:grid-layout
+      layout:
+        margin: 0
+        grid-template-columns: 0 430px 430px 0
+        grid-template-rows: 1fr
+        grid-template-areas: |
+          ". motion contact ."
+        mediaquery:
+          #portrait
+          '(max-width: 1200px)':
+            grid-template-columns: 1fr
+            grid-template-rows: repeat(2, fit-content(100%))
+            grid-template-areas: |
+              "motion"
+              "contact"
+      cards:
+        - type: entities
+          view_layout:
+            grid-area: motion
+          title: Motion
+          show_header_toggle: false
+          card_mod:
+            class: header
+          entities:
+            - type: custom:auto-entities
+              filter:
+                include:
+                  - group: group.motion_sensors
+                    options:
+                      type: custom:mushroom-entity-card
+                      layout: horizontal
+                      secondary_info: last-changed
+                      card_mod:
+                        style: |
+                          ha-card {
+                            padding: 1% 0 !important;
+                          }
+                exclude: []
+              sort:
+                method: last_changed
+                reverse: true
+              card:
+                type: custom:layout-card
+                cards: []
+                layout_type: masonry
+
+        - type: entities
+          view_layout:
+            grid-area: contact
+          title: Contact
+          show_header_toggle: false
+          card_mod:
+            class: header
+            style: |
+              ha-card {
+                border: none !important;
+              }
+
+          entities:
+            - type: custom:auto-entities
+              filter:
+                include:
+                  - group: group.contact_sensors
+                    options:
+                      type: custom:mushroom-entity-card
+                      layout: horizontal
+                      secondary_info: last-changed
+                      card_mod:
+                        style: |
+                          ha-card {
+                            padding: 1% 0 !important;
+                          }
+                exclude: []
+              card:
+                type: custom:layout-card
+                cards: []
+                layout_type: masonry

@@ -1,0 +1,91 @@
+action: fire-dom-event
+browser_mod:
+  command: popup
+  title: Sensors
+  style:
+    .: |
+      :host .main-title {
+        pointer-events: none;
+      }
+    hui-grid-card:
+      $: |
+        #root {
+          grid-gap: 0 !important;
+          padding: var(--card-content-padding);
+        }
+  card:
+    type: grid
+    columns: 1
+    square: false
+    cards:
+      # CONTACT SENSORS
+      - type: custom:button-card
+        entity: group.contact_sensors
+        template: contact_sensors
+
+      - type: entities
+        state_color: true
+        show_header_toggle: false
+        card_mod:
+          class: content
+        entities:
+          - entity: binary_sensor.contact_sensor_entrance_door
+            icon: custom:entrance-door-closed
+            name: Entrance door
+            secondary_info: last-changed
+
+          - entity: binary_sensor.contact_sensor_terrace_door
+            icon: phu:panel-door-close
+            name: Terrace door
+            secondary_info: last-changed
+
+          - entity: binary_sensor.contact_sensor_garden_door
+            icon: custom:terrace-door
+            name: Garden door
+            secondary_info: last-changed
+
+      # MOTION SENSORS
+      - type: custom:button-card
+        entity: group.motion_sensors
+        template: motion_sensors
+
+      - type: entities
+        state_color: true
+        show_header_toggle: false
+        card_mod:
+          class: content
+        entities:
+          - entity: binary_sensor.motion_sensor_entrance
+            icon: phu:rooms-hallway
+            name: Hallway
+            secondary_info: last-changed
+
+          - entity: binary_sensor.motion_sensor_kitchen
+            icon: custom:dining-room
+            name: Kitchen
+            secondary_info: last-changed
+
+          - entity: binary_sensor.motion_sensor_bedroom
+            icon: phu:rooms-bedroom
+            name: Bedroom
+            secondary_info: last-changed
+
+          - entity: binary_sensor.motion_sensor_utility
+            icon: phu:rooms-storage
+            name: Utility room
+            secondary_info: last-changed
+
+          # - entity: binary_sensor.motion_sensor_kids_room
+          #   icon: phu:rooms-kids-bedroom
+          #   name: Kids Room
+          #   secondary_info: last-changed
+
+          - entity: binary_sensor.motion_sensor_bathroom
+            icon: phu:rooms-bathroom
+            name: Bathroom
+            secondary_info: last-changed
+
+          - entity: binary_sensor.motion_sensor_shower_room
+            icon: custom:toilet-closed
+            name: Shower Room
+            secondary_info: last-changed

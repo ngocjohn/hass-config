@@ -1,0 +1,202 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Network
+    style: >
+      --popup-max-width: calc(450px + 450px);
+    card_mod:
+      style:
+        .: |
+
+        layout-card:
+          $grid-layout$:
+            # card divider border
+            .: |
+              #root > * {
+                margin: 0px !important;
+              }
+              @media (max-width: 450px), (max-height: 500px) {
+                #root {
+                  display: block !important;
+                }
+              }
+            hui-entities-card:
+              $: |
+                ha-card {
+                  border-right: 0.1vw solid rgba(58, 69, 73, 0.2);
+                  border-radius: 0;
+                  transition: none;
+                }
+                /* portrait */
+                @media screen and (max-width: 800px) {
+                  ha-card {
+                    border-right: none;
+                    border-bottom: 0.1vw solid rgba(58, 69, 73, 0.2);
+                  }
+                }
+              $hui-horizontal-stack-card:
+                # horizontal bottom buttons
+                $: |
+                  #root {
+                    justify-content: space-evenly;
+                    margin-top: 1.7em;
+                  }
+    content:
+      type: custom:layout-card
+      layout_type: custom:grid-layout
+      layout:
+        margin: 0
+        grid-template-columns: 450px 450px
+        grid-template-areas: |
+          "router ap"
+        mediaquery:
+          #portrait
+          '(max-width: 1200px)':
+            grid-template-columns: 1fr
+            grid-template-rows: fit-content(100%)
+            grid-template-areas: |
+              "router"
+              "ap"
+      cards:
+        #################################################
+        #                                               #
+        #                UNIFI CONTROLLER               #
+        #                                               #
+        #################################################
+        - type: entities
+          view_layout:
+            grid-area: router
+          title: Router
+          show_header_toggle: false
+          card_mod:
+            class: header
+          entities:
+            - entity: binary_sensor.template_router_internet
+              name: WAN Status
+            # - entity: sensor.external_ip
+            # - entity: binary_sensor.template_unifi_upgradable
+            # - entity: binary_sensor.wifi_access_point
+            #   name: Status
+            - entity: sensor.template_ap_adopted
+            # - entity: sensor.template_ap_disconected
+            - type: custom:multiple-entity-row
+              entity: sensor.template_ap_clients
+              icon: mdi:devices
+              name: 'Total Clients'
+              show_state: false
+              secondary_info:
+                entity: sensor.template_network_clients
+              entities:
+                - entity: sensor.ngoc_giang_vanessa_2g
+                  name: 2.4GhZ
+                  unit: ' '
+                - entity: sensor.ngoc_giang_vanessa_5g
+                  name: 5GhZ
+                  unit: ' '
+                - entity: sensor.template_wired_clients
+                  name: Wired
+                  unit: ' '
+
+          footer:
+            type: custom:mini-graph-card
+            name: Speedtest
+            tap_action:
+              action: call-service
+              service: homeassistant.update_entity
+              service_data:
+                entity_id: sensor.speedtest_download
+            entities:
+              - entity: sensor.speedtest_download
+                name: Download
+                color: '#00bb33'
+              - entity: sensor.speedtest_upload
+                name: Upload
+                show_state: false
+                color: '#2196f3'
+                y_axis: secondary
+            hours_to_show: 48
+            hour24: true
+            line_width: 3
+            animate: true
+            upper_bound_secondary: 100
+            show:
+              name: True
+              icon: false
+              state: true
+              legend: true
+              fill: fade
+              labels: true
+              labels_secondary: false
+              average: true
+              extrema: true
+              points: hover
+            card_mod:
+              style: |
+                .info__item__time {
+                  display: none !important;
+                }
+
+        #################################################
+        #                                               #
+        #                UNIFI ACCES POINT              #
+        #                                               #
+        #################################################
+        - type: entities
+          view_layout:
+            grid-area: ap
+          title: Access Points
+          show_header_toggle: false
+          card_mod:
+            class: header
+            style: |
+              ha-card {
+                border: none !important;
+              }
+          entities:
+            - type: custom:tabbed-card
+              styles: # global styles applied to all tabs
+                --mdc-theme-primary: 'rgba(250, 250, 250, 0.75)'
+                --mdc-tab-text-label-color-default: '#97989c'
+                --mdc-typography-button-font-size: 1em
+              tabs:
+                - !include ../../hidden/ap_office.yaml
+                - !include ../../hidden/ap_bedroom.yaml
+                - !include ../../hidden/ap_wall.yaml
+            - type: divider
+            - type: custom:hui-horizontal-stack-card
+              cards:
+                - type: custom:button-card
+                  name: Vodafone
+                  icon: mdi:router-wireless
+                  tap_action:
+                    action: url
+                    url_path: !secret router_url
+                  template: icon_name
+
+                - type: custom:button-card
+                  name: Unifi
+                  icon: phu:ubiquiti-logo
+                  template:
+                    - icon_name
+                    - >
+                      [[[
+                        return window.navigator.userAgent.match(/iPhone/i)
+                          ? 'unifi_ios'
+                          : 'unifi_web';
+                      ]]]
+                - type: custom:button-card
+                  name: ZigBee
+                  icon: si:zigbee
+                  tap_action:
+                    action: fire-dom-event
+                    browser_mod:
+                      service: browser_mod.popup
+                      data:
+                        title: 'ZigBee map'
+                        size: fullscreen
+                        content:
+                          type: iframe
+                          url: /api/hassio_ingress/Ew2YSafnnerR2_NXuuOG-3KWDZvnNgFBSfdzoUmcR_Y/#/map
+                  template:
+                    - icon_name

@@ -1,0 +1,111 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: >
+      [[[ return entity.attributes.friendly_name; ]]]
+    size: wide
+    style: >
+      --ha-card-border-radius: 0;
+    card_mod:
+      style:
+        layout-card:
+          $grid-layout$:
+            # card divider border
+            .: |
+              #root {
+                  margin: -24px 0 !important;
+              }
+            hui-horizontal-stack-card:
+              # horizontal bottom buttons
+              $: |
+                #root {
+                  justify-content: space-evenly !important;
+                  margin-bottom: 10px;
+                }
+
+    content:
+      type: custom:layout-card
+      layout_type: grid
+      layout:
+        grid-gap: 0.5vw
+        grid-template-columns: 2vw auto 2vw
+        grid-template-rows: 45vw
+        grid-template-areas: |
+          ". cam ."
+          ". button ."
+
+        mediaquery:
+          #phone
+          '(max-width: 800px)':
+            grid-gap: 0
+            grid-template-columns: auto
+            grid-template-rows: auto
+            grid-template-areas: |
+              "cam"
+              "button"
+
+          #tablet with 2000x1200 res
+          '(max-width: 1400px)':
+            grid-gap: 0.5vw
+            grid-template-columns: 2vw auto 2vw
+            grid-template-rows: 45vh
+            grid-template-areas: |
+              ". cam ."
+              ". button ."
+
+      cards:
+        - type: picture-entity
+          entity: >
+            [[[ return variables.entity_id;]]]
+          image: >
+            [[[ return variables.entity_picture ]]]
+          show_info: true
+          show_state: true
+          show_name: false
+          camera_view: live
+          tap_action:
+            action: call-service
+            service: homeassistant.update_entity
+            target:
+              entity_id: >
+                [[[
+                  return variables.entity_id;
+                ]]]
+          view_layout:
+            grid-area: cam
+
+        - type: horizontal-stack
+          view_layout:
+            grid-area: button
+          cards:
+            - type: custom:button-card
+              name: Reload
+              icon: mdi:reload
+              tap_action:
+                action: call-service
+                service: homeassistant.update_entity
+                service_data:
+                  entity_id: >
+                    [[[
+                      return variables.entity_id;
+                    ]]]
+              template: icon_name
+
+            - type: custom:button-card
+              name: ON / OFF
+              icon: mdi:power
+              tap_action:
+                action: call-service
+                service: >
+                  [[[
+                    return variables.state === 'streaming'
+                      ? 'camera.turn_off'
+                      : 'camera.turn_on';
+                  ]]]
+                service_data:
+                  entity_id: >
+                    [[[
+                      return variables.entity_id;
+                    ]]]
+              template: icon_name

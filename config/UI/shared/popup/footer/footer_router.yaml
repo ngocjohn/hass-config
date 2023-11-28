@@ -1,0 +1,79 @@
+update_entities:
+  action: >
+    [[[
+      hass.callService('homeassistant', 'update_entity', {
+          entity_id: [
+            'binary_sensor.template_internet'
+          ]
+      });
+    ]]]
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Unifi Network
+    card_mod:
+      style:
+        #popup header
+        .:
+    content:
+      type: vertical-stack
+      cards:
+        - type: entities
+          state_color: true
+          card_mod:
+            class: content
+          entities:
+            - entity: binary_sensor.template_internet
+              secondary_info: last-changed
+
+            - entity: sensor.template_udm_cpu_temp
+              name: CPU Temperatur
+
+            # - type: custom:bar-card
+            #   width: 55%
+            #   height: 2em
+            #   decimal: 0
+            #   unit_of_measurement: '%'
+            #   positions:
+            #     icon: outside
+            #     indicator: 'off'
+            #     name: outside
+            #   severity:
+            #     - color: '#6d2525'
+            #       from: 90
+            #       to: 999
+            #   entity_row: true
+            #   entities:
+            #     - entity: sensor.template_udm_cpu
+            #     - entity: sensor.template_udm_mem
+            #     - entity: sensor.template_udm_disk
+
+            - entity: sensor.template_udm_uptime
+
+        - type: custom:mod-card
+          card_mod:
+            style:
+              hui-horizontal-stack-card$: |
+                #root {
+                  justify-content: space-evenly !important;
+                  padding: var(--tablet-popup-button-padding);
+                }
+          card:
+            type: horizontal-stack
+            cards:
+              - type: custom:button-card
+                name: Nätverksenheter
+                icon: mdi:devices
+                tap_action:
+                  action: url
+                  url_path: https://192.168.1.1/network/default/clients
+                template: icon_name
+
+              - type: custom:button-card
+                name: System
+                icon: mdi:cog
+                tap_action:
+                  action: url
+                  url_path: https://192.168.1.1/settings/system
+                template: icon_name

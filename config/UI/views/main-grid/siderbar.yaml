@@ -1,0 +1,99 @@
+#################################################
+#                                               #
+#                    SIDEBAR                    #
+#                                               #
+#################################################
+- type: vertical-stack
+  title: ' '
+  view_layout:
+    grid-area: sidebar
+    show:
+      mediaquery: '(min-width: 801px) and (max-width: 1440px)'
+  cards:
+    - type: custom:button-card
+      entity: sensor.template_sidebar
+      template:
+        - timesidebar
+# iphone sidebar #
+
+# - type: custom:button-card
+#   view_layout:
+#     grid-area: sidebar
+#     show:
+#       mediaquery: '(pointer: coarse)'
+#   entity: sensor.template_sidebar
+#   template:
+#     - timesidebar
+
+# - type: 'custom:layout-card'
+#   layout_type: 'custom:grid-layout'
+#   view_layout:
+#     grid-area: sidebar
+#     show:
+#       mediaquery: '(max-width: 800px)'
+#   layout:
+#     grid-template-columns: 100%
+#     grid-template-rows: auto
+#   cards:
+#     - type: custom:button-card
+#       entity: sensor.template_sidebar_time
+#       template:
+#         - timeclock
+# - type: horizontal-stack
+#   view_layout:
+#     grid-area: buttons
+#     place-self: center
+#     show:
+#       mediaquery: '(max-width: 800px)'
+#   cards:
+#     - type: custom:button-card
+#       entity: sensor.lights_count
+#       name: <ha-icon icon="custom:ios-bulb"></ha-icon>
+#       tap_action: !include /config/ui/popup/all_lights.yaml
+#       template: footer
+#       variables: &notify
+#         notify: >
+#           [[[
+#             return parseInt(entity?.state);
+#           ]]]
+#       styles: &styles
+#         card:
+#           - color: >
+#               [[[
+#                 return variables.notify
+#                   ? '#b68349'
+#                   : '#97989c';
+#               ]]]
+#           - background-color: >
+#               [[[
+#                 return variables.notify
+#                   ? '#ff81812e'
+#                   : null;
+#               ]]]
+#     - type: custom:button-card
+#       entity: sensor.covers_open_count
+#       name: <ha-icon icon="custom:ios-blinds"></ha-icon>
+#       tap_action: !include /config/ui/popup/all_covers.yaml
+#       template: footer
+#       variables: *notify
+#       styles: *styles
+
+#     - type: custom:button-card
+#       name: >
+#         <ha-icon icon="custom:tvhifi"></ha-icon>
+#       entity: media_player.currently_playing
+#       tap_action: !include /config/ui/popup/currently_playing.yaml
+#       template: footer
+#       variables: *notify
+#       styles: *styles
+
+# - type: custom:button-card
+#   entity: vacuum.robot_vacuum
+#   icon: mdi:play-pause
+#   tap_action: !include /config/ui/popup/all_lights.yaml
+#   template: sidebar_icon_only
+# - type: custom:button-card
+#   entity: vacuum.robot_vacuum
+#   icon: mdi:play-pause
+#   tap_action: !include /config/ui/popup/all_lights.yaml
+#   template: sidebar_icon_only

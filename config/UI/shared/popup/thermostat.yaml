@@ -1,0 +1,93 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Thermostat
+    style: >
+      --popup-max-width: calc(470px + 470px);
+    card_mod:
+      style:
+        .: |
+          @media (max-width: 450px), (max-height: 500px) {
+            ha-dialog {
+              --mdc-dialog-min-width: 100vw !important;
+              --mdc-dialog-min-height: 100vh !important;
+              --popup-border-radius: 0 !important;
+            }
+          }
+        layout-card:
+          $grid-layout$:
+            # card divider border
+            .: |
+              #root > * {
+                margin: 0px !important;
+              }
+            hui-entities-card:
+              $: |
+                ha-card {
+                  border-right: 0.1vw solid rgba(58, 69, 73, 0.2);
+                  border-radius: 0;
+                  transition: none;
+                }
+                /* portrait */
+                @media screen and (max-width: 1400px) {
+                  ha-card {
+                    border-right: none;
+                    border-bottom: 0.1vw solid rgba(58, 69, 73, 0.2);
+                  }
+                }
+    content:
+      type: custom:layout-card
+      layout_type: custom:grid-layout
+      layout:
+        margin: 0
+        grid-template-columns: 450px 450px
+        grid-template-areas: |
+          "leva prava"
+        mediaquery:
+          #portrait
+          '(max-width: 1200px)':
+            grid-template-columns: 1fr
+            grid-template-rows: repeat(2, fit-content(100%))
+            grid-template-areas: |
+              "leva"
+              "prava"
+
+      cards:
+        - type: entities
+          view_layout:
+            grid-area: leva
+          entities:
+            - type: custom:better-thermostat-ui-card
+              entity: climate.living_room_thermostat
+              eco_temperature: 22
+              disable_summer: true
+              name: Living room
+              set_current_as_main: false
+            - type: custom:better-thermostat-ui-card
+              entity: climate.kids_room_thermostat
+              eco_temperature: 22
+              disable_summer: true
+              name: Kids Room
+        - type: entities
+          view_layout:
+            grid-area: prava
+          card_mod:
+            style: |
+              ha-card {
+                border: none !important;
+              }
+          entities:
+            - type: custom:better-thermostat-ui-card
+              entity: climate.bedroom_thermostat
+              disable_summer: true
+              eco_temperature: 22
+              name: Bedroom
+              set_current_as_main: false
+            - type: custom:better-thermostat-ui-card
+              entity: climate.office_thermostat
+              disable_window: true
+              disable_summer: true
+              eco_temperature: 22
+              set_current_as_main: false
+              name: Office

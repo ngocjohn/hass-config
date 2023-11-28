@@ -1,0 +1,40 @@
+# ################################################
+#                                               #
+#         DOORS                                 #
+#                                               #
+# ################################################
+
+- entities:
+    - binary_sensor.contact_sensor_bedroom_balcony
+    - binary_sensor.contact_sensor_kid_balcony
+    - binary_sensor.contact_sensor_garden_door
+    - binary_sensor.contact_sensor_terrace_door
+    - lock.nuki_neklanka_byt_lock
+  tap_action: false
+  hold_action: false
+  double_tap_action: false
+  state_action:
+    action: call-service
+    service: floorplan.class_set
+    service_data: 'door-${entity.state}'
+
+- element: icon-front-door
+  entity: lock.nuki_neklanka_byt_lock
+  tap_action: false
+  state_action:
+    action: call-service
+    service: floorplan.style_set
+    service_data:
+      style: |
+        >
+        if( entity.state !== "locked" )
+            return `
+              display: block;
+              fill: #bababa;
+              fill-opacity: 0.3;
+            `
+        return `
+          display: block;
+          fill: #bababa;
+          fill-opacity: 0.8;
+        `

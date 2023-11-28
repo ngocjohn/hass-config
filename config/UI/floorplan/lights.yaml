@@ -1,0 +1,116 @@
+#################################################
+#                                               #
+#         LIGHTS                                #
+#                                               #
+#################################################
+
+- elements:
+    - input_boolean.office_mode
+    - light.office_lamp_bulb
+    - area.office
+  double_tap_action: more-info
+  tap_action: toggle
+  hold_action: !include ../shared/honeycomb/office_mode.yaml
+
+- entity:
+    - light.bed_light
+  double_tap_action: more-info
+  tap_action: toggle
+  hold_action: !include ../shared/honeycomb/bedroom.yaml
+  state_action:
+    action: call-service
+    service: floorplan.style_set
+    service_data:
+      element: 'light_overlay.bed_light'
+      style: |
+        >
+        if( entity.state !== "on" )
+            return "display: none;";
+        return `
+          display: block;
+          transform: translate3d(0,0,0) !important;
+          mix-blend-mode: lighten;
+          filter: sepia(100%) hue-rotate(calc(-26deg)) saturate(calc(200%)) brightness(calc(0.4));
+          `
+
+- elements:
+    - area.utility
+  hold_action: !include ../shared/honeycomb/utitlity.yaml
+
+- entities:
+    - light.office_lamp_bulb
+    - light.bed_light
+    - light.bedroom_closet_light
+    - light.shower_room_mirror_light
+    - light.kitchen_table_light
+    - light.kitchen_main_light
+    - light.hallway_group
+    - light.utility_room_light
+    - light.vanesska_ceiling_light
+    - light.bathroom_group
+    - light.living_room_floor_lamp
+    - light.office_led_light_strip
+    - light.shelly_rgbw_kitchen_led_strip
+  state_action:
+    action: call-service
+    service: floorplan.class_set
+    service_data: 'light-${entity.state}'
+
+- entities:
+    - light.office_lamp_bulb
+    - light.bedroom_closet_light
+    - light.shower_room_mirror_light
+    - light.kitchen_table_light
+    - light.kitchen_main_light
+    - light.hallway_group
+    - light.utility_room_light
+    - light.vanesska_ceiling_light
+    - light.bathroom_group
+    - light.living_room_floor_lamp
+    - light.office_led_light_strip
+    - light.shelly_rgbw_kitchen_led_strip
+  tap_action: toggle
+  double_tap_action: more-info
+  state_action:
+    action: call-service
+    service: floorplan.style_set
+    service_data:
+      element: "${entity.entity_id.replace('light.', 'light_overlay.')}"
+      style: |
+        >
+        if( entity.state !== "on" )
+            return "display: none;";
+        let hue = 0;
+        let sat = 0;
+        if( entity.attributes.hs_color )
+        {
+            hue = entity.attributes.hs_color[0];
+            sat = entity.attributes.hs_color[1];
+        }
+        if( sat < 10 )
+        {
+          return `
+            display: block;
+            transform: translate3d(0,0,0) !important;
+            mix-blend-mode: lighten;
+            filter: brightness(calc( ${entity.attributes.brightness} / 255));
+            `
+        }
+        return `
+          display: block;
+          transform: translate3d(0,0,0) !important;
+          mix-blend-mode: lighten;
+          filter:
+            sepia(100%)
+            hue-rotate(calc( ${hue}deg - 55deg ))
+            saturate(calc( ${sat}% * 2 ))
+            brightness(calc( ${entity.attributes.brightness} / 255));
+          `
+- entities:
+    - light.kitchen_table_light
+    - light.kitchen_main_light
+  hold_action: !include ../shared/honeycomb/kitchen.yaml
+- entities:
+    - light.shelly_rgbw_kitchen_led_strip
+    - light.living_room_floor_lamp
+  hold_action: !include ../shared/honeycomb/living.yaml

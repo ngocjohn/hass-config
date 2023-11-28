@@ -1,0 +1,105 @@
+# RECORDER
+recorder:
+  auto_purge: true
+  purge_keep_days: 7
+  commit_interval: 60
+  exclude:
+    domains:
+      - alarm_control_panel
+      - group
+      - update
+      - button
+      - fan
+      - group
+      - number
+      - scene
+      - select
+      - sun
+      - weather
+      - media_player
+      - switch
+      - camera
+      - zone
+      - input_text
+      - input_boolean
+      - input_datetime
+    entity_globs:
+      - light.browser_*
+      - light.*_group
+      - binary_sensor.browser_*
+      - sensor.browser_*
+      - sensor.esp_*
+      - sensor.espresense_*
+      - sensor.*_rssi
+      - sensor.template_*
+      - sensor.*_last_seen
+      - sensor.macbook_*
+      - sensor.nuki_*
+      - sensor.*_motor_speed
+      - sensor.*_linkquality
+      - sensor.*_power
+      - sensor.*_voltage
+      - sensor.*_power_on_behavior
+      - sensor.*_device_temperature
+      - image.*_qr_code
+      - sensor.sun_*
+      - sensor.*_color
+      - sensor.added_*
+      - sensor.trakt_*
+      - sensor.curtain_*
+      - sensor.*_uptime
+      - sensor.office_lamp_*
+      - sensor.kuchyn_*
+      - sensor.unifi_*_activity
+    event_types:
+      - call_service
+    entities:
+      - sensor.unifi_status_wlan
+      - cover.curtain_4d3d
+      - script.fade_music
+      - sensor.unifi_status_lan
+      - sensor.home_climate
+      - light.sony_tv_backlight
+      - sensor.chromecast_devices
+      - sensor.template_sidebar
+      - sensor.zhimi_mb4_b008_moto_speed_rpm
+      - sensor.kitchen_main_light_energy
+      - sensor.time
+      - sensor.date
+      - sensor.playlists_sensor
+      - sensor.motion_detected
+      - sensor.lights_count
+      - sensor.arris_tg3442de_upload_speed
+      - sensor.arris_tg3442de_download_speed
+      - script.fade_volume
+      - light.office_lamp_bulb
+  include:
+    entities:
+      - device_tracker.findmy_d098350b38e241d3972ad394a27f38b6
+logger:
+  default: error
+  logs:
+    homeassistant.core: error
+    homeassistant.components.mqtt: warning
+    homeassistant.components.http: error
+    homeassistant.components.websocket_api: error
+    homeassistant.components.spotify: fatal
+    frontend.js.latest: fatal
+
+# TTS
+tts:
+  - platform: google_translate
+  - platform: google_cloud
+    key_file: google_stt.json
+
+  - platform: edge_tts
+    service_name: edge_eng_say
+    language: en-US-JennyNeural
+  - platform: edge_tts
+    service_name: edge_vietnam_say
+    language: vi-VN-HoaiMyNeural
+
+bluetooth:
+delete:
+sun:
+powercalc:

@@ -1,0 +1,62 @@
+# FAVICON
+favicon:
+  title: Neklanka
+  icon_path: /local/favicons/
+
+# sidebar_menu:
+
+panel_custom:
+  - name: ha_addons
+    sidebar_title: Add-ons
+    sidebar_icon: mdi:toy-brick-outline
+    js_url: /api/hassio/app/entrypoint.js
+    url_path: 'hassio/dashboard'
+    embed_iframe: true
+    require_admin: true
+    config:
+      ingress: core_configurator
+  - name: ha_automations
+    sidebar_title: Automations
+    sidebar_icon: mdi:robot
+    js_url: /api/hassio/app/entrypoint.js
+    url_path: 'config/automation'
+    embed_iframe: true
+    require_admin: true
+    config:
+      ingress: core_configurator
+  - name: ha_entities
+    sidebar_title: Entities
+    sidebar_icon: mdi:devices
+    js_url: /api/hassio/app/entrypoint.js
+    url_path: 'config/entities'
+    embed_iframe: true
+    require_admin: true
+    config:
+      ingress: core_configurator
+  - name: ha_helpers
+    sidebar_title: Helpers
+    sidebar_icon: mdi:toggle-switch-outline
+    js_url: /api/hassio/app/entrypoint.js
+    url_path: 'config/helpers'
+    embed_iframe: true
+    require_admin: true
+    config:
+      ingress: core_configurator
+  - name: ha_integrations
+    sidebar_title: Integrations
+    sidebar_icon: mdi:chip
+    js_url: /api/hassio/app/entrypoint.js
+    url_path: 'config/integrations'
+    embed_iframe: true
+    require_admin: true
+    config:
+      ingress: core_configurator
+  - name: ha_states
+    sidebar_title: States
+    sidebar_icon: mdi:details
+    js_url: /api/hassio/app/entrypoint.js
+    url_path: 'developer-tools/state'
+    embed_iframe: true
+    require_admin: true
+    config:
+      ingress: core_configurator

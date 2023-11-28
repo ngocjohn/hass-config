@@ -1,0 +1,50 @@
+type: sidebar
+theme: tablet
+icon: mdi:map
+subview: false
+path: map
+badges: []
+cards:
+  - type: map
+    view_layout:
+      position: main
+    entities:
+      - entity: device_tracker.findmy_d098350b38e241d3972ad394a27f38b6
+      - entity: person.viet_ngoc
+    hours_to_show: 24
+    default_zoom: 14
+    aspect_ratio: '1:2'
+    auto_fit: true
+  - type: custom:stack-in-card
+    style: |
+      :host {
+        position: sticky !important;
+        bottom: 26px;
+        animation: 1.2s position ease-in-out;
+        z-index: 4;
+        --paper-item-icon-color: #f5f5f5 !important;
+      }
+      @media screen and (min-width: 800px) {
+        :host {
+          display: none !important;
+        }
+      }
+      @keyframes position {
+        0% { bottom: -80px; }
+        20% { bottom: -80px; }
+        70% { bottom: 26px; }
+        90% { bottom: 24px; }
+        100% { bottom: 26px; }
+      }
+      ha-card {
+        margin-bottom: 0px !important;
+        border-radius: 34px !important;
+        background-color: #0000004d !important;
+        backdrop-filter: blur(50px) brightness(1.6);
+        -webkit-backdrop-filter: blur(50px) brightness(1.6);
+        -moz-backdrop-filter: blur(50px) brightness(1.6);
+        -o-backdrop-filter: blur(50px) brightness(1.6);
+        -ms-backdrop-filter: blur(50px) brightness(1.6);
+        box-shadow: 0px 2px 4px 0px #0000008c;
+      }
+    cards: !include ../shared/hidden/sticky_menu.yaml

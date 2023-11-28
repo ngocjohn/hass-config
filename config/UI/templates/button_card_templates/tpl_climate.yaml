@@ -1,0 +1,1240 @@
+#################################################
+#                                               #
+#                  CLIMATE                      #
+#                                               #
+#################################################
+
+climate_base:
+  show_icon: false
+  styles:
+    name:
+      - padding: 12px 13px
+      - font-size: 0.8em
+      - font-weight: 600
+    card:
+      - border-radius: 10px
+
+climate_fan_mode:
+  variables:
+    fan_mode: false
+  tap_action:
+    action: call-service
+    service: climate.set_fan_mode
+    service_data:
+      entity_id: >
+        [[[ return !entity || entity.entity_id; ]]]
+
+      fan_mode: >
+        [[[ return variables.fan_mode; ]]]
+
+  styles:
+    card:
+      - background-color: >
+          [[[
+            return !entity || entity.attributes.fan_mode === variables.fan_mode
+                ? "rgba(158, 158, 158, 0.2)"
+                : "rgba(189, 189, 189, 0.05)";
+          ]]]
+
+  template:
+    - climate_base
+
+climate_swing_mode:
+  tap_action:
+    action: call-service
+    service: climate.set_swing_mode
+    service_data:
+      entity_id: >
+        [[[ return !entity || entity.entity_id; ]]]
+
+      swing_mode: >
+        [[[
+          return !entity || entity.attributes.swing_mode === 'off'
+              ? 'on'
+              : 'off';
+        ]]]
+
+  styles:
+    card:
+      - background-color: >
+          [[[
+            return !entity || entity.attributes.swing_mode === "on"
+                ? "rgba(158, 158, 158, 0.2)"
+                : "rgba(189, 189, 189, 0.05)";
+          ]]]
+
+  template:
+    - climate_base
+
+#################################################
+#                                               #
+#            CLIMATE DEVICES                    #
+#                                               #
+#################################################
+
+airpurifier:
+  template:
+    - base
+  show_state: false
+  variables:
+    average_humid: ''
+    purifier_on: >
+      [[[
+        return ['yes'].indexOf(entity === undefined || entity.attributes.purifier) !==-1;
+      ]]]
+    entity_id: >
+      [[[ return !entity || entity.entity_id; ]]]
+
+  custom_fields:
+    humid: >
+      [[[ return '💧' + Math.round(entity.attributes.average_humidity)+'%'; ]]]
+    graph:
+      card:
+        type: 'custom:mini-graph-card'
+        entities:
+          - sensor.average_humidity
+        color_thresholds:
+          - value: 40
+            color: '#D35467'
+          - value: 50
+            color: '#68C9F0'
+          - value: 60
+            color: '#4D6DDC'
+        hours_to_show: 96
+        points_per_hour: 1
+        line_width: 7
+        show:
+          name: false
+          icon: false
+          state: false
+          label: false
+          legend: false
+          points: false
+          fill: fade
+          extrema: true
+          average: true
+        card_mod:
+          style: |
+            ha-card {
+              font-size: 0.5vw !important;
+              background: none !important;
+            }
+            @media (max-width: 1440px) {
+              ha-card {
+                font-size: 1vw !important;
+              }
+            }
+
+            ha-card[fill] .info {
+              padding-bottom: 0 !important;
+            }
+            .info {
+                opacity: 0.5 !important;
+            }
+
+            .info__item__time {
+                display: none !important;
+            }
+            .graph__labels {
+              top: -10% !important;
+            }
+            .graph__container__svg {
+              padding-bottom: 5px;
+            }
+            @media (max-width: 800px) {
+              div.info.flex {
+                display: none;
+              }
+            }
+  styles:
+    grid:
+      - grid-template-areas: |
+          "humid"
+          "n"
+          "graph"
+      - grid-template-columns: 1fr
+      - grid-template-rows: fit-content(100%) min-content 1fr
+      - gap: 0
+    card:
+      - color: rgba(255, 255, 255, 0.6)
+      - background: >
+          [[[
+            return variables.purifier_on
+              ? 'linear-gradient(to top, rgba(53,59,83,0.8) 0%, rgba(10,14,34,0.8) 100%)'
+              : 'rgba(115, 115, 115, 0.25)';
+          ]]]
+      - overflow: hidden
+      - padding: 10.9% 9.9% 8.9% 10.9%
+
+    custom_fields:
+      humid:
+        - place-self: flex-start
+        - font-family: Futura
+        - font-size: >
+            [[[
+              if (window.matchMedia('(max-width: 800px)').matches)
+                return '1.2em';
+              if (window.matchMedia('(max-width: 1500px)').matches)
+                return '3vw';
+              else return '1.6vw';
+            ]]]
+        - font-weight: 500
+        - letter-spacing: -1px
+        # - text-shadow: 0px 0px 5px rgb(18 22 23 / 25%)
+      graph:
+        - bottom: -40%
+        - left: '-15%'
+        - width: 130%
+        - position: absolute
+        - place-self: start
+        - overflow: hidden
+
+        # - opacity: 0.7
+        # - display: >
+        #     [[[
+        #       return window.navigator.userAgent.match(/iPhone/i)
+        #         ? 'none'
+        #         : 'initial';
+        #     ]]]
+
+thermostat:
+  template:
+    - base
+  show_state: false
+  variables:
+    thermostat_on: >
+      [[[
+        return ['yes'].indexOf(entity === undefined || entity.attributes.heating) !==-1;
+      ]]]
+    entity_id: >
+      [[[ return !entity || entity.entity_id; ]]]
+
+  custom_fields:
+    temp: >
+      [[[
+        return '🔥'+Math.round(entity.attributes.average_temperature).toFixed(1)+'°';
+      ]]]
+
+    # state: >
+    #   [[[
+    #     if (variables.thermostat_on) {
+    #         let num = entity.attributes.heating_on.length;
+    #         if (num == '1') {
+    #           return entity.attributes.heating_on;
+    #         }
+    #         else {
+    #           return num === '0'
+    #           ? 'Off'
+    #           : num + ' On';
+    #         }
+    #       }
+    #     return 'Off';
+    #   ]]]
+    graph:
+      card:
+        type: 'custom:mini-graph-card'
+        entities:
+          - sensor.average_temperature
+        color_thresholds:
+          - value: 20.5
+            color: '#f39c12'
+          - value: 23.5
+            color: '#fd3721'
+        hours_to_show: 96
+        points_per_hour: 0.5
+        line_width: 7
+        show:
+          name: false
+          icon: false
+          state: false
+          label: false
+          legend: false
+          points: false
+          fill: fade
+          extrema: true
+          average: true
+        card_mod:
+          style: |
+            ha-card {
+              font-size: 0.5vw !important;
+              background: none !important;
+            }
+            @media (max-width: 1440px) {
+              ha-card {
+                font-size: 1vw !important;
+              }
+            }
+
+            ha-card[fill] .info {
+              padding-bottom: 0 !important;
+            }
+            .info {
+              opacity: 0.5 !important;
+            }
+            .info__item__time {
+                display: none !important;
+            }
+            .graph__labels {
+              top: -10% !important;
+            }
+            @media (max-width: 800px) {
+              div.info.flex {
+                display: none;
+              }
+            }
+  styles:
+    grid:
+      - grid-template-areas: |
+          "temp"
+          "n"
+          "graph"
+      - grid-template-columns: 1fr
+      - grid-template-rows: fit-content(100%) min-content 1fr
+      - gap: 0
+    card:
+      - color: rgba(255, 255, 255, 0.6)
+      - background: linear-gradient(to top, rgba(53,59,83,0.8) 0%, rgba(10,14,34,0.8) 100%)
+      - overflow: hidden
+      - padding: 10.9% 9.9% 8.9% 10.9%
+
+    name:
+      - overflow: inherit
+    custom_fields:
+      temp:
+        - place-self: flex-start
+        - font-family: Futura
+        - font-size: >
+            [[[
+              if (window.matchMedia('(max-width: 800px)').matches)
+                return '1.2em';
+              if (window.matchMedia('(max-width: 1500px)').matches)
+                return '3vw';
+              else return '1.6vw';
+            ]]]
+        - font-weight: 500
+        - letter-spacing: '-1px'
+        # - text-shadow: 0px 0px 5px rgb(18 22 23 / 25%)
+        - color: >
+            [[[
+              return variables.thermostat_on
+                  ? '#FF9500'
+                  : '#3583b6';
+            ]]]
+      # state:
+      #   - justify-self: start
+      #   - line-height: 125%
+      #   - padding-bottom: 10%
+      #   - color: >
+      #       [[[
+      #         return variables.thermostat_on
+      #             ? '#97989c'
+      #             : '#4b5254';
+      #       ]]]
+      graph:
+        - bottom: -40%
+        - left: '-15%'
+        - width: 130%
+        - position: absolute
+        - place-self: start
+        # - opacity: 0.7
+        # - display: >
+        #     [[[
+        #       return window.navigator.userAgent.match(/iPhone/i)
+        #         ? 'none'
+        #         : 'initial';
+        #     ]]]
+
+  # extra_styles: |
+  #   @media screen and (max-width: 1440px) {
+  #     #temp {
+  #       font-size: 2.5em !important;
+
+  #     }
+  #   }
+
+radiator:
+  template:
+    - base
+    - circle
+  variables:
+    state: >
+      [[[
+        if (entity) {
+          return entity.attributes.hvac_action
+        }
+      ]]]
+    state_on: >
+      [[[
+        return ['heating'].indexOf(!entity || entity.attributes.hvac_action) !==-1;
+      ]]]
+
+    circle_input: >
+      [[[
+        if (entity) {
+            return entity.state === 'idle'
+                ? Math.round(entity.attributes.current_temperature).toString()
+                : entity.attributes.hvac_action === "heating"
+                  ? Math.round(entity.attributes.temperature).toString()
+                  : Math.round(entity.attributes.current_temperature).toString();
+        }
+      ]]]
+    # circle_input: >
+    #   [[[
+    #     return Math.round(entity.attributes.current_temperature).toString();
+    #   ]]]
+
+    circle_input_unit: '°C'
+  state_display: >
+    [[[ return variables.state === 'idle' || variables.state === 'heat' ? 'Inactive' : 'Heating'; ]]]
+  styles:
+    card:
+      # - background-color: >
+      #     [[[
+      #       return variables.state === 'heating'
+      #           ? 'rgba(255, 255, 255, 0.85)'
+      #           : 'rgba(115, 115, 115, 0.25)';
+      #     ]]]
+
+      - color: >
+          [[[
+            return variables.state === 'heating'
+                ? '#4b5254'
+                : '#97989c';
+          ]]]
+
+purifier:
+  template:
+    - base
+    - circle
+  state_display: >
+    [[[ return states[entity.entity_id].attributes.preset_mode;]]]
+  tap_action:
+    action: more-info
+  styles:
+    state:
+      - color: '#97989c'
+    card:
+      - background-color: >
+          [[[
+            if (variables.state_error) {
+              return variables.state_error
+                ? 'rgba(139, 51, 51, 0.9)'
+                : 'rgba(115, 115, 115, 0.2)';
+            }
+            else {
+              return variables.state_on
+                ? "rgba(158, 158, 158, 0.2)"
+                : "rgba(189, 189, 189, 0.05)";
+            }
+          ]]]
+      - color: >
+          [[[
+            return variables.state_on
+                ? '#97989c'
+                : '#97989c';
+          ]]]
+    custom_fields:
+      circle:
+        - width: 70%
+  custom_fields:
+    circle: >
+      [[[
+        let aqi = states['sensor.zhimi_mb4_b008_pm25_density'].state,
+            stroke = 'rgba(255,255,255,0.1)',
+            fill = 'rgba(255,255,255,0.1)',
+            unit = 'µg';
+        return `
+          <svg viewBox="0 0 50 50">
+            <circle cx="25" cy="25" r="20.5" stroke="${stroke}" stroke-width="1" fill="${fill}" />
+            <text x="50%" y="52%" fill="#8d8e90" font-size="12" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle">${aqi} ${unit}</text>
+          </svg>
+        `;
+      ]]]
+
+cover:
+  template:
+    - base
+    - circle
+    # - icon_cover
+    - icon_cover_animate
+  variables:
+    state_on: >
+      [[[ return ['open', 'opened', 'opening', 'closing'].indexOf(!entity || entity.state) !== -1; ]]]
+    current_position: >
+      [[[
+        if (entity)
+          return entity.attributes.current_position;
+      ]]]
+    current_tilt_position: >
+      [[[
+        if (entity)
+          return entity.attributes.current_tilt_position;
+      ]]]
+    circle_input: >
+      [[[
+        if (entity) {
+          // if light group get brightness from child to remove bounce
+          let position = Math.round(entity.attributes.current_position)
+          return position === 0 && entity.state !== 'closed'
+            ? 1
+            : position
+        }
+      ]]]
+    circle_input_unit: '%'
+  state_display: >
+    [[[
+      if (variables.current_tilt_position == 100 && variables.current_position == 0)
+        return 'Open';
+      if (variables.current_tilt_position == 100 && variables.current_position == 100)
+        return 'Fully opened';
+      else
+          return variables.state;
+    ]]]
+
+  styles:
+    state:
+      - color: >
+          [[[
+            return (variables.current_tilt_position != 0 )
+                ? 'rgb(139, 51, 51)'
+                : 'rgba(255, 255, 255, 0.3)';
+          ]]]
+    card:
+      - background-color: >
+          [[[
+            return (variables.current_tilt_position != 0 )
+                ? 'rgba(250, 250, 250, 0.75)'
+                : 'rgba(115, 115, 115, 0.25)';
+          ]]]
+      - color: >
+          [[[
+            return (variables.current_tilt_position != 0 )
+                ? '#4b5254'
+                : '#97989c';
+          ]]]
+
+  tap_action:
+    action: none
+
+  # hold_action:
+  #   action: call-service
+  #   service: cover.toggle
+  #   service_data:
+  #     entity_id: >
+  #       [[[ return variables.entity_id; ]]]
+
+  double_tap_action:
+    action: fire-dom-event
+    browser_mod:
+      service: browser_mod.popup
+      data:
+        title: >
+          [[[
+            return !entity || entity.attributes.friendly_name;
+          ]]]
+        style: >
+          --tablet-popup-header-color: rgba(0, 0, 0, 0);
+          --popup-background-color: rgba(0, 0, 0, 0.4);
+          --popup-border-width: 0;
+          --popup-max-width: calc(405px + 515px);
+        card_mod:
+          style:
+            .: |
+              @media (max-width: 450px), (max-height: 500px) {
+                ha-dialog {
+                  --mdc-dialog-min-width: 100vw !important;
+                  --mdc-dialog-min-height: 100vh !important;
+                  --popup-border-radius: 0 !important;
+                }
+              }
+            # card divider border
+        content:
+          type: custom:layout-card
+          layout_type: custom:grid-layout
+          layout:
+            margin: 0
+            grid-template-columns: 0 385px 495px 0
+            grid-template-rows: fit-content(100%)
+            grid-template-areas: |
+              ". main entity ."
+            mediaquery:
+              #phone
+              '(max-width: 800px)':
+                grid-template-columns: 1fr
+                grid-template-rows: fit-content(100%) fit-content(100%)
+                grid-template-areas: |
+                  "main"
+                  "entity"
+          cards:
+            - type: custom:more-info-card
+              view_layout:
+                grid-area: main
+              entity: >
+                [[[ return variables.entity_id ]]]
+              card_mod:
+                style:
+                  $: |
+                    h1 {
+                      display: none !important;
+                    }
+                  .: |
+                    state-card-content {
+                      display: none !important;
+                    }
+                    div.action {
+                      display: none !important;
+                    }
+                    ha-card {
+                      margin: 1vw !important;
+                    }
+                  ha-card>div>more-info-content>more-info-cover$ha-more-info-state-header$:
+                    |
+                    p.name {
+                      display: none !important;
+                    }
+                    p.state {
+                      font-size: 1.5em;
+                    }
+                  ha-card>div>more-info-content>more-info-cover$: |
+                    div {
+                      margin: 0 !important;
+                    }
+                    div.actions {
+                      display: none !important;
+                    }
+
+            - type: entities
+              view_layout:
+                grid-area: entity
+              state_color: true
+              show_header_toggle: false
+              card_mod:
+                style: |
+                  #states {
+                    padding: 0;
+                  }
+                .: |
+                  mushroom-cover-card {
+                    padding: 1vw !imporant;
+                  }
+              entities: >
+                [[[
+                  if (entity) {
+                      let covers = [],
+                          id = Boolean(entity.attributes.entity_id)
+                              ? [entity.entity_id].concat(entity.attributes.entity_id)
+                              : [entity.entity_id];
+
+                      for (let i = 1; i < id.length; i++) {
+                          covers.push({
+                              "type": "custom:mushroom-cover-card",
+                              "entity": id[i],
+                              "fill_container": false,
+                              "primary_info": "name",
+                              "secondary_info": "state",
+                              "icon_type": "icon",
+                              "show_position_control": true,
+                              "show_tilt_position_control": false,
+                              "show_buttons_control": true,
+                              "layout": "horizontal"
+                          });
+                      }
+                      return covers;
+                  }
+                ]]]
+
+homeclimate:
+  template:
+    - base
+    - circle
+  variables:
+    state_on: >
+      [[[ return ['Good', 'Excellent', 'Fair', 'Interior', 'Fair', 'Poor'].indexOf(entity === undefined || entity.state) !== -1; ]]]
+
+    heat_on: >
+      [[[
+        return ['yes'].indexOf(!entity || entity.attributes.heating) !==-1;
+      ]]]
+
+  styles:
+    state:
+      - color: >
+          [[[
+            return variables.state_on
+              ? 'rgb(139, 51, 51)'
+              : 'rgba(255, 255, 255, 0.3)';
+          ]]]
+    custom_fields:
+      icon:
+        - width: 90%
+        - pointer-events: none
+
+  custom_fields:
+    circle: >
+      [[[
+        if (entity)
+          let temp = Math.round(entity.attributes.average_temperature).toString(),
+              stroke = variables.heat_on ? '#b2b2b2' : 'none',
+              fill = variables.heat_on ? 'none' : 'rgba(255,255,255,0.04)';
+
+          return `
+              <svg viewBox="0 0 50 50">
+                <circle cx="25" cy="25" r="22.1" stroke="${stroke}" stroke-width="2.5" fill="${fill}" />
+                <text x="50%" y="52%" fill="#8d8e90" font-size="14" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle">${temp}°C</text>
+              </svg>
+          `;
+      ]]]
+    icon: >
+      [[[
+        if (entity)
+          let temp = Math.round(entity.attributes.average_humidity).toString(),
+              stroke = variables.heat_on ? '#b2b2b2' : 'none',
+              fill = variables.heat_on ? 'none' : 'rgba(255,255,255,0.04)';
+
+          return `
+            <svg viewBox="0 0 50 50">
+              <circle cx="25" cy="25" r="22.1" stroke="${stroke}" stroke-width="2.5" fill="${fill}" />
+              <text x="50%" y="52%" fill="#8d8e90" font-size="14" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle">${temp}°C</text>
+            </svg>
+          `;
+      ]]]
+
+#################################################
+#                                               #
+#                   FORECAST                    #
+#                                               #
+#################################################
+
+widget_weather:
+  template:
+    - base
+  variables:
+    temp_min: ''
+    temp_max: ''
+    humidity: ''
+    current_weather: ''
+    is_bellow_horrizon: >
+      [[[
+        if (states['sun.sun'].state == 'below_horizon') {
+            return true;
+        }
+      ]]]
+  aspect_ratio: 1/1
+  show_icon: false
+  show_entity_picture: true
+  show_name: true
+  show_state: true
+  show_label: true
+  tap_action:
+    action: more-info
+  styles:
+    grid:
+      - grid-template-areas: |
+          "n"
+          "temp"
+          "i"
+          "s"
+          "l"
+      - grid-template-columns: 100%
+      - grid-template-rows: min-content 1fr 1fr min-content min-content
+      - gap: 0%
+      - overflow: visible
+    card:
+      - padding: 11.5% 10.5% 10.5% 11.5%
+      - color: rgba(255, 255, 255, 0.6)
+      - background: >
+          [[[
+            let weather = states[variables.current_weather].state.toLowerCase();
+              return variables.is_bellow_horrizon
+                ? `linear-gradient(to top, rgba(53,59,83,0.8) 0%, rgba(0,0,0,0.4) 100%) 100% / cover, url(/local/svg/weather/gif/${weather}.gif)`
+                : `linear-gradient(to top, rgba(155, 109, 129, 0.5) 0%, rgba(63,74,113,1) 100%) 100% / cover, url(/local/svg/weather/gif/${weather}.gif)`;
+          ]]]
+      - background-size: cover
+
+    state:
+      - text-transform: uppercase
+      - margin-top: 5px
+      - line-height: 100%
+    name:
+      - place-self: start
+      - text-transform: uppercase
+      - font-weight: 500
+      - font-family: Futura
+      - letter-spacing: 0.1vw
+      - margin-top: -7%
+    img_cell:
+      - place-self: center
+      - overflow: visible
+      - justify-content: flex-end
+      - position: absolute
+    icon:
+      - width: 70%
+      - position: relative
+    label:
+      - place-self: start
+      # - margin-left: -5px
+      - margin-top: 3%
+      - margin-bottom: -7%
+      # - text-shadow: 1px 0px 2px rgba(18, 22, 23, 0.9)
+    custom_fields:
+      temp:
+        - place-self: start
+        # - margin-top: -5px
+        - font-family: Futura
+        - color: rgba(240, 255, 255, 0.8)
+        - text-shadow: 5px 3px 9px black
+  label: >
+    [[[
+      return `
+        <ha-icon icon="mdi:water-percent" style="width: 1em; height: 1em; margin-right: -0.3em;"></ha-icon>
+        <span>${states[variables.humidity].state}%</span>
+        <ha-icon icon="mdi:chevron-up" style="width: 1.5em; height: 1.5em; margin-right: -0.3em;"></ha-icon>
+        <span>${states[variables.temp_max].state}°</span>
+        <ha-icon icon="mdi:chevron-down" style="width: 1.5em; height: 1.5em; margin-right: -0.3em;"></ha-icon>
+        <span>${states[variables.temp_min].state}°</span>
+      `
+    ]]]
+  custom_fields:
+    temp: >
+      [[[ return entity.attributes.temperature + "°"; ]]]
+  entity_picture: >
+    [[[
+      let weather = states[variables.current_weather].state.toLowerCase();
+      if ((weather == 'sunny') && (states['sun.sun'].state == 'above_horizon'))
+        return "/local/icons/weather_icons/animated/clear-day.svg";
+        if ((weather == 'sunny') || (weather == 'clear-night') && (states['sun.sun'].state == 'below_horizon'))
+          return "/local/icons/weather_icons/animated/clear-night.svg";
+            if (weather == 'fog')
+              return "/local/icons/weather_icons/animated/fog.svg";
+                if ((weather == 'partlycloudy') && (states['sun.sun'].state == 'above_horizon'))
+                  return "/local/icons/weather_icons/animated/partly-cloudy-day.svg";
+                    if ((weather == 'partlycloudy') && (states['sun.sun'].state == 'below_horizon'))
+                      return "/local/icons/weather_icons/animated/partly-cloudy-night.svg";
+                        if (weather == 'rainy')
+                          return "/local/icons/weather_icons/animated/rain.svg";
+                            if (weather == 'sleet')
+                              return "/local/icons/weather_icons/animated/sleet.svg";
+                                if (weather == 'snow')
+                                  return "/local/icons/weather_icons/animated/snow.svg";
+                                    if (weather == 'cloudy')
+                                      return "/local/icons/weather_icons/animated/cloudy.svg";
+      else (weather == 'wind')
+        return "/local/icons/weather_icons/animated/wind.svg";
+    ]]]
+  extra_styles: |
+    [[[
+      return `
+        #name {
+          font-size: 0.9vw;
+        }
+        #temp {
+          font-size: 1.4vw;
+        }
+        #state {
+          font-size: 0.7vw;
+        }
+        #label {
+          font-size: 0.6vw;
+        }
+        @media screen and (max-width: 1500px) {
+          #name {
+            font-size: 1.3vw;
+          }
+          #temp {
+            font-size: 3vw;
+          }
+          #state {
+            font-size: 1.2vw;
+          }
+          #label {
+            font-size: 1.2vw;
+          }
+        @media screen and (max-width: 800px) {
+          #name {
+            font-size: 3vw;
+            margin-top: -5%;
+          }
+          #temp {
+            font-size: 6vw;
+          }
+          #state {
+            font-size: 2.7vw;
+          }
+          #icon {
+            display: none !important;
+          }
+          #label {
+            font-size: 1.9vw;
+            font-weight: 500 !important;
+            margin-top: 5%;
+            margin-bottom: 0%;
+            margin-left: -4%;
+          }
+        }
+      `
+    ]]]
+
+#################################################
+#                                               #
+#                   HORIZONTAL                  #
+#                                               #
+#################################################
+
+horizontal_widget_weather:
+  template:
+    - base
+  variables:
+    temp_min: ''
+    temp_max: ''
+    humidity: ''
+    current_weather: ''
+    tilt_enable: false
+  aspect_ratio: 3/1
+  show_entity_picture: true
+  show_name: false
+  show_state: false
+  show_label: true
+  tap_action:
+    action: more-info
+  label: >
+    [[[
+      return `
+        <ha-icon icon="mdi:water-percent" style="width: 1em; height: 1em; margin-right: -0.3em;"></ha-icon>
+        <span>${states[variables.humidity].state}%</span>
+        <ha-icon icon="mdi:chevron-up" style="width: 1.5em; height: 1.5em; margin-right: -0.3em;"></ha-icon>
+        <span>${states[variables.temp_max].state}°</span>
+        <ha-icon icon="mdi:chevron-down" style="width: 1.5em; height: 1.5em; margin-right: -0.3em;"></ha-icon>
+        <span>${states[variables.temp_min].state}°</span>
+      `
+    ]]]
+  entity_picture: >
+    [[[
+      let weather = states[variables.current_weather].state.toLowerCase();
+      if ((weather == 'sunny') && (states['sun.sun'].state == 'above_horizon'))
+        return "/local/img/weather_new/clear-day.png";
+        if ((weather == 'sunny') || (weather == 'clear-night') && (states['sun.sun'].state == 'below_horizon'))
+          return "/local/img/weather_new/clear-night.png";
+            if (weather == 'fog')
+              return "/local/img/weather_new/fog.png";
+                if ((weather == 'partlycloudy') && (states['sun.sun'].state == 'above_horizon'))
+                  return "/local/img/weather_new/partly-cloudy-day.png";
+                    if ((weather == 'partlycloudy') && (states['sun.sun'].state == 'below_horizon'))
+                      return "/local/img/weather_new/partly-cloudy-night.png";
+                        if (weather == 'rainy')
+                          return "/local/img/weather_new/rain.png";
+                            if (weather == 'sleet')
+                              return "/local/img/weather_new/sleet.png";
+                                if (weather == 'snow')
+                                  return "/local/img/weather_new/snow.png";
+                                    if (weather == 'cloudy')
+                                      return "/local/img/weather_new/cloudy.png";
+      else (weather == 'wind')
+        return "/local/img/weather_new/wind.png";
+    ]]]
+  custom_fields:
+    temp: >
+      [[[ return Math.round(entity.attributes.temperature)+"°C"; ]]]
+    # forecast:
+    #   card:
+    #     show_current: false
+    #     show_forecast: true
+    #     type: weather-forecast
+    #     entity: weather.openweathermap
+
+  styles:
+    grid:
+      - grid-template-areas: |
+          "i   temp"
+          "i   temp"
+          "i   l"
+      - grid-template-columns: 1fr 1fr
+      - grid-template-rows: fit-content(100%) fit-content(100%) min-content
+      - gap: 0
+    card:
+      - background: none
+      - --webkit-tap-highlight-color: none
+      - --mdc-ripple-color: none
+      - box-shadow: none
+      - padding: 0
+      - margin: 3% 0 0 0
+      - color: rgba(255, 255, 255, 0.6)
+      - overflow: visible
+    img_cell:
+      - justify-content: end
+      - overflow: visible
+    icon:
+      - width: 75%
+    name:
+      - place-self: flex-start
+      - text-transform: uppercase
+      - font-weight: 500
+      - letter-spacing: 0.1vw
+      - font-family: Futura
+    state:
+      - place-self: flex-start
+
+    label:
+      - justify-self: start
+      - align-self: center
+
+    custom_fields:
+      temp:
+        - align-self: center
+        - justify-self: start
+        - font-weight: 500
+        - font-family: Futura
+        - letter-spacing: 1px
+        - color: rgba(240, 255, 255, 0.5)
+  extra_styles: |
+    [[[
+      return `
+        @keyframes marquee {
+          from {
+            transform: translateX(0%);
+          }
+          to {
+            transform: translateX(-5%);
+            scale: 1.1;
+          }
+        }
+        #img-cell {
+          animation: marquee 7s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+          animation-direction: alternate-reverse;
+        }
+        #name {
+          font-size: 0.9vw;
+        }
+        #temp {
+          font-size: 2vw;
+        }
+        #state {
+          font-size: 0.5vw;
+        }
+        #label {
+          font-size: 0.5vw;
+        }
+        @media screen and (max-width: 800px) {
+          #card {
+            margin: 8% 0 0 0 !imporant;
+          }
+          #temp {
+            font-size: 9vw;
+          }
+          #state {
+            font-size: 2.7vw;
+          }
+          #label {
+            font-size: 2vw;
+          }
+        }
+      `
+    ]]]
+
+wide_header:
+  template:
+    - base
+  aspect_ratio: 4/1
+  show_name: false
+  show_state: false
+  show_label: true
+  show_entity_picture: true
+  variables:
+    tilt_enable: >
+      [[[ return false; ]]]
+  tap_action: block
+  custom_fields:
+    time: >
+      [[[ return states[variables.time].state; ]]]
+    date: >
+      [[[ return states[variables.day].state + " " + "/" + " " + states[variables.date].state; ]]]
+    temp: >
+      [[[
+          var realtemp = Math.round(entity.attributes.temperature);
+          return `<span class="high">${realtemp}</span><span class="unit">°C</span>`;
+      ]]]
+    gpt: >
+      [[[
+        let gpt = states[variables.gpt_weather].state;
+        return `<span class="gpttext">${gpt}&nbsp;&nbsp;&nbsp;</span>`;
+      ]]]
+    overlay:
+      card:
+        type: picture-elements
+        image: /local/img/svg/overlay.svg
+        card_mod:
+          style: |
+            ha-card {
+              --ha-card-background: none !important;
+            }
+        elements:
+          - type: 'custom:button-card'
+            aspect_ratio: 2/1
+            show_name: false
+            show_icon: false
+            size: 100%
+            style:
+              top: 50%
+              left: 20%
+              height: 100%
+              width: 40%
+            tap_action: !include ../../shared/popup/calendar.yaml
+
+          - type: 'custom:button-card'
+            aspect_ratio: 2/1
+            show_name: false
+            show_icon: false
+            size: 100%
+            style:
+              top: 50%
+              left: 70%
+              height: 100%
+              width: 60%
+            tap_action: !include ../../shared/popup/popup_weather.yaml
+
+  label: >
+    [[[
+      return `
+          <ha-icon icon="mdi:thermometer"></ha-icon><span>${entity.attributes.apparent_temperature} °C</span><br>
+          <ha-icon icon="mdi:water-percent"></ha-icon><span>${entity.attributes.humidity} %</span><br>
+          <ha-icon icon="mdi:weather-windy"></ha-icon><span>${entity.attributes.wind_speed} km/H</span><br>
+          <ha-icon icon="mdi:gauge"></ha-icon><span>${entity.attributes.pressure} hPa</span><br>
+      `
+    ]]]
+  entity_picture: >
+    [[[
+      let weather = entity.state.toLowerCase();
+      if ((weather == 'sunny') && (states['sun.sun'].state == 'above_horizon'))
+        return "/local/img/weather_new/clear-day.png";
+        if ((weather == 'sunny') || (weather == 'clear-night') && (states['sun.sun'].state == 'below_horizon'))
+          return "/local/img/weather_new/clear-night.png";
+            if (weather == 'fog')
+              return "/local/img/weather_new/fog.png";
+                if ((weather == 'partlycloudy') && (states['sun.sun'].state == 'above_horizon'))
+                  return "/local/img/weather_new/partly-cloudy-day.png";
+                    if ((weather == 'partlycloudy') && (states['sun.sun'].state == 'below_horizon'))
+                      return "/local/img/weather_new/partly-cloudy-night.png";
+                        if (weather == 'rainy')
+                          return "/local/img/weather_new/rain.png";
+                            if (weather == 'sleet')
+                              return "/local/img/weather_new/sleet.png";
+                                if (weather == 'snow')
+                                  return "/local/img/weather_new/snow.png";
+                                    if (weather == 'cloudy')
+                                      return "/local/img/weather_new/cloudy.png";
+      else (weather == 'wind')
+        return "/local/img/weather_new/wind.png";
+    ]]]
+
+  styles:
+    grid:
+      - grid-template-areas: |
+          "time   i   temp  l"
+          "date   i   temp  l"
+          "gpt    gpt gpt   gpt"
+      - grid-template-columns: 40% 25% 20% 15%
+      - grid-template-rows: auto
+      - gap: 0%
+      - margin: 0
+    card:
+      - --mdc-ripple-color: none
+      - --webkit-tap-highlight-color: none
+    img_cell:
+      - overflow: visible
+    icon:
+      - width: 80%
+      - position: relative
+      - right: -40%
+    custom_fields:
+      temp:
+        - font-weight: 500
+        - font-family: Futura
+      overlay:
+        - display: inline
+        - position: absolute
+        - width: 100%
+        - height: inherit
+        - aspect-ratio: 4/1
+  extra_styles: |
+    [[[
+      return `
+        @keyframes marquee {
+          from {
+            transform: translateX(0%);
+            scale: 0.9;
+          }
+          to {
+            transform: translateX(-25%);
+            scale: 1.1;
+          }
+        }
+        @keyframes gptmarquee {
+          from {
+            transform: translateX(0%);
+          }
+          to {
+            transform: translateX(-200%);
+          }
+        }
+        #img-cell {
+          animation: marquee 10s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+          animation-direction: alternate-reverse;
+        }
+        #card {
+          padding: 0px 8px !important;
+          border-width: 0;
+          background: none !important;
+        }
+        #temp .high {
+          font-size: 3.3vw;
+        }
+        #temp .unit {
+          font-size: 2.4em;
+          position: relative;
+          left: -0.3vw;
+          bottom: 0.9vw;
+        }
+        #label.ellipsis {
+          font-size: 0.8em;
+          text-align: left;
+          place-self: center;
+          line-height: 150%;
+          overflow: visible;
+        }
+        #label ha-icon {
+          width: 1.4em;
+          height: 1.6em;
+          padding-right: 10%;
+        }
+        #time {
+          justify-self: center;
+          align-self: start;
+          line-height: 100%;
+          font-size: 3.5vw;
+          font-weight: 800;
+          color: #97989c;
+          font-family: auto;
+          letter-spacing: 0.15vw;
+        }
+        #date {
+          font-size: 0.6vw;
+          text-transform: uppercase;
+          font-weight: 700;
+          font-family: 'Raleway';
+          letter-spacing: 1.5px;
+          color: #97989c;
+        }
+        #gpt {
+          padding: 1% 0 !important;
+          overflow: visible !important;
+          border-top: 0.04vw rgba(158, 158, 158, 0.1) solid;
+        }
+        .gpttext {
+          font-size: 0.6vw;
+          white-space: pre-wrap;
+        }
+        #overlay {
+          padding: 0 !imporant;
+          margin: 0 !important;
+        }
+      `;
+    ]]]

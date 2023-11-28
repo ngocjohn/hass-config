@@ -1,0 +1,77 @@
+<svg viewBox="0 0 36 36" class="circular-chart green">
+  <style>
+    .flex-wrapper {
+      display: flex;
+      flex-flow: row nowrap;
+    }
+
+    .single-chart {
+      width: 33%;
+      justify-content: space-around;
+    }
+
+    .circle-bg {
+      fill: #000000;
+      stroke: #ffffff85;
+      stroke-width: 3.8;
+    }
+
+    .circle {
+      fill: none;
+      stroke-width: 2.8;
+      stroke-linecap: round;
+      animation: progress;
+      animation-duration: 6s;
+      animation-iteration-count: infinite;
+      animation-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+    }
+
+    @keyframes progress {
+      0% {
+        stroke-dasharray: 0 100;
+      }
+    }
+
+    tspan {
+      font-size: 10px;
+    }
+
+    text {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: -0.03rem;
+      fill: #ffffff;
+      ;
+    }
+
+    #circle_value,
+    tspan {
+      text-anchor: middle;
+      dominant-baseline: central;
+    }
+
+    .circular-chart.green .circle {
+      stroke: #20d07b;
+    }
+
+    .percentage {
+      fill: #ffffff;
+      font-family: Poppins;
+      font-size: 0.6em;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+  </style>
+  <g class="flex-wrapper">
+    <g class="single-chart">
+      <path class="circle-bg" d="M18 2.0845
+                  a 15.9155 15.9155 0 0 1 0 31.831
+                  a 15.9155 15.9155 0 0 1 0 -31.831" />
+      <path class="circle" stroke-dasharray="60, 100" d="M18 2.0845
+                  a 15.9155 15.9155 0 0 1 0 31.831
+                  a 15.9155 15.9155 0 0 1 0 -31.831" />
+      <text id="circle_value" x="50%" y="52%" text-anchor="middle" alignment-baseline="middle"
+        dominant-baseline="middle">60<tspan dx=".2" dy="-.4">%</tspan></text>
+    </g>
+  </g>
+</svg>

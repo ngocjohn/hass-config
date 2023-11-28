@@ -1,0 +1,30 @@
+#################################################
+#                                               #
+#                     HOME                      #
+#                                               #
+#################################################
+
+- type: grid
+  title: Home
+  view_layout:
+    grid-area: home
+    show:
+      mediaquery: '(max-width: 1440px)'
+  columns: 2
+  cards:
+    # PERSON NGOC
+    - type: custom:decluttering-card
+      template: grid_ngoc
+
+    # PERSON ZUZU
+    - type: custom:decluttering-card
+      template: grid_zuzu
+
+    # WEATHER
+    - type: custom:decluttering-card
+      template: grid_weather
+
+    # HOME MODE
+    - type: custom:decluttering-card
+      template: grid_home_mode
+

@@ -1,0 +1,343 @@
+#################################################
+#                                               #
+#           GRID MEDIA MIN 1441px               #
+#                                               #
+#################################################
+
+- type: grid
+  title: Media
+  view_layout:
+    grid-area: media
+    show:
+      mediaquery: '(min-width: 1441px)'
+  columns: 1
+  cards:
+    #Conditional Media
+    - type: custom:swipe-card
+      start_card: 1
+      parameters:
+        pagination:
+          type: bullets
+          clickable: true
+        roundLengths: true
+        effect: coverflow
+        coverflowEffect:
+          rotate: 80
+          depth: 300
+        speed: 650
+        spaceBetween: 20
+        threshold: 7
+        observer: false
+        followFinger: true
+        grabCursor: true
+      cards:
+        - type: horizontal-stack
+          cards:
+            - type: conditional
+              conditions:
+                - entity: select.conditional_media
+                  state: Recently added
+              card: &spotify
+                type: custom:button-card
+                entity: media_player.spotify
+                template:
+                  - tpl_spotify
+                variables:
+                  playlist_type: default
+
+            - type: conditional
+              conditions:
+                - entity: select.conditional_media
+                  state: Living Room TV
+              card: &ATV
+                type: custom:button-card
+                entity: media_player.living_room_tv
+                name: ' '
+                triggers_update: sensor.youtube_watching
+                template:
+                  - conditional_media
+                  - progress_bar
+                  - tpl_minicontrol
+                  - icon_apple_tv
+
+            - type: conditional
+              conditions:
+                - entity: select.conditional_media
+                  state: Bedroom TV
+              card: &BEDROOMTV
+                type: custom:button-card
+                entity: media_player.shieldtv_kodi
+                name: 'ShieldTV'
+                triggers_update: sensor.shieldtv_youtube_watching
+                template:
+                  - conditional_media
+                  - icon_shieldtv_text
+                  - progress_bar
+
+            - type: conditional
+              conditions:
+                - entity: select.conditional_media
+                  state: Spotify
+              card: *spotify
+
+            - type: conditional
+              conditions:
+                - entity: select.conditional_media
+                  state: PS5 Activity
+              card: &PS5
+                type: custom:button-card
+                entity: sensor.ps5_activity
+                name: 'PlayStation 5'
+                template:
+                  - conditional_media
+                  - icon_playstation
+
+            - type: conditional
+              conditions:
+                - entity: select.conditional_media
+                  state: MASS Airplay Group
+              card: &MASSAIRPLAY
+                type: custom:button-card
+                entity: media_player.homepod_airplay_group
+                template:
+                  # - currently_playing
+                  - conditional_media
+                  - progress_bar
+                  - tpl_minicontrol_mass
+                show_name: false
+                tap_action: block
+                styles:
+                  custom_fields:
+                    blur_overlay:
+                      - clip-path: >
+                          [[[
+                            return `inset(75% 3.45% 3.45% 5.45% round 0 0 calc(var(--button-card-border-radius) / 2) calc(var(--button-card-border-radius) / 2))`;
+                          ]]]
+
+                double_tap_action:
+                  action: fire-dom-event
+                  browser_mod:
+                    service: browser_mod.popup
+                    data:
+                      title: 'MASS'
+                      size: wide
+                      content:
+                        type: iframe
+                        # aspect_ratio: '100%'
+                        url: /api/hassio_ingress/vY3Npsvoa2MxygW4H78Jr2ZEpMXsTJtX8DuZsXbT6mE/#/home
+
+        # VN FEATURED Playlist
+        - type: grid
+          columns: 1
+          cards: &SPOTIFYPLAYLIST
+            - type: custom:button-card
+              entity: media_player.spotify
+              template:
+                - tpl_spotify
+              variables:
+                playlist_type: featured
+                country_code: VN
+
+        # - type: grid
+        #   columns: 1
+        #   cards:
+        #     - type: custom:button-card
+        #       entity: sensor.kodi_media_sensor_recently_added_tvshow
+        #       template:
+        #         - conditional_media_shows
+
+        #Media Players
+        - type: grid
+          columns: 2
+          cards:
+            - &grid-atv-kodi
+              type: custom:button-card
+              entity: media_player.kodi_atv
+              name: Kodi ATV
+              template:
+                - media
+                - icon_apple_tv
+            # Samsung TV
+            - &grid-shield-kodi
+              type: custom:button-card
+              entity: media_player.shieldtv
+              name: Kodi Shield
+              template:
+                - media
+                - icon_shieldtv_text
+              variables:
+                media_on: >
+                  [[[ return states['media_player.shieldtv'].attributes.source === 'Kodi'; ]]]
+            - &grid-spotify-media
+              type: custom:button-card
+              entity: media_player.spotify
+              name: Spotify
+              double_tap_action: !include ../../shared/popup/spotify_playlist.yaml
+              template:
+                - media
+                - icon_spotify
+
+#################################################
+#                                               #
+#                     MEDIA                     #
+#                                               #
+#################################################
+
+- type: grid
+  title: Media
+  view_layout:
+    grid-area: media
+    show:
+      mediaquery: '(max-width: 1440px)'
+  columns: 1
+  cards:
+    #Conditional Media
+    - type: custom:swipe-card
+      start_card: 1
+      parameters:
+        pagination:
+          type: bullets
+          clickable: true
+        direction: horizontal
+        roundLengths: true
+        effect: coverflow
+        speed: 650
+        spaceBetween: 20
+        threshold: 7
+        coverflowEffect:
+          rotate: 80
+          depth: 300
+        observer: true
+      cards:
+        - type: horizontal-stack
+          cards:
+            - type: conditional
+              conditions:
+                - entity: select.conditional_media
+                  state: Recently added
+              card:
+                type: grid
+                columns: 1
+                cards:
+                  - type: custom:swipe-card
+                    start_card: 1
+                    parameters:
+                      pagination:
+                        type: bullets
+                        clickable: false
+                      autoplay:
+                        delay: 5000
+                        disableOnInteraction: false
+                        reverseDirection: false
+                      threshold: 7
+                      speed: 650
+                      spaceBetween: 70
+                      direction: vertical
+                      autoHeight: true
+                      slidesPerView: auto
+                      observer: true
+                      followFinger: false
+                      grabCursor: true
+                      roundLengths: true
+
+                    cards:
+                      - type: grid
+                        columns: 1
+                        cards:
+                          - type: custom:button-card
+                            entity: sensor.added_movies_2
+                            template:
+                              - added_movies
+                      - type: grid
+                        columns: 1
+                        cards:
+                          - type: custom:button-card
+                            entity: sensor.added_movies_3
+                            template:
+                              - added_movies
+                      - type: grid
+                        columns: 1
+                        cards:
+                          - type: custom:button-card
+                            entity: sensor.added_movies_4
+                            template:
+                              - added_movies
+                      - type: grid
+                        columns: 1
+                        cards:
+                          - type: custom:button-card
+                            entity: sensor.added_movies_5
+                            template:
+                              - added_movies
+                      - type: grid
+                        columns: 1
+                        cards:
+                          - type: custom:button-card
+                            entity: sensor.added_movies_6
+                            template:
+                              - added_movies
+
+            - type: conditional
+              conditions:
+                - entity: select.conditional_media
+                  state: Living Room TV
+              card: *ATV
+
+            - type: conditional
+              conditions:
+                - entity: select.conditional_media
+                  state: Bedroom TV
+              card: *BEDROOMTV
+
+            - type: conditional
+              conditions:
+                - entity: select.conditional_media
+                  state: Spotify
+              card:
+                type: custom:button-card
+                entity: media_player.spotify
+                name: ' '
+                double_tap_action: !include ../../shared/popup/spotify_playlist.yaml
+                template:
+                  - currently_playing
+                  # - conditional_media
+
+            - type: conditional
+              conditions:
+                - entity: select.conditional_media
+                  state: PS5 Activity
+              card: *PS5
+
+            - type: conditional
+              conditions:
+                - entity: select.conditional_media
+                  state: MASS Airplay Group
+              card: *MASSAIRPLAY
+
+        - type: conditional
+          conditions:
+            - condition: state
+              entity: sensor.trakt_upcoming_shows
+              state_not: '0'
+          card:
+            type: grid
+            columns: 1
+            cards:
+              - type: custom:button-card
+                entity: sensor.trakt_upcoming_shows
+                template:
+                  - conditional_media_shows
+
+        #Media Players
+        - type: conditional
+          conditions:
+            - condition: state
+              entity: sensor.trakt_upcoming_shows
+              state: '0'
+          card:
+            type: grid
+            columns: 2
+            cards:
+              - *grid-atv-kodi
+              - *grid-shield-kodi
+              - *grid-spotify-media

@@ -1,0 +1,77 @@
+type: custom:grid-layout
+icon: mdi:view-dashboard
+theme: tablet
+path: devices
+layout:
+  default:
+  margin: 0
+  grid-gap: 1.8vw
+  grid-template-columns: 0 1fr 1fr 0
+  grid-template-rows: fit-content(100%)
+  grid-template-areas: |
+    ". devices   climate  ."
+
+#################################################
+#                                               #
+#                    DASHBOARD                  #
+#                                               #
+#################################################
+
+cards:
+  #################################################
+  #                                               #
+  #                    DEVICES                    #
+  #                                               #
+  #################################################
+
+  - type: grid
+    title: Devices
+    view_layout:
+      grid-area: devices
+    columns: 2
+    cards:
+      # APPLE TV
+      - type: custom:decluttering-card
+        template: grid_atv
+
+      # Samsung TV
+      - type: custom:decluttering-card
+        template: grid_samsung
+
+      # PLAYSTATION
+      - type: custom:decluttering-card
+        template: grid_playstation
+
+      # HOMEPODS
+      - type: custom:decluttering-card
+        template: grid_homepods
+
+
+  #################################################
+  #                                               #
+  #                  CLIMATE                      #
+  #                                               #
+  #################################################
+  - type: grid
+    title: Climate
+    view_layout:
+      grid-area: climate
+    columns: 2
+    cards:
+      # AIR PURIFIER
+      - type: custom:decluttering-card
+        template: grid_air_purifier
+
+      # THERMOSTAT
+      - type: custom:decluttering-card
+        template: grid_thermostat
+
+      # LIVING ROOM COVERS
+      - type: custom:decluttering-card
+        template: grid_covers_living
+
+      # BEDOOM COVERS
+      - type: custom:decluttering-card
+        template: grid_covers_bedroom
+
+

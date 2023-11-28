@@ -1,0 +1,140 @@
+light:
+  # light:
+  - platform: group
+    name: 'Living Room Group'
+    unique_id: group_light_living_room
+    entities:
+      - light.living_room_floor_lamp
+      - light.shelly_rgbw_kitchen_led_strip
+
+  - platform: group
+    name: 'Kitchen Group'
+    unique_id: group_light_kitchen
+    entities:
+      - light.kitchen_main_light
+      - light.kitchen_table_light
+      - light.hood_lighting
+  - platform: group
+    name: 'Bathroom Group'
+    unique_id: group_light_bathroom
+    entities:
+      - light.bathroom_main_light
+      - light.bathroom_mirror_light
+
+  - platform: group
+    name: 'Bedroom Group'
+    unique_id: group_light_bedroom
+    entities:
+      - light.bedroom_closet_light
+      - light.bedroom_main_light
+      - light.bed_light
+      - light.bedroom_ripple_mood_light
+
+  - platform: group
+    name: 'Shower Group'
+    unique_id: group_light_hower
+    entities:
+      - light.shower_room_main_light
+      - light.shower_room_mirror_light
+
+  - platform: group
+    name: 'Hallway Group'
+    unique_id: group_light_hallway
+    entities:
+      - light.aqara_hub
+      - light.hallway_light
+
+  - platform: group
+    name: 'Cozy Light Group'
+    unique_id: group_cozy_light
+    entities:
+      - light.shelly_rgbw_kitchen_led_strip
+      - light.living_room_floor_lamp
+
+  - platform: group
+    unique_id: group_light_hallway_utility
+    name: 'Hallway Utility Group'
+    entities:
+      - light.aqara_hub
+      - light.utility_room_light
+      - light.hallway_light
+
+  - platform: group
+    name: 'Office Group'
+    unique_id: group_light_office
+    entities:
+      - light.office_led_light_strip
+      - light.office_lamp_bulb
+      - light.office_shelf_led
+      - light.vocolinc_rpl_188bce_mood_light
+
+  - platform: group
+    unique_id: group_light_all
+    name: 'All Light Group'
+    entities:
+      - light.living_room_floor_lamp
+      - light.shelly_dimmer
+      - light.shelly_rgbw_kitchen_led_strip
+      - light.kitchen_main_light
+      - light.kitchen_table_light
+      - light.hood_lighting
+      - light.bathroom_main_light
+      - light.bathroom_mirror_light
+      - light.bedroom_closet_light
+      - light.bedroom_main_light
+      - light.shower_room_main_light
+      - light.shower_room_mirror_light
+      - light.bed_light
+      - light.aqara_hub
+      - light.utility_room_light
+      - light.hallway_light
+      - light.office_lamp_bulb
+      - light.office_main_light
+      - light.office_shelf_led
+      - light.vocolinc_rpl_188bce_mood_light
+      - light.office_led_light_strip
+      - light.bedroom_ripple_mood_light
+      # - light.yeelink_bslamp2_409e_light
+
+homeassistant:
+  customize:
+    light.living_room_floor_lamp:
+      friendly_name: 'Living Room Floor Lamp'
+    light.shelly_rgbw_kitchen_led_strip:
+      friendly_name: 'Living Room Light Strip'
+    light.kitchen_main_light:
+      friendly_name: 'Kitchen Main Light'
+    light.kitchen_table_light:
+      friendly_name: 'Kitchen Table Light'
+    light.hood_lighting:
+      friendly_name: 'Kitchen Hood Light'
+    light.bathroom_main_light:
+      friendly_name: 'Bathroom Main Light'
+    light.bathroom_mirror_light:
+      friendly_name: 'Bathroom Mirror Light'
+    light.bedroom_closet_light:
+      friendly_name: 'Bedroom Closet Light'
+    light.bedroom_main_light:
+      friendly_name: 'Bedroom Ceiling Light'
+    light.bed_light:
+      friendly_name: 'Bedroom Bed Light'
+    light.bedroom_ripple_mood_light:
+      friendly_name: 'Bedroom Mood Light'
+    light.shower_room_main_light:
+      friendly_name: 'Shower Room Main Light'
+    light.shower_room_mirror_light:
+      friendly_name: 'Shower Room Mirror Light'
+    light.aqara_hub:
+      friendly_name: 'Hallway Hub Light'
+    light.hallway_light:
+      friendly_name: 'Hallway Light'
+    light.utility_room_light:
+      friendly_name: 'Utility Room Light'
+    light.office_led_light_strip:
+      friendly_name: 'Office Light Strip'
+    light.office_lamp_bulb:
+      friendly_name: 'Office Floor Lamp'
+    light.office_shelf_led:
+      friendly_name: 'Office Shelf Light'
+    light.vocolinc_rpl_188bce_mood_light:
+      friendly_name: 'Office Mood Light'

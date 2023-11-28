@@ -1,0 +1,157 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Air Purifier
+    style: >
+      --popup-max-width: calc(460px + 460px);
+
+    card_mod:
+      style:
+        .: |
+          @media (max-width: 450px), (max-height: 500px) {
+            ha-dialog {
+              --mdc-dialog-min-width: 100vw !important;
+              --mdc-dialog-min-height: 100vh !important;
+              --popup-border-radius: 0 !important;
+            }
+          }
+        layout-card:
+          $grid-layout$:
+            # card divider border
+            .: |
+              #root > * {
+                margin: 0px !important;
+              }
+            hui-entities-card:
+              $: |
+                ha-card {
+                  border-right: 0.1vw solid rgba(58, 69, 73, 0.2);
+                  border-radius: 0;
+                  transition: none;
+                }
+                /* portrait */
+                @media screen and (max-width: 1400px) {
+                  ha-card {
+                    border-right: none;
+                    border-bottom: 0.1vw solid rgba(58, 69, 73, 0.2);
+                  }
+                }
+
+    content:
+      type: custom:layout-card
+      layout_type: custom:grid-layout
+      layout:
+        margin: 0
+        grid-template-columns: 450px 450px
+        grid-template-rows: 1fr
+        grid-template-areas: |
+          "living office"
+        mediaquery:
+          #portrait
+          '(max-width: 1200px)':
+            grid-template-columns: 1fr
+            grid-template-rows: repeat(2, fit-content(100%))
+            grid-template-areas: |
+              "living"
+              "office"
+
+      cards:
+        - type: entities
+          view_layout:
+            grid-area: living
+          title: Bedroom
+          show_header_toggle: false
+          card_mod:
+            class: header
+          entities:
+            - type: custom:purifier-card
+              entity: fan.zhimi_mb3_8b86_air_purifier
+              stats:
+                - entity_id: sensor.zhimi_mb3_8b86_filter_life_level
+                  unit: '%'
+                  subtitle: Filter Remaining
+                - entity_id: sensor.zhimi_mb3_8b86_motor_speed
+                  unit: RPM
+                  subtitle: Motor Speed
+              shortcuts:
+                - name: Sleep
+                  icon: mdi:weather-night
+                  preset_mode: Sleep
+                - name: 33%
+                  icon: mdi:fan-speed-1
+                  percentage: 33
+                - name: 66%
+                  icon: mdi:fan-speed-2
+                  percentage: 66
+                - name: 100%
+                  icon: mdi:fan-speed-3
+                  percentage: 100
+                - name: Auto
+                  icon: mdi:fan-auto
+                  preset_mode: Auto
+              show_name: false
+              show_state: true
+              show_toolbar: true
+              compact_view: false
+              aqi:
+                entity_id: sensor.zhimi_mb3_8b86_pm25
+                unit: µg/m³
+        - type: entities
+          view_layout:
+            grid-area: office
+          title: Office
+          show_header_toggle: false
+          card_mod:
+            class: header
+            style: |
+              ha-card {
+                border: none !important;
+              }
+          entities:
+            - type: custom:purifier-card
+              view_layout:
+                grid-area: office
+              entity: fan.zhimi_mb4_b008_air_purifier
+              stats:
+                - entity_id: sensor.zhimi_mb4_b008_filter_life_level
+                  unit: '%'
+                  subtitle: Filter Remaining
+                - entity_id: sensor.zhimi_mb4_b008_moto_speed_rpm
+                  unit: RPM
+                  subtitle: Motor Speed
+              shortcuts:
+                - name: Silent
+                  icon: mdi:weather-night
+                  preset_mode: Silent
+                - name: 50%
+                  icon: mdi:fan-speed-1
+                  preset_mode: Favorite
+                  service: number.set_value
+                  service_data:
+                    entity_id: number.zhimi_mb4_b008_favorite_speed
+                    value: '1300'
+                - name: 75%
+                  icon: mdi:fan-speed-2
+                  preset_mode: Favorite
+                  service: number.set_value
+                  service_data:
+                    entity_id: number.zhimi_mb4_b008_favorite_speed
+                    value: '1700'
+                - name: 100%
+                  icon: mdi:fan-speed-3
+                  preset_mode: Favorite
+                  service: number.set_value
+                  service_data:
+                    entity_id: number.zhimi_mb4_b008_favorite_speed
+                    value: '2200'
+                - name: Auto
+                  icon: mdi:fan-auto
+                  preset_mode: Auto
+              show_name: false
+              show_state: true
+              show_toolbar: true
+              compact_view: false
+              aqi:
+                entity_id: sensor.zhimi_mb4_b008_pm25_density
+                unit: µg/m³

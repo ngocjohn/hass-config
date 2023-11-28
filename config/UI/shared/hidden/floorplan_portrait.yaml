@@ -1,0 +1,29 @@
+type: custom:local-conditional-card
+default: hide
+id: portrait
+card:
+  type: custom:floorplan-card
+  style: >
+    ha-card {
+      margin: 4% 16% 0 !important;
+      box-shadow: none;
+      opacity: 0;
+      animation: slide-opacity 1000ms cubic-bezier(0.4, 0, 0.2, 1) 500ms both;
+    }
+    @keyframes slide-opacity {
+      0% {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      100% {
+        transform: translateX(0%);
+        opacity: 1;
+      }
+    }
+  config:
+    image: /local/hafloor/ip_floorplan/iphone_opt.svg
+    stylesheet: /local/hafloor/style.css
+    defaults:
+      hover_action: false
+      tap_action: false
+    rules: !include_dir_merge_list /config/UI/floorplan/

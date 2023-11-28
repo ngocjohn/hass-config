@@ -1,0 +1,70 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Entrance & Utility
+    style: >
+      --button-card-border-radius: 10%;
+    card_mod:
+      style:
+        .: |
+
+        hui-grid-card$: |
+          #root {
+            margin: 0.8vw 1vw;
+            grid-gap: 2% !important;
+          }
+    content:
+      type: grid
+      columns: 3
+      cards:
+        - type: custom:button-card
+          entity: light.utility_room_light
+          name: Utility
+          template:
+            - lightpop
+            - icon_light_recessed
+        - type: custom:button-card
+          entity: vacuum.robot_vacuum
+          name: Roborock
+          icon: phu:roborock
+          tap_action: !include ../footer/footer_vacuum.yaml
+          double_tap_action: !include ../footer/footer_vacuum.yaml
+          template:
+            - base
+            - icon_roborock
+
+        - type: custom:button-card
+          entity: switch.washer_dryer_power
+          name: Washer
+          template:
+            - base
+            - icon_washer
+          tap_action: block
+          double_tap_action:
+            action: fire-dom-event
+            browser_mod:
+              service: browser_mod.popup
+              data:
+                title: 'Washer-Dryer'
+                card_mod:
+                  style:
+                    #popup header
+                    .:
+                content:
+                  type: vertical-stack
+                  cards:
+                    - type: entities
+                      entities:
+                        - entity: switch.washer_dryer_power
+                          name: Power
+                          icon: mdi:power
+                          secondary_info: last-changed
+                        - entity: binary_sensor.washer_dryer_door
+                          name: Door
+                        - entity: sensor.washer_dryer_operation_state
+                          name: Operation State
+                        - entity: sensor.washer_dryer_program_progress
+                          name: Program Progress
+                        - entity: sensor.washer_dryer_remaining_program_time
+                          name: Remaining Program Time

@@ -1,0 +1,75 @@
+action: call-service
+service: honeycomb
+service_data:
+  audio: /local/sound/popup.m4a
+  autoclose: true
+  size: 250
+  buttons:
+    #0
+    - icon: phu:light-strip
+      position: 0
+      show: true
+      entity: light.bed_light
+      active: '[[[ return entity.state != "off" ]]]'
+      tap_action:
+        action: call-service
+        service: light.toggle
+        service_data:
+          entity_id: entity
+
+    #1
+    - icon: mdi:shower-head
+      show: true
+      position: 1
+      entity: light.shower_group
+      active: '[[[ return entity.state != "off" ]]]'
+      tap_action:
+        action: call-service
+        service: light.toggle
+        service_data:
+          entity_id: entity
+
+    #2
+    - icon: phu:arlo-baby
+      show: true
+      position: 2
+      entity: switch.lidl_3_gang_socket_l3
+      active: '[[[ return entity.state != "off" ]]]'
+      tap_action:
+        action: call-service
+        service: homeassistant.toggle
+        service_data:
+          entity_id: entity
+    #3
+    - icon: mdi:window-shutter
+      show: true
+      position: 3
+      active: '[[[ return entity.attributes.current_position == 0 ]]]'
+      entity: cover.bedroom_shutters
+      tap_action:
+        action: call-service
+        service: cover.open_cover
+        service_data:
+          entity_id: entity
+    #4
+    - icon: mdi:window-shutter-open
+      show: true
+      position: 4
+      active: '[[[ return entity.attributes.current_position == 100 ]]]'
+      entity: cover.bedroom_shutters
+      tap_action:
+        action: call-service
+        service: cover.close_cover
+        service_data:
+          entity_id: entity
+    #5
+    - icon: mdi:ceiling-light
+      show: true
+      position: 5
+      entity: light.bedroom_main_light
+      active: '[[[ return entity.state != "off" ]]]'
+      tap_action:
+        action: call-service
+        service: light.toggle
+        service_data:
+          entity_id: entity
