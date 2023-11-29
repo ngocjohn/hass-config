@@ -31,7 +31,7 @@ I frequently refresh my configuration files. My current Home Assistant version i
     </thead>
     <tbody>
         <tr>
-            <td>32,748 </td>
+            <td>32,794 </td>
             <td>30</td>
             <td>186</td>
             <td>51</td>
@@ -186,6 +186,7 @@ The floorplan is crafted using the [Ha Floorplan](https://github.com/ExperienceL
 </video>
 
   https://github.com/ngocjohn/hass-config/assets/96962827/77487f2e-3f8e-4362-8767-bc3fd2d08b0a
+
 
 ### Mobile and tablet:
 

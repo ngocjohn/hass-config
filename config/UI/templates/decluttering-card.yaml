@@ -90,7 +90,6 @@ grid_living_room:
           display:none !important;
         {% endif %}
         }
-
 # KITCHEN NORMAL
 grid_kitchen_normal:
   card:
@@ -114,7 +113,6 @@ grid_kitchen_normal:
         light_entity: light.kitchen_table_light
         motion: binary_sensor.motion_sensor_kitchen
         active: sensor.kitchen_active
-
 # KITCHEN DISHWASING
 grid_kitchen_dishwasing:
   card:
@@ -136,10 +134,10 @@ grid_kitchen_dishwasing:
           service: browser_mod.popup
           data:
             title: 'Dishwasher'
-            card_mod:
-              style:
-                #popup header
-                .:
+            # card_mod:
+            #   style:
+            #     #popup header
+            #     .:
             content:
               type: vertical-stack
               cards:
@@ -172,6 +170,8 @@ grid_kitchen_dishwasing:
             entity: timer.dishwasher_remaining
             bar_direction: rt
             invert: true
+            bar_background: '#ffffff4d'
+            bar_foreground: '#e5a00d9e'
       styles:
         card:
           - overflow: hidden
@@ -186,7 +186,7 @@ grid_kitchen_dishwasing:
                     : '97%';
                 ]]]
             - left: -15%
-            - width: 120%
+            - width: 127%
 # BEDROOM
 grid_bedroom:
   card:

@@ -23,30 +23,30 @@ browser_mod:
           name: Table light
           template:
             - lightpop
-            - icon_ensis
+            # - icon_ensis
 
         - type: custom:button-card
           entity: light.kitchen_main_light
           name: Main light
           template:
             - lightpop
-            - icon_light_recessed
+            # - icon_light_recessed
 
         - type: custom:button-card
           entity: light.hood_lighting
           name: Cooker hood
           template:
             - lightpop
-            - icon_light_recessed
+            # - icon_light_recessed
 
           # Cooker Hood
         - type: custom:button-card
           entity: fan.hood_power
           name: 'Hood'
           template:
-            - base
+            - lightpop
             - loader
-            - icon_cookerhood
+            # - icon_cookerhood
           tap_action:
             action: call-service
             service: homeassistant.toggle
@@ -89,9 +89,9 @@ browser_mod:
           entity: switch.hob_power
           name: Hob
           template:
-            - base
+            - lightpop
             - loader
-            - icon_oven
+            # - icon_oven
 
         - type: custom:button-card
           entity: switch.mycka_nadobi_power

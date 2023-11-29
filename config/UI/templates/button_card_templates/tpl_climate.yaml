@@ -94,7 +94,7 @@ airpurifier:
         entities:
           - sensor.average_humidity
         color_thresholds:
-          - value: 40
+          - value: 30
             color: '#D35467'
           - value: 50
             color: '#68C9F0'

@@ -793,6 +793,16 @@ svetla:
 lightpop:
   template:
     - base
+  custom_fields:
+    icon: >
+      [[[
+        return `<ha-icon icon="${entity.attributes.icon}"></ha-icon>`;
+      ]]]
+  styles:
+    custom_fields:
+      icon:
+        - width: 85%
+
   double_tap_action:
     action: fire-dom-event
     browser_mod:

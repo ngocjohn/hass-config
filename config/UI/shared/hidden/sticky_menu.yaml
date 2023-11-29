@@ -20,7 +20,7 @@
           icon:
             - color: >
                 [[[
-                    if (location.pathname === "/lovelace-yaml/summary")
+                    if (location.pathname.split('/').slice(-1) === "summary")
                     return '#ffb300';
                 ]]]
       - type: custom:button-card
@@ -33,7 +33,7 @@
           icon:
             - color: >
                 [[[
-                    if (location.pathname === "/lovelace-yaml/system")
+                    if (location.pathname.split('/').slice(-1) === "system")
                     return '#ffb300';
                 ]]]
       - type: custom:button-card
@@ -46,7 +46,7 @@
           icon:
             - color: >
                 [[[
-                    if (location.pathname === "/lovelace-yaml/map")
+                    if (location.pathname.split('/').slice(-1) === "map")
                     return '#ffb300';
                 ]]]
       - type: custom:button-card
