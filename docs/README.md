@@ -6,9 +6,11 @@ This is where I store all the cool configurations for my Home Assistant system. 
 
 I frequently refresh my configuration files. My current Home Assistant version is 2023.11.3. If you find something you like, don't forget to give my repository a ⭐️!
 
-<video width="100%">
-  <source src="https://github-production-user-asset-6210df.s3.amazonaws.com/96962827/285987130-48cc5542-0ca7-480b-9c95-77aa9464eb10.mp4" type="video/mp4">
+<video width="100%" controls autoplay loop muted>
+  <source src=https://github-production-user-asset-6210df.s3.amazonaws.com/96962827/285987130-48cc5542-0ca7-480b-9c95-77aa9464eb10.mp4" type="video/mp4">
 </video>
+
+  https://github.com/ngocjohn/hass-config/assets/96962827/04aa847e-42fb-46cb-9a97-bc83249684fd
 
 ## Some statistics about my installation:
 
@@ -179,10 +181,11 @@ My dashboard is basically a cool fusion of ideas, mainly inspired by the awesome
 
 The floorplan is crafted using the [Ha Floorplan](https://github.com/ExperienceLovelace/ha-floorplan) Lovelace plugin, and it features interactive controls thanks to the [Honeycomb Menu](https://github.com/Sian-Lee-SA/honeycomb-menu).
 
-<video width="100%" controls>
+<video width="100%" controls autoplay loop muted>
   <source src="https://github-production-user-asset-6210df.s3.amazonaws.com/96962827/286403471-9e4efab5-5bc5-4b71-94d2-37937cf1df77.mp4" type="video/mp4">
 </video>
 
+  https://github.com/ngocjohn/hass-config/assets/96962827/77487f2e-3f8e-4362-8767-bc3fd2d08b0a
 
 ### Mobile and tablet:
 
