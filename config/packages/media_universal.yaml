@@ -1,0 +1,543 @@
+media_player:
+  - platform: universal ### CURRENTLY PLAYING ###
+    name: Currently Playing
+    unique_id: currently_playing
+    children:
+      - media_player.homepod_mass
+      - media_player.spotify
+      - media_player.living_room_tv
+      - media_player.bedroom_tv
+
+  - platform: universal ### CURRENTLY PLAYING ###
+    name: Homepod Airplay Group
+    unique_id: homepod_airplay_media
+    children:
+      - media_player.office
+      - media_player.bathroom_homepod
+      - media_player.bedroom_homepod
+      - media_player.living_room
+
+  - platform: universal ### CURRENTLY PLAYING ###
+    name: MASS Airplay Group
+    children:
+      - media_player.office_2
+      - media_player.bathroom
+      - media_player.bedroom
+      - media_player.living_room_2
+
+template:
+  - select:
+      - name: conditional_media
+        state: >-
+          {% set recently_added = 'Recently added' %}
+          {% set paused_timeout_minutes = 0.5 %}
+          {% set media_players = [
+            states.media_player.spotify,
+            states.sensor.ps5_activity,
+            states.media_player.living_room_tv,
+            states.media_player.mass_airplay_group,
+            states.media_player.bedroom_tv ] %}
+
+          {% macro media(state) %}
+          {% set state = media_players | selectattr('state','eq',state) | list %}
+          {% set last_changed = recently_added if state | length == 0 else state | map(attribute='last_changed') | list | max %}
+            {{ state | selectattr('last_changed','eq', last_changed) | map(attribute='name') | list | join }}
+          {% endmacro %}
+
+          {% set playing = media_players | selectattr('state','eq','playing') | list %}
+          {% set timeout_playing = False if playing | length == 0 else (as_timestamp(now()) - as_timestamp(playing | map(attribute='last_changed') | list | max)) < paused_timeout_minutes * 60 %}
+
+          {% set paused = media_players | selectattr('state','eq','paused') | list %}
+          {% set timeout_paused = False if paused | length == 0 else (as_timestamp(now()) - as_timestamp(paused | map(attribute='last_changed') | list | max)) < paused_timeout_minutes * 60 %}
+
+          {% if playing %}
+            {{ media('playing') if timeout_playing else media('paused') if timeout_paused else media('playing') }}
+          {% elif paused %}
+            {{ media('paused') if timeout_paused else recently_added }}
+          {% else %}
+            {{ recently_added }}
+          {% endif %}
+
+        options: >
+          {% set recently_added = ['Recently added'] %}
+          {% set upcoming_shows = ['Trakt Upcoming Shows'] %}
+          {% set media_players = [
+            states.media_player.spotify,
+            states.sensor.ps5_activity,
+            states.media_player.living_room_tv,
+            states.media_player.mass_airplay_group,
+            states.media_player.bedroom_tv ] %}
+          {{ recently_added + upcoming_shows + media_players | map(attribute='name') | list }}
+
+        select_option:
+          service: select.select_option
+          target:
+            entity_id: select.conditional_media
+          data:
+            option: >
+              {{ option }}
+
+  - sensor:
+      # SENSOR -RECENTLY ADDED MOVIE
+      - unique_id: added_movies
+        name: 'Added movies'
+        state: >-
+          {% if has_value('this.attributes.data') %}
+            {{ this.attributes.data | list | count }}
+          {% endif %}
+        attributes:
+          data: |
+            [
+            {%- for movie in states.sensor.movies_added_data.attributes.movies[0:5] -%}
+            {%- set cztitle = movie._source.i18n_info_labels[0].title %}
+            {%- set originaltitle = movie._source.info_labels.originaltitle %}
+            {%- if cztitle == originaltitle -%}
+            {%- set media_artist = 'null' %}
+            {%- else %} {%- set media_artist = originaltitle %}
+            {%- endif -%}
+            {%- set cast = movie._source.cast | map(attribute='name') | list | join(', ') %}
+            {%- set year = movie._source.info_labels.year | string %}
+            {%- set genre = movie._source.info_labels.genre[:2] | list | join(', ') %}
+            {%- set director = movie._source.info_labels.director | list | join(', ')  %}
+            {%- set studio = movie._source.info_labels.studio | list | join(', ')  %}
+            {%- set plot = movie._source.i18n_info_labels[0].plot | regex_replace('"','') %}
+            {%- set country = movie._source.info_labels.country[:1] | list | join(', ') %}
+            {%- if country is defined -%} {%- set first_country = country -%} {%- endif -%}
+            {%- set art = movie._source.i18n_info_labels[0] %}
+            {%- set poster = movie._source.i18n_info_labels[0].art.poster %}
+            {%- set fanart = movie._source.i18n_info_labels[0].art.fanart %}
+            {%- set available_streams = movie._source.available_streams %}
+            {%- set stream = movie._source.stream_info %}
+            {%- set services = movie._source.services %}
+            {%- set rating = movie._source.ratings %}
+            {%- set tmdb = movie._source.ratings.tmdb %}
+            {%- set trakt = movie._source.ratings.trakt %}
+            {%- if tmdb is defined -%} {% set selected_rating = tmdb.rating  %}
+            {%- elif trakt is defined -%} {% set selected_rating = trakt.rating  %}
+            {%- else %} {% set selected_rating = "" %}
+            {%- endif %}
+            {%- set subtitles = movie._source.available_streams.languages.subtitles.map | select('equalto', 'cs') | join %}
+            {%- if subtitles is defined -%}
+            {%- set selected_language = subtitles %}
+            {%- endif %}
+            {%- if stream.video.height >= 2160 and stream.video.codec == "HEVC" %} {%- set resolution = 'UHD HEVC' %}
+            {%- elif stream.video.height >= 2160 -%} {%- set resolution = '"UHD",' %}
+            {%- elif stream.video.height >= 1080 and stream.video.codec == "HEVC" -%}{%- set resolution = 'HD HEVC' %}
+            {%- elif stream.video.height >= 1080 -%}{%- set resolution = 'HD' %}
+            {%- else %} {%- set resolution = 'SD' %}
+            {%- endif %}
+            {%- if stream.audio.codec == "AAC" %}{%- set audio_codec = 'AAC' %}
+            {%- elif stream.audio.codec == "E-AC-3" %}{%- set audio_codec = 'DDP' %}
+            {%- else %} {%- set audio_codec = stream.audio.codec | lower %}
+            {%- endif %}
+              {
+                "title": "{{ cztitle }}",
+                "original_title": "{{ originaltitle }}",
+                "rating": "{{ selected_rating }}",
+                "country": "{{ first_country }}",
+                "year": {{ year }},
+                "genre": "{{ genre }}",
+                "studio": "{%- if studio is defined -%}{{ studio }}{%- endif -%}",
+                "director": "{%- if director is defined -%}{{ director }}{%- endif -%}",
+                "cast": "{{ cast | replace('"', "'") }}",
+                "plot": "{{ plot }}",
+                "resolution": "{{ resolution }}",
+                "audio": "{{ audio_codec }}",
+                "subtitles": "{{ selected_language | string }}",
+                "stream":{
+                  "video":{%- if stream.video is defined %}{{ stream.video | tojson }} {%- endif -%},
+                  "audio":{%- if stream.audio is defined %}{{ stream.audio | tojson }} {%- endif -%}
+                },
+                "services": {%- if services is defined %} {{ services }}{% endif -%},
+                "entity_picture": "{%- if art.art.poster is defined -%} {{ art.art.poster }}{%- endif -%}"
+              },
+            {%- endfor %}
+            ]
+          unit_of_measurement: movies
+          icon: mdi:movie
+
+      - unique_id: added_movies_2
+        name: 'Added movies_2'
+        state: >-
+          {% if has_value("sensor.added_movies_2") %}
+            {{ states.sensor.added_movies_2.attributes.data[0].title }}
+          {% endif %}
+        attributes:
+          data: |
+            [
+            {%- for movie in states.sensor.movies_added_data.attributes.movies[0:1] -%}
+            {%- set cztitle = movie._source.i18n_info_labels[0].title %}
+            {%- set originaltitle = movie._source.info_labels.originaltitle %}
+            {%- if cztitle == originaltitle -%}
+            {%- set media_artist = 'null' %}
+            {%- else %}
+            {%- set media_artist = originaltitle %}
+            {%- endif -%}
+            {%- set cast = movie._source.cast | map(attribute='name') | list | join(', ') %}
+            {%- set year = movie._source.info_labels.year | string %}
+            {%- set genre = movie._source.info_labels.genre[:2] | list | join(', ') %}
+            {%- set director = movie._source.info_labels.director | list | join(', ')  %}
+            {%- set studio = movie._source.info_labels.studio | list | join(', ')  %}
+            {%- set plot = movie._source.i18n_info_labels[0].plot | regex_replace('"','')  %}
+            {%- set country = movie._source.info_labels.country[:1] | list | join(', ') %}
+            {%- if country is defined -%} {%- set first_country = country -%} {%- endif -%}
+            {%- set art = movie._source.i18n_info_labels[0] %}
+            {%- set poster = movie._source.i18n_info_labels[0].art.poster %}
+            {%- set fanart = movie._source.i18n_info_labels[0].art.fanart %}
+            {%- set available_streams = movie._source.available_streams %}
+            {%- set stream = movie._source.stream_info %}
+            {%- set services = movie._source.services %}
+            {%- set rating = movie._source.ratings %}
+            {%- set tmdb = movie._source.ratings.tmdb %}
+            {%- set trakt = movie._source.ratings.trakt %}
+            {%- if tmdb is defined -%} {% set selected_rating = tmdb.rating  %}
+            {%- elif trakt is defined -%} {% set selected_rating = trakt.rating  %}
+            {%- else %} {% set selected_rating = "" %}
+            {%- endif %}
+            {%- set subtitles = movie._source.available_streams.languages.subtitles.map | select('equalto', 'cs') | join %}
+            {%- if subtitles is defined -%}
+            {%- set selected_language = subtitles %}
+            {%- endif %}
+            {%- if stream.video.height >= 2160 and stream.video.codec == "HEVC" %} {%- set resolution = 'UHD HEVC' %}
+            {%- elif stream.video.height >= 2160 -%} {%- set resolution = '"UHD",' %}
+            {%- elif stream.video.height >= 1080 and stream.video.codec == "HEVC" -%}{%- set resolution = 'HD HEVC' %}
+            {%- elif stream.video.height >= 1080 -%}{%- set resolution = 'HD' %}
+            {%- else %} {%- set resolution = 'SD' %}
+            {%- endif %}
+            {%- if stream.audio.codec == "AAC" %}{%- set audio_codec = 'AAC' %}
+            {%- elif stream.audio.codec == "E-AC-3" %}{%- set audio_codec = 'DDP' %}
+            {%- else %} {%- set audio_codec = stream.audio.codec | lower %}
+            {%- endif %}
+              {
+                "title": "{{ cztitle }}",
+                "original_title": "{{ originaltitle }}",
+                "rating": "{{ selected_rating }}",
+                "country": "{{ first_country }}",
+                "year": {{ year }},
+                "genre": "{{ genre }}",
+                "studio": "{%- if studio is defined -%}{{ studio }}{%- endif -%}",
+                "director": "{%- if director is defined -%}{{ director }}{%- endif -%}",
+                "cast": "{{ cast | replace('"', "'") }}",
+                "plot": "{{ plot }}",
+                "resolution": "{{ resolution }}",
+                "audio": "{{ audio_codec }}",
+                "subtitles": "{{ selected_language | string }}",
+                "stream":{
+                  "video":{%- if stream.video is defined %}{{ stream.video | tojson }} {%- endif -%},
+                  "audio":{%- if stream.audio is defined %}{{ stream.audio | tojson }} {%- endif -%}
+                },
+                "services": {%- if services is defined %} {{ services }}{% endif -%},
+                "entity_picture": "{%- if art.art.poster is defined -%} {{ art.art.poster }}{%- endif -%}"
+              },
+            {%- endfor %}
+            ]
+          unit_of_measurement: movies
+          icon: mdi:movie
+
+      - unique_id: added_movies_3
+        name: 'Added movies_3'
+        state: >-
+          {% if has_value("sensor.added_movies_3") %}
+            {{ states.sensor.added_movies_3.attributes.data[0].title }}
+          {% endif %}
+        attributes:
+          data: |
+            [
+            {%- for movie in states.sensor.movies_added_data.attributes.movies[1:2] -%}
+            {%- set cztitle = movie._source.i18n_info_labels[0].title %}
+            {%- set originaltitle = movie._source.info_labels.originaltitle %}
+            {%- if cztitle == originaltitle -%}
+            {%- set media_artist = 'null' %}
+            {%- else %} {%- set media_artist = originaltitle %}
+            {%- endif -%}
+            {%- set cast = movie._source.cast | map(attribute='name') | list | join(', ') %}
+            {%- set year = movie._source.info_labels.year | string %}
+            {%- set genre = movie._source.info_labels.genre[:2] | list | join(', ') %}
+            {%- set director = movie._source.info_labels.director | list | join(', ')  %}
+            {%- set studio = movie._source.info_labels.studio | list | join(', ')  %}
+            {%- set plot = movie._source.i18n_info_labels[0].plot | regex_replace('"','')  %}
+            {%- set country = movie._source.info_labels.country[:1] | list | join(', ') %}
+            {%- if country is defined -%} {%- set first_country = country -%} {%- endif -%}
+            {%- set art = movie._source.i18n_info_labels[0] %}
+            {%- set poster = movie._source.i18n_info_labels[0].art.poster %}
+            {%- set fanart = movie._source.i18n_info_labels[0].art.fanart %}
+            {%- set available_streams = movie._source.available_streams %}
+            {%- set stream = movie._source.stream_info %}
+            {%- set services = movie._source.services %}
+            {%- set rating = movie._source.ratings %}
+            {%- set tmdb = movie._source.ratings.tmdb %}
+            {%- set trakt = movie._source.ratings.trakt %}
+            {%- if tmdb is defined -%} {% set selected_rating = tmdb.rating  %}
+            {%- elif trakt is defined -%} {% set selected_rating = trakt.rating  %}
+            {%- else %} {% set selected_rating = "" %}
+            {%- endif %}
+            {%- set subtitles = movie._source.available_streams.languages.subtitles.map | select('equalto', 'cs') | join %}
+            {%- if subtitles is defined -%}
+            {%- set selected_language = subtitles %}
+            {%- endif %}
+            {%- if stream.video.height >= 2160 and stream.video.codec == "HEVC" %} {%- set resolution = 'UHD HEVC' %}
+            {%- elif stream.video.height >= 2160 -%} {%- set resolution = '"UHD",' %}
+            {%- elif stream.video.height >= 1080 and stream.video.codec == "HEVC" -%}{%- set resolution = 'HD HEVC' %}
+            {%- elif stream.video.height >= 1080 -%}{%- set resolution = 'HD' %}
+            {%- else %} {%- set resolution = 'SD' %}
+            {%- endif %}
+            {%- if stream.audio.codec == "AAC" %}{%- set audio_codec = 'AAC' %}
+            {%- elif stream.audio.codec == "E-AC-3" %}{%- set audio_codec = 'DDP' %}
+            {%- else %} {%- set audio_codec = stream.audio.codec | lower %}
+            {%- endif %}
+              {
+                "title": "{{ cztitle }}",
+                "original_title": "{{ originaltitle }}",
+                "rating": "{{ selected_rating }}",
+                "country": "{{ first_country }}",
+                "year": {{ year }},
+                "genre": "{{ genre }}",
+                "studio": "{%- if studio is defined -%}{{ studio }}{%- endif -%}",
+                "director": "{%- if director is defined -%}{{ director }}{%- endif -%}",
+                "cast": "{{ cast | replace('"', "'") }}",
+                "plot": "{{ plot }}",
+                "resolution": "{{ resolution }}",
+                "audio": "{{ audio_codec }}",
+                "subtitles": "{{ selected_language | string }}",
+                "stream":{
+                  "video":{%- if stream.video is defined %}{{ stream.video | tojson }} {%- endif -%},
+                  "audio":{%- if stream.audio is defined %}{{ stream.audio | tojson }} {%- endif -%}
+                },
+                "services": {%- if services is defined %} {{ services }}{% endif -%},
+                "entity_picture": "{%- if art.art.poster is defined -%} {{ art.art.poster }}{%- endif -%}"
+              },
+            {%- endfor %}
+            ]
+          unit_of_measurement: movies
+          icon: mdi:movie
+
+      - unique_id: added_movies_4
+        name: 'Added movies_4'
+        state: >-
+          {% if has_value("sensor.added_movies_4") %}
+            {{ states.sensor.added_movies_4.attributes.data[0].title }}
+          {% endif %}
+        attributes:
+          data: |
+            [
+            {%- for movie in states.sensor.movies_added_data.attributes.movies[2:3] -%}
+            {%- set cztitle = movie._source.i18n_info_labels[0].title %}
+            {%- set originaltitle = movie._source.info_labels.originaltitle %}
+            {%- if cztitle == originaltitle -%}
+            {%- set media_artist = 'null' %}
+            {%- else %} {%- set media_artist = originaltitle %}
+            {%- endif -%}
+            {%- set cast = movie._source.cast | map(attribute='name') | list | join(', ') %}
+            {%- set year = movie._source.info_labels.year | string %}
+            {%- set genre = movie._source.info_labels.genre[:2] | list | join(', ') %}
+            {%- set director = movie._source.info_labels.director | list | join(', ')  %}
+            {%- set studio = movie._source.info_labels.studio | list | join(', ')  %}
+            {%- set plot = movie._source.i18n_info_labels[0].plot | regex_replace('"','')  %}
+            {%- set country = movie._source.info_labels.country[:1] | list | join(', ') %}
+            {%- if country is defined -%} {%- set first_country = country -%} {%- endif -%}
+            {%- set art = movie._source.i18n_info_labels[0] %}
+            {%- set poster = movie._source.i18n_info_labels[0].art.poster %}
+            {%- set fanart = movie._source.i18n_info_labels[0].art.fanart %}
+            {%- set available_streams = movie._source.available_streams %}
+            {%- set stream = movie._source.stream_info %}
+            {%- set services = movie._source.services %}
+            {%- set rating = movie._source.ratings %}
+            {%- set tmdb = movie._source.ratings.tmdb %}
+            {%- set trakt = movie._source.ratings.trakt %}
+            {%- if tmdb is defined -%} {% set selected_rating = tmdb.rating  %}
+            {%- elif trakt is defined -%} {% set selected_rating = trakt.rating  %}
+            {%- else %} {% set selected_rating = "" %}
+            {%- endif %}
+            {%- set subtitles = movie._source.available_streams.languages.subtitles.map | select('equalto', 'cs') | join %}
+            {%- if subtitles is defined -%}
+            {%- set selected_language = subtitles %}
+            {%- endif %}
+            {%- if stream.video.height >= 2160 and stream.video.codec == "HEVC" %} {%- set resolution = 'UHD HEVC' %}
+            {%- elif stream.video.height >= 2160 -%} {%- set resolution = '"UHD",' %}
+            {%- elif stream.video.height >= 1080 and stream.video.codec == "HEVC" -%}{%- set resolution = 'HD HEVC' %}
+            {%- elif stream.video.height >= 1080 -%}{%- set resolution = 'HD' %}
+            {%- else %} {%- set resolution = 'SD' %}
+            {%- endif %}
+            {%- if stream.audio.codec == "AAC" %}{%- set audio_codec = 'AAC' %}
+            {%- elif stream.audio.codec == "E-AC-3" %}{%- set audio_codec = 'DDP' %}
+            {%- else %} {%- set audio_codec = stream.audio.codec | lower %}
+            {%- endif %}
+              {
+                "title": "{{ cztitle }}",
+                "original_title": "{{ originaltitle }}",
+                "rating": "{{ selected_rating }}",
+                "country": "{{ first_country }}",
+                "year": {{ year }},
+                "genre": "{{ genre }}",
+                "studio": "{%- if studio is defined -%}{{ studio }}{%- endif -%}",
+                "director": "{%- if director is defined -%}{{ director }}{%- endif -%}",
+                "cast": "{{ cast | replace('"', "'") }}",
+                "plot": "{{ plot }}",
+                "resolution": "{{ resolution }}",
+                "audio": "{{ audio_codec }}",
+                "subtitles": "{{ selected_language | string }}",
+                "stream":{
+                  "video":{%- if stream.video is defined %}{{ stream.video | tojson }} {%- endif -%},
+                  "audio":{%- if stream.audio is defined %}{{ stream.audio | tojson }} {%- endif -%}
+                },
+                "services": {%- if services is defined %} {{ services }}{% endif -%},
+                "entity_picture": "{%- if art.art.poster is defined -%} {{ art.art.poster }}{%- endif -%}"
+              },
+            {%- endfor %}
+            ]
+          unit_of_measurement: movies
+          icon: mdi:movie
+
+      - unique_id: added_movies_5
+        name: 'Added movies_5'
+        state: >-
+          {% if has_value("sensor.added_movies_5") %}
+            {{ states.sensor.added_movies_5.attributes.data[0].title }}
+          {% endif %}
+        attributes:
+          data: |
+            [
+            {%- for movie in states.sensor.movies_added_data.attributes.movies[3:4] -%}
+            {%- set cztitle = movie._source.i18n_info_labels[0].title %}
+            {%- set originaltitle = movie._source.info_labels.originaltitle %}
+            {%- if cztitle == originaltitle -%}
+            {%- set media_artist = 'null' %}
+            {%- else %} {%- set media_artist = originaltitle %}
+            {%- endif -%}
+            {%- set cast = movie._source.cast | map(attribute='name') | list | join(', ') %}
+            {%- set year = movie._source.info_labels.year | string %}
+            {%- set genre = movie._source.info_labels.genre[:2] | list | join(', ') %}
+            {%- set director = movie._source.info_labels.director | list | join(', ')  %}
+            {%- set studio = movie._source.info_labels.studio | list | join(', ')  %}
+            {%- set plot = movie._source.i18n_info_labels[0].plot | regex_replace('"','')  %}
+            {%- set country = movie._source.info_labels.country[:1] | list | join(', ') %}
+            {%- if country is defined -%} {%- set first_country = country -%} {%- endif -%}
+            {%- set art = movie._source.i18n_info_labels[0] %}
+            {%- set poster = movie._source.i18n_info_labels[0].art.poster %}
+            {%- set fanart = movie._source.i18n_info_labels[0].art.fanart %}
+            {%- set available_streams = movie._source.available_streams %}
+            {%- set stream = movie._source.stream_info %}
+            {%- set services = movie._source.services %}
+            {%- set rating = movie._source.ratings %}
+            {%- set tmdb = movie._source.ratings.tmdb %}
+            {%- set trakt = movie._source.ratings.trakt %}
+            {%- if tmdb is defined -%} {% set selected_rating = tmdb.rating  %}
+            {%- elif trakt is defined -%} {% set selected_rating = trakt.rating  %}
+            {%- else %} {% set selected_rating = "" %}
+            {%- endif %}
+            {%- set subtitles = movie._source.available_streams.languages.subtitles.map | select('equalto', 'cs') | join %}
+            {%- if subtitles is defined -%}
+            {%- set selected_language = subtitles %}
+            {%- endif %}
+            {%- if stream.video.height >= 2160 and stream.video.codec == "HEVC" %} {%- set resolution = 'UHD HEVC' %}
+            {%- elif stream.video.height >= 2160 -%} {%- set resolution = '"UHD",' %}
+            {%- elif stream.video.height >= 1080 and stream.video.codec == "HEVC" -%}{%- set resolution = 'HD HEVC' %}
+            {%- elif stream.video.height >= 1080 -%}{%- set resolution = 'HD' %}
+            {%- else %} {%- set resolution = 'SD' %}
+            {%- endif %}
+            {%- if stream.audio.codec == "AAC" %}{%- set audio_codec = 'AAC' %}
+            {%- elif stream.audio.codec == "E-AC-3" %}{%- set audio_codec = 'DDP' %}
+            {%- else %} {%- set audio_codec = stream.audio.codec | lower %}
+            {%- endif %}
+              {
+                "title": "{{ cztitle }}",
+                "original_title": "{{ originaltitle }}",
+                "rating": "{{ selected_rating }}",
+                "country": "{{ first_country }}",
+                "year": {{ year }},
+                "genre": "{{ genre }}",
+                "studio": "{%- if studio is defined -%}{{ studio }}{%- endif -%}",
+                "director": "{%- if director is defined -%}{{ director }}{%- endif -%}",
+                "cast": "{{ cast | replace('"', "'") }}",
+                "plot": "{{ plot }}",
+                "resolution": "{{ resolution }}",
+                "audio": "{{ audio_codec }}",
+                "subtitles": "{{ selected_language | string }}",
+                "stream":{
+                  "video":{%- if stream.video is defined %}{{ stream.video | tojson }} {%- endif -%},
+                  "audio":{%- if stream.audio is defined %}{{ stream.audio | tojson }} {%- endif -%}
+                },
+                "services": {%- if services is defined %} {{ services }}{% endif -%},
+                "entity_picture": "{%- if art.art.poster is defined -%} {{ art.art.poster }}{%- endif -%}"
+              },
+            {%- endfor %}
+            ]
+          unit_of_measurement: movies
+          icon: mdi:movie
+
+      - unique_id: added_movies_6
+        name: 'Added movies_6'
+        state: >-
+          {% if has_value("sensor.added_movies_6") %}
+            {{ states.sensor.added_movies_6.attributes.data[0].title }}
+          {% endif %}
+        attributes:
+          data: |
+            [
+            {%- for movie in states.sensor.movies_added_data.attributes.movies[4:5] -%}
+            {%- set cztitle = movie._source.i18n_info_labels[0].title %}
+            {%- set originaltitle = movie._source.info_labels.originaltitle %}
+            {%- if cztitle == originaltitle -%}
+            {%- set media_artist = 'null' %}
+            {%- else %} {%- set media_artist = originaltitle %}
+            {%- endif -%}
+            {%- set cast = movie._source.cast | map(attribute='name') | list | join(', ') %}
+            {%- set year = movie._source.info_labels.year | string %}
+            {%- set genre = movie._source.info_labels.genre[:2] | list | join(', ') %}
+            {%- set director = movie._source.info_labels.director | list | join(', ')  %}
+            {%- set studio = movie._source.info_labels.studio | list | join(', ')  %}
+            {%- set plot = movie._source.i18n_info_labels[0].plot | regex_replace('"','')  %}
+            {%- set country = movie._source.info_labels.country[:1] | list | join(', ') %}
+            {%- if country is defined -%} {%- set first_country = country -%} {%- endif -%}
+            {%- set art = movie._source.i18n_info_labels[0] %}
+            {%- set poster = movie._source.i18n_info_labels[0].art.poster %}
+            {%- set fanart = movie._source.i18n_info_labels[0].art.fanart %}
+            {%- set available_streams = movie._source.available_streams %}
+            {%- set stream = movie._source.stream_info %}
+            {%- set services = movie._source.services %}
+            {%- set rating = movie._source.ratings %}
+            {%- set tmdb = movie._source.ratings.tmdb %}
+            {%- set trakt = movie._source.ratings.trakt %}
+            {%- if tmdb is defined -%} {% set selected_rating = tmdb.rating  %}
+            {%- elif trakt is defined -%} {% set selected_rating = trakt.rating  %}
+            {%- else %} {% set selected_rating = "" %}
+            {%- endif %}
+            {%- set subtitles = movie._source.available_streams.languages.subtitles.map | select('equalto', 'cs') | join %}
+            {%- if subtitles is defined -%}
+            {%- set selected_language = subtitles %}
+            {%- endif %}
+            {%- if stream.video.height >= 2160 and stream.video.codec == "HEVC" %} {%- set resolution = 'UHD HEVC' %}
+            {%- elif stream.video.height >= 2160 -%} {%- set resolution = '"UHD",' %}
+            {%- elif stream.video.height >= 1080 and stream.video.codec == "HEVC" -%}{%- set resolution = 'HD HEVC' %}
+            {%- elif stream.video.height >= 1080 -%}{%- set resolution = 'HD' %}
+            {%- else %} {%- set resolution = 'SD' %}
+            {%- endif %}
+            {%- if stream.audio.codec == "AAC" %}{%- set audio_codec = 'AAC' %}
+            {%- elif stream.audio.codec == "E-AC-3" %}{%- set audio_codec = 'DDP' %}
+            {%- else %} {%- set audio_codec = stream.audio.codec | lower %}
+            {%- endif %}
+              {
+                "title": "{{ cztitle }}",
+                "original_title": "{{ originaltitle }}",
+                "rating": "{{ selected_rating }}",
+                "country": "{{ first_country }}",
+                "year": {{ year }},
+                "genre": "{{ genre }}",
+                "studio": "{%- if studio is defined -%}{{ studio }}{%- endif -%}",
+                "director": "{%- if director is defined -%}{{ director }}{%- endif -%}",
+                "cast": "{{ cast | replace('"', "'") }}",
+                "plot": "{{ plot }}",
+                "resolution": "{{ resolution }}",
+                "audio": "{{ audio_codec }}",
+                "subtitles": "{{ selected_language | string }}",
+                "stream":{
+                  "video":{%- if stream.video is defined %}{{ stream.video | tojson }} {%- endif -%},
+                  "audio":{%- if stream.audio is defined %}{{ stream.audio | tojson }} {%- endif -%}
+                },
+                "services": {%- if services is defined %} {{ services }}{% endif -%},
+                "entity_picture": "{%- if art.art.poster is defined -%} {{ art.art.poster }}{%- endif -%}"
+              },
+            {%- endfor %}
+            ]
+          unit_of_measurement: movies
+          icon: mdi:movie

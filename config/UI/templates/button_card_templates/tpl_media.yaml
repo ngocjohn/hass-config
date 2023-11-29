@@ -1,0 +1,2481 @@
+#################################################
+#                                               #
+#                  BASE MEDIA                   #
+#                                               #
+#################################################
+
+base_media:
+  variables:
+    media_on: >
+      [[[ return !entity || ['playing', 'on', 'paused'].indexOf(entity.state) !== -1; ]]]
+    media_off: >
+      [[[ return !entity || ['off', 'idle', 'standby', 'unknown', 'unavailable', 'none'].indexOf(entity.state) !== -1; ]]]
+    entity_picture: >
+      [[[ return !entity || entity.attributes.entity_picture; ]]]
+    is_youtube: >
+      [[[
+        let is_youtube = entity?.attributes?.app_id === 'com.google.ios.youtube',
+            shield_youtube = entity?.attributes?.source === 'YouTube',
+            sensor = this?._config?.triggers_update,
+            media_title = entity?.attributes?.media_title,
+            watching_title = states[sensor]?.attributes?.title;
+        if (is_youtube || shield_youtube && media_title === watching_title) {
+            return true;
+        }
+      ]]]
+    is_kodi: >
+      [[[
+        let is_kodi = states['media_player.atv'].attributes.app_id === 'org.xbmc.kodi-tvos',
+            shield_kodi = states['media_player.shieldtv'].attributes.source === 'Kodi';
+        if (is_kodi || shield_kodi) {
+            return true;
+        }
+      ]]]
+  tap_action:
+    action: >
+      [[[
+        return variables.media_on
+            ? 'call-service'
+            : 'none';
+      ]]]
+    service: media_player.media_play_pause
+    service_data:
+      entity_id: >
+        [[[
+          return variables.entity_id;
+        ]]]
+  double_tap_action:
+    action: more-info
+  triggers_update: all
+  styles:
+    state:
+      - color: >
+          [[[
+            return variables.state_on
+                ? 'rgb(139, 51, 51)'
+                : null;
+          ]]]
+    card:
+      - overflow: hidden
+      - color: >
+          [[[
+            let game_image = entity.attributes.title_image;
+            if (variables.is_youtube) {
+                return '#efefef';
+            } else {
+                return entity && game_image !== undefined
+                  ? '#efefef'
+                  : variables.media_on && variables.entity_picture === undefined
+                    ? 'rgba(0, 0, 0, 0.6)'
+                    : variables.media_off
+                        ? '#97989c'
+                        : '#efefef';
+            }
+          ]]]
+      - text-shadow: >
+          [[[
+            let game_image = entity.attributes.title_image;
+            if (variables.is_youtube) {
+                return `1px 1px 5px rgba(18, 22, 23, 0.9)`;
+            } else {
+                return entity && game_image !== undefined
+                  ? `1px 1px 5px rgba(18, 22, 23, 0.9)`
+                  : variables.media_off || variables.entity_picture === undefined
+                    ? 'none'
+                    : '4px 5px 5px rgba(18, 22, 23, 0.9)';
+            }
+          ]]]
+
+#################################################
+#                                               #
+#                     MEDIA                     #
+#                                               #
+#################################################
+
+media:
+  template:
+    - base
+    - base_media
+  styles:
+    custom_fields:
+      icon:
+        - width: 70%
+        - margin-left: 2%
+        - fill: '#9da0a2'
+        - display: >
+            [[[
+              let game_image = entity.attributes.title_image;
+              if (variables.is_youtube) {
+                  return 'none';
+              }
+              else {
+                  return entity && game_image !== undefined
+                  ? 'none'
+                  : variables.media_off || variables.entity_picture === undefined
+                      ? 'initial'
+                      : 'none';
+              }
+            ]]]
+    card:
+      - background-color: none
+      - background-size: cover
+      - background-position: center
+      - background-image: >
+          [[[
+            let game_image = entity.attributes.title_image;
+            if (variables.is_youtube) {
+                return `linear-gradient(0deg, rgba(0,0,0,.8) 0%, rgba(0,0,0,0) 100%), url(${states[this._config?.triggers_update].state})`;
+            } else {
+                return entity && game_image !== undefined
+                  ? `linear-gradient(0deg, rgba(0,0,0,.8) 0%, rgba(0,0,0,0) 100%), url(${game_image})`
+                  : variables.media_on && variables.entity_picture === undefined
+                    ? 'linear-gradient(0deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.8) 100%)'
+                    : variables.media_off
+                        ? 'linear-gradient(0deg, rgba(115, 115, 115, 0.2) 0%, rgba(115, 115, 115, 0.2) 100%)'
+                        : `linear-gradient(0deg, rgba(0,0,0,.8) 0%, rgba(0,0,0,0) 100%), url(${variables.entity_picture})`;
+            }
+          ]]]
+
+#################################################
+#                                               #
+#               CONDITIONAL MEDIA               #
+#                                               #
+#################################################
+
+conditional_media:
+  aspect_ratio: 1000/996
+  template:
+    - base
+    - base_media
+    - icon_play_pause
+    # - icon_playing_bars
+  variables:
+    i: >
+      [[[
+        if (entity) {
+            let data = entity.attributes.data;
+            return data === undefined || Math.floor(Math.random() * (data.length - 1)) + 1;
+        }
+      ]]]
+  state_display: >
+    [[[
+      let horizontalStack = this.getRootNode().host,
+          swipeCard = horizontalStack.getRootNode().host,
+          gridTitle = swipeCard.getRootNode().querySelector("h1");
+
+      swipeCard.swiper.on("slideChange", () => {
+          if (swipeCard.swiper.realIndex === 0) {
+              gridTitle.textContent = "Media";
+          }
+          else if (swipeCard.swiper.realIndex === 1) {
+              gridTitle.textContent = "Players";
+          }
+      });
+      if (entity) {
+          let elt = this.shadowRoot,
+              await = setTimeout(marquee, 100),
+              data = entity.attributes.data,
+              artist = entity.attributes.media_artist,
+              title = entity.attributes.media_title,
+              originaltitle = entity.attributes.originaltitle,
+              game_title = entity.attributes.title_name;
+
+          var output = artist === undefined && title !== undefined
+            ? title
+            : game_title !== undefined
+              ? `${game_title}`
+              : title === undefined && artist !== undefined
+                  ? artist
+                  : title !== undefined && artist !== undefined
+                      ? `<div id="title" style="font-weight: 800; text-transform: uppercase; font-family: Raleway; letter-spacing: 0.07vw;">${title}</div><span style="font-size: 0.90em; color: #efefefd1; font-family: Raleway; text-transform: capitalize; letter-spacing: 0.03vw;">${artist}</span>`
+                      : variables.translate_idle;
+
+
+          function marquee() {
+              let state = elt.getElementById("title"),
+                  container = elt.getElementById("container");
+
+              if (state && container) {
+                  state.innerHTML = title;
+                  let ro = new ResizeObserver(entries => {
+                      let spacer = "&nbsp;".repeat(3),
+                          s = entries[0],
+                          c = entries[1],
+                          r = s && s.contentRect &&
+                              c && c.contentRect &&
+                              s.contentRect.width !== 0 &&
+                              c.contentRect.width !== 0;
+
+                      if (r && s.contentRect.width < c.contentRect.width) {
+                          state.classList.remove("marquee");
+                      }
+                      else if (r && s.contentRect.width >= c.contentRect.width) {
+                          state.innerHTML = `${title} ${spacer} ${title} &nbsp;`;
+                          state.classList.add("marquee");
+                      }
+                  });
+                  ro.observe(state);
+                  ro.observe(container);
+              }
+          }
+          return output;
+      }
+    ]]]
+  # tap_action:
+  #   action: call-service
+  #   service: media_player.media_play_pause
+  #   service_data:
+  #     entity_id: >
+  #       [[[ return variables.entity_id; ]]]
+  # double_tap_action:
+  #   action: call-service
+  #   service: media_player.media_next_track
+  #   service_data:
+  #     entity_id: >
+  #       [[[ return variables.entity_id; ]]]
+  styles:
+    grid:
+      - gap: 0.65%
+    name:
+      - justify-self: flex-start
+      - line-height: 120%
+      - padding: 0.2vw
+      - margin: -0.2vw
+      - color: rgba(255,255,255,0.6)
+      - display: >
+          [[[
+            if (window.matchMedia('(max-width: 800px)').matches)
+              return 'none';
+            if (window.matchMedia('(max-width: 1440px)').matches)
+              return 'block';
+            else return 'block';
+          ]]]
+    state:
+      - line-height: 120%
+      - padding-bottom: 1.5%
+      - max-width: unset
+      - text-shadow: 3px 1px 4px black
+      - text-transform: uppercase
+      - padding-bottom: >
+          [[[
+            return window.matchMedia('(max-width: 800px)').matches
+              ? '4%'
+              : '10.5%';
+          ]]]
+
+      # - overflow: visible
+    card:
+      - padding: 5.75% 5.75% 0 5.75%
+      - border-radius: calc(var(--button-card-border-radius) / 2)
+      - background: &media_background >
+          [[[
+            if (entity) {
+              if (variables.is_youtube) {
+                  return `rgba(115, 115, 115, 0.2) center center/cover no-repeat`;
+              } else {
+                let data = entity.attributes.data;
+                return data && (data[variables.i].entity_picture)
+                    ? `rgba(115, 115, 115, 0.2) center center/cover no-repeat`
+                    :  data && (data[variables.i].fanart)
+                      ? `rgba(115, 115, 115, 0.2) top center/cover no-repeat`
+                      : `rgba(115, 115, 115, 0.2) center center/cover no-repeat`;
+              }
+            }
+          ]]]
+      - background-image: &media_background_image >
+          [[[
+            if (entity) {
+              if (variables.is_youtube) {
+                  return `url(${states[this._config?.triggers_update].attributes.entity_picture})`;
+              }
+              if (entity?.attributes?.app_id === 'com.google.ios.youtubekids') {
+                  return `url(/local/img/channels/youtubekids.png)`;
+              } else {
+                let data = entity.attributes.data,
+                game_image = entity.attributes.title_image;
+                return game_image !== undefined
+                  ? `url("${game_image}")`
+                  : data && (data[variables.i].entity_picture || data[variables.i].fanart)
+                    ? `linear-gradient(to top, rgba(0, 0, 0, .65) 0%, rgba(0, 0, 0, 0) 100%), url("${data[variables.i].entity_picture}"), url("${data[variables.i].fanart}")`
+                    : `url("${variables.entity_picture}")`;
+              }
+            }
+          ]]]
+      - color: >
+          [[[
+            return entity === undefined
+                ? '#97989c'
+                : '#efefef';
+          ]]]
+      - text-shadow: >
+          [[[
+            return entity === undefined
+                ? 'none'
+                : '1px 1px 5px rgba(18, 22, 23, 0.9)';
+          ]]]
+    custom_fields:
+      icon:
+        - width: 30%
+        - fill: >
+            [[[
+              return entity && variables.media_on
+                  ? 'rgba(255, 255, 255, 0.80)'
+                  : '#9da0a2';
+            ]]]
+      blur_overlay:
+        - display: block
+        - position: absolute
+        - width: 115%
+        - height: 115%
+        - filter: var(--blur-intensity)
+        - clip-path: >
+            [[[
+              if (entity) {
+                if (variables.is_youtube) {
+                    return `inset(74% 3.45% 3.45% 5.45% round 0 0 calc(var(--button-card-border-radius) / 2) calc(var(--button-card-border-radius) / 2))`;
+                } else {
+                  return `inset(80% 3.45% 3.45% 5.45% round 0 0 calc(var(--button-card-border-radius) / 2) calc(var(--button-card-border-radius) / 2))`;
+                }
+              }
+            ]]]
+        - background: *media_background
+        - background-image: *media_background_image
+        - left: -10%
+        - bottom: -5%
+  custom_fields:
+    blur_overlay: >
+      [[[
+        setTimeout(() => {
+            let elt = this.shadowRoot,
+                card = elt.getElementById('card'),
+                container = elt.getElementById('container'),
+                blur_overlay = elt.getElementById('blur_overlay');
+
+            if (elt && card && container && blur_overlay) {
+                card.insertBefore(blur_overlay, container);
+            }
+          }, 0);
+        return ' ';
+      ]]]
+
+#################################################
+#                                               #
+#         CONDITIONAL MEDIA SHOWS               #
+#                                               #
+#################################################
+
+conditional_media_shows:
+  aspect_ratio: 1000/996
+  show_name: false
+  template:
+    - base
+  variables:
+    i: >
+      [[[
+        if (entity) {
+            let data = entity.attributes.data;
+            return data === undefined || Math.floor(Math.random() * (data.length - 1)) + 1;
+        }
+      ]]]
+  state_display: >
+    [[[
+      let horizontalStack = this.getRootNode().host,
+          swipeCard = horizontalStack.getRootNode().host,
+          gridTitle = swipeCard.getRootNode().querySelector("h1");
+
+      swipeCard.swiper.on("slideChange", () => {
+          if (swipeCard.swiper.realIndex === 0) {
+              gridTitle.textContent = "Movies";
+          }
+          else if (swipeCard.swiper.realIndex === 1) {
+              gridTitle.textContent = "TV Shows";
+          }
+      });
+
+      if (entity) {
+          let elt = this.shadowRoot,
+              await = setTimeout(marquee, 100),
+              data = entity.attributes.data;
+
+            if (data !== undefined) {
+              let airdate = new Date(Date.parse(data[variables.i].airdate)),
+                  datestring = airdate.getDate() + "-" + (airdate.getMonth()+1) + "-" + airdate.getFullYear(),
+                  showepisode = data[variables.i].episode,
+                  showtitle = data[variables.i].title;
+
+              var title = `<span style="font-weight: 700; text-transform: uppercase; color: #ffffffcc;">${data[variables.i].title}</span>`;
+
+              var episode = `<span style="text-transform: capitalize; font-family: Raleway;">${data[variables.i].episode}</span>`;
+
+              var number = data[variables.i].number === undefined && data[variables.i].airdate !== undefined
+                  ? `(${data[variables.i].airdate.split("-")[0]})`
+                  : data[variables.i].number === undefined && data[variables.i].airdate === undefined
+                      ? ' '
+                      : (data[variables.i].number).match(/.{1,3}/g)[0] + "·" + (data[variables.i].number).match(/.{1,3}/g)[1];
+
+              var title_episode = `<span style="font-weight: 700; text-transform: uppercase; color: #ffffffcc;">${data[variables.i].title}</span>&nbsp;·&nbsp <span style="text-transform: capitalize; font-family: Raleway;">${data[variables.i].episode}</span>`;
+
+              var output = window.matchMedia('(max-width: 800px)').matches
+                ? `
+                <div id="title">${title}&nbsp;·&nbsp${episode}</div>
+                <span class="year" role="img">${number}</span>
+                <span class="info" style="color: #ffffff80;">${datestring}</span>
+                  `
+                : `
+                <div id="title">${title}</div>
+                <div>${episode}</div>
+                <span class="year" role="img">${number}</span>
+                <span class="info" style="color: #ffffff80;">${datestring}</span>
+                `
+            }
+
+              function marquee() {
+                  let state = elt.getElementById("title"),
+                      container = elt.getElementById("container");
+
+                  if (state && container) {
+                      state.innerHTML = title;
+                      let ro = new ResizeObserver(entries => {
+                          let spacer = "&nbsp;".repeat(3),
+                              s = entries[0],
+                              c = entries[1],
+                              r = s && s.contentRect &&
+                                  c && c.contentRect &&
+                                  s.contentRect.width !== 0 &&
+                                  c.contentRect.width !== 0;
+
+                          if (r && s.contentRect.width < c.contentRect.width) {
+                              state.classList.remove("marquee");
+                          }
+                          else if (r && s.contentRect.width >= c.contentRect.width) {
+                              state.innerHTML = `${title_episode} ${spacer} ${title_episode} &nbsp;`;
+                              state.classList.add("marquee");
+                          }
+                      });
+                      ro.observe(state);
+                      ro.observe(container);
+                  }
+              }
+              return output;
+      }
+    ]]]
+  styles:
+    grid:
+      - gap: 0.65%
+    name:
+      - justify-self: flex-start
+      - line-height: 123%
+      - padding: 0.2vw
+      - margin: -0.2vw
+
+    state:
+      - line-height: 130%
+      - padding-bottom: 1.5%
+      - color: #ffffffcc
+      - text-shadow: black 3px 2px 4px
+
+    card:
+      - padding: 5.75% 5.75% 0 5.75%
+      - border-radius: calc(var(--button-card-border-radius) / 2)
+      - background: *media_background
+      - background-image: *media_background_image
+      - color: >
+          [[[
+            return entity === undefined
+                ? '#97989c'
+                : '#efefef';
+          ]]]
+      - text-shadow: >
+          [[[
+            return entity === undefined
+                ? 'none'
+                : '1px 1px 5px rgba(18, 22, 23, 0.9)';
+          ]]]
+    custom_fields:
+      icon:
+        - width: 30%
+        - fill: >
+            [[[
+              return entity && variables.media_on
+                  ? 'rgba(255, 255, 255, 0.80)'
+                  : '#9da0a2';
+            ]]]
+      blur_overlay:
+        - display: block
+        - position: absolute
+        - width: 110%
+        - height: 110%
+        - filter: var(--blur-intensity)
+        - clip-path: >
+            inset(77.5% 3.45% 1.45% 5.45% round 0 0 calc(var(--button-card-border-radius) / 2) calc(var(--button-card-border-radius) / 2))
+        - background: *media_background
+        - background-image: *media_background_image
+        - left: -6%
+        - bottom: -2%
+  custom_fields:
+    blur_overlay: >
+      [[[
+        setTimeout(() => {
+            let elt = this.shadowRoot,
+                card = elt.getElementById('card'),
+                container = elt.getElementById('container'),
+                blur_overlay = elt.getElementById('blur_overlay');
+
+            if (elt && card && container && blur_overlay) {
+                card.insertBefore(blur_overlay, container);
+            }
+          }, 0);
+        return ' ';
+      ]]]
+
+#################################################
+#                                               #
+#          ADDED MOVIES                         #
+#                                               #
+#################################################
+
+added_movies_base:
+  template:
+    - base
+  aspect_ratio: 1000/996
+  show_state: true
+  show_label: true
+  tap_action: block
+  styles:
+    grid:
+      - grid-template-areas: |
+          "poster"
+          "l"
+          "n"
+          "s"
+      - grid-template-columns: 1fr
+      - grid-template-rows: auto repeat(3, min-content)
+      - gap: 0
+      - align-items: start
+      - -webkit-backdrop-filter: var(--blur-intensity)
+      - backdrop-filter: var(--blur-intensity)
+    name:
+      - justify-self: flex-start
+      - line-height: 100%
+      - color: rgba(255,255,255,0.6)
+    state:
+      - justify-self: flex-start
+      - line-height: 123%
+      - padding: 2% 5%
+      - width: unset
+      - color: #ffffffcc
+      - text-shadow: black 3px 2px 4px
+    label:
+      - position: absolute
+      - width: unset
+      - justify-self: center
+      - bottom: 10%
+      - overflow: visible
+    card:
+      - padding: 5.75% 5.75% 0 5.75%
+      - border-radius: 5%
+      - padding: 0
+      - background-color: '#00000'
+      - overflow: hidden
+      - background: >
+          [[[
+            if (entity) {
+              let data = entity.attributes.data;
+                if (data && data[0].entity_picture) {
+                  return  `center center/cover no-repeat`;
+                }
+                else {
+                  return  `center center/contain no-repeat`;
+                }
+            }
+          ]]]
+      - background-image: >
+          [[[
+            if (entity) {
+              let data = entity.attributes.data;
+                if (data && data[0].entity_picture) {
+                  return `linear-gradient(to top, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 0) 100%), url("${data[0].entity_picture}")`;
+                }
+                else {
+                  return `url("/local/img/movie_time.png")`;
+                }
+            }
+          ]]]
+
+added_movies:
+  template:
+    - added_movies_base
+  show_state: true
+  show_label: true
+  show_name: false
+  double_tap_action:
+    action: fire-dom-event
+    local_conditional_card:
+      action: set
+      ids:
+        - landscape: hide
+        - portrait: hide
+        - ymovie: show
+  # tap_action: !include /config/ui/popup/movie.yaml
+  tap_action:
+    action: fire-dom-event
+    browser_mod:
+      service: browser_mod.popup
+      data:
+        style: |
+          --popup-min-width: 1400px;
+        card_mod:
+          style:
+            #popup header
+            .: |
+              @media (max-width: 450px), (max-height: 500px) {
+                ha-dialog {
+                  --mdc-dialog-min-width: 100vw !important;
+                  --mdc-dialog-min-height: 100vh !important;
+                  --popup-border-radius: 0 !important;
+                }
+              }
+              .content .container {
+                padding: 0 !important;
+              }
+        title: >
+          [[[
+            if (entity) {
+                let data = entity.attributes.data;
+
+              if (data !== undefined) {
+                let title = data[0].title;
+                return `${title}`;
+              }
+            }
+          ]]]
+        content:
+          type: custom:layout-card
+          layout_type: custom:grid-layout
+          layout:
+            margin: 0
+            grid-template-columns: 1fr
+            grid-template-rows: fit-content(100%)
+          cards:
+            - type: iframe
+              aspect_ratio: >
+                [[[
+                  if (window.matchMedia('(max-width: 800px)').matches)
+                    return '180%';
+                  else return '100%';
+                ]]]
+              url: >
+                [[[
+                  if (entity) {
+                      let data = entity.attributes.data;
+                    if (data !== undefined) {
+                      let tmdb = data[0].services.tmdb;
+                      return `https://www.themoviedb.org/movie/${tmdb}`;
+                    }
+                  }
+                ]]]
+
+  label: >
+    [[[
+      if (entity) {
+          let data = entity.attributes.data;
+
+        if (data !== undefined) {
+          let country = data[0].country,
+              resolution = data[0].resolution,
+              subtitles = data[0].subtitles,
+              audio = data[0].audio;
+
+          var country_select = (country.length > 4) ? '' : country;
+
+          var resolution_icon = 'badge badge--sdh';
+            if (resolution == 'UHD HEVC' || resolution == 'UHD' ) { resolution_icon = 'badge badge--4k'};
+            if (resolution == 'HD HEVC' || resolution == 'HD' ) { resolution_icon = 'badge badge--hd'};
+            if (resolution == 'SD') { resolution_icon = 'badge badge--sdh' };
+
+          var audio_codec = '';
+            if (audio == 'AAC') { audio_codec = 'badge badge--dd'};
+            if (audio == 'DDP') { audio_codec = 'badge badge--ddp'};
+
+          var sub = '';
+            if (subtitles == 'cs') { sub = 'badge badge--cc'};
+          let quality = `
+            <div id="quality">
+            <span class="${audio_codec}" role="img"></span>
+            <span class="${resolution_icon}" role="img"></span>
+            <span class="${sub}" role="img"></span>
+            </div>
+          `;
+        return `${quality}`;
+        }
+      }
+    ]]]
+  state_display: >
+    [[[
+
+      if (entity) {
+          let elt = this.shadowRoot,
+              await = setTimeout(marquee, 100),
+              data = entity.attributes.data;
+
+        if (data !== undefined) {
+          let cztitle = data[0].title,
+              originaltitle = data[0].original_title,
+              country = data[0].country,
+              rating = data[0].rating,
+              year = data[0].year,
+              genre = data[0].genre,
+              resolution = data[0].resolution,
+              subtitles = data[0].subtitles,
+              plot = data[0].plot,
+              audio = data[0].audio;
+
+          var country_select = (country.length > 4) ? ' ' : country;
+
+          var resolution_icon = 'badge badge--sdh';
+            if (resolution == 'UHD HEVC' || resolution == 'UHD' ) { resolution_icon = 'badge badge--4k'};
+            if (resolution == 'HD HEVC' || resolution == 'HD' ) { resolution_icon = 'badge badge--hd'};
+            if (resolution == 'SD') { resolution_icon = 'badge badge--sdh' };
+
+          var audio_codec = '';
+            if (audio == 'AAC') { audio_codec = 'badge badge--dd'};
+            if (audio == 'DDP') { audio_codec = 'badge badge--ddp'};
+
+          var sub = '';
+            if (subtitles == 'cs') { sub = 'badge badge--cc'};
+
+          var info =  originaltitle !== undefined && genre === undefined
+            ? `${originaltitle}`
+            : `&nbsp;·&nbsp${genre}`;
+
+          var title = cztitle == originaltitle
+            ? `<span style="font-weight: 700; text-transform: uppercase; letter-spacing: 2px;">${cztitle}</span>`
+            : `<span style="font-weight: 700; text-transform: uppercase;">${cztitle}</span>&nbsp;·&nbsp<span style="text-transform: capitalize; font-family: Raleway;">${originaltitle}</span>`;
+
+          var output = `
+            <div id="title">${title}</div>
+            <span class="year" role="img">${year}&nbsp;·&nbsp${country}</span>
+            <span class="info" style="color: #ffffff80;">${info}</span>
+            `;
+        }
+          function marquee() {
+              let state = elt.getElementById("title"),
+                  container = elt.getElementById("container");
+
+              if (state && container) {
+                  state.innerHTML = title;
+                  let ro = new ResizeObserver(entries => {
+                      let spacer = "&nbsp;".repeat(3),
+                          s = entries[0],
+                          c = entries[1],
+                          r = s && s.contentRect &&
+                              c && c.contentRect &&
+                              s.contentRect.width !== 0 &&
+                              c.contentRect.width !== 0;
+
+                      if (r && s.contentRect.width < c.contentRect.width) {
+                          state.classList.remove("marquee");
+                      }
+                      else if (r && s.contentRect.width >= c.contentRect.width) {
+                          state.innerHTML = `${title} ${spacer} ${title} &nbsp;`;
+                          state.classList.add("marquee");
+                      }
+                  });
+                  ro.observe(state);
+                  ro.observe(container);
+              }
+          }
+          return output;
+      }
+    ]]]
+
+  custom_fields:
+    rating: >
+      [[[
+        if (entity) {
+            let data = entity.attributes.data;
+
+          if (data !== undefined) {
+            let rating = Math.round((data[0].rating * 10));
+
+            var stroke = '#20d07b';
+              if (rating <= 40) { stroke = '#ff0000' };
+              if (rating <= 60) { stroke = '#ffcc00' };
+
+            let path = `
+              <svg viewBox="0 0 36 36" class="circular-chart green">
+                <style>
+                  .flex-wrapper {
+                    display: flex;
+                    flex-flow: row nowrap;
+                  }
+
+                  .single-chart {
+                    width: 33%;
+                    justify-content: space-around;
+                  }
+
+                  .circle-bg {
+                    fill: #000000;
+                    stroke: #ffffff85;
+                    stroke-width: 3.8;
+                  }
+
+                  .circle {
+                    fill: none;
+                    stroke-width: 2.8;
+                    stroke-linecap: round;
+                    animation: progress;
+                    animation-duration: 6s;
+                    animation-iteration-count: infinite;
+                    animation-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+                  }
+
+                  @keyframes progress {
+                    0% {
+                      stroke-dasharray: 0 100;
+                    }
+                  }
+                  tspan {
+                    font-size: 10px;
+                  }
+                  text {
+                    font-size: 12px;
+                    font-weight: 500;
+                    letter-spacing: -0.03rem;
+                    fill: #ffffff;;
+                  }
+                  #circle_value, tspan {
+                    text-anchor: middle;
+                    dominant-baseline: central;
+                  }
+                  .circular-chart.green .circle {
+                    stroke: ${stroke};
+                  }
+
+                  .percentage {
+                    fill: #ffffff;
+                    font-family: Poppins;
+                    font-size: 0.6em;
+                    font-weight: 700;
+                    text-anchor: middle;
+                  }
+                </style>
+              <g class="flex-wrapper">
+                <g class="single-chart">
+                  <path class="circle-bg" d="M18 2.0845
+                  a 15.9155 15.9155 0 0 1 0 31.831
+                  a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                <path class="circle" stroke-dasharray="${rating}, 100" d="M18 2.0845
+                  a 15.9155 15.9155 0 0 1 0 31.831
+                  a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                <text id="circle_value" x="50%" y="52%" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle" >${rating}<tspan dx=".2" dy="-.4">%</tspan></text>
+              </g>
+            </g>
+          </svg>
+          `;
+
+          return `${path}`;
+          }
+        }
+      ]]]
+    poster: ''
+
+  styles:
+    custom_fields:
+      rating:
+        - display: block
+        - position: absolute
+        - top: 5%
+        - left: 5%
+        - width: 15%
+      poster:
+        - justify-self: center
+        - overflow: hidden
+        - margin: 1.5% 0 0.5%
+        - width: 58%
+        - height: 99%
+        - border-radius: 5%
+        - background-origin: border-box
+        - background: >
+            [[[
+              if (entity) {
+                let data = entity.attributes.data;
+                  if (data && data[0].entity_picture) {
+                    return  `center center/100% no-repeat`;
+                  }
+                  else {
+                    return `center center/contain no-repeat`;
+                  }
+              }
+            ]]]
+        - background-image: >
+            [[[
+              if (entity) {
+                let data = entity.attributes.data;
+                  if (data && data[0].entity_picture) {
+                    return `linear-gradient(to top, rgba(0, 0, 0, .9) 0%, rgba(0, 0, 0, 0) 30%), url("${data[0].entity_picture}")`;
+                  }
+                else {
+                  return `url("/local/img/movie_time.png")`;
+                }
+              }
+            ]]]
+
+#################################################
+#                                               #
+#               PROGRESS BAR                    #
+#                                               #
+#################################################
+
+progress_bar:
+  styles:
+    custom_fields:
+      progress:
+        - background-color: var(--progress-bar-background-color)
+        - position: absolute
+        - left: 0%
+        - top: unset
+        - bottom: 0px
+        # - top: >
+        #     [[[
+        #       if (entity) {
+        #         if (variables.is_youtube) {
+        #             return '75%';
+        #         } else {
+        #           return '82%';
+        #         }
+        #       }
+        #     ]]]
+        - height: var(--progress-bar-height)
+        - width: 100%
+      bar:
+        - background-color: var(--progress-bar-color)
+        - position: absolute
+        - left: 0%
+        - top: unset
+        - bottom: 0px
+        # - top: >
+        #     [[[
+        #       if (entity) {
+        #         if (variables.is_youtube) {
+        #             return '75%';
+        #         } else {
+        #           return '82%';
+        #         }
+        #       }
+        #     ]]]
+        - height: var(--progress-bar-height)
+        - z-index: 1
+        - transition: 1s ease-out
+  custom_fields:
+    bar: >
+      [[[
+        if (entity.attributes.media_position !== undefined) {
+        setTimeout(() => {
+          let elt = this.shadowRoot,
+              card = elt.getElementById('card'),
+              container = elt.getElementById('container'),
+              bar = elt.getElementById('bar');
+
+          if (elt && card && container && bar) {
+              card.insertBefore(bar, container);
+                function update() {
+                  let mediaPositionUpdatedAt = entity.attributes.media_position_updated_at,
+                      mediaPosition = entity.attributes.media_position,
+                      mediaDuration = entity.attributes.media_duration,
+                      mediaContentType = entity.attributes.media_content_type;
+
+                  let percentage = entity.state === 'paused'
+                    ? (mediaPosition / mediaDuration * 100)
+                    : entity.state === 'playing'
+                      ? (((Date.now() / 1000) - (new Date(mediaPositionUpdatedAt).getTime() / 1000) + mediaPosition) / mediaDuration * 100)
+                      : 0;
+
+                  bar.style.width = percentage.toFixed(1) + '%';
+                  requestAnimationFrame(update);
+                }
+                requestAnimationFrame(update);
+          }
+        }, 0);
+        return ' ';}
+      ]]]
+    progress: >
+      [[[
+        if (entity.attributes.media_position !== undefined) {
+        setTimeout(() => {
+            let elt = this.shadowRoot,
+                card = elt.getElementById('card'),
+                container = elt.getElementById('container'),
+                progress = elt.getElementById('progress');
+
+            if (elt && card && container && progress) {
+                card.insertBefore(progress, container);
+            }
+          }, 0);
+        return ' ';}
+      ]]]
+
+#################################################
+#                                               #
+#               MEDIA PLAYER                    #
+#                                               #
+#################################################
+
+mediaplayer:
+  template:
+    - base
+    - circle
+    - loader
+    - icon_tv
+  state_display: >
+    [[[
+      return variables.state === 'off' ? " " : null;
+    ]]]
+  variables:
+    state_on: >
+      [[[ return ['on', 'idle', 'playing', 'paused', 'standby'].indexOf(!entity || entity.state) !== -1; ]]]
+    circle_input: >
+      [[[
+        if (entity) {
+          // if light group get brightness from child to remove bounce
+          let volume = Math.round(entity.attributes.volume_level * 100)
+          return volume === 0 && entity.state !== 'off'
+            ? 1
+            : volume
+        }
+      ]]]
+    circle_input_unit: '%'
+
+currently_playing:
+  template:
+    - conditional_media
+    - progress_bar
+    - icon_spotify_color
+  variables:
+    tilt_enable: >
+      [[[
+        return false;
+      ]]]
+    entity_id: >
+      [[[ return !entity || entity.entity_id; ]]]
+  tap_action:
+    action: call-service
+    service: media_player.media_play_pause
+    service_data:
+      entity_id: >
+        [[[ return variables.entity_id; ]]]
+  custom_fields:
+    spotify:
+      card:
+        type: custom:mushroom-media-player-card
+        entity: >
+          [[[ return entity.entity_id; ]]]
+        use_media_info: false
+        media_controls: []
+        fill_container: false
+        show_volume_level: false
+        collapsible_controls: false
+        volume_controls: []
+        icon_type: none
+        secondary_info: none
+        primary_info: none
+        card_mod:
+          style: |
+            ha-card:before {
+              transform: translate3d(0,0,0);
+              -webkit-transform: translate3d(0,0,0);
+              content: "";
+              background:
+                {% if is_state('media_player.mass_airplay_group', 'playing') %}
+                  url( '{{ state_attr('media_player.mass_airplay_group', "entity_picture") }}')
+                {% else %}
+                  url( '{{ state_attr('media_player.spotify', "entity_picture") }}')
+                {% endif %} center no-repeat;
+              background-size: contain;
+              filter: drop-shadow(4px 4px 6px rgba(0, 0, 0, 0.5));
+              border-radius: var(--control-border-radius);
+              aspect-ratio: 1 / 1;
+            }
+
+    media_card_speaker:
+      card:
+        type: picture-elements
+        image: /local/img/svg/overlay.svg
+        card_mod:
+          style: |
+            ha-card {
+              --ha-card-background: none !important;
+            }
+        elements:
+          - type: 'custom:button-card'
+            icon: 'mdi:dots-vertical'
+            entity: >
+              [[[ return entity.entity_id; ]]]
+            template: music_card_speaker_button
+            style:
+              right: '-5%'
+              top: 5%
+              height: 10%
+              width: 10%
+            tap_action:
+              haptic: medium
+              action: more-info
+            hold_action:
+              action: none
+          - type: 'custom:button-card'
+            icon: 'mdi:skip-previous'
+            entity: >
+              [[[ return entity.entity_id; ]]]
+            template: music_card_speaker_button
+            style:
+              right: 80%
+              top: 50%
+              height: 15%
+              width: 15%
+            tap_action:
+              action: call-service
+              service: media_player.media_previous_track
+              service_data:
+                entity_id: >
+                  [[[ return variables.entity_id; ]]]
+              haptic: medium
+          - type: 'custom:button-card'
+            icon: 'mdi:skip-next'
+            entity: >
+              [[[ return entity.entity_id; ]]]
+            template: music_card_speaker_button
+            style:
+              right: -10%
+              top: 50%
+              height: 15%
+              width: 15%
+            tap_action:
+              action: call-service
+              service: media_player.media_next_track
+              service_data:
+                entity_id: >
+                  [[[ return variables.entity_id; ]]]
+              haptic: medium
+          - type: 'custom:button-card'
+            entity: >
+              [[[ return entity.entity_id; ]]]
+            icon: >
+              [[[
+                if (entity.state === 'paused')
+                    return 'mdi:play';
+                if (entity.state === 'playing')
+                    return  'mdi:pause';
+              ]]]
+            aspect_ratio: 1/1
+            show_name: false
+            show_icon: true
+            size: 100%
+            style:
+              right: 10%
+              top: 50%
+              height: 40%
+              width: 40%
+            styles:
+              icon:
+                - color: rgba(255, 255, 255, 1)
+                - filter: drop-shadow(2px 4px 4px rgba(0,0,0,0.7))
+            tap_action:
+              action: call-service
+              service: media_player.media_play_pause
+              service_data:
+                entity_id: >
+                  [[[ return entity.entity_id; ]]]
+              haptic: medium
+            hold_action:
+              action: none
+            extra_styles: |
+              [[[
+                return `
+                  #icon {
+                    filter: drop-shadow(2px 4px 4px rgba(0,0,0,0.7));
+                    opacity: 0;
+                    transition-duration: 0.1s;
+                  }
+                  #icon:hover {
+                    opacity: 0.7;
+                    color: #ffffff;
+                    transform: scale(1.2);
+                    transition-duration: 0.2s;
+                  }
+                `
+              ]]]
+          # - icon: 'mdi:close-circle'
+          #   template: music_card_speaker_button
+          #   entity: >
+          #     [[[ return variables.entity_id; ]]]
+          #   style:
+          #     right: 35%
+          #     top: 15%
+          #     height: 15%
+          #     width: 15%
+          #   tap_action:
+          #     action: call-service
+          #     service: media_player.volume_mute
+          #     service_data:
+          #       is_volume_muted: >
+          #         [[[ if (entity.attributes.is_volume_muted == false) return 'true'; return
+          #         'false' ]]]
+          #       entity_id: >
+          #         [[[ return variables.entity_id; ]]]
+          #     haptic: medium
+          #   hold_action:
+          #     action: none
+          #   type: 'custom:button-card'
+          - type: 'custom:button-card'
+            icon: 'mdi:volume-minus'
+            entity: >
+              [[[ return variables.entity_id; ]]]
+            template: music_card_speaker_button
+            style:
+              right: 60%
+              top: 25%
+              height: 15%
+              width: 15%
+            tap_action:
+              action: call-service
+              service: media_player.volume_set
+              service_data:
+                volume_level: >
+                  [[[ return entity.attributes.volume_level - 0.020; ]]]
+                entity_id: >
+                  [[[ return entity.entity_id; ]]]
+              haptic: medium
+
+          - type: 'custom:button-card'
+            icon: 'mdi:volume-plus'
+            entity: >
+              [[[ return variables.entity_id; ]]]
+            template: music_card_speaker_button
+            style:
+              left: 75%
+              top: 25%
+              height: 15%
+              width: 15%
+            tap_action:
+              action: call-service
+              service: media_player.volume_set
+              service_data:
+                volume_level: >
+                  [[[ return entity.attributes.volume_level + 0.020; ]]]
+                entity_id: >
+                  [[[ return variables.entity_id; ]]]
+              haptic: medium
+
+          # - icon: 'mdi:power-standby'
+          #   template: music_card_speaker_button
+          #   #entity: '[[entity]]'
+          #   style:
+          #     right: 80%
+          #     top: 10%
+          #     height: 10%
+          #     width: 10%
+          #   tap_action:
+          #     action: call-service
+          #     service: media_player.toggle
+          #     service_data:
+          #       entity_id: >
+          #         [[[ return entity.entity_id; ]]]
+          #     haptic: medium
+          #   hold_action:
+          #     action: none
+          #   type: 'custom:button-card'
+
+  styles:
+    card:
+      - padding: 2.75% 5.75% 0 5.75%
+      # - background-color: '#00000'
+      - background: >
+          [[[
+              let bg = states['sensor.vibrant_color'].state;
+              return `linear-gradient(to top, rgba(${bg},.1), rgba(${bg},.6))`;
+
+          ]]]
+      - background-image: '#00000'
+      - transition: all 0.5s ease-out
+    custom_fields:
+      spotify:
+        - display: block
+        - position: absolute
+        - justify-self: center
+        - width: 84%
+      media_card_speaker:
+        - display: block
+        - position: absolute
+        - justify-self: center
+        - width: 100%
+      blur_overlay:
+        - display: none
+        #   # - background-color: '#00000'
+        #   - background: >
+        #       [[[
+        #           let bg = states['sensor.vibrant_color'].state;
+        #           return `rgba(${bg},.2)`;
+        #       ]]]
+        #   - background-image: none
+        #   - clip-path: >
+        #       inset(80% 1.45% 1.45% 1.45% round 0 0 calc(var(--button-card-border-radius) / 2) calc(var(--button-card-border-radius) / 2))
+        # icon:
+        - width: 22%
+      progress:
+        - top: 80%
+      bar:
+        - top: 80%
+
+#################################################
+#                                               #
+#            MUSIC PLAYER BUTTON                #
+#                                               #
+#################################################
+
+music_card_speaker_button:
+  aspect_ratio: 1/1
+  show_name: false
+  show_icon: true
+  entity: >
+    [[[ return entity.entity_id; ]]]
+  size: 100%
+  styles:
+    card:
+      - background: none
+      - padding: 0px
+      - border-radius: 50%
+      - box-shadow: none
+      - -webkit-box-shadow: none
+      - border-style: none
+    icon:
+      - color: rgba(255, 255, 255, 1)
+      - filter: drop-shadow(2px 4px 4px rgba(0,0,0,0.7))
+  extra_styles: |
+    [[[
+      return `
+        #icon {
+          opacity: 0.2;
+          transition-duration: 0.1s;
+        }
+        #icon:hover {
+          opacity: 0.7;
+          transform: scale(1.2);
+          transition-duration: 0.2s;
+        }
+      `
+    ]]]
+
+#################################################
+#                                               #
+#               ICON RATINGS                    #
+#                                               #
+#################################################
+
+icon_rating:
+  variables:
+    star_rating: ''
+  styles:
+    card:
+      - --star-color: '#fec401'
+    custom_fields:
+      rating:
+        - position: absolute
+        - width: 15%
+        - justify-self: start
+        - opacity: 1
+  custom_fields:
+    rating: >
+      [[[
+          let value = variables.star_rating || '';
+            return `
+              <svg viewBox="0 0 24 24">
+                <style>
+                  text {
+                      font-size: 14px;
+                      font-weight: 700;
+                      text-shadow: 2px 0 0 var(--star-color),-2px 0 0 var(--star-color),0 2px 0 var(--star-color),0 -2px 0 var(--star-color),1px 1px var(--star-color),-1px -1px 0 var(--star-color),1px -1px 0 var(--star-color),-1px 1px 0 var(--star-color);
+                    }
+                    #star {
+                      fill: var(--star-color)
+                    }
+                </style>
+                <path id="star" d="M12 .288l2.833 8.718h9.167l-7.417 5.389 2.833 8.718-7.416-5.388-7.417 5.388 2.833-8.718-7.416-5.389h9.167z"/>
+                <text id="star_value" x="50%" y="60%" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle">${value}</text>
+              </svg>
+            `
+      ]]]
+
+#################################################
+#                                               #
+#               REMOTE CONTROL                  #
+#                                               #
+#################################################
+
+atv_popup_ios:
+  double_tap_action:
+    action: fire-dom-event
+    browser_mod:
+      service: browser_mod.popup
+      data:
+        title: 'ATV Remote'
+        style: >
+          --popup-background-color: rgba(21,25,35,1);
+        card_mod:
+          style:
+            .: |
+              ha-dialog>ha-dialog-header {
+                display: none;
+              }
+              @media (max-width: 450px), (max-height: 500px) {
+                .content .container {
+                  margin: 0 6.8% !important;
+                }
+                ha-dialog {
+                  --mdc-dialog-min-width: 100vw !important;
+                  --mdc-dialog-min-height: 100vh !important;
+                  --popup-border-radius: 0 !important;
+                }
+                ha-dialog>ha-dialog-header {
+                  display: block !important;
+                }
+              }
+        content:
+          type: custom:apple-tv-card
+          background: 'linear-gradient(155deg, rgba(60,66,80,1) 0%, rgba(23,26,37,1) 42%, rgba(21,25,35,1) 100%)'
+          entity: media_player.atv
+          full_screen: true
+          remote: remote.atv
+          sources:
+            - source_name: Infuse
+            - source_name: Disney+
+            - source_name: Netflix
+            - source_name: Prime Video
+            - image: /local/community/Apple-Tv-Card/logo/Prime Video.png
+              source_name: YouTube
+            - image: /local/community/Apple-Tv-Card/logo/DAZN.png
+              source_name: DAZN
+
+atv_popup_web:
+  double_tap_action:
+    action: fire-dom-event
+    browser_mod:
+      service: browser_mod.popup
+      data:
+        title: 'Apple TV'
+        style: >
+          --popup-background-color: rgba(0, 0, 0, .2);
+          --popup-max-width: calc(450px + 450px);
+        card_mod:
+          style:
+            .: |
+              :host {
+                --ha-card-border-radius: 12px !important;
+                --mush-rgb-state-media-player: 3, 169, 244;
+                --mush-rgb-blue-grey: 96, 125, 139;
+                --ha-card-background: #ffffff0d !important;
+              }
+              @media (max-width: 450px), (max-height: 500px) {
+                ha-dialog {
+                  --mdc-dialog-min-width: 100vw !important;
+                  --mdc-dialog-min-height: 100vh !important;
+                  --popup-border-radius: 0 !important;
+                }
+              }
+        content:
+          type: custom:layout-card
+          layout_type: custom:grid-layout
+          layout:
+            margin: 0
+            grid-gap: 10px
+            grid-template-columns: 0 430px 430px 0
+            grid-template-rows: fit-content(100%)
+            grid-template-areas: |
+              ". player remote ."
+            mediaquery:
+              #phone
+              '(max-width: 800px)':
+                grid-template-columns: 1fr
+                grid-template-rows: fit-content(100%) fit-content(100%)
+                grid-template-areas: |
+                  "player"
+                  "remote"
+          cards:
+            - type: custom:stack-in-card
+              view_layout:
+                grid-area: player
+              cards:
+                - type: custom:mushroom-media-player-card
+                  entity: media_player.living_room_tv
+                  icon: mdi:play
+                  use_media_info: true
+                  use_media_artwork: false
+                  show_volume_level: true
+                  collapsible_controls: true
+                  media_controls:
+                    - play_pause_stop
+                    - previous
+                    - next
+                  volume_controls:
+                    - volume_buttons
+                    - volume_set
+                  fill_container: false
+                  card_mod:
+                    style: |
+                      mushroom-shape-icon {
+                        display: flex;
+                        {% set media_type = state_attr(config.entity, 'media_content_type') %}
+                        {% if media_type == 'tvshow' %}
+                          --card-mod-icon: mdi:television-classic;
+                          animation: flicker 1s linear infinite alternate;
+                        {% elif media_type == 'video' %}
+                          --card-mod-icon: mdi:movie-roll;
+                          animation: spin 2s linear infinite reverse;
+                        {% elif media_type == 'music' %}
+                          --card-mod-icon: mdi:music;
+                          animation: beat 1.3s ease-out infinite both;
+                        {% elif media_type == 'playlist' %}
+                          --card-mod-icon: mdi:music;
+                          animation: beat 1.3s ease-out infinite both;
+                        {% else %}
+                          --card-mod-icon: mdi:play;
+                        {% endif %}
+
+                        {{ 'animation: none;' if not is_state(config.entity, 'playing') }}
+                      }
+                      @keyframes flicker {
+                        0%, 31.98%, 32.98%, 34.98%, 36.98%, 39.98%, 67.98%, 68.98%, 95.98%, 96.98%, 97.98%, 98.98%, 100% { --icon-color: rgba(var(--album-art-color), 1); }
+                        32%, 33%, 35%, 36%, 37%, 40%, 68%, 69%, 96%, 97%, 98%, 99% { --icon-color: rgba(var(--album-art-color), 0.6); }
+                      }
+                      @keyframes beat {
+                        0%, 60% { --icon-symbol-size: 21px; }
+                        5%, 17%, 57% { --icon-symbol-size: 22px; }
+                        10%, 20%, 51% { --icon-symbol-size: 23px; }
+                        25%, 45% { --icon-symbol-size: 24px; }
+                        30%, 39% { --icon-symbol-size: 25px; }
+                        33% { --icon-symbol-size: 26px; }
+                      }
+                      ha-card {
+                        --ha-card-border-width: 0;
+                        --rgb-state-media-player: var(--album-art-color);
+                      }
+                      .actions {
+                        --rgb-primary-text-color: var(--album-art-color);
+                        --primary-text-color: rgb(var(--album-art-color));
+                      }
+                      ha-card:before {
+                        transform: translate3d(0,0,0);
+                        -webkit-transform: translate3d(0,0,0);
+                        content: "";
+                        background: url('/local/img/atv.png') center no-repeat;
+                        {% if not is_state('media_player.living_room_tv', 'idle') and not is_state('media_player.living_room_tv', 'off') %}
+                        {% set appname = state_attr('media_player.currently_playing', 'app_id') %}
+                          {% if appname == 'com.google.ios.youtube' %}
+                            background: url( '{{ states.sensor.youtube_watching.attributes.entity_picture }}' ) center no-repeat;
+                          {% else %}
+                            background: url( '{{ state_attr('media_player.living_room_tv', "entity_picture") }}' ) center no-repeat;
+                          {% endif %}
+                        {% endif %}
+                        background-size: contain;
+                        margin: 4px 4px 16px;
+                        filter: drop-shadow(4px 4px 6px rgba(0, 0, 0, 0.5));
+                        border-radius: var(--control-border-radius);
+                        aspect-ratio: 16 / 9;
+                      }
+                - type: conditional
+                  conditions:
+                    - entity: media_player.living_room_tv
+                      state_not: 'off'
+                    - entity: media_player.living_room_tv
+                      state_not: 'idle'
+                  card:
+                    entity: media_player.living_room_tv
+                    hide:
+                      icon: true
+                      name: true
+                      runtime: true
+                      source: true
+                      power: true
+                      state_label: true
+                      volume: true
+                      info: true
+                      progress: false
+                      controls: true
+                    more_info: false
+                    type: custom:mini-media-player
+                    toggle_power: false
+                    group: true
+                    card_mod:
+                      style:
+                        mmp-progress$: |
+                          paper-progress {
+                            {% if is_state(config.entity, 'playing') %}
+                              --paper-progress-container-color: rgba(var(--album-art-color), 0.2) !important;
+                            {% endif %}
+                          }
+                        .: |
+                          ha-card {
+                            margin: 0px 12px 12px;
+                            --mmp-progress-height: 12px !important;
+                            height: var(--mmp-progress-height);
+                            --mmp-accent-color: rgb(var(--album-art-color));
+                            --mmp-border-radius: 12px !important;
+                            --ha-card-border-width: 0;
+                          }
+              card_mod:
+                style: |
+                  ha-card:before {
+                    transform: translate3d(0,0,0);
+                    -webkit-transform: translate3d(0,0,0);
+                    content: "";
+                    position: absolute;
+                    height: 100%;
+                    width: 100%;
+                    background: url('/local/img/atv.png') center no-repeat;
+                    {% if not is_state('media_player.living_room_tv', 'idle') and not is_state('media_player.living_room_tv', 'off') %}
+                    {% set appname = state_attr('media_player.currently_playing', 'app_id') %}
+                      {% if appname == 'com.google.ios.youtube' %}
+                        background: url( '{{ states.sensor.youtube_watching.attributes.entity_picture }}' ) center no-repeat;
+                        {% else %}
+                        background: url( '{{ state_attr('media_player.currently_playing', "entity_picture") }}' ) center no-repeat;
+                      {% endif %}
+                    {% endif %}
+                    filter: blur(150px) saturate(200%);
+                    background-size: 100% 100%;
+                  }
+                  ha-card {
+                    transform: translate3d(0,0,0);
+                    -webkit-transform: translate3d(0,0,0);
+                  }
+                  :host {
+                    --album-art-color:
+                    {% if not is_state('media_player.currently_playing', 'idle') and not is_state('media_player.currently_playing', 'off') and states('sensor.muted_color') not in ['unknown', 'unavaible'] %}
+                      {{ states('sensor.muted_color') }}
+                    {% else %}
+                    var(--mush-rgb-blue-grey)
+                    {% endif %};
+                  }
+            - type: grid
+              view_layout:
+                grid-area: remote
+              columns: 4
+              square: false
+              cards:
+                # - type: custom:button-card
+                #   entity: media_player.living_room_tv
+                #   icon: mdi:volume-mute
+                #   tap_action:
+                #     action: call-service
+                #     service: media_player.volume_mute
+                #     service_data:
+                #       entity_id: >
+                #         [[[ return entity.entity_id; ]]]
+                #       is_volume_muted: >
+                #         [[[ return entity.attributes.is_volume_muted === 'false' ? 'true' : 'false'; ]]]
+                #   template: remote_icon_only
+
+                # - type: custom:button-card
+                #   entity: media_player.living_room_tv
+                #   icon: mdi:volume-minus
+                #   tap_action:
+                #     action: call-service
+                #     service: media_player.volume_down
+                #     service_data:
+                #       entity_id: >
+                #         [[[ return entity.entity_id; ]]]
+                #   template: remote_icon_only
+
+                # - type: custom:button-card
+                #   entity: media_player.living_room_tv
+                #   icon: mdi:volume-plus
+                #   tap_action:
+                #     action: call-service
+                #     service: media_player.volume_up
+                #     service_data:
+                #       entity_id: >
+                #         [[[ return entity.entity_id; ]]]
+                #   template: remote_icon_only
+
+                - type: custom:button-card
+                  icon: mdi:youtube
+                  tap_action:
+                    action: call-service
+                    service: media_player.select_source
+                    service_data:
+                      entity_id: media_player.living_room_tv
+                      source: 'YouTube'
+                    haptic: light
+                  template: remote_icon_only
+
+                - type: custom:button-card
+                  entity: media_player.living_room_tv
+                  icon: mdi:menu
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.atv
+                      command: home_hold
+                  template: remote_icon_only
+
+                - type: custom:button-card
+                  entity: media_player.living_room_tv
+                  icon: mdi:arrow-up-drop-circle-outline
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.atv
+                      command: up
+                  template: remote_icon_arrow
+
+                - type: custom:button-card
+                  entity: media_player.sony_bravia_tv
+                  icon: mdi:power
+                  tap_action:
+                    action: call-service
+                    service: >
+                      [[[
+                        return variables.state_on
+                          ? 'media_player.turn_off'
+                          : 'media_player.turn_on';
+                      ]]]
+                    service_data:
+                      entity_id: media_player.sony_bravia_tv
+                  template:
+                    - remote_icon_arrow
+                    - loader
+                  # styles:
+                  #   card:
+                  #     - background-color: >
+                  #         [[[
+                  #           return variables.state_on
+                  #             ? 'rgba(206, 245, 149, 0.4)'
+                  #             : 'rgba(139, 51, 51, 0.9)';
+                  #         ]]]
+
+                - type: custom:button-card
+                  entity: media_player.living_room_tv
+                  icon: mdi:spotify
+                  tap_action:
+                    action: call-service
+                    service: media_player.select_source
+                    service_data:
+                      entity_id: media_player.living_room_tv
+                      source: 'Spotify'
+                    haptic: light
+                  template: remote_icon_only
+
+                - type: custom:button-card
+                  entity: media_player.living_room_tv
+                  icon: mdi:arrow-left-drop-circle-outline
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.atv
+                      command: left
+                  template: remote_icon_arrow
+
+                - type: custom:button-card
+                  entity: media_player.living_room_tv
+                  icon: mdi:crop-square
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.atv
+                      command: select
+                  template: remote_icon_arrow
+
+                - type: custom:button-card
+                  entity: media_player.living_room_tv
+                  icon: mdi:arrow-right-drop-circle-outline
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.atv
+                      command: right
+                  template: remote_icon_arrow
+
+                - type: custom:button-card
+                  entity: media_player.living_room_tv
+                  icon: mdi:netflix
+                  tap_action:
+                    action: call-service
+                    service: media_player.select_source
+                    service_data:
+                      entity_id: media_player.living_room_tv
+                      source: 'Netflix'
+                    haptic: light
+                  template: remote_icon_only
+
+                - type: custom:button-card
+                  entity: media_player.living_room_tv
+                  icon: mdi:keyboard-backspace
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.atv
+                      command: menu
+                  template: remote_icon_only
+
+                - type: custom:button-card
+                  entity: media_player.living_room_tv
+                  icon: mdi:arrow-down-drop-circle-outline
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.atv
+                      command: down
+                  template: remote_icon_arrow
+
+                - type: custom:button-card
+                  entity: rmedia_player.living_room_tv
+                  icon: mdi:home
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.atv
+                      command: home
+                  template: remote_icon_only
+
+        # content:
+        #   type: vertical-stack
+        #   cards:
+        #     - type: custom:stack-in-card
+        #       cards:
+        #         - type: custom:mushroom-media-player-card
+        #           entity: media_player.currently_playing
+        #           icon: mdi:play
+        #           use_media_info: true
+        #           use_media_artwork: false
+        #           show_volume_level: false
+        #           media_controls:
+        #             - play_pause_stop
+        #             - previous
+        #             - next
+        #           volume_controls:
+        #             - volume_buttons
+        #             - volume_set
+        #           fill_container: false
+        #           card_mod:
+        #             style: |
+        #               mushroom-shape-icon {
+        #                 display: flex;
+        #                 {% set media_type = state_attr(config.entity, 'media_content_type') %}
+        #                 {% if media_type == 'tvshow' %}
+        #                   --card-mod-icon: mdi:television-classic;
+        #                   animation: flicker 1s linear infinite alternate;
+        #                 {% elif media_type == 'video' %}
+        #                   --card-mod-icon: mdi:movie-roll;
+        #                   animation: spin 2s linear infinite reverse;
+        #                 {% elif media_type == 'music' %}
+        #                   --card-mod-icon: mdi:music;
+        #                   animation: beat 1.3s ease-out infinite both;
+        #                 {% elif media_type == 'playlist' %}
+        #                   --card-mod-icon: mdi:music;
+        #                   animation: beat 1.3s ease-out infinite both;
+        #                 {% else %}
+        #                   --card-mod-icon: mdi:play;
+        #                 {% endif %}
+
+        #                 {{ 'animation: none;' if not is_state(config.entity, 'playing') }}
+        #               }
+        #               @keyframes flicker {
+        #                 0%, 31.98%, 32.98%, 34.98%, 36.98%, 39.98%, 67.98%, 68.98%, 95.98%, 96.98%, 97.98%, 98.98%, 100% { --icon-color: rgba(var(--album-art-color), 1); }
+        #                 32%, 33%, 35%, 36%, 37%, 40%, 68%, 69%, 96%, 97%, 98%, 99% { --icon-color: rgba(var(--album-art-color), 0.6); }
+        #               }
+        #               @keyframes beat {
+        #                 0%, 60% { --icon-symbol-size: 21px; }
+        #                 5%, 17%, 57% { --icon-symbol-size: 22px; }
+        #                 10%, 20%, 51% { --icon-symbol-size: 23px; }
+        #                 25%, 45% { --icon-symbol-size: 24px; }
+        #                 30%, 39% { --icon-symbol-size: 25px; }
+        #                 33% { --icon-symbol-size: 26px; }
+        #               }
+        #               ha-card {
+        #                 --ha-card-border-width: 0;
+        #                 --rgb-state-media-player: var(--album-art-color);
+        #               }
+        #               .actions {
+        #                 --rgb-primary-text-color: var(--album-art-color);
+        #                 --primary-text-color: rgb(var(--album-art-color));
+        #               }
+        #               ha-card:before {
+        #                 transform: translate3d(0,0,0);
+        #                 -webkit-transform: translate3d(0,0,0);
+        #                 {% if not is_state(config.entity, 'idle') and not is_state(config.entity, 'off') %}
+        #                   content: "";
+        #                 {% endif %}
+
+        #                 {% if not is_state('media_player.currently_playing', 'idle') and not is_state('media_player.currently_playing', 'off') %}
+        #                 {% set source = state_attr('media_player.currently_playing', 'source') %}
+        #                 {% set appname = state_attr('media_player.currently_playing', 'app_id') %}
+        #                   {% if source == 'YouTube' %}
+        #                     background: url( '{{ states.sensor.shieldtv_youtube_watching.attributes.entity_picture }}' ) center no-repeat;
+        #                     {% elif appname == 'com.google.ios.youtube' %}
+        #                     background: url( '{{ states.sensor.youtube_watching.attributes.entity_picture }}' ) center no-repeat;
+        #                     {% else %}
+        #                     background: url( '{{ state_attr('media_player.currently_playing', "entity_picture") }}' ) center no-repeat;
+        #                   {% endif %}
+        #                 {% endif %}
+        #                 background-size: contain;
+        #                 margin: 4px 4px 16px;
+        #                 filter: drop-shadow(4px 4px 6px rgba(0, 0, 0, 0.5));
+        #                 border-radius: var(--control-border-radius);
+
+        #                 {% set active_child = state_attr(config.entity, 'active_child') %}
+        #                 {% if active_child == 'media_player.spotify' %}
+        #                   aspect-ratio: 1 / 1;
+        #                 {% elif active_child == 'media_player.living_room_tv' %}
+        #                   aspect-ratio: 16 / 9;
+        #                 {% elif active_child == 'media_player.bedroom_tv' %}
+        #                   aspect-ratio: 2 / 3;
+        #                 {% else %}
+        #                   aspect-ratio: 1 / 1;
+        #                 {% endif %}
+        #               }
+        #         - type: conditional
+        #           conditions:
+        #             - entity: media_player.currently_playing
+        #               state_not: 'off'
+        #             - entity: media_player.currently_playing
+        #               state_not: idle
+        #           card:
+        #             entity: media_player.currently_playing
+        #             hide:
+        #               icon: true
+        #               name: true
+        #               runtime: true
+        #               source: true
+        #               power: true
+        #               state_label: true
+        #               volume: true
+        #               info: true
+        #               progress: false
+        #               controls: true
+        #             more_info: false
+        #             type: custom:mini-media-player
+        #             toggle_power: false
+        #             group: true
+        #             card_mod:
+        #               style:
+        #                 mmp-progress$: |
+        #                   paper-progress {
+        #                     {% if is_state(config.entity, 'playing') %}
+        #                       --paper-progress-container-color: rgba(var(--album-art-color), 0.2) !important;
+        #                     {% endif %}
+        #                   }
+        #                 .: |
+        #                   ha-card {
+        #                     margin: 0px 12px 12px;
+        #                     --mmp-progress-height: 12px !important;
+        #                     height: var(--mmp-progress-height);
+        #                     --mmp-accent-color: rgb(var(--album-art-color));
+        #                     --mmp-border-radius: 12px !important;
+        #                     --ha-card-border-width: 0;
+        #                   }
+        #       card_mod:
+        #         style: |
+        #           ha-card:before {
+        #             transform: translate3d(0,0,0);
+        #             -webkit-transform: translate3d(0,0,0);
+        #             content: "";
+        #             position: absolute;
+        #             height: 100%;
+        #             width: 100%;
+        #             background: url('/local/idle_art.png') center no-repeat;
+        #             {% if not is_state('media_player.currently_playing', 'idle') and not is_state('media_player.currently_playing', 'off') %}
+        #             {% set source = state_attr('media_player.currently_playing', 'source') %}
+        #             {% set appname = state_attr('media_player.currently_playing', 'app_id') %}
+        #               {% if source == 'YouTube' %}
+        #                 background: url( '{{ states.sensor.shieldtv_youtube_watching.attributes.entity_picture }}' ) center no-repeat;
+        #                 {% elif appname == 'com.google.ios.youtube' %}
+        #                 background: url( '{{ states.sensor.youtube_watching.attributes.entity_picture }}' ) center no-repeat;
+        #                 {% else %}
+        #                 background: url( '{{ state_attr('media_player.currently_playing', "entity_picture") }}' ) center no-repeat;
+        #               {% endif %}
+        #             {% endif %}
+        #             filter: blur(150px) saturate(200%);
+        #             background-size: 100% 100%;
+        #           }
+        #           ha-card {
+        #             transform: translate3d(0,0,0);
+        #             -webkit-transform: translate3d(0,0,0);
+        #           }
+        #           :host {
+        #             --album-art-color:
+        #             {% if not is_state('media_player.currently_playing', 'idle') and not is_state('media_player.currently_playing', 'off') and states('sensor.muted_color') not in ['unknown', 'unavaible'] %}
+        #               {{ states('sensor.muted_color') }}
+        #             {% else %}
+        #             var(--mush-rgb-blue-grey)
+        #             {% endif %};
+        #           }
+
+        #     - type: grid
+        #       columns: 4
+        #       cards:
+        #         - type: custom:button-card
+        #           icon: mdi:youtube
+        #           tap_action:
+        #             action: call-service
+        #             service: media_player.select_source
+        #             service_data:
+        #               entity_id: media_player.living_room_tv
+        #               source: 'YouTube'
+        #             haptic: light
+        #           template: remote_icon_only
+
+        #         - type: custom:button-card
+        #           entity: media_player.living_room_tv
+        #           icon: mdi:volume-mute
+        #           tap_action:
+        #             action: call-service
+        #             service: media_player.volume_mute
+        #             service_data:
+        #               entity_id: >
+        #                 [[[ return entity.entity_id; ]]]
+        #               is_volume_muted: >
+        #                 [[[ return entity.attributes.is_volume_muted === 'false' ? 'true' : 'false'; ]]]
+        #           template: remote_icon_only
+
+        #         - type: custom:button-card
+        #           entity: media_player.living_room_tv
+        #           icon: mdi:volume-minus
+        #           tap_action:
+        #             action: call-service
+        #             service: media_player.volume_down
+        #             service_data:
+        #               entity_id: >
+        #                 [[[ return entity.entity_id; ]]]
+        #           template: remote_icon_only
+
+        #         - type: custom:button-card
+        #           entity: media_player.living_room_tv
+        #           icon: mdi:volume-plus
+        #           tap_action:
+        #             action: call-service
+        #             service: media_player.volume_up
+        #             service_data:
+        #               entity_id: >
+        #                 [[[ return entity.entity_id; ]]]
+        #           template: remote_icon_only
+
+        #         - type: custom:button-card
+        #           entity: media_player.living_room_tv
+        #           icon: mdi:kodi
+        #           tap_action:
+        #             action: call-service
+        #             service: media_player.select_source
+        #             service_data:
+        #               entity_id: media_player.living_room_tv
+        #               source: 'Kodi'
+        #             haptic: light
+        #           template: remote_icon_only
+
+        #         - type: custom:button-card
+        #           entity: media_player.living_room_tv
+        #           icon: mdi:menu
+        #           tap_action:
+        #             action: call-service
+        #             service: remote.send_command
+        #             service_data:
+        #               entity_id: remote.atv
+        #               command: home_hold
+        #           template: remote_icon_only
+
+        #         - type: custom:button-card
+        #           entity: media_player.living_room_tv
+        #           icon: mdi:arrow-up-drop-circle-outline
+        #           tap_action:
+        #             action: call-service
+        #             service: remote.send_command
+        #             service_data:
+        #               entity_id: remote.atv
+        #               command: up
+        #           template: remote_icon_arrow
+
+        #         - type: custom:button-card
+        #           entity: media_player.living_room_tv
+        #           icon: mdi:power
+        #           tap_action:
+        #             action: call-service
+        #             service: script.turn_on
+        #             service_data:
+        #               entity_id: script.atv_turn_on_off
+        #           template:
+        #             - remote_icon_arrow
+        #             - loader
+        #           styles:
+        #             card:
+        #               - background: >
+        #                   [[[
+        #                     return variables.state_on
+        #                       ? 'rgba(206, 245, 149, 0.4)'
+        #                       : 'rgba(139, 51, 51, 0.9)';
+        #                   ]]]
+
+        #         - type: custom:button-card
+        #           entity: media_player.living_room_tv
+        #           icon: mdi:spotify
+        #           tap_action:
+        #             action: call-service
+        #             service: media_player.select_source
+        #             service_data:
+        #               entity_id: media_player.living_room_tv
+        #               source: 'Spotify'
+        #             haptic: light
+        #           template: remote_icon_only
+
+        #         - type: custom:button-card
+        #           entity: media_player.living_room_tv
+        #           icon: mdi:arrow-left-drop-circle-outline
+        #           tap_action:
+        #             action: call-service
+        #             service: remote.send_command
+        #             service_data:
+        #               entity_id: remote.atv
+        #               command: left
+        #           template: remote_icon_arrow
+
+        #         - type: custom:button-card
+        #           entity: media_player.living_room_tv
+        #           icon: mdi:crop-square
+        #           tap_action:
+        #             action: call-service
+        #             service: remote.send_command
+        #             service_data:
+        #               entity_id: remote.atv
+        #               command: select
+        #           template: remote_icon_arrow
+
+        #         - type: custom:button-card
+        #           entity: media_player.living_room_tv
+        #           icon: mdi:arrow-right-drop-circle-outline
+        #           tap_action:
+        #             action: call-service
+        #             service: remote.send_command
+        #             service_data:
+        #               entity_id: remote.atv
+        #               command: right
+        #           template: remote_icon_arrow
+
+        #         - type: custom:button-card
+        #           entity: media_player.living_room_tv
+        #           icon: mdi:netflix
+        #           tap_action:
+        #             action: call-service
+        #             service: media_player.select_source
+        #             service_data:
+        #               entity_id: media_player.living_room_tv
+        #               source: 'Netflix'
+        #             haptic: light
+        #           template: remote_icon_only
+
+        #         - type: custom:button-card
+        #           entity: media_player.living_room_tv
+        #           icon: mdi:keyboard-backspace
+        #           tap_action:
+        #             action: call-service
+        #             service: remote.send_command
+        #             service_data:
+        #               entity_id: remote.atv
+        #               command: menu
+        #           template: remote_icon_only
+
+        #         - type: custom:button-card
+        #           entity: media_player.living_room_tv
+        #           icon: mdi:arrow-down-drop-circle-outline
+        #           tap_action:
+        #             action: call-service
+        #             service: remote.send_command
+        #             service_data:
+        #               entity_id: remote.atv
+        #               command: down
+        #           template: remote_icon_arrow
+
+        #         - type: custom:button-card
+        #           entity: rmedia_player.living_room_tv
+        #           icon: mdi:home
+        #           tap_action:
+        #             action: call-service
+        #             service: remote.send_command
+        #             service_data:
+        #               entity_id: remote.atv
+        #               command: home
+        #           template: remote_icon_only
+
+remote:
+  show_name: false
+  show_state: false
+  styles:
+    card:
+      - border-radius: var(--button-card-border-radius)
+      - border-width: 0
+      - -webkit-tap-highlight-color: rgba(0,0,0,0)
+      - transition: none
+      - box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.15)
+      - overflow: hidden
+      # - padding: 11.5% 10.5% 10.5% 11.5%
+      - --mdc-ripple-color: >
+          [[[
+            return variables.state_on
+                ? 'rgb(0, 0, 0)'
+                : '#97989c';
+          ]]]
+
+      - color: >
+          [[[
+            return variables.state_on
+                ? '#4b5254'
+                : '#97989c';
+          ]]]
+      - background-color: >
+          [[[
+            if (variables.state_error) {
+              return variables.state_error
+                ? 'rgba(139, 51, 51, 0.9)'
+                : 'rgba(115, 115, 115, 0.2)';
+            }
+            else {
+              return variables.state_on
+                ? 'rgba(250, 250, 250, 0.75)'
+                : 'rgba(115, 115, 115, 0.2)';
+            }
+          ]]]
+
+    icon:
+      - width: 32px
+      - color: >
+          [[[
+            return variables.state_on
+                ? '#4b5254'
+                : '#97989c';
+          ]]]
+
+#################################################
+#                                               #
+#               CONTROLL TEMPLATE               #
+#                                               #
+#################################################
+
+tpl_spotify:
+  template:
+    - base
+  variables:
+    playlist_type: ''
+    country_code: ''
+  show_state: false
+  show_icon: false
+  show_name: false
+  custom_fields:
+    spotify:
+      card:
+        type: 'custom:spotify-card'
+        limit: 9
+        spotify_entity: media_player.spotify
+        playlist_type: >
+          [[[ return variables.playlist_type ]]]
+        country_code: >
+          [[[ return variables.country_code ]]]
+        hide_warning: true
+        display_style: grid
+        always_play_random_song: true
+        grid_covers_per_row: 3
+        grid_show_title: false
+        hide_chromecast_devices: true
+        hide_top_header: true
+        hide_currently_playing: true
+        hide_playback_controls: true
+        card_mod:
+          style: |
+            ha-card {
+              border-radius: calc(var(--custom-button-card-border-radius) / 2) !important;  /* card - rounded corners */
+              aspect-ratio: 2/2 !important;  /* card - square */
+              margin: 0px !important;  /* remove card margins to line up with rest of dashboard */
+              padding: 0% !important;
+            }
+            .grid {
+              object-fit: cover !important;  /* fill the whole card */
+              aspect-ratio: 1/1;  /* needed for object-fit */
+              border-radius: calc(var(--custom-button-card-border-radius) / 2) !important;  /* card - rounded corners */
+              margin: 0px !important;  /* remove card margins to line up with rest of dashboard */
+              gap: 5% !important;
+            }
+            .btn {
+              top: 50% !important;  /* center buttons */
+            }
+            .grid-item {
+              border-radius: var(--button-card-border-radius) !important;
+              object-fit: cover !important;  /* fill the whole card */
+              aspect-ratio: unset;  /* undo image aspect-ratio when clicked */
+              box-shadow:none !important;
+              color: transparent !important;
+            }
+            .grid-item-album-image img{
+              border-radius: var(--button-card-border-radius) !important;
+              object-fit: cover !important;  /* fill the whole card */
+              aspect-ratio: unset;  /* undo image aspect-ratio when clicked */
+              margin: 0px !important;  /* remove card margins to line up with rest of dashboard */
+            }
+            .grid-item:hover {
+              box-shadow:none !important;
+              color: transparent !important;
+            }
+            .grid-item-album-image.playing{
+              border-radius: var(--button-card-border-radius) !important;
+            }
+            #header{
+              display:none !important;
+            }
+            #footer{
+              display:none !important;
+            }
+            .playback-controls{
+              display:none !important;
+            }
+            #header-track{
+              display:none;
+            }
+            #content{
+              border: 0px !important;
+              background-color: transparent !important;
+            }
+  styles:
+    grid:
+      - gap: 0
+    card:
+      - padding: 0
+      - background: none
+      - --mdc-ripple-color: none
+      - --webkit-tap-highlight-color: none
+
+tpl_minicontrol:
+  custom_fields:
+    minicontrol:
+      card:
+        type: picture-elements
+        image: /local/img/svg/overlay.svg
+        card_mod:
+          style: |
+            ha-card {
+              --ha-card-background: none !important;
+            }
+        elements:
+          - type: custom:mini-media-player
+            entity: >
+              [[[ return variables.entity_id; ]]]
+            hide:
+              icon: true
+              name: true
+              runtime: true
+              source: true
+              power: true
+              state_label: true
+              volume: false
+              info: true
+              progress: true
+              controls: false
+            volume_stateless: true
+            card_mod:
+              style:
+                mmp-media-controls$: |
+                  ha-icon-button {
+                    filter: drop-shadow(2px 4px 4px rgba(0,0,0,0.7));
+                    color: #ffffff70 !important;
+                  }
+                  ha-icon-button:hover {
+                    color: #ffffff !important;
+                    transform: scale(1.2);
+                    transition-duration: 0.2s;
+                    background: none !important;
+                  }
+                .: |
+                  ha-card>div.mmp-player{
+                    padding: 0px !important;
+                  }
+            style:
+              top: 90%
+              left: 50%
+              width: 105%
+  styles:
+    custom_fields:
+      minicontrol:
+        - display: block
+        - position: absolute
+        - justify-self: center
+        - width: '100%'
+        - top: '9%'
+        - display: >
+            [[[
+              return window.matchMedia('(max-width: 800px)').matches
+                ? 'none'
+                : null;
+            ]]]
+
+tpl_minicontrol_mass:
+  custom_fields:
+    minicontrol:
+      card:
+        type: picture-elements
+        image: /local/img/svg/overlay.svg
+        card_mod:
+          style: |
+            ha-card {
+              --ha-card-background: none !important;
+            }
+        elements:
+          - type: custom:mini-media-player
+            entity: media_player.mass_airplay_group
+            hide:
+              icon: true
+              name: true
+              runtime: true
+              source: true
+              power: true
+              state_label: true
+              volume: false
+              info: true
+              progress: true
+              controls: false
+            volume_stateless: true
+            card_mod:
+              style:
+                mmp-media-controls$: |
+                  ha-icon-button {
+                    filter: drop-shadow(2px 4px 4px rgba(0,0,0,0.7));
+                    color: #ffffff70 !important;
+                  }
+                  ha-icon-button:hover {
+                    color: #ffffff !important;
+                    transform: scale(1.2);
+                    transition-duration: 0.2s;
+                    background: none !important;
+                  }
+                .: |
+                  ha-card>div.mmp-player{
+                    padding: 0px !important;
+                  }
+            style:
+              top: 90%
+              left: 50%
+              width: 105%
+  styles:
+    custom_fields:
+      minicontrol:
+        - display: block
+        - position: absolute
+        - justify-self: center
+        - width: '100%'
+        - top: '9%'
+        - display: >
+            [[[
+              return window.matchMedia('(max-width: 800px)').matches
+                ? 'none'
+                : null;
+            ]]]

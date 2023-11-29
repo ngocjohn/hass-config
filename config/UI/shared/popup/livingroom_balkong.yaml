@@ -1,0 +1,23 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Balkong
+    card_mod:
+      style:
+        #popup header
+        .:
+    content:
+      type: vertical-stack
+      cards:
+        - type: entities
+          state_color: true
+          show_header_toggle: false
+          card_mod:
+            class: content
+          entities:
+
+            - entity: switch.deltaco_sh_p01_socket
+              secondary_info: last-changed
+
+            - entity: automation.balcony_lights

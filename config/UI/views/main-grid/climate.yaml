@@ -1,0 +1,26 @@
+#################################################
+#                                               #
+#                  CLIMATE                      #
+#                                               #
+#################################################
+- type: grid
+  title: Climate
+  view_layout:
+    grid-area: climate
+  columns: 2
+  cards:
+    # AIR PURIFIER
+    - type: custom:decluttering-card
+      template: grid_air_purifier
+
+    # THERMOSTAT
+    - type: custom:decluttering-card
+      template: grid_thermostat
+
+    # LIVING ROOM COVERS
+    - type: custom:decluttering-card
+      template: grid_covers_living
+
+    # BEDOOM COVERS
+    - type: custom:decluttering-card
+      template: grid_covers_bedroom

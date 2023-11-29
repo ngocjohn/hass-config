@@ -1,0 +1,83 @@
+########################################
+#  ROUTER UNIFI                        #
+########################################
+
+template:
+  - binary_sensor:
+      - name: 'Internet'
+        unique_id: router_internet
+        icon: mdi:wan
+        device_class: connectivity
+        state: >
+          {{ is_state('binary_sensor.arris_tg3442de_wan_status', 'on')  }}
+
+      - unique_id: unifi_alerts
+        state: >
+          {{ states('sensor.unifi_status_alerts') | int > 0 }}
+        attributes:
+          icon: mdi:alert
+          device_class: problem
+          friendly_name: Alerts
+
+      - unique_id: unifi_upgradable
+        state: >
+          {{ states('sensor.unifi_status_firmware_upgradable') | int > 0 }}
+        attributes:
+          icon: mdi:database-plus
+          device_class: update
+          friendly_name: Upgradable
+
+      - name: 'WIFI Access Point'
+        unique_id: unifi_acces_point
+        icon: mdi:wifi
+        device_class: connectivity
+        state: >
+          {{ is_state('device_tracker.ap_bedroom', 'home')
+              and is_state('device_tracker.ap_lr_wall', 'home')
+              and is_state('device_tracker.ap_office', 'home')
+              and is_state('device_tracker.usw_office', 'home')
+              and is_state('device_tracker.usw_bedroom', 'home')
+          }}
+
+  - sensor:
+      - unique_id: router_external_ip
+        state: >
+          {{ states('sensor.arris_tg3442de_external_ip') }}
+        attributes:
+          icon: mdi:ip-network
+          friendly_name: Public IP
+
+      - unique_id: ap_adopted
+        state: >
+          {{ state_attr('sensor.unifi_status_wlan', 'num_adopted') }}
+        attributes:
+          icon: mdi:access-point
+          friendly_name: AP Adopted
+
+      - unique_id: ap_disconected
+        state: >
+          {{ state_attr('sensor.unifi_status_wlan', 'num_disconnected') }}
+        attributes:
+          icon: mdi:access-point-off
+          friendly_name: AP Disconected
+
+      - unique_id: ap_clients
+        state: >
+          {{ state_attr('sensor.unifi_status_wlan', 'num_user') }}
+        attributes:
+          icon: mdi:devices
+          friendly_name: Wi-Fi Clients
+
+      - unique_id: wired_clients
+        state: >
+          {{ state_attr('sensor.unifi_status_lan', 'num_user') }}
+        attributes:
+          icon: mdi:devices
+          friendly_name: Wired Clients
+
+      - unique_id: network_clients
+        state: >
+          {{ state_attr('sensor.unifi_status_lan', 'num_user') + (states('sensor.ngoc_giang_vanessa_2g') | int ) + (states('sensor.ngoc_giang_vanessa_5g') | int )  }}
+        attributes:
+          icon: mdi:devices
+          friendly_name: Clients

@@ -1,0 +1,136 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Kitchen
+    style: >
+      --button-card-border-radius: 10%;
+    card_mod:
+      style:
+        .: |
+
+        hui-grid-card$: |
+          #root {
+            margin: 0.8vw 1vw;
+            grid-gap: 2% !important;
+          }
+    content:
+      type: grid
+      columns: 3
+      cards:
+        - type: custom:button-card
+          entity: light.kitchen_table_light
+          name: Table light
+          template:
+            - lightpop
+            - icon_ensis
+
+        - type: custom:button-card
+          entity: light.kitchen_main_light
+          name: Main light
+          template:
+            - lightpop
+            - icon_light_recessed
+
+        - type: custom:button-card
+          entity: light.hood_lighting
+          name: Cooker hood
+          template:
+            - lightpop
+            - icon_light_recessed
+
+          # Cooker Hood
+        - type: custom:button-card
+          entity: fan.hood_power
+          name: 'Hood'
+          template:
+            - base
+            - loader
+            - icon_cookerhood
+          tap_action:
+            action: call-service
+            service: homeassistant.toggle
+            service_data:
+              entity_id: fan.hood_power
+          double_tap_action:
+            action: fire-dom-event
+            browser_mod:
+              service: browser_mod.popup
+              data:
+                title: 'Cooker hood'
+                card_mod:
+                  style:
+                    #popup header
+                    .:
+                content:
+                  type: vertical-stack
+                  cards:
+                    - type: entities
+                      state_color: true
+                      show_header_toggle: false
+                      card_mod:
+                        class: content
+                      entities:
+                        - entity: fan.hood_power
+                          name: Power
+                        - entity: light.hood_ambientlight
+                          name: AmbientLight
+                        - entity: light.hood_lighting
+                          name: Light
+                        - entity: switch.hood_program_automatic
+                          name: Program Automatic
+                        - entity: switch.hood_program_delayedshutoff
+                          name: Program DelayedShutOff
+                        - entity: switch.hood_program_venting
+                          name: Program Venting
+                      title: Hood
+
+        - type: custom:button-card
+          entity: switch.hob_power
+          name: Hob
+          template:
+            - base
+            - loader
+            - icon_oven
+
+        - type: custom:button-card
+          entity: switch.mycka_nadobi_power
+          name: Dishwasher
+          template:
+            - base
+            - icon_dishwasher
+          styles:
+            name:
+              - overflow: visible
+          tap_action:
+            action: call-service
+            service: homeassistant.toggle
+            service_data:
+              entity_id: switch.mycka_nadobi_power
+          double_tap_action:
+            action: fire-dom-event
+            browser_mod:
+              service: browser_mod.popup
+              data:
+                title: 'Dishwasher'
+                card_mod:
+                  style:
+                    #popup header
+                    .:
+                content:
+                  type: vertical-stack
+                  cards:
+                    - type: entities
+                      title: Myčka nádobí
+                      entities:
+                        - entity: switch.mycka_nadobi_power
+                          name: Power
+                          icon: mdi:power
+                        - entity: binary_sensor.mycka_nadobi_door
+                          name: Door
+                        - entity: sensor.mycka_nadobi_operation_state
+                          name: Operation State
+                        - entity: sensor.mycka_nadobi_program_progress
+                          name: Program Progress
+                        - entity: sensor.mycka_nadobi_remaining_program_time
+                          name: Remaining Program Time

@@ -1,0 +1,430 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Homepod Speakers
+    style: |
+      --popup-max-width: calc(420px + 440px + 420px);
+    card_mod:
+      style:
+        .: |
+          :host {
+            --ha-card-border-radius: 12px !important;
+            --mush-rgb-state-media-player: 3, 169, 244;
+            --mush-rgb-blue-grey: 96, 125, 139;
+            --ha-card-background: #ffffff0d !important;
+          }
+          @media (max-width: 450px), (max-height: 500px) {
+            ha-dialog {
+              --mdc-dialog-min-width: 100vw !important;
+              --mdc-dialog-min-height: 100vh !important;
+              --popup-border-radius: 0 !important;
+            }
+          }
+    content:
+      type: custom:layout-card
+      layout_type: custom:grid-layout
+      layout:
+        margin: 0
+        grid-gap: 10px
+        grid-template-columns: 0 400px 420px 400px 0
+        grid-template-rows: fit-content(100%)
+        grid-template-areas: |
+          ". speakers playlist spotify ."
+        mediaquery:
+          #phone
+          '(max-width: 800px)':
+            grid-template-columns: 1fr
+            grid-template-rows: fit-content(100%) fit-content(100%) fit-content(100%)
+            grid-template-areas: |
+              "speakers"
+              "playlist"
+              "spotify"
+      cards:
+        # Homepods
+        - type: custom:stack-in-card
+          view_layout:
+            grid-area: speakers
+          cards:
+            - type: grid
+              square: false
+              columns: 2
+              cards:
+                - type: custom:mushroom-template-card
+                  primary: Homepods
+                  secondary: >-
+                    {{ states.media_player.owntone_server.state | capitalize }} - {{ expand(states.group.homepod_speakers) | selectattr( 'state', 'eq', 'on') |
+                    list | count }} / 4
+                  icon: phu:homepod
+                  layout: horizontal
+                  fill_container: false
+                  multiline_secondary: false
+                  icon_color: "{% if is_state('group.homepod_speakers', 'on') %}blue{% endif %}"
+                  tap_action:
+                    action: call-service
+                    service: homeassistant.toggle
+                    target:
+                      entity_id: group.homepod_speakers
+                - type: custom:mushroom-chips-card
+                  chips:
+                    - type: template
+                      card_mod:
+                        style: |
+                          ha-card:hover {
+                            rotate: 90deg;
+                          }
+
+                      icon: mdi:dots-horizontal
+                      icon_color: white
+                      tap_action:
+                        action: fire-dom-event
+                        local_conditional_card:
+                          action: toggle
+                          ids:
+                            - homepod
+                  alignment: end
+                  card_mod:
+                    style: |
+                      ha-card {
+                        --chip-box-shadow: none;
+                        --chip-background: #ffffff0d;
+                        padding: 15px 10px;
+                      }
+
+            # Homepods
+            - type: custom:local-conditional-card
+              default: hide
+              id: homepod
+              card:
+                type: custom:stack-in-card
+                style: |
+                  ha-card {
+                    background: none !important;
+                    animation: slide-opacity 700ms ease-in forwards;
+                    opacity: 0;
+                  }
+                  @keyframes slide-opacity {
+                    0% {
+                      transform: translateY(-30%);
+                      opacity: 0;
+                    }
+                    100% {
+                      transform: translateY(0%);
+                      opacity: 1;
+                    }
+                  }
+                cards:
+                  - type: custom:mushroom-media-player-card
+                    entity: media_player.owntone_output_office
+                    name: Office
+                    show_volume_level: true
+                    use_media_info: false
+                    volume_controls:
+                      - volume_set
+                    fill_container: false
+                    layout: horizontal
+                    collapsible_controls: true
+                    tap_action:
+                      action: toggle
+                    card_mod:
+                      style: &style
+                        mushroom-media-player-volume-control$:
+                          mushroom-slider$: |
+                            .slider {
+                              height: 50% !important;
+                              align-self: center !important;
+                            }
+                        .: |
+                          ha-card {
+                            background: none
+                            border-radius: 12px !important;
+                          }
+                          ha-card:hover {
+                            background: #3182b78a !important;
+                            border-radius: 12px !important;
+                          }
+
+                  - type: custom:mushroom-media-player-card
+                    entity: media_player.owntone_output_bathroom
+                    name: Bathroom
+                    show_volume_level: true
+                    use_media_info: false
+                    volume_controls:
+                      - volume_set
+                    fill_container: false
+                    layout: horizontal
+                    collapsible_controls: true
+                    tap_action:
+                      action: toggle
+                    card_mod:
+                      style: *style
+
+                  - type: custom:mushroom-media-player-card
+                    entity: media_player.owntone_output_bedroom
+                    show_volume_level: true
+                    name: Bedroom
+                    use_media_info: false
+                    volume_controls:
+                      - volume_set
+                    fill_container: false
+                    layout: horizontal
+                    collapsible_controls: true
+                    tap_action:
+                      action: toggle
+                    card_mod:
+                      style: *style
+                  - type: custom:mushroom-media-player-card
+                    entity: media_player.owntone_output_living_room
+                    name: Living Room
+                    show_volume_level: true
+                    use_media_info: false
+                    volume_controls:
+                      - volume_set
+                    fill_container: false
+                    layout: horizontal
+                    collapsible_controls: true
+                    tap_action:
+                      action: toggle
+                    card_mod:
+                      style: *style
+        # Playlist
+        - type: custom:stack-in-card
+          view_layout:
+            grid-area: playlist
+          cards:
+            - type: custom:mushroom-media-player-card
+              entity: media_player.currently_playing
+              icon: mdi:play
+              use_media_info: true
+              use_media_artwork: false
+              show_volume_level: false
+              media_controls:
+                - play_pause_stop
+                - previous
+                - next
+              volume_controls:
+                - volume_buttons
+                - volume_set
+              fill_container: false
+              card_mod:
+                style: |
+                  mushroom-shape-icon {
+                    display: flex;
+                    {% set media_type = state_attr(config.entity, 'media_content_type') %}
+                    {% if media_type == 'tvshow' %}
+                      --card-mod-icon: mdi:television-classic;
+                      animation: flicker 1s linear infinite alternate;
+                    {% elif media_type == 'movie' %}
+                      --card-mod-icon: mdi:movie-roll;
+                      animation: spin 2s linear infinite reverse;
+                    {% elif media_type == 'music' %}
+                      --card-mod-icon: mdi:music;
+                      animation: beat 1.3s ease-out infinite both;
+                    {% elif media_type == 'playlist' %}
+                      --card-mod-icon: mdi:music;
+                      animation: beat 1.3s ease-out infinite both;
+                    {% else %}
+                      --card-mod-icon: mdi:play;
+                    {% endif %}
+
+                    {{ 'animation: none;' if not is_state(config.entity, 'playing') }}
+
+                  }
+                  @keyframes flicker {
+                    0%, 31.98%, 32.98%, 34.98%, 36.98%, 39.98%, 67.98%, 68.98%, 95.98%, 96.98%, 97.98%, 98.98%, 100% { --icon-color: rgba(var(--album-art-color), 1); }
+                    32%, 33%, 35%, 36%, 37%, 40%, 68%, 69%, 96%, 97%, 98%, 99% { --icon-color: rgba(var(--album-art-color), 0.6); }
+                  }
+                  @keyframes beat {
+                    0%, 60% { --icon-symbol-size: 21px; }
+                    5%, 17%, 57% { --icon-symbol-size: 22px; }
+                    10%, 20%, 51% { --icon-symbol-size: 23px; }
+                    25%, 45% { --icon-symbol-size: 24px; }
+                    30%, 39% { --icon-symbol-size: 25px; }
+                    33% { --icon-symbol-size: 26px; }
+                  }
+                  ha-card {
+                    --ha-card-border-width: 0;
+                    --rgb-state-media-player: var(--album-art-color);
+                  }
+                  .actions {
+                    --rgb-primary-text-color: var(--album-art-color);
+                    --primary-text-color: rgb(var(--album-art-color));
+                  }
+                  ha-card:before {
+                    transform: translate3d(0,0,0);
+                    -webkit-transform: translate3d(0,0,0);
+                    content: "";
+
+                    background: url('/local/img/idle_art.png') center no-repeat;
+                    {% if is_state('media_player.spotify', 'playing') %}
+                      background: url( '{{ state_attr('media_player.spotify', "entity_picture") }}' ) center no-repeat;
+                    {% elif is_state('media_player.owntone_server', 'playing') and not is_state('media_player.spotify', 'playing') %}
+                    {% set radio = state_attr('media_player.owntone_server', 'media_album_name') %}
+                      background: url( '/local/img/radio/{{radio}}.png' ) center no-repeat;
+                    {% endif %}
+                    background-size: contain;
+                    margin: 4px 4px 16px 4px !important;
+                    filter: drop-shadow(4px 4px 6px rgba(0, 0, 0, 0.5));
+                    border-radius: var(--control-border-radius);
+                    aspect-ratio: 1 / 1;
+                  }
+            - type: conditional
+              conditions:
+                - entity: media_player.spotify
+                  state: 'playing'
+              card:
+                entity: media_player.spotify
+                hide:
+                  icon: true
+                  name: true
+                  runtime: true
+                  source: true
+                  power: true
+                  state_label: true
+                  volume: true
+                  info: true
+                  progress: false
+                  controls: true
+                more_info: false
+                type: custom:mini-media-player
+                toggle_power: false
+                group: true
+                card_mod:
+                  style:
+                    mmp-progress$: |
+                      paper-progress {
+                        {% if is_state('media_player.spotify', 'playing') %}
+                          --paper-progress-container-color: rgba(var(--album-art-color), 0.2) !important;
+                        {% endif %}
+                      }
+                    .: |
+                      ha-card {
+                        margin: 0px 12px 12px;
+                        --mmp-progress-height: 12px !important;
+                        height: var(--mmp-progress-height);
+                        --mmp-accent-color: rgb(var(--album-art-color));
+                        --mmp-border-radius: 12px !important;
+                        --ha-card-border-width: 0;
+                      }
+          card_mod:
+            style: |
+              ha-card:before {
+                transform: translate3d(0,0,0);
+                -webkit-transform: translate3d(0,0,0);
+                content: "";
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                background: url('/local/img/idle_art.png') center no-repeat;
+                {% if is_state('media_player.spotify', 'playing') %}
+                  background: url( '{{ state_attr('media_player.spotify', "entity_picture") }}' ) center no-repeat;
+                {% elif is_state('media_player.owntone_server', 'playing') and not is_state('media_player.spotify', 'playing') %}
+                {% set radio = state_attr('media_player.owntone_server', 'media_album_name') %}
+                  background: url( '/local/img/radio/{{radio}}.png' ) center no-repeat;
+                {% endif %}
+                filter: blur(150px) saturate(200%);
+                background-size: 100% 100%;
+              }
+              ha-card {
+                transform: translate3d(0,0,0);
+                -webkit-transform: translate3d(0,0,0);
+              }
+              :host {
+                --album-art-color:
+                {% if is_state('media_player.spotify', 'playing') %}
+                  {{ states('sensor.vibrant_color') }}
+                {% else %}
+                  var(--mush-rgb-blue-grey)
+                {% endif %};
+              }
+        # Spotify
+        - type: vertical-stack
+          view_layout:
+            grid-area: spotify
+          cards:
+            - type: horizontal-stack
+              cards:
+                - type: custom:mushroom-template-card
+                  card_mod:
+                    style: |
+                      ha-card:hover {
+                        scale: 1.04;
+                        filter: opacity(0.5);
+                      }
+                      ha-card:active {
+                        background-color: rgba(255,255,255,.8);
+                      }
+                  primary: Featured
+                  tap_action:
+                    action: fire-dom-event
+                    local_conditional_card:
+                      action: set
+                      ids:
+                        - featured: show
+                        - discover-weekly: hide
+                  layout: vertical
+                - type: custom:mushroom-template-card
+                  card_mod:
+                    style: |
+                      ha-card:hover {
+                        scale: 1.04;
+                        filter: opacity(0.5);
+                      }
+                      ha-card:active {
+                        background-color: rgba(255,255,255,.8);
+                      }
+                  primary: Discover weekly
+                  tap_action:
+                    action: fire-dom-event
+                    local_conditional_card:
+                      action: set
+                      ids:
+                        - featured: hide
+                        - discover-weekly: show
+                  layout: vertical
+            - type: custom:local-conditional-card
+              default: show
+              id: featured
+              persist_state: true
+              card:
+                type: custom:spotify-card
+                limit: 9
+                spotify_entity: media_player.spotify
+                default_device: Home Assistant
+                default: Home Assistant
+                playlist_type: featured
+                country_code: VN
+                hide_warning: true
+                display_style: grid
+                always_play_random_song: true
+                grid_covers_per_row: 3
+                grid_show_title: true
+                filter_devices:
+                  - SHIELD
+                hide_chromecast_devices: true
+                hide_top_header: true
+                hide_currently_playing: true
+                hide_playback_controls: true
+            - type: custom:local-conditional-card
+              default: hide
+              id: discover-weekly
+              persist_state: true
+              card:
+                type: custom:spotify-card
+                limit: 9
+                spotify_entity: media_player.spotify
+                default_device: Home Assistant
+                default: Home Assistant
+                playlist_type: discover-weekly
+                hide_warning: true
+                display_style: grid
+                always_play_random_song: true
+                grid_covers_per_row: 3
+                grid_show_title: true
+                filter_devices:
+                  - SHIELD
+                  - Air
+                hide_chromecast_devices: true
+                hide_top_header: true
+                hide_currently_playing: true
+                hide_playback_controls: true

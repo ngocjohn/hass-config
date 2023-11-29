@@ -1,0 +1,57 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: 'Entertaiment'
+    card_mod:
+      style:
+        .: |
+          @media (max-width: 450px), (max-height: 500px) {
+            ha-dialog {
+              --mdc-dialog-min-width: 100vw !important;
+              --mdc-dialog-min-height: 100vh !important;
+              --popup-border-radius: 0 !important;
+            }
+          }
+          .content .container {
+              padding: 0 !important;
+          }
+    content:
+      type: custom:mod-card
+      card_mod:
+      style: |
+        ha-card {
+          background: rgba(115, 115, 115, 0.2);
+          border-start-start-radius: 1vw;
+          border-start-end-radius: 1vw;
+          overflow: hidden;
+        }
+      card:
+        type: custom:tabbed-card
+        styles: # global styles applied to all tabs
+          --mdc-theme-primary: 'rgba(250, 250, 250, 0.75)'
+          --mdc-tab-text-label-color-default: '#97989c'
+          --mdc-typography-button-font-size: 10px;
+        tabs:
+          - card:
+              type: iframe
+              url: https://ymovie.streamcinema.cz/#/scc/browse/Movies
+              aspect_ratio: '9:16'
+            attributes:
+              label: Movies
+              icon: mdi:movie-open-star
+          - card:
+              type: iframe
+              url: https://ymovie.streamcinema.cz/#/scc/browse/Series
+              aspect_ratio: '9:16'
+            attributes:
+              label: Series
+              icon: mdi:television
+
+          - card:
+              type: iframe
+              url: https://ymovie.streamcinema.cz/#/scc/browse/Popular-Movies
+              aspect_ratio: '9:16'
+            attributes:
+              label: Popular
+              icon: mdi:star

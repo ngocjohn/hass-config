@@ -1,0 +1,217 @@
+########################################
+#   BEDROOM MEDIA                      #
+########################################
+media_player:
+  - platform: media_player_template
+    media_players:
+      bedroom_tv: ### BED ROOM TEMPLATE ###
+        friendly_name: Bedroom TV
+        unique_id: bedroom_media
+        device_class: tv
+        ###### ATTRIBUTES ######
+        current_is_muted_template: "{{ state_attr('media_player.shield', 'is_volume_muted') }}"
+        current_volume_template: "{{ state_attr('media_player.shield', 'volume_level') }}"
+        title_template: "{{ state_attr('media_player.shield', 'media_title') }}"
+        album_template: "{{ state_attr('media_player.shield', 'media_album_name') }}"
+        artist_template: "{{ state_attr('media_player.shield', 'media_artist') }}"
+        current_source_template: "{{ state_attr('media_player.shieldtv', 'source') }}"
+        current_position_template: "{{ state_attr('media_player.shield', 'media_position') }}"
+        media_duration_template: "{{ state_attr('media_player.shield', 'media_duration') }}"
+        media_content_type_template: "{{ state_attr('media_player.shield', 'media_content_type') }}"
+        media_image_url_template: >
+          {% if is_state_attr('media_player.shieldtv', 'app_name', 'YouTube') -%}
+            {{ states('sensor.shieldtv_youtube_watching') }}
+          {%- else -%}
+            {{ state_attr('media_player.shieldtv', 'entity_picture') }}
+          {%- endif %}
+        value_template: >
+          {% if is_state("media_player.shieldtv", "off") -%}
+            off
+          {%- else -%}
+            {{ states('media_player.shieldtv') }}
+          {%- endif %}
+        turn_on:
+          service: media_player.turn_on
+          data: {}
+          target:
+            entity_id: media_player.shieldtv
+        turn_off:
+          service: media_player.turn_off
+          data: {}
+          target:
+            entity_id: media_player.shieldtv
+        volume_up:
+          service: media_player.volume_up
+          data: {}
+          target:
+            entity_id: media_player.shield
+        volume_down:
+          service: media_player.volume_down
+          data: {}
+          target:
+            entity_id: media_player.shield
+        play:
+          service: media_player.media_play
+          data: {}
+          target:
+            entity_id: media_player.shield
+        pause:
+          service: media_player.media_pause
+          data: {}
+          target:
+            entity_id: media_player.shield
+        stop:
+          service: media_player.media_stop
+          data: {}
+          target:
+            entity_id: media_player.shield
+        next:
+          service: media_player.media_next_track
+          data: {}
+          target:
+            entity_id: media_player.shield
+        previous:
+          service: media_player.media_previous_track
+          data: {}
+          target:
+            entity_id: media_player.shield
+        set_volume:
+          service: media_player.volume_set
+          data:
+            entity_id: media_player.shield
+            volume_level: '{{ volume | float }}'
+        mute:
+          service: media_player.volume_mute
+          data:
+            is_volume_muted: false
+          target:
+            entity_id: media_player.shield
+        ###### SOURCE ######
+        inputs:
+          Netflix:
+            service: media_player.select_source
+            data:
+              source: Netflix
+            target:
+              entity_id: media_player.shieldtv
+          YouTube:
+            service: media_player.select_source
+            data:
+              source: YouTube
+            target:
+              entity_id: media_player.shieldtv
+          Kodi:
+            service: media_player.select_source
+            data:
+              source: Kodi
+            target:
+              entity_id: media_player.shieldtv
+          Spotify:
+            service: media_player.select_source
+            data:
+              source: Spotify
+            target:
+              entity_id: media_player.shieldtv
+
+  ### BEDROOM UNIVERSAL ###
+
+  - platform: universal
+    name: ShieldTV Kodi
+    unique_id: shieldtv_kodi
+    device_class: tv
+    children:
+      - media_player.bedroom_kodi
+      - media_player.bedroom_tv
+    commands:
+      turn_on:
+        service: media_player.turn_on
+        data: {}
+        target:
+          entity_id: media_player.shieldtv
+      turn_off:
+        service: media_player.turn_off
+        data: {}
+        target:
+          entity_id: media_player.shieldtv
+
+### BEDROOM SENSOR YOUTUBE ###
+command_line:
+  - sensor:
+      name: shieldtv_youtube_watching
+      unique_id: shieldtv_youtube_watching
+      command: |-
+        python3 << EOF
+        import sys
+        from http.cookiejar import MozillaCookieJar
+        import json
+        import re
+        import requests
+        COOKIES_FILE = "/config/.youtube_new.txt"
+        if __name__ == "__main__":
+            # COOKIES
+            cookie_jar = MozillaCookieJar(COOKIES_FILE)
+            try:
+                cookie_jar.load(ignore_discard=True, ignore_expires=True)
+            except OSError as notfound_error:
+                print(f"WARNING: {COOKIES_FILE} not found\nDEBUG: {notfound_error}")
+                sys.exit()
+            # SESSION
+            session = requests.Session()
+            session.headers = {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)\
+                    AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                "Accept-Language": "en-us,en;q=0.5",
+                "Sec-Fetch-Mode": "navigate",
+            }
+            session.cookies = cookie_jar
+            # RESPONSE
+            response = session.get("https://www.youtube.com/feed/history")
+            cookie_jar.save(ignore_discard=True, ignore_expires=True)
+            html = response.text
+            # JSON
+            try:
+                REGEX = r"var ytInitialData = (.*);<\/script>"
+                match = re.search(REGEX, html).group(1)
+                data = json.loads(match)
+                path = data["contents"]["twoColumnBrowseResultsRenderer"]["tabs"][0]["tabRenderer"]\
+                    ["content"]["sectionListRenderer"]["contents"][0]["itemSectionRenderer"]["contents"]
+            except AttributeError as data_error:
+                print(
+                    f"WARNING: Can't find data, update cookie file\nDEBUG: {data_error}")
+                sys.exit()
+            # THUMBNAIL
+            def thumbnail(fid):
+                """ return max resolution """
+                url = f"https://img.youtube.com/vi/{fid}"
+                maxres = f"{url}/maxresdefault.jpg"
+                default = f"{url}/0.jpg"
+                if requests.get(maxres, timeout=3).status_code == 200:
+                    return maxres
+                return default
+            # OUTPUT
+            if "reelShelfRenderer" in path[0]:
+                key = path[1]["videoRenderer"]
+            else:
+                key = path[0]["videoRenderer"]
+            output = {
+                "channel": key["longBylineText"]["runs"][0]["text"],
+                "title": key["title"]["runs"][0]["text"],
+                "video_id": key["videoId"],
+                "duration_string": key["lengthText"]["simpleText"],
+                "thumbnail": thumbnail(key["videoId"]),
+                "entity_picture": thumbnail(key["videoId"]),
+                "original_url": f'https://www.youtube.com/watch?v={key["videoId"]}',
+            }
+            print(json.dumps(output, indent=4))
+        EOF
+      value_template: >
+        {{ states.sensor.shieldtv_youtube_watching.attributes.entity_picture }}
+      json_attributes:
+        - channel
+        - title
+        - video_id
+        - duration_string
+        - original_url
+        - entity_picture
+      scan_interval: 86400

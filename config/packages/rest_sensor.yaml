@@ -1,0 +1,48 @@
+rest:
+  - resource: https://plugin.sc2.zone/api/media/filter/v2/newsSubs?type=movie&sort=news&order=desc&lang=cs&days=730&access_token=th2tdy0no8v1zoh1fs59
+    scan_interval: 21600
+    sensor:
+      - name: ymovies new
+        json_attributes_path: '$.hits.hits[0]'
+        json_attributes:
+          - _source
+        value_template: 'added movie 0'
+
+      - name: ymovies new 1
+        json_attributes_path: '$.hits.hits[1]'
+        json_attributes:
+          - _source
+        value_template: 'added movie 1'
+
+      - name: ymovies new 2
+        json_attributes_path: '$.hits.hits[2]'
+        json_attributes:
+          - _source
+        value_template: 'added movie 2'
+
+      - name: ymovies new 3
+        json_attributes_path: '$.hits.hits[3]'
+        json_attributes:
+          - _source
+        value_template: 'added movie 3'
+
+      - name: ymovies new 4
+        json_attributes_path: '$.hits.hits[4]'
+        json_attributes:
+          - _source
+        value_template: 'added movie 4'
+template:
+  - sensor:
+      - unique_id: movies_added_data
+        name: Movies added data
+        state: |
+          {{ this.attributes.movies | list | count }}
+        attributes:
+          movies: |
+            [
+              {{ states.sensor.ymovies_new.attributes }},
+              {{ states.sensor.ymovies_new_1.attributes }},
+              {{ states.sensor.ymovies_new_2.attributes }},
+              {{ states.sensor.ymovies_new_3.attributes }},
+              {{ states.sensor.ymovies_new_4.attributes }},
+            ]

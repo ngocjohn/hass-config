@@ -1,0 +1,97 @@
+#################################################
+#                                               #
+#                  HORIZONTAL                   #
+#                                               #
+#################################################
+
+- type: grid
+  title: Movies
+  view_layout:
+    grid-area: movies
+    show:
+      mediaquery: '(min-width: 1441px)'
+  columns: 1
+  cards:
+    - type: custom:swipe-card
+      start_card: 1
+      parameters:
+        pagination:
+          type: bullets
+          clickable: true
+        direction: horizontal
+        roundLengths: true
+        effect: coverflow
+        speed: 650
+        spaceBetween: 20
+        threshold: 7
+        coverflowEffect:
+          rotate: 80
+          depth: 300
+        observer: true
+      cards:
+        - type: horizontal-stack
+          cards:
+            - type: grid
+              columns: 1
+              cards:
+                #Conditional Media
+                - type: custom:swipe-card
+                  start_card: 1
+                  parameters:
+                    pagination:
+                      type: bullets
+                      clickable: true
+                    autoplay:
+                      delay: 7000
+                      disableOnInteraction: false
+                      reverseDirection: false
+                      pauseOnMouseEnter: true
+                    speed: 650
+                    slidesPerView: auto
+                    roundLengths: true
+                    grabCursor: true
+                    loop: false
+                    spaceBetween: 50
+                    direction: vertical
+                    autoHeight: true
+                    observer: true
+                    followFinger: true
+                  cards:
+                    - type: custom:button-card
+                      entity: sensor.added_movies_2
+                      template:
+                        - added_movies
+
+                    - type: custom:button-card
+                      entity: sensor.added_movies_3
+                      template:
+                        - added_movies
+
+                    - type: custom:button-card
+                      entity: sensor.added_movies_4
+                      template:
+                        - added_movies
+
+                    - type: custom:button-card
+                      entity: sensor.added_movies_5
+                      template:
+                        - added_movies
+
+                    - type: custom:button-card
+                      entity: sensor.added_movies_6
+                      template:
+                        - added_movies
+
+        - type: conditional
+          conditions:
+            - condition: state
+              entity: sensor.trakt_upcoming_shows
+              state_not: '0'
+          card:
+            type: grid
+            columns: 1
+            cards:
+              - type: custom:button-card
+                entity: sensor.trakt_upcoming_shows
+                template:
+                  - conditional_media_shows

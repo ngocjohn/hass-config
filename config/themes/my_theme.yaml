@@ -1,0 +1,201 @@
+My Theme:
+  # ha-card-box-shadow: 0px 2px 4px 0px rgba(0, 0 ,0 ,.15)
+  # ha-card-box-shadow: 0 0 1rem 0 rgba(0, 0, 0, .2);
+  #browser_mod.popup
+
+  dialog-backdrop-filter: blur(12px) brightness(0.3)
+  popup-background-color: rgba(34,38,39,0.6)
+  # popup-border-width: 1px
+  popup-border-radius: 1em
+  popup-padding-x: 0px
+  popup-padding-y: 0px
+  popup-min-width: 440px
+  tablet-popup-header-color: rgba(200, 218, 222, 0.05)
+  tablet-popup-content-padding: 1.4em 2.2em 1.6em 1.5em
+  tablet-popup-button-padding: 0.1em 2em 1.8em 2em
+  tablet-popup-border-style: 1.5px solid rgba(0,0,0,0.2)
+  tablet-popup-align-dialog: center
+  tablet-popup-margin-top: 0px
+  ha-card-border-width: 0px
+  primary-font-family: Poppins, Raleway, SF Pro Text, SF Pro Display, SF Mono, sans-serif, system-ui
+  paper-font-common-base_-_font-family: var(--primary-font-family)
+  paper-font-common-code_-_font-family: var(--primary-font-family)
+  paper-font-body1_-_font-family: var(--primary-font-family)
+  paper-font-subhead_-_font-family: var(--primary-font-family)
+  paper-font-headline_-_font-family: var(--primary-font-family)
+  paper-font-caption_-_font-family: var(--primary-font-family)
+  paper-font-title_-_font-family: var(--primary-font-family)
+
+  ha-card-header-font-family: var(--primary-font-family) #Futura
+  mdc-typography-body1-font-family: var(--primary-font-family)
+  mdc-typography-font-family: var(--primary-font-family)
+  mdc-theme-surface: var(--popup-background-color)
+
+  dialog-box-shadow: 0px 2px 4px 0px rgba(0, 0 ,0 , .2)
+  header-height: 48px
+  state-icon-color: '#9da0a2'
+  state-icon-active-color: '#3182b7'
+  state-active-color: '#b68349'
+  switch-checked-color: '#FF9800'
+  switch-unchecked-button-color: '#9E9E9E'
+  switch-unchecked-track-color: '#9E9E9E'
+  paper-slider-knob-color: '#a4abb1'
+  paper-slider-knob-start-color: '#a4abb1'
+  paper-slider-pin-color: '#626a6f'
+  paper-slider-active-color: '#626a6f'
+  paper-slider-container-color: '#202020'
+  paper-toast-color: var(--primary-text-color)
+  paper-toast-background-color: '#1b1b1bf2'
+  # Contrast variables
+  black1: '#000000'
+  black2: '#111318'
+  black3: '#171A21'
+  black4: '#1C1F27'
+  black5: '#262A35'
+  black6: '#353946'
+  black7: '#434856'
+  black8: '#535865'
+  black9: '#636774'
+  black10: '#777A83'
+  white10: '#898C94'
+  white9: '#969AA6'
+  white8: '#A4A9B6'
+  white7: '#B3B8C6'
+  white6: '#C3C8D5'
+  white5: '#D4D8E2'
+  white4: '#E1E5EF'
+  white3: '#EAEDF6'
+  white2: '#F4F6FB'
+  white1: '#FFFFFF'
+  modes:
+    light:
+      # Header:
+      mush-rgb-disabled: 93, 93, 93
+      app-header-background-color: rgb(231,231,231)
+      app-header-text-color: rgb(44, 49, 60)
+      app-header-selection-bar-color: var(--primary-color)
+      # Main Interface Colors
+      primary-font-family: Poppins, Raleway, SF Pro Text, SF Pro Display, SF Mono, sans-serif, system-ui
+      primary-color: rgb(61,90,254)
+      primary-background-color: rgb(231,231,231)
+      rgb-primary-background-color: 231,231,231
+      secondary-background-color: var(--primary-background-color)
+      divider-color: var(--primary-background-color)
+      accent-color: rgb(255, 115, 0)
+      # Text
+      primary-text-color: rgb(44, 49, 60)
+      secondary-text-color: rgb(111, 111, 111)
+      text-primary-color: rgb(255, 255, 255)
+      # disabled-text-color:
+      # Sidebar Menu
+      sidebar-icon-color: var(--primary-text-color)
+      sidebar-text-color: var(--primary-text-color)
+      sidebar-background-color: var(--primary-background-color)
+      sidebar-selected-background-color: var(--primary-background-color)
+      sidebar-selected-icon-color: rgb(61,90,254)
+      sidebar-selected-text-color: var(--sidebar-selected-icon-color))
+
+      # # States and Badges
+      state-icon-color: '#9da0a2'
+      state-icon-active-color: '#3182b7'
+      state-icon-unavailable-color: var(--disabled-text-color)
+      # Cards
+      card-background-color: rgb(255, 255, 255)
+      ha-card-background: rgb(255, 255, 255)
+      rgb-card-background-color: 255, 255, 255
+      popup-bg-content: rgba(255, 255, 255,.7)
+      ha-card-border-color: none
+      ha-card-border-width: 0px
+      paper-dialog-background-color: var(--card-background-color)
+      paper-listbox-background-color: var(--card-background-color)
+      paper-card-background-color: var(--card-background-color)
+    dark:
+      # Header:
+      # app-header-background-color: '#040b25'
+      # app-header-background-color: '#081427'
+
+      app-header-background-color: '#000000'
+      app-header-text-color: var(--primary-text-color)
+      app-header-selection-bar-color: var(--primary-color)
+      # Main Interface Colors
+      primary-color: rgb(96,171,246)
+      primary-background-color: rgb(17,17,17)
+      rgb-primary-background-color: 17,17,17
+      primary-font-family: Poppins, Raleway, SF Pro Text, SF Pro Display, SF Mono, sans-serif, system-ui
+      secondary-background-color: var(--primary-background-color)
+      divider-color: transparent
+      # Text
+      primary-text-color: rgb(207,207,207)
+      rgb-primary-text-color: 207,207,207
+      secondary-text-color: rgb(160,160,160)
+      text-primary-color: var(--primary-text-color)
+      # Sidebar Menu
+      sidebar-icon-color: '#4a4b4c'
+      sidebar-text-color: var(--primary-text-color)
+      sidebar-background-color: var(--primary-background-color)
+      sidebar-selected-background-color: var(--primary-background-color)
+      sidebar-selected-icon-color: var(--primary-color)
+      sidebar-selected-text-color: var(--primary-text-color)
+      # Cards
+      state-icon-color: '#9da0a2'
+      state-icon-active-color: '#3182b7'
+      # --state-active-color: '#3182b7'
+      card-background-color: rgb(29,29,29)
+      ha-card-background: var(--card-background-color)
+
+  card-mod-theme: My Theme
+
+  card-mod-root-yaml: |
+    .: |
+
+      /* ___________ Bottom tabbar ___________  */
+
+      .header {
+        backdrop-filter: blur(50px);
+        -webkit-backdrop-filter: blur(50px);
+        -moz-backdrop-filter: blur(50px);
+        -o-backdrop-filter: blur(50px);
+        -ms-backdrop-filter: blur(50px);
+        background-color: rgba(255,255,255,0.02) !important;
+      }
+      :host([scrolled]) .header {
+        box-shadow: none !important;
+      }
+      .toolbar {
+        background-color: rgba(0,0,0,0) !important;
+        padding: 0px 12px !important;
+      }
+  card-mod-more-info-yaml: |
+    .: |
+      :host {
+        --ha-card-border-width: 0 !important;
+        --ha-card-border-radius: 0px !important;
+        --ha-card-border-color: none !important;
+        --bar-card-border-radius: 12px !important;
+        --ha-card-box-shadow: none !important;
+        --ha-card-background: none !important;
+
+      }
+      ha-dialog > div.content > div.container {
+        padding: 0 !important;
+      }
+      ha-dialog {
+        --vertical-align-dialog: var(--tablet-popup-align-dialog) !important;
+        --dialog-surface-margin-top: var(--tablet-popup-margin-top) !important;
+      }
+      ha-dialog > div:focus {
+        outline: none;
+      }
+      ha-dialog-header {
+        font-family: var(--primary-font-family);
+        background-color: var(--tablet-popup-header-color) !important;
+        border-bottom: var(--tablet-popup-border-style);
+      }
+    ha-dialog-header$header: |
+      div.header-bar {
+        padding: 10px 17px 8px 17px;
+      }
+    ha-dialog$: |
+      div.mdc-dialog__surface {
+        background-color: var(--popup-background-color) !important;
+      }

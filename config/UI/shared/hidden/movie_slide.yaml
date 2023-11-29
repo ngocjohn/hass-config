@@ -1,0 +1,32 @@
+type: custom:local-conditional-card
+default: hide
+id: movie
+card:
+  type: vertical-stack
+  cards:
+    - type: custom:mushroom-chips-card
+      chips:
+        - type: template
+          icon: mdi:close
+          icon_color: rgb(139, 51, 51)
+          tap_action:
+            action: fire-dom-event
+            local_conditional_card:
+              action: toggle
+              ids:
+                - landscape
+                - movie
+    - type: custom:gap-card
+      height: 26
+    - type: iframe
+      aspect_ratio: '100%'
+      url: >
+        [[[
+          if (entity) {
+              let data = entity.attributes.data;
+            if (data !== undefined) {
+              let tmdb = data[0].services.tmdb;
+              return `https://www.themoviedb.org/movie/${tmdb}`;
+            }
+          }
+        ]]]

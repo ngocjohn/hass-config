@@ -1,0 +1,63 @@
+#################################################
+#                                               #
+#                  HEADER                       #
+#                                               #
+#################################################
+
+- type: custom:stack-in-card
+  view_layout:
+    grid-area: header
+    show:
+      mediaquery: '(min-width: 1441px)'
+  cards:
+    - type: custom:button-card
+      entity: weather.prague_smichov
+      name: Prague
+      variables:
+        time: 'sensor.time'
+        date: 'sensor.date_en'
+        day: 'sensor.day_en'
+        gpt_weather: 'input_text.gpt_weather_response'
+      template:
+        - wide_header
+
+#################################################
+#                                               #
+#                  WEATHER                      #
+#                                               #
+#################################################
+- type: 'custom:layout-card'
+  layout_type: 'custom:grid-layout'
+  view_layout:
+    grid-area: header
+    show:
+      mediaquery: '(max-width: 800px)'
+  layout:
+    grid-template-columns: 1fr
+  cards:
+    - type: custom:button-card
+      entity: sensor.template_sidebar_time
+      template:
+        - timeclock
+
+- type: 'custom:layout-card'
+  layout_type: 'custom:grid-layout'
+  view_layout:
+    grid-area: weather
+    show:
+      mediaquery: '(max-width: 800px)'
+  layout:
+    grid-template-columns: 1fr
+    margin: 0
+  cards:
+    - type: custom:button-card
+      entity: weather.prague_smichov
+      tap_action: !include ../../shared/popup/popup_weather.yaml
+      name: Prague
+      variables:
+        temp_min: sensor.weather_min_temp
+        temp_max: sensor.weather_max_temp
+        humidity: sensor.weather_humidity
+        current_weather: weather.prague_smichov
+      template:
+        - horizontal_widget_weather

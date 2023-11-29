@@ -1,0 +1,43 @@
+#################################################
+#                                               #
+#            GRAPH HISTORY                      #
+#                                               #
+#################################################
+
+- type: vertical-stack
+  view_layout:
+    grid-area: cc
+  cards:
+    - type: custom:history-explorer-card
+      cardName: historycard-sys
+      header: 'Monitoring'
+      uimode: dark
+      defaultTimeOffset: 1h
+      refresh:
+        automatic: true
+        interval: 30
+      combineSameUnits: true
+      defaultTimeRange: 12h
+      decimation: fast
+      lineGraphHeight: 300
+      labelsVisible: true
+      legendVisible: false
+      uiLayout:
+        toolbar: top
+        selector: hide
+      tooltip:
+        size: full
+      graphs:
+        - type: line
+          entities:
+            - entity: sensor.*_cpu_percent
+              lineMode: lines
+        - type: line
+          entities:
+            - entity: sensor.*_memory_percent
+        - type: line
+          entities:
+            - entity: sensor.processor_temperature
+              lineMode: curves
+            - entity: sensor.processor_use
+            - entity: sensor.memory_use_percent

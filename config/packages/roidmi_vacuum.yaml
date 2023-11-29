@@ -1,0 +1,813 @@
+# xiaomi_vacuum:
+homeassistant:
+  customize:
+    vacuum.roidmi_eve:
+      miot_local: true # Force to read and write data in LAN
+      miot_cloud: false # Enable miot cloud for entity (read, write, action)
+      miot_cloud_write: true # (Optional) Enable miot cloud (only write)
+      miot_cloud_action: true # (Optional) Enable miot cloud (only action)
+    sensor.vacuum_cleaner_battery_level:
+      friendly_name: 'Charge level'
+      icon: 'mdi:battery'
+    sensor.vacuum_charging_state:
+      friendly_name: 'Charging status'
+      icon: 'mdi:state-machine'
+    sensor.vacuum_status:
+      friendly_name: 'Mode of operation'
+      icon: 'mdi:state-machine'
+    sensor.vacuum_status_fix:
+      friendly_name: 'Vacuum Cleaner Status'
+      icon: 'mdi:autorenew'
+    sensor.vacuum_sweep_mode:
+      friendly_name: 'Cleaning type'
+      icon: 'mdi:format-list-bulleted-type'
+    sensor.vacuum_fan_speed:
+      friendly_name: 'Fan speed'
+      icon: 'mdi:speedometer'
+    sensor.vacuum_fault:
+      friendly_name: 'Error'
+      icon: 'mdi:alert-circle'
+    sensor.vacuum_on:
+      friendly_name: 'Switch state'
+      icon: 'mdi:nintendo-switch'
+    binary_sensor.vacuum_mop:
+      friendly_name: 'Water container'
+      icon: 'mdi:cup-water'
+    sensor.vacuum_cleaner_filter_life_level:
+      friendly_name: 'Percentage left'
+      icon: 'mdi:percent-outline'
+    sensor.vacuum_cleaner_filter_left_time:
+      friendly_name: 'Time left'
+      icon: 'mdi:calendar-clock'
+    sensor.vacuum_cleaner_brush_life_level:
+      friendly_name: 'Percentage left'
+      icon: 'mdi:percent-outline'
+    sensor.vacuum_cleaner_brush_left_time:
+      friendly_name: 'Time left'
+      icon: 'mdi:calendar-clock'
+    sensor.vacuum_cleaner_brush_life_level_2:
+      friendly_name: 'Percentage left'
+      icon: 'mdi:percent-outline'
+    sensor.vacuum_cleaner_brush_left_time_2:
+      friendly_name: 'Time left'
+      icon: 'mdi:calendar-clock'
+    sensor.vacuum_cleaner_brush_life_level_3:
+      friendly_name: 'Percentage left'
+      icon: 'mdi:percent-outline'
+    sensor.vacuum_cleaner_brush_left_time_3:
+      friendly_name: 'Time left'
+      icon: 'mdi:calendar-clock'
+    sensor.vacuum_cleaning_time:
+      friendly_name: 'Time of last harvest'
+      unit_of_measurement: 'min.'
+      icon: 'mdi:timer-outline'
+    sensor.vacuum_total_cleaning_time:
+      friendly_name: 'Total cleaning time'
+      unit_of_measurement: 'min.'
+      icon: 'mdi:timer-outline'
+    sensor.vacuum_cleaned_area:
+      friendly_name: 'Area of the last cleaning'
+      unit_of_measurement: 'm ²'
+      icon: 'mdi:ruler'
+    sensor.vacuum_total_cleaned_area:
+      friendly_name: 'Total cleaning area'
+      unit_of_measurement: 'm ²'
+      icon: 'mdi:ruler'
+    sensor.vacuum_cleaning_count:
+      friendly_name: 'Number of cleanings'
+      icon: 'mdi:robot-vacuum'
+    sensor.vacuum_operation:
+      friendly_name: 'Operation'
+    sensor.vacuum_accessories:
+      friendly_name: 'Working time'
+
+camera:
+  # ROIDMI EVE PLUS VACUUM
+  - platform: xiaomi_cloud_map_extractor
+    name: 'Roidmi EVE'
+    host: !secret roidmi_host
+    token: !secret roidmi_token
+    username: !secret vacuum_username
+    password: !secret vacuum_password
+    country: 'de'
+    # store_map: true
+    store_map_raw: true
+    store_map_image: true
+    store_map_path: /config/tmp
+    force_api: roidmi
+    scan_interval:
+      seconds: 5
+    auto_update: true
+    colors:
+      color_robo: [255, 89, 9]
+      color_charger: [27, 117, 27]
+      color_path: [109, 37, 37]
+      color_goto_path: [30, 80, 113]
+      color_obstacle: [30, 30, 30]
+      color_virtual_walls: [255, 0, 0, 60]
+      color_no_go_zones_outline: [255, 0, 0, 60]
+      color_no_go_zones: [255, 0, 0, 28]
+      color_map_inside: [115, 115, 115, 40]
+      color_map_outside: [0, 0, 0, 0]
+      color_grey_wall: [0, 0, 0, 0]
+      color_map_wall: [255, 255, 255, 80]
+      color_zones_outline: [0, 0, 0, 0]
+      color_zones: [0, 0, 0, 0]
+    # draw: ['all']
+    draw:
+      - charger
+      - path
+      - goto_path
+      - predicted_path
+      - no_go_zones
+      - no_mopping_zones
+      - vacuum_position
+      - virtual_walls
+    map_transformation:
+      scale: 3
+    sizes:
+      charger_radius: 16
+      vacuum_radius: 15
+    attributes:
+      - calibration_points
+      - charger
+      - cleaned_rooms
+      - country
+      - goto
+      - goto_path
+      - goto_predicted_path
+      - ignored_obstacles_with_photo
+      - ignored_obstacles
+      - image
+      - is_empty
+      - map_name
+      - no_go_areas
+      - no_mopping_areas
+      - obstacles
+      - path
+      - room_numbers
+      - rooms
+      - vacuum_position
+      - vacuum_room
+      - walls
+      - zones
+
+template:
+  - sensor:
+      - name: 'vacuum_operation'
+        state: 'Operation'
+      - name: 'vacuum_accessories'
+        state: 'Working time'
+      - name: 'vacuum_status_fix'
+        state: >
+          {% set val =  state_attr('vacuum.roidmi_eve','vacuum.status')  %}
+          {% if val == 1 %}
+            Sleeping
+          {% elif val == 2 %}
+            In Standby
+          {% elif val == 3 %}
+            Suspend
+          {% elif val == 4 %}
+            Cleaning
+          {% elif val == 5 %}
+            Go Charging
+          {% elif val == 6 %}
+            Charging
+          {% elif val == 7 %}
+            Fault
+          {% elif val == 8 %}
+            Remote control
+          {% elif val == 9 %}
+            The battery is full
+          {% elif val == 10 %}
+            Shut down
+          {% elif val == 11 %}
+            Recharge pause
+          {% else %}
+            Device offline
+          {% endif %}
+      - name: 'vacuum_fan_speed'
+        state: "{{ state_attr('vacuum.roidmi_eve','fan_speed') }}"
+      - name: 'vacuum_status'
+        state: "{{ state_attr('vacuum.roidmi_eve','vacuum.status') }}"
+      - name: 'vacuum_fault'
+        state: >
+          {% set val = state_attr('vacuum.roidmi_eve','vacuum.fault')  %}
+          {% if (val == 0) or (val == None) %}
+            No Faults
+          {% elif val == 1 %}
+            Low battery, start recharging
+          {% elif val == 2 %}
+            Low power, start shutting down
+          {% elif val == 3 %}
+            The main wheel is abnormal, please check whether the main wheel is stuck
+          {% elif val == 4 %}
+            Please check if the edge is jammed
+          {% elif val == 5 %}
+            Machine tilt, please move to level and start
+          {% elif val == 6 %}
+            Please check whether the top radar is blocked or jammed
+          {% elif val == 7 %}
+            Front collision sensor abnormal
+          {% elif val == 8 %}
+            Abnormal sensor on the right side along the wall
+          {% elif val == 9 %}
+            Please check whether the main brush is entangled or jammed
+          {% elif val == 10 %}
+            Please check whether the side brush is entangled or jammed
+          {% elif val == 11 %}
+            Abnormal fan
+          {% elif val == 12 %}
+            The radar cover is jammed
+          {% elif val == 13 %}
+            Please clean the dust box and filter screen, or check whether the dust box and filter screen are in place
+          {% elif val == 14 %}
+            Take out the dust box
+          {% elif val == 15 %}
+            Please clean the dust box and filter screen
+          {% elif val == 16 %}
+            The machine is trapped, please move to the new position and start
+          {% elif val == 17 %}
+            The machine is suspended. Please put it back on the level ground before starting
+          {% elif val == 18 %}
+            The water tank has been taken out. Please put it back into the water tank before starting
+          {% elif val == 19 %}
+            There is not enough water in the tank
+          {% elif val == 20 %}
+            The specified area cannot be reached
+          {% elif val == 21 %}
+            Please move out of the restricted area before starting
+          {% elif val == 22 %}
+            Please stay away from the cliff before starting
+          {% elif val == 23 %}
+            Pump current error
+          {% elif val == 24 %}
+            Recharge failed, charging point not found
+          {% elif val == 25 %}
+            Radar speed error
+          {% elif val == 27 %}
+            Please check whether the top radar is jammed
+          {% elif val == 30 %}
+            Radar open circuit abnormal
+          {% elif val == 31 %}
+            Battery abnormal
+          {% elif val == 32 %}
+            Middle brush abnormal
+          {% elif val == 33 %}
+            Main wheel abnormal
+          {% elif val == 34 %}
+            Side brush abnormal
+          {% elif val == 35 %}
+            Fan abnormal
+          {% elif val == 37 %}
+            Firmware upgrade failed due to insufficient conditions
+          {% else %}
+            Unknown error №{{state_attr('vacuum.roidmi_eve','vacuum.fault')}}
+          {% endif %}
+      - name: 'vacuum_on'
+        state: >
+          {% set val = state_attr('vacuum.roidmi_eve','vacuum.on') %}
+          {% if val == 0 %}
+            Close
+          {% elif val == 1 %}
+            Open
+          {% else %}
+            Unknown
+          {% endif %}
+      - name: 'vacuum_cleaner_battery_level'
+        state: >
+          {{ state_attr('vacuum.roidmi_eve', 'battery_level') }}
+      - name: 'vacuum_charging_state'
+        state: >
+          {% set val = state_attr('vacuum.roidmi_eve','battery.charging_state') %}
+          {% if val == 1 %}
+            Charging
+          {% elif val == 2 %}
+            No charging
+          {% elif val == 3 %}
+            No need
+          {% else %}
+            Unknown
+          {% endif %}
+      - name: 'vacuum_sweep_mode'
+        state: >
+          {% set val = state_attr('vacuum.roidmi_eve','sweep.sweep_mode') %}
+          {% if val == 0 %}
+            Waiting
+          {% elif val == 1 %}
+            Cleaning the entire apartment
+          {% elif val == 2 %}
+            Cleaning the area
+          {% elif val == 3 %}
+            Local cleaning
+          {% elif val == 4 %}
+            Moving to the point
+          {% elif val == 7 %}
+            Smart
+          {% elif val == 8 %}
+            Cleaning the segment
+          {% elif val == 9 %}
+            DepthTotal
+          {% elif val == 10 %}
+            Along the wall
+          {% else %}
+            Unknown
+          {% endif %}
+      - name: 'vacuum_station_type'
+        state: "{{ state_attr('vacuum.roidmi_eve','custom.station_type') }}"
+      - name: 'vacuum_cleaning_time'
+        state: >
+          {% if (state_attr('vacuum.roidmi_eve','custom.clean_time') == None) %}
+            0
+          {% else %}
+            {{(state_attr('vacuum.roidmi_eve','custom.clean_time')/60)|round(1)}}
+          {% endif %}
+      - name: 'vacuum_total_cleaning_time'
+        state: >
+          {% if (state_attr('vacuum.roidmi_eve','custom.total_clean_time') == None) %}
+            0
+          {% else %}
+            {{(state_attr('vacuum.roidmi_eve','custom.total_clean_time')/60)|round(1)}}
+          {% endif %}
+      - name: 'vacuum_cleaned_area'
+        state: "{{ state_attr('vacuum.roidmi_eve','custom.clean_area') }}"
+      - name: 'vacuum_total_cleaned_area'
+        state: "{{ state_attr('vacuum.roidmi_eve','custom.total_clean_areas') }}"
+      - name: 'vacuum_cleaning_count'
+        state: "{{ state_attr('vacuum.roidmi_eve','custom.clean_counts') }}"
+
+      - name: 'vacuum_position'
+        state: >
+          {% set room_dict = {
+            1: "Kitchen",
+            2: "Utility",
+            3: "Office",
+            4: "Bedroom",
+            5: "Kids Room",
+            6: "Living Room",
+            7: "Hallway",
+            8: "Bathroom"
+          } %}
+          {{ room_dict[state_attr('camera.roidmi_eve', 'vacuum_room')] }}
+
+  - binary_sensor:
+      - name: 'vacuum_mop'
+        state: "{{ state_attr('vacuum.roidmi_eve','custom.mop') }}"
+
+input_boolean:
+  vacuum_lidar_collision:
+    name: 'Collision Radar'
+    icon: 'mdi:radar'
+  vacuum_led_switch:
+    name: 'Button light'
+    icon: 'mdi:alarm-light'
+  vacuum_auto_boost:
+    name: 'Carpet inflation mode'
+    icon: 'mdi:rug'
+  vacuum_double_clean:
+    name: 'Cleaning x2'
+    icon: 'mdi:map-marker-distance'
+  vacuum_edge_sweep:
+    name: 'Y-Mopping'
+    icon: 'mdi:transit-detour'
+  vacuum_station_key:
+    name: 'Display status when touched'
+    icon: 'mdi:account-arrow-right'
+  vacuum_station_led:
+    name: 'Display backlight'
+    icon: 'mdi:lightbulb-on-outline'
+  vacuum_mute:
+    name: 'Silent mode'
+    icon: 'mdi:volume-off'
+  vacuum_room1:
+    name: 'Kitchen'
+    icon: 'mdi:silverware-variant'
+  vacuum_room2:
+    name: 'Utility'
+    icon: 'mdi:washing-machine'
+  vacuum_room3:
+    name: 'Office'
+    icon: 'mdi:laptop'
+  vacuum_room4:
+    name: 'Bedroom'
+    icon: 'mdi:bed-king'
+  vacuum_room5:
+    name: 'Children'
+    icon: 'mdi:teddy-bear'
+  vacuum_room6:
+    name: 'Lounge'
+    icon: 'mdi:sofa'
+  vacuum_room7:
+    name: 'Hallway'
+    icon: 'mdi:mirror'
+  vacuum_room8:
+    name: 'Bathroom'
+    icon: 'mdi:shower'
+
+input_number:
+  vacuum_volume:
+    name: 'Volume level'
+    icon: 'mdi:volume-high'
+    unit_of_measurement: '%'
+    min: 0
+    max: 100
+    step: 1
+
+input_select:
+  vacuum_water_level:
+    name: 'Water use'
+    icon: 'mdi:waves'
+    options:
+      - No water
+      - Small
+      - Middle
+      - MAX
+  vacuum_work_station_freq:
+    name: 'Throwing away trash'
+    icon: 'mdi:delete'
+    options:
+      - Not to throw away
+      - Every time
+      - Every second
+      - Every third
+  vacuum_mode:
+    name: 'Cleaning power'
+    icon: 'mdi:wind-power-outline'
+    options:
+      - Sweep
+      - Silent
+      - Basic
+      - Strong
+      - Full Speed
+  vacuum_sweep_type:
+    name: 'Cleaning function'
+    icon: 'mdi:vacuum-outline'
+    options:
+      - Sweep
+      - Mop
+      - Mop And Sweep
+
+automation:
+  # get the values from the vacuum cleaner
+  - alias: vacuum_get_miot_property
+    mode: queued
+    trigger:
+      platform: state
+      entity_id: vacuum.roidmi_eve
+    action:
+      - service: >
+          {% if is_state_attr('vacuum.roidmi_eve', 'custom.led_switch', 1) %}
+            input_boolean.turn_on
+          {% else %}
+            input_boolean.turn_off
+          {% endif %}
+        data:
+          entity_id: input_boolean.vacuum_led_switch
+      - service: >
+          {% if is_state_attr('vacuum.roidmi_eve', 'custom.lidar_collision', 1) %}
+            input_boolean.turn_on
+          {% else %}
+            input_boolean.turn_off
+          {% endif %}
+        data:
+          entity_id: input_boolean.vacuum_lidar_collision
+      - service: >
+          {% if is_state_attr('vacuum.roidmi_eve', 'custom.auto_boost', 1) %}
+            input_boolean.turn_on
+          {% else %}
+            input_boolean.turn_off
+          {% endif %}
+        data:
+          entity_id: input_boolean.vacuum_auto_boost
+      - service: input_number.set_value
+        entity_id: input_number.vacuum_volume
+        data_template:
+          value: '{{ state_attr("vacuum.roidmi_eve","speaker.volume") }}'
+      - service: >
+          {% if is_state_attr('vacuum.roidmi_eve', 'custom.double_clean', 1) %}
+            input_boolean.turn_on
+          {% else %}
+            input_boolean.turn_off
+          {% endif %}
+        data:
+          entity_id: input_boolean.vacuum_double_clean
+      - service: >
+          {% if is_state_attr('vacuum.roidmi_eve', 'map.path_type', 1) %}
+            input_boolean.turn_on
+          {% else %}
+            input_boolean.turn_off
+          {% endif %}
+        data:
+          entity_id: input_boolean.vacuum_edge_sweep
+      - service: input_select.select_option
+        entity_id: input_select.vacuum_water_level
+        data_template:
+          option: >
+            {%- if is_state_attr('vacuum.roidmi_eve','custom.water_level',0) -%}
+              No water
+            {%- elif is_state_attr('vacuum.roidmi_eve','custom.water_level',1) -%}
+              Small
+            {%- elif is_state_attr('vacuum.roidmi_eve','custom.water_level',2) -%}
+              Middle
+            {%- elif is_state_attr('vacuum.roidmi_eve','custom.water_level',3) -%}
+              MAX
+            {%- else -%}
+            {%- endif -%}
+      - service: >
+          {% if is_state_attr('vacuum.roidmi_eve', 'custom.station_key', 1) %}
+            input_boolean.turn_on
+          {% else %}
+            input_boolean.turn_off
+          {% endif %}
+        data:
+          entity_id: input_boolean.vacuum_station_key
+      - service: >
+          {% if is_state_attr('vacuum.roidmi_eve', 'custom.station_led', 1) %}
+            input_boolean.turn_on
+          {% else %}
+            input_boolean.turn_off
+          {% endif %}
+        data:
+          entity_id: input_boolean.vacuum_station_led
+      - service: >
+          {% if is_state_attr('vacuum.roidmi_eve', 'speaker.mute', 1) %}
+            input_boolean.turn_on
+          {% else %}
+            input_boolean.turn_off
+          {% endif %}
+        data:
+          entity_id: input_boolean.vacuum_mute
+      - service: input_select.select_option
+        entity_id: input_select.vacuum_work_station_freq
+        data_template:
+          option: >
+            {%- if is_state_attr('vacuum.roidmi_eve','custom.work_station_freq',0) -%}
+              Not to throw away
+            {%- elif is_state_attr('vacuum.roidmi_eve','custom.work_station_freq',1) -%}
+              Every time
+            {%- elif is_state_attr('vacuum.roidmi_eve','custom.work_station_freq',2) -%}
+              Every second
+            {%- elif is_state_attr('vacuum.roidmi_eve','custom.work_station_freq',3) -%}
+              Every third
+            {%- else -%}
+            {%- endif -%}
+      - service: input_select.select_option
+        entity_id: input_select.vacuum_mode
+        data_template:
+          option: >
+            {%- if is_state_attr('vacuum.roidmi_eve','vacuum.mode',0) -%}
+              Sweep
+            {%- elif is_state_attr('vacuum.roidmi_eve','vacuum.mode',1) -%}
+              Silent
+            {%- elif is_state_attr('vacuum.roidmi_eve','vacuum.mode',2) -%}
+              Basic
+            {%- elif is_state_attr('vacuum.roidmi_eve','vacuum.mode',3) -%}
+              Strong
+            {%- elif is_state_attr('vacuum.roidmi_eve','vacuum.mode',4) -%}
+              Full Speed
+            {%- else -%}
+            {%- endif -%}
+      - service: input_select.select_option
+        entity_id: input_select.vacuum_sweep_type
+        data_template:
+          option: >
+            {%- if is_state_attr('vacuum.roidmi_eve','vacuum.sweep_type',0) -%}
+              Sweep
+            {%- elif is_state_attr('vacuum.roidmi_eve','vacuum.sweep_type',1) -%}
+              Mop
+            {%- elif is_state_attr('vacuum.roidmi_eve','vacuum.sweep_type',2) -%}
+              Mop And Sweep
+            {%- else -%}
+            {%- endif -%}
+
+  # set the values in the vacuum cleaner
+  - alias: vacuum_set_miot_property
+    mode: queued
+    trigger:
+      - platform: state
+        entity_id: vacuum.roidmi_eve
+      - platform: state
+        entity_id: input_boolean.vacuum_led_switch
+        id: 'led_switch'
+      - platform: state
+        entity_id: input_boolean.vacuum_lidar_collision
+        id: 'lidar_collision'
+      - platform: state
+        entity_id: input_boolean.vacuum_auto_boost
+        id: 'auto_boost'
+      - platform: state
+        entity_id: input_number.vacuum_volume
+        id: 'volume'
+      - platform: state
+        entity_id: input_boolean.vacuum_double_clean
+        id: 'double_clean'
+      - platform: state
+        entity_id: input_boolean.vacuum_edge_sweep
+        id: 'edge_sweep'
+      - platform: state
+        entity_id: input_select.vacuum_water_level
+        id: 'water_level'
+      - platform: state
+        entity_id: input_boolean.vacuum_station_key
+        id: 'station_key'
+      - platform: state
+        entity_id: input_boolean.vacuum_station_led
+        id: 'station_led'
+      - platform: state
+        entity_id: input_boolean.vacuum_mute
+        id: 'mute'
+      - platform: state
+        entity_id: input_select.vacuum_work_station_freq
+        id: 'work_station_freq'
+      - platform: state
+        entity_id: input_select.vacuum_mode
+        id: 'vacuum_mode'
+      - platform: state
+        entity_id: input_select.vacuum_sweep_type
+        id: 'vacuum_sweep_type'
+
+    action:
+      - choose:
+          - conditions:
+              - condition: trigger
+                id: 'led_switch'
+            sequence:
+              - service: xiaomi_miot.set_miot_property
+                data:
+                  entity_id: vacuum.roidmi_eve
+                  did: 558429891
+                  siid: 8
+                  piid: 22
+                  value: "{{ 0 if is_state('input_boolean.vacuum_led_switch', 'off') else 1 }}"
+          - conditions:
+              - condition: trigger
+                id: 'lidar_collision'
+            sequence:
+              - service: xiaomi_miot.set_miot_property
+                data:
+                  entity_id: vacuum.roidmi_eve
+                  did: 558429891
+                  siid: 8
+                  piid: 23
+                  value: "{{ 0 if is_state('input_boolean.vacuum_lidar_collision', 'off') else 1 }}"
+          - conditions:
+              - condition: trigger
+                id: 'auto_boost'
+            sequence:
+              - service: xiaomi_miot.set_miot_property
+                data:
+                  entity_id: vacuum.roidmi_eve
+                  did: 558429891
+                  siid: 8
+                  piid: 9
+                  value: "{{ 0 if is_state('input_boolean.vacuum_auto_boost', 'off') else 1 }}"
+          - conditions:
+              - condition: trigger
+                id: 'volume'
+            sequence:
+              - service: xiaomi_miot.set_miot_property
+                data:
+                  entity_id: vacuum.roidmi_eve
+                  did: 558429891
+                  siid: 9
+                  piid: 1
+                  value: "{{states('input_number.vacuum_volume')|round(0)}}"
+          - conditions:
+              - condition: trigger
+                id: 'double_clean'
+            sequence:
+              - service: xiaomi_miot.set_miot_property
+                data:
+                  entity_id: vacuum.roidmi_eve
+                  did: 558429891
+                  siid: 8
+                  piid: 20
+                  value: "{{ 0 if is_state('input_boolean.vacuum_double_clean', 'off') else 1 }}"
+          - conditions:
+              - condition: trigger
+                id: 'edge_sweep'
+            sequence:
+              - service: xiaomi_miot.set_miot_property
+                data:
+                  entity_id: vacuum.roidmi_eve
+                  did: 558429891
+                  siid: 13
+                  piid: 8
+                  value: "{{ 0 if is_state('input_boolean.vacuum_edge_sweep', 'off') else 1 }}"
+          - conditions:
+              - condition: trigger
+                id: 'water_level'
+            sequence:
+              - service: xiaomi_miot.set_miot_property
+                data:
+                  entity_id: vacuum.roidmi_eve
+                  did: 558429891
+                  siid: 8
+                  piid: 11
+                  value: >
+                    {%- if is_state("input_select.vacuum_water_level", "No water") -%}
+                      0
+                    {%- elif is_state("input_select.vacuum_water_level", "Small") -%}
+                      1
+                    {%- elif is_state("input_select.vacuum_water_level", "Middle") -%}
+                      2
+                    {%- elif is_state("input_select.vacuum_water_level", "MAX") -%}
+                      3
+                    {% else %}
+                    {% endif %}
+          - conditions:
+              - condition: trigger
+                id: 'station_key'
+            sequence:
+              - service: xiaomi_miot.set_miot_property
+                data:
+                  entity_id: vacuum.roidmi_eve
+                  did: 558429891
+                  siid: 8
+                  piid: 24
+                  value: "{{ 0 if is_state('input_boolean.vacuum_station_key', 'off') else 1 }}"
+          - conditions:
+              - condition: trigger
+                id: 'station_led'
+            sequence:
+              - service: xiaomi_miot.set_miot_property
+                data:
+                  entity_id: vacuum.roidmi_eve
+                  did: 558429891
+                  siid: 8
+                  piid: 25
+                  value: "{{ 0 if is_state('input_boolean.vacuum_station_led', 'off') else 1 }}"
+          - conditions:
+              - condition: trigger
+                id: 'mute'
+            sequence:
+              - service: xiaomi_miot.set_miot_property
+                data:
+                  entity_id: vacuum.roidmi_eve
+                  did: 558429891
+                  siid: 9
+                  piid: 2
+                  value: "{{ 0 if is_state('input_boolean.vacuum_mute', 'off') else 1 }}"
+          - conditions:
+              - condition: trigger
+                id: 'work_station_freq'
+            sequence:
+              - service: xiaomi_miot.set_miot_property
+                data:
+                  entity_id: vacuum.roidmi_eve
+                  did: 558429891
+                  siid: 8
+                  piid: 2
+                  value: >
+                    {%- if is_state("input_select.vacuum_work_station_freq", "Not to throw away") -%}
+                      0
+                    {%- elif is_state("input_select.vacuum_work_station_freq", "Every time") -%}
+                      1
+                    {%- elif is_state("input_select.vacuum_work_station_freq", "Every second") -%}
+                      2
+                    {%- elif is_state("input_select.vacuum_work_station_freq", "Every third") -%}
+                      3
+                    {% else %}
+                    {% endif %}
+          - conditions:
+              - condition: trigger
+                id: 'vacuum_mode'
+            sequence:
+              - service: xiaomi_miot.set_miot_property
+                data:
+                  entity_id: vacuum.roidmi_eve
+                  did: 558429891
+                  siid: 2
+                  piid: 4
+                  value: >
+                    {%- if is_state("input_select.vacuum_mode", "Sweep") -%}
+                      0
+                    {%- elif is_state("input_select.vacuum_mode", "Silent") -%}
+                      1
+                    {%- elif is_state("input_select.vacuum_mode", "Basic") -%}
+                      2
+                    {%- elif is_state("input_select.vacuum_mode", "Strong") -%}
+                      3
+                    {%- elif is_state("input_select.vacuum_mode", "Full Speed") -%}
+                      4
+                    {% else %}
+                    {% endif %}
+          - conditions:
+              - condition: trigger
+                id: 'vacuum_sweep_type'
+            sequence:
+              - service: xiaomi_miot.set_miot_property
+                data:
+                  entity_id: vacuum.roidmi_eve
+                  did: 558429891
+                  siid: 2
+                  piid: 8
+                  value: >
+                    {%- if is_state("input_select.vacuum_sweep_type", "Sweep") -%}
+                      0
+                    {%- elif is_state("input_select.vacuum_sweep_type", "Mop") -%}
+                      1
+                    {%- elif is_state("input_select.vacuum_sweep_type", "Mop And Sweep") -%}
+                      2
+                    {% else %}
+                    {% endif %}

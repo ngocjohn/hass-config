@@ -1,0 +1,79 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Living Room
+    style: >
+      --tablet-popup-header-color: rgba(0, 0, 0, 0);
+      --popup-background-color: rgba(0, 0, 0, 0);
+      --popup-border-width: 0;
+      --button-card-border-radius: 10%;
+    card_mod:
+      style:
+        .: |
+
+    content:
+      type: custom:layout-card
+      layout_type: custom:grid-layout
+      layout:
+        grid-gap: 10px
+        grid-template-columns: 0 1fr 0
+        grid-template-rows: 1fr
+        grid-template-areas: |
+          ". hallway ."
+
+        mediaquery:
+          #tablet
+          '(max-width: 1440px)':
+            grid-template-columns: 1fr #20vw
+            grid-template-rows: 1fr
+            grid-template-areas: |
+              "hallway"
+              "hallway"
+      cards:
+        - type: grid
+          view_layout:
+            grid-area: hallway
+          columns: 3
+          cards:
+            - type: custom:button-card
+              entity: light.living_room_floor_lamp
+              name: Floor lamp
+              template:
+                - lightpop
+                - icon_shade
+
+            - type: custom:button-card
+              entity: light.shelly_dimmer
+              name: Main light
+              template:
+                - icon_light_recessed
+                - light
+
+            - type: custom:button-card
+              entity: light.shelly_rgbw_kitchen_led_strip
+              name: Led strip
+              template:
+                - light
+                - icon_ledstrip
+
+            - type: custom:button-card
+              entity: media_player.living_room_tv
+              name: Apple TV
+              template:
+                - base
+                - icon_tv
+
+            - type: custom:button-card
+              entity: climate.living_room_thermostat
+              name: Radiator
+              template:
+                - radiator
+                - icon_climate
+
+            - type: custom:button-card
+              entity: fan.zhimi_mb3_8b86_air_purifier
+              name: Air Purifier
+              template:
+                - purifier
+                - icon_purifier

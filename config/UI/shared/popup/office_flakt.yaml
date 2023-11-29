@@ -1,0 +1,24 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: "Fläkt\u00B2"
+    card_mod:
+      style:
+        #popup header
+        .:
+    content:
+      type: vertical-stack
+      cards:
+        - type: entities
+          state_color: true
+          card_mod:
+            class: content
+          entities:
+
+            - entity: switch.gosund_fan_switch
+              secondary_info: last-changed
+
+            - type: custom:slider-entity-row
+              entity: input_number.fan_timer
+              hide_state: false

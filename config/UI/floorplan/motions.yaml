@@ -1,0 +1,19 @@
+# ################################################
+#                                               #
+#         DOORS                                 #
+#                                               #
+# ################################################
+
+- entities:
+    - binary_sensor.motion_sensor_entrance
+    - binary_sensor.motion_sensor_kidsroom
+    - binary_sensor.motion_sensor_entrance
+    - binary_sensor.motion_sensor_bathroom
+    - binary_sensor.motion_sensor_hallway_occupancy
+  tap_action: false
+  hold_action: false
+  double_tap_action: false
+  state_action:
+    action: call-service
+    service: floorplan.class_set
+    service_data: 'motion-${entity.state}'

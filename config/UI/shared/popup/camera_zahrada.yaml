@@ -1,0 +1,45 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    style: |
+      --popup-border-width: 0;
+      --tablet-popup-header-color: rgba(0, 0, 0, 0);
+      --popup-background-color: rgba(0, 0, 0, 0);
+      --popup-max-width: 550px;
+    card_mod:
+      style:
+        .: |
+          ha-header-bar {
+            display: none !important;
+          }
+        layout-card:
+          $grid-layout$:
+            # card divider border
+            .: |
+              #root {
+                justify-content: center !important;
+              }
+
+    content:
+      type: custom:stack-in-card
+      cards:
+        - type: picture-entity
+          entity: camera.zahrada
+          image: camera.zahrada
+          show_info: true
+          show_state: true
+          show_name: false
+          camera_view: live
+          tap_action:
+            action: call-service
+            service: camera.turn_on
+            target:
+              entity_id: camera.zahrada
+          view_layout:
+            grid-area: cam
+          card_mod:
+            style: |
+              ha-card {
+                border-radius: 16px !important;
+              }

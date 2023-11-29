@@ -1,0 +1,288 @@
+chips:
+  template:
+    - settings
+    - tilt
+    - extra_styles
+  variables:
+    state_on: >
+      [[[ return ['on', 'home', 'Normal', 'Away', 'Night', 'Guest', 'cool', 'fan_only', 'unlocked', 'open', 'streaming', 'yes', 'Blažičkova', 'Plzeňská'].indexOf(!entity || entity.state) !== -1; ]]]
+    state: >
+      [[[ return !entity || entity.state; ]]]
+
+    light_on: >
+      [[[ return states['sensor.lights_count'].state;]]]
+    playing: >
+      [[[ return states['sensor.currently_playing'].attributes.device_playing; ]]]
+    entity_id: >
+      [[[ return !entity || entity.entity_id; ]]]
+
+    entity_picture: >
+      [[[ return !entity || entity.attributes.entity_picture; ]]]
+
+    timeout: >
+      [[[ return !entity || Date.now() - Date.parse(entity.last_changed); ]]]
+    tilt_options: >
+      [[[
+        return {
+          max: 5,
+          scale: 1.02,
+          glare: true,
+          'max-glare': 0.05,
+          perspective: 1000,
+          speed: 800,
+          parallax: '5px'
+        };
+      ]]]
+    gle: >
+      [[[ return states['sensor.gle'].state; ]]]
+
+  # size: 2vw
+  show_icon: true
+  show_state: true
+  show_name: true
+  show_label: true
+  show_units: true
+  show_entity_picture: true
+  state_display: >
+    [[[
+      if (entity) {
+          return variables.state === 'home'
+              ? variables.translate_home
+              : variables.state === 'not_home'
+                  ? variables.translate_not_home
+                  : variables.state;
+      }
+      return variables.translate_unknown;
+    ]]]
+  tap_action:
+    # ui_sound_tablet: |
+    #   [[[
+    #     let screensaver = states[variables.entity_tablet] === undefined || states[variables.entity_tablet].state;
+
+    #     if (variables.state_on !== undefined  && screensaver === 'on') {
+    #         hass.callService('media_player', 'play_media', {
+    #             entity_id: variables.entity_browser_mod,
+    #             media_content_id: '/local/sound/on.m4a',
+    #             media_content_type: 'music'
+    #         });
+    #     }
+    #     if (variables.state_on && screensaver === 'on') {
+    #         hass.callService('media_player', 'play_media', {
+    #             entity_id: variables.entity_browser_mod,
+    #             media_content_id: '/local/sound/off.m4a',
+    #             media_content_type: 'music'
+    #         });
+    #     }
+    #   ]]]
+    card_bounce: |
+      [[[
+        // add animation
+        if (this.getElementsByTagName("style").length === 0) {
+
+            // phone condition
+            let mq = window.matchMedia('(max-width: 800px)').matches;
+
+            let style = document.createElement('style');
+
+            style.innerHTML = `
+                @keyframes card_bounce {
+                    0%   { transform: scale(1); }
+                    10%  { transform: scale(${ mq ? '0.92' : '0.94' }); }
+                    25%  { transform: scale(1); }
+                    30%  { transform: scale(${ mq ? '0.96' : '0.98' }); }
+                    100% { transform: scale(1); }
+                }
+            `;
+
+            this.appendChild(style);
+        }
+        // duration
+        let duration = 800;
+
+        // animate
+        this.style.animation = `card_bounce ${duration}ms cubic-bezier(0.22, 1, 0.36, 1)`;
+
+        // reset
+        window.setTimeout(() => { this.style.animation = "none"; }, duration + 100)
+      ]]]
+    haptic: medium
+  double_tap_action:
+    haptic: success
+  hold_action:
+    haptic: medium
+  styles:
+    grid:
+      - grid-template-areas: |
+          "i n"
+          "i s"
+      - grid-template-rows: min-content min-content
+      - grid-template-columns: 30% 1fr
+      - position: relative
+    card:
+      - padding: 0.3vw
+      # - margin-block: 10%
+      # - width: min-content
+      # - padding: 0 0 0.05vw 0
+      - transition: none
+      - box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.15)
+      # - overflow: visible
+      - --mdc-ripple-color: rgba(0, 0, 0, 0.8)
+      - color: >
+          [[[
+            return variables.state_on
+                ? '#4b5254'
+                : '#97989c';
+          ]]]
+      - background-color: >
+          [[[
+              return variables.state_on
+                ? 'rgba(250, 250, 250, 0.7)'
+                : 'rgba(115, 115, 115, 0.2)';
+          ]]]
+    state:
+      - font-weight: 600
+      - padding: 0 0.4vw 0 0
+      - line-height: 125%
+      - align-self: center
+      - justify-self: start
+      - color: >
+          [[[
+            return variables.state_on
+              ? 'rgb(139, 51, 51)'
+              : '#4b5254';
+          ]]]
+
+    name:
+      - justify-self: start
+      - padding: 0 0.4vw 0 0
+      - line-height: 160%
+      - letter-spacing: 0.06em
+
+    img-cell:
+      - display: inline-flex
+      - place-items: center
+      - position: relative
+    icon:
+      - width: 40%
+      - height: auto
+      - background: rgb(150 150 150 / 30%)
+      - border-radius: 1vw
+      - padding: 10%
+      - position: inherit
+      - opacity: >
+          [[[
+              return variables.state_on
+                ? 1
+                : 0.4;
+          ]]]
+
+chip_notify:
+  # custom_fields:
+  #   chip_notify: >
+  #     [[[
+  #       let input = Math.floor(states['sensor.air_quality_index'].state),
+  #         radius = 20.5,
+  #         circumference = radius * 2 * Math.PI;
+  #       let color;
+  #       if (variables.state === 'Excellent') {
+  #         color = "#4CAF50";
+  #       }
+  #       if (variables.state === 'Good') {
+  #         color = "#8BC34A";
+  #       }
+  #       if (variables.state === 'Fair') {
+  #         color = "#FFEB3B";
+  #       }
+  #       if (variables.state === 'Interior') {
+  #         color = "#FF5722";
+  #       }
+  #       if (variables.state === 'Poor') {
+  #         color = "#607D8B";
+  #       }
+  #       return `
+  #         <svg viewBox="0 0 50 50">
+  #           <style>
+  #             circle {
+  #               transform: rotate(-90deg);
+  #               transform-origin: 50% 50%;
+  #               stroke-dasharray: ${circumference};
+  #               stroke-dashoffset: ${circumference - input / 100 * circumference};
+  #             }
+  #           </style>
+  #           <circle cx="25" cy="25" r="${radius}" stroke=${color} stroke-width="2.5" fill=${color} fill-opacity="0.3" stroke-linecap="round"/>
+  #           <text x="50%" y="54%" fill=${color} font-weight="600" font-size="16" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle">${input}</text>
+  #         </svg>
+  #     `;
+  #     ]]]
+  styles:
+    card:
+      - color: rgba(255, 255, 255, 0.6)
+      - background: linear-gradient(to top, rgba(53,59,83,0.8) 0%, rgba(10,14,34,0.8) 100%)
+    state:
+      - color: &color >
+          [[[
+            let state;
+            if (variables.state === 'Excellent') {
+              state = '#4CAF50';
+            }
+            if (variables.state === 'Good') {
+              state = '#8BC34A';
+            }
+            if (variables.state === 'Fair') {
+              state = '#FFEB3B';
+            }
+            if (variables.state === 'Interior') {
+              state = '#FF5722';
+            }
+            if (variables.state === 'Poor') {
+              state = '#607D8B';
+            }
+            return `${state}`
+          ]]]
+    icon:
+      - color: *color
+      - opacity: 0.8
+
+    # custom_fields:
+    #   chip_notify:
+    #     - position: absolute
+    #     - left: 0%
+    #     - top: >
+    #         [[[ return window.matchMedia('(max-width: 800px)').matches ? '10%' : '0%'; ]]]
+    #     - width: 24%
+    #     - height: auto
+    #     - margin-inline: 5%
+chip_system:
+  template:
+    - chips
+  state_display: >
+    [[[
+      return (variables.state) +(entity.attributes.unit_of_measurement);
+    ]]]
+  tap_action:
+    action: more-info
+  styles:
+    card:
+      - color: rgba(255, 255, 255, 0.6)
+      - background: 'linear-gradient(to top, #607d8b6e 0%, rgba(10, 14, 34, 0.8) 100%)'
+    state:
+      - color: &systemcolor >
+          [[[
+            let state;
+            if (variables.state >=1) {
+              state = '#4CAF50';
+            }
+            if (variables.state >=35) {
+              state = '#8BC34A';
+            }
+            if (variables.state >= 45) {
+              state = '#FFEB3B';
+            }
+            if (variables.state >= 75) {
+              state = '#FF5722';
+            }
+            return `${state}`
+          ]]]
+    icon:
+      - color: *systemcolor
+      - opacity: 0.8

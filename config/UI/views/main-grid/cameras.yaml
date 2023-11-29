@@ -1,0 +1,65 @@
+#################################################
+#                                               #
+#                  CAMERAS                      #
+#                                               #
+#################################################
+
+- type: grid
+  title: Cameras
+  view_layout:
+    grid-area: cameras
+  columns: 1
+  cards:
+    #Conditional Media
+    - type: custom:swipe-card
+      start_card: 1
+      parameters:
+        # pagination:
+        #   type: bullets
+        #   clickable: true
+        roundLengths: true
+        effect: coverflow
+        speed: 650
+        spaceBetween: 20
+        threshold: 7
+        observer: true
+        coverflowEffect:
+          rotate: 80
+          depth: 300
+      cards:
+        - type: grid
+          columns: 2
+          cards:
+            # CAM DOOR
+            - type: custom:decluttering-card
+              template: grid_cam_door
+
+            # CAM KIDS ROOM
+            - type: custom:decluttering-card
+              template: grid_cam_kids
+
+            # CAM TERRACE
+            - type: custom:decluttering-card
+              template: grid_cam_terrace
+
+            # CAM GARDEN
+            - type: custom:decluttering-card
+              template: grid_cam_garden
+
+        #                  SINGLE CAM                      #
+
+        # CAM DOOR
+        - type: custom:decluttering-card
+          template: grid_cam_door
+
+        # CAM KIDS ROOM
+        - type: custom:decluttering-card
+          template: grid_cam_kids
+
+        # CAM TERRACE
+        - type: custom:decluttering-card
+          template: grid_cam_terrace
+
+        # CAM GARDEN
+        - type: custom:decluttering-card
+          template: grid_cam_garden

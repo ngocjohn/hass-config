@@ -1,0 +1,87 @@
+type: custom:grid-layout
+icon: mdi:view-dashboard
+theme: tablet
+path: rooms
+layout:
+  default:
+  margin: 0
+  grid-gap: 1.8vw
+  grid-template-columns: 0 1fr 1fr 0
+  grid-template-rows: fit-content(100%)
+  grid-template-areas: |
+    ". mainrooms   other  ."
+
+#################################################
+#                                               #
+#                    DASHBOARD                  #
+#                                               #
+#################################################
+
+cards:
+  #################################################
+  #                                               #
+  #                  MAIN ROOMS                   #
+  #                                               #
+  #################################################
+
+  - type: grid
+    title: Masters
+    view_layout:
+      grid-area: mainrooms
+    columns: 2
+    cards:
+      # Living Room
+      - type: custom:decluttering-card
+        template: grid_living_room
+
+      # OFFICE
+      - type: custom:decluttering-card
+        template: grid_office
+
+      # Kitchen
+      - type: custom:decluttering-card
+        template: grid_kitchen_normal
+
+      - type: custom:decluttering-card
+        template: grid_kitchen_dishwasing
+
+      # Bedroom
+      - type: custom:decluttering-card
+        template: grid_bedroom
+
+
+  #################################################
+  #                                               #
+  #                    ROOMS 2                    #
+  #                                               #
+  #################################################
+
+  - type: grid
+    title: Rooms
+    view_layout:
+      grid-area: other
+    columns: 2
+    cards:
+      # SHOWER ROOM
+      - type: custom:decluttering-card
+        template: grid_shower
+
+      # BATHROOM
+      - type: custom:decluttering-card
+        template: grid_bathroom
+
+      # UTILITY NORMAL
+      - type: custom:decluttering-card
+        template: grid_utility_normal
+
+      # UTILITY VACUUM
+      - type: custom:decluttering-card
+        template: grid_utility_vacuum
+
+      # UTILITY VACUUM
+      - type: custom:decluttering-card
+        template: grid_utility_washing
+
+      # HALLWAY
+      - type: custom:decluttering-card
+        template: grid_hallway

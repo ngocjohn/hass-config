@@ -1,0 +1,36 @@
+- element:
+    - above_horizon
+  entity: sun.sun
+  tap_action: false
+  hold_action: false
+  double_tap_action: false
+  state_action:
+    action: call-service
+    service: floorplan.style_set
+    service_data:
+      style: |
+        >
+        if( entity.state === "above_horizon" )
+            return "display: block;";
+        return "display: none;"
+
+- element: icon-phone-rotate
+  hold_action: false
+  tap_action:
+    action: fire-dom-event
+    local_conditional_card:
+      action: toggle
+      ids:
+        - landscape
+        - portrait
+  state_action:
+    action: call-service
+    service: floorplan.style_set
+    service_data:
+      style: |
+        >
+          return `
+            fill: #ffffff40;
+            stroke: #606060;
+            opacity: 0.2;
+          `

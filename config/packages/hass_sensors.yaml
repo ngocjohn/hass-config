@@ -1,0 +1,130 @@
+########################################
+#   HOME ASSISTANT CORE                #
+########################################
+
+rest:
+  - resource: https://api.github.com/repos/home-assistant/core/releases/latest
+    sensor:
+      name: hass_release_notes
+      unique_id: 'ee81059a-b51f-44cc-9a36-26c938e48c73'
+      value_template: >
+        {{ value_json.name }}
+      json_attributes:
+        - body
+        - html_url
+    scan_interval: 21600
+
+  - resource: https://api.github.com/repos/home-assistant/core/releases?per_page=1
+    sensor:
+      name: hass_release_notes_beta
+      unique_id: '4f92b2cc-2ee1-4d67-beda-713795139f29'
+      value_template: >
+        {{ value_json[0].name }}
+      json_attributes:
+        - body
+        - html_url
+    scan_interval: 21600
+
+template:
+  - sensor:
+      # SENSOR - HASS CORE NEXT RELEASE
+      - unique_id: hass_next_release
+        state: >
+          {% set start_time = state_attr('calendar.home_assistant_devs', 'start_time') %}
+          {{ (as_timestamp(start_time, default=0) + 60*60*20.5) | timestamp_local(default) }}
+        attributes:
+          friendly_name: >
+            {% set release = state_attr('calendar.home_assistant_devs','message') %}
+            {% if release == 'Home Assistant Core Beta Release' %}
+              Next beta
+            {% elif release == 'Home Assistant Core Release' %}
+              Next release
+            {% else %}
+              {{ release }}
+            {% endif %}
+          icon: mdi:dev-to
+          device_class: timestamp
+
+      - unique_id: updates
+        state: >
+          {{ this.attributes.values() | sum }}
+        attributes:
+          home_assistant: >
+            {% set installed = states('sensor.current_version') %}
+            {% set latest = states('sensor.home_assistant_versions') %}
+            {{ iif(version(latest) > version(installed) and '.' in installed and '.' in latest, 1, 0) }}
+          update_entities: >
+            {% set ignore_entities = device_entities("7353b70cac886bd0995d71776dfa49fb") | list %}
+            {{ states.update | selectattr('state','eq','on') | rejectattr('entity_id', 'in', ignore_entities) | list | count }}
+
+      # SENSOR - DOMAIN COUNTER
+      - unique_id: domain_counter
+        name: 'Domain Counter'
+        state: >
+          {{ states | count }}
+        attributes:
+          automation: >
+            {{ states.automation | count }}
+          binary_sensor: >
+            {{ states.binary_sensor | count }}
+          device_tracker: >
+            {{ states.device_tracker | count }}
+          light: >
+            {{ states.light | count }}
+          media_player: >
+            {{ states.media_player | count }}
+          sensor: >
+            {{ states.sensor | count }}
+          switch: >
+            {{ states.switch | count }}
+          other: >
+            {% set exclude = this.attributes | list %}
+            {{ states | rejectattr('domain', 'in', exclude) | list | count }}
+
+command_line:
+  - sensor:
+      unique_id: hacs_installed
+      name: HACS installed
+      command: |-
+        python3 << EOF
+        import os, json
+        installed = {"repositories": []}
+        PATH = "/config/.storage/hacs.repositories"
+        with open(PATH, "r", encoding="UTF-8") as file:
+            data = json.load(file)["data"]
+            for i in data:
+                if "installed" in data[i]:
+                    installed["repositories"] += [data[i]["full_name"]]
+            file.close()
+        print(json.dumps(installed))
+        EOF
+      value_template: >
+        {{ value_json.repositories | count }}
+      json_attributes:
+        - repositories
+      scan_interval: 86400
+
+sensor:
+  - platform: systemmonitor
+    resources:
+      - type: disk_use_percent
+        arg: /
+      - type: memory_use_percent
+      - type: memory_use
+      - type: processor_temperature
+      - type: processor_use
+      - type: last_boot
+      - type: memory_free
+      - type: swap_use_percent
+      - type: swap_use
+      - type: swap_free
+      - type: load_1m
+      - type: load_5m
+      - type: load_15m
+
+  - platform: time_date
+    display_options:
+      - 'time'
+      - 'date'
+  - platform: folder
+    folder: /config/www/tmp/snapshots

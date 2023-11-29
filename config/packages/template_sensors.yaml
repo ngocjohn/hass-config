@@ -1,0 +1,410 @@
+homeassistant:
+  customize:
+    sensor.trakt_upcoming_shows:
+      icon: mdi:television-box
+      friendly_name: 'Upcoming shows'
+    sensor.code_line_count:
+      friendly_name: 'Code Line Count'
+      icon: mdi:xml
+      state_class: measurement
+      unit_of_measurement: Lines
+#################################################
+#                                               #
+#                SENSORS                        #
+#                                               #
+#################################################
+# WEATHER
+weather:
+  - platform: template
+    name: 'Smichov'
+    unique_id: '86218ef4-128d-44e8-ac25-549a28c2a94e'
+    condition_template: "{{ states('weather.prague_smichov') }}"
+    temperature_template: "{{ state_attr('weather.prague_smichov','apparent_temperature') | float }}"
+    humidity_template: "{{ state_attr('weather.prague_smichov','humidity') | float }}"
+
+template:
+  # SENSORS
+  - sensor:
+      # SENSOR CLIMATE
+      - unique_id: climate_index
+        name: Home Climate
+        state: >-
+          {% set aqi = states.sensor.air_quality_index.state | float %}
+          {% if 0 < aqi < 12 %}
+            Excellent
+          {% elif 12.1 < aqi < 35.4 %}
+            Good
+          {% elif 35.5 < aqi < 55.4%}
+            Fair
+          {% elif 55.5 < aqi < 150.4 %}
+            Interior
+          {% elif 150.5 < aqi %}
+            Poor
+          {% endif %}
+        icon: >-
+          {% if states('sensor.home_climate') in ['Excellent', 'Good'] %}
+            mdi:leaf
+          {% elif states('sensor.home_climate') in ['Fair', 'Interior'] %}
+            ios:aqi-medium
+          {% else %}
+            ios:aqi-high
+          {%- endif %}
+        attributes:
+          average_temperature: >-
+            {{ states.sensor.average_temperature.state }}
+          average_humidity: >-
+            {{ states.sensor.average_humidity.state }}
+          living_room_pm25: >-
+            {{ states.sensor.dyson_ph04_pm_2_5.state }} µg/m³
+          bedroom_pm25: >-
+            {{ states.sensor.zhimi_mb3_8b86_pm25.state }} µg/m³
+          office_pm25: >-
+            {{ states.sensor.zhimi_mb4_b008_pm25_density.state }} µg/m³
+          heating: >-
+            {% set heaters = [
+              states.climate.bedroom_thermostat,
+              states.climate.office_thermostat,
+              states.climate.kids_room_thermostat,
+              states.climate.living_room_thermostat ] %}
+            {% set heateron = heaters | selectattr('attributes.hvac_action','eq','heating') | list | count %}
+            {%- if (heateron != 0) -%}
+              yes
+            {% else %}
+              no
+            {% endif %}
+          purifier: >-
+            {% set purifiers = [
+              states.fan.dyson_ph04,
+              states.fan.office_xiaomi_air_purifier,
+              states.fan.zhimi_mb3_8b86_air_purifier ] %}
+            {% set purifier_on = purifiers | selectattr('state','eq','on') | list | count %}
+            {%- if (purifier_on != 0) -%}
+              yes
+            {% else %}
+              no
+            {% endif %}
+          heating_on: >-
+            {% set heateron = [
+              states.climate.bedroom_thermostat,
+              states.climate.office_thermostat,
+              states.climate.kids_room_thermostat,
+              states.climate.living_room_thermostat ] %}
+            {{ heateron | selectattr('attributes.hvac_action','eq','heating') | map(attribute='name') | list | replace('Thermostat', '') }}
+
+      # SENSOR - ROOM ACTIVITY
+      - unique_id: living_room_active
+        name: 'Living-room Active'
+        state: >-
+          {% if not is_state('light.living_room_group', 'off') %} yes
+          {% elif not is_state('media_player.sony_bravia_tv', 'off') %} yes
+          {% else %} no
+          {% endif %}
+        icon: >-
+          {% set state = states('sensor.living_room_active') %}
+          {% if state == 'no' %} mdi:thumb-down
+          {% else %} mdi:thumb-up
+          {%- endif %}
+        attributes:
+          lights_on: >-
+            {%- set light = expand(states.light.living_room_group) | selectattr( 'state', 'eq', 'on') | map(attribute='name') | list | replace('Living Room ', '') %}
+            {{- light }}
+      # SENSOR - BEDROOM ACTIVITY
+      - unique_id: bedroom_active
+        name: 'Bedroom Active'
+        state: >-
+          {% if not is_state('light.bedroom_group', 'off') %} yes
+          {% elif not is_state('media_player.bedroom_tv', 'off') %} yes
+          {% elif is_state('media_player.bedroom_homepod', 'playing') %} yes
+          {% else %} no
+          {% endif %}
+        icon: >-
+          {% set state = states('sensor.bedroom_active') %}
+          {% if state == 'no' %} mdi:thumb-down
+          {% else %} mdi:thumb-up
+          {%- endif %}
+        attributes:
+          lights_on: >-
+            {%- set light = expand(states.light.bedroom_group) | selectattr( 'state', 'eq', 'on') | map(attribute='name') | list | replace('Bedroom ', '') %}
+            {{- light }}
+      # SENSOR - HALLWAY ACTIVITY
+      - unique_id: hallway_active
+        name: 'Hallway Active'
+        state: >-
+          {% if not is_state('light.hallway_group', 'off') %} yes
+          {% elif not is_state('binary_sensor.motion_sensor_entrance', 'off') %} yes
+          {% elif not is_state('binary_sensor.motion_sensor_hallway_occupancy', 'off') %} yes
+          {% else %} no
+          {% endif %}
+        icon: >-
+          {% set state = states('sensor.hallway_active') %}
+          {% if state == 'no' %} mdi:thumb-down
+          {% else %} mdi:thumb-up
+          {%- endif %}
+        attributes:
+          lights_on: >-
+            {%- set light = expand(states.light.hallway_group) | selectattr( 'state', 'eq', 'on') | map(attribute='name') | list | replace('Hallway ', '') %}
+            {{- light }}
+      # SENSOR - KITCHEN ACTIVITY
+      - unique_id: kitchen_active
+        name: 'Kitchen Active'
+        state: >-
+          {% if is_state('light.kitchen_group', 'on') %} on
+          {% elif is_state('sensor.mycka_nadobi_operation_state', 'Run') %} dishwashing
+          {% elif is_state('sensor.hob_operation_state', 'Run') %} cooking
+          {% else %} no
+          {% endif %}
+        icon: >-
+          {% set state = states('sensor.kitchen_active') %}
+          {% if state == 'no' %} mdi:thumb-down
+          {% else %} mdi:thumb-up
+          {%- endif %}
+        attributes:
+          dishwasher_remain: >-
+            {% if has_value('sensor.mycka_nadobi_remaining_program_time') %}
+            {% from 'easy_time.jinja' import easy_relative_time %}
+              {{ easy_relative_time(states('sensor.mycka_nadobi_remaining_program_time')) | string | replace(' minutes', ' min') }}
+            {% endif %}
+          lights_on: >-
+            {%- set light = expand(states.light.kitchen_group) | selectattr( 'state', 'eq', 'on') | map(attribute='name') | list | replace('Kitchen ', '') %}
+            {{- light }}
+      # SENSOR - OFFICE ACTIVITY
+      - unique_id: office_active
+        name: 'Office Active'
+        state: >-
+          {% if not is_state('light.office_group', 'off') %} yes
+          {% elif is_state('switch.playstation_5_power', 'on') %} yes
+          {% elif is_state('media_player.office', 'playing') %} playing
+          {% else %} no
+          {% endif %}
+        icon: >-
+          {% if states('sensor.office_active') == 'no' %} mdi:thumb-down
+          {% else %} mdi:thumb-up
+          {%- endif %}
+        attributes:
+          lights_on: >-
+            {%- set light = expand(states.light.office_group) | selectattr( 'state', 'eq', 'on') | map(attribute='name') | list | replace('Office ', '') %}
+            {{- light }}
+
+      # SENSOR - BATHROOM ACTIVITY
+      - unique_id: bathroom_active
+        name: 'Bathroom Active'
+        state: >-
+          {% if is_state('binary_sensor.bathroom_occupancy', 'on') %} occupied
+          {% elif is_state('light.bathroom_group', 'on') %} yes
+          {% elif is_state('media_player.bathroom_homepod', 'playing') %} playing
+          {% else %} no
+          {% endif %}
+        icon: >-
+          {% if states('sensor.bathroom_active') == 'no' %} mdi:thumb-down
+          {% else %} mdi:thumb-up
+          {%- endif %}
+        attributes:
+          lights_on: >-
+            {%- set light = expand(states.light.bathroom_group) | selectattr( 'state', 'eq', 'on') | map(attribute='name') | list | replace('Bathroom ', '') %}
+            {{- light }}
+      # SENSOR - SHOWER ACTIVITY
+      - unique_id: shower_active
+        name: 'Shower Active'
+        state: >-
+          {% if is_state('binary_sensor.shower_room_occupancy', 'on') %} occupied
+          {% elif is_state('light.shower_group', 'on') %} yes
+          {% else %} no
+          {% endif %}
+        icon: >-
+          {% if states('sensor.shower_active') == 'no' %} mdi:thumb-down
+          {% else %} mdi:thumb-up
+          {%- endif %}
+        attributes:
+          lights_on: >-
+            {%- set light = expand(states.light.shower_group) | selectattr( 'state', 'eq', 'on') | map(attribute='name') | list | replace('Shower Room ', '') %}
+            {{- light }}
+      # SENSOR - UTILITY ACTIVITY
+      - unique_id: appliance_active
+        name: 'Appliance Active'
+        state: >-
+          {% if not is_state('light.utility_room_light', 'off') %} on
+          {% elif not is_state('vacuum.roidmi_eve', 'docked') %} cleaning
+          {% elif is_state('sensor.washer_dryer_operation_state', 'Run') %} washing
+          {% else %} no
+          {% endif %}
+        icon: >-
+          {% if states('sensor.appliance_active') == 'no' %} mdi:thumb-down
+          {% else %} mdi:thumb-up
+          {%- endif %}
+        attributes:
+          washdryer_remain: >-
+            {% if has_value('sensor.washer_dryer_remaining_program_time') %}
+            {% from 'easy_time.jinja' import easy_relative_time %}
+              {{ easy_relative_time(states('sensor.washer_dryer_remaining_program_time')) | string | replace(' minutes', ' min') }}
+            {% endif %}
+          lights_on: >-
+            {%- if is_state('light.utility_room_light', 'on') %}
+            [ "light" ]
+            {%- endif %}
+
+      # SENSOR - LIGHTS COUNT
+      - name: Lights count
+        unique_id: lights_on_count
+        state: >-
+          {%- set light = expand(states.light.all_light_group) | selectattr( 'state', 'eq', 'on') | list | count %}
+          {%- if light == 0 %} Off {% else %} {{ light }} On {% endif %}
+        attributes:
+          living_room: >-
+            {%- set light = expand(states.light.living_room_group) | selectattr( 'state', 'eq', 'on') | list | count | float %}
+            {{- light }}
+          kitchen: "{{ expand(states.light.kitchen_group) | selectattr( 'state', 'eq', 'on') | list | count }}"
+          bathroom: "{{ expand(states.light.bathroom_group) | selectattr( 'state', 'eq', 'on') | list | count }}"
+          bedroom: "{{ expand(states.light.bedroom_group) | selectattr( 'state', 'eq', 'on') | list | count }}"
+          hallway_utility: "{{ expand(states.light.hallway_group) | selectattr( 'state', 'eq', 'on') | list | count }}"
+          office: "{{ expand(states.light.office_group) | selectattr( 'state', 'eq', 'on') | list | count }}"
+
+      # SENSOR - MEDIA PLAYER
+      - name: Currently playing
+        unique_id: currently_playing
+        state: >-
+          {% if this.attributes.device | list | count > 0 %} on {% else %} off {% endif %}
+        attributes:
+          device: >-
+            {% set p2 = expand(states.group.homepod_airplay) | selectattr( 'state', 'in', ['on', 'playing']) | map(attribute='name') | list %}
+            {% set p1 = expand(states.group.media_players) | rejectattr('entity_id', 'in', ['media_player.spotify']) | selectattr( 'state', 'in', ['on', 'playing', 'idle', 'paused']) | map(attribute='name') | list %}
+            {{ p1 + p2 }}
+          device_playing: >-
+            {{ this.attributes.device | list | count }} Playing
+          mass_homepods: >-
+            {% set mass = expand('group.homepod_mass_airplay') | rejectattr('state', 'eq', 'off') | list | count %}
+            {{ mass }}
+      # SENSOR - COVER SHUTTERS COUNT
+      - name: Covers open count
+        unique_id: covers_on_count
+        unit_of_measurement: devices
+        state: >-
+          {{ expand(states.group.shades_cover) | selectattr( 'state', 'eq', 'open') | list | count }}
+
+      # SENSOR - DEVICE LOW BATTERRY
+      - name: Device with Low Battery
+        unique_id: low_baterry_device
+        unit_of_measurement: devices
+        state: >-
+          {%- set ignore_entities =  integration_entities('mobile_app') -%}
+          {{ states.sensor
+          | rejectattr('attributes.device_class', 'undefined')
+          | selectattr('attributes.device_class', 'eq', 'battery')
+          | rejectattr('entity_id', 'in', ignore_entities)
+          | map(attribute='state')
+          | reject('in', ['unknown', 'unavailable'])
+          | map('int', -1) | select('le', 50)
+          | select('ge', 0)
+          | list | count
+          }}
+        icon: >-
+          {% if is_state('sensor.low_baterry_device', '0') %}
+            mdi:battery-check
+          {% else %}
+            mdi:battery-alert
+          {% endif %}
+
+      # SENSOR - WEATHER
+      - unique_id: weather_min_temp
+        name: 'Weather Min Temp'
+        state: '{{ states.sensor.weather_smichov_forecast_daily.attributes.forecast[0].templow }}'
+      - unique_id: weather_max_temp
+        name: 'Weather Max Temp'
+        state: '{{ states.sensor.weather_smichov_forecast_daily.attributes.forecast[0].temperature }}'
+
+      - unique_id: weather_humidity
+        name: 'Weather Humidity'
+        unit_of_measurement: '%'
+        state: >-
+          {{ states.weather.prague_smichov.attributes.humidity }}
+      - unique_id: weather_current_temp
+        name: 'Weather Current Temperature'
+        state: >-
+          {{ states.weather.prague_smichov.attributes.temperature }}
+        unit_of_measurement: '°C'
+      # SENSOR - SECURITY - DOORS STATE
+      - unique_id: doors_state
+        name: 'Doors state'
+        state: >-
+          {% if states('group.security_doors') == 'on' %}
+            open
+          {% else %}
+            closed
+          {% endif %}
+        icon: >-
+          {% if 'open' in this.state or 'unlocked' in this.state %}
+          mdi:lock-open
+          {% else %}
+          mdi:lock
+          {% endif %}
+        attributes:
+          doors_open: >-
+            {% set doors = [
+              states.binary_sensor.contact_sensor_bedroom_balcony,
+              states.binary_sensor.contact_sensor_kid_balcony,
+              states.binary_sensor.contact_sensor_terrace_door,
+              states.binary_sensor.contact_sensor_garden_door,
+              states.binary_sensor.contact_sensor_entrance_door ] %}
+            {{ doors | selectattr('state', 'in', ['open', 'on', 'unlocked']) | map(attribute='name') | list | replace('Contact Sensor ', '') }}
+
+      # SENSOR - HOME MODE
+      - unique_id: home_mode
+        name: 'Home mode'
+        state: >-
+          {% if is_state('input_boolean.guest_mode', 'on') %} Guest
+          {% elif is_state('input_boolean.leaving_home', 'on') %} Away
+          {% elif is_state('input_boolean.night_mode', 'on') %} Night
+          {% else %} Normal
+          {% endif %}
+        icon: >
+          {% if 'Guest' in this.state %}
+          fas:person-circle-question
+          {% elif 'Away' in this.state %}
+          ios:car
+          {% elif 'Night' in this.state %}
+          ios:moon-stars-fill
+          {% else %}
+          ios:house-fill
+          {% endif %}
+
+      # SENSOR - SECURITY - MOTION STATE
+      - unique_id: motion_state
+        name: 'Motion state'
+        state: >-
+          {% if states('group.motion_sensors') == 'on' %}
+            Detected
+          {% else %}
+            Clear
+          {% endif %}
+        icon: >-
+          {% if 'Detected' in this.state %}
+          mdi:motion-sensor
+          {% else %}
+          mdi:motion-sensor-off
+          {% endif %}
+        attributes:
+          motion_detected: >-
+            {% set motions = [
+              states.binary_sensor.motion_sensor_bathroom,
+              states.binary_sensor.motion_sensor_hallway_occupancy,
+              states.binary_sensor.motion_sensor_shower_room,
+              states.binary_sensor.motion_sensor_bedroom,
+              states.binary_sensor.motion_sensor_kidsroom,
+              states.binary_sensor.motion_sensor_kitchen,
+              states.binary_sensor.motion_sensor_utility,
+              states.binary_sensor.motion_sensor_entrance ] %}
+            {{ motions | selectattr('state', 'in', ['detected', 'on']) | map(attribute='name') | list | replace('Motion Sensor ', '') }}
+
+sensor:
+  - platform: template
+    sensors:
+      day_en:
+        value_template: "{{ ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'][now().weekday()] }}"
+      date_en:
+        value_template: "{%- set months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] -%} {{ now().day | string + ' ' + months[now().month-1]}}"
+
+command_line:
+  - sensor:
+      name: code_line_count
+      unique_id: '2760a667-469c-4b41-8c76-722e87b236df'
+      command: find . -name "*.yaml" -not -path "*/custom_components/*" -not -path "*/blueprints/*" | xargs wc -l | grep "total" | grep "[0-9]*" -o
+      scan_interval: 3600

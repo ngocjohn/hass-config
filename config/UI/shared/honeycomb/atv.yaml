@@ -1,0 +1,78 @@
+action: call-service
+service: honeycomb
+service_data:
+  entity: media_player.living_room_tv
+  audio: /local/sound/popup.m4a
+  autoclose: false
+  active: true
+  xy_pad:
+    repeat: 500
+    x:
+      invert: true
+      service: script.turn_on
+      service_data:
+        entity_id: >-
+          {{ ( x_percentage > 0 ? 'script.tv_volume_down' : 'script.tv_volume_up' ) }}
+  buttons:
+    #0
+    - icon: mdi:volume-mute
+      active: true
+      position: 0
+      show: true
+      tap_action:
+        action: call-service
+        service: media_player.volume_mute #Mute
+        service_data:
+          is_volume_muted: true
+          entity_id: entity
+    #1
+    - icon: mdi:play-pause
+      active: true
+      show: true
+      position: 1
+      tap_action:
+        action: call-service
+        service: media_player.media_play_pause
+        service_data:
+          entity_id: entity
+    #2
+    - icon: mdi:volume-plus
+      active: true
+      show: true
+      position: 2
+      tap_action:
+        action: call-service
+        service: media_player.volume_up
+        service_data:
+          entity_id: entity
+    #3
+    - icon: mdi:youtube
+      active: true
+      show: true
+      position: 3
+      tap_action:
+        action: call-service
+        service: media_player.select_source
+        service_data:
+          entity_id: entity
+          source: YouTube
+    #4
+    - icon: mdi:power
+      active: '[[[ return entity.state != "off" ]]]'
+      position: 4
+      audio: /local/sound/tv.m4a
+      tap_action:
+        action: call-service
+        service: script.turn_on
+        service_data:
+          entity_id: script.atv_turn_on_off
+    #5
+    - icon: mdi:volume-minus
+      active: true
+      show: true
+      position: 5
+      tap_action:
+        action: call-service
+        service: media_player.volume_down
+        service_data:
+          entity_id: entity

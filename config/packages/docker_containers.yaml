@@ -1,0 +1,119 @@
+########################################
+#   DOCKER RASPBERRY PI                #
+########################################
+
+switch:
+  - platform: template
+    switches:
+      watchtower:
+        unique_id: watchtower_switch
+        friendly_name: Watchtower
+        value_template: >
+          {{ is_state('sensor.docker_watchtower', 'running') }}
+        turn_on:
+          - service: shell_command.unpause_watchtower
+          - service: homeassistant.update_entity
+            target:
+              entity_id: binary_sensor.container_watchtower
+        turn_off:
+          - service: shell_command.pause_watchtower
+          - service: homeassistant.update_entity
+            target:
+              entity_id: binary_sensor.container_watchtower
+sensor:
+  - platform: rest ## UNIFI ##
+    unique_id: container_unifi_controller
+    name: Docker Unifi Controller
+    icon: si:ubiquiti
+    json_attributes:
+      - state
+      - status
+      - image
+    resource: http://192.168.0.146:8126/container/unifi-controller
+    value_template: >
+      {{ value_json.state }}
+    timeout: 60
+    scan_interval: 360
+
+  - platform: rest
+    unique_id: container_portainer
+    name: Docker Portainer
+    icon: si:portainer
+    json_attributes:
+      - state
+      - status
+      - image
+    resource: http://192.168.0.146:8126/container/portainer
+    value_template: >
+      {{ value_json.state }}
+    timeout: 60
+    scan_interval: 360
+
+  - platform: rest
+    unique_id: container_homebridge
+    name: Docker Homebridge
+    icon: si:homebridge
+    json_attributes:
+      - state
+      - status
+      - image
+    resource: http://192.168.0.146:8126/container/homebridge
+    value_template: >
+      {{ value_json.state }}
+    timeout: 60
+    scan_interval: 360
+
+  - platform: rest
+    unique_id: container_watchtower
+    name: Docker Watchtower
+    icon: cil:docker-watchtower
+    json_attributes:
+      - state
+      - status
+      - image
+    resource: http://192.168.0.146:8126/container/watchtower
+    value_template: >
+      {{ value_json.state }}
+    timeout: 60
+    scan_interval: 360
+
+  - platform: rest ## PORTAINER ##
+    unique_id: container_hadockermon
+    name: Docker Hadockermon
+    icon: si:docker
+    json_attributes:
+      - state
+      - status
+      - image
+    resource: http://192.168.0.146:8126/container/ha-dockermon
+    value_template: >
+      {{ value_json.state }}
+    timeout: 60
+    scan_interval: 360
+
+template:
+  - binary_sensor:
+      ########################################
+      #           RASPBERRY SYSTEM           #
+      ########################################
+
+      - unique_id: raspberry_docker
+        name: Raspberry Docker
+        icon: mdi:raspberry-pi
+        state: >
+          {{ has_value('sensor.rpi_monitor_pidocker') }}
+        device_class: running
+        attributes:
+          uptime: >
+            {{ state_attr('sensor.rpi_monitor_pidocker', 'up_time') }}
+          IP: >
+            {% if has_value('sensor.rpi_monitor_pidocker') %}
+              {{ state_attr('sensor.rpi_monitor_pidocker', 'networking')['eth0'].IP }}
+            {% endif %}
+          last_reboot: >
+            {{ as_timestamp(state_attr('sensor.rpi_monitor_pidocker', 'last_update')) | timestamp_custom('%d.%m.%y at %H:%M') }}
+
+  - sensor:
+      - unique_id: pidocker_mem
+        state: >
+          {{ ((state_attr('sensor.rpi_monitor_pidocker', 'memory').free_mb | int) / (state_attr('sensor.rpi_monitor_pidocker', 'memory').size_mb | int) * 100) | int }}

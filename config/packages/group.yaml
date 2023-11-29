@@ -1,0 +1,168 @@
+group:
+  # LIGHTS GROUP
+
+  light_living_room:
+    name: Lights Living Room
+    icon: mdi:lightbulb-group
+    entities:
+      - light.living_room_floor_lamp
+      - light.shelly_dimmer
+      - light.shelly_rgbw_kitchen_led_strip
+  light_kitchen:
+    name: Lights Kitchen Group
+    icon: mdi:lightbulb-group
+    entities:
+      - light.kitchen_main_light
+      - light.kitchen_table_light
+      - light.hood_lighting
+  light_bathroom:
+    name: Lights Bathroom Group
+    icon: mdi:lightbulb-group
+    entities:
+      - light.bathroom_main_light
+      - light.bathroom_mirror_light
+  light_bedroom:
+    name: Lights Bedroom Group
+    icon: mdi:lightbulb-group
+    entities:
+      - light.bedroom_closet_light
+      - light.bedroom_main_light
+      - light.shower_room_main_light
+      - light.shower_room_mirror_light
+      - light.bed_light
+      - light.bedroom_ripple_mood_light
+  light_hallway_utility:
+    name: Lights Hallway Utility Group
+    icon: mdi:lightbulb-group
+    entities:
+      - light.aqara_hub
+      - light.utility_room_light
+      - light.hallway_light
+  light_office:
+    name: Lights Office Group
+    icon: mdi:lightbulb-group
+    entities:
+      - light.office_led_light_strip
+      - light.office_lamp_bulb
+      - light.office_main_light
+      - light.office_shelf_led
+      - light.vocolinc_rpl_188bce_mood_light
+  light_all:
+    name: All Lights Group
+    icon: mdi:lightbulb-group
+    entities:
+      - light.living_room_floor_lamp
+      - light.shelly_dimmer
+      - light.shelly_rgbw_kitchen_led_strip
+      - light.kitchen_main_light
+      - light.kitchen_table_light
+      - light.hood_lighting
+      - light.bathroom_main_light
+      - light.bathroom_mirror_light
+      - light.bedroom_closet_light
+      - light.bedroom_main_light
+      - light.shower_room_main_light
+      - light.shower_room_mirror_light
+      - light.bed_light
+      - light.aqara_hub
+      - light.utility_room_light
+      - light.hallway_light
+      - light.office_lamp_bulb
+      - light.office_main_light
+      - light.office_shelf_led
+      - light.vocolinc_rpl_188bce_mood_light
+      - light.office_led_light_strip
+      - light.bedroom_ripple_mood_light
+      # - light.yeelink_bslamp2_409e_light
+
+  ## SECURITY - SENSORS GROUP ##
+  motion_sensors:
+    name: Motion sensors
+    icon: mdi:motion-sensor
+    entities:
+      - binary_sensor.motion_sensor_bathroom
+      - binary_sensor.motion_sensor_shower_room
+      - binary_sensor.motion_sensor_bedroom
+      - binary_sensor.motion_sensor_kidsroom
+      - binary_sensor.motion_sensor_kitchen
+      # - binary_sensor.motion_sensor_utility
+      - binary_sensor.motion_sensor_entrance
+      - binary_sensor.motion_sensor_hallway_occupancy
+
+  contact_sensors:
+    name: Contact sensors
+    icon: mdi:window-open-variant
+    entities:
+      - binary_sensor.contact_sensor_bathroom
+      - binary_sensor.contact_sensor_shower_room
+      - binary_sensor.contact_sensor_bedroom_balcony
+      - binary_sensor.contact_sensor_kid_balcony
+      - binary_sensor.contact_sensor_terrace_door
+      - binary_sensor.contact_sensor_garden_door
+      - binary_sensor.contact_sensor_entrance_door
+
+  security_doors:
+    name: Security Doors sensors
+    icon: mdi:door
+    entities:
+      - binary_sensor.contact_sensor_bedroom_balcony
+      - binary_sensor.contact_sensor_kid_balcony
+      - binary_sensor.contact_sensor_terrace_door
+      - binary_sensor.contact_sensor_garden_door
+      - binary_sensor.contact_sensor_entrance_door
+
+  cameras:
+    name: Camera Group
+    icon: mdi:cctv
+    entities:
+      - camera.doorway
+      - camera.kids_room
+      - camera.terasa
+      - camera.zahrada
+
+  ## COVER GROUP ##
+  shades_cover:
+    name: Shades Cover Group
+    icon: mdi:roller-shade
+    entities:
+      - cover.bedroom_left
+      - cover.bedroom_right
+      - cover.door
+      - cover.double
+      - cover.left
+      - cover.right
+      - cover.window
+
+  ## MEDIA PLAYER GROUP ##
+  device_players:
+    name: Media Players
+    icon: mdi:play-circle
+    entities:
+      - media_player.spotify
+      - media_player.living_room_tv
+      - media_player.bedroom_tv
+
+  homepod_airplay:
+    name: 'Homepod Airplay'
+    icon: mdi:speaker
+    entities:
+      - media_player.office
+      - media_player.bathroom_homepod
+      - media_player.bedroom_homepod
+      - media_player.living_room
+
+  homepod_mass_airplay:
+    name: 'Homepod MASS Airplay'
+    icon: mdi:speaker
+    entities:
+      - media_player.office_2
+      - media_player.bathroom
+      - media_player.bedroom
+      - media_player.living_room_2
+
+  television:
+    name: Television
+    icon: mdi:television
+    entities:
+      - media_player.living_room_tv
+      - media_player.bedroom_tv

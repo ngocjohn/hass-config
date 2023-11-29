@@ -1,0 +1,45 @@
+action: call-service
+service: honeycomb
+service_data:
+  entity: cover.living_room_cover
+  autoclose: false
+  audio: /local/sound/popup.m4a
+  buttons:
+    #0 OPEN BASE
+    - icon: mdi:arrow-up-drop-circle
+      active: '[[[ return entity.attributes.current_position == 0 ]]]'
+      tap_action:
+        action: call-service
+        service: cover.open_cover
+        service_data:
+          entity_id: entity
+      #1 TILT OPEN BASE
+    - icon: mdi:arrow-top-right-bold-box
+      active: '[[[ return entity.attributes.current_tilt_position == 0 ]]]'
+      tap_action:
+        action: call-service
+        service: cover.set_cover_tilt_position
+        service_data:
+          entity_id: entity
+          tilt_position: 100
+      #2 VARIABLE
+    - show: false
+      #3 TILT CLOSE BASE
+    - icon: mdi:arrow-bottom-right-bold-box
+      active: '[[[ return entity.attributes.current_tilt_position == 100 ]]]'
+      tap_action:
+        action: call-service
+        service: cover.set_cover_tilt_position
+        service_data:
+          entity_id: entity
+          tilt_position: 0
+      #4 CLOSE BASE
+    - icon: mdi:arrow-down-drop-circle
+      active: '[[[ return entity.attributes.current_position == 100 ]]]'
+      tap_action:
+        action: call-service
+        service: cover.close_cover
+        service_data:
+          entity_id: entity
+      #5 VARIABLE
+    - show: false

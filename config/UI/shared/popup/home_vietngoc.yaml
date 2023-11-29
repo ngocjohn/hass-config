@@ -1,0 +1,105 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Viet Ngoc
+    card_mod:
+      style:
+        .: |
+          @media (max-width: 450px), (max-height: 500px) {
+            ha-dialog {
+              --mdc-dialog-min-width: 100vw !important;
+              --mdc-dialog-min-height: 100vh !important;
+              --popup-border-radius: 0 !important;
+            }
+          }
+    style: >
+      --popup-max-width: 400px;
+    content:
+      type: vertical-stack
+      cards:
+        - type: entities
+          card_mod:
+            class: content
+          entities:
+            - entity: person.viet_ngoc
+              secondary_info: last-changed
+
+        - type: history-graph
+          card_mod:
+            style: |
+              ha-card > div {
+                padding: 0 0.5em !important;
+              }
+          entities:
+            - entity: person.viet_ngoc
+
+        - type: custom:mod-card
+          card_mod:
+            style:
+              hui-horizontal-stack-card$: |
+                #root {
+                  justify-content: space-evenly !important;
+                }
+          card:
+            type: horizontal-stack
+            cards:
+              - type: custom:button-card
+                name: Play audio on iPhone
+                icon: mdi:volume-high
+                template: icon_name
+                tap_action:
+                  action: call-service
+                  service: notify.mobile_app_viet_ngoc
+                  service_data:
+                    title: Find my iPhone
+                    message: Here I am
+                    data:
+                      push:
+                        sound:
+                          name: findmy.wav
+                          critical: 1
+                          volume: 1
+
+        - type: map
+          default_zoom: 16
+          dark_mode: true
+          entities:
+            - device_tracker.viet_ngoc
+            - device_tracker.findmy_521d68e4ecef4686a97a2b77ccd20056
+          card_mod:
+            style:
+              .: |
+                #root {
+                  height: 25em;
+                  padding-bottom: 0 !important;
+                }
+                ha-icon-button {
+                  color: var(--primary-color);
+                  zoom: 140%;
+                  margin-left: -0.2em;
+                }
+                ha-card {
+                  border-radius: 12px;
+                  transition: none;
+                  height: 25em !important;
+                }
+              ha-map$: |
+                #map {
+                  background-color: #191919 !important;
+                }
+                .leaflet-control-attribution {
+                  display: none;
+                }
+                .leaflet-bar a {
+                  background-color: rgba(115, 123, 124, 0.2) !important;
+                  color: #9da0a2 !important;
+                  backdrop-filter: blur(0.25em);
+                  zoom: 140%;
+                }
+                a.leaflet-control-zoom-in {
+                  border-bottom: 1px solid #181818 !important;
+                }
+                .leaflet-pane.leaflet-tile-pane {
+                  filter: invert(0.95) grayscale(0.95) contrast(95%);
+                }

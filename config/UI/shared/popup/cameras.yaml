@@ -1,0 +1,146 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Cameras
+    style: >
+      --popup-border-width: 0;
+      --tablet-popup-header-color: rgba(0, 0, 0, 0);
+      --popup-background-color: rgba(0, 0, 0, 0);
+      --popup-max-width: calc(620px + 620px);
+    card_mod:
+      style:
+        layout-card:
+          $grid-layout$:
+            # card divider border
+            .: |
+              #root {
+                justify-content: center !important;
+              }
+    content:
+      type: custom:mod-card
+      card:
+        type: vertical-stack
+        cards:
+          - type: custom:layout-card
+            layout_type: custom:grid-layout
+            layout:
+              grid-gap: 1vw
+              grid-template-columns: 0 repeat(2, 1fr) 0
+              grid-template-rows: auto
+              grid-template-areas: |
+                ". cam1 cam2 ."
+                ". cam3 cam4 ."
+
+              mediaquery:
+                #hide_header: false
+                #phone
+                '(max-width: 800px)':
+                  grid-gap: 1.5vw
+                  grid-template-columns: 5px auto 5px
+                  grid-template-rows: auto
+                  grid-template-areas: |
+                    ". cam1 ."
+                    ". cam2 ."
+                    ". cam3 ."
+                    ". cam4 ."
+
+            cards:
+              - type: picture-entity
+                entity: camera.terasa
+                image: camera.terasa
+                show_info: true
+                show_state: true
+                show_name: true
+                view_layout:
+                  grid-area: cam1
+                card_mod:
+                  style: |
+                    ha-card {
+                      border-radius: 16px !important;
+                    }
+                tap_action:
+                  action: call-service
+                  service: >
+                    [[[
+                      return entity.state == 'idle'
+                        ? 'camera.turn_on'
+                        : 'camera.turn_off';
+                    ]]]
+                  service_data:
+                    entity_id: camera.terasa
+              - type: picture-entity
+                entity: camera.zahrada
+                image: camera.zahrada
+                # aspect_ratio: 55%
+                show_info: true
+                show_state: true
+                show_name: true
+                camera_view: auto
+                tap_action:
+                  action: call-service
+                  service: >
+                    [[[
+                      return entity.state == 'idle'
+                        ? 'camera.turn_on'
+                        : 'camera.turn_off';
+                    ]]]
+                  service_data:
+                    entity_id: camera.zahrada
+                view_layout:
+                  grid-area: cam2
+                card_mod:
+                  style: |
+                    ha-card {
+                      border-radius: 16px !important;
+                    }
+
+              - type: picture-entity
+                entity: camera.doorway
+                image: camera.doorway
+                show_info: true
+                show_state: true
+                show_name: true
+                camera_view: auto
+                tap_action:
+                  action: call-service
+                  service: >
+                    [[[
+                      return entity.state == 'idle'
+                        ? 'camera.turn_on'
+                        : 'camera.turn_off';
+                    ]]]
+                  service_data:
+                    entity_id: camera.doorway
+                view_layout:
+                  grid-area: cam3
+                card_mod:
+                  style: |
+                    ha-card {
+                      border-radius: 16px !important;
+                    }
+
+              - type: picture-entity
+                entity: camera.kids_room
+                image: camera.kids_room
+                show_info: true
+                show_state: true
+                show_name: true
+                camera_view: auto
+                tap_action:
+                  action: call-service
+                  service: >
+                    [[[
+                      return entity.state == 'idle'
+                        ? 'camera.turn_on'
+                        : 'camera.turn_off';
+                    ]]]
+                  service_data:
+                    entity_id: camera.kids_room
+                view_layout:
+                  grid-area: cam4
+                card_mod:
+                  style: |
+                    ha-card {
+                      border-radius: 16px !important;
+                    }

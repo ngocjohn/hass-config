@@ -1,0 +1,26 @@
+homekit:
+  - filter:
+      include_entities:
+        - switch.kitchen_ikea_plug
+        - switch.lidl_smart_plug
+        - switch.lidl_3_gang_socket_l2
+        - input_boolean.double_click
+        - input_boolean.long_press
+        - input_boolean.single_click
+        - input_boolean.night_mode
+        - input_boolean.good_morning
+        - input_boolean.leaving_home
+        - input_boolean.mailbox
+        - input_boolean.z_occupacy
+        - input_boolean.brma
+        - input_boolean.guest_mode
+        - binary_sensor.bathroom_occupancy
+        - binary_sensor.shower_room_occupancy
+        - input_button.nuki_vchod
+    entity_config:
+      switch.kitchen_ikea_plug:
+        type: outlet
+        name: Kitchen outlet
+      switch.lidl_smart_plug:
+        type: outlet
+        name: Bathroom Outlet

@@ -1,0 +1,106 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Entrance & Utility
+    style: >
+      --tablet-popup-header-color: rgba(0, 0, 0, 0);
+      --popup-background-color: rgba(0, 0, 0, 0);
+      --popup-border-width: 0;
+      --button-card-border-radius: 10%;
+      --grid-card-gap: 5%;
+    card_mod:
+      style:
+        .: |
+          ha-header-bar {
+            display: none !important;
+          }
+          @media screen and (max-width: 800px) {
+            ha-header-bar {
+              display: block !important;
+            }
+          }
+    content:
+      type: custom:layout-card
+      layout_type: custom:grid-layout
+      layout:
+        grid-template-columns: 0 1fr 0
+        grid-template-rows: 1fr
+        grid-template-areas: |
+          ". hallway ."
+
+        mediaquery:
+          #phone
+          '(max-width: 800px)':
+            grid-template-columns: 1fr
+            grid-template-rows: 1fr
+            grid-template-areas: |
+              "hallway"
+              "hallway"
+          #tablet
+          '(max-width: 1440px)':
+            grid-template-columns: 1fr #20vw
+            grid-template-rows: 1fr
+            grid-template-areas: |
+              "hallway"
+              "hallway"
+
+      cards:
+        - type: grid
+          #title: hallway
+          view_layout:
+            grid-area: hallway
+          columns: 3
+          cards:
+            - type: custom:button-card
+              entity: light.aqara_hub
+              name: Spots
+              template:
+                - lightpop
+                - icon_light_flush
+
+            - type: custom:button-card
+              entity: light.hallway_light
+              name: Hallway
+              template:
+                - lightpop
+                - icon_light_recessed
+
+            - type: custom:button-card
+              entity: light.office_led_light_strip
+              name: Led strip
+              template:
+                - lightpop
+                - icon_light_recessed
+
+            - type: custom:button-card
+              entity: light.utility_room_light
+              name: Utility
+              template:
+                - lightpop
+                - icon_light_recessed
+
+            - type: custom:button-card
+              entity: camera.doorway
+              triggers_update:
+                - button.doorway_start_rtsp_stream
+                - sensor.doorway_stream_status
+              name: ' '
+              template:
+                - icon_spot_cam
+                - camera
+                - loader
+              double_tap_action:
+                action: more-info
+
+            - type: custom:button-card
+              entity: vacuum.robot_vacuum
+              name: Roborock
+              icon: phu:roborock
+              tap_action: !include footer/footer_vacuum.yaml
+              hold_action: !include footer/footer_vacuum.yaml
+              template:
+                - base
+                - icon_roborock
+              double_tap_action:
+                action: more-info

@@ -1,0 +1,37 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    style: |
+      --popup-min-width: 1440px;
+    title: 'MASS'
+    card_mod:
+      style:
+        #popup header
+        .: |
+          ha-dialog>ha-dialog-header {
+            display: none;
+          }
+          @media (max-width: 450px), (max-height: 500px) {
+            ha-dialog>ha-dialog-header {
+              display: block;
+            }
+          }
+          .content .container {
+            padding: 0 !important;
+          }
+    content:
+      type: custom:layout-card
+      layout_type: custom:grid-layout
+      layout:
+        margin: 0
+        grid-template-columns: 1fr
+      cards:
+        - type: iframe
+          aspect_ratio: >
+            [[[
+              if (window.matchMedia('(max-width: 800px)').matches)
+                return '195%';
+              else return '16:9';
+            ]]]
+          url: /api/hassio_ingress/vY3Npsvoa2MxygW4H78Jr2ZEpMXsTJtX8DuZsXbT6mE/#/home

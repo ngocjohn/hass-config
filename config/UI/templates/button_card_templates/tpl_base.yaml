@@ -1,0 +1,1274 @@
+#################################################
+#                                               #
+#                     BASE                      #
+#                                               #
+#################################################
+
+base:
+  template:
+    - settings
+    - tilt
+    - extra_styles
+  variables:
+    state_on: >
+      [[[ return ['on', 'home', 'cool', 'fan_only', 'unlocked', 'open', 'streaming', 'yes', 'Blažičkova', 'Plzeňská', 'active' ].indexOf(!entity || entity.state) !== -1; ]]]
+    state_error: >
+      [[[ return ['error', 'unavailable'].indexOf(entity === undefined || entity.state) !== -1; ]]]
+    state: >
+      [[[ return !entity || entity.state; ]]]
+    entity_id: >
+      [[[ return !entity || entity.entity_id; ]]]
+    entity_picture: >
+      [[[ return !entity || entity.attributes.entity_picture; ]]]
+    timeout: >
+      [[[ return !entity || Date.now() - Date.parse(entity.last_changed); ]]]
+
+  aspect_ratio: 1/1
+  show_state: true
+  show_icon: false
+  tap_action:
+    # ui_sound_tablet: |
+    #   [[[
+    #     let screensaver = states[variables.entity_tablet] === undefined || states[variables.entity_tablet].state;
+
+    #     if (variables.state_on !== undefined  && screensaver === 'on') {
+    #         hass.callService('media_player', 'play_media', {
+    #             entity_id: variables.entity_browser_mod,
+    #             media_content_id: '/local/sound/on.m4a',
+    #             media_content_type: 'music'
+    #         });
+    #     }
+    #     if (variables.state_on && screensaver === 'on') {
+    #         hass.callService('media_player', 'play_media', {
+    #             entity_id: variables.entity_browser_mod,
+    #             media_content_id: '/local/sound/off.m4a',
+    #             media_content_type: 'music'
+    #         });
+    #     }
+    #   ]]]
+    card_bounce: |
+      [[[
+        // add animation
+        if (this.getElementsByTagName("style").length === 0) {
+
+            // phone condition
+            let mq = window.matchMedia('(max-width: 800px)').matches;
+
+            let style = document.createElement('style');
+
+            style.innerHTML = `
+                @keyframes card_bounce {
+                    0%   { transform: scale(1); }
+                    10%  { transform: scale(${ mq ? '0.92' : '0.94' }); }
+                    25%  { transform: scale(1); }
+                    30%  { transform: scale(${ mq ? '0.96' : '0.98' }); }
+                    100% { transform: scale(1); }
+                }
+            `;
+
+            this.appendChild(style);
+        }
+        // duration
+        let duration = 800;
+
+        // animate
+        this.style.animation = `card_bounce ${duration}ms cubic-bezier(0.22, 1, 0.36, 1)`;
+
+        // reset
+        window.setTimeout(() => { this.style.animation = "none"; }, duration + 100)
+      ]]]
+    action: toggle
+    haptic: medium
+  double_tap_action:
+    haptic: success
+  hold_action:
+    haptic: medium
+  styles:
+    grid:
+      - grid-template-areas: |
+          "icon  circle"
+          "n     n"
+          "s     s"
+      - grid-template-columns: 1fr 1fr
+      - grid-template-rows: auto min-content min-content
+      - gap: 1.3%
+      - align-items: start
+      - will-change: transform
+    name:
+      - justify-self: start
+      - line-height: 130%
+      - overflow: hidden
+    state:
+      - justify-self: start
+      - line-height: 130%
+      - color: >
+          [[[
+            return variables.state_on
+                ? 'rgb(139, 51, 51)'
+                : 'rgba(255, 255, 255, 0.3)';
+          ]]]
+    card:
+      - border-radius: var(--button-card-border-radius)
+      - border-width: 0
+      - --webkit-tap-highlight-color: rgba(250,250,250,1)
+      - transition: none
+      - box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.15)
+      # - padding: 11.5% 10.5% 10.5% 11.5%
+      - --mdc-ripple-color: >
+          [[[
+            return variables.state_on
+                ? 'rgb(0, 0, 0)'
+                : '#97989c';
+          ]]]
+
+      - color: >
+          [[[
+            return variables.state_on
+                ? '#4b5254'
+                : '#97989c';
+          ]]]
+      - background-color: >
+          [[[
+            if (variables.state_error) {
+              return variables.state_error
+                ? 'rgba(139, 51, 51, 0.9)'
+                : 'rgba(115, 115, 115, 0.2)';
+            }
+            else {
+              return variables.state_on
+                ? 'rgba(250, 250, 250, 0.75)'
+                : 'rgba(115, 115, 115, 0.2)';
+            }
+          ]]]
+
+#################################################
+#                                               #
+#                     TILT                      #
+#                                               #
+#################################################
+
+# dashboard resource https://micku7zu.github.io/vanilla-tilt.js/
+
+tilt:
+  variables:
+    tilt_enable: >
+      [[[
+        // disable on macos app, text appears over popup
+        if (window.navigator.userAgent.includes("Home Assistant")) {
+            return false
+        }
+        // enable on macos browsers
+        else if (window.navigator.userAgent.match(/Macintosh; Intel Mac OS X/i)) {
+            return true;
+        }
+        // default - phones, tablets etc
+        return false;
+      ]]]
+    tilt_options: >
+      [[[
+        let options = {
+            max: 5,
+            scale: 1.06,
+            glare: true,
+            'max-glare': 0.15,
+            perspective: 800,
+            speed: 800,
+            parallax: '25px'
+        }
+        if (this._config.template.includes('conditional_media') || this._config.template.includes('conditional_media_shows')|| this._config.template.includes('conditional_media_movies') || this._config.template.includes('conditional_added_media') || this._config.template.includes('spotify') || this._config.template.includes('minicontrol') || this._config.template.includes('added_movies')) {
+            options.scale = options.scale % parseInt(options.scale) / 3 + parseInt(options.scale);
+            options.perspective = options.perspective * 3;
+            return options;
+        }
+        return options;
+      ]]]
+  custom_fields:
+    tilt: >
+      [[[
+        setTimeout(() => {
+            let elt = this.shadowRoot,
+                card = elt.getElementById('card'),
+                tilt = typeof VanillaTilt === 'function';
+
+            if (elt && card && tilt && variables.tilt_enable) {
+                VanillaTilt.init(card, variables.tilt_options);
+            } else {
+                setTimeout(() => {
+                    if (elt && card && tilt && variables.tilt_enable) {
+                        VanillaTilt.init(card, variables.tilt_options);
+                    }
+                }, 1000);
+            }
+        }, 0);
+      ]]]
+
+#################################################
+#                                               #
+#               EXTRA STYLES                    #
+#                                               #
+#################################################
+
+extra_styles:
+  extra_styles: >
+    [[[
+      if (entity) {
+          if (entity.entity_id.split('.')[0] === 'light' && variables.state_on) {
+
+              // theme variable and conditions
+              let style = getComputedStyle(document.body),
+                  theme_var = style.getPropertyValue('--button-card-light-color-temp'),
+                  is_hsl = theme_var.startsWith('hsl('),
+                  is_color_temp = entity.attributes.color_mode === 'color_temp';
+
+              if (is_hsl && is_color_temp && entity.attributes.brightness) {
+
+                  // calculate lightness in hsl
+                  let regex_pattern = /(\d+)(?!.*\d)/g,
+                      brightness = entity.attributes.brightness / 2.54,
+                      lightness = parseFloat(theme_var.match(regex_pattern)[0]),
+                      min = lightness - 10,
+                      max = lightness + 10,
+                      calc_lightness = brightness * (max - min) / 100 + min;
+
+                  var light_color = theme_var.replace(regex_pattern, calc_lightness);
+              }
+              else {
+                  var light_color = 'var(--button-card-light-color)';
+              }
+          }
+      }
+      return `
+
+       /* * * * * * * * * * * * * * * * * *
+        *                                 *
+        *              LIGHT              *
+        *                                 *
+        * * * * * * * * * * * * * * * * * */
+
+        svg {
+          --light-color:
+          ${ variables.state_on && entity.attributes.brightness
+              ? light_color
+              : variables.state_on && !entity.attributes.brightness
+                ? 'var(--state-icon-active-color);'
+                : 'var(--state-icon-color);'
+          }
+        }
+
+        .light-color {
+          fill: var(--light-color);
+          transition: all 0.25s ease-out;
+        }
+
+        /* magnification */
+        :host {
+          --card-portrait: 1.8;
+          --card-phone: 3.8;
+        }
+
+        ${(this._config.template.includes('light') || this._config.template.includes('mediaplayer') || this._config.template.includes('cover')) ? `
+
+         /* * * * * * * * * * * * * * * * * *
+          *                                 *
+          *          CIRCLE SLIDER          *
+          *                                 *
+          * * * * * * * * * * * * * * * * * */
+
+          #circle_slider {
+            opacity: 0;
+            appearance: none;
+            transform: rotate(270deg);
+            width: 90%;
+            position: absolute;
+            pointer-events: none;
+            cursor: grab;
+            left: 33%;
+            margin-top: 10%;
+          }
+
+          #circle_slider::-webkit-slider-thumb {
+            pointer-events: initial;
+            appearance: none;
+            width: 3vw;
+            height: 3vw;
+            border-radius: 50%;
+            background: green;
+          }
+
+          #circle_slider::-webkit-slider-runnable-track {
+            background: cornflowerblue;
+          }
+
+          #circle_slider::-moz-range-thumb {
+            pointer-events: initial;
+            appearance: none;
+            width: 3vw;
+            height: 3vw;
+            border-radius: 50%;
+            background: green;
+          }
+
+          #circle_slider::-moz-range-track {
+            background: cornflowerblue;
+            height: 3vw;
+          }
+
+          /* portrait */
+          @media screen and (max-width: 1440px) {
+            #circle_slider::-webkit-slider-thumb {
+              width: 4vw;
+              height: 4vw;
+            }
+
+            #circle_slider::-moz-range-thumb {
+              width: 4vw;
+              height: 4vw;
+            }
+          }
+
+          /* phone */
+          @media screen and (max-width: 800px) {
+            #circle_slider::-webkit-slider-thumb {
+              width: 7.8vw;
+              height: 7.8vw;
+            }
+
+            #circle_slider::-moz-range-thumb {
+              width: 7.8vw;
+              height: 7.8vw;
+            }
+          }
+
+        `:''}
+
+       /* * * * * * * * * * * * * * * * * *
+        *                                 *
+        *              BASE               *
+        *                                 *
+        * * * * * * * * * * * * * * * * * */
+
+        #container {
+          text-align: left !important;
+          z-index: 1;
+        }
+
+        #card {
+          padding: 10.9% 9.9% 8.9% 10.9%;
+        }
+
+        #state::first-letter {
+          text-transform: uppercase;
+        }
+        #name {
+          font-size: var(--button-card-font-size);
+          font-weight: var(--button-card-font-weight);
+          letter-spacing: var(--button-card-letter-spacing);
+        }
+
+        #state {
+          font-size: var(--button-card-state-size);
+          font-weight: var(--button-card-font-weight);
+          letter-spacing: var(--button-card-letter-spacing);
+          font-family: Poppins;
+        }
+
+        /* portrait */
+        @media screen and (max-width: 1440px) {
+          #name {
+            font-size: calc(var(--button-card-font-size) * var(--card-portrait));
+          }
+          #state {
+            font-size: calc(var(--button-card-state-size) * var(--card-portrait));
+          }
+        }
+        /* phone */
+        @media screen and (max-width: 800px) {
+          #name {
+            font-size: calc(var(--button-card-font-size) * var(--card-phone));
+          }
+          #state {
+            font-size: calc(var(--button-card-state-size) * var(--card-phone));
+          }
+        }
+        @media (pointer: coarse) {
+          #name, #state {
+            font-family: Futura;
+          }
+        }
+
+        ${variables.tilt_enable === true ? `
+
+         /* * * * * * * * * * * * * * * * * *
+          *                                 *
+          *              TILT               *
+          *                                 *
+          * * * * * * * * * * * * * * * * * */
+
+            #name {
+              font-size: calc(var(--button-card-font-size) - var(--z-axis-adjustment));
+            }
+            #state {
+              font-size: calc(var(--button-card-state-size) - var(--z-axis-adjustment));
+            }
+            /* portrait */
+            @media screen and (max-width: 1440px) {
+              #name {
+                font-size: calc(calc(var(--button-card-font-size) * var(--card-portrait)) - var(--z-axis-adjustment));
+              }
+              #state {
+                font-size: calc(calc(var(--button-card-state-size) * var(--card-portrait)) - var(--z-axis-adjustment));
+              }
+            }
+
+            /* phone */
+            @media screen and (max-width: 800px) {
+              #name, #state {
+                font-size: calc(calc(var(--button-card-font-size) * var(--card-phone)) - var(--z-axis-adjustment));
+              }
+            }
+
+            #container {
+              transform: translateZ(${variables.tilt_options.parallax});
+            }
+
+            #circle_slider {
+              width: 100%;
+              margin-top: 0;
+            }
+
+            /* adjust circle_slider position for firefox */
+            @supports (-moz-appearance:none) {
+              #circle_slider {
+                margin-top: 13%;
+              }
+            }
+
+            #card {
+              padding: 12% 11% 10.5% 12%;
+              transform-style: preserve-3d;
+              overflow: visible;
+              /* firefox pixelated edges */
+              outline: 1px solid transparent;
+            }
+
+            #ripple, .js-tilt-glare {
+              clip-path: inset(0 round var(--button-card-border-radius));
+              overflow: hidden;
+            }
+
+            .js-tilt-glare {
+              z-index: 1;
+            }
+
+            .js-tilt-glare-inner {
+              background-color: rgba(0,0,0,0.9);
+            }
+
+        `:''}
+
+        ${(this._config.template.includes('conditional_media') || this._config.template.includes('conditional_media_shows') ||this._config.template.includes('conditional_added_media')|| this._config.template.includes('conditional_media_movies') || this._config.template.includes('added_movies') || this._config.template.includes('base_added')) ? `
+
+         /* * * * * * * * * * * * * * * * * *
+          *                                 *
+          *              MEDIA              *
+          *                                 *
+          * * * * * * * * * * * * * * * * * */
+
+          :host {
+            --blur-intensity: blur(0.3em) brightness(0.7);
+          }
+
+          /* phone */
+          @media screen and (max-width: 800px) {
+            :host {
+              --blur-intensity: blur(0.3em) brightness(0.7);
+            }
+          }
+
+          #ripple, .js-tilt-glare {
+            clip-path: inset(0 round calc(var(--button-card-border-radius) / 2));
+          }
+
+          #container {
+            overflow: hidden;
+          }
+
+
+          /* phone */
+          @media screen and (max-width: 800px) {
+            #name {
+              font-size: calc(var(--button-card-font-size) * var(--card-phone));
+            }
+            #state {
+              font-size: calc(var(--button-card-movie-state-size) * var(--card-phone));
+            }
+          }
+          @media (pointer: coarse) {
+            #name, #state {
+              font-family: Futura;
+            }
+            .tooltiptext {
+              display: none;
+            }
+          }
+          .marquee {
+            animation: marquee 20s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+          }
+          @keyframes marquee {
+            from {
+              transform: translateX(0%);
+            }
+            to {
+              transform: translateX(-80%);
+            }
+          }
+          /* phone */
+          @media screen and (max-width: 800px) {
+            #quality {
+              display: none !important;
+            }
+          }
+          .badge {
+            display: inline-block;
+            padding-right: 5%;
+            height: 1em;
+            opacity: 1;
+          }
+
+          .badge--cc {
+            content: url("/local/svg/media/cc.svg");
+          }
+          .badge--sdh {
+            content: url("/local/svg/media/sdh.svg");
+          }
+          .badge--hd {
+            content: url("/local/svg/media/hd.svg");
+          }
+          .badge--4k {
+            content: url("/local/svg/media/4k.svg");
+          }
+          .badge--dd {
+            content: url("/local/svg/media/dd.svg");
+          }
+          .badge--ddp {
+            content: url("/local/svg/media/ddp.svg");
+          }
+          .year {
+            background-color: #ffffff20;
+            color: #6a7377;
+            border: solid 2.2px #6a737780;
+            border-radius: 0.5vh;
+            padding: 0px 4px;
+            font-size: 0.8em;
+            font-weight: 700;
+            font-family: 'Roboto';
+            text-shadow: none;
+            display: inline;
+          }
+
+        `:''}
+
+
+        ${this._config.template.includes('footer') ? `
+
+         /* * * * * * * * * * * * * * * * * *
+          *                                 *
+          *             FOOTER              *
+          *                                 *
+          * * * * * * * * * * * * * * * * * */
+
+          /* magnification */
+          :host {
+            --footer-portrait: 1.4;
+            --footer-phone: 3;
+          }
+
+          #ripple, .js-tilt-glare {
+            border-radius: calc(var(--footer-card-border-radius) - 0.1vw);
+            clip-path: inset(0 round calc( var(--button-card-border-radius) - 0.1vw ));
+          }
+
+          #name {
+            font-size: var(--footer-card-font-size);
+            padding: var(--footer-card-padding-v) var(--footer-card-padding-h);
+            letter-spacing: 0.06vw;
+          }
+
+          ha-icon {
+            width: var(--footer-card-icon-size);
+            vertical-align: 7%;
+            padding-right: 0.1vw;
+            opacity: 0.4;
+          }
+
+          #card {
+            border-radius: var(--footer-card-border-radius);
+            background: rgba(115, 115, 115, 0.10);
+          }
+          #card:hover {
+            background: rgba(115, 115, 115, 0.2) !important;
+          }
+          #notify {
+            font-size: var(--footer-notify-font-size);
+            width: var(--footer-notify-box-size);
+            height: var(--footer-notify-box-size);
+            line-height: var(--footer-notify-box-size);
+            padding-right: 0.5%;
+            padding-top: 0.5%;
+            top: var(--footer-notify-top);
+            right: var(--footer-notify-right);
+          }
+
+          /* portrait */
+          @media screen and (max-width: 1200px) {
+            #name {
+              font-size: calc(var(--footer-card-font-size) * var(--footer-portrait));
+              padding: calc(var(--footer-card-padding-v) * var(--footer-portrait)) calc(var(--footer-card-padding-h) * var(--footer-portrait));
+            }
+
+            ha-icon {
+              width: calc(var(--footer-card-icon-size) * var(--footer-portrait));
+            }
+
+            #card {
+              border-radius: calc(var(--footer-card-border-radius) * var(--footer-portrait));
+              margin: 0 0.5vw;
+            }
+
+            #notify {
+              font-size: calc(var(--footer-notify-font-size) * var(--footer-portrait));
+              width: calc(var(--footer-notify-box-size) * var(--footer-portrait));
+              height: calc(var(--footer-notify-box-size) * var(--footer-portrait));
+              line-height: calc(var(--footer-notify-box-size) * var(--footer-portrait));
+            }
+          }
+
+          /* phone */
+          @media screen and (max-width: 800px) {
+            #name {
+              font-size: calc(var(--footer-card-font-size) * var(--footer-phone));
+              padding: calc(var(--footer-card-padding-v) * var(--footer-phone)) calc(var(--footer-card-padding-h) * var(--footer-phone));
+              letter-spacing: 0.05vw;
+            }
+
+            ha-icon {
+              width: calc(var(--footer-card-icon-size) * var(--footer-phone));
+            }
+
+            #card {
+              border-radius: calc(var(--footer-card-border-radius) * var(--footer-phone));
+              background: rgba(115, 115, 115, 0.12);
+              margin: 0 0.5vw;
+            }
+
+            #notify {
+              font-size: calc(var(--footer-notify-font-size) * var(--footer-phone));
+              width: calc(var(--footer-notify-box-size) * var(--footer-phone));
+              height: calc(var(--footer-notify-box-size) * var(--footer-phone));
+              line-height: calc(var(--footer-notify-box-size) * var(--footer-phone) + 1px);
+              top: calc(var(--footer-notify-top) * var(--footer-phone));
+              right: calc(var(--footer-notify-right) * var(--footer-phone) + 2%);
+              padding: 0;
+            }
+          }
+
+        `:''}
+
+        ${(this._config.template.includes('icon_name') || this._config.template.includes('icon_only')) ? `
+        #card {
+          background: rgba(255, 255, 255, 0.06);
+        }
+        #card:hover {
+          background: rgba(255, 255, 255, 0.15) !important;
+          scale: 1.05;
+        }
+        #icon:hover, #name:hover {
+          color: rgb(255, 255, 255) !important;
+        }
+        `:''}
+
+        ${this._config.template.includes('chips')  ? `
+
+         /* * * * * * * * * * * * * * * * * *
+          *                                 *
+          *             CHIPS               *
+          *                                 *
+          * * * * * * * * * * * * * * * * * */
+
+          /* magnification */
+          :host {
+            --chips-portrait: 1.4;
+            --chips-phone: 4.1;
+          }
+
+          #ripple, .js-tilt-glare {
+            border-radius: calc(var(--chips-card-border-radius) - 0.1vw);
+            clip-path: inset(0 round calc( var(--button-card-border-radius) - 0.1vw ));
+          }
+          #name {
+            font-size: var(--chips-card-font-size);
+            padding: var(--chips-card-padding-v) var(--chips-card-padding-h);
+          }
+          #state {
+            font-size: var(--chips-card-state-size);
+            padding: var(--chips-card-padding-v) var(--chips-card-padding-h);
+            letter-spacing: 0.06vw;
+          }
+          #card {
+            border-radius: var(--chips-card-border-radius);
+          }
+          #container {
+            overflow: hidden;
+          }
+          /* horizontal */
+          @media screen and (max-width: 2500px) {
+            #icon {
+              width: 50% !important;
+              background: none !important;
+              padding: 0 !important;
+              position: relative !important;
+            }
+          }
+          /* phone */
+          @media screen and (max-width: 800px) {
+            #card {
+              padding: 1vw !important;
+            }
+            #name {
+              font-size: calc(var(--chips-card-font-size) * var(--chips-phone));
+              letter-spacing: 0.2vw;
+            }
+            #state {
+              font-size: calc(var(--chips-card-state-size) * var(--chips-phone));
+              font-weight: 400 !important;
+              letter-spacing: 0.2vw;
+            }
+            /* #icon {
+              width: 30% !important;
+            } */
+            ha-icon {
+              width: calc(var(--chips-card-icon-size) * var(--chips-phone));
+            }
+            #card {
+              border-radius: calc(var(--chips-card-border-radius) * var(--chips-phone));
+            }
+          }
+          .marquee {
+            animation: marquee 20s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+          }
+          @keyframes marquee {
+            from {
+              transform: translateX(0%);
+            }
+            to {
+              transform: translateX(-50%);
+            }
+          }
+        `:''}
+      `;
+    ]]]
+
+#################################################
+#                                               #
+#               CIRCLE                          #
+#                                               #
+#################################################
+
+circle:
+  styles:
+    card:
+      # - --c-stroke-color-on: '#7d7e80'
+      - --c-stroke-color-on: 'rgba(48, 128, 181, 0.8)'
+      - --c-stroke-color-off: 'rgba(255,255,255,0.04)'
+      - --c-fill-color-on: none
+      - --c-fill-color-off: rgba(255,255,255,0.04)
+      - --c-stroke-width: 3
+      - --c-stroke-width-dragging: 5
+      - --c-font-color: '#8d8e90'
+      - --c-font-size: 14px
+      - --c-unit-font-size: 10px
+      - --c-font-weight: 500
+      - --c-letter-spacing: -0.03rem
+    custom_fields:
+      circle:
+        - display: initial
+        - width: 85%
+        - margin: -10% -10% 0px 0px
+        - justify-self: end
+        - opacity: 1
+  custom_fields:
+    circle: >
+      [[[
+        if (entity) {
+            let r = 20.5,
+                c = r * 2 * Math.PI,
+                tspan = '<tspan dx=".2" dy="-.4">',
+                domain = entity.entity_id.split('.')[0],
+                state = variables.state_on,
+                input = variables.circle_input || ' ',
+                unit = variables.circle_input_unit || ' ';
+
+           /* * * * * * * * * * * * * * * * * *
+            *                                 *
+            *             CIRCLE              *
+            *                                 *
+            * * * * * * * * * * * * * * * * * */
+
+            let circle = (state, input, unit) => {
+                return `
+                  <svg viewBox="0 0 50 50">
+                    <style>
+                      circle {
+                        transform: rotate(-90deg);
+                        transform-origin: 50% 50%;
+                        stroke-dasharray: ${c};
+                        stroke-linecap: round;
+                        fill: ${state ? 'var(--c-fill-color-on)' : 'var(--c-fill-color-off)'};
+                      }
+                      text {
+                        font-size: var(--c-font-size);
+                        font-weight: var(--c-font-weight);
+                        letter-spacing: var(--c-letter-spacing);
+                        fill: var(--c-font-color);
+                      }
+                      tspan {
+                        font-size: var(--c-unit-font-size);
+                      }
+                      #circle_value, tspan {
+                        text-anchor: middle;
+                        dominant-baseline: central;
+                      }
+                    </style>
+                    <circle id="circle_stroke_bg" cx="25" cy="25" r="${r}" opacity="0.5" stroke-width="var(--c-stroke-width)" stroke="#b8b8b8"/>
+                    <circle id="circle_stroke_prev" cx="25" cy="25" r="${r}" opacity="1" stroke-width="2.5" stroke="#ffd945"  stroke-dashoffset="${typeof input === 'number' && c - input / 100 * c}" stroke-dasharray="${c}"/>
+                    <circle id="circle_stroke" cx="25" cy="25" r="${r}" opacity="1.0" stroke-width="var(--c-stroke-width)" stroke="${state ? 'var(--c-stroke-color-on)' : 'var(--c-stroke-color-off)'}" stroke-dashoffset="${typeof input === 'number' && c - input / 100 * c}" stroke-dasharray="${c}"/>
+                    <text id="circle_value" x="50%" y="52%" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle">${input}${tspan}<tspan>${unit}</tspan></text>
+                  </svg>
+
+                  ${(domain === 'light' || domain === 'media_player' || domain === 'cover') && `
+                      <input id="circle_slider" type="range" min="0" max="100" value="${input}">
+                  `}
+                `;
+            }
+
+           /* * * * * * * * * * * * * * * * * *
+            *                                 *
+            *              LIGHT              *
+            *                                 *
+            * * * * * * * * * * * * * * * * * */
+
+            if (domain === 'light' && state) {
+
+                // wait 0ms for shadow dom
+                setTimeout(() => {
+
+                    // then get elements
+                    let elt = this.shadowRoot,
+                        circle_slider = elt.getElementById('circle_slider'),
+                        circle_value = elt.getElementById('circle_value'),
+                        circle_stroke_prev = elt.getElementById('circle_stroke_prev'),
+                        circle_stroke = elt.getElementById('circle_stroke');
+
+                    // approximate position of thumb relative to circle
+                    circle_slider.style.top = `${(circle_slider.value - 50) / 1.66 - 1}%`;
+
+                    // debug position
+                    let debug = false;
+                    if (debug) circle_slider.style.opacity = 0.3;
+
+                    // pass each event to handler
+                    ['click', 'input', 'mousedown', 'mouseup', 'touchstart', 'touchend'].forEach((event) => {
+                        circle_slider.addEventListener(event, handler, { passive: true })
+                    });
+
+                    function handler(event) {
+
+                        // "this" refers to slider
+                        if (event.target === this) {
+
+                            // bypass button-card tap_action
+                            event.stopPropagation();
+
+                            // update circle_value
+                            circle_value.innerHTML = `${this.value}${tspan}${unit}</tspan>`;
+
+                            // update stroke
+                            circle_stroke.style.strokeDashoffset = c - this.value / 100 * c;
+                            circle_stroke.style.strokeWidth = 'var(--c-stroke-width-dragging)';
+
+                            // set cursor while dragging
+                            if (event.type === 'mousedown' || event.type === 'input') {
+                                this.style.cursor = 'grabbing';
+                            } else {
+                                this.style.cursor = 'grab';
+                            }
+
+                            // reset stroke width if value doesn't change
+                            if (input == this.value && (event.type === 'click' || event.type === 'touchend'))
+                                circle_stroke.style.strokeWidth = 'var(--c-stroke-width)';
+
+                            // on release
+                            if (event.type === 'mouseup' || event.type === 'touchend') {
+
+                                // display loader if brightness is 0
+                                if (circle_slider.value == 0 && elt.getElementById('loader')) {
+                                    elt.getElementById('loader').style.display = 'initial';
+                                    elt.getElementById('circle').style.display = 'none';
+                                }
+
+                                // set brightness
+                                hass.callService('light', 'turn_on', {
+                                    entity_id: entity.entity_id,
+                                    brightness_pct: this.value
+                                });
+                            }
+                        }
+                    }
+                }, 0);
+
+                return circle(state, input, unit);
+            }
+
+           /* * * * * * * * * * * * * * * * * *
+            *                                 *
+            *             PERSON              *
+            *                                 *
+            * * * * * * * * * * * * * * * * * */
+
+            else if (domain === 'person') {
+                return `
+                  <svg viewBox="0 0 50 50">
+                    <style>
+                      circle {
+                        transform: rotate(-90deg);
+                        transform-origin: 50% 50%;
+                        stroke-dasharray: ${c};
+                        stroke-linecap: round;
+                        stroke: ${state ? '#9da0a2' : 'rgba(255,255,255,0.1)'};
+                        fill: ${state ? 'var(--c-fill-color-on)' : 'var(--c-fill-color-off)'};
+                      }
+                      text {
+                        font-size: var(--c-font-size);
+                        font-weight: var(--c-font-weight);
+                        letter-spacing: var(--c-letter-spacing);
+                        fill: var(--c-font-color);
+                      }
+                      tspan {
+                        font-size: var(--c-unit-font-size);
+                      }
+                      #circle_value, tspan {
+                        text-anchor: middle;
+                        dominant-baseline: central;
+                      }
+                    </style>
+                    <circle id="circle_stroke_bg" cx="25" cy="25" r="${r}" opacity="0.7" stroke-width="var(--c-stroke-width)" stroke="#9da0a2"/>
+                    <text id="circle_value" x="50%" y="52%" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle">${input}${tspan}${unit}</tspan></text>
+                  </svg>
+                `;
+            }
+
+           /* * * * * * * * * * * * * * * * * *
+            *                                 *
+            *             CLIMATE             *
+            *                                 *
+            * * * * * * * * * * * * * * * * * */
+
+            else if (domain === 'climate' || domain === 'fan') {
+                return `
+                  <svg viewBox="0 0 50 50">
+                    <style>
+                      circle {
+                        transform: rotate(-90deg);
+                        transform-origin: 50% 50%;
+                        stroke-dasharray: ${c};
+                        stroke-linecap: round;
+                        stroke: ${state ? '#9da0a2' : 'rgba(255,255,255,0.1)'};
+                        fill: ${state ? 'var(--c-fill-color-on)' : 'var(--c-fill-color-off)'};
+                      }
+                      text {
+                        font-size: var(--c-font-size);
+                        font-weight: var(--c-font-weight);
+                        letter-spacing: var(--c-letter-spacing);
+                        fill: var(--c-font-color);
+                      }
+                      tspan {
+                        font-size: var(--c-unit-font-size);
+                      }
+                      #circle_value, tspan {
+                        text-anchor: middle;
+                        dominant-baseline: central;
+                      }
+                    </style>
+                    <circle id="circle_stroke_bg" cx="25" cy="25" r="${r}" opacity="0.7" stroke-width="var(--c-stroke-width)"/>
+                    <text id="circle_value" x="50%" y="52%" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle">${input}${tspan}${unit}</tspan></text>
+                  </svg>
+                `;
+            }
+            /* * * * * * * * * * * * * * * * * *
+            *                                 *
+            *              MEDIAPLAYER        *
+            *                                 *
+            * * * * * * * * * * * * * * * * * */
+
+            else if (domain === 'media_player' && state) {
+
+                // wait 0ms for shadow dom
+                setTimeout(() => {
+
+                    // then get elements
+                    let elt = this.shadowRoot,
+                        circle_slider = elt.getElementById('circle_slider'),
+                        circle_value = elt.getElementById('circle_value'),
+                        circle_stroke_prev = elt.getElementById('circle_stroke_prev'),
+                        circle_stroke = elt.getElementById('circle_stroke');
+
+                    // approximate position of thumb relative to circle
+                    circle_slider.style.top = `${(circle_slider.value - 50) / 1.66 - 1}%`;
+
+                    // debug position
+                    let debug = false;
+                    if (debug) circle_slider.style.opacity = 0.3;
+
+                    // pass each event to handler
+                    ['click', 'input', 'mousedown', 'mouseup', 'touchstart', 'touchend'].forEach((event) => {
+                        circle_slider.addEventListener(event, handler, { passive: true })
+                    });
+
+                    function handler(event) {
+
+                        // "this" refers to slider
+                        if (event.target === this) {
+
+                            // bypass button-card tap_action
+                            event.stopPropagation();
+
+                            // update circle_value
+                            circle_value.innerHTML = `${this.value}${tspan}${unit}</tspan>`;
+
+                            // update stroke
+                            circle_stroke.style.strokeDashoffset = c - this.value / 100 * c;
+                            circle_stroke.style.strokeWidth = 'var(--c-stroke-width-dragging)';
+
+                            // set cursor while dragging
+                            if (event.type === 'mousedown' || event.type === 'input') {
+                                this.style.cursor = 'grabbing';
+                            } else {
+                                this.style.cursor = 'grab';
+                            }
+
+                            // reset stroke width if value doesn't change
+                            if (input == this.value && (event.type === 'click' || event.type === 'touchend'))
+                                circle_stroke.style.strokeWidth = 'var(--c-stroke-width)';
+
+                            // on release
+                            if (event.type === 'mouseup' || event.type === 'touchend') {
+
+                                // display loader if brightness is 0
+                                if (circle_slider.value == 0 && elt.getElementById('loader')) {
+                                    elt.getElementById('loader').style.display = 'initial';
+                                    elt.getElementById('circle').style.display = 'none';
+                                }
+
+                                // set volume
+                                hass.callService('media_player', 'volume_set', {
+                                    entity_id: entity.entity_id,
+                                    volume_level: this.value / 100
+                                });
+                            }
+                        }
+                    }
+                }, 0);
+
+                return circle(state, input, unit);
+            }
+           /* * * * * * * * * * * * * * * * * *
+            *                                 *
+            *              COVER              *
+            *                                 *
+            * * * * * * * * * * * * * * * * * */
+
+            else if (domain === 'cover' && state) {
+
+                // wait 0ms for shadow dom
+                setTimeout(() => {
+
+                    // then get elements
+                    let elt = this.shadowRoot,
+                        circle_slider = elt.getElementById('circle_slider'),
+                        circle_value = elt.getElementById('circle_value'),
+                        circle_stroke_prev = elt.getElementById('circle_stroke_prev'),
+                        circle_stroke = elt.getElementById('circle_stroke');
+
+                    // approximate position of thumb relative to circle
+                    circle_slider.style.top = `${(circle_slider.value - 50) / 1.66 - 1}%`;
+
+                    // debug position
+                    let debug = false;
+                    if (debug) circle_slider.style.opacity = 0.3;
+
+                    // pass each event to handler
+                    ['click', 'input', 'mousedown', 'mouseup', 'touchstart', 'touchend'].forEach((event) => {
+                        circle_slider.addEventListener(event, handler, { passive: true })
+                    });
+
+                    function handler(event) {
+
+                        // "this" refers to slider
+                        if (event.target === this) {
+
+                            // bypass button-card tap_action
+                            event.stopPropagation();
+
+                            // update circle_value
+                            circle_value.innerHTML = `${this.value}${tspan}${unit}</tspan>`;
+
+                            // update stroke
+                            circle_stroke.style.strokeDashoffset = c - this.value / 100 * c;
+                            circle_stroke.style.strokeWidth = 'var(--c-stroke-width-dragging)';
+
+                            // set cursor while dragging
+                            if (event.type === 'mousedown' || event.type === 'input') {
+                                this.style.cursor = 'grabbing';
+                            } else {
+                                this.style.cursor = 'grab';
+                            }
+
+                            // reset stroke width if value doesn't change
+                            if (input == this.value && (event.type === 'click' || event.type === 'touchend'))
+                                circle_stroke.style.strokeWidth = 'var(--c-stroke-width)';
+
+                            // on release
+                            if (event.type === 'mouseup' || event.type === 'touchend') {
+
+                                // display loader if brightness is 0
+                                if (circle_slider.value == 0 && elt.getElementById('loader')) {
+                                    elt.getElementById('loader').style.display = 'initial';
+                                    elt.getElementById('circle').style.display = 'none';
+                                }
+
+                                // set cover
+                                hass.callService('cover', 'set_cover_position', {
+                                    entity_id: entity.entity_id,
+                                    position: this.value
+                                });
+                            }
+                        }
+                    }
+                }, 0);
+
+                return circle(state, input, unit);
+            }
+           /* * * * * * * * * * * * * * * * * *
+            *                                 *
+            *              OTHER              *
+            *                                 *
+            * * * * * * * * * * * * * * * * * */
+
+            else if (variables.state_on) {
+                return circle(state, input, unit);
+            }
+        }
+      ]]]
+
+#################################################
+#                                               #
+#               LOADER                          #
+#                                               #
+#################################################
+
+loader:
+  custom_fields:
+    loader: >
+      <img src="/local/img/loader.svg" width="100%">
+  tap_action:
+    loader: >
+      [[[
+        if (entity) {
+          var domain = entity.entity_id.split('.')[0];
+          if (domain === 'light' || domain ==='camera' || domain === 'media_player' || domain === 'switch') {
+            let elt = this.shadowRoot,
+              loader = (id, style, timeout) => {
+                elt.getElementById(id) && (elt.getElementById(id).style.display = style,
+                  window.setTimeout(() => {
+                    elt.getElementById('loader').style.display = 'none'
+                  }, 20000))
+              };
+            loader('circle', 'none', 'initial'),
+            loader('loader', 'initial', 'none');
+          }
+        }
+      ]]]
+  hold_action:
+    loader: >
+      [[[
+        if (entity) {
+          var domain = entity.entity_id.split('.')[0];
+          if (domain === 'lock' || domain === 'cover') {
+            let elt = this.shadowRoot,
+              loader = (id, style, timeout) => {
+                elt.getElementById(id) && (elt.getElementById(id).style.display = style,
+                  window.setTimeout(() => {
+                    elt.getElementById('loader').style.display = 'none'
+                  }, 20000))
+              };
+            loader('circle', 'none', 'initial'),
+            loader('loader', 'initial', 'none');
+          }
+        }
+      ]]]
+  # double_tap_action:
+  #   loader: >
+  #     [[[
+  #       if (entity) {
+  #         var domain = entity.entity_id.split('.')[0];
+  #         if (domain === 'cover') {
+  #           let elt = this.shadowRoot,
+  #             loader = (id, style, timeout) => {
+  #               elt.getElementById(id) && (elt.getElementById(id).style.display = style,
+  #                 window.setTimeout(() => {
+  #                   elt.getElementById('loader').style.display = 'none'
+  #                 }, 20000))
+  #             };
+  #           loader('circle', 'none', 'initial'),
+  #           loader('loader', 'initial', 'none');
+  #         }
+  #       }
+  #     ]]]
+
+  styles:
+    custom_fields:
+      loader:
+        - display: none
+        - top: -5.8%
+        - right: -5.3%
+        - width: 50%
+        - position: absolute
+        - opacity: 0.5
+        - pointer-events: none
+        - filter: >
+            [[[
+              return variables.state_on
+                  ? 'none'
+                  : 'invert(1)';
+            ]]]
+
+#################################################
+#                                               #
+#               SETTINGS                        #
+#                                               #
+#################################################
+
+settings:
+  variables:
+    entity_tablet: light.browser_iphone_hass_app_screen_2
+    chrome_int: light.browser_chrome_mac_int_screen
+    entity_browser_mod: media_player.browser_iphone_hass_app_2
+    browser_mode_chrome: media_player.browser_chrome_mac_int
+    translate_unknown: unknown
+    translate_idle: idle
+    translate_home: home
+    translate_not_home: away
+    translate_available: available
+    translate_no_updates: no updates
+    translate_update_available: update available
+    translate_updates_available: updates available

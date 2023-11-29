@@ -1,0 +1,47 @@
+#################################################
+#                                               #
+#                BINARY SENSORS                 #
+#                                               #
+#################################################
+
+template:
+  - binary_sensor:
+      #BINARY SENSOR - ROOM OCCUPANCY
+      - name: 'Shower Room Occupancy'
+        unique_id: shower_room_occupancy
+        icon: mdi:motion-sensor
+        device_class: occupancy
+        state: >-
+          {{
+            is_state('binary_sensor.contact_sensor_shower_room', 'off')
+            or is_state('binary_sensor.motion_sensor_shower_room', 'on')
+          }}
+
+      - name: 'Bathroom Occupancy'
+        unique_id: bathroom_occupancy
+        icon: mdi:motion-sensor
+        device_class: occupancy
+        state: >-
+          {{
+            is_state('binary_sensor.contact_sensor_bathroom', 'off')
+            or is_state('binary_sensor.motion_sensor_bathroom', 'on')
+          }}
+
+      - name: 'People Home'
+        unique_id: home_occupancy
+        device_class: occupancy
+        icon: mdi:home-import-outline
+        state: >-
+          {{
+            is_state('input_boolean.z_occupacy', 'on')
+            or is_state('person.huong_giang', 'home')
+            or is_state('input_boolean.guest_mode','on')
+          }}
+      - name: 'Zuzu Presence'
+        unique_id: zuzu_occupancy
+        device_class: occupancy
+        icon: mdi:account
+        state: >-
+          {{
+            is_state('input_boolean.z_occupacy', 'on')
+          }}

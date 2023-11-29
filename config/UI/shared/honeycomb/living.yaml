@@ -1,0 +1,75 @@
+action: call-service
+service: honeycomb
+service_data:
+  audio: /local/sound/popup.m4a
+  autoclose: true
+  size: 250
+  buttons:
+    #0
+    - icon: phu:floor-shade
+      position: 0
+      show: true
+      entity: light.living_room_floor_lamp
+      active: '[[[ return entity.state != "off" ]]]'
+      tap_action:
+        action: call-service
+        service: light.toggle
+        service_data:
+          entity_id: entity
+
+    #1
+    - icon: phu:light-strip
+      show: true
+      position: 1
+      entity: light.shelly_rgbw_kitchen_led_strip
+      active: '[[[ return entity.state != "off" ]]]'
+      tap_action:
+        action: call-service
+        service: light.toggle
+        service_data:
+          entity_id: entity
+      hold_action: more-info
+    #2
+    - icon: phu:bulb-group-sultan-lightstrip
+      show: true
+      position: 2
+      entity: input_boolean.cozy_light
+      active: '[[[ return entity.state != "off" ]]]'
+      tap_action:
+        action: toggle
+        service_data:
+          entity_id: entity
+    #3
+    - icon: mdi:window-shutter
+      show: true
+      position: 3
+      active: '[[[ return entity.attributes.current_position == 100 ]]]'
+      entity: cover.living_room_cover
+      tap_action:
+        action: call-service
+        service: cover.close_cover
+        service_data:
+          entity_id: entity
+    #4
+    - icon: mdi:window-shutter-open
+      show: true
+      position: 4
+      active: '[[[ return entity.attributes.current_position == 0 ]]]'
+      entity: cover.living_room_cover
+      tap_action:
+        action: call-service
+        service: cover.open_cover
+        service_data:
+          entity_id: entity
+    #5
+    - icon: mdi:ceiling-light
+      show: true
+      position: 5
+      entity: light.shelly_dimmer
+      active: '[[[ return entity.state != "off" ]]]'
+      tap_action:
+        action: call-service
+        service: light.toggle
+        service_data:
+          entity_id: entity
+      hold_action: more-info

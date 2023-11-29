@@ -1,0 +1,234 @@
+scene:
+  - id: '1664659752676'
+    name: Office Mode
+    entities:
+      light.office_lamp_bulb:
+        min_color_temp_kelvin: 2202
+        max_color_temp_kelvin: 4000
+        min_mireds: 250
+        max_mireds: 454
+        effect_list:
+          - blink
+          - breathe
+          - okay
+          - channel_change
+          - finish_effect
+          - stop_effect
+        supported_color_modes:
+          - color_temp
+        color_mode: color_temp
+        brightness: 127
+        color_temp_kelvin: 2369
+        color_temp: 422
+        hs_color:
+          - 29.243
+          - 77.486
+        rgb_color:
+          - 255
+          - 153
+          - 57
+        xy_color:
+          - 0.562
+          - 0.389
+        color_temp_startup: 65535
+        last_seen: '2023-09-04T20:29:11+02:00'
+        linkquality: 32
+        power_on_behavior: previous
+        update:
+          installed_version: 587814449
+          latest_version: 537040419
+          state: idle
+        update_available:
+        icon: phu:floor-shade
+        friendly_name: Office Floor Lamp
+        supported_features: 44
+        state: 'on'
+      light.vocolinc_rpl_188bce_mood_light:
+        supported_color_modes:
+          - hs
+        color_mode: hs
+        brightness: 255
+        hs_color:
+          - 15
+          - 100
+        rgb_color:
+          - 255
+          - 63
+          - 0
+        xy_color:
+          - 0.677
+          - 0.319
+        icon: phu:go
+        friendly_name: Ofice Mood Light
+        supported_features: 0
+        state: 'on'
+      light.office_shelf_led:
+        supported_color_modes:
+          - onoff
+        color_mode: onoff
+        icon: phu:light-strip
+        friendly_name: Office Shelf Led
+        supported_features: 0
+        state: 'on'
+      light.office_led_light_strip:
+        min_color_temp_kelvin: 1700
+        max_color_temp_kelvin: 6535
+        min_mireds: 153
+        max_mireds: 588
+        effect_list:
+          - Strobe color
+          - Police
+          - Christmas
+          - RGB
+          - Random Loop
+          - Fast Random Loop
+          - LSD
+          - Slowdown
+          - Night Mode
+          - Date Night
+          - Movie
+          - Sunrise
+          - Sunset
+          - Romance
+          - Happy Birthday
+          - Disco
+          - Strobe epilepsy!
+          - Alarm
+          - Police2
+          - WhatsApp
+          - Facebook
+          - Twitter
+          - Home
+          - Candle Flicker
+          - Slow Temp
+          - Stop
+        supported_color_modes:
+          - color_temp
+          - hs
+          - rgb
+        color_mode: hs
+        brightness: 255
+        hs_color:
+          - 29
+          - 100
+        rgb_color:
+          - 255
+          - 123
+          - 0
+        xy_color:
+          - 0.617
+          - 0.37
+        flowing: false
+        music_mode: false
+        icon: phu:light-strip
+        friendly_name: Office Light Stripe
+        supported_features: 44
+        state: 'on'
+    icon: mdi:keyboard
+    metadata: {}
+  - id: '1680833898105'
+    name: Cozy light
+    entities:
+      light.shelly_rgbw_kitchen_led_strip:
+        effect_list:
+          - 'Off'
+          - Meteor Shower
+          - Gradual Change
+          - Flash
+        supported_color_modes:
+          - rgbw
+        color_mode: rgbw
+        brightness: 255
+        hs_color:
+          - 0
+          - 74.902
+        rgb_color:
+          - 255
+          - 64
+          - 64
+        rgbw_color:
+          - 255
+          - 64
+          - 64
+          - 0
+        xy_color:
+          - 0.645
+          - 0.304
+        effect: 'Off'
+        icon: phu:light-strip
+        friendly_name: Living Room Led Strip
+        supported_features: 36
+        state: 'on'
+      light.living_room_floor_lamp:
+        supported_color_modes:
+          - onoff
+        color_mode: onoff
+        icon: phu:floor-shade
+        friendly_name: Living Room Floor Lamp
+        supported_features: 0
+        state: 'on'
+    metadata:
+      light.living_room_floor_lamp:
+        entity_only: true
+  - id: '1689285115264'
+    name: Office Mode
+    entities:
+      input_boolean.office_mode:
+        editable: true
+        icon: mdi:desk
+        friendly_name: Office Mode
+        state: 'on'
+    icon: mdi:microsoft-office
+    metadata:
+      input_boolean.office_mode:
+        entity_only: true
+  - id: '1689456625248'
+    name: Morning Cover
+    entities:
+      cover.door:
+        current_position: 0
+        current_tilt_position: 100
+        device_class: blind
+        friendly_name: Cover Door
+        supported_features: 143
+        state: closed
+      cover.double:
+        current_position: 0
+        current_tilt_position: 100
+        device_class: blind
+        friendly_name: Cover Double
+        supported_features: 143
+        state: closed
+      cover.left:
+        current_position: 0
+        current_tilt_position: 100
+        device_class: blind
+        friendly_name: Cover Left
+        supported_features: 143
+        state: closed
+      cover.right:
+        current_position: 0
+        current_tilt_position: 100
+        device_class: blind
+        friendly_name: Cover Right
+        supported_features: 143
+        state: closed
+      cover.window:
+        current_position: 0
+        current_tilt_position: 100
+        device_class: blind
+        friendly_name: Cover Window
+        supported_features: 143
+        state: closed
+    icon: mdi:window-shutter
+    metadata:
+      cover.door:
+        entity_only: true
+      cover.double:
+        entity_only: true
+      cover.left:
+        entity_only: true
+      cover.right:
+        entity_only: true
+      cover.window:
+        entity_only: true

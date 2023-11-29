@@ -1,0 +1,39 @@
+#################################################
+#                                               #
+#         SENSORS                               #
+#                                               #
+#################################################
+- entity: input_boolean.svg_temp_humid
+  element: temphumid
+  tap_action: false
+  hold_action: false
+  double_tap_action: false
+  state_action:
+    action: call-service
+    service: floorplan.class_set
+    service_data: 'temphumid-${entity.state}'
+
+- entities:
+    - sensor.bedroom_tem_humid_temperature
+    - sensor.dyson_ph04_temperature
+    - sensor.office_temp_humid_sensor_temperature
+    - sensor.kids_room_temp_humid_temperature
+    - sensor.bathroom_temp_humid_temperature
+  tap_action: false
+  double_tap_action: more-info
+  state_action:
+    action: call-service
+    service: floorplan.text_set
+    service_data: '${entity.state ? Math.round(entity.state * 10) / 10 + "°C" : "unknown"}'
+- entities:
+    - sensor.bedroom_tem_humid_humidity
+    - sensor.dyson_ph04_humidity
+    - sensor.bathroom_temp_humid_humidity
+    - sensor.office_temp_humid_sensor_humidity
+    - sensor.kids_room_temp_humid_humidity
+  tap_action: false
+  double_tap_action: more-info
+  state_action:
+    action: call-service
+    service: floorplan.text_set
+    service_data: '${entity.state ? Math.round(entity.state * 10) / 10 + "%" : "unknown"}'

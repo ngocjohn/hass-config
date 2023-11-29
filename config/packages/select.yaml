@@ -1,0 +1,48 @@
+input_select:
+  speaker_select:
+    name: Speaker Select
+    initial: All Homepods
+    options:
+      - All Homepods
+      - Office
+      - Bedroom
+      - Bathroom
+      - Living Room
+    icon: mdi:speaker-wireless
+
+  radio_select:
+    name: Radio Select
+    initial: none
+    options:
+      - none
+      - Evropa 2
+      - Spin Radio
+      - Fajn Radio
+      - Kiss Radio
+    icon: mdi:radio
+
+# INPUT BOOLEAN
+input_boolean:
+  notify_visible:
+    name: Notifications
+    icon: mdi:checkbox-blank-badge
+
+  notify_away:
+    name: Notify when someone leaves home
+    icon: mdi:car
+
+  svg_covers_display:
+    name: SVG covers display
+    icon: mdi:window-shutter
+
+  kiosk_hide_sidebar:
+    name: Kiosk mode sidebar
+    icon: mdi:menu
+
+  floor_media_button:
+    name: Floor media button
+    icon: mdi:multimedia
+
+  floor_airplay_button:
+    name: Airplay
+    icon: mdi:play

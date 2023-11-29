@@ -1,0 +1,783 @@
+- id: '1668864895588'
+  alias: Main Door Open
+  description: ''
+  trigger:
+  - platform: event
+    event_type: ios.action_fired
+    event_data:
+      actionName: Main Door Open
+  condition: []
+  action:
+  - service: lock.open
+    data: {}
+    target:
+      entity_id: lock.nuki_vchod_lock
+  mode: single
+- id: '1677334681247'
+  alias: Dock lock state
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.nuki_neklanka_byt_locked
+    from:
+    - 'on'
+    - 'off'
+    to:
+    - 'on'
+    - 'off'
+  action:
+  - service: input_boolean.toggle
+    data: {}
+    target:
+      entity_id: input_boolean.door_lock
+  mode: parallel
+- id: '1681806258876'
+  alias: z left
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.gle
+    attribute: Street
+  - platform: state
+    entity_id:
+    - input_boolean.z_occupacy
+    to: 'on'
+    id: home
+  - platform: geo_location
+    source: person.huong_giang
+    zone: zone.smichov
+    event: enter
+    id: smichov
+  condition: []
+  action:
+  - if:
+    - condition: trigger
+      id:
+      - home
+      - smichov
+    then:
+    - service: notify.mobile_app_viet_ngoc
+      data:
+        title: Location
+        message: '{{ state_attr(''sensor.gle'', ''Formatted Address'') }}'
+        data:
+          push:
+            sound:
+              name: findmy.wav
+              critical: 1
+              volume: 1
+          action_data:
+            latitude: '{{ state_attr(''device_tracker.findmy_d098350b38e241d3972ad394a27f38b6'',
+              ''latitude'') }}'
+            longitude: '{{ state_attr(''device_tracker.findmy_d098350b38e241d3972ad394a27f38b6'',
+              ''longitude'') }}'
+            latitude_delta: '0'
+            longitude_delta: '0.01'
+    else:
+    - service: notify.ngoc_devices
+      data:
+        title: Location
+        message: '{{ state_attr(''sensor.gle'', ''Formatted Address'') }}'
+        data:
+          action_data:
+            latitude: '{{ state_attr(''device_tracker.findmy_d098350b38e241d3972ad394a27f38b6'',
+              ''latitude'') }}'
+            longitude: '{{ state_attr(''device_tracker.findmy_d098350b38e241d3972ad394a27f38b6'',
+              ''longitude'') }}'
+            latitude_delta: '0'
+            longitude_delta: '0.01'
+    enabled: true
+  mode: single
+- id: '1681905795903'
+  alias: camera snapshot
+  description: ''
+  trigger:
+  - platform: time
+    at: 05:00:00
+    id: delete
+  - platform: time_pattern
+    hours: /1
+  condition:
+  - condition: time
+    after: 05:00:00
+    before: 00:00:00
+  action:
+  - if:
+    - condition: trigger
+      id: delete
+    then:
+    - service: delete.files_in_folder
+      data:
+        folder: /config/www/tmp/snapshots/
+        time: 0
+        only_extensions:
+        - .png
+        - .jpg
+  - parallel:
+    - service: camera.turn_on
+      data: {}
+      target:
+        entity_id:
+        - camera.doorway
+        - camera.terasa
+        - camera.kids_room
+        - camera.zahrada
+    - condition: state
+      entity_id: camera.doorway
+      state: streaming
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 3
+    - condition: state
+      entity_id: camera.terasa
+      state: streaming
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 3
+    - condition: state
+      entity_id: camera.kids_room
+      state: streaming
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 3
+    - condition: state
+      entity_id: camera.zahrada
+      state: streaming
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 3
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
+  - parallel:
+    - service: camera.snapshot
+      data:
+        filename: /config/www/tmp/snapshots/camera.doorway{{ now().strftime("%Y%m%d-%H%M%S")
+          }}.jpg
+      target:
+        entity_id: camera.doorway
+    - service: camera.snapshot
+      data:
+        filename: /config/www/tmp/snapshots/camera.kids_room{{ now().strftime("%Y%m%d-%H%M%S")
+          }}.jpg
+      target:
+        entity_id: camera.kids_room
+    - service: camera.snapshot
+      data:
+        filename: /config/www/tmp/snapshots/camera.terasa{{ now().strftime("%Y%m%d-%H%M%S")
+          }}.jpg
+      target:
+        entity_id: camera.terasa
+    - service: camera.snapshot
+      data:
+        filename: /config/www/tmp/snapshots/camera.zahrada{{ now().strftime("%Y%m%d-%H%M%S")
+          }}.jpg
+      target:
+        entity_id: camera.zahrada
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
+  - parallel:
+    - service: camera.snapshot
+      data:
+        filename: /config/www/tmp/camera.doorway-latest.jpg
+      target:
+        entity_id: camera.doorway
+    - service: camera.snapshot
+      data:
+        filename: /config/www/tmp/camera.kids_room-latest.jpg
+      target:
+        entity_id: camera.kids_room
+    - service: camera.snapshot
+      data:
+        filename: /config/www/tmp/camera.terasa-latest.jpg
+      target:
+        entity_id: camera.terasa
+    - service: camera.snapshot
+      data:
+        filename: /config/www/tmp/camera.zahrada-latest.jpg
+      target:
+        entity_id: camera.zahrada
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - service: camera.turn_off
+    data: {}
+    target:
+      entity_id:
+      - camera.doorway
+      - camera.kids_room
+      - camera.terasa
+      - camera.zahrada
+  mode: single
+- id: '1683903230879'
+  alias: Bedroom Cover Night
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: 00:30:00
+  condition: []
+  action:
+  - service: cover.close_cover
+    data: {}
+    target:
+      area_id: bedroom
+  mode: single
+- id: '1684613417245'
+  alias: Cover Night Mode
+  description: ''
+  trigger: []
+  condition: []
+  action:
+  - service: cover.close_cover
+    data: {}
+    target:
+      entity_id:
+      - cover.bedroom_shutters
+      - cover.living_room_cover
+  mode: single
+- id: '1688809817206'
+  alias: Guest Mode notify
+  description: ''
+  trigger:
+  - platform: zone
+    entity_id: person.viet_ngoc
+    zone: zone.home
+    event: leave
+  condition:
+  - condition: state
+    entity_id: input_boolean.guest_mode
+    state: 'on'
+  action:
+  - alias: Set up variables for the actions
+    variables:
+      action_yes: '{{ ''YES_'' ~ context.id }}'
+      action_no: '{{ ''NO_'' ~ context.id }}'
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - alias: Ask to stop or no guest mode
+    service: notify.mobile_app_viet_ngoc
+    data:
+      message: Do you want to stop this?
+      data:
+        actions:
+        - action: '{{ action_yes }}'
+          title: 'YES'
+        - action: '{{ action_no }}'
+          title: 'NO'
+      title: Guest mode
+  - alias: Wait for a response
+    wait_for_trigger:
+    - platform: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: '{{ action_yes }}'
+    - platform: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: '{{ action_no }}'
+  - alias: Perform the action
+    choose:
+    - conditions: '{{ wait.trigger.event.data.action == action_yes }}'
+      sequence:
+      - service: input_boolean.turn_off
+        data: {}
+        target:
+          entity_id: input_boolean.guest_mode
+      - condition: state
+        entity_id: input_boolean.guest_mode
+        state: 'off'
+        for:
+          hours: 0
+          minutes: 0
+          seconds: 2
+      - service: input_boolean.turn_on
+        data: {}
+        target:
+          entity_id: input_boolean.leaving_home
+    - conditions: '{{ wait.trigger.event.data.action == action_no }}'
+      sequence:
+      - service: input_boolean.turn_on
+        data: {}
+        target:
+          entity_id: input_boolean.guest_mode
+        enabled: false
+      - stop: ''
+  mode: single
+- id: '1688940697804'
+  alias: Alarm
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - script.homepod_alarm
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+    enabled: true
+    to: 'on'
+  condition: []
+  action:
+  - alias: Set up variables for the actions
+    variables:
+      action_stop: '{{ ''STOP_'' ~ context.id }}'
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  - alias: Ask to close or open the blinds
+    service: notify.mobile_app_viet_ngoc
+    data:
+      message: Do you want to stop this?
+      data:
+        push:
+          sound:
+            name: findmy.wav
+            critical: 1
+            volume: 1
+        actions:
+        - action: '{{ action_stop }}'
+          title: Stop alarm
+      title: Alarm Clock
+  - alias: Wait for a response
+    wait_for_trigger:
+    - platform: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: '{{ action_stop }}'
+  - alias: Perform the action
+    choose:
+    - conditions: '{{ wait.trigger.event.data.action == action_stop }}'
+      sequence:
+      - service: media_player.media_pause
+        data: {}
+        target:
+          entity_id:
+          - media_player.office_2
+          - media_player.bedroom
+  mode: restart
+- id: '1693488019712'
+  alias: Nuki Vchod Open
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_button.nuki_vchod
+  condition: []
+  action:
+  - service: lock.open
+    data: {}
+    target:
+      entity_id: lock.nuki_vchod_lock
+  mode: single
+- id: '1694467964669'
+  alias: Refresh iPad when Lovelace is updated
+  description: Ensure the view refreshes when I make changes to a Lovelace dashboard
+  trigger:
+  - platform: event
+    event_type: lovelace_updated
+  condition: []
+  action:
+  - service: browser_mod.refresh
+    data: {}
+    target:
+      device_id:
+      - 0604abf0d6d8e6f72903f0cc77d83b3d
+  mode: single
+- id: '1694516012171'
+  alias: Only update vaze information every 20 minutes when I'm home
+  description: ''
+  trigger:
+  - platform: time_pattern
+    minutes: /20
+    id: 20min
+  condition:
+  - condition: state
+    entity_id: device_tracker.viet_ngoc
+    state: not_home
+  action:
+  - service: homeassistant.update_entity
+    data: {}
+    target:
+      entity_id: sensor.waze_ngoc_home
+- id: '1694520399882'
+  alias: Jahoda trigger
+  description: ''
+  trigger:
+  - platform: time_pattern
+    minutes: /5
+    id: 5min
+  condition:
+  - condition: or
+    conditions:
+    - condition: time
+      after: '16:00:00'
+      before: '17:00:00'
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+    - condition: time
+      after: 08:00:00
+      before: 09:15:00
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+  action:
+  - service: homeassistant.update_entity
+    data: {}
+    target:
+      entity_id: sensor.waze_ngoc_jahoda
+  mode: single
+- id: '1694522705616'
+  alias: Vanny skolka
+  description: ''
+  trigger:
+  - platform: template
+    value_template: '{% set lag_in_minute = 10 %}
+
+      {% set travel_time_in_minute = states("sensor.waze_ngoc_jahoda")|int %}
+
+      {% set target_time = now().replace(hour=16).replace(minute=45).replace(second=0)
+      %}
+
+      {{ as_timestamp(target_time) - (travel_time_in_minute+lag_in_minute)*60 <= as_timestamp(now())}}
+
+      '
+  condition:
+  - condition: not
+    conditions:
+    - condition: zone
+      entity_id: device_tracker.viet_ngoc
+      zone: zone.smichov
+  action:
+  - service: notify.mobile_app_viet_ngoc
+    data:
+      message: '{{ states(''sensor.waze_ngoc_jahoda'')}}min {{ state_attr(''sensor.waze_ngoc_jahoda'',''route'')}}'
+      title: Vanesska Jesle
+      data:
+        shortcut:
+          name: Jahoda Direction
+          ignore_result: ignore
+        push:
+          sound:
+            name: findmy.wav
+            critical: 1
+            volume: 1
+  mode: single
+- id: '1694721012171'
+  alias: Spotify Vibrant Color
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.vibrant_color
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: light.office_led_light_strip
+      state: 'on'
+    - condition: or
+      conditions:
+      - condition: device
+        device_id: d8496daf7e926630a7431da013a83590
+        domain: media_player
+        entity_id: 952057f8ccc2766d1d825168186a225a
+        type: is_playing
+      - condition: state
+        entity_id: media_player.mass_airplay_group
+        state: playing
+  action:
+  - service: light.turn_on
+    data:
+      transition: 5
+      rgb_color: '{{states(''sensor.vibrant_color'')}}'
+    target:
+      entity_id: light.office_led_light_strip
+  mode: single
+- id: '1695149693530'
+  alias: Notify HA started
+  description: ''
+  trigger:
+  - platform: homeassistant
+    event: start
+  condition: []
+  action:
+  - service: notify.mobile_app_viet_ngoc
+    data:
+      message: Home assistant started
+      data:
+        tag: hastarted
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 10
+      milliseconds: 0
+  - service: notify.mobile_app_viet_ngoc
+    data:
+      message: clear_notification
+      data:
+        tag: hastarted
+  - service: automation.trigger
+    data:
+      skip_condition: true
+    target:
+      entity_id: automation.camera_snapshot
+  mode: single
+- id: '1695935011647'
+  alias: dismiss_lovelace_updated
+  description: ''
+  trigger:
+  - platform: event
+    event_type: lovelace_updated
+  condition: []
+  action:
+  - repeat:
+      count: 5
+      sequence:
+      - delay: 0.5
+      - service: browser_mod.notification
+        data:
+          duration: 1
+          message: ' '
+  mode: restart
+- id: '1696329856970'
+  alias: Quit Youtube
+  description: quit youtube when TV is off
+  trigger:
+  - platform: state
+    entity_id:
+    - media_player.living_room_tv
+    to: 'off'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 15
+  condition:
+  - condition: state
+    entity_id: media_player.atv
+    attribute: app_id
+    state: com.google.ios.youtube
+  action:
+  - if:
+    - condition: state
+      entity_id: media_player.atv
+      state: playing
+    then:
+    - service: media_player.media_pause
+      data: {}
+      target:
+        entity_id: media_player.atv
+    - wait_template: '{{ states(''media_player.atv'') != ''playing'' }}'
+      continue_on_timeout: true
+    - service: script.atv_quit
+      data: {}
+    else:
+    - service: script.atv_quit
+      data: {}
+    enabled: false
+  - service: media_player.turn_off
+    data: {}
+    target:
+      entity_id: media_player.living_room
+    enabled: false
+  - service: script.atv_sleep
+    data: {}
+  mode: restart
+- id: '1696545639248'
+  alias: Roidmi Camera Automation
+  description: ''
+  use_blueprint:
+    path: PiotrMachowski/disable_vacuum_camera_update_when_docked.yaml
+    input:
+      vacuum: vacuum.roidmi_eve
+      camera: camera.roidmi_eve
+- id: '1696553366478'
+  alias: 'Dishwasher Set Timer '
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.mycka_nadobi_operation_state
+    to: Run
+  condition:
+  - condition: or
+    conditions:
+    - condition: not
+      conditions:
+      - condition: state
+        entity_id: sensor.mycka_nadobi_remaining_program_time
+        state: unknown
+    - condition: not
+      conditions:
+      - condition: state
+        entity_id: sensor.mycka_nadobi_remaining_program_time
+        state: unavailable
+  action:
+  - service: timer.start
+    data:
+      duration: '{{ (as_timestamp(states.sensor.mycka_nadobi_remaining_program_time.state))
+        - (as_timestamp(now())) | round(0)}}'
+    target:
+      entity_id: timer.dishwasher_remaining
+  initial_state: true
+  mode: restart
+- id: 32ca3bc2-e0e7-42e0-be25-8f40287cbfef
+  alias: shield_update_youtube_watching_thumbnail
+  mode: single
+  max_exceeded: silent
+  trigger:
+    platform: state
+    entity_id:
+    - media_player.bedroom_tv
+    attribute: media_title
+  condition: '{{ is_state_attr(trigger.entity_id, ''source'', ''YouTube'') and state_attr(trigger.entity_id,
+    ''media_title'') != state_attr(''sensor.shieldtv_youtube_watching'', ''title'')
+    }}
+
+    '
+  action:
+  - service: homeassistant.update_entity
+    target:
+      entity_id: sensor.shieldtv_youtube_watching
+- id: f7973aa2-262c-4c51-ae10-26216b605b24
+  alias: update_youtube_watching_thumbnail
+  mode: single
+  max_exceeded: silent
+  trigger:
+    platform: state
+    entity_id:
+    - media_player.living_room_tv
+    attribute: media_title
+  condition: '{{ is_state_attr(trigger.entity_id, ''app_id'', ''com.google.ios.youtube'')
+    and state_attr(trigger.entity_id, ''media_title'') != state_attr(''sensor.youtube_watching'',
+    ''title'') }}
+
+    '
+  action:
+  - service: homeassistant.update_entity
+    target:
+      entity_id: sensor.youtube_watching
+- id: 34ba1897-ec7a-4cb3-a12b-fb0a1e9e495e
+  alias: vacuum_start_cleaning
+  mode: queued
+  trigger:
+  - platform: state
+    entity_id: sensor.vacuum_status
+    from: '9'
+    to: '4'
+  - platform: state
+    entity_id: sensor.vacuum_status
+    from: '6'
+    to: '4'
+  action:
+    service: script.vacuum_notify
+    data:
+      title: Little messy there
+      message: The vacuum cleaner started cleaning!
+- id: 2dedd749-b65a-49e0-8747-2dce6dd995a4
+  alias: vacuum_show_error
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.vacuum_fault
+    from: No Faults
+  condition:
+  - condition: template
+    value_template: '{% if is_state_attr(''vacuum.roidmi_eve'',''vacuum.fault'',0)
+      or is_state_attr(''vacuum.roidmi_eve'',''vacuum.fault'',None) %}False{% else
+      %}True{% endif %}'
+    enabled: false
+  action:
+  - service: script.vacuum_notify
+    data:
+      title: Something is wrong with robot
+      message: '{{states(''sensor.vacuum_fault'')}}.'
+  mode: queued
+- id: '1700514428812'
+  alias: Notify HA System usage
+  description: Memory or CPU leak
+  trigger:
+  - platform: numeric_state
+    entity_id:
+    - sensor.memory_use_percent
+    - sensor.processor_use
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+    above: 70
+  condition: []
+  action:
+  - parallel:
+    - service: notify.notify
+      data:
+        message: Memory {{ states.sensor.memory_use_percent.state }}% - CPU {{ states.sensor.processor_use.state
+          }}%
+        title: System
+  mode: single
+- id: '1701050852425'
+  alias: GPT Weather prompt
+  description: ''
+  trigger:
+  - platform: time_pattern
+    hours: /2
+  condition:
+  - condition: sun
+    before: sunset
+    after: sunrise
+  action:
+  - service: conversation.process
+    data:
+      agent_id: e982dc33e8a9da3b9950ae320b549d16
+      text: Please generate short notification sentence with helpful information.
+        Your answer is helpful, friendly, warm, insightful add proper emoji. Making
+        note of unusual     weather for the outside location for now and for the next
+        hours. (but not     mundane details like 0% chance of precipitation, temperature
+        or humidity %)
+    response_variable: weather_gpt
+  - service: input_text.set_value
+    data:
+      value: '{{ weather_gpt.response.speech.plain.speech }}'
+    target:
+      entity_id: input_text.gpt_weather_response
+  mode: single
+- id: '1701118898607'
+  alias: Github stars
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.ngocjohn_hass_config_stars
+  condition: []
+  action:
+  - service: notify.notify
+    data:
+      message: Congrats! U got another star! {{ states.sensor.ngocjohn_hass_config_stars.state
+        }}⭐
+      title: Github Stars
+  mode: single

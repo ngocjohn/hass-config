@@ -1,0 +1,40 @@
+homeassistant:
+  customize:
+    device_tracker.viet_ngoc:
+      entity_picture: /local/img/device_tracker.svg
+    person.huong_giang:
+      entity_picture: /local/img/zuzu.png
+    person.viet_ngoc:
+      entity_picture: /local/img/vietngoc.jpg
+    device_tracker.findmy_d098350b38e241d3972ad394a27f38b6:
+      friendly_name: GLE
+      entity_picture: /local/img/icon_mercedes.svg
+    device_tracker.benz_gle_device_tracker:
+      friendly_name: GLE
+      entity_picture: /local/img/suv_gle.png
+    device_tracker.findmy_521d68e4ecef4686a97a2b77ccd20056:
+      friendly_name: AMG
+      entity_picture: /local/img/benz_amg.png
+    device_tracker.findmy_f28d260523a64f37b0595dfcd64d3b73:
+      friendly_name: Ngoc Keys AirTag
+      entity_picture: /local/svg/Apple_AirTag.svg
+    device_tracker.findmy_0a9abc99c33b483f972a7cdddeb20ab4:
+      friendly_name: AirPod Left Bud
+      entity_picture: /local/svg/Apple_AirTag.svg
+    device_tracker.findmy_fabadbf695d74e8eaa164ff51dc1500c:
+      friendly_name: AirPod Right Bud
+      entity_picture: /local/svg/Apple_AirTag.svg
+    device_tracker.findmy_7fd9d3a5b60e4f099b80e91a5cda7c4d:
+      friendly_name: Ngoc's AirPods Pro
+      entity_picture: /local/svg/Apple_AirTag.svg
+    device_tracker.findmy_9414ea483058416cb41991d034d0638c:
+      friendly_name: Macbook Air FINDMY
+      entity_picture: /local/svg/Apple_AirTag.svg
+    device_tracker.findmy_42070f6de4bb45388debeb4742fe8afa:
+      friendly_name: Apple Watch FINDMY
+      entity_picture: /local/svg/Apple_AirTag.svg
+    device_tracker.findmy_081687f017e446eeb5a213c38a62b66c:
+      unique_id: 43426905-054e-4a34-867b-b4a9141b4af6
+    sensor.gle:
+      unique_id: 452501ea-39d6-4b23-9a5b-72c6800db0ef
+      entity_picture: /local/img/suv_gle.png

@@ -1,0 +1,67 @@
+action: call-service
+service: honeycomb
+service_data:
+  active: true
+  autoclose: true
+  buttons:
+    #0
+    - icon: mdi:weather-night
+      show: true
+      position: 0
+      entity: input_boolean.night_mode
+      active: '[[[ return entity.state != "off" ]]]'
+      tap_action:
+        action: toggle
+        service_data:
+          entity_id: entity
+    #1
+    - icon: mdi:weather-sunny
+      show: true
+      position: 1
+      entity: input_boolean.good_morning
+      active: '[[[ return entity.state != "off" ]]]'
+      tap_action:
+        action: toggle
+        service_data:
+          entity_id: entity
+    #2
+    - icon: mdi:account-question
+      show: true
+      position: 2
+      entity: input_boolean.guest_mode
+      active: '[[[ return entity.state != "off" ]]]'
+      tap_action:
+        action: toggle
+        service_data:
+          entity_id: entity
+    # #3
+    # - icon: mdi:home-export-outline
+    #   show: true
+    #   position: 3
+    #   entity: input_boolean.leaving_home
+    #   active: '[[[ return entity.state != "off" ]]]'
+    #   tap_action:
+    #     action: toggle
+    #     service_data:
+    #       entity_id: entity
+    #4
+    - icon: mdi:home-export-outline
+      show: true
+      position: 4
+      entity: input_boolean.leaving_home
+      active: '[[[ return entity.state != "off" ]]]'
+      tap_action:
+        action: homeassistant.turn_on
+        service_data:
+          entity_id: entity
+    #5
+    - icon: mdi:lock
+      show: true
+      position: 5
+      entity: lock.nuki_neklanka_byt_lock
+      active: '[[[ return entity.state != "locked" ]]]'
+      tap_action:
+        action: call-service
+        service: lock.lock
+        service_data:
+          entity_id: entity

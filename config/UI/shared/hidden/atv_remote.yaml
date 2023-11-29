@@ -1,0 +1,15 @@
+title: ATV Remote
+background: 'linear-gradient(155deg, rgba(60,66,80,1) 0%, rgba(23,26,37,1) 42%, rgba(21,25,35,1) 100%)'
+type: custom:apple-tv-card
+full_screen: true
+entity: media_player.atv
+remote: remote.atv
+sources:
+  - source_name: Infuse
+  - source_name: Disney+
+  - source_name: Netflix
+  - source_name: Prime Video
+  - image: /local/dashboard-resources/Apple-Tv-Card/logo/youtube.png
+    source_name: YouTube
+  - image: /local/dashboard-resources/Apple-Tv-Card/logo/dazn.png
+    source_name: DAZN

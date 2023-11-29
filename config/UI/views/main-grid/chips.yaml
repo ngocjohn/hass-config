@@ -1,0 +1,151 @@
+#################################################
+#                                               #
+#             CHIPS MAX 800px                   #
+#                                               #
+#################################################
+
+- type: horizontal-stack
+  view_layout:
+    grid-area: chips
+    show:
+      mediaquery: '(max-width: 800px)'
+  cards:
+    - type: custom:swipe-card
+      start_card: 1
+      parameters:
+        centeredSlides: false
+        slidesPerView: 3
+        spaceBetween: 5
+        slideToClickedSlide: true
+        speed: 420
+      cards:
+        - &lights
+          type: custom:button-card
+          name: Lights
+          entity: group.light_all
+          tap_action: !include ../../shared/popup/all_light_mushroom.yaml
+          icon: phu:bulb-group-classic-3-alt
+          template:
+            - chips
+          state_display: >
+            [[[
+                if (variables.state == 'off') return 'All Off';
+                else return variables.light_on;
+            ]]]
+          styles:
+            icon:
+              - color: >
+                  [[[
+                    return variables.state_on
+                      ? '#b68752'
+                      : null;
+                  ]]]
+        - &media
+          type: custom:button-card
+          name: Media
+          entity: sensor.currently_playing
+          icon: ios:tv-and-hifispeaker-fill
+          template:
+            - chips
+          state_display: >
+            [[[
+                if (variables.playing == '0 Playing') return 'None';
+                else return variables.playing;
+            ]]]
+
+        # - &homemode
+        #   type: custom:button-card
+        #   name: Home Mode
+        #   entity: sensor.lights_count
+        #   icon: mdi:account-multiple-plus
+        #   template:
+        #     - chips
+
+        - &air
+          type: custom:button-card
+          name: Air Quality
+          entity: sensor.home_climate
+          template:
+            - chips
+            - chip_notify
+          show_icon: true
+
+#################################################
+#                                               #
+#             CHIPS MIN 1700px                  #
+#                                               #
+#################################################
+
+- type: horizontal-stack
+  view_layout:
+    grid-area: chips
+    show:
+      mediaquery: '(min-width: 1441px)'
+  cards:
+    - *lights
+    - *media
+
+    - type: custom:button-card
+      name: Home Mode
+      entity: sensor.home_mode
+      template:
+        - chips
+      styles:
+        icon:
+          - color: >
+              [[[
+                let state;
+                if (variables.state === 'Guest') {
+                  state = '#337acc';
+                }
+                if (variables.state === 'Normal') {
+                  state = '#607D8B';
+                }
+                if (variables.state === 'Away') {
+                  state = '#f77f00';
+                }
+                if (variables.state === 'Night') {
+                  state = '#003049';
+                }
+                return `${state}`
+              ]]]
+
+    - *air
+
+    - type: custom:button-card
+      name: Viet Ngoc
+      double_tap_action: !include ../../shared/popup/home_vietngoc.yaml
+      entity: person.viet_ngoc
+      template:
+        - chips
+      styles:
+        icon:
+          - padding: 3px
+          - background-color: null
+          - width: 50%
+
+    - type: custom:button-card
+      name: Huong Giang
+      entity: person.huong_giang
+      double_tap_action: !include ../../shared/popup/home_zuzu.yaml
+      template:
+        - chips
+      state_display: >
+        [[[
+          if (entity)
+            return variables.state == 'not_home' || variables.state === 'away' || variables.state == 'unknown'
+              ? `<div class="marquee"> ${states['sensor.gle'].state}&nbsp;&nbsp;&nbsp;${states['sensor.gle'].state}&nbsp;</div>`
+              : variables.state;
+        ]]]
+      triggers_update: sensor.time
+      tap_action:
+        action: call-service
+        service: homeassistant.update_entity
+        service_data:
+          entity_id: >
+            [[[ return variables.entity_id ]]]
+      styles:
+        icon:
+          - padding: 3px
+          - background-color: null
+          - width: 50%
