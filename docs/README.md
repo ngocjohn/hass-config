@@ -6,7 +6,7 @@ This is where I store all the cool configurations for my Home Assistant system. 
 
 I frequently refresh my configuration files. My current Home Assistant version is 2023.11.3. If you find something you like, don't forget to give my repository a ⭐️!
 
-<video width="100%" controls>
+<video width="100%">
   <source src="https://github-production-user-asset-6210df.s3.amazonaws.com/96962827/285987130-48cc5542-0ca7-480b-9c95-77aa9464eb10.mp4" type="video/mp4">
 </video>
 
