@@ -13,14 +13,6 @@ homeassistant:
 #                SENSORS                        #
 #                                               #
 #################################################
-# WEATHER
-weather:
-  - platform: template
-    name: 'Smichov'
-    unique_id: '86218ef4-128d-44e8-ac25-549a28c2a94e'
-    condition_template: "{{ states('weather.prague_smichov') }}"
-    temperature_template: "{{ state_attr('weather.prague_smichov','apparent_temperature') | float }}"
-    humidity_template: "{{ state_attr('weather.prague_smichov','humidity') | float }}"
 
 template:
   # SENSORS

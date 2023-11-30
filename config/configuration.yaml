@@ -38,13 +38,15 @@ lovelace:
       title: Dashboard
       icon: mdi:home-circle
       show_in_sidebar: true
-      filename: UI/ui-lovelace-main.yaml
+      filename: dashboards/ui-lovelace-main.yaml
 
 # HTTP
 http:
   use_x_forwarded_for: true
   trusted_proxies:
     - 172.30.33.0/24
+  ip_ban_enabled: true
+  login_attempts_threshold: 3
 
 # STT
 stt:

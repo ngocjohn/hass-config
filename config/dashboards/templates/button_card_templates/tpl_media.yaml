@@ -616,7 +616,7 @@ added_movies:
         - landscape: hide
         - portrait: hide
         - ymovie: show
-  # tap_action: !include /config/ui/popup/movie.yaml
+  # tap_action: !include /config/dashboards/popup/movie.yaml
   tap_action:
     action: fire-dom-event
     browser_mod:

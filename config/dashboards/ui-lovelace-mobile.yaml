@@ -1,0 +1,25 @@
+kiosk_mode:
+  hide_header: true
+  hide_unused_entities: true
+  mobile_settings:
+    hide_header: true
+    hide_unused_entities: true
+    hide_edit_dashboard: true
+    ignore_entity_settings: true
+    custom_width: 800
+swipe_nav:
+  wrap: false
+  enable_mouse_swipe: true
+  animate: swipe
+  prevent_default: true
+  swipe_amount: 30
+
+button_card_templates: !include_dir_merge_named dashboards/templates/button_card_templates
+decluttering_templates: !include dashboards/templates/decluttering-card.yaml
+
+views:
+  - !include dashboards/mobile/sidebar-office.yaml
+  - !include dashboards/mobile/masters-rooms.yaml
+  - !include dashboards/mobile/devices-climate.yaml
+  - !include dashboards/mobile/security-camera.yaml
+  - !include dashboards/mobile/floorplan.yaml

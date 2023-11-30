@@ -49,7 +49,7 @@
 #     - type: custom:button-card
 #       entity: sensor.lights_count
 #       name: <ha-icon icon="custom:ios-bulb"></ha-icon>
-#       tap_action: !include /config/ui/popup/all_lights.yaml
+#       tap_action: !include /config/dashboards/popup/all_lights.yaml
 #       template: footer
 #       variables: &notify
 #         notify: >
@@ -73,7 +73,7 @@
 #     - type: custom:button-card
 #       entity: sensor.covers_open_count
 #       name: <ha-icon icon="custom:ios-blinds"></ha-icon>
-#       tap_action: !include /config/ui/popup/all_covers.yaml
+#       tap_action: !include /config/dashboards/popup/all_covers.yaml
 #       template: footer
 #       variables: *notify
 #       styles: *styles
@@ -82,7 +82,7 @@
 #       name: >
 #         <ha-icon icon="custom:tvhifi"></ha-icon>
 #       entity: media_player.currently_playing
-#       tap_action: !include /config/ui/popup/currently_playing.yaml
+#       tap_action: !include /config/dashboards/popup/currently_playing.yaml
 #       template: footer
 #       variables: *notify
 #       styles: *styles
@@ -90,10 +90,10 @@
 # - type: custom:button-card
 #   entity: vacuum.robot_vacuum
 #   icon: mdi:play-pause
-#   tap_action: !include /config/ui/popup/all_lights.yaml
+#   tap_action: !include /config/dashboards/popup/all_lights.yaml
 #   template: sidebar_icon_only
 # - type: custom:button-card
 #   entity: vacuum.robot_vacuum
 #   icon: mdi:play-pause
-#   tap_action: !include /config/ui/popup/all_lights.yaml
+#   tap_action: !include /config/dashboards/popup/all_lights.yaml
 #   template: sidebar_icon_only

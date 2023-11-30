@@ -147,7 +147,7 @@ base:
 #                                               #
 #################################################
 
-# dashboard resource https://micku7zu.github.io/vanilla-tilt.js/
+# dashboard resource link: https://micku7zu.github.io/vanilla-tilt.js/
 
 tilt:
   variables:

@@ -479,30 +479,3 @@ tablet:
       border-radius: 0.3em;
       overflow: hidden;
     }
-
-  # card-mod-more-info-yaml: |
-  #   .: |
-  #     :host {
-  #       --ha-card-border-width: 0 !important;
-  #       --ha-card-border-radius: 0px !important;
-  #       --ha-card-border-color: none !important;
-  #       --bar-card-border-radius: 12px !important;
-  #       --ha-card-box-shadow: none !important;
-  #       --ha-card-background: none !important;
-  #       --tablet-popup-header-color: rgba(200, 218, 222, 0.05);
-  #     }
-  #     ha-dialog > div.content > div.container {
-  #       padding: 0 !important;
-  #     }
-  #     ha-dialog {
-  #       --vertical-align-dialog: var(--tablet-popup-align-dialog) !important;
-  #       --dialog-surface-margin-top: var(--tablet-popup-margin-top) !important;
-  #     }
-  #     ha-dialog > div:focus {
-  #       outline: none;
-  #     }
-  #     ha-dialog-header {
-  #       font-family: var(--primary-font-family);
-  #       background-color: var(--tablet-popup-header-color) !important;
-  #       border-bottom: var(--tablet-popup-border-style);
-  #     }
