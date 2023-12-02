@@ -46,7 +46,7 @@ browser_mod:
           "hass docker containers"
         mediaquery:
           #portrait
-          '(max-width: 1400px)':
+          '(max-width: 1440px)':
             grid-template-columns: 1fr
             grid-template-rows: fit-content(100%)
             grid-template-areas: |

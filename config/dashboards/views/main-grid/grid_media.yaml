@@ -245,35 +245,42 @@
                         columns: 1
                         cards:
                           - type: custom:button-card
-                            entity: sensor.added_movies_2
+                            entity: sensor.ymovie_added_1
                             template:
                               - added_movies
                       - type: grid
                         columns: 1
                         cards:
                           - type: custom:button-card
-                            entity: sensor.added_movies_3
+                            entity: sensor.ymovie_added_2
                             template:
                               - added_movies
                       - type: grid
                         columns: 1
                         cards:
                           - type: custom:button-card
-                            entity: sensor.added_movies_4
+                            entity: sensor.ymovie_added_3
                             template:
                               - added_movies
                       - type: grid
                         columns: 1
                         cards:
                           - type: custom:button-card
-                            entity: sensor.added_movies_5
+                            entity: sensor.ymovie_added_4
                             template:
                               - added_movies
                       - type: grid
                         columns: 1
                         cards:
                           - type: custom:button-card
-                            entity: sensor.added_movies_6
+                            entity: sensor.ymovie_added_5
+                            template:
+                              - added_movies
+                      - type: grid
+                        columns: 1
+                        cards:
+                          - type: custom:button-card
+                            entity: sensor.ymovie_added_6
                             template:
                               - added_movies
 

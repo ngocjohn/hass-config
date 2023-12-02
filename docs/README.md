@@ -36,13 +36,13 @@ I frequently refresh my configuration files. My current Home Assistant version i
     </thead>
     <tbody>
         <tr>
-            <td>32,789 </td>
+            <td>31,529 </td>
             <td>30</td>
-            <td>186</td>
+            <td>177</td>
             <td>51</td>
             <td>52</td>
-            <td>33</td>
-            <td>857</td>
+            <td>29</td>
+            <td>824</td>
             <td>187</td>
             <td>37</td>
         </tr>
@@ -171,7 +171,6 @@ I frequently refresh my configuration files. My current Home Assistant version i
 - [Weather Radar Card](https://github.com/Makin-Things/weather-radar-card)
 - [Xiaomi Vacuum Map Card](https://github.com/PiotrMachowski/lovelace-xiaomi-vacuum-map-card)
 </details>
-
 
 
 ## My dashboard:

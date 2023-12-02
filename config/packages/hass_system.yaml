@@ -2,27 +2,25 @@
 recorder:
   auto_purge: true
   purge_keep_days: 7
-  commit_interval: 60
+  commit_interval: 10
   exclude:
     domains:
       - alarm_control_panel
-      - group
-      - update
       - button
+      - camera
       - fan
-      - group
+      - input_boolean
+      - input_datetime
+      - input_text
+      - media_player
       - number
       - scene
       - select
       - sun
-      - weather
-      - media_player
       - switch
-      - camera
+      - update
+      - weather
       - zone
-      - input_text
-      - input_boolean
-      - input_datetime
     entity_globs:
       - light.browser_*
       - light.*_group

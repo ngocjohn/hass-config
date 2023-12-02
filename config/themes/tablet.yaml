@@ -119,10 +119,11 @@ tablet:
   ha-card-header-font-family: Futura
   mdc-typography-body1-font-family: var(--primary-font-family)
   mdc-typography-font-family: var(--primary-font-family)
-
   #custom variables
   # ha-card-background-color: none
   ha-card-header-background-color: rgba(48,52,52,0.8)
+  app-header-background-color: rgba(0, 0, 0, 0)
+
   # custom-layout-card-padding: 2.2w #3.3vw or #3vw...#1.9...sidebar OK
   custom-layout-card-padding: 3vw
   state-light-color: '#9da0a2'

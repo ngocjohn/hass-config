@@ -1117,7 +1117,7 @@ wide_header:
                           return "/local/img/weather_new/rain.png";
                             if (weather == 'sleet')
                               return "/local/img/weather_new/sleet.png";
-                                if (weather == 'snow')
+                                if (weather == 'snowy')
                                   return "/local/img/weather_new/snow.png";
                                     if (weather == 'cloudy')
                                       return "/local/img/weather_new/cloudy.png";
@@ -1158,11 +1158,13 @@ wide_header:
     [[[
       return `
         @keyframes marquee {
-          from {
+          0%,
+          70% {
             transform: translateX(0%);
             scale: 0.9;
           }
-          to {
+          40%,
+          100% {
             transform: translateX(-25%);
             scale: 1.1;
           }

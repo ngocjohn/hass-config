@@ -7,6 +7,8 @@
 #                         /____/
 
 homeassistant:
+  allowlist_external_dirs:
+    - /config
   latitude: !secret homeassistant_latitude
   longitude: !secret homeassistant_longitude
   elevation: !secret homeassistant_elevation
@@ -16,8 +18,6 @@ homeassistant:
   unit_system: 'metric'
   temperature_unit: 'C'
   country: 'CZ'
-  allowlist_external_dirs:
-    - /config
   media_dirs:
     movies: /media/movies
     media: /media
@@ -45,8 +45,6 @@ http:
   use_x_forwarded_for: true
   trusted_proxies:
     - 172.30.33.0/24
-  ip_ban_enabled: true
-  login_attempts_threshold: 3
 
 # STT
 stt:
@@ -56,6 +54,5 @@ stt:
 
 # INCLUDES
 automation ui: !include automations.yaml
-automation manual: !include_dir_merge_list automations/
 script: !include_dir_merge_named /config/scripts
 api:
