@@ -23,7 +23,7 @@ template:
         device_class: occupancy
         state: >-
           {{
-            is_state('binary_sensor.contact_sensor_bathroom', 'off')
+            is_state('binary_sensor.contact_sensor_bathroom_contact', 'off')
             or is_state('binary_sensor.motion_sensor_bathroom', 'on')
           }}
 

@@ -111,7 +111,7 @@ browser_mod:
                     {% if not is_state('media_player.living_room_tv', 'idle') and not is_state('media_player.living_room_tv', 'off') %}
                     {% set appname = state_attr('media_player.currently_playing', 'app_id') %}
                       {% if appname == 'com.google.ios.youtube' %}
-                        background: url( '{{ states.sensor.youtube_watching.attributes.entity_picture }}' ) center no-repeat;
+                        background: url( '{{ states.sensor.youtube_thumbnail.attributes.entity_picture }}' ) center no-repeat;
                       {% else %}
                         background: url( '{{ state_attr('media_player.living_room_tv', "entity_picture") }}' ) center no-repeat;
                       {% endif %}
@@ -175,7 +175,7 @@ browser_mod:
                 {% if not is_state('media_player.living_room_tv', 'idle') and not is_state('media_player.living_room_tv', 'off') %}
                 {% set appname = state_attr('media_player.currently_playing', 'app_id') %}
                   {% if appname == 'com.google.ios.youtube' %}
-                    background: url( '{{ states.sensor.youtube_watching.attributes.entity_picture }}' ) center no-repeat;
+                    background: url( '{{ states.sensor.youtube_thumbnail.attributes.entity_picture }}' ) center no-repeat;
                     {% else %}
                     background: url( '{{ state_attr('media_player.currently_playing', "entity_picture") }}' ) center no-repeat;
                   {% endif %}
@@ -457,9 +457,9 @@ browser_mod:
     #                 {% set source = state_attr('media_player.currently_playing', 'source') %}
     #                 {% set appname = state_attr('media_player.currently_playing', 'app_id') %}
     #                   {% if source == 'YouTube' %}
-    #                     background: url( '{{ states.sensor.shieldtv_youtube_watching.attributes.entity_picture }}' ) center no-repeat;
+    #                     background: url( '{{ states.sensor.youtube_thumbnail.attributes.entity_picture }}' ) center no-repeat;
     #                     {% elif appname == 'com.google.ios.youtube' %}
-    #                     background: url( '{{ states.sensor.youtube_watching.attributes.entity_picture }}' ) center no-repeat;
+    #                     background: url( '{{ states.sensor.youtube_thumbnail.attributes.entity_picture }}' ) center no-repeat;
     #                     {% else %}
     #                     background: url( '{{ state_attr('media_player.currently_playing', "entity_picture") }}' ) center no-repeat;
     #                   {% endif %}
@@ -534,9 +534,9 @@ browser_mod:
     #             {% set source = state_attr('media_player.currently_playing', 'source') %}
     #             {% set appname = state_attr('media_player.currently_playing', 'app_id') %}
     #               {% if source == 'YouTube' %}
-    #                 background: url( '{{ states.sensor.shieldtv_youtube_watching.attributes.entity_picture }}' ) center no-repeat;
+    #                 background: url( '{{ states.sensor.youtube_thumbnail.attributes.entity_picture }}' ) center no-repeat;
     #                 {% elif appname == 'com.google.ios.youtube' %}
-    #                 background: url( '{{ states.sensor.youtube_watching.attributes.entity_picture }}' ) center no-repeat;
+    #                 background: url( '{{ states.sensor.youtube_thumbnail.attributes.entity_picture }}' ) center no-repeat;
     #                 {% else %}
     #                 background: url( '{{ state_attr('media_player.currently_playing', "entity_picture") }}' ) center no-repeat;
     #               {% endif %}

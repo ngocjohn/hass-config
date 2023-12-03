@@ -9,7 +9,7 @@ room_group:
     - base
   variables:
     light_entity: ''
-    circle_input: >
+    circle_input: >-
       [[[ return entity === undefined || Math.round(entity.attributes.brightness / 2.54); ]]]
   state_display: >
     [[[ return variables.state == 'no' ? 'Off' : 'On'; ]]]
@@ -61,7 +61,6 @@ room_group:
 rooms_base:
   template:
     - base
-  triggers_update: all
   variables:
     light_entity: ''
     active: ''
@@ -240,12 +239,6 @@ air_diffuser_circle:
         - margin: -10%
         - width: 15%
         - transition: top 250ms ease-out
-        # - background: >
-        #     [[[
-        #       return variables.state_on
-        #         ? 'rgba(255, 255, 255, 0.4)'
-        #         : '#3082b787';
-        #     ]]]
 
 # MACBOOK CIRCLE
 macbook:

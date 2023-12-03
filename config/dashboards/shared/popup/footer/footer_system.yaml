@@ -184,7 +184,7 @@ browser_mod:
             - entity: switch.watchtower
 
             - type: attribute
-              entity: sensor.rpi_monitor_pidocker
+              entity: sensor.rpi_monitor_docker
               attribute: up_time
               name: Uptime
               icon: mdi:update
@@ -193,40 +193,43 @@ browser_mod:
               width: 55%
               height: 2em
               decimal: 0
-              # unit_of_measurement: '%'
               positions: *bar_card_positions
               severity: *bar_card_severity
               entity_row: true
               entities:
-                - entity: sensor.rpi_cpu_use_pidocker
+                - entity: sensor.rpi_monitor_docker_rpi_cpu_use_pidocker
                   name: Processor
                   icon: mdi:chip
                   tap_action:
                     action: call-service
                     service: homeassistant.update_entity
                     service_data:
-                      entity_id: sensor.rpi_cpu_use_pidocker
+                      entity_id: sensor.rpi_monitor_docker_rpi_cpu_use_pidocker
 
-                - entity: sensor.rpi_temp_pidocker
+                - entity: sensor.rpi_monitor_docker_rpi_temp_pidocker
                   name: Temperature
                   icon: mdi:thermostat
 
-                - entity: sensor.template_pidocker_mem
+                - entity: sensor.rpi_monitor_docker_rpi_used_pidocker
                   name: Memory 4GB
                   icon: mdi:memory
                   tap_action:
                     action: call-service
                     service: homeassistant.update_entity
                     service_data:
-                      entity_id: sensor.template_pidocker_mem
+                      entity_id: sensor.sensor.rpi_monitor_docker_rpi_used_pidocker
 
-                - entity: sensor.rpi_used_pidocker
+                - entity: sensor.rpi_monitor_docker
+                  type: attribute
+                  attribute: fs_free_prcnt
                   name: SD used 32GB
+                  icon: mdi:content-save
+                  unit_of_measurement: '%'
                   tap_action:
                     action: call-service
                     service: homeassistant.update_entity
                     service_data:
-                      entity_id: sensor.rpi_used_pidocker
+                      entity_id: sensor.rpi_monitor_docker
 
             - type: custom:hui-horizontal-stack-card
               cards:

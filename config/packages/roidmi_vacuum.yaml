@@ -101,7 +101,7 @@ camera:
     colors:
       color_robo: [255, 89, 9]
       color_charger: [27, 117, 27]
-      color_path: [109, 37, 37]
+      color_path: [147, 194, 238]
       color_goto_path: [30, 80, 113]
       color_obstacle: [30, 30, 30]
       color_virtual_walls: [255, 0, 0, 60]
@@ -113,7 +113,18 @@ camera:
       color_map_wall: [255, 255, 255, 80]
       color_zones_outline: [0, 0, 0, 0]
       color_zones: [0, 0, 0, 0]
-    # draw: ['all']
+      color_unknown: [0x00, 0x00, 0x00, 0x00]
+    room_colors:
+      1: [0x00, 0x00, 0x00, 0x00]
+      2: [0x00, 0x00, 0x00, 0x00]
+      3: [0x00, 0x00, 0x00, 0x00]
+      4: [0x00, 0x00, 0x00, 0x00]
+      5: [0x00, 0x00, 0x00, 0x00]
+      6: [0x00, 0x00, 0x00, 0x00]
+      7: [0x00, 0x00, 0x00, 0x00]
+      8: [0x00, 0x00, 0x00, 0x00]
+      9: [0x00, 0x00, 0x00, 0x00]
+
     draw:
       - charger
       - path
@@ -123,6 +134,7 @@ camera:
       - no_mopping_zones
       - vacuum_position
       - virtual_walls
+      - cleaned_area
     map_transformation:
       scale: 3
     sizes:

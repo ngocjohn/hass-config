@@ -17,7 +17,7 @@ I frequently refresh my configuration files. My current Home Assistant version i
 
   https://github.com/ngocjohn/hass-config/assets/96962827/04aa847e-42fb-46cb-9a97-bc83249684fd
 
-## Some statistics about my installation:
+## Some statistics about my installation
 
 
 <table>
@@ -36,20 +36,20 @@ I frequently refresh my configuration files. My current Home Assistant version i
     </thead>
     <tbody>
         <tr>
-            <td>31,529 </td>
-            <td>30</td>
-            <td>177</td>
-            <td>51</td>
-            <td>52</td>
+            <td>31,415 </td>
             <td>29</td>
-            <td>824</td>
+            <td>165</td>
+            <td>51</td>
+            <td></td>
+            <td>52</td>
+            <td>724</td>
             <td>187</td>
             <td>37</td>
         </tr>
     </tbody>
 </table>
 
-## My installed extensions:
+## My installed extensions
 <details>
   <summary>Add-ons</summary>
 
@@ -173,7 +173,7 @@ I frequently refresh my configuration files. My current Home Assistant version i
 </details>
 
 
-## My dashboard:
+## My dashboard
 
 My dashboard is basically a cool fusion of ideas, mainly inspired by the awesome [Matt8707](https://github.com/matt8707/hass-config) 🌟. I threw in some extra goodies to make it perfect for my needs! 🚀
 
@@ -189,7 +189,7 @@ The floorplan is crafted using the [Ha Floorplan](https://github.com/ExperienceL
   https://github.com/ngocjohn/hass-config/assets/96962827/77487f2e-3f8e-4362-8767-bc3fd2d08b0a
 
 
-### Mobile and tablet:
+### Mobile and tablet
 
 <table>
   <tr>
@@ -198,7 +198,7 @@ The floorplan is crafted using the [Ha Floorplan](https://github.com/ExperienceL
   </tr>
 </table>
 
-### Popups:
+### Popups
 
 <table>
   <tr>

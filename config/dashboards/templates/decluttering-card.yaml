@@ -111,7 +111,7 @@ grid_kitchen_normal:
       variables:
         fan_circle: fan.hood_power
         light_entity: light.kitchen_table_light
-        motion: binary_sensor.motion_sensor_kitchen
+        motion: binary_sensor.motion_sensor_kitchen_occupancy
         active: sensor.kitchen_active
 # KITCHEN DISHWASING
 grid_kitchen_dishwasing:
@@ -300,7 +300,7 @@ grid_samsung:
 grid_playstation:
   card:
     type: custom:button-card
-    entity: switch.playstation_5_power
+    entity: switch.ps5_power
     name: Playstation
     template:
       - base
@@ -390,8 +390,8 @@ grid_shower:
       # - icon_shower_head
     variables:
       light_entity: light.shower_group
-      motion: binary_sensor.motion_sensor_shower_room
-      door: binary_sensor.contact_sensor_shower_room
+      motion: binary_sensor.motion_sensor_shower_room_occupancy
+      door: binary_sensor.contact_sensor_shower_room_contact
       active: sensor.shower_active
 
 # BATHROOM
@@ -402,16 +402,16 @@ grid_bathroom:
     name: Bathroom
     template:
       - rooms_base
+      - icon_bathroom
       - motion
       - door_state
-      - icon_bathroom
       - air_diffuser_circle
     variables:
       light_entity: light.bathroom_group
       motion: binary_sensor.motion_sensor_bathroom
-      door: binary_sensor.contact_sensor_bathroom
+      door: binary_sensor.contact_sensor_bathroom_contact
       active: sensor.bathroom_active
-      air_diffuser_circle: switch.bathoom_air_diffuser
+      air_diffuser_circle: switch.bathroom_air_diffuser
 
 # UTILITY NORMAL
 grid_utility_normal:
@@ -430,12 +430,10 @@ grid_utility_normal:
       hold_action: !include ../shared/honeycomb/utitlity.yaml
       template:
         - rooms_base
-        # - motion
         - icon_broom
       variables:
         light_entity: light.utility_room_light
         active: sensor.appliance_active
-        # motion: binary_sensor.motion_sensor_utility
 # UTILITY VACUUM
 grid_utility_vacuum:
   card:
@@ -526,7 +524,7 @@ grid_hallway:
       - motion
     variables:
       light_entity: light.hallway_group
-      motion: binary_sensor.motion_sensor_entrance
+      motion: binary_sensor.motion_sensor_entrance_occupancy
 
 #################################################
 #                                               #

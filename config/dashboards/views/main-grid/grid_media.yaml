@@ -53,7 +53,7 @@
                 type: custom:button-card
                 entity: media_player.living_room_tv
                 name: ' '
-                triggers_update: sensor.youtube_watching
+                triggers_update: sensor.youtube_thumbnail
                 template:
                   - conditional_media
                   - progress_bar
@@ -68,7 +68,7 @@
                 type: custom:button-card
                 entity: media_player.shieldtv_kodi
                 name: 'ShieldTV'
-                triggers_update: sensor.shieldtv_youtube_watching
+                triggers_update: sensor.youtube_thumbnail
                 template:
                   - conditional_media
                   - icon_shieldtv_text
@@ -136,7 +136,6 @@
                 - tpl_spotify
               variables:
                 playlist_type: featured
-                country_code: VN
 
         # - type: grid
         #   columns: 1
@@ -160,14 +159,14 @@
             # Samsung TV
             - &grid-shield-kodi
               type: custom:button-card
-              entity: media_player.shieldtv
+              entity: media_player.shield_android_tv
               name: Kodi Shield
               template:
                 - media
                 - icon_shieldtv_text
               variables:
                 media_on: >
-                  [[[ return states['media_player.shieldtv'].attributes.source === 'Kodi'; ]]]
+                  [[[ return states['media_player.shield_android_tv'].attributes.source === 'Kodi'; ]]]
             - &grid-spotify-media
               type: custom:button-card
               entity: media_player.spotify

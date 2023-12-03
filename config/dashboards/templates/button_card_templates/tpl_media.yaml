@@ -26,7 +26,7 @@ base_media:
     is_kodi: >
       [[[
         let is_kodi = states['media_player.atv'].attributes.app_id === 'org.xbmc.kodi-tvos',
-            shield_kodi = states['media_player.shieldtv'].attributes.source === 'Kodi';
+            shield_kodi = states['media_player.shield_android_tv'].attributes.source === 'Kodi';
         if (is_kodi || shield_kodi) {
             return true;
         }
@@ -325,14 +325,14 @@ conditional_media:
       blur_overlay:
         - display: block
         - position: absolute
-        - width: 115%
-        - height: 115%
+        - width: 118%
+        - height: 117%
         - filter: var(--blur-intensity)
         - clip-path: >
             [[[
               if (entity) {
                 if (variables.is_youtube) {
-                    return `inset(74% 3.45% 3.45% 5.45% round 0 0 calc(var(--button-card-border-radius) / 2) calc(var(--button-card-border-radius) / 2))`;
+                    return `inset(73% 7% 3.45% 9% round 0 0 calc(var(--button-card-border-radius) / 2) calc(var(--button-card-border-radius) / 2))`;
                 } else {
                   return `inset(80% 3.45% 3.45% 5.45% round 0 0 calc(var(--button-card-border-radius) / 2) calc(var(--button-card-border-radius) / 2))`;
                 }
@@ -1571,7 +1571,7 @@ atv_popup_web:
                         {% if not is_state('media_player.living_room_tv', 'idle') and not is_state('media_player.living_room_tv', 'off') %}
                         {% set appname = state_attr('media_player.currently_playing', 'app_id') %}
                           {% if appname == 'com.google.ios.youtube' %}
-                            background: url( '{{ states.sensor.youtube_watching.attributes.entity_picture }}' ) center no-repeat;
+                            background: url( '{{ states.sensor.youtube_thumbnail.attributes.entity_picture }}' ) center no-repeat;
                           {% else %}
                             background: url( '{{ state_attr('media_player.living_room_tv', "entity_picture") }}' ) center no-repeat;
                           {% endif %}
@@ -1635,7 +1635,7 @@ atv_popup_web:
                     {% if not is_state('media_player.living_room_tv', 'idle') and not is_state('media_player.living_room_tv', 'off') %}
                     {% set appname = state_attr('media_player.currently_playing', 'app_id') %}
                       {% if appname == 'com.google.ios.youtube' %}
-                        background: url( '{{ states.sensor.youtube_watching.attributes.entity_picture }}' ) center no-repeat;
+                        background: url( '{{ states.sensor.youtube_thumbnail.attributes.entity_picture }}' ) center no-repeat;
                         {% else %}
                         background: url( '{{ state_attr('media_player.currently_playing', "entity_picture") }}' ) center no-repeat;
                       {% endif %}
@@ -1917,9 +1917,9 @@ atv_popup_web:
         #                 {% set source = state_attr('media_player.currently_playing', 'source') %}
         #                 {% set appname = state_attr('media_player.currently_playing', 'app_id') %}
         #                   {% if source == 'YouTube' %}
-        #                     background: url( '{{ states.sensor.shieldtv_youtube_watching.attributes.entity_picture }}' ) center no-repeat;
+        #                     background: url( '{{ states.sensor.youtube_thumbnail.attributes.entity_picture }}' ) center no-repeat;
         #                     {% elif appname == 'com.google.ios.youtube' %}
-        #                     background: url( '{{ states.sensor.youtube_watching.attributes.entity_picture }}' ) center no-repeat;
+        #                     background: url( '{{ states.sensor.youtube_thumbnail.attributes.entity_picture }}' ) center no-repeat;
         #                     {% else %}
         #                     background: url( '{{ state_attr('media_player.currently_playing', "entity_picture") }}' ) center no-repeat;
         #                   {% endif %}
@@ -1994,9 +1994,9 @@ atv_popup_web:
         #             {% set source = state_attr('media_player.currently_playing', 'source') %}
         #             {% set appname = state_attr('media_player.currently_playing', 'app_id') %}
         #               {% if source == 'YouTube' %}
-        #                 background: url( '{{ states.sensor.shieldtv_youtube_watching.attributes.entity_picture }}' ) center no-repeat;
+        #                 background: url( '{{ states.sensor.youtube_thumbnail.attributes.entity_picture }}' ) center no-repeat;
         #                 {% elif appname == 'com.google.ios.youtube' %}
-        #                 background: url( '{{ states.sensor.youtube_watching.attributes.entity_picture }}' ) center no-repeat;
+        #                 background: url( '{{ states.sensor.youtube_thumbnail.attributes.entity_picture }}' ) center no-repeat;
         #                 {% else %}
         #                 background: url( '{{ state_attr('media_player.currently_playing', "entity_picture") }}' ) center no-repeat;
         #               {% endif %}
@@ -2268,8 +2268,7 @@ tpl_spotify:
   template:
     - base
   variables:
-    playlist_type: ''
-    country_code: ''
+    playlist_type: ' '
   show_state: false
   show_icon: false
   show_name: false
@@ -2281,8 +2280,6 @@ tpl_spotify:
         spotify_entity: media_player.spotify
         playlist_type: >
           [[[ return variables.playlist_type ]]]
-        country_code: >
-          [[[ return variables.country_code ]]]
         hide_warning: true
         display_style: grid
         always_play_random_song: true

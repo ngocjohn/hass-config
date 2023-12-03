@@ -646,42 +646,6 @@
       entity_id: timer.dishwasher_remaining
   initial_state: true
   mode: restart
-- id: 32ca3bc2-e0e7-42e0-be25-8f40287cbfef
-  alias: shield_update_youtube_watching_thumbnail
-  mode: single
-  max_exceeded: silent
-  trigger:
-    platform: state
-    entity_id:
-    - media_player.bedroom_tv
-    attribute: media_title
-  condition: '{{ is_state_attr(trigger.entity_id, ''source'', ''YouTube'') and state_attr(trigger.entity_id,
-    ''media_title'') != state_attr(''sensor.shieldtv_youtube_watching'', ''title'')
-    }}
-
-    '
-  action:
-  - service: homeassistant.update_entity
-    target:
-      entity_id: sensor.shieldtv_youtube_watching
-- id: f7973aa2-262c-4c51-ae10-26216b605b24
-  alias: update_youtube_watching_thumbnail
-  mode: single
-  max_exceeded: silent
-  trigger:
-    platform: state
-    entity_id:
-    - media_player.living_room_tv
-    attribute: media_title
-  condition: '{{ is_state_attr(trigger.entity_id, ''app_id'', ''com.google.ios.youtube'')
-    and state_attr(trigger.entity_id, ''media_title'') != state_attr(''sensor.youtube_watching'',
-    ''title'') }}
-
-    '
-  action:
-  - service: homeassistant.update_entity
-    target:
-      entity_id: sensor.youtube_watching
 - id: 34ba1897-ec7a-4cb3-a12b-fb0a1e9e495e
   alias: vacuum_start_cleaning
   mode: queued
@@ -780,4 +744,32 @@
       message: Congrats! U got another star! {{ states.sensor.ngocjohn_hass_config_stars.state
         }}⭐
       title: Github Stars
+  mode: single
+- id: '1701556784590'
+  alias: Update YouTube Sensor
+  max_exceeded: silent
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - media_player.living_room_tv
+    - media_player.bedroom_tv
+    to: playing
+  condition:
+  - condition: or
+    conditions:
+    - condition: template
+      value_template: '{{ is_state_attr(''media_player.living_room_tv'', ''app_id'',
+        ''com.google.ios.youtube'') and state_attr(''media_player.living_room_tv'',
+        ''media_title'') != state_attr(''sensor.youtube_thumbnail'', ''title'') }}'
+    - condition: template
+      value_template: '{{ is_state_attr(''media_player.bedroom_tv'', ''source'', ''YouTube'')
+        and
+
+        state_attr(''media_player.bedroom_tv'', ''media_title'') !=
+
+        state_attr(''sensor.youtube_thumbnail'', ''title'') }}'
+  action:
+  - event: youtube_update
+    event_data: {}
   mode: single

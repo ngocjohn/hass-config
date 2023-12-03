@@ -25,17 +25,3 @@
     # HOMEPODS
     - type: custom:decluttering-card
       template: grid_homepods
-
-    # TEST
-
-    # - type: custom:button-card
-    #   entity: input_button.assist
-    #   name: device 1
-    #   template:
-    #     - test_template
-
-    # - type: custom:button-card
-    #   entity: input_button.assist
-    #   name: device 2
-    #   template:
-    #     - test_template

@@ -164,7 +164,6 @@ template:
         name: 'Office Active'
         state: >-
           {% if not is_state('light.office_group', 'off') %} yes
-          {% elif is_state('switch.playstation_5_power', 'on') %} yes
           {% elif is_state('media_player.office', 'playing') %} playing
           {% else %} no
           {% endif %}
@@ -198,7 +197,7 @@ template:
       - unique_id: shower_active
         name: 'Shower Active'
         state: >-
-          {% if is_state('binary_sensor.shower_room_occupancy', 'on') %} occupied
+          {% if is_state('binary_sensor.motion_sensor_shower_room_occupancy', 'on') %} occupied
           {% elif is_state('light.shower_group', 'on') %} yes
           {% else %} no
           {% endif %}
