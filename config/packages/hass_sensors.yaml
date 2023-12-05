@@ -115,12 +115,6 @@ sensor:
       - type: processor_use
       - type: last_boot
       - type: memory_free
-      - type: swap_use_percent
-      - type: swap_use
-      - type: swap_free
-      - type: load_1m
-      - type: load_5m
-      - type: load_15m
 
   - platform: time_date
     display_options:

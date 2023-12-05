@@ -5,7 +5,6 @@ homeassistant:
       friendly_name: 'Upcoming shows'
     sensor.code_line_count:
       friendly_name: 'Code Line Count'
-      icon: mdi:xml
       state_class: measurement
       unit_of_measurement: Lines
 #################################################
@@ -329,12 +328,7 @@ template:
           {% endif %}
         attributes:
           doors_open: >-
-            {% set doors = [
-              states.binary_sensor.contact_sensor_bedroom_balcony,
-              states.binary_sensor.contact_sensor_kid_balcony,
-              states.binary_sensor.contact_sensor_terrace_door,
-              states.binary_sensor.contact_sensor_garden_door,
-              states.binary_sensor.contact_sensor_entrance_door ] %}
+            {% set doors = expand(states.group.security_doors) %}
             {{ doors | selectattr('state', 'in', ['open', 'on', 'unlocked']) | map(attribute='name') | list | replace('Contact Sensor ', '') }}
 
       # SENSOR - HOME MODE
@@ -374,15 +368,7 @@ template:
           {% endif %}
         attributes:
           motion_detected: >-
-            {% set motions = [
-              states.binary_sensor.motion_sensor_bathroom,
-              states.binary_sensor.motion_sensor_hallway_occupancy,
-              states.binary_sensor.motion_sensor_shower_room,
-              states.binary_sensor.motion_sensor_bedroom,
-              states.binary_sensor.motion_sensor_kidsroom,
-              states.binary_sensor.motion_sensor_kitchen,
-              states.binary_sensor.motion_sensor_utility,
-              states.binary_sensor.motion_sensor_entrance ] %}
+            {% set motions =  expand(states.group.motion_sensors) %}
             {{ motions | selectattr('state', 'in', ['detected', 'on']) | map(attribute='name') | list | replace('Motion Sensor ', '') }}
 
 sensor:

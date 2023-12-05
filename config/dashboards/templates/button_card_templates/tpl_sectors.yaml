@@ -238,6 +238,7 @@ air_diffuser_circle:
         - padding: 5%
         - margin: -10%
         - width: 15%
+        - top: "[[[return (states[variables.motion].state == 'on') ? '30%' : null;]]]"
         - transition: top 250ms ease-out
 
 # MACBOOK CIRCLE

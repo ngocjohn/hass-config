@@ -512,7 +512,7 @@ extra_styles:
             }
           }
           .marquee {
-            animation: marquee 20s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+            animation: marquee 20s cubic-bezier(0.4, 0, 0.2, 1) infinite;
           }
           @keyframes marquee {
             from {

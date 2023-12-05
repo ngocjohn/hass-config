@@ -22,58 +22,60 @@ recorder:
       - weather
       - zone
     entity_globs:
-      - light.browser_*
-      - light.*_group
       - binary_sensor.browser_*
+      - image.*_qr_code
+      - light.*_group
+      - light.browser_*
+      - sensor.*_color
+      - sensor.*_device_temperature
+      - sensor.*_last_seen
+      - sensor.*_linkquality
+      - sensor.*_motor_speed
+      - sensor.*_power
+      - sensor.*_power_on_behavior
+      - sensor.*_rssi
+      - sensor.*_uptime
+      - sensor.*_voltage
+      - sensor.added_*
       - sensor.browser_*
+      - sensor.curtain_*
       - sensor.esp_*
       - sensor.espresense_*
-      - sensor.*_rssi
-      - sensor.template_*
-      - sensor.*_last_seen
+      - sensor.kuchyn_*
       - sensor.macbook_*
       - sensor.nuki_*
-      - sensor.*_motor_speed
-      - sensor.*_linkquality
-      - sensor.*_power
-      - sensor.*_voltage
-      - sensor.*_power_on_behavior
-      - sensor.*_device_temperature
-      - image.*_qr_code
-      - sensor.sun_*
-      - sensor.*_color
-      - sensor.added_*
-      - sensor.trakt_*
-      - sensor.curtain_*
-      - sensor.*_uptime
       - sensor.office_lamp_*
-      - sensor.kuchyn_*
+      - sensor.sun_*
+      - sensor.template_*
+      - sensor.trakt_*
       - sensor.unifi_*_activity
     event_types:
       - call_service
     entities:
-      - sensor.unifi_status_wlan
       - cover.curtain_4d3d
-      - script.fade_music
-      - sensor.unifi_status_lan
-      - sensor.home_climate
-      - light.sony_tv_backlight
-      - sensor.chromecast_devices
-      - sensor.template_sidebar
-      - sensor.zhimi_mb4_b008_moto_speed_rpm
-      - sensor.kitchen_main_light_energy
-      - sensor.time
-      - sensor.date
-      - sensor.playlists_sensor
-      - sensor.motion_detected
-      - sensor.lights_count
-      - sensor.arris_tg3442de_upload_speed
-      - sensor.arris_tg3442de_download_speed
-      - script.fade_volume
       - light.office_lamp_bulb
+      - light.sony_tv_backlight
+      - script.fade_music
+      - script.fade_volume
+      - sensor.arris_tg3442de_download_speed
+      - sensor.arris_tg3442de_upload_speed
+      - sensor.chromecast_devices
+      - sensor.date
+      - sensor.home_climate
+      - sensor.kitchen_main_light_energy
+      - sensor.lights_count
+      - sensor.memory_free
+      - sensor.motion_detected
+      - sensor.playlists_sensor
+      - sensor.template_sidebar
+      - sensor.time
+      - sensor.unifi_status_lan
+      - sensor.unifi_status_wlan
+      - sensor.zhimi_mb4_b008_moto_speed_rpm
   include:
     entities:
       - device_tracker.findmy_d098350b38e241d3972ad394a27f38b6
+
 logger:
   default: error
   logs:

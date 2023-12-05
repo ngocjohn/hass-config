@@ -54,5 +54,5 @@ stt:
 
 # INCLUDES
 automation ui: !include automations.yaml
-script: !include_dir_merge_named /config/scripts
+script: !include scripts.yaml
 api:

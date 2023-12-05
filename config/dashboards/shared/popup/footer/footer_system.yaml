@@ -276,21 +276,55 @@ browser_mod:
           entities:
             - entity: sensor.docker_portainer
               name: Portainer
+              icon: si:portainer
               secondary_info:
-                attribute: status
+                attribute: uptime
             - entity: sensor.docker_homebridge
-              name: Hombridge
+              name: Homebridge
+              icon: si:homebridge
               secondary_info:
-                attribute: status
+                attribute: uptime
             - entity: sensor.docker_watchtower
               name: Watchtower
+              icon: cil:docker-watchtower
               secondary_info:
-                attribute: status
-            - entity: sensor.docker_unifi_controller
+                attribute: uptime
+            - entity: sensor.docker_unificontroller
               name: Unifi Controller
+              icon: si:ubiquiti
               secondary_info:
-                attribute: status
+                attribute: uptime
             - entity: sensor.docker_hadockermon
               name: HA-Dockermon
+              icon: si:docker
               secondary_info:
-                attribute: status
+                attribute: uptime
+            - entity: sensor.docker_cloudflare
+              name: Cloudflare
+              icon: si:cloudflare
+              secondary_info:
+                attribute: uptime
+        # - type: custom:auto-entities
+        #   filter:
+        #     include:
+        #       - entity_id: sensor.docker_*
+        #         options:
+        #           secondary_info:
+        #             attribute: Uptime
+        #     exclude: []
+        #   card:
+        #     type: entities
+        #     view_layout:
+        #       grid-area: containers
+        #     title: Containers
+        #     show_header_toggle: false
+        #     card_mod:
+        #       class: header
+        #       # no border on last card
+        #       style: |
+        #         ha-card {
+        #           border: none !important;
+        #         }
+        #         #states {
+        #           text-transform: capitalize !important;
+        #         }

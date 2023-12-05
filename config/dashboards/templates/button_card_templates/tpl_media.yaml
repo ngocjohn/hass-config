@@ -325,14 +325,14 @@ conditional_media:
       blur_overlay:
         - display: block
         - position: absolute
-        - width: 118%
-        - height: 117%
+        - width: 122%
+        - height: 101%
         - filter: var(--blur-intensity)
         - clip-path: >
             [[[
               if (entity) {
                 if (variables.is_youtube) {
-                    return `inset(73% 7% 3.45% 9% round 0 0 calc(var(--button-card-border-radius) / 2) calc(var(--button-card-border-radius) / 2))`;
+                    return `inset(74% 7% 3.45% 9% round 0 0 calc(var(--button-card-border-radius) / 2) calc(var(--button-card-border-radius) / 2))`;
                 } else {
                   return `inset(80% 3.45% 3.45% 5.45% round 0 0 calc(var(--button-card-border-radius) / 2) calc(var(--button-card-border-radius) / 2))`;
                 }
@@ -340,8 +340,8 @@ conditional_media:
             ]]]
         - background: *media_background
         - background-image: *media_background_image
-        - left: -10%
-        - bottom: -5%
+        # - left: -10%
+        # - bottom: -5%
   custom_fields:
     blur_overlay: >
       [[[
