@@ -6,3 +6,4 @@ config/gitpush.sh
 private_repo.sh
 config/index.html
 config/hassio.code-profile
+config/templates
