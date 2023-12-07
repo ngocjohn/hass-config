@@ -66,14 +66,14 @@ template:
               states.light.bedroom_main_light,
               states.light.shower_room_main_light,
               states.light.shower_room_mirror_light,
-              states.switch.lidl_3_gang_socket_l2,
+              states.light.bedroom_bed_light,
               states.light.aqara_hub,
               states.light.utility_room_light,
               states.light.hallway_light,
               states.light.office_lamp_bulb,
               states.light.office_main_light,
               states.light.office_shelf_led,
-              states.light.vocolinc_rpl_188bce_mood_light,
+              states.light.office_ripple_mood_light,
               states.light.office_led_light_strip,
               states.light.bedroom_ripple_mood_light
             ] %}

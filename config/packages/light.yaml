@@ -27,7 +27,7 @@ light:
     entities:
       - light.bedroom_closet_light
       - light.bedroom_main_light
-      - light.bed_light
+      - light.bedroom_bed_light
       - light.bedroom_ripple_mood_light
 
   - platform: group
@@ -66,7 +66,7 @@ light:
       - light.office_led_light_strip
       - light.office_lamp_bulb
       - light.office_shelf_led
-      - light.vocolinc_rpl_188bce_mood_light
+      - light.office_ripple_mood_light
 
   - platform: group
     unique_id: group_light_all
@@ -84,14 +84,14 @@ light:
       - light.bedroom_main_light
       - light.shower_room_main_light
       - light.shower_room_mirror_light
-      - light.bed_light
+      - light.bedroom_bed_light
       - light.aqara_hub
       - light.utility_room_light
       - light.hallway_light
       - light.office_lamp_bulb
       - light.office_main_light
       - light.office_shelf_led
-      - light.vocolinc_rpl_188bce_mood_light
+      - light.office_ripple_mood_light
       - light.office_led_light_strip
       - light.bedroom_ripple_mood_light
       # - light.yeelink_bslamp2_409e_light
@@ -116,7 +116,7 @@ homeassistant:
       friendly_name: 'Bedroom Closet Light'
     light.bedroom_main_light:
       friendly_name: 'Bedroom Ceiling Light'
-    light.bed_light:
+    light.bedroom_bed_light:
       friendly_name: 'Bedroom Bed Light'
     light.bedroom_ripple_mood_light:
       friendly_name: 'Bedroom Mood Light'
@@ -136,5 +136,5 @@ homeassistant:
       friendly_name: 'Office Floor Lamp'
     light.office_shelf_led:
       friendly_name: 'Office Shelf Light'
-    light.vocolinc_rpl_188bce_mood_light:
+    light.office_ripple_mood_light:
       friendly_name: 'Office Mood Light'

@@ -9,7 +9,7 @@ service_data:
     - icon: phu:light-strip
       position: 0
       show: true
-      entity: light.bed_light
+      entity: light.bedroom_bed_light
       active: '[[[ return entity.state != "off" ]]]'
       tap_action:
         action: call-service

@@ -1,3 +1,5 @@
+#Humidifier switch Template
+
 switch:
   - platform: template
     switches:
@@ -12,15 +14,15 @@ switch:
       # VOCOLINC DIFFUSER
       office_humidifier:
         unique_id: sw_office_humid
-        value_template: "{{ is_state('fan.vocolinc_rpl_188bce_ripple', 'on') }}"
+        value_template: "{{ is_state('fan.office_ripple_ripple', 'on') }}"
         turn_on:
           service: fan.turn_on
           target:
-            entity_id: fan.vocolinc_rpl_188bce_ripple
+            entity_id: fan.office_ripple_ripple
         turn_off:
           service: fan.turn_off
           target:
-            entity_id: fan.vocolinc_rpl_188bce_ripple
+            entity_id: fan.office_ripple_ripple
       bedroom_humidifier:
         unique_id: sw_bedroom_humid
         value_template: "{{ is_state('fan.bedroom_ripple_ripple', 'on') }}"
@@ -32,3 +34,17 @@ switch:
           service: fan.turn_off
           target:
             entity_id: fan.bedroom_ripple_ripple
+
+  # Humidifier
+
+generic_hygrostat:
+  - name: Office Humidifier
+    humidifier: switch.office_humidifier
+    target_sensor: sensor.office_temp_humid_humidity
+    target_humidity: 100
+    device_class: 'humidifier'
+  - name: Bedroom Humidifier
+    humidifier: switch.bedroom_humidifier
+    target_sensor: sensor.bedroom_tem_humid_humidity
+    target_humidity: 100
+    device_class: 'humidifier'

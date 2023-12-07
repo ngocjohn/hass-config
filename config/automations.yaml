@@ -388,20 +388,6 @@
     target:
       entity_id: lock.nuki_vchod_lock
   mode: single
-- id: '1694467964669'
-  alias: Refresh iPad when Lovelace is updated
-  description: Ensure the view refreshes when I make changes to a Lovelace dashboard
-  trigger:
-  - platform: event
-    event_type: lovelace_updated
-  condition: []
-  action:
-  - service: browser_mod.refresh
-    data: {}
-    target:
-      device_id:
-      - 0604abf0d6d8e6f72903f0cc77d83b3d
-  mode: single
 - id: '1694516012171'
   alias: Only update vaze information every 20 minutes when I'm home
   description: ''
@@ -675,7 +661,7 @@
     value_template: '{% if is_state_attr(''vacuum.roidmi_eve'',''vacuum.fault'',0)
       or is_state_attr(''vacuum.roidmi_eve'',''vacuum.fault'',None) %}False{% else
       %}True{% endif %}'
-    enabled: false
+    enabled: true
   action:
   - service: script.vacuum_notify
     data:
@@ -731,19 +717,50 @@
       entity_id: input_text.gpt_weather_response
   mode: single
 - id: '1701118898607'
-  alias: Github stars
+  alias: Notify_Github stars
   description: ''
   trigger:
   - platform: state
     entity_id:
     - sensor.ngocjohn_hass_config_stars
+    id: public_stars
+    alias: Public repo stars
+  - platform: state
+    entity_id:
+    - sensor.github_ngocjohn
+    attribute: date_committed
+    id: private_commit
   condition: []
   action:
-  - service: notify.notify
-    data:
-      message: Congrats! U got another star! {{ states.sensor.ngocjohn_hass_config_stars.state
-        }}⭐
-      title: Github Stars
+  - alias: Public stars notify
+    if:
+    - condition: trigger
+      id:
+      - public_stars
+    - condition: template
+      value_template: '{{ has_value(''sensor.ngocjohn_hass_config_stars'') }}'
+    then:
+    - service: notify.notify
+      data:
+        message: Congrats! U got another star! {{ states.sensor.ngocjohn_hass_config_stars.state
+          }}⭐
+        title: Github Stars
+  - alias: Private repo new comit action
+    if:
+    - condition: trigger
+      id:
+      - private_commit
+    - condition: template
+      value_template: '{{ is_state(''sensor.github_ngocjohn'', ''ok'') }}'
+    then:
+    - service: notify.notify
+      data:
+        message: new commit
+        title: Github
+    - service: homeassistant.update_entity
+      target:
+        entity_id: sensor.code_line_count
+      data: {}
   mode: single
 - id: '1701556784590'
   alias: Update YouTube Sensor

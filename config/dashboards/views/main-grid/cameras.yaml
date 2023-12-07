@@ -22,7 +22,7 @@
         speed: 650
         spaceBetween: 20
         threshold: 7
-        observer: true
+
         coverflowEffect:
           rotate: 80
           depth: 300

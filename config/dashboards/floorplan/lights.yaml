@@ -13,7 +13,7 @@
   hold_action: !include ../shared/honeycomb/office_mode.yaml
 
 - entity:
-    - light.bed_light
+    - light.bedroom_bed_light
   double_tap_action: more-info
   tap_action: toggle
   hold_action: !include ../shared/honeycomb/bedroom.yaml
@@ -39,7 +39,7 @@
 
 - entities:
     - light.office_lamp_bulb
-    - light.bed_light
+    - light.bedroom_bed_light
     - light.bedroom_closet_light
     - light.shower_room_mirror_light
     - light.kitchen_table_light

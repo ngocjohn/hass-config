@@ -101,7 +101,7 @@ cards:
           coverflowEffect:
             rotate: 80
             depth: 300
-          observer: true
+
         cards:
           - type: horizontal-stack
             cards:

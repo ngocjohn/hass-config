@@ -29,7 +29,7 @@ group:
       - light.bedroom_main_light
       - light.shower_room_main_light
       - light.shower_room_mirror_light
-      - light.bed_light
+      - light.bedroom_bed_light
       - light.bedroom_ripple_mood_light
   light_hallway_utility:
     name: Lights Hallway Utility Group
@@ -46,7 +46,7 @@ group:
       - light.office_lamp_bulb
       - light.office_main_light
       - light.office_shelf_led
-      - light.vocolinc_rpl_188bce_mood_light
+      - light.office_ripple_mood_light
   light_all:
     name: All Lights Group
     icon: mdi:lightbulb-group
@@ -63,14 +63,14 @@ group:
       - light.bedroom_main_light
       - light.shower_room_main_light
       - light.shower_room_mirror_light
-      - light.bed_light
+      - light.bedroom_bed_light
       - light.aqara_hub
       - light.utility_room_light
       - light.hallway_light
       - light.office_lamp_bulb
       - light.office_main_light
       - light.office_shelf_led
-      - light.vocolinc_rpl_188bce_mood_light
+      - light.office_ripple_mood_light
       - light.office_led_light_strip
       - light.bedroom_ripple_mood_light
       # - light.yeelink_bslamp2_409e_light

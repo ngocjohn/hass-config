@@ -27,7 +27,7 @@
         coverflowEffect:
           rotate: 80
           depth: 300
-        observer: true
+
       cards:
         - type: horizontal-stack
           cards:
@@ -54,7 +54,7 @@
                     spaceBetween: 50
                     direction: vertical
                     autoHeight: true
-                    observer: true
+
                     followFinger: true
                   cards:
                     - type: custom:button-card

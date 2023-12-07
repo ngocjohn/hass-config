@@ -22,7 +22,7 @@ browser_mod:
       columns: 3
       cards:
         - type: custom:button-card
-          entity: light.bed_light
+          entity: light.bedroom_bed_light
           name: Bed light
           template:
             - lightpop

@@ -203,20 +203,6 @@ tablet:
 
   card-mod-theme: tablet
 
-  # card-mod-root-yaml: |
-  #   .: |
-  #     @media only screen and (max-width: 768px) {
-  #         .header {
-  #           display: none;
-  #           opacity: 0;
-  #         }
-  #         #view {
-  #           padding-top: 0 !important;
-  #           margin-top: 0 !important;
-  #           height: calc(100vh - env(safe-area-inset-top)) !important;
-  #         }
-  #     }
-
   card-mod-view-yaml: |
     .: |
       #view {

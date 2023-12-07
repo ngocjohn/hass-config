@@ -43,7 +43,7 @@ scene:
         friendly_name: Office Floor Lamp
         supported_features: 44
         state: 'on'
-      light.vocolinc_rpl_188bce_mood_light:
+      light.office_ripple_mood_light:
         supported_color_modes:
           - hs
         color_mode: hs

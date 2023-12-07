@@ -16,6 +16,11 @@ homeassistant:
 template:
   # SENSORS
   - sensor:
+      # Test sensor github
+      - name: GitHub NgocJohn
+        unique_id: 'github_ngocjohn'
+        state: '{{this.trigger.attributes.date_committed}}'
+
       # SENSOR CLIMATE
       - unique_id: climate_index
         name: Home Climate

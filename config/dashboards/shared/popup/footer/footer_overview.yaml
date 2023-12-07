@@ -41,152 +41,153 @@ browser_mod:
       layout:
         margin: 0
         gap: 5%
-        grid-template-columns: 450px 1fr 1fr
+        grid-template-columns: 1fr 1fr 1fr
 
         mediaquery:
           #phone
           '(max-width: 800px)':
             grid-template-columns: 1fr
       cards:
-        - type: entities
-          title: Entities
-          show_header_toggle: false
-          card_mod:
-            class: header
-          entities:
-            - type: custom:apexcharts-card
-              header:
-                show: false
-              chart_type: donut
-              apex_config:
-                fill:
-                  type: gradient
-                  gradient:
-                    shade: dark
-                    shadeIntensity: 0.1
-                    opacityFrom: 0.9
-                    opacityTo: 0.85
-                    stops:
-                      - 0
-                      - 90
-                      - 100
-                chart:
-                  fontFamily: SF Pro Text
-                legend:
-                  position: right
-                  fontSize: 13px
-                  fontWeight: 300
-                  markers:
-                    width: 16
-                    height: 25
-                    customHTML:
-                      - |-
-                        EVAL:() => {
-                          return `<ha-icon icon="hass:robot" style="--mdc-icon-size: 14px;"></ha-icon>`
-                        }
-                      - |-
-                        EVAL:() => {
-                          return `<ha-icon icon="hass:radiobox-blank" style="--mdc-icon-size: 14px;"></ha-icon>`
-                        }
-                      - |-
-                        EVAL:() => {
-                          return `<ha-icon icon="hass:account" style="--mdc-icon-size: 14px;"></ha-icon>`
-                        }
-                      - |-
-                        EVAL:() => {
-                          return `<ha-icon icon="hass:lightbulb" style="--mdc-icon-size: 14px;"></ha-icon>`
-                        }
-                      - |-
-                        EVAL:() => {
-                          return `<ha-icon icon="hass:cast" style="--mdc-icon-size: 14px;"></ha-icon>`
-                        }
-                      - |-
-                        EVAL:() => {
-                          return `<ha-icon icon="hass:eye" style="--mdc-icon-size: 14px;"></ha-icon>`
-                        }
-                      - |-
-                        EVAL:() => {
-                          return `<ha-icon icon="hass:flash" style="--mdc-icon-size: 14px;"></ha-icon>`
-                        }
-                      - |-
-                        EVAL:() => {
-                          return `<ha-icon icon="hass:home-assistant" style="--mdc-icon-size: 14px;"></ha-icon>`
-                        }
-                    fillColors:
-                      - none
-                      - none
-                      - none
-                      - none
-                      - none
-                      - none
-                      - none
-                      - none
-                stroke:
-                  show: true
-                  width: 0.4
-                dataLabels:
-                  enabled: false
-                  style:
-                    fontSize: 14px
-                    fontWeight: 700
-                  dropShadow:
-                    enabled: true
-                    top: 0
-                    left: 0
-                    blur: 3
-                    color: black
-                    opacity: 0.1
-                plotOptions:
-                  pie:
-                    startAngle: 0
-                    endAngle: 360
-                    expandOnClick: true
-                    offsetX: 0
-                    offsetY: 0
-                    customScale: 1
-                    dataLabels:
-                      offset: 0
-                      minAngleToShowLabel: 10
-                    donut:
-                      size: 65%
-                      background: transparent
-                      labels:
-                        show: true
-                        value:
-                          fontSize: 1.5em
-                          fontWeight: 700
-                          offsetY: 16
-                        total:
-                          show: true
-                          label: Entities
-                          fontSize: 15px
-                          fontWeight: 800
-                          color: '#ffffff50'
-              series:
-                - entity: sensor.template_domain_counter
-                  attribute: automation
-                  name: Automations
-                - entity: sensor.template_domain_counter
-                  attribute: binary_sensor
-                  name: Binary sensors
-                - entity: sensor.template_domain_counter
-                  attribute: device_tracker
-                  name: Device trackers
-                - entity: sensor.template_domain_counter
-                  attribute: light
-                  name: Lights
-                - entity: sensor.template_domain_counter
-                  attribute: media_player
-                  name: Media players
-                - entity: sensor.template_domain_counter
-                  attribute: sensor
-                  name: Sensors
-                - entity: sensor.template_domain_counter
-                  attribute: switch
-                  name: Switches
-                - entity: sensor.template_domain_counter
-                  attribute: other
-                  name: Other
+        # - type: entities
+        #   title: Entities
+        #   show_header_toggle: false
+        #   card_mod:
+        #     class: header
+        #   entities:
+        #     - type: custom:apexcharts-card
+        #       header:
+        #         show: false
+        #       chart_type: donut
+        #       apex_config:
+        #         fill:
+        #           type: gradient
+        #           gradient:
+        #             shade: dark
+        #             shadeIntensity: 0.1
+        #             opacityFrom: 0.9
+        #             opacityTo: 0.85
+        #             stops:
+        #               - 0
+        #               - 90
+        #               - 100
+        #         chart:
+        #           fontFamily: SF Pro Text
+        #         legend:
+        #           position: right
+        #           fontSize: 13
+        #           fontWeight: 300
+        #           height: 150
+        #           markers:
+        #             width: 16
+        #             height: 25
+        #             customHTML:
+        #               - |-
+        #                 EVAL:() => {
+        #                   return `<ha-icon icon="hass:robot" style="--mdc-icon-size: 14px;"></ha-icon>`
+        #                 }
+        #               - |-
+        #                 EVAL:() => {
+        #                   return `<ha-icon icon="hass:radiobox-blank" style="--mdc-icon-size: 14px;"></ha-icon>`
+        #                 }
+        #               - |-
+        #                 EVAL:() => {
+        #                   return `<ha-icon icon="hass:account" style="--mdc-icon-size: 14px;"></ha-icon>`
+        #                 }
+        #               - |-
+        #                 EVAL:() => {
+        #                   return `<ha-icon icon="hass:lightbulb" style="--mdc-icon-size: 14px;"></ha-icon>`
+        #                 }
+        #               - |-
+        #                 EVAL:() => {
+        #                   return `<ha-icon icon="hass:cast" style="--mdc-icon-size: 14px;"></ha-icon>`
+        #                 }
+        #               - |-
+        #                 EVAL:() => {
+        #                   return `<ha-icon icon="hass:eye" style="--mdc-icon-size: 14px;"></ha-icon>`
+        #                 }
+        #               - |-
+        #                 EVAL:() => {
+        #                   return `<ha-icon icon="hass:flash" style="--mdc-icon-size: 14px;"></ha-icon>`
+        #                 }
+        #               - |-
+        #                 EVAL:() => {
+        #                   return `<ha-icon icon="hass:home-assistant" style="--mdc-icon-size: 14px;"></ha-icon>`
+        #                 }
+        #             fillColors:
+        #               - none
+        #               - none
+        #               - none
+        #               - none
+        #               - none
+        #               - none
+        #               - none
+        #               - none
+        #         stroke:
+        #           show: true
+        #           width: 0.4
+        #         dataLabels:
+        #           enabled: false
+        #           style:
+        #             fontSize: 14px
+        #             fontWeight: 700
+        #           dropShadow:
+        #             enabled: true
+        #             top: 0
+        #             left: 0
+        #             blur: 3
+        #             color: black
+        #             opacity: 0.1
+        #         plotOptions:
+        #           pie:
+        #             startAngle: 0
+        #             endAngle: 360
+        #             expandOnClick: true
+        #             offsetX: 0
+        #             offsetY: 0
+        #             customScale: 1
+        #             dataLabels:
+        #               offset: 0
+        #               minAngleToShowLabel: 10
+        #             donut:
+        #               size: 65%
+        #               background: transparent
+        #               labels:
+        #                 show: true
+        #                 value:
+        #                   fontSize: 1.5em
+        #                   fontWeight: 700
+        #                   offsetY: 16
+        #                 total:
+        #                   show: true
+        #                   label: Entities
+        #                   fontSize: 15px
+        #                   fontWeight: 800
+        #                   color: '#ffffff50'
+        #       series:
+        #         - entity: sensor.template_domain_counter
+        #           attribute: automation
+        #           name: Automations
+        #         - entity: sensor.template_domain_counter
+        #           attribute: binary_sensor
+        #           name: Binary sensors
+        #         - entity: sensor.template_domain_counter
+        #           attribute: device_tracker
+        #           name: Device trackers
+        #         - entity: sensor.template_domain_counter
+        #           attribute: light
+        #           name: Lights
+        #         - entity: sensor.template_domain_counter
+        #           attribute: media_player
+        #           name: Media players
+        #         - entity: sensor.template_domain_counter
+        #           attribute: sensor
+        #           name: Sensors
+        #         - entity: sensor.template_domain_counter
+        #           attribute: switch
+        #           name: Switches
+        #         - entity: sensor.template_domain_counter
+        #           attribute: other
+        #           name: Other
         - type: entities
           title: Devices state
           show_header_toggle: false
@@ -254,55 +255,52 @@ browser_mod:
               sort:
                 method: friendly_name
 
-        - type: markdown
-          title: 'Packages'
-          card_mod:
-            class: header
-          content: >
-            {% set status = [
-              {
-                  "sensor": "seventeentrack_packages_expired",
-                  "icon": "mdi:restore-alert"
-              },
-              {
-                  "sensor": "seventeentrack_packages_undelivered",
-                  "icon": "mdi:alert-decagram"
-              },
-              {
-                  "sensor": "seventeentrack_packages_in_transit",
-                  "icon": "mdi:truck-delivery"
-              },
-              {
-                  "sensor": "seventeentrack_packages_returned",
-                  "icon": "mdi:alert"
-              },
-              {
-                  "sensor": "seventeentrack_packages_ready_to_be_picked_up",
-                  "icon": "mdi:flag"
-              },
-              {
-                  "sensor": "seventeentrack_packages_delivered",
-                  "icon": "mdi:package"
-              }
-            ]
-            %}
-            {%- for state in status %}
-            {%- if states['sensor'][state.sensor].state != '0' %}
+        # - type: markdown
+        #   title: 'Packages'
+        #   card_mod:
+        #     class: header
+        #   content: >
+        #     {% set status = [
+        #       {
+        #           "sensor": "seventeentrack_packages_expired",
+        #           "icon": "mdi:restore-alert"
+        #       },
+        #       {
+        #           "sensor": "seventeentrack_packages_undelivered",
+        #           "icon": "mdi:alert-decagram"
+        #       },
+        #       {
+        #           "sensor": "seventeentrack_packages_in_transit",
+        #           "icon": "mdi:truck-delivery"
+        #       },
+        #       {
+        #           "sensor": "seventeentrack_packages_returned",
+        #           "icon": "mdi:alert"
+        #       },
+        #       {
+        #           "sensor": "seventeentrack_packages_ready_to_be_picked_up",
+        #           "icon": "mdi:flag"
+        #       },
+        #       {
+        #           "sensor": "seventeentrack_packages_delivered",
+        #           "icon": "mdi:package"
+        #       }
+        #     ]
+        #     %}
+        #     {%- for state in status %}
+        #     {%- if states['sensor'][state.sensor].state != '0' %}
 
-            {% for package in
-            states.sensor.seventeentrack_packages_in_transit.attributes.packages %}
+        #     {% for package in
+        #     states.sensor.seventeentrack_packages_in_transit.attributes.packages %}
 
+        #     ### <ha-icon icon="{{ state.icon }}" style="color: '#b8860b';"></ha-icon> {{ package.friendly_name }} *({{ package.tracking_number }})*
 
-            ### <ha-icon icon="{{ state.icon }}" style="color: '#b8860b';"></ha-icon> {{ package.friendly_name }} *({{ package.tracking_number }})*
+        #     - {{package.info_text }}
 
+        #     - {{package.status }}
 
-            - {{package.info_text }}
+        #     > *Update: {{ as_timestamp(package.timestamp) | timestamp_custom("%a, %d %b %Y %H:%M")}} - {{ relative_time(package.timestamp)}} ago*
 
-            - {{package.status }}
-
-
-            > *Update: {{ as_timestamp(package.timestamp) | timestamp_custom("%a, %d %b %Y %H:%M")}} - {{ relative_time(package.timestamp)}} ago*
-
-            {% endfor %}
-            {% endif -%}
-            {% endfor %}
+        #     {% endfor %}
+        #     {% endif -%}
+        #     {% endfor %}

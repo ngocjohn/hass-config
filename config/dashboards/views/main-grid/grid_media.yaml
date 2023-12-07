@@ -206,7 +206,7 @@
         coverflowEffect:
           rotate: 80
           depth: 300
-        observer: true
+
       cards:
         - type: horizontal-stack
           cards:
@@ -234,7 +234,7 @@
                       direction: vertical
                       autoHeight: true
                       slidesPerView: auto
-                      observer: true
+
                       followFinger: false
                       grabCursor: true
                       roundLengths: true
