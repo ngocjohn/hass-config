@@ -12,3 +12,4 @@ shell_command:
 
   refresh_lovelace: !secret refresh_lovelace
   addons_cf_backup: !secret addons_cf_backup
+  gitpush: !secret gitpush
