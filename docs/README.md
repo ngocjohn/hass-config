@@ -9,9 +9,9 @@ Hey there! Welcome to my little corner of the tech world! 👨‍💻
 
 This is where I store all the cool configurations for my Home Assistant system. Well, it's a mix of awesome codes and setups I discovered from the Home Assistant community. Seriously, those folks are wizards! 🧙‍♂️ As a bit of an internet newbie turned tech enthusiast, I stumbled upon the magic of IT, and this repository is my way of sharing the joy and knowledge I've gained along the way. Dive in, explore, and let the tech magic begin! ✨
 
-I frequently refresh my configuration files. My current Home Assistant version is 2023.11.3. If you find something you like, don't forget to give my repository a ⭐️!
+I frequently refresh my configuration files. My current Home Assistant version is <b>2023.12.0</b>. If you find something you like, don't forget to give my repository a ⭐️!
 
-<video width="100%" controls autoplay loop muted>
+<video width="100%" controls loop muted>
   <source src="https://github-production-user-asset-6210df.s3.amazonaws.com/96962827/285987130-48cc5542-0ca7-480b-9c95-77aa9464eb10.mp4" type="video/mp4">
 </video>
 
@@ -19,36 +19,36 @@ I frequently refresh my configuration files. My current Home Assistant version i
 
 ## Some statistics about my installation
 
-
-<table>
-    <thead>
-        <tr>
-            <th>Lines of code</th>
-            <th>Automations</th>
-            <th>Binary sensors</th>
-            <th>Device trackers</th>
-            <th>Lights</th>
-            <th>Media players</th>
-            <th>Sensors</th>
-            <th>Switches</th>
-            <th>Scripts</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>31,428 </td>
-            <td>29</td>
-            <td>160</td>
-            <td>51</td>
-            <td>51</td>
-            <td>28</td>
-            <td>722</td>
-            <td>187</td>
-            <td>37</td>
-        </tr>
-    </tbody>
-</table>
-
+<div class="table-container">
+  <table>
+      <thead>
+          <tr>
+              <th>Lines of code</th>
+              <th>Automations</th>
+              <th>Binary sensors</th>
+              <th>Device trackers</th>
+              <th>Lights</th>
+              <th>Media players</th>
+              <th>Sensors</th>
+              <th>Switches</th>
+              <th>Scripts</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td>31,003 </td>
+              <td>28</td>
+              <td>160</td>
+              <td>51</td>
+              <td>52</td>
+              <td>31</td>
+              <td>722</td>
+              <td>187</td>
+              <td>37</td>
+          </tr>
+      </tbody>
+  </table>
+</div>
 ## My installed extensions
 <details>
   <summary>Add-ons</summary>
@@ -90,6 +90,7 @@ I frequently refresh my configuration files. My current Home Assistant version i
 - [Googlegeocode Hass](https://github.com/gregoryduckworth/GoogleGeocode-HASS)
 - [Govee](https://github.com/LaggAt/hacs-govee)
 - [HACS](https://github.com/hacs/integration)
+- [Hass Favicon](https://github.com/thomasloven/hass-favicon)
 - [Kodi Media Sensors](https://github.com/jtbgroup/kodi-media-sensors)
 - [Media Player Template](https://github.com/Sennevds/media_player.template)
 - [Mercedesme 2020](https://github.com/ReneNulschDE/mbapi2020)
@@ -122,7 +123,6 @@ I frequently refresh my configuration files. My current Home Assistant version i
 - [Button Card](https://github.com/custom-cards/button-card)
 - [Card Mod](https://github.com/thomasloven/lovelace-card-mod)
 - [Clock Weather Card](https://github.com/pkissling/clock-weather-card)
-- [Config Template Card](https://github.com/iantrich/config-template-card)
 - [Custom Brand Icons](https://github.com/elax46/custom-brand-icons)
 - [Custom Icons](https://github.com/Mariusthvdb/custom-icons)
 - [Decluttering Card](https://github.com/custom-cards/decluttering-card)
@@ -182,7 +182,7 @@ My dashboard is basically a cool fusion of ideas, mainly inspired by the awesome
 
 The floorplan is crafted using the [Ha Floorplan](https://github.com/ExperienceLovelace/ha-floorplan) Lovelace plugin, and it features interactive controls thanks to the [Honeycomb Menu](https://github.com/Sian-Lee-SA/honeycomb-menu).
 
-<video width="100%" controls autoplay loop muted>
+<video width="100%" controls loop muted>
   <source src="https://github-production-user-asset-6210df.s3.amazonaws.com/96962827/286403471-9e4efab5-5bc5-4b71-94d2-37937cf1df77.mp4" type="video/mp4">
 </video>
 
