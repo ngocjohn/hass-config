@@ -278,32 +278,32 @@ browser_mod:
               name: Portainer
               icon: si:portainer
               secondary_info:
-                attribute: uptime
+                attribute: Uptime
             - entity: sensor.docker_homebridge
               name: Homebridge
               icon: si:homebridge
               secondary_info:
-                attribute: uptime
+                attribute: Uptime
             - entity: sensor.docker_watchtower
               name: Watchtower
               icon: cil:docker-watchtower
               secondary_info:
-                attribute: uptime
+                attribute: Uptime
             - entity: sensor.docker_unificontroller
               name: Unifi Controller
               icon: si:ubiquiti
               secondary_info:
-                attribute: uptime
+                attribute: Uptime
             - entity: sensor.docker_hadockermon
               name: HA-Dockermon
               icon: si:docker
               secondary_info:
-                attribute: uptime
+                attribute: Uptime
             - entity: sensor.docker_cloudflare
               name: Cloudflare
               icon: si:cloudflare
               secondary_info:
-                attribute: uptime
+                attribute: Uptime
         # - type: custom:auto-entities
         #   filter:
         #     include:
