@@ -759,6 +759,8 @@
       data: {}
     - service: readme.generate
       data: {}
+    - service: shell_command.gitpush
+      data: {}
   mode: single
 - id: '1701556784590'
   alias: Update YouTube Sensor
