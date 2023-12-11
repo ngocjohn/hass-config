@@ -587,8 +587,7 @@ cover:
                     ha-card {
                       margin: 1vw !important;
                     }
-                  ha-card>div>more-info-content>more-info-cover$ha-more-info-state-header$:
-                    |
+                  ha-card>div>more-info-content>more-info-cover$ha-more-info-state-header$: |
                     p.name {
                       display: none !important;
                     }
@@ -1055,7 +1054,7 @@ wide_header:
     gpt: >
       [[[
         let gpt = states[variables.gpt_weather].state;
-        return `<span class="gpttext">${gpt}&nbsp;&nbsp;&nbsp;</span>`;
+        return `<span class="gpttext">${gpt}</span>`;
       ]]]
     overlay:
       card:
@@ -1196,7 +1195,7 @@ wide_header:
           bottom: 0.9vw;
         }
         #label.ellipsis {
-          font-size: 0.8em;
+          font-size: 0.6vw;
           text-align: left;
           place-self: center;
           line-height: 150%;
@@ -1226,12 +1225,12 @@ wide_header:
           color: #97989c;
         }
         #gpt {
-          padding: 1% 0 !important;
+          padding: 10px 0 0 0 !important;
           overflow: visible !important;
           border-top: 0.04vw rgba(158, 158, 158, 0.1) solid;
         }
         .gpttext {
-          font-size: 0.6vw;
+          font-size: 1vh;
           white-space: pre-wrap;
         }
         #overlay {

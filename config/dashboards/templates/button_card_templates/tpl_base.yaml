@@ -22,7 +22,7 @@ base:
       [[[ return !entity || entity.attributes.entity_picture; ]]]
     timeout: >
       [[[ return !entity || Date.now() - Date.parse(entity.last_changed); ]]]
-
+  triggers_update: all
   aspect_ratio: 1/1
   show_state: true
   show_icon: false

@@ -70,7 +70,7 @@ browser_mod:
                 exclude: []
               sort:
                 method: last_changed
-                reverse: true
+                reverse: false
               card:
                 type: custom:layout-card
                 cards: []

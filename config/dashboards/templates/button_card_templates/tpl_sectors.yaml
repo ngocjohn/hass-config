@@ -933,6 +933,7 @@ alarm:
 front_door:
   template:
     - base
+    - battery_alert
   styles:
     state:
       - color: >
@@ -954,6 +955,26 @@ front_door:
         [[[
           return variables.entity_id;
         ]]]
+
+# BATTER ALERT CIRCLE
+battery_alert:
+  custom_fields:
+    battery_alert: >
+      [[[
+        return (states[variables.battery_alert].state == 'on')
+          ? '<ha-icon icon="mdi:battery-alert" style="width:100%;display:flex;color:red;"></ha-icon>'
+          : null;
+      ]]]
+  styles:
+    custom_fields:
+      battery_alert:
+        - position: absolute
+        - height: auto
+        - border-radius: 50%
+        - right: 1%
+        - padding: 5%
+        - margin: -10%
+        - width: 15%
 
 # SENSORS
 sensors:

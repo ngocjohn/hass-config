@@ -237,8 +237,10 @@ grid_front_door:
       action: block
     template:
       - front_door
-      - loader
       - icon_lock
+      - loader
+    variables:
+      battery_alert: binary_sensor.nuki_vchod_battery_critical
 
 #  MOTION SENSORS
 grid_motion_sensors:
@@ -251,6 +253,7 @@ grid_motion_sensors:
       - icon_motion
 
 #  CONTACT SENSORS
+
 grid_contact_sensors:
   card:
     type: custom:button-card

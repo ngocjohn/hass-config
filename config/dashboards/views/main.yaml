@@ -17,6 +17,9 @@ layout:
     ". .         .          .         .        .          .          ."
 
   mediaquery:
+    #laptop
+    '(max-width: 1712px)':
+      grid-gap: 1.3%
     #portrait
     '(min-width: 801px) and (max-width: 1440px)':
       grid-gap: 1vw
