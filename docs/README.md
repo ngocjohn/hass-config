@@ -36,13 +36,13 @@ I frequently refresh my configuration files. My current Home Assistant version i
       </thead>
       <tbody>
           <tr>
-              <td>30,932 </td>
+              <td>29,892 </td>
               <td>28</td>
               <td>161</td>
               <td>51</td>
               <td>52</td>
               <td>31</td>
-              <td>744</td>
+              <td>745</td>
               <td>187</td>
               <td>37</td>
           </tr>
@@ -167,7 +167,6 @@ I frequently refresh my configuration files. My current Home Assistant version i
 - [Tv Remote Card (With Touchpad And Haptic Feedback)](https://github.com/usernein/tv-card)
 - [Upcoming Media Card](https://github.com/xZetsubou/upcoming-media-card)
 - [Uptime Card](https://github.com/dylandoamaral/uptime-card)
-- [Vacuum Card](https://github.com/denysdovhan/vacuum-card)
 - [Vertical Stack In Card](https://github.com/ofekashery/vertical-stack-in-card)
 - [Weather Card](https://github.com/bramkragten/weather-card)
 - [Weather Chart Card](https://github.com/mlamberts78/weather-chart-card)
