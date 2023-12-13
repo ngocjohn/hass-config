@@ -790,3 +790,15 @@
   - event: youtube_update
     event_data: {}
   mode: single
+- id: '1702444277863'
+  alias: 'Event_Unifi Archive Alert '
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_button.unifi_archive_alerts
+  condition: []
+  action:
+  - event: archive_alerts
+    event_data: {}
+  mode: single
