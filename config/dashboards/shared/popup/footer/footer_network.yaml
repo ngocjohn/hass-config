@@ -76,10 +76,7 @@ browser_mod:
               name: WAN Status
             # - entity: sensor.external_ip
             # - entity: binary_sensor.template_unifi_upgradable
-            # - entity: binary_sensor.wifi_access_point
-            #   name: Status
             - entity: sensor.template_ap_adopted
-            # - entity: sensor.template_ap_disconected
             - type: custom:multiple-entity-row
               entity: sensor.template_ap_clients
               icon: mdi:devices
@@ -97,6 +94,24 @@ browser_mod:
                 - entity: sensor.template_wired_clients
                   name: Wired
                   unit: ' '
+            - type: custom:multiple-entity-row
+              entity: binary_sensor.unifi_controller_alert
+              name: 'Alert'
+              state_color: true
+              show_state: false
+              secondary_info:
+                attribute: Message
+              entities:
+                - entity: binary_sensor.unifi_controller_alert
+                  name: 'State'
+                - icon: mdi:archive-minus
+                  tap_action:
+                    action: call-service
+                    confirmation:
+                      text: Are you sure you want to archive?
+                    service: input_button.press
+                    service_data:
+                      entity_id: input_button.unifi_archive_alerts
 
           footer:
             type: custom:mini-graph-card

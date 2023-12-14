@@ -550,6 +550,10 @@
         data:
           duration: 1
           message: ' '
+        target:
+          device_id:
+          - 4f43e0dc2e03b71c2e137f9696a04a2c
+          - 06f0c6e9f7b45a2445a607fef53f54df
   mode: restart
 - id: '1696329856970'
   alias: Quit Youtube
