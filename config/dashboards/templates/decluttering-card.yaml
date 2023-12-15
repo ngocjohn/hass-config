@@ -402,6 +402,7 @@ grid_bathroom:
   card:
     type: custom:button-card
     entity: sensor.bathroom_active
+    double_tap_action: !include /config/dashboards/shared/popup/test_pop.yaml
     name: Bathroom
     template:
       - rooms_base
