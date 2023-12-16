@@ -310,11 +310,11 @@ template:
         name: 'Weather Humidity'
         unit_of_measurement: '%'
         state: >-
-          {{ states.weather.prague_smichov.attributes.humidity }}
+          {{ states.weather.prague.attributes.humidity }}
       - unique_id: weather_current_temp
         name: 'Weather Current Temperature'
         state: >-
-          {{ states.weather.prague_smichov.attributes.temperature }}
+          {{ states.weather.prague.attributes.temperature }}
         unit_of_measurement: '°C'
       # SENSOR - SECURITY - DOORS STATE
       - unique_id: doors_state

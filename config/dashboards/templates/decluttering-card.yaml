@@ -36,13 +36,12 @@ light_auto_entitites:
       title: '[[title]]'
     show_empty: true
     card_param: cards
-#################################################
-#                                               #
-#                  MAIN ROOMS                   #
-#                                               #
-#################################################
-
-# OFFICE GRID
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+  #                                               #
+  #                  MAIN ROOMS                   #
+  #                                               #
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+  # OFFICE GRID
 grid_office:
   card:
     type: custom:button-card
@@ -67,7 +66,7 @@ grid_office:
       server: binary_sensor.mbproserver_active
       macbook: switch.macbook
       active: sensor.office_active
-# LIVING ROOM GRID
+  # LIVING ROOM GRID
 grid_living_room:
   card:
     type: custom:button-card
@@ -90,7 +89,7 @@ grid_living_room:
           display:none !important;
         {% endif %}
         }
-# KITCHEN NORMAL
+  # KITCHEN NORMAL
 grid_kitchen_normal:
   card:
     type: conditional
@@ -113,7 +112,7 @@ grid_kitchen_normal:
         light_entity: light.kitchen_table_light
         motion: binary_sensor.motion_sensor_kitchen_occupancy
         active: sensor.kitchen_active
-# KITCHEN DISHWASING
+  # KITCHEN DISHWASING
 grid_kitchen_dishwasing:
   card:
     type: conditional
@@ -155,7 +154,6 @@ grid_kitchen_dishwasing:
                       name: Program Progress
                     - entity: sensor.mycka_nadobi_remaining_program_time
                       name: Remaining Program Time
-
       tap_action: !include ../shared/popup/rooms/kitchen.yaml
       hold_action: !include ../shared/honeycomb/kitchen.yaml
       variables:
@@ -187,7 +185,7 @@ grid_kitchen_dishwasing:
                 ]]]
             - left: -15%
             - width: 127%
-# BEDROOM
+  # BEDROOM
 grid_bedroom:
   card:
     type: custom:button-card
@@ -210,14 +208,12 @@ grid_bedroom:
           let state = states['sensor.bedroom_active'].state;
           if (state == 'yes') return state;
         ]]]
-
-#################################################
-#                                               #
-#                     SECURITY                  #
-#                                               #
-#################################################
-
-# ALARM PANEL
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+  #                                               #
+  #                     SECURITY                  #
+  #                                               #
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+  # ALARM PANEL
 grid_alarm:
   card:
     type: custom:button-card
@@ -226,8 +222,7 @@ grid_alarm:
     template:
       - alarm
       - icon_alarm
-
-# FRONT DOOR
+  # FRONT DOOR
 grid_front_door:
   card:
     type: custom:button-card
@@ -241,8 +236,7 @@ grid_front_door:
       - loader
     variables:
       battery_alert: binary_sensor.nuki_vchod_battery_critical
-
-#  MOTION SENSORS
+  #  MOTION SENSORS
 grid_motion_sensors:
   card:
     type: custom:button-card
@@ -251,9 +245,7 @@ grid_motion_sensors:
     template:
       - sensors
       - icon_motion
-
-#  CONTACT SENSORS
-
+  #  CONTACT SENSORS
 grid_contact_sensors:
   card:
     type: custom:button-card
@@ -263,14 +255,12 @@ grid_contact_sensors:
       - doors
       - circle_state
       - icon_closet
-
-#################################################
-#                                               #
-#                    DEVICES                    #
-#                                               #
-#################################################
-
-# APPLE TV
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+  #                                               #
+  #                    DEVICES                    #
+  #                                               #
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+  # APPLE TV
 grid_atv:
   card:
     type: custom:button-card
@@ -281,8 +271,7 @@ grid_atv:
     hold_action: !include ../shared/honeycomb/atv.yaml
     template:
       - mediaplayer
-
-# SAMSUNG TV
+  # SAMSUNG TV
 grid_samsung:
   card:
     type: custom:button-card
@@ -298,8 +287,7 @@ grid_samsung:
     hold_action: !include ../shared/honeycomb/shield.yaml
     template:
       - mediaplayer
-
-# PLAYSTATION
+  # PLAYSTATION
 grid_playstation:
   card:
     type: custom:button-card
@@ -309,8 +297,7 @@ grid_playstation:
       - base
       - icon_ps5
       - loader
-
-# HOMEPODS
+  # HOMEPODS
 grid_homepods:
   card:
     type: custom:button-card
@@ -341,7 +328,6 @@ grid_homepods:
               state = variables.state_on,
               unit = variables.circle_input_unit || ' ';
             let inner_text = Math.round(states['sensor.currently_playing'].attributes.mass_homepods );
-
             return `
               <svg viewBox="0 0 50 50">
                 <style>
@@ -371,19 +357,17 @@ grid_homepods:
           display: none !important;
         }
         {%- endif %}
-#################################################
-#                                               #
-#                    ROOMS 2                    #
-#                                               #
-#################################################
-
-# SHOWER ROOM
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+  #                                               #
+  #                    ROOMS 2                    #
+  #                                               #
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+  # SHOWER ROOM
 grid_shower:
   card:
     type: custom:button-card
     entity: sensor.shower_active
     name: Shower
-
     template:
       - rooms_base
       - door_state
@@ -396,8 +380,7 @@ grid_shower:
       motion: binary_sensor.motion_sensor_shower_room_occupancy
       door: binary_sensor.contact_sensor_shower_room_contact
       active: sensor.shower_active
-
-# BATHROOM
+  # BATHROOM
 grid_bathroom:
   card:
     type: custom:button-card
@@ -416,8 +399,7 @@ grid_bathroom:
       door: binary_sensor.contact_sensor_bathroom_contact
       active: sensor.bathroom_active
       air_diffuser_circle: switch.bathroom_air_diffuser
-
-# UTILITY NORMAL
+  # UTILITY NORMAL
 grid_utility_normal:
   card:
     type: conditional
@@ -438,7 +420,7 @@ grid_utility_normal:
       variables:
         light_entity: light.utility_room_light
         active: sensor.appliance_active
-# UTILITY VACUUM
+  # UTILITY VACUUM
 grid_utility_vacuum:
   card:
     type: conditional
@@ -464,7 +446,7 @@ grid_utility_vacuum:
       variables:
         light_entity: light.utility_room_light
         active: sensor.appliance_active
-# UTILITY WASHING
+  # UTILITY WASHING
 grid_utility_washing:
   card:
     type: conditional
@@ -511,8 +493,7 @@ grid_utility_washing:
                       name: Program Progress
                     - entity: sensor.washer_dryer_remaining_program_time
                       name: Remaining Program Time
-
-# HALLWAY
+  # HALLWAY
 grid_hallway:
   card:
     type: custom:button-card
@@ -529,14 +510,12 @@ grid_hallway:
     variables:
       light_entity: light.hallway_group
       motion: binary_sensor.motion_sensor_entrance_occupancy
-
-#################################################
-#                                               #
-#                  CAMERAS                      #
-#                                               #
-#################################################
-
-# CAM DOOR
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+  #                                               #
+  #                  CAMERAS                      #
+  #                                               #
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+  # CAM DOOR
 grid_cam_door:
   card:
     type: custom:button-card
@@ -551,8 +530,7 @@ grid_cam_door:
     styles:
       card:
         - background-position: center
-
-# CAM KIDS ROOM
+  # CAM KIDS ROOM
 grid_cam_kids:
   card:
     type: custom:button-card
@@ -571,7 +549,7 @@ grid_cam_kids:
     #         [[[
     #             return `linear-gradient(0deg, rgba(0,0,0,.3) 0%, rgba(0,0,0,0) 100%), url(/local/tmp/${variables.entity_id}-latest.jpg)`;
     #         ]]]
-# CAM TERRACE
+  # CAM TERRACE
 grid_cam_terrace:
   card:
     type: custom:button-card
@@ -586,8 +564,7 @@ grid_cam_terrace:
     styles:
       card:
         - background-position: center
-
-# CAM GARDEN
+  # CAM GARDEN
 grid_cam_garden:
   card:
     type: custom:button-card
@@ -599,14 +576,12 @@ grid_cam_garden:
       - loader
     variables:
       battery: sensor.zahrada_battery_percentage
-
-#################################################
-#                                               #
-#                  CLIMATE                      #
-#                                               #
-#################################################
-
-# AIR PURIFIER
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+  #                                               #
+  #                  CLIMATE                      #
+  #                                               #
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+  # AIR PURIFIER
 grid_air_purifier:
   card:
     type: custom:button-card
@@ -616,8 +591,7 @@ grid_air_purifier:
     template:
       - airpurifier
     double_tap_action: !include ../shared/popup/airpurifier.yaml
-
-# THERMOSTAT
+  # THERMOSTAT
 grid_thermostat:
   card:
     type: custom:button-card
@@ -631,8 +605,7 @@ grid_thermostat:
       service: input_boolean.toggle
       service_data:
         entity_id: input_boolean.svg_temp_humid
-
-# LIVING ROOM COVERS
+  # LIVING ROOM COVERS
 grid_covers_living:
   card:
     type: custom:button-card
@@ -641,8 +614,7 @@ grid_covers_living:
     # hold_action: !include ../shared/honeycomb/cover_living.yaml
     template:
       - cover
-
-# LIVING ROOM COVERS
+  # LIVING ROOM COVERS
 grid_covers_bedroom:
   card:
     type: custom:button-card
@@ -651,14 +623,12 @@ grid_covers_bedroom:
     # hold_action: !include ../shared/honeycomb/cover_bedroom.yaml
     template:
       - cover
-
-#################################################
-#                                               #
-#                     HOME                      #
-#                                               #
-#################################################
-
-# PERSON NGOC
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+  #                                               #
+  #                     HOME                      #
+  #                                               #
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+  # PERSON NGOC
 grid_ngoc:
   card:
     type: custom:button-card
@@ -683,8 +653,7 @@ grid_ngoc:
           display:none !important;
         {% endif %}
         }
-
-# PERSON ZUZU
+  # PERSON ZUZU
 grid_zuzu:
   card:
     type: custom:button-card
@@ -707,22 +676,20 @@ grid_zuzu:
             ? states['sensor.gle'].state
             : variables.state;
       ]]]
-
-# WEATHER
+  # WEATHER
 grid_weather:
   card:
     type: custom:button-card
-    entity: weather.prague_smichov
+    entity: weather.prague
     name: Prague
     variables:
       temp_min: sensor.weather_min_temp
       temp_max: sensor.weather_max_temp
       humidity: sensor.weather_humidity
-      current_weather: weather.prague_smichov
+      current_weather: weather.prague
     template:
       - widget_weather
-
-# HOME MODE
+  # HOME MODE
 grid_home_mode:
   card:
     type: custom:button-card
@@ -739,8 +706,7 @@ grid_home_mode:
     styles:
       name:
         - overflow: initial
-
-# FOOTER
+  # FOOTER
 footer:
   card:
     type: horizontal-stack
@@ -761,7 +727,6 @@ footer:
                   code: lovelace_reload()
         template:
           - footer
-
       - type: custom:button-card
         name: >
           <ha-icon icon="mdi:vacuum"></ha-icon> Vacuum
@@ -776,21 +741,18 @@ footer:
             ]]]
         template:
           - footer
-
       - type: custom:button-card
         name: >
           <ha-icon icon="mdi:server"></ha-icon> System
         tap_action: !include ../shared/popup/footer/footer_system.yaml
         template:
           - footer
-
       - type: custom:button-card
         name: >
           <ha-icon icon="ios:pc"></ha-icon> Server
         tap_action: !include ../shared/popup/footer/footer_mbproserver.yaml
         template:
           - footer
-
       - type: custom:button-card
         entity: sensor.template_updates
         name: >
@@ -815,7 +777,6 @@ footer:
         #     ]]]
         template:
           - footer
-
       - type: custom:button-card
         name: >
           <ha-icon icon="mdi:router-wireless"></ha-icon> Network

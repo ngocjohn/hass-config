@@ -71,7 +71,7 @@ browser_mod:
                 type: weather-forecast
                 show_current: true
                 show_forecast: true
-                entity: weather.prague_smichov
+                entity: weather.prague
                 name: ' '
                 forecast_type: hourly
             - type: divider

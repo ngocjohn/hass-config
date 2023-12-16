@@ -51,13 +51,13 @@
     margin: 0
   cards:
     - type: custom:button-card
-      entity: weather.prague_smichov
+      entity: weather.prague
       tap_action: !include ../../shared/popup/popup_weather.yaml
       name: Prague
       variables:
         temp_min: sensor.weather_min_temp
         temp_max: sensor.weather_max_temp
         humidity: sensor.weather_humidity
-        current_weather: weather.prague_smichov
+        current_weather: weather.prague
       template:
         - horizontal_widget_weather

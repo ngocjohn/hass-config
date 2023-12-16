@@ -1,0 +1,40 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    style: |
+      --popup-min-width: 1080px;
+    title: 'MASS'
+    card_mod:
+      style:
+        #popup header
+        .: |
+          ha-dialog>ha-dialog-header {
+            display: none;
+          }
+          @media (max-width: 450px), (max-height: 500px) {
+            ha-dialog>ha-dialog-header {
+              display: block;
+            }
+          }
+    content:
+      type: custom:layout-card
+      layout_type: custom:grid-layout
+      layout:
+        gap: 1%
+        margin: 0
+        grid-template-columns: 1fr
+      cards:
+        - type: custom:auto-entities
+          filter:
+            include:
+              - entity_id: 'sensor.ymovie_added_*'
+                options:
+                  type: custom:button-card
+                  template:
+                    - added_movies
+          card:
+            type: grid
+            columns: 3
+            title: ' '
+          card_param: cards

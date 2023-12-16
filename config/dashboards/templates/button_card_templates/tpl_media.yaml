@@ -1,9 +1,3 @@
-#################################################
-#                                               #
-#                  BASE MEDIA                   #
-#                                               #
-#################################################
-
 base_media:
   variables:
     media_on: >
@@ -85,13 +79,11 @@ base_media:
                     : '4px 5px 5px rgba(18, 22, 23, 0.9)';
             }
           ]]]
-
-#################################################
-#                                               #
-#                     MEDIA                     #
-#                                               #
-#################################################
-
+  #################################################
+  #                                               #
+  #                     MEDIA                     #
+  #                                               #
+  #################################################
 media:
   template:
     - base
@@ -135,13 +127,11 @@ media:
                         : `linear-gradient(0deg, rgba(0,0,0,.8) 0%, rgba(0,0,0,0) 100%), url(${variables.entity_picture})`;
             }
           ]]]
-
-#################################################
-#                                               #
-#               CONDITIONAL MEDIA               #
-#                                               #
-#################################################
-
+  #################################################
+  #                                               #
+  #               CONDITIONAL MEDIA               #
+  #                                               #
+  #################################################
 conditional_media:
   aspect_ratio: 1000/996
   template:
@@ -162,7 +152,6 @@ conditional_media:
       let horizontalStack = this.getRootNode().host,
           swipeCard = horizontalStack.getRootNode().host,
           gridTitle = swipeCard.getRootNode().querySelector("h1");
-
       swipeCard.swiper.on("slideChange", () => {
           if (swipeCard.swiper.realIndex === 0) {
               gridTitle.textContent = "Media";
@@ -179,7 +168,6 @@ conditional_media:
               title = entity.attributes.media_title,
               originaltitle = entity.attributes.originaltitle,
               game_title = entity.attributes.title_name;
-
           var output = artist === undefined && title !== undefined
             ? title
             : game_title !== undefined
@@ -189,12 +177,9 @@ conditional_media:
                   : title !== undefined && artist !== undefined
                       ? `<div id="title" style="font-weight: 800; text-transform: uppercase; font-family: Raleway; letter-spacing: 0.07vw;">${title}</div><span style="font-size: 0.90em; color: #efefefd1; font-family: Raleway; text-transform: capitalize; letter-spacing: 0.03vw;">${artist}</span>`
                       : variables.translate_idle;
-
-
           function marquee() {
               let state = elt.getElementById("title"),
                   container = elt.getElementById("container");
-
               if (state && container) {
                   state.innerHTML = title;
                   let ro = new ResizeObserver(entries => {
@@ -205,7 +190,6 @@ conditional_media:
                               c && c.contentRect &&
                               s.contentRect.width !== 0 &&
                               c.contentRect.width !== 0;
-
                       if (r && s.contentRect.width < c.contentRect.width) {
                           state.classList.remove("marquee");
                       }
@@ -262,7 +246,6 @@ conditional_media:
       #         ? '4%'
       #         : '10.5%';
       #     ]]]
-
       # - overflow: visible
     card:
       - padding: 5.75% 5.75% 0 5.75%
@@ -350,20 +333,17 @@ conditional_media:
                 card = elt.getElementById('card'),
                 container = elt.getElementById('container'),
                 blur_overlay = elt.getElementById('blur_overlay');
-
             if (elt && card && container && blur_overlay) {
                 card.insertBefore(blur_overlay, container);
             }
           }, 0);
         return ' ';
       ]]]
-
-#################################################
-#                                               #
-#         CONDITIONAL MEDIA SHOWS               #
-#                                               #
-#################################################
-
+    #################################################
+    #                                               #
+    #         CONDITIONAL MEDIA SHOWS               #
+    #                                               #
+    #################################################
 conditional_media_shows:
   aspect_ratio: 1000/996
   show_name: false
@@ -382,7 +362,6 @@ conditional_media_shows:
       let horizontalStack = this.getRootNode().host,
           swipeCard = horizontalStack.getRootNode().host,
           gridTitle = swipeCard.getRootNode().querySelector("h1");
-
       swipeCard.swiper.on("slideChange", () => {
           if (swipeCard.swiper.realIndex === 0) {
               gridTitle.textContent = "Movies";
@@ -391,30 +370,23 @@ conditional_media_shows:
               gridTitle.textContent = "TV Shows";
           }
       });
-
       if (entity) {
           let elt = this.shadowRoot,
               await = setTimeout(marquee, 100),
               data = entity.attributes.data;
-
             if (data !== undefined) {
               let airdate = new Date(Date.parse(data[variables.i].airdate)),
                   datestring = airdate.getDate() + "-" + (airdate.getMonth()+1) + "-" + airdate.getFullYear(),
                   showepisode = data[variables.i].episode,
                   showtitle = data[variables.i].title;
-
               var title = `<span style="font-weight: 700; text-transform: uppercase; color: #ffffffcc;">${data[variables.i].title}</span>`;
-
               var episode = `<span style="text-transform: capitalize; font-family: Raleway;">${data[variables.i].episode}</span>`;
-
               var number = data[variables.i].number === undefined && data[variables.i].airdate !== undefined
                   ? `(${data[variables.i].airdate.split("-")[0]})`
                   : data[variables.i].number === undefined && data[variables.i].airdate === undefined
                       ? ' '
                       : (data[variables.i].number).match(/.{1,3}/g)[0] + "·" + (data[variables.i].number).match(/.{1,3}/g)[1];
-
               var title_episode = `<span style="font-weight: 700; text-transform: uppercase; color: #ffffffcc;">${data[variables.i].title}</span>&nbsp;·&nbsp <span style="text-transform: capitalize; font-family: Raleway;">${data[variables.i].episode}</span>`;
-
               var output = window.matchMedia('(max-width: 800px)').matches
                 ? `
                 <div id="title">${title}&nbsp;·&nbsp${episode}</div>
@@ -428,11 +400,9 @@ conditional_media_shows:
                 <span class="info" style="color: #ffffff80;">${datestring}</span>
                 `
             }
-
               function marquee() {
                   let state = elt.getElementById("title"),
                       container = elt.getElementById("container");
-
                   if (state && container) {
                       state.innerHTML = title;
                       let ro = new ResizeObserver(entries => {
@@ -443,7 +413,6 @@ conditional_media_shows:
                                   c && c.contentRect &&
                                   s.contentRect.width !== 0 &&
                                   c.contentRect.width !== 0;
-
                           if (r && s.contentRect.width < c.contentRect.width) {
                               state.classList.remove("marquee");
                           }
@@ -467,13 +436,11 @@ conditional_media_shows:
       - line-height: 123%
       - padding: 0.2vw
       - margin: -0.2vw
-
     state:
       - line-height: 130%
       - padding-bottom: 1.5%
       - color: #ffffffcc
       - text-shadow: black 3px 2px 4px
-
     card:
       - padding: 5.75% 5.75% 0 5.75%
       - border-radius: calc(var(--button-card-border-radius) / 2)
@@ -520,20 +487,17 @@ conditional_media_shows:
                 card = elt.getElementById('card'),
                 container = elt.getElementById('container'),
                 blur_overlay = elt.getElementById('blur_overlay');
-
             if (elt && card && container && blur_overlay) {
                 card.insertBefore(blur_overlay, container);
             }
           }, 0);
         return ' ';
       ]]]
-
-#################################################
-#                                               #
-#          ADDED MOVIES                         #
-#                                               #
-#################################################
-
+  #################################################
+  #                                               #
+  #          ADDED MOVIES                         #
+  #                                               #
+  #################################################
 movies_base:
   template:
     - base
@@ -548,7 +512,6 @@ movies_base:
           let elt = this.shadowRoot,
               await = setTimeout(marquee, 100),
               data = entity.attributes.data;
-
         if (data !== undefined) {
           let cztitle = data[0].title,
               originaltitle = data[0].original_title,
@@ -560,18 +523,14 @@ movies_base:
               subtitles = data[0].subtitles,
               plot = data[0].plot,
               audio = data[0].audio;
-
           var country_select = (country.length > 4) ? ' ' : country;
-
           var resolution_icon = 'badge badge--sdh';
             if (resolution == 'UHD HEVC' || resolution == 'UHD' ) { resolution_icon = 'badge badge--4k'};
             if (resolution == 'HD HEVC' || resolution == 'HD' ) { resolution_icon = 'badge badge--hd'};
             if (resolution == 'SD') { resolution_icon = 'badge badge--sdh' };
-
           var audio_codec = '';
             if (audio == 'AAC') { audio_codec = 'badge badge--dd'};
             if (audio == 'DDP') { audio_codec = 'badge badge--ddp'};
-
           var sub = '';
             if (subtitles == 'cs') { sub = 'badge badge--cc'};
           var quality = `
@@ -579,15 +538,12 @@ movies_base:
             <span class="${resolution_icon}" role="img"></span>
             <span class="${sub}" role="img"></span>
             `;
-
           var info =  originaltitle !== undefined && genre === undefined
             ? `${originaltitle}`
             : `&nbsp;·&nbsp${genre}`;
-
           var title = cztitle == originaltitle
             ? `<span style="font-weight: 700; text-transform: uppercase; letter-spacing: 2px;">${cztitle}</span>`
             : `<span style="font-weight: 700; text-transform: uppercase;">${cztitle}</span>&nbsp;·&nbsp<span style="text-transform: capitalize; font-family: Raleway;">${originaltitle}</span>`;
-
           var output = `
             <div id="title">${title}</div>
             <span class="year" role="img">${year}&nbsp;·&nbsp${country}</span>
@@ -597,7 +553,6 @@ movies_base:
           function marquee() {
               let state = elt.getElementById("title"),
                   container = elt.getElementById("container");
-
               if (state && container) {
                   state.innerHTML = title;
                   let ro = new ResizeObserver(entries => {
@@ -608,7 +563,6 @@ movies_base:
                               c && c.contentRect &&
                               s.contentRect.width !== 0 &&
                               c.contentRect.width !== 0;
-
                       if (r && s.contentRect.width < c.contentRect.width) {
                           state.classList.remove("marquee");
                       }
@@ -629,24 +583,19 @@ movies_base:
       [[[
         if (entity) {
             let data = entity.attributes.data;
-
           if (data !== undefined) {
             let country = data[0].country,
                 resolution = data[0].resolution,
                 subtitles = data[0].subtitles,
                 audio = data[0].audio;
-
             var country_select = (country.length > 4) ? '' : country;
-
             var resolution_icon = 'badge badge--sdh';
               if (resolution == 'UHD HEVC' || resolution == 'UHD' ) { resolution_icon = 'badge badge--4k'};
               if (resolution == 'HD HEVC' || resolution == 'HD' ) { resolution_icon = 'badge badge--hd'};
               if (resolution == 'SD') { resolution_icon = 'badge badge--sdh' };
-
             var audio_codec = '';
               if (audio == 'AAC') { audio_codec = 'badge badge--dd'};
               if (audio == 'DDP') { audio_codec = 'badge badge--ddp'};
-
             var sub = '';
               if (subtitles == 'cs') { sub = 'badge badge--cc'};
             let quality = `
@@ -664,14 +613,11 @@ movies_base:
       [[[
         if (entity) {
             let data = entity.attributes.data;
-
           if (data !== undefined) {
             let rating = Math.round((data[0].rating * 10));
-
             var stroke = '#20d07b';
               if (rating <= 40) { stroke = '#ff0000' };
               if (rating <= 60) { stroke = '#ffcc00' };
-
             let path = `
               <svg viewBox="0 0 36 36" class="circular-chart green">
                 <style>
@@ -679,18 +625,15 @@ movies_base:
                     display: flex;
                     flex-flow: row nowrap;
                   }
-
                   .single-chart {
                     width: 33%;
                     justify-content: space-around;
                   }
-
                   .circle-bg {
                     fill: #000000;
                     stroke: #ffffff85;
                     stroke-width: 3.8;
                   }
-
                   .circle {
                     fill: none;
                     stroke-width: 2.8;
@@ -700,7 +643,6 @@ movies_base:
                     animation-iteration-count: infinite;
                     animation-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
                   }
-
                   @keyframes progress {
                     0% {
                       stroke-dasharray: 0 100;
@@ -722,7 +664,6 @@ movies_base:
                   .circular-chart.green .circle {
                     stroke: ${stroke};
                   }
-
                   .percentage {
                     fill: #ffffff;
                     font-family: Poppins;
@@ -744,7 +685,6 @@ movies_base:
             </g>
           </svg>
           `;
-
           return `${path}`;
           }
         }
@@ -851,7 +791,6 @@ movies_base:
         - display: block
         - position: absolute
         - justify-self: center
-
 added_movies_base:
   template:
     - base
@@ -918,7 +857,6 @@ added_movies_base:
                 }
             }
           ]]]
-
 added_movies:
   template:
     - added_movies_base
@@ -933,87 +871,81 @@ added_movies:
         - landscape: hide
         - portrait: hide
         - ymovie: show
-  # tap_action: !include /config/dashboards/popup/movie.yaml
-  tap_action:
-    action: fire-dom-event
-    browser_mod:
-      service: browser_mod.popup
-      data:
-        style: |
-          --popup-min-width: 1400px;
-        card_mod:
-          style:
-            #popup header
-            .: |
-              @media (max-width: 450px), (max-height: 500px) {
-                ha-dialog {
-                  --mdc-dialog-min-width: 100vw !important;
-                  --mdc-dialog-min-height: 100vh !important;
-                  --popup-border-radius: 0 !important;
-                }
-              }
-              .content .container {
-                padding: 0 !important;
-              }
-        title: >
-          [[[
-            if (entity) {
-                let data = entity.attributes.data;
-
-              if (data !== undefined) {
-                let title = data[0].title;
-                return `${title}`;
-              }
-            }
-          ]]]
-        content:
-          type: custom:layout-card
-          layout_type: custom:grid-layout
-          layout:
-            margin: 0
-            grid-template-columns: 1fr
-            grid-template-rows: fit-content(100%)
-          cards:
-            - type: iframe
-              aspect_ratio: >
-                [[[
-                  if (window.matchMedia('(max-width: 800px)').matches)
-                    return '180%';
-                  else return '100%';
-                ]]]
-              url: >
-                [[[
-                  if (entity) {
-                      let data = entity.attributes.data;
-                    if (data !== undefined) {
-                      let tmdb = data[0].services.tmdb;
-                      return `https://www.themoviedb.org/movie/${tmdb}`;
-                    }
-                  }
-                ]]]
+  tap_action: !include /config/dashboards/shared/popup/popup_ymovie.yaml
+  # tap_action:
+  #   action: fire-dom-event
+  #   browser_mod:
+  #     service: browser_mod.popup
+  #     data:
+  #       style: |
+  #         --popup-min-width: 1400px;
+  #       card_mod:
+  #         style:
+  #           #popup header
+  #           .: |
+  #             @media (max-width: 450px), (max-height: 500px) {
+  #               ha-dialog {
+  #                 --mdc-dialog-min-width: 100vw !important;
+  #                 --mdc-dialog-min-height: 100vh !important;
+  #                 --popup-border-radius: 0 !important;
+  #               }
+  #             }
+  #             .content .container {
+  #               padding: 0 !important;
+  #             }
+  #       title: >
+  #         [[[
+  #           if (entity) {
+  #               let data = entity.attributes.data;
+  #             if (data !== undefined) {
+  #               let title = data[0].title;
+  #               return `${title}`;
+  #             }
+  #           }
+  #         ]]]
+  #       content:
+  #         type: custom:layout-card
+  #         layout_type: custom:grid-layout
+  #         layout:
+  #           margin: 0
+  #           grid-template-columns: 1fr
+  #           grid-template-rows: fit-content(100%)
+  #         cards:
+  #           - type: iframe
+  #             aspect_ratio: >
+  #               [[[
+  #                 if (window.matchMedia('(max-width: 800px)').matches)
+  #                   return '180%';
+  #                 else return '100%';
+  #               ]]]
+  #             url: >
+  #               [[[
+  #                 if (entity) {
+  #                     let data = entity.attributes.data;
+  #                   if (data !== undefined) {
+  #                     let tmdb = data[0].services.tmdb;
+  #                     return `https://www.themoviedb.org/movie/${tmdb}`;
+  #                   }
+  #                 }
+  #               ]]]
 
   label: >
     [[[
       if (entity) {
           let data = entity.attributes.data;
-
         if (data !== undefined) {
           let country = data[0].country,
               resolution = data[0].resolution,
               subtitles = data[0].subtitles,
               audio = data[0].audio;
-
           var country_select = (country.length > 4) ? '' : country;
-
           var resolution_icon = 'badge badge--sdh';
             if (resolution == 'UHD HEVC' || resolution == 'UHD' ) { resolution_icon = 'badge badge--4k'};
             if (resolution == 'HD HEVC' || resolution == 'HD' ) { resolution_icon = 'badge badge--hd'};
             if (resolution == 'SD') { resolution_icon = 'badge badge--sdh' };
-
           var audio_codec = '';
             if (audio == 'AAC') { audio_codec = 'badge badge--dd'};
             if (audio == 'DDP') { audio_codec = 'badge badge--ddp'};
-
           var sub = '';
             if (subtitles == 'cs') { sub = 'badge badge--cc'};
           let quality = `
@@ -1029,12 +961,10 @@ added_movies:
     ]]]
   state_display: >
     [[[
-
       if (entity) {
           let elt = this.shadowRoot,
               await = setTimeout(marquee, 100),
               data = entity.attributes.data;
-
         if (data !== undefined) {
           let cztitle = data[0].title,
               originaltitle = data[0].original_title,
@@ -1046,29 +976,22 @@ added_movies:
               subtitles = data[0].subtitles,
               plot = data[0].plot,
               audio = data[0].audio;
-
           var country_select = (country.length > 4) ? ' ' : country;
-
           var resolution_icon = 'badge badge--sdh';
             if (resolution == 'UHD HEVC' || resolution == 'UHD' ) { resolution_icon = 'badge badge--4k'};
             if (resolution == 'HD HEVC' || resolution == 'HD' ) { resolution_icon = 'badge badge--hd'};
             if (resolution == 'SD') { resolution_icon = 'badge badge--sdh' };
-
           var audio_codec = '';
             if (audio == 'AAC') { audio_codec = 'badge badge--dd'};
             if (audio == 'DDP') { audio_codec = 'badge badge--ddp'};
-
           var sub = '';
             if (subtitles == 'cs') { sub = 'badge badge--cc'};
-
           var info =  originaltitle !== undefined && genre === undefined
             ? `${originaltitle}`
             : `&nbsp;·&nbsp${genre}`;
-
           var title = cztitle == originaltitle
             ? `<span style="font-weight: 700; text-transform: uppercase; letter-spacing: 2px;">${cztitle}</span>`
             : `<span style="font-weight: 700; text-transform: uppercase;">${cztitle}</span>&nbsp;·&nbsp<span style="text-transform: capitalize; font-family: Raleway;">${originaltitle}</span>`;
-
           var output = `
             <div id="title">${title}</div>
             <span class="year" role="img">${year}&nbsp;·&nbsp${country}</span>
@@ -1078,7 +1001,6 @@ added_movies:
           function marquee() {
               let state = elt.getElementById("title"),
                   container = elt.getElementById("container");
-
               if (state && container) {
                   state.innerHTML = title;
                   let ro = new ResizeObserver(entries => {
@@ -1089,7 +1011,6 @@ added_movies:
                               c && c.contentRect &&
                               s.contentRect.width !== 0 &&
                               c.contentRect.width !== 0;
-
                       if (r && s.contentRect.width < c.contentRect.width) {
                           state.classList.remove("marquee");
                       }
@@ -1105,20 +1026,16 @@ added_movies:
           return output;
       }
     ]]]
-
   custom_fields:
     rating: >
       [[[
         if (entity) {
             let data = entity.attributes.data;
-
           if (data !== undefined) {
             let rating = Math.round((data[0].rating * 10));
-
             var stroke = '#20d07b';
               if (rating <= 40) { stroke = '#ff0000' };
               if (rating <= 60) { stroke = '#ffcc00' };
-
             let path = `
               <svg viewBox="0 0 36 36" class="circular-chart green">
                 <style>
@@ -1126,18 +1043,15 @@ added_movies:
                     display: flex;
                     flex-flow: row nowrap;
                   }
-
                   .single-chart {
                     width: 33%;
                     justify-content: space-around;
                   }
-
                   .circle-bg {
                     fill: #000000;
                     stroke: #ffffff85;
                     stroke-width: 3.8;
                   }
-
                   .circle {
                     fill: none;
                     stroke-width: 2.8;
@@ -1147,7 +1061,6 @@ added_movies:
                     animation-iteration-count: infinite;
                     animation-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
                   }
-
                   @keyframes progress {
                     0% {
                       stroke-dasharray: 0 100;
@@ -1169,7 +1082,6 @@ added_movies:
                   .circular-chart.green .circle {
                     stroke: ${stroke};
                   }
-
                   .percentage {
                     fill: #ffffff;
                     font-family: Poppins;
@@ -1191,13 +1103,11 @@ added_movies:
             </g>
           </svg>
           `;
-
           return `${path}`;
           }
         }
       ]]]
     poster: ''
-
   styles:
     custom_fields:
       rating:
@@ -1237,13 +1147,11 @@ added_movies:
                 }
               }
             ]]]
-
-#################################################
-#                                               #
-#               PROGRESS BAR                    #
-#                                               #
-#################################################
-
+  #################################################
+  #                                               #
+  #               PROGRESS BAR                    #
+  #                                               #
+  #################################################
 progress_bar:
   styles:
     custom_fields:
@@ -1293,7 +1201,6 @@ progress_bar:
               card = elt.getElementById('card'),
               container = elt.getElementById('container'),
               bar = elt.getElementById('bar');
-
           if (elt && card && container && bar) {
               card.insertBefore(bar, container);
                 function update() {
@@ -1301,13 +1208,11 @@ progress_bar:
                       mediaPosition = entity.attributes.media_position,
                       mediaDuration = entity.attributes.media_duration,
                       mediaContentType = entity.attributes.media_content_type;
-
                   let percentage = entity.state === 'paused'
                     ? (mediaPosition / mediaDuration * 100)
                     : entity.state === 'playing'
                       ? (((Date.now() / 1000) - (new Date(mediaPositionUpdatedAt).getTime() / 1000) + mediaPosition) / mediaDuration * 100)
                       : 0;
-
                   bar.style.width = percentage.toFixed(1) + '%';
                   requestAnimationFrame(update);
                 }
@@ -1324,20 +1229,17 @@ progress_bar:
                 card = elt.getElementById('card'),
                 container = elt.getElementById('container'),
                 progress = elt.getElementById('progress');
-
             if (elt && card && container && progress) {
                 card.insertBefore(progress, container);
             }
           }, 0);
         return ' ';}
       ]]]
-
-#################################################
-#                                               #
-#               MEDIA PLAYER                    #
-#                                               #
-#################################################
-
+  #################################################
+  #                                               #
+  #               MEDIA PLAYER                    #
+  #                                               #
+  #################################################
 mediaplayer:
   template:
     - base
@@ -1362,7 +1264,6 @@ mediaplayer:
         }
       ]]]
     circle_input_unit: '%'
-
 currently_playing:
   template:
     - conditional_media
@@ -1413,7 +1314,6 @@ currently_playing:
               border-radius: var(--control-border-radius);
               aspect-ratio: 1 / 1;
             }
-
     media_card_speaker:
       card:
         type: picture-elements
@@ -1562,7 +1462,6 @@ currently_playing:
                 entity_id: >
                   [[[ return entity.entity_id; ]]]
               haptic: medium
-
           - type: 'custom:button-card'
             icon: 'mdi:volume-plus'
             entity: >
@@ -1582,7 +1481,6 @@ currently_playing:
                 entity_id: >
                   [[[ return variables.entity_id; ]]]
               haptic: medium
-
           # - icon: 'mdi:power-standby'
           #   template: music_card_speaker_button
           #   #entity: '[[entity]]'
@@ -1601,7 +1499,6 @@ currently_playing:
           #   hold_action:
           #     action: none
           #   type: 'custom:button-card'
-
   styles:
     card:
       - padding: 2.75% 5.75% 0 5.75%
@@ -1610,7 +1507,6 @@ currently_playing:
           [[[
               let bg = states['sensor.vibrant_color'].state;
               return `linear-gradient(to top, rgba(${bg},.1), rgba(${bg},.6))`;
-
           ]]]
       - background-image: '#00000'
       - transition: all 0.5s ease-out
@@ -1642,13 +1538,11 @@ currently_playing:
         - top: 80%
       bar:
         - top: 80%
-
-#################################################
-#                                               #
-#            MUSIC PLAYER BUTTON                #
-#                                               #
-#################################################
-
+  #################################################
+  #                                               #
+  #            MUSIC PLAYER BUTTON                #
+  #                                               #
+  #################################################
 music_card_speaker_button:
   aspect_ratio: 1/1
   show_name: false
@@ -1681,13 +1575,11 @@ music_card_speaker_button:
         }
       `
     ]]]
-
-#################################################
-#                                               #
-#               ICON RATINGS                    #
-#                                               #
-#################################################
-
+  #################################################
+  #                                               #
+  #               ICON RATINGS                    #
+  #                                               #
+  #################################################
 icon_rating:
   variables:
     star_rating: ''
@@ -1721,13 +1613,11 @@ icon_rating:
               </svg>
             `
       ]]]
-
-#################################################
-#                                               #
-#               REMOTE CONTROL                  #
-#                                               #
-#################################################
-
+  #################################################
+  #                                               #
+  #               REMOTE CONTROL                  #
+  #                                               #
+  #################################################
 atv_popup_ios:
   double_tap_action:
     action: fire-dom-event
@@ -1771,7 +1661,6 @@ atv_popup_ios:
               source_name: YouTube
             - image: /local/community/Apple-Tv-Card/logo/DAZN.png
               source_name: DAZN
-
 atv_popup_web:
   double_tap_action:
     action: fire-dom-event
@@ -1856,7 +1745,6 @@ atv_popup_web:
                         {% else %}
                           --card-mod-icon: mdi:play;
                         {% endif %}
-
                         {{ 'animation: none;' if not is_state(config.entity, 'playing') }}
                       }
                       @keyframes flicker {
@@ -1989,7 +1877,6 @@ atv_popup_web:
                 #       is_volume_muted: >
                 #         [[[ return entity.attributes.is_volume_muted === 'false' ? 'true' : 'false'; ]]]
                 #   template: remote_icon_only
-
                 # - type: custom:button-card
                 #   entity: media_player.living_room_tv
                 #   icon: mdi:volume-minus
@@ -2000,7 +1887,6 @@ atv_popup_web:
                 #       entity_id: >
                 #         [[[ return entity.entity_id; ]]]
                 #   template: remote_icon_only
-
                 # - type: custom:button-card
                 #   entity: media_player.living_room_tv
                 #   icon: mdi:volume-plus
@@ -2011,7 +1897,6 @@ atv_popup_web:
                 #       entity_id: >
                 #         [[[ return entity.entity_id; ]]]
                 #   template: remote_icon_only
-
                 - type: custom:button-card
                   icon: mdi:youtube
                   tap_action:
@@ -2022,7 +1907,6 @@ atv_popup_web:
                       source: 'YouTube'
                     haptic: light
                   template: remote_icon_only
-
                 - type: custom:button-card
                   entity: media_player.living_room_tv
                   icon: mdi:menu
@@ -2033,7 +1917,6 @@ atv_popup_web:
                       entity_id: remote.atv
                       command: home_hold
                   template: remote_icon_only
-
                 - type: custom:button-card
                   entity: media_player.living_room_tv
                   icon: mdi:arrow-up-drop-circle-outline
@@ -2044,7 +1927,6 @@ atv_popup_web:
                       entity_id: remote.atv
                       command: up
                   template: remote_icon_arrow
-
                 - type: custom:button-card
                   entity: media_player.sony_bravia_tv
                   icon: mdi:power
@@ -2069,7 +1951,6 @@ atv_popup_web:
                   #             ? 'rgba(206, 245, 149, 0.4)'
                   #             : 'rgba(139, 51, 51, 0.9)';
                   #         ]]]
-
                 - type: custom:button-card
                   entity: media_player.living_room_tv
                   icon: mdi:spotify
@@ -2081,7 +1962,6 @@ atv_popup_web:
                       source: 'Spotify'
                     haptic: light
                   template: remote_icon_only
-
                 - type: custom:button-card
                   entity: media_player.living_room_tv
                   icon: mdi:arrow-left-drop-circle-outline
@@ -2092,7 +1972,6 @@ atv_popup_web:
                       entity_id: remote.atv
                       command: left
                   template: remote_icon_arrow
-
                 - type: custom:button-card
                   entity: media_player.living_room_tv
                   icon: mdi:crop-square
@@ -2103,7 +1982,6 @@ atv_popup_web:
                       entity_id: remote.atv
                       command: select
                   template: remote_icon_arrow
-
                 - type: custom:button-card
                   entity: media_player.living_room_tv
                   icon: mdi:arrow-right-drop-circle-outline
@@ -2114,7 +1992,6 @@ atv_popup_web:
                       entity_id: remote.atv
                       command: right
                   template: remote_icon_arrow
-
                 - type: custom:button-card
                   entity: media_player.living_room_tv
                   icon: mdi:netflix
@@ -2126,7 +2003,6 @@ atv_popup_web:
                       source: 'Netflix'
                     haptic: light
                   template: remote_icon_only
-
                 - type: custom:button-card
                   entity: media_player.living_room_tv
                   icon: mdi:keyboard-backspace
@@ -2137,7 +2013,6 @@ atv_popup_web:
                       entity_id: remote.atv
                       command: menu
                   template: remote_icon_only
-
                 - type: custom:button-card
                   entity: media_player.living_room_tv
                   icon: mdi:arrow-down-drop-circle-outline
@@ -2148,7 +2023,6 @@ atv_popup_web:
                       entity_id: remote.atv
                       command: down
                   template: remote_icon_arrow
-
                 - type: custom:button-card
                   entity: rmedia_player.living_room_tv
                   icon: mdi:home
@@ -2159,7 +2033,6 @@ atv_popup_web:
                       entity_id: remote.atv
                       command: home
                   template: remote_icon_only
-
         # content:
         #   type: vertical-stack
         #   cards:
@@ -2199,7 +2072,6 @@ atv_popup_web:
         #                 {% else %}
         #                   --card-mod-icon: mdi:play;
         #                 {% endif %}
-
         #                 {{ 'animation: none;' if not is_state(config.entity, 'playing') }}
         #               }
         #               @keyframes flicker {
@@ -2228,7 +2100,6 @@ atv_popup_web:
         #                 {% if not is_state(config.entity, 'idle') and not is_state(config.entity, 'off') %}
         #                   content: "";
         #                 {% endif %}
-
         #                 {% if not is_state('media_player.currently_playing', 'idle') and not is_state('media_player.currently_playing', 'off') %}
         #                 {% set source = state_attr('media_player.currently_playing', 'source') %}
         #                 {% set appname = state_attr('media_player.currently_playing', 'app_id') %}
@@ -2244,7 +2115,6 @@ atv_popup_web:
         #                 margin: 4px 4px 16px;
         #                 filter: drop-shadow(4px 4px 6px rgba(0, 0, 0, 0.5));
         #                 border-radius: var(--control-border-radius);
-
         #                 {% set active_child = state_attr(config.entity, 'active_child') %}
         #                 {% if active_child == 'media_player.spotify' %}
         #                   aspect-ratio: 1 / 1;
@@ -2332,7 +2202,6 @@ atv_popup_web:
         #             var(--mush-rgb-blue-grey)
         #             {% endif %};
         #           }
-
         #     - type: grid
         #       columns: 4
         #       cards:
@@ -2346,7 +2215,6 @@ atv_popup_web:
         #               source: 'YouTube'
         #             haptic: light
         #           template: remote_icon_only
-
         #         - type: custom:button-card
         #           entity: media_player.living_room_tv
         #           icon: mdi:volume-mute
@@ -2359,7 +2227,6 @@ atv_popup_web:
         #               is_volume_muted: >
         #                 [[[ return entity.attributes.is_volume_muted === 'false' ? 'true' : 'false'; ]]]
         #           template: remote_icon_only
-
         #         - type: custom:button-card
         #           entity: media_player.living_room_tv
         #           icon: mdi:volume-minus
@@ -2370,7 +2237,6 @@ atv_popup_web:
         #               entity_id: >
         #                 [[[ return entity.entity_id; ]]]
         #           template: remote_icon_only
-
         #         - type: custom:button-card
         #           entity: media_player.living_room_tv
         #           icon: mdi:volume-plus
@@ -2381,7 +2247,6 @@ atv_popup_web:
         #               entity_id: >
         #                 [[[ return entity.entity_id; ]]]
         #           template: remote_icon_only
-
         #         - type: custom:button-card
         #           entity: media_player.living_room_tv
         #           icon: mdi:kodi
@@ -2393,7 +2258,6 @@ atv_popup_web:
         #               source: 'Kodi'
         #             haptic: light
         #           template: remote_icon_only
-
         #         - type: custom:button-card
         #           entity: media_player.living_room_tv
         #           icon: mdi:menu
@@ -2404,7 +2268,6 @@ atv_popup_web:
         #               entity_id: remote.atv
         #               command: home_hold
         #           template: remote_icon_only
-
         #         - type: custom:button-card
         #           entity: media_player.living_room_tv
         #           icon: mdi:arrow-up-drop-circle-outline
@@ -2415,7 +2278,6 @@ atv_popup_web:
         #               entity_id: remote.atv
         #               command: up
         #           template: remote_icon_arrow
-
         #         - type: custom:button-card
         #           entity: media_player.living_room_tv
         #           icon: mdi:power
@@ -2435,7 +2297,6 @@ atv_popup_web:
         #                       ? 'rgba(206, 245, 149, 0.4)'
         #                       : 'rgba(139, 51, 51, 0.9)';
         #                   ]]]
-
         #         - type: custom:button-card
         #           entity: media_player.living_room_tv
         #           icon: mdi:spotify
@@ -2447,7 +2308,6 @@ atv_popup_web:
         #               source: 'Spotify'
         #             haptic: light
         #           template: remote_icon_only
-
         #         - type: custom:button-card
         #           entity: media_player.living_room_tv
         #           icon: mdi:arrow-left-drop-circle-outline
@@ -2458,7 +2318,6 @@ atv_popup_web:
         #               entity_id: remote.atv
         #               command: left
         #           template: remote_icon_arrow
-
         #         - type: custom:button-card
         #           entity: media_player.living_room_tv
         #           icon: mdi:crop-square
@@ -2469,7 +2328,6 @@ atv_popup_web:
         #               entity_id: remote.atv
         #               command: select
         #           template: remote_icon_arrow
-
         #         - type: custom:button-card
         #           entity: media_player.living_room_tv
         #           icon: mdi:arrow-right-drop-circle-outline
@@ -2480,7 +2338,6 @@ atv_popup_web:
         #               entity_id: remote.atv
         #               command: right
         #           template: remote_icon_arrow
-
         #         - type: custom:button-card
         #           entity: media_player.living_room_tv
         #           icon: mdi:netflix
@@ -2492,7 +2349,6 @@ atv_popup_web:
         #               source: 'Netflix'
         #             haptic: light
         #           template: remote_icon_only
-
         #         - type: custom:button-card
         #           entity: media_player.living_room_tv
         #           icon: mdi:keyboard-backspace
@@ -2503,7 +2359,6 @@ atv_popup_web:
         #               entity_id: remote.atv
         #               command: menu
         #           template: remote_icon_only
-
         #         - type: custom:button-card
         #           entity: media_player.living_room_tv
         #           icon: mdi:arrow-down-drop-circle-outline
@@ -2514,7 +2369,6 @@ atv_popup_web:
         #               entity_id: remote.atv
         #               command: down
         #           template: remote_icon_arrow
-
         #         - type: custom:button-card
         #           entity: rmedia_player.living_room_tv
         #           icon: mdi:home
@@ -2525,7 +2379,6 @@ atv_popup_web:
         #               entity_id: remote.atv
         #               command: home
         #           template: remote_icon_only
-
 remote:
   show_name: false
   show_state: false
@@ -2544,7 +2397,6 @@ remote:
                 ? 'rgb(0, 0, 0)'
                 : '#97989c';
           ]]]
-
       - color: >
           [[[
             return variables.state_on
@@ -2564,7 +2416,6 @@ remote:
                 : 'rgba(115, 115, 115, 0.2)';
             }
           ]]]
-
     icon:
       - width: 32px
       - color: >
@@ -2573,13 +2424,11 @@ remote:
                 ? '#4b5254'
                 : '#97989c';
           ]]]
-
-#################################################
-#                                               #
-#               CONTROLL TEMPLATE               #
-#                                               #
-#################################################
-
+  #################################################
+  #                                               #
+  #               CONTROLL TEMPLATE               #
+  #                                               #
+  #################################################
 tpl_spotify:
   template:
     - base
@@ -2667,7 +2516,6 @@ tpl_spotify:
       - background: none
       - --mdc-ripple-color: none
       - --webkit-tap-highlight-color: none
-
 tpl_minicontrol:
   custom_fields:
     minicontrol:
@@ -2730,7 +2578,6 @@ tpl_minicontrol:
                 ? 'none'
                 : null;
             ]]]
-
 tpl_minicontrol_mass:
   custom_fields:
     minicontrol:
