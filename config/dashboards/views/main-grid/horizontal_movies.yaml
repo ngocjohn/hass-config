@@ -29,6 +29,11 @@
           depth: 300
 
       cards:
+        # - type: custom:button-card
+        #   entity: sensor.ymovie_added_5
+        #   template:
+        #     - movies_base
+
         - type: horizontal-stack
           cards:
             - type: grid

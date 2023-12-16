@@ -36,13 +36,13 @@ I frequently refresh my configuration files. My current Home Assistant version i
       </thead>
       <tbody>
           <tr>
-              <td>30,804 </td>
+              <td>31,132 </td>
               <td>29</td>
-              <td>163</td>
+              <td>148</td>
               <td>32</td>
               <td>52</td>
               <td>32</td>
-              <td>730</td>
+              <td>695</td>
               <td>190</td>
               <td>37</td>
           </tr>
@@ -64,6 +64,7 @@ I frequently refresh my configuration files. My current Home Assistant version i
 - Cloudflared
 - eufy-security-ws
 - Glances
+- Hakit
 - Home Assistant Google Drive Backup
 - Log Viewer
 - Mosquitto broker

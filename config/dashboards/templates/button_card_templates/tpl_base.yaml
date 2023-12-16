@@ -466,7 +466,7 @@ extra_styles:
 
         `:''}
 
-        ${(this._config.template.includes('conditional_media') || this._config.template.includes('conditional_media_shows') ||this._config.template.includes('conditional_added_media')|| this._config.template.includes('conditional_media_movies') || this._config.template.includes('added_movies') || this._config.template.includes('base_added')) ? `
+        ${(this._config.template.includes('conditional_media') || this._config.template.includes('conditional_media_shows') || this._config.template.includes('conditional_added_media')|| this._config.template.includes('movies_base') || this._config.template.includes('added_movies')) ? `
 
          /* * * * * * * * * * * * * * * * * *
           *                                 *
@@ -512,7 +512,7 @@ extra_styles:
             }
           }
           .marquee {
-            animation: marquee 20s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            animation: marquee 20s linear infinite;
           }
           @keyframes marquee {
             from {
@@ -528,6 +528,7 @@ extra_styles:
               display: none !important;
             }
           }
+
           .badge {
             display: inline-block;
             padding-right: 5%;
@@ -675,16 +676,22 @@ extra_styles:
         `:''}
 
         ${(this._config.template.includes('icon_name') || this._config.template.includes('icon_only')) ? `
-        #card {
-          background: rgba(255, 255, 255, 0.06);
-        }
-        #card:hover {
-          background: rgba(255, 255, 255, 0.15) !important;
-          scale: 1.05;
-        }
-        #icon:hover, #name:hover {
-          color: rgb(255, 255, 255) !important;
-        }
+          #card {
+            background: rgba(255, 255, 255, 0.06);
+          }
+          #card:hover {
+            background: rgba(255, 255, 255, 0.15) !important;
+            scale: 1.05;
+          }
+          #icon:hover, #name:hover {
+            color: rgb(255, 255, 255) !important;
+          }
+        `:''}
+
+        ${(this._config.template.includes('added_movies_base')) ? `
+          #container {
+            padding: 1.5% 5%;
+          }
         `:''}
 
         ${this._config.template.includes('chips')  ? `
