@@ -34,7 +34,24 @@ browser_mod:
                   template:
                     - added_movies
           card:
-            type: grid
-            columns: 3
-            title: ' '
+            type: custom:swipe-card
+            start_card: 1
+            parameters:
+              pagination:
+                type: bullets
+                clickable: true
+              autoplay:
+                delay: 7000
+                disableOnInteraction: false
+                reverseDirection: false
+                pauseOnMouseEnter: true
+              speed: 650
+              slidesPerView: auto
+              roundLengths: true
+              grabCursor: true
+              loop: false
+              spaceBetween: 50
+              direction: vertical
+              autoHeight: true
+              followFinger: true
           card_param: cards

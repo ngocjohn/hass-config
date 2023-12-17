@@ -554,6 +554,7 @@
           device_id:
           - 4f43e0dc2e03b71c2e137f9696a04a2c
           - 06f0c6e9f7b45a2445a607fef53f54df
+          - 0604abf0d6d8e6f72903f0cc77d83b3d
   mode: restart
 - id: '1696329856970'
   alias: Quit Youtube
@@ -770,6 +771,24 @@
       timeout: 00:05:00
     - service: shell_command.gitpush
       data: {}
+    - service: notify.persistent_notification
+      data:
+        message: Git public repo pushed!
+        title: Github Public
+    - wait_for_trigger:
+      - platform: state
+        entity_id:
+        - sensor.ngocjohn_hass_config_latest_commit
+      continue_on_timeout: false
+      timeout:
+        hours: 0
+        minutes: 0
+        seconds: 5
+        milliseconds: 0
+    - service: notify.persistent_notification
+      data:
+        title: Github Public
+        message: '{{ states.sensor.ngocjohn_hass_config_latest_commit.state }}'
   mode: single
 - id: '1701556784590'
   alias: Update YouTube Sensor

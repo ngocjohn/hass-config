@@ -40,57 +40,88 @@
               columns: 1
               cards:
                 #Conditional Media
-                - type: custom:swipe-card
-                  start_card: 1
-                  parameters:
-                    pagination:
-                      type: bullets
-                      clickable: true
-                    autoplay:
-                      delay: 7000
-                      disableOnInteraction: false
-                      reverseDirection: false
-                      pauseOnMouseEnter: true
-                    speed: 650
-                    slidesPerView: auto
-                    roundLengths: true
-                    grabCursor: true
-                    loop: false
-                    spaceBetween: 50
-                    direction: vertical
-                    autoHeight: true
 
-                    followFinger: true
-                  cards:
-                    - type: custom:button-card
-                      entity: sensor.ymovie_added_1
-                      template:
-                        - added_movies
+                - type: custom:auto-entities
+                  filter:
+                    include:
+                      - entity_id: 'sensor.ymovie_added_*'
+                        options:
+                          type: custom:button-card
+                          template:
+                            - added_movies
+                  card:
+                    type: custom:swipe-card
+                    start_card: 1
+                    parameters:
+                      pagination:
+                        type: bullets
+                        clickable: true
+                      autoplay:
+                        delay: 7000
+                        disableOnInteraction: false
+                        reverseDirection: false
+                        pauseOnMouseEnter: true
+                      speed: 650
+                      slidesPerView: auto
+                      roundLengths: true
+                      grabCursor: true
+                      loop: false
+                      spaceBetween: 50
+                      direction: vertical
+                      autoHeight: true
+                      followFinger: true
+                  card_param: cards
 
-                    - type: custom:button-card
-                      entity: sensor.ymovie_added_2
-                      template:
-                        - added_movies
+                # - type: custom:swipe-card
+                #   start_card: 1
+                #   parameters:
+                #     pagination:
+                #       type: bullets
+                #       clickable: true
+                #     autoplay:
+                #       delay: 7000
+                #       disableOnInteraction: false
+                #       reverseDirection: false
+                #       pauseOnMouseEnter: true
+                #     speed: 650
+                #     slidesPerView: auto
+                #     roundLengths: true
+                #     grabCursor: true
+                #     loop: false
+                #     spaceBetween: 50
+                #     direction: vertical
+                #     autoHeight: true
+                #     followFinger: true
+                #   cards:
+                #     - type: custom:button-card
+                #       entity: sensor.ymovie_added_1
+                #       template:
+                #         - added_movies
 
-                    - type: custom:button-card
-                      entity: sensor.ymovie_added_3
-                      template:
-                        - added_movies
+                #     - type: custom:button-card
+                #       entity: sensor.ymovie_added_2
+                #       template:
+                #         - added_movies
 
-                    - type: custom:button-card
-                      entity: sensor.ymovie_added_4
-                      template:
-                        - added_movies
+                #     - type: custom:button-card
+                #       entity: sensor.ymovie_added_3
+                #       template:
+                #         - added_movies
 
-                    - type: custom:button-card
-                      entity: sensor.ymovie_added_5
-                      template:
-                        - added_movies
+                #     - type: custom:button-card
+                #       entity: sensor.ymovie_added_4
+                #       template:
+                #         - added_movies
 
-                    - type: custom:button-card
-                      entity: sensor.ymovie_added_6
-                      template:
-                        - added_movies
+                #     - type: custom:button-card
+                #       entity: sensor.ymovie_added_5
+                #       template:
+                #         - added_movies
+
+                #     - type: custom:button-card
+                #       entity: sensor.ymovie_added_6
+                #       template:
+                #         - added_movies
 
         - type: conditional
           conditions:

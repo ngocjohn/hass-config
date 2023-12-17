@@ -688,6 +688,12 @@ extra_styles:
           }
         `:''}
 
+        ${(this._config.template.includes('added_movies_base')) ? `
+          #container {
+            padding: 1.5% 5%;
+          }
+        `:''}
+
         ${(this._config.template.includes('movies_base')) ? `
           #card {
             display: flex;

@@ -323,7 +323,7 @@ tablet:
               }
               .swiper-pagination {
                 right: 10% !important;
-                top: 90% !important;
+                top: 75% !important;
               }
               .swiper-pagination-bullet {
                 background-color: rgba(255, 255, 255, .7) !important;
@@ -335,7 +335,7 @@ tablet:
                 }
                 .swiper-pagination {
                   right: 5% !important;
-                  top: 70% !important;
+                  top: 60% !important;
                 }
               }
 
