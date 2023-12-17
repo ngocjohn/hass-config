@@ -25,3 +25,4 @@ decluttering_templates: !include ./templates/decluttering-card.yaml
 views:
   - !include views/main.yaml
   - !include views/system.yaml
+  - !include views/cinema.yaml

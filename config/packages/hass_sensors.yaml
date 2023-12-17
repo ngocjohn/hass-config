@@ -122,3 +122,5 @@ sensor:
       - 'date'
   - platform: folder
     folder: /config/www/tmp/snapshots
+
+  - platform: websocket_api

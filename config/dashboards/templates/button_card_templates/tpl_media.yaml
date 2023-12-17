@@ -501,11 +501,14 @@ conditional_media_shows:
 movies_base:
   template:
     - base
-    - base_media
-  aspect_ratio: 1000/996
+  aspect_ratio: 1/1.94
   show_name: false
   show_state: true
   show_entity_picture: false
+  show_icon: false
+  show_label: true
+  variables:
+    tilt_enable: '[[[ return false;]]]'
   state_display: >
     [[[
       if (entity) {
@@ -579,6 +582,26 @@ movies_base:
       }
     ]]]
   custom_fields:
+    image: >
+      [[[
+        if (entity) {
+          let data = entity.attributes.data;
+            if (data && data[0].entity_picture) {
+              return  `
+              <div class="image">
+                <img class="poster" src="${data[0].entity_picture}">
+              </div>
+              `;
+            }
+            else {
+              return  `
+              <div id="image">
+                <img class="poster" src="/local/img/movie_time.png}">
+              </div>
+              `;
+            }
+        }
+      ]]]
     label: >
       [[[
         if (entity) {
@@ -689,108 +712,22 @@ movies_base:
           }
         }
       ]]]
-    poster:
-      card:
-        type: picture-elements
-        image: /local/img/svg/overlay.svg
-        card_mod:
-          style: |
-            ha-card {
-              --ha-card-background: none !important;
-            }
-        elements:
-          - type: 'custom:button-card'
-            entity: >
-              [[[
-                if(entity) {
-                  return variables.entity_id;
-                }
-              ]]]
-            aspect_ratio: 1/2
-            show_name: false
-            show_entity_picture: false
-            show_state: false
-            show_icon: false
-            styles:
-              card:
-                - background: >
-                    [[[
-                      if (entity) {
-                        let data = entity.attributes.data;
-                          if (data && data[0].entity_picture) {
-                            return  `center center/cover no-repeat`;
-                          }
-                          else {
-                            return  `center center/contain no-repeat`;
-                          }
-                      }
-                    ]]]
-                - background-image: >
-                    [[[
-                      if (entity) {
-                        let data = entity.attributes.data;
-                          if (data && data[0].entity_picture) {
-                            return `url("${data[0].entity_picture}")`;
-                          }
-                          else {
-                            return `url("/local/img/movie_time.png")`;
-                          }
-                      }
-                    ]]]
-            style:
-              top: 50%
-              left: 50%
-              width: 70%
   styles:
-    card:
+    grid:
+      - grid-template-areas: |
+          "image"
+          "l"
+          "s"
+      - grid-template-columns: 150px
+      - grid-template-rows: calc(150px * 1.5) min-content min-content
       - gap: 0
+      - align-items: flex-start
+    card:
       - padding: 0
-      - margin: 0
-      - backdrop-filter: var(--blur-intensity)
-      - border-radius: calc(var(--button-card-border-radius) / 2)
-      - background: &movie_background >
-          [[[
-            if (entity) {
-              let data = entity.attributes.data;
-                if (data && data[0].entity_picture) {
-                  return  `center center/cover no-repeat`;
-                }
-                else {
-                  return  `center center/contain no-repeat`;
-                }
-            }
-          ]]]
-      - background-image: &movie_background_image >
-          [[[
-            if (entity) {
-              let data = entity.attributes.data;
-                if (data && data[0].entity_picture) {
-                  return `linear-gradient(to top, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 0) 100%), url("${data[0].entity_picture}")`;
-                }
-                else {
-                  return `url("/local/img/movie_time.png")`;
-                }
-            }
-          ]]]
     state:
-      - line-height: normal
-      - color: '#ffffff8c'
-      - text-shadow: black 3px 2px 4px
-    custom_fields:
-      rating:
-        - display: block
-        - position: absolute
-        - width: 15%
-        - padding: 5%
-      label:
-        - position: absolute
-        - justify-self: center
-        - bottom: 20%
-        - overflow: visible
-      poster:
-        - display: block
-        - position: absolute
-        - justify-self: center
+      - justify-self: start
+
+  #ADDED MOVIES
 added_movies_base:
   template:
     - base
@@ -871,63 +808,63 @@ added_movies:
         - landscape: hide
         - portrait: hide
         - ymovie: show
-  tap_action: !include /config/dashboards/shared/popup/popup_ymovie.yaml
-  # tap_action:
-  #   action: fire-dom-event
-  #   browser_mod:
-  #     service: browser_mod.popup
-  #     data:
-  #       style: |
-  #         --popup-min-width: 1400px;
-  #       card_mod:
-  #         style:
-  #           #popup header
-  #           .: |
-  #             @media (max-width: 450px), (max-height: 500px) {
-  #               ha-dialog {
-  #                 --mdc-dialog-min-width: 100vw !important;
-  #                 --mdc-dialog-min-height: 100vh !important;
-  #                 --popup-border-radius: 0 !important;
-  #               }
-  #             }
-  #             .content .container {
-  #               padding: 0 !important;
-  #             }
-  #       title: >
-  #         [[[
-  #           if (entity) {
-  #               let data = entity.attributes.data;
-  #             if (data !== undefined) {
-  #               let title = data[0].title;
-  #               return `${title}`;
-  #             }
-  #           }
-  #         ]]]
-  #       content:
-  #         type: custom:layout-card
-  #         layout_type: custom:grid-layout
-  #         layout:
-  #           margin: 0
-  #           grid-template-columns: 1fr
-  #           grid-template-rows: fit-content(100%)
-  #         cards:
-  #           - type: iframe
-  #             aspect_ratio: >
-  #               [[[
-  #                 if (window.matchMedia('(max-width: 800px)').matches)
-  #                   return '180%';
-  #                 else return '100%';
-  #               ]]]
-  #             url: >
-  #               [[[
-  #                 if (entity) {
-  #                     let data = entity.attributes.data;
-  #                   if (data !== undefined) {
-  #                     let tmdb = data[0].services.tmdb;
-  #                     return `https://www.themoviedb.org/movie/${tmdb}`;
-  #                   }
-  #                 }
-  #               ]]]
+  # tap_action: !include /config/dashboards/shared/popup/popup_ymovie.yaml
+  tap_action:
+    action: fire-dom-event
+    browser_mod:
+      service: browser_mod.popup
+      data:
+        style: |
+          --popup-min-width: 1400px;
+        card_mod:
+          style:
+            #popup header
+            .: |
+              @media (max-width: 450px), (max-height: 500px) {
+                ha-dialog {
+                  --mdc-dialog-min-width: 100vw !important;
+                  --mdc-dialog-min-height: 100vh !important;
+                  --popup-border-radius: 0 !important;
+                }
+              }
+              .content .container {
+                padding: 0 !important;
+              }
+        title: >
+          [[[
+            if (entity) {
+                let data = entity.attributes.data;
+              if (data !== undefined) {
+                let title = data[0].title;
+                return `${title}`;
+              }
+            }
+          ]]]
+        content:
+          type: custom:layout-card
+          layout_type: custom:grid-layout
+          layout:
+            margin: 0
+            grid-template-columns: 1fr
+            grid-template-rows: fit-content(100%)
+          cards:
+            - type: iframe
+              aspect_ratio: >
+                [[[
+                  if (window.matchMedia('(max-width: 800px)').matches)
+                    return '180%';
+                  else return '100%';
+                ]]]
+              url: >
+                [[[
+                  if (entity) {
+                      let data = entity.attributes.data;
+                    if (data !== undefined) {
+                      let tmdb = data[0].services.tmdb;
+                      return `https://www.themoviedb.org/movie/${tmdb}`;
+                    }
+                  }
+                ]]]
 
   label: >
     [[[

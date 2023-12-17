@@ -688,9 +688,29 @@ extra_styles:
           }
         `:''}
 
-        ${(this._config.template.includes('added_movies_base')) ? `
-          #container {
-            padding: 1.5% 5%;
+        ${(this._config.template.includes('movies_base')) ? `
+          #card {
+            display: flex;
+            flex-wrap: wrap;
+            align-content: flex-start;
+            width: 150px;
+            min-width: 150px;
+            overflow: visible;
+            border-radius: 8px !important;
+          }
+          #image {
+            display: block;
+            width: 100%;
+            min-height: calc(150px * 1.5);
+            height: calc(150px * 1.5);
+            background: #dbdbdb;
+            overflow: visible;
+            box-shadow: 0 2px 8px rgba(0,0,0,.1);
+          }
+          #image img {
+            display: inline-block;
+            width: 100%;
+            height: 100%;
           }
         `:''}
 
