@@ -334,7 +334,7 @@ template:
         attributes:
           doors_open: >-
             {% set doors = expand(states.group.security_doors) %}
-            {{ doors | selectattr('state', 'in', ['open', 'on', 'unlocked']) | map(attribute='name') | list | replace('Contact Sensor ', '') }}
+            {{ doors | selectattr('state', 'in', ['open', 'on', 'unlocked']) | map(attribute='name') | list | replace('Contact Sensor ', '') | replace('Balcony Door ', '') }}
 
       # SENSOR - HOME MODE
       - unique_id: home_mode

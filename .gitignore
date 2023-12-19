@@ -7,3 +7,6 @@ private_repo.sh
 config/index.html
 config/hassio.code-profile
 config/templates
+config/.gitignore
+config/.vscode
+secrets.yaml

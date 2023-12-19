@@ -86,7 +86,7 @@ browser_mod:
               set_current_as_main: false
             - type: custom:better-thermostat-ui-card
               entity: climate.office_thermostat
-              disable_window: true
+              disable_window: false
               disable_summer: true
               eco_temperature: 22
               set_current_as_main: false

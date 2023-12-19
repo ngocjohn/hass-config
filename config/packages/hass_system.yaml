@@ -84,7 +84,7 @@ logger:
     homeassistant.components.http: error
     homeassistant.components.websocket_api: error
     homeassistant.components.spotify: fatal
-    frontend.js.latest: debug
+    frontend.js.latest: error
 
 # TTS
 tts:

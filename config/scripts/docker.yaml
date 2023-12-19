@@ -1,0 +1,8 @@
+---
+  docker_watchtower_toogle:
+    alias: Pause Watchtower
+    sequence:
+      - service: shell_command.pause_watchtower
+        data: {}
+    mode: single
+    icon: cil:docker-watchtower

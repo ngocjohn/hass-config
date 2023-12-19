@@ -1,0 +1,121 @@
+blueprint:
+  name: Conversation agent agenda notification
+  description: Conversation agent generates a notification based on the upcoming calendar
+    agenda, location, and weather.
+  author: allenporter
+  domain: automation
+  input:
+    notify_time:
+      name: Notification time
+      description: Time the automation is triggered to send the notification.
+      selector:
+        time: {}
+      default: 07:00:00
+    notify_service:
+      name: Notify service name
+      description: The name of the notify service where the notification should be
+        sent.
+      selector:
+        text:
+          multiline: false
+      default: notify.notify
+    calendar_entity:
+      name: Calendar
+      description: The calendar entity to use for finding upcoming calendar events.
+      selector:
+        entity:
+          multiple: false
+          filter:
+          - domain:
+            - calendar
+    calendar_duration:
+      name: Calendar event duration
+      description: How many hours ahead to look for upcoming calendar events.
+      selector:
+        duration: {}
+      default:
+        hours: 18
+    weather_entity:
+      name: Weather entity
+      description: The weather entity to use for upcoming weather forecast.
+      selector:
+        entity:
+          multiple: false
+          filter:
+          - domain:
+            - weather
+    zone_entity:
+      name: Home zone entity
+      description: The zone entity to use to determine approximate location for understanding
+        typical weather.
+      selector:
+        entity:
+          multiple: false
+          filter:
+          - domain:
+            - zone
+    conversation_agent:
+      name: Conversation agent
+      description: 'The conversation agent to use for generating the notification
+        text.
+
+        This should be a OpenAI conversation agent for this Blueprint to work.'
+      selector:
+        conversation_agent: {}
+    prompt:
+      name: Conversation agent prompt
+      selector:
+        text:
+          multiline: true
+          type: text
+      default: "Please generate text for a notification that will be sent to the users\nsmartphone
+        with helpful information.\n\nYou are a helpful personal agent that generates
+        text for the user:\n- Your answers are helpful, friendly, warm, insightful.\n-
+        Your answers are not technical, and do not include Home Assistant internal
+        details such as entities in responses.\n- Your messages help the user prepare
+        for their day, for example:\n  - Making note of unusual weather for the location
+        and time of year (but not mundane details like \"0% chance of precipitation\")\n
+        \ - How much time remaining until their first meeting\n  - Anything that may
+        be special or unique, such as celebrating a birthday"
+  source_url: https://www.home-assistant.io/blueprints/blog/2023-07/notify_agent_agenda.yaml
+trigger:
+  platform: time
+  at: !input notify_time
+action:
+- variables:
+    weather_entity: !input weather_entity
+    calendar_entity: !input calendar_entity
+    zone_entity: !input zone_entity
+    calendar_duration: !input calendar_duration
+    prompt: !input prompt
+- alias: Fetch Calendar Agenda
+  service: calendar.list_events
+  data:
+    duration: !input calendar_duration
+  target:
+    entity_id: !input calendar_entity
+  response_variable: agenda
+- alias: Conversation Agent Notification Text
+  service: conversation.process
+  data:
+    text: "Time: {{ now() }}\n{%- if zone_entity is defined %}\nLatitude: {{ state_attr(zone_entity,
+      'latitude') | round(1) }}\nLongitude: {{ state_attr(zone_entity, 'longitude')
+      | round(1) }}\n{% endif %}\n\n{%- if weather_entity is defined %}\n{%- set forecast
+      = state_attr(weather_entity, 'forecast')[0] %}\n{%- set temperature_unit = state_attr(weather_entity,
+      'temperature_unit') -%}\nWeather: {{ forecast.condition }} ({{ forecast.temperature
+      }}{{ temperature_unit }}, {{ forecast.precipitation }}% precipitation)\n{%-
+      endif %}\n\nCalendar \"{{ state_attr(calendar_entity, 'friendly_name') }}\"
+      events for the next {{ calendar_duration.hours }}:\n{%- if agenda.events %}\n
+      \ {%- for event in agenda.events %}\n  - Summary: {{ event.summary }}\n    Start-End:
+      {% if event.start is defined %}{{ event.start }} to {{ event.end }}{% else %}All
+      Day{% endif %}\n    {%- if event.descripton is defined %}\n    Descripton: {{
+      event.descripton }}\n    {% endif -%}\n    {%- if event.location is defined
+      %}\n      Location: {{ event.location }}\n    {% endif -%}\n  {%- endfor %}\n{%-
+      else %}\n  - No upcoming events.\n{%- endif %}\n\n{{ prompt }}"
+    agent_id: !input conversation_agent
+  response_variable: agent
+- alias: Send notification
+  service: !input notify_service
+  data:
+    title: '{{ now().strftime(''%A'') }} Agenda'
+    message: '{{ agent.response.speech.plain.speech }}'

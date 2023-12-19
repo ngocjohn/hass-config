@@ -76,34 +76,33 @@ browser_mod:
               name: WAN Status
             # - entity: sensor.external_ip
             # - entity: binary_sensor.template_unifi_upgradable
-            - entity: sensor.template_ap_adopted
+            # - entity: sensor.template_ap_adopted
             - type: custom:multiple-entity-row
-              entity: sensor.template_ap_clients
+              entity: sensor.unifi_controller_clients
               icon: mdi:devices
               name: 'Total Clients'
               show_state: false
               secondary_info:
-                entity: sensor.template_network_clients
+                entity: sensor.unifi_controller_clients
+                unit: true
               entities:
-                - entity: sensor.ngoc_giang_vanessa_2g
+                - attribute: wifi0
                   name: 2.4GhZ
                   unit: ' '
-                - entity: sensor.ngoc_giang_vanessa_5g
+                - attribute: wifi1
                   name: 5GhZ
                   unit: ' '
-                - entity: sensor.template_wired_clients
+                - attribute: wired
                   name: Wired
                   unit: ' '
             - type: custom:multiple-entity-row
               entity: binary_sensor.unifi_controller_alert
               name: 'Alert'
               state_color: true
-              show_state: false
+              show_state: true
               secondary_info:
                 attribute: Message
               entities:
-                - entity: binary_sensor.unifi_controller_alert
-                  name: 'State'
                 - icon: mdi:archive-minus
                   tap_action:
                     action: call-service
