@@ -44,7 +44,7 @@
                 - type: custom:auto-entities
                   filter:
                     include:
-                      - entity_id: 'sensor.ymovie_added_*'
+                      - entity_id: 'sensor.kodi_added_movie_*'
                         options:
                           type: custom:button-card
                           template:

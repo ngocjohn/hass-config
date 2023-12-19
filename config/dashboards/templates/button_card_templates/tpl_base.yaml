@@ -690,7 +690,10 @@ extra_styles:
 
         ${(this._config.template.includes('added_movies_base')) ? `
           #container {
-            padding: 1.5% 5%;
+            padding: 0px 5%;
+          }
+          #poster {
+            border-radius: 12px !important;
           }
         `:''}
 

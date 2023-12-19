@@ -733,7 +733,7 @@ added_movies_base:
     - base
   aspect_ratio: 1000/996
   show_state: true
-  show_label: true
+  show_label: false
   show_name: false
   tap_action: block
   styles:
@@ -746,7 +746,7 @@ added_movies_base:
       - grid-template-columns: 1fr 1fr
       - grid-template-rows: auto min-content min-content min-content
       - gap: 0
-      - align-items: start
+      - align-items: flex-start
       - -webkit-backdrop-filter: var(--blur-intensity)
       - backdrop-filter: var(--blur-intensity)
     name:
@@ -754,17 +754,14 @@ added_movies_base:
       - line-height: 100%
       - color: rgba(255,255,255,0.6)
     state:
-      # - justify-self: flex
-      - line-height: 123%
-      - overflow: hidden
-      - color: #ffffffcc
+      - line-height: normal
       - text-shadow: black 3px 2px 4px
-    label:
-      - position: absolute
-      - width: unset
-      - justify-self: center
-      - bottom: 10%
-      - overflow: visible
+    # label:
+    #   - position: absolute
+    #   - width: unset
+    #   - justify-self: center
+    #   - bottom: 10%
+    #   - overflow: visible
     card:
       - padding: 0%
       - border-radius: calc(var(--button-card-border-radius) / 2)
@@ -772,27 +769,14 @@ added_movies_base:
       - overflow: hidden
       - background: >
           [[[
-            if (entity) {
-              let data = entity.attributes.data;
-                if (data && data[0].entity_picture) {
-                  return  `center center/cover no-repeat`;
-                }
-                else {
-                  return  `center center/contain no-repeat`;
-                }
-            }
+              if (entity && entity.attributes)
+                return  `center center/cover no-repeat`
+                return `center center/contain no-repeat`;
           ]]]
       - background-image: >
           [[[
-            if (entity) {
-              let data = entity.attributes.data;
-                if (data && data[0].entity_picture) {
-                  return `linear-gradient(to top, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 0) 100%), url("${data[0].entity_picture}")`;
-                }
-                else {
-                  return `url("/local/img/movie_time.png")`;
-                }
-            }
+            if (entity && entity.attributes)
+              return `linear-gradient(to top, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 0) 100%), url("${entity.attributes.entity_picture}")`
           ]]]
 added_movies:
   template:
@@ -808,131 +792,22 @@ added_movies:
         - landscape: hide
         - portrait: hide
         - ymovie: show
-  # tap_action: !include /config/dashboards/shared/popup/popup_ymovie.yaml
-  tap_action:
-    action: fire-dom-event
-    browser_mod:
-      service: browser_mod.popup
-      data:
-        style: |
-          --popup-min-width: 1400px;
-        card_mod:
-          style:
-            #popup header
-            .: |
-              @media (max-width: 450px), (max-height: 500px) {
-                ha-dialog {
-                  --mdc-dialog-min-width: 100vw !important;
-                  --mdc-dialog-min-height: 100vh !important;
-                  --popup-border-radius: 0 !important;
-                }
-              }
-              .content .container {
-                padding: 0 !important;
-              }
-        title: >
-          [[[
-            if (entity) {
-                let data = entity.attributes.data;
-              if (data !== undefined) {
-                let title = data[0].title;
-                return `${title}`;
-              }
-            }
-          ]]]
-        content:
-          type: custom:layout-card
-          layout_type: custom:grid-layout
-          layout:
-            margin: 0
-            grid-template-columns: 1fr
-            grid-template-rows: fit-content(100%)
-          cards:
-            - type: iframe
-              aspect_ratio: >
-                [[[
-                  if (window.matchMedia('(max-width: 800px)').matches)
-                    return '180%';
-                  else return '100%';
-                ]]]
-              url: >
-                [[[
-                  if (entity) {
-                      let data = entity.attributes.data;
-                    if (data !== undefined) {
-                      let tmdb = data[0].services.tmdb;
-                      return `https://www.themoviedb.org/movie/${tmdb}`;
-                    }
-                  }
-                ]]]
-
-  label: >
-    [[[
-      if (entity) {
-          let data = entity.attributes.data;
-        if (data !== undefined) {
-          let country = data[0].country,
-              resolution = data[0].resolution,
-              subtitles = data[0].subtitles,
-              audio = data[0].audio;
-          var country_select = (country.length > 4) ? '' : country;
-          var resolution_icon = 'badge badge--sdh';
-            if (resolution == 'UHD HEVC' || resolution == 'UHD' ) { resolution_icon = 'badge badge--4k'};
-            if (resolution == 'HD HEVC' || resolution == 'HD' ) { resolution_icon = 'badge badge--hd'};
-            if (resolution == 'SD') { resolution_icon = 'badge badge--sdh' };
-          var audio_codec = '';
-            if (audio == 'AAC') { audio_codec = 'badge badge--dd'};
-            if (audio == 'DDP') { audio_codec = 'badge badge--ddp'};
-          var sub = '';
-            if (subtitles == 'cs') { sub = 'badge badge--cc'};
-          let quality = `
-            <div id="quality">
-            <span class="${audio_codec}" role="img"></span>
-            <span class="${resolution_icon}" role="img"></span>
-            <span class="${sub}" role="img"></span>
-            </div>
-          `;
-        return `${quality}`;
-        }
-      }
-    ]]]
   state_display: >
     [[[
       if (entity) {
           let elt = this.shadowRoot,
-              await = setTimeout(marquee, 100),
-              data = entity.attributes.data;
-        if (data !== undefined) {
-          let cztitle = data[0].title,
-              originaltitle = data[0].original_title,
-              country = data[0].country,
-              rating = data[0].rating,
-              year = data[0].year,
-              genre = data[0].genre,
-              resolution = data[0].resolution,
-              subtitles = data[0].subtitles,
-              plot = data[0].plot,
-              audio = data[0].audio;
-          var country_select = (country.length > 4) ? ' ' : country;
-          var resolution_icon = 'badge badge--sdh';
-            if (resolution == 'UHD HEVC' || resolution == 'UHD' ) { resolution_icon = 'badge badge--4k'};
-            if (resolution == 'HD HEVC' || resolution == 'HD' ) { resolution_icon = 'badge badge--hd'};
-            if (resolution == 'SD') { resolution_icon = 'badge badge--sdh' };
-          var audio_codec = '';
-            if (audio == 'AAC') { audio_codec = 'badge badge--dd'};
-            if (audio == 'DDP') { audio_codec = 'badge badge--ddp'};
-          var sub = '';
-            if (subtitles == 'cs') { sub = 'badge badge--cc'};
-          var info =  originaltitle !== undefined && genre === undefined
-            ? `${originaltitle}`
-            : `&nbsp;·&nbsp${genre}`;
-          var title = cztitle == originaltitle
-            ? `<span style="font-weight: 700; text-transform: uppercase; letter-spacing: 2px;">${cztitle}</span>`
-            : `<span style="font-weight: 700; text-transform: uppercase;">${cztitle}</span>&nbsp;·&nbsp<span style="text-transform: capitalize; font-family: Raleway;">${originaltitle}</span>`;
+              await = setTimeout(marquee, 100);
+        if (entity && entity.attributes) {
+          let cztitle = entity.attributes.Title,
+              rating = entity.attributes.Rating,
+              year = entity.attributes.Year,
+              genre = entity.attributes.Genre;
+
+          var title = `<span style="font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #ffffff90;"> ${cztitle} </span>`;
           var output = `
             <div id="title">${title}</div>
-            <span class="year" role="img">${year}&nbsp;·&nbsp${country}</span>
-            <span class="info" style="color: #ffffff80;">${info}</span>
+            <span class="year" role="img">${year}</span>
+            <span class="info" style="color: #ffffff80;">${genre}</span>
             `;
         }
           function marquee() {
@@ -967,80 +842,79 @@ added_movies:
     rating: >
       [[[
         if (entity) {
-            let data = entity.attributes.data;
-          if (data !== undefined) {
-            let rating = Math.round((data[0].rating * 10));
-            var stroke = '#20d07b';
-              if (rating <= 40) { stroke = '#ff0000' };
-              if (rating <= 60) { stroke = '#ffcc00' };
-            let path = `
-              <svg viewBox="0 0 36 36" class="circular-chart green">
-                <style>
-                  .flex-wrapper {
-                    display: flex;
-                    flex-flow: row nowrap;
-                  }
-                  .single-chart {
-                    width: 33%;
-                    justify-content: space-around;
-                  }
-                  .circle-bg {
-                    fill: #000000;
-                    stroke: #ffffff85;
-                    stroke-width: 3.8;
-                  }
-                  .circle {
-                    fill: none;
-                    stroke-width: 2.8;
-                    stroke-linecap: round;
-                    animation: progress;
-                    animation-duration: 6s;
-                    animation-iteration-count: infinite;
-                    animation-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
-                  }
-                  @keyframes progress {
-                    0% {
-                      stroke-dasharray: 0 100;
+          if (entity && entity.attributes ) {
+              let rating = Math.round(( entity.attributes.Rating * 10));
+              var stroke = '#20d07b';
+                if (rating <= 40) { stroke = '#ff0000' };
+                if (rating <= 60) { stroke = '#ffcc00' };
+              let path = `
+                <svg viewBox="0 0 36 36" class="circular-chart green">
+                  <style>
+                    .flex-wrapper {
+                      display: flex;
+                      flex-flow: row nowrap;
                     }
-                  }
-                  tspan {
-                    font-size: 10px;
-                  }
-                  text {
-                    font-size: 12px;
-                    font-weight: 500;
-                    letter-spacing: -0.03rem;
-                    fill: #ffffff;;
-                  }
-                  #circle_value, tspan {
-                    text-anchor: middle;
-                    dominant-baseline: central;
-                  }
-                  .circular-chart.green .circle {
-                    stroke: ${stroke};
-                  }
-                  .percentage {
-                    fill: #ffffff;
-                    font-family: Poppins;
-                    font-size: 0.6em;
-                    font-weight: 700;
-                    text-anchor: middle;
-                  }
-                </style>
-              <g class="flex-wrapper">
-                <g class="single-chart">
-                  <path class="circle-bg" d="M18 2.0845
-                  a 15.9155 15.9155 0 0 1 0 31.831
-                  a 15.9155 15.9155 0 0 1 0 -31.831"/>
-                <path class="circle" stroke-dasharray="${rating}, 100" d="M18 2.0845
-                  a 15.9155 15.9155 0 0 1 0 31.831
-                  a 15.9155 15.9155 0 0 1 0 -31.831"/>
-                <text id="circle_value" x="50%" y="52%" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle" >${rating}<tspan dx=".2" dy="-.4">%</tspan></text>
-              </g>
-            </g>
-          </svg>
-          `;
-          return `${path}`;
+                    .single-chart {
+                      width: 33%;
+                      justify-content: space-around;
+                    }
+                    .circle-bg {
+                      fill: #000000;
+                      stroke: #ffffff85;
+                      stroke-width: 3.8;
+                    }
+                    .circle {
+                      fill: none;
+                      stroke-width: 2.8;
+                      stroke-linecap: round;
+                      animation: progress;
+                      animation-duration: 6s;
+                      animation-iteration-count: infinite;
+                      animation-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+                    }
+                    @keyframes progress {
+                      0% {
+                        stroke-dasharray: 0 100;
+                      }
+                    }
+                    tspan {
+                      font-size: 10px;
+                    }
+                    text {
+                      font-size: 12px;
+                      font-weight: 500;
+                      letter-spacing: -0.03rem;
+                      fill: #ffffff;;
+                    }
+                    #circle_value, tspan {
+                      text-anchor: middle;
+                      dominant-baseline: central;
+                    }
+                    .circular-chart.green .circle {
+                      stroke: ${stroke};
+                    }
+                    .percentage {
+                      fill: #ffffff;
+                      font-family: Poppins;
+                      font-size: 0.6em;
+                      font-weight: 700;
+                      text-anchor: middle;
+                    }
+                  </style>
+                <g class="flex-wrapper">
+                  <g class="single-chart">
+                    <path class="circle-bg" d="M18 2.0845
+                    a 15.9155 15.9155 0 0 1 0 31.831
+                    a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                  <path class="circle" stroke-dasharray="${rating}, 100" d="M18 2.0845
+                    a 15.9155 15.9155 0 0 1 0 31.831
+                    a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                  <text id="circle_value" x="50%" y="52%" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle" >${rating}<tspan dx=".2" dy="-.4">%</tspan></text>
+                </g>
+                </g>
+              </svg>
+            `;
+            return `${path}`;
           }
         }
       ]]]
@@ -1055,34 +929,20 @@ added_movies:
         - width: 15%
       poster:
         - justify-self: center
-        - margin: 1.5% 0 0.2%
-        - width: 65%
+        - margin: 1% 0 0.5%
+        - width: 60%
         - height: 100%
-        - border-radius: 5% 5%
-        - background-origin: border-box
+        - overflow: visible
         - background: >
             [[[
-              if (entity) {
-                let data = entity.attributes.data;
-                  if (data && data[0].entity_picture) {
-                    return  `center center/100% no-repeat`;
-                  }
-                  else {
-                    return `center center/contain no-repeat`;
-                  }
-              }
+                if (entity && entity.attributes.entity_picture)
+                    return `top / 100% no-repeat`;
             ]]]
         - background-image: >
             [[[
-              if (entity) {
-                let data = entity.attributes.data;
-                  if (data && data[0].entity_picture) {
-                    return `linear-gradient(to top, rgba(0, 0, 0, .9) 0%, rgba(0, 0, 0, 0) 30%), url("${data[0].entity_picture}")`;
-                  }
-                else {
+                if (entity && entity.attributes.entity_picture)
+                    return `linear-gradient(to top, rgba(0, 0, 0, 1) 5%, rgba(0, 0, 0, 0) 45%), url("${entity.attributes.entity_picture}")`
                   return `url("/local/img/movie_time.png")`;
-                }
-              }
             ]]]
   #################################################
   #                                               #
