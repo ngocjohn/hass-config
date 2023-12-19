@@ -10,3 +10,4 @@ config/templates
 config/.gitignore
 config/.vscode
 secrets.yaml
+*.sh
