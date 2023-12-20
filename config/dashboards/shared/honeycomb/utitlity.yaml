@@ -22,7 +22,6 @@ service_data:
       entity: vacuum.roidmi_eve
       active: '[[[ return entity.state != "docked" ]]]'
       tap_action: !include ../popup/footer/footer_vacuum.yaml
-
     #2
     - icon: mdi:play-pause
       position: 2

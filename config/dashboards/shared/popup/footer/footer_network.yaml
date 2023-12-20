@@ -8,7 +8,6 @@ browser_mod:
     card_mod:
       style:
         .: |
-
         layout-card:
           $grid-layout$:
             # card divider border
@@ -111,7 +110,6 @@ browser_mod:
                     service: input_button.press
                     service_data:
                       entity_id: input_button.unifi_archive_alerts
-
           footer:
             type: custom:mini-graph-card
             name: Speedtest
@@ -150,7 +148,6 @@ browser_mod:
                 .info__item__time {
                   display: none !important;
                 }
-
         #################################################
         #                                               #
         #                UNIFI ACCES POINT              #
@@ -187,7 +184,6 @@ browser_mod:
                     action: url
                     url_path: !secret router_url
                   template: icon_name
-
                 - type: custom:button-card
                   name: Unifi
                   icon: phu:ubiquiti-logo

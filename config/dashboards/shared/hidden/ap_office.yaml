@@ -56,7 +56,6 @@ card:
           unit: '%'
           tap_action:
             action: none
-
     - type: custom:mini-graph-card
       entities:
         - entity: sensor.unifi_office_ap

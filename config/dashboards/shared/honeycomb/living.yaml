@@ -16,7 +16,6 @@ service_data:
         service: light.toggle
         service_data:
           entity_id: entity
-
     #1
     - icon: phu:light-strip
       show: true

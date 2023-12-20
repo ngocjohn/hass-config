@@ -21,7 +21,6 @@ browser_mod:
     content:
       type: vertical-stack
       cards:
-
         ### ON ###
         - type: conditional
           conditions:
@@ -35,11 +34,9 @@ browser_mod:
                 card_mod:
                   class: content
                 entities:
-
                   - entity: switch.imac
                     name: iMac
                     secondary_info: last-changed
-
                   - type: custom:bar-card
                     width: 55%
                     height: 2em
@@ -55,31 +52,26 @@ browser_mod:
                         to: 999
                     entity_row: true
                     entities:
-
                       - entity: sensor.imac_cpu
                         tap_action:
                           action: call-service
                           service: homeassistant.update_entity
                           service_data:
                             entity_id: sensor.imac_cpu
-
                       - entity: sensor.imac_mem
                         tap_action:
                           action: call-service
                           service: homeassistant.update_entity
                           service_data:
                             entity_id: sensor.imac_mem
-
                       - entity: sensor.template_imac_macintosh_hd
                         tap_action:
                           action: call-service
                           service: homeassistant.update_entity
                           service_data:
                             entity_id: sensor.template_imac_macintosh_hd
-
                   - entity: automation.imac_notification_motion_hall
                   - entity: sensor.imac_uptime
-
                   - entity: binary_sensor.template_imac_vpn
                     tap_action:
                       action: call-service
@@ -92,9 +84,7 @@ browser_mod:
                           --paper-item-icon-color:
                             {{ 'red' if not is_state(config.entity, 'Ansluten') }};
                           }
-
                   - entity: input_boolean.imac_lock
-
               - type: custom:mod-card
                 card_mod:
                   style:
@@ -104,10 +94,8 @@ browser_mod:
                         padding: var(--tablet-popup-button-padding);
                       }
                 card:
-
                   type: horizontal-stack
                   cards:
-
                     - type: custom:button-card
                       name: Försätt i vila
                       icon: mdi:power-sleep
@@ -115,7 +103,6 @@ browser_mod:
                         action: call-service
                         service: shell_command.imac_sleep
                       template: icon_name
-
                     - type: custom:button-card
                       name: Starta om
                       icon: mdi:restart
@@ -123,8 +110,6 @@ browser_mod:
                         action: call-service
                         service: shell_command.imac_restart
                       template: icon_name
-
-
         ### OFF ###
         - type: conditional
           conditions:
@@ -139,13 +124,11 @@ browser_mod:
                 card_mod:
                   class: content
                 entities:
-
                   - entity: switch.imac
                     name: iMac
                     secondary_info: last-changed
                   - entity: automation.imac_notification_motion_hall
                   - entity: input_boolean.imac_lock
-
               - type: custom:mod-card
                 card_mod:
                   style:
@@ -155,10 +138,8 @@ browser_mod:
                         padding: var(--tablet-popup-button-padding);
                       }
                 card:
-
                   type: horizontal-stack
                   cards:
-
                     - type: custom:button-card
                       name: Starta iMac
                       icon: mdi:power

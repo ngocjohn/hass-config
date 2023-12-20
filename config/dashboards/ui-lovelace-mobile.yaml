@@ -13,10 +13,8 @@ swipe_nav:
   animate: swipe
   prevent_default: true
   swipe_amount: 30
-
 button_card_templates: !include_dir_merge_named dashboards/templates/button_card_templates
 decluttering_templates: !include dashboards/templates/decluttering-card.yaml
-
 views:
   - !include dashboards/mobile/sidebar-office.yaml
   - !include dashboards/mobile/masters-rooms.yaml

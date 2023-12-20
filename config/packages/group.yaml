@@ -1,6 +1,5 @@
 group:
   # LIGHTS GROUP
-
   light_living_room:
     name: Lights Living Room
     icon: mdi:lightbulb-group
@@ -74,7 +73,6 @@ group:
       - light.office_led_light_strip
       - light.bedroom_ripple_mood_light
       # - light.yeelink_bslamp2_409e_light
-
   ## SECURITY - SENSORS GROUP ##
   motion_sensors:
     name: Motion sensors
@@ -88,7 +86,6 @@ group:
       # - binary_sensor.motion_sensor_utility
       - binary_sensor.motion_sensor_entrance_occupancy
       - binary_sensor.motion_sensor_hallway_occupancy
-
   contact_sensors:
     name: Contact sensors
     icon: mdi:window-open-variant
@@ -101,7 +98,6 @@ group:
       - binary_sensor.contact_sensor_garden_door
       - binary_sensor.contact_sensor_entrance_door
       - binary_sensor.contact_sensor_office_balcony_contact
-
   security_doors:
     name: Security Doors sensors
     icon: mdi:door
@@ -112,7 +108,6 @@ group:
       - binary_sensor.contact_sensor_garden_door
       - binary_sensor.contact_sensor_entrance_door
       - binary_sensor.contact_sensor_office_balcony_contact
-
   cameras:
     name: Camera Group
     icon: mdi:cctv
@@ -121,7 +116,6 @@ group:
       - camera.kids_room
       - camera.terasa
       - camera.zahrada
-
   ## COVER GROUP ##
   shades_cover:
     name: Shades Cover Group
@@ -134,7 +128,6 @@ group:
       - cover.left
       - cover.right
       - cover.window
-
   ## MEDIA PLAYER GROUP ##
   device_players:
     name: Media Players
@@ -143,7 +136,6 @@ group:
       - media_player.spotify
       - media_player.living_room_tv
       - media_player.bedroom_tv
-
   homepod_airplay:
     name: 'Homepod Airplay'
     icon: mdi:speaker
@@ -152,7 +144,6 @@ group:
       - media_player.bathroom_homepod
       - media_player.bedroom_homepod
       - media_player.living_room
-
   homepod_mass_airplay:
     name: 'Homepod MASS Airplay'
     icon: mdi:speaker
@@ -161,7 +152,6 @@ group:
       - media_player.bathroom
       - media_player.bedroom
       - media_player.living_room_2
-
   television:
     name: Television
     icon: mdi:television

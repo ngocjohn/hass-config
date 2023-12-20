@@ -6,7 +6,6 @@ light:
     entities:
       - light.living_room_floor_lamp
       - light.shelly_rgbw_kitchen_led_strip
-
   - platform: group
     name: 'Kitchen Group'
     unique_id: group_light_kitchen
@@ -20,7 +19,6 @@ light:
     entities:
       - light.bathroom_main_light
       - light.bathroom_mirror_light
-
   - platform: group
     name: 'Bedroom Group'
     unique_id: group_light_bedroom
@@ -29,28 +27,24 @@ light:
       - light.bedroom_main_light
       - light.bedroom_bed_light
       - light.bedroom_ripple_mood_light
-
   - platform: group
     name: 'Shower Group'
     unique_id: group_light_hower
     entities:
       - light.shower_room_main_light
       - light.shower_room_mirror_light
-
   - platform: group
     name: 'Hallway Group'
     unique_id: group_light_hallway
     entities:
       - light.aqara_hub
       - light.hallway_light
-
   - platform: group
     name: 'Cozy Light Group'
     unique_id: group_cozy_light
     entities:
       - light.shelly_rgbw_kitchen_led_strip
       - light.living_room_floor_lamp
-
   - platform: group
     unique_id: group_light_hallway_utility
     name: 'Hallway Utility Group'
@@ -58,7 +52,6 @@ light:
       - light.aqara_hub
       - light.utility_room_light
       - light.hallway_light
-
   - platform: group
     name: 'Office Group'
     unique_id: group_light_office
@@ -67,7 +60,6 @@ light:
       - light.office_lamp_bulb
       - light.office_shelf_led
       - light.office_ripple_mood_light
-
   - platform: group
     unique_id: group_light_all
     name: 'All Light Group'
@@ -95,7 +87,6 @@ light:
       - light.office_led_light_strip
       - light.bedroom_ripple_mood_light
       # - light.yeelink_bslamp2_409e_light
-
 homeassistant:
   customize:
     light.living_room_floor_lamp:

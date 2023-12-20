@@ -726,7 +726,6 @@ movies_base:
       - padding: 0
     state:
       - justify-self: start
-
   #ADDED MOVIES
 added_movies_base:
   template:
@@ -859,11 +858,9 @@ added_movies:
               country = entity.attributes.country,
               year = entity.attributes.year,
               genre = entity.attributes.genre;
-
           var title = cztitle == originaltitle
             ? `<span style="font-weight: 700; text-transform: uppercase; letter-spacing: 2px;">${cztitle}</span>`
             : `<span style="font-weight: 700; text-transform: uppercase;">${cztitle}</span>&nbsp;·&nbsp<span style="text-transform: capitalize; font-family: Raleway;">${originaltitle}</span>`;
-
           var output = `
             <div id="title">${title}</div>
             <span class="year" role="img">${country}&nbsp;·&nbsp${year}</span>

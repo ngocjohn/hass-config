@@ -3,7 +3,6 @@
 #                SIDEBAR TEMPLATE               #
 #                                               #
 #################################################
-
 template:
   - sensor:
       - unique_id: sidebar

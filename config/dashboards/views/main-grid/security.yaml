@@ -3,7 +3,6 @@
 #                     SECURITY                  #
 #                                               #
 #################################################
-
 - type: grid
   title: Security
   view_layout:
@@ -13,15 +12,12 @@
     # ALARM
     - type: custom:decluttering-card
       template: grid_alarm
-
     # FRONT DOOR
     - type: custom:decluttering-card
       template: grid_front_door
-
     # MOTION SENSORS
     - type: custom:decluttering-card
       template: grid_motion_sensors
-
     #  CONTACT SENSORS
     - type: custom:decluttering-card
       template: grid_contact_sensors

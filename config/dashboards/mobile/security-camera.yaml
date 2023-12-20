@@ -10,20 +10,17 @@ layout:
   grid-template-rows: fit-content(100%)
   grid-template-areas: |
     ". security   cameras  ."
-
 #################################################
 #                                               #
 #                    DASHBOARD                  #
 #                                               #
 #################################################
-
 cards:
   #################################################
   #                                               #
   #                  CAMERAS                      #
   #                                               #
   #################################################
-
   - type: grid
     title: Cameras
     view_layout:
@@ -33,25 +30,20 @@ cards:
       # CAM DOOR
       - type: custom:decluttering-card
         template: grid_cam_door
-
       # CAM KIDS ROOM
       - type: custom:decluttering-card
         template: grid_cam_kids
-
       # CAM TERRACE
       - type: custom:decluttering-card
         template: grid_cam_terrace
-
       # CAM GARDEN
       - type: custom:decluttering-card
         template: grid_cam_garden
-
   #################################################
   #                                               #
   #                     SECURITY                  #
   #                                               #
   #################################################
-
   - type: grid
     title: Security
     view_layout:
@@ -61,16 +53,12 @@ cards:
       # ALARM
       - type: custom:decluttering-card
         template: grid_alarm
-
       # FRONT DOOR
       - type: custom:decluttering-card
         template: grid_front_door
-
       # MOTION SENSORS
       - type: custom:decluttering-card
         template: grid_motion_sensors
-
       #  CONTACT SENSORS
       - type: custom:decluttering-card
         template: grid_contact_sensors
-

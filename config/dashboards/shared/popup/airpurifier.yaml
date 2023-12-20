@@ -5,7 +5,6 @@ browser_mod:
     title: Air Purifier
     style: >
       --popup-max-width: calc(460px + 460px);
-
     card_mod:
       style:
         .: |
@@ -37,7 +36,6 @@ browser_mod:
                     border-bottom: 0.1vw solid rgba(58, 69, 73, 0.2);
                   }
                 }
-
     content:
       type: custom:layout-card
       layout_type: custom:grid-layout
@@ -55,7 +53,6 @@ browser_mod:
             grid-template-areas: |
               "living"
               "office"
-
       cards:
         - type: entities
           view_layout:

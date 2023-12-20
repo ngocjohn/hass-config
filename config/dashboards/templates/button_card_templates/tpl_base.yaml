@@ -3,7 +3,6 @@
 #                     BASE                      #
 #                                               #
 #################################################
-
 base:
   template:
     - settings
@@ -30,7 +29,6 @@ base:
     # ui_sound_tablet: |
     #   [[[
     #     let screensaver = states[variables.entity_tablet] === undefined || states[variables.entity_tablet].state;
-
     #     if (variables.state_on !== undefined  && screensaver === 'on') {
     #         hass.callService('media_player', 'play_media', {
     #             entity_id: variables.entity_browser_mod,
@@ -50,12 +48,9 @@ base:
       [[[
         // add animation
         if (this.getElementsByTagName("style").length === 0) {
-
             // phone condition
             let mq = window.matchMedia('(max-width: 800px)').matches;
-
             let style = document.createElement('style');
-
             style.innerHTML = `
                 @keyframes card_bounce {
                     0%   { transform: scale(1); }
@@ -65,15 +60,12 @@ base:
                     100% { transform: scale(1); }
                 }
             `;
-
             this.appendChild(style);
         }
         // duration
         let duration = 800;
-
         // animate
         this.style.animation = `card_bounce ${duration}ms cubic-bezier(0.22, 1, 0.36, 1)`;
-
         // reset
         window.setTimeout(() => { this.style.animation = "none"; }, duration + 100)
       ]]]
@@ -120,7 +112,6 @@ base:
                 ? 'rgb(0, 0, 0)'
                 : '#97989c';
           ]]]
-
       - color: >
           [[[
             return variables.state_on
@@ -140,15 +131,12 @@ base:
                 : 'rgba(115, 115, 115, 0.2)';
             }
           ]]]
-
 #################################################
 #                                               #
 #                     TILT                      #
 #                                               #
 #################################################
-
 # dashboard resource link: https://micku7zu.github.io/vanilla-tilt.js/
-
 tilt:
   variables:
     tilt_enable: >
@@ -189,7 +177,6 @@ tilt:
             let elt = this.shadowRoot,
                 card = elt.getElementById('card'),
                 tilt = typeof VanillaTilt === 'function';
-
             if (elt && card && tilt && variables.tilt_enable) {
                 VanillaTilt.init(card, variables.tilt_options);
             } else {
@@ -201,27 +188,22 @@ tilt:
             }
         }, 0);
       ]]]
-
 #################################################
 #                                               #
 #               EXTRA STYLES                    #
 #                                               #
 #################################################
-
 extra_styles:
   extra_styles: >
     [[[
       if (entity) {
           if (entity.entity_id.split('.')[0] === 'light' && variables.state_on) {
-
               // theme variable and conditions
               let style = getComputedStyle(document.body),
                   theme_var = style.getPropertyValue('--button-card-light-color-temp'),
                   is_hsl = theme_var.startsWith('hsl('),
                   is_color_temp = entity.attributes.color_mode === 'color_temp';
-
               if (is_hsl && is_color_temp && entity.attributes.brightness) {
-
                   // calculate lightness in hsl
                   let regex_pattern = /(\d+)(?!.*\d)/g,
                       brightness = entity.attributes.brightness / 2.54,
@@ -229,7 +211,6 @@ extra_styles:
                       min = lightness - 10,
                       max = lightness + 10,
                       calc_lightness = brightness * (max - min) / 100 + min;
-
                   var light_color = theme_var.replace(regex_pattern, calc_lightness);
               }
               else {
@@ -238,13 +219,11 @@ extra_styles:
           }
       }
       return `
-
        /* * * * * * * * * * * * * * * * * *
         *                                 *
         *              LIGHT              *
         *                                 *
         * * * * * * * * * * * * * * * * * */
-
         svg {
           --light-color:
           ${ variables.state_on && entity.attributes.brightness
@@ -254,26 +233,21 @@ extra_styles:
                 : 'var(--state-icon-color);'
           }
         }
-
         .light-color {
           fill: var(--light-color);
           transition: all 0.25s ease-out;
         }
-
         /* magnification */
         :host {
           --card-portrait: 1.8;
           --card-phone: 3.8;
         }
-
         ${(this._config.template.includes('light') || this._config.template.includes('mediaplayer') || this._config.template.includes('cover')) ? `
-
          /* * * * * * * * * * * * * * * * * *
           *                                 *
           *          CIRCLE SLIDER          *
           *                                 *
           * * * * * * * * * * * * * * * * * */
-
           #circle_slider {
             opacity: 0;
             appearance: none;
@@ -285,7 +259,6 @@ extra_styles:
             left: 33%;
             margin-top: 10%;
           }
-
           #circle_slider::-webkit-slider-thumb {
             pointer-events: initial;
             appearance: none;
@@ -294,11 +267,9 @@ extra_styles:
             border-radius: 50%;
             background: green;
           }
-
           #circle_slider::-webkit-slider-runnable-track {
             background: cornflowerblue;
           }
-
           #circle_slider::-moz-range-thumb {
             pointer-events: initial;
             appearance: none;
@@ -307,55 +278,45 @@ extra_styles:
             border-radius: 50%;
             background: green;
           }
-
           #circle_slider::-moz-range-track {
             background: cornflowerblue;
             height: 3vw;
           }
-
           /* portrait */
           @media screen and (max-width: 1440px) {
             #circle_slider::-webkit-slider-thumb {
               width: 4vw;
               height: 4vw;
             }
-
             #circle_slider::-moz-range-thumb {
               width: 4vw;
               height: 4vw;
             }
           }
-
           /* phone */
           @media screen and (max-width: 800px) {
             #circle_slider::-webkit-slider-thumb {
               width: 7.8vw;
               height: 7.8vw;
             }
-
             #circle_slider::-moz-range-thumb {
               width: 7.8vw;
               height: 7.8vw;
             }
           }
-
         `:''}
-
        /* * * * * * * * * * * * * * * * * *
         *                                 *
         *              BASE               *
         *                                 *
         * * * * * * * * * * * * * * * * * */
-
         #container {
           text-align: left !important;
           z-index: 1;
         }
-
         #card {
           padding: 10.9% 9.9% 8.9% 10.9%;
         }
-
         #state::first-letter {
           text-transform: uppercase;
         }
@@ -364,14 +325,12 @@ extra_styles:
           font-weight: var(--button-card-font-weight);
           letter-spacing: var(--button-card-letter-spacing);
         }
-
         #state {
           font-size: var(--button-card-state-size);
           font-weight: var(--button-card-font-weight);
           letter-spacing: var(--button-card-letter-spacing);
           font-family: Poppins;
         }
-
         /* portrait */
         @media screen and (max-width: 1440px) {
           #name {
@@ -395,15 +354,12 @@ extra_styles:
             font-family: Futura;
           }
         }
-
         ${variables.tilt_enable === true ? `
-
          /* * * * * * * * * * * * * * * * * *
           *                                 *
           *              TILT               *
           *                                 *
           * * * * * * * * * * * * * * * * * */
-
             #name {
               font-size: calc(var(--button-card-font-size) - var(--z-axis-adjustment));
             }
@@ -419,30 +375,25 @@ extra_styles:
                 font-size: calc(calc(var(--button-card-state-size) * var(--card-portrait)) - var(--z-axis-adjustment));
               }
             }
-
             /* phone */
             @media screen and (max-width: 800px) {
               #name, #state {
                 font-size: calc(calc(var(--button-card-font-size) * var(--card-phone)) - var(--z-axis-adjustment));
               }
             }
-
             #container {
               transform: translateZ(${variables.tilt_options.parallax});
             }
-
             #circle_slider {
               width: 100%;
               margin-top: 0;
             }
-
             /* adjust circle_slider position for firefox */
             @supports (-moz-appearance:none) {
               #circle_slider {
                 margin-top: 13%;
               }
             }
-
             #card {
               padding: 12% 11% 10.5% 12%;
               transform-style: preserve-3d;
@@ -450,50 +401,38 @@ extra_styles:
               /* firefox pixelated edges */
               outline: 1px solid transparent;
             }
-
             #ripple, .js-tilt-glare {
               clip-path: inset(0 round var(--button-card-border-radius));
               overflow: hidden;
             }
-
             .js-tilt-glare {
               z-index: 1;
             }
-
             .js-tilt-glare-inner {
               background-color: rgba(0,0,0,0.9);
             }
-
         `:''}
-
         ${(this._config.template.includes('conditional_media') || this._config.template.includes('conditional_media_shows') || this._config.template.includes('conditional_added_media')|| this._config.template.includes('movies_base') || this._config.template.includes('added_movies')) ? `
-
          /* * * * * * * * * * * * * * * * * *
           *                                 *
           *              MEDIA              *
           *                                 *
           * * * * * * * * * * * * * * * * * */
-
           :host {
             --blur-intensity: blur(0.3em) brightness(0.7);
           }
-
           /* phone */
           @media screen and (max-width: 800px) {
             :host {
               --blur-intensity: blur(0.3em) brightness(0.7);
             }
           }
-
           #ripple, .js-tilt-glare {
             clip-path: inset(0 round calc(var(--button-card-border-radius) / 2));
           }
-
           #container {
             overflow: hidden;
           }
-
-
           /* phone */
           @media screen and (max-width: 800px) {
             #name {
@@ -528,14 +467,12 @@ extra_styles:
               display: none !important;
             }
           }
-
           .badge {
             display: inline-block;
             padding-right: 5%;
             height: 1em;
             opacity: 1;
           }
-
           .badge--cc {
             content: url("/local/svg/media/cc.svg");
           }
@@ -566,42 +503,33 @@ extra_styles:
             text-shadow: none;
             display: inline;
           }
-
         `:''}
-
-
         ${this._config.template.includes('footer') ? `
-
          /* * * * * * * * * * * * * * * * * *
           *                                 *
           *             FOOTER              *
           *                                 *
           * * * * * * * * * * * * * * * * * */
-
           /* magnification */
           :host {
             --footer-portrait: 1.4;
             --footer-phone: 3;
           }
-
           #ripple, .js-tilt-glare {
             border-radius: calc(var(--footer-card-border-radius) - 0.1vw);
             clip-path: inset(0 round calc( var(--button-card-border-radius) - 0.1vw ));
           }
-
           #name {
             font-size: var(--footer-card-font-size);
             padding: var(--footer-card-padding-v) var(--footer-card-padding-h);
             letter-spacing: 0.06vw;
           }
-
           ha-icon {
             width: var(--footer-card-icon-size);
             vertical-align: 7%;
             padding-right: 0.1vw;
             opacity: 0.4;
           }
-
           #card {
             border-radius: var(--footer-card-border-radius);
             background: rgba(115, 115, 115, 0.10);
@@ -619,23 +547,19 @@ extra_styles:
             top: var(--footer-notify-top);
             right: var(--footer-notify-right);
           }
-
           /* portrait */
           @media screen and (max-width: 1200px) {
             #name {
               font-size: calc(var(--footer-card-font-size) * var(--footer-portrait));
               padding: calc(var(--footer-card-padding-v) * var(--footer-portrait)) calc(var(--footer-card-padding-h) * var(--footer-portrait));
             }
-
             ha-icon {
               width: calc(var(--footer-card-icon-size) * var(--footer-portrait));
             }
-
             #card {
               border-radius: calc(var(--footer-card-border-radius) * var(--footer-portrait));
               margin: 0 0.5vw;
             }
-
             #notify {
               font-size: calc(var(--footer-notify-font-size) * var(--footer-portrait));
               width: calc(var(--footer-notify-box-size) * var(--footer-portrait));
@@ -643,7 +567,6 @@ extra_styles:
               line-height: calc(var(--footer-notify-box-size) * var(--footer-portrait));
             }
           }
-
           /* phone */
           @media screen and (max-width: 800px) {
             #name {
@@ -651,17 +574,14 @@ extra_styles:
               padding: calc(var(--footer-card-padding-v) * var(--footer-phone)) calc(var(--footer-card-padding-h) * var(--footer-phone));
               letter-spacing: 0.05vw;
             }
-
             ha-icon {
               width: calc(var(--footer-card-icon-size) * var(--footer-phone));
             }
-
             #card {
               border-radius: calc(var(--footer-card-border-radius) * var(--footer-phone));
               background: rgba(115, 115, 115, 0.12);
               margin: 0 0.5vw;
             }
-
             #notify {
               font-size: calc(var(--footer-notify-font-size) * var(--footer-phone));
               width: calc(var(--footer-notify-box-size) * var(--footer-phone));
@@ -672,9 +592,7 @@ extra_styles:
               padding: 0;
             }
           }
-
         `:''}
-
         ${(this._config.template.includes('icon_name') || this._config.template.includes('icon_only')) ? `
           #card {
             background: rgba(255, 255, 255, 0.06);
@@ -687,7 +605,6 @@ extra_styles:
             color: rgb(255, 255, 255) !important;
           }
         `:''}
-
         ${(this._config.template.includes('added_movies_base')) ? `
           #container {
             padding: 0px 5%;
@@ -696,7 +613,6 @@ extra_styles:
             border-radius: 12px !important;
           }
         `:''}
-
         ${(this._config.template.includes('movies_base')) ? `
           #card {
             display: flex;
@@ -722,21 +638,17 @@ extra_styles:
             height: 100%;
           }
         `:''}
-
         ${this._config.template.includes('chips')  ? `
-
          /* * * * * * * * * * * * * * * * * *
           *                                 *
           *             CHIPS               *
           *                                 *
           * * * * * * * * * * * * * * * * * */
-
           /* magnification */
           :host {
             --chips-portrait: 1.4;
             --chips-phone: 4.1;
           }
-
           #ripple, .js-tilt-glare {
             border-radius: calc(var(--chips-card-border-radius) - 0.1vw);
             clip-path: inset(0 round calc( var(--button-card-border-radius) - 0.1vw ));
@@ -803,13 +715,11 @@ extra_styles:
         `:''}
       `;
     ]]]
-
 #################################################
 #                                               #
 #               CIRCLE                          #
 #                                               #
 #################################################
-
 circle:
   styles:
     card:
@@ -843,13 +753,11 @@ circle:
                 state = variables.state_on,
                 input = variables.circle_input || ' ',
                 unit = variables.circle_input_unit || ' ';
-
            /* * * * * * * * * * * * * * * * * *
             *                                 *
             *             CIRCLE              *
             *                                 *
             * * * * * * * * * * * * * * * * * */
-
             let circle = (state, input, unit) => {
                 return `
                   <svg viewBox="0 0 50 50">
@@ -880,78 +788,60 @@ circle:
                     <circle id="circle_stroke" cx="25" cy="25" r="${r}" opacity="1.0" stroke-width="var(--c-stroke-width)" stroke="${state ? 'var(--c-stroke-color-on)' : 'var(--c-stroke-color-off)'}" stroke-dashoffset="${typeof input === 'number' && c - input / 100 * c}" stroke-dasharray="${c}"/>
                     <text id="circle_value" x="50%" y="52%" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle">${input}${tspan}<tspan>${unit}</tspan></text>
                   </svg>
-
                   ${(domain === 'light' || domain === 'media_player' || domain === 'cover') && `
                       <input id="circle_slider" type="range" min="0" max="100" value="${input}">
                   `}
                 `;
             }
-
            /* * * * * * * * * * * * * * * * * *
             *                                 *
             *              LIGHT              *
             *                                 *
             * * * * * * * * * * * * * * * * * */
-
             if (domain === 'light' && state) {
-
                 // wait 0ms for shadow dom
                 setTimeout(() => {
-
                     // then get elements
                     let elt = this.shadowRoot,
                         circle_slider = elt.getElementById('circle_slider'),
                         circle_value = elt.getElementById('circle_value'),
                         circle_stroke_prev = elt.getElementById('circle_stroke_prev'),
                         circle_stroke = elt.getElementById('circle_stroke');
-
                     // approximate position of thumb relative to circle
                     circle_slider.style.top = `${(circle_slider.value - 50) / 1.66 - 1}%`;
-
                     // debug position
                     let debug = false;
                     if (debug) circle_slider.style.opacity = 0.3;
-
                     // pass each event to handler
                     ['click', 'input', 'mousedown', 'mouseup', 'touchstart', 'touchend'].forEach((event) => {
                         circle_slider.addEventListener(event, handler, { passive: true })
                     });
-
                     function handler(event) {
-
                         // "this" refers to slider
                         if (event.target === this) {
-
                             // bypass button-card tap_action
                             event.stopPropagation();
-
                             // update circle_value
                             circle_value.innerHTML = `${this.value}${tspan}${unit}</tspan>`;
-
                             // update stroke
                             circle_stroke.style.strokeDashoffset = c - this.value / 100 * c;
                             circle_stroke.style.strokeWidth = 'var(--c-stroke-width-dragging)';
-
                             // set cursor while dragging
                             if (event.type === 'mousedown' || event.type === 'input') {
                                 this.style.cursor = 'grabbing';
                             } else {
                                 this.style.cursor = 'grab';
                             }
-
                             // reset stroke width if value doesn't change
                             if (input == this.value && (event.type === 'click' || event.type === 'touchend'))
                                 circle_stroke.style.strokeWidth = 'var(--c-stroke-width)';
-
                             // on release
                             if (event.type === 'mouseup' || event.type === 'touchend') {
-
                                 // display loader if brightness is 0
                                 if (circle_slider.value == 0 && elt.getElementById('loader')) {
                                     elt.getElementById('loader').style.display = 'initial';
                                     elt.getElementById('circle').style.display = 'none';
                                 }
-
                                 // set brightness
                                 hass.callService('light', 'turn_on', {
                                     entity_id: entity.entity_id,
@@ -961,16 +851,13 @@ circle:
                         }
                     }
                 }, 0);
-
                 return circle(state, input, unit);
             }
-
            /* * * * * * * * * * * * * * * * * *
             *                                 *
             *             PERSON              *
             *                                 *
             * * * * * * * * * * * * * * * * * */
-
             else if (domain === 'person') {
                 return `
                   <svg viewBox="0 0 50 50">
@@ -1002,13 +889,11 @@ circle:
                   </svg>
                 `;
             }
-
            /* * * * * * * * * * * * * * * * * *
             *                                 *
             *             CLIMATE             *
             *                                 *
             * * * * * * * * * * * * * * * * * */
-
             else if (domain === 'climate' || domain === 'fan') {
                 return `
                   <svg viewBox="0 0 50 50">
@@ -1045,66 +930,50 @@ circle:
             *              MEDIAPLAYER        *
             *                                 *
             * * * * * * * * * * * * * * * * * */
-
             else if (domain === 'media_player' && state) {
-
                 // wait 0ms for shadow dom
                 setTimeout(() => {
-
                     // then get elements
                     let elt = this.shadowRoot,
                         circle_slider = elt.getElementById('circle_slider'),
                         circle_value = elt.getElementById('circle_value'),
                         circle_stroke_prev = elt.getElementById('circle_stroke_prev'),
                         circle_stroke = elt.getElementById('circle_stroke');
-
                     // approximate position of thumb relative to circle
                     circle_slider.style.top = `${(circle_slider.value - 50) / 1.66 - 1}%`;
-
                     // debug position
                     let debug = false;
                     if (debug) circle_slider.style.opacity = 0.3;
-
                     // pass each event to handler
                     ['click', 'input', 'mousedown', 'mouseup', 'touchstart', 'touchend'].forEach((event) => {
                         circle_slider.addEventListener(event, handler, { passive: true })
                     });
-
                     function handler(event) {
-
                         // "this" refers to slider
                         if (event.target === this) {
-
                             // bypass button-card tap_action
                             event.stopPropagation();
-
                             // update circle_value
                             circle_value.innerHTML = `${this.value}${tspan}${unit}</tspan>`;
-
                             // update stroke
                             circle_stroke.style.strokeDashoffset = c - this.value / 100 * c;
                             circle_stroke.style.strokeWidth = 'var(--c-stroke-width-dragging)';
-
                             // set cursor while dragging
                             if (event.type === 'mousedown' || event.type === 'input') {
                                 this.style.cursor = 'grabbing';
                             } else {
                                 this.style.cursor = 'grab';
                             }
-
                             // reset stroke width if value doesn't change
                             if (input == this.value && (event.type === 'click' || event.type === 'touchend'))
                                 circle_stroke.style.strokeWidth = 'var(--c-stroke-width)';
-
                             // on release
                             if (event.type === 'mouseup' || event.type === 'touchend') {
-
                                 // display loader if brightness is 0
                                 if (circle_slider.value == 0 && elt.getElementById('loader')) {
                                     elt.getElementById('loader').style.display = 'initial';
                                     elt.getElementById('circle').style.display = 'none';
                                 }
-
                                 // set volume
                                 hass.callService('media_player', 'volume_set', {
                                     entity_id: entity.entity_id,
@@ -1114,7 +983,6 @@ circle:
                         }
                     }
                 }, 0);
-
                 return circle(state, input, unit);
             }
            /* * * * * * * * * * * * * * * * * *
@@ -1122,66 +990,50 @@ circle:
             *              COVER              *
             *                                 *
             * * * * * * * * * * * * * * * * * */
-
             else if (domain === 'cover' && state) {
-
                 // wait 0ms for shadow dom
                 setTimeout(() => {
-
                     // then get elements
                     let elt = this.shadowRoot,
                         circle_slider = elt.getElementById('circle_slider'),
                         circle_value = elt.getElementById('circle_value'),
                         circle_stroke_prev = elt.getElementById('circle_stroke_prev'),
                         circle_stroke = elt.getElementById('circle_stroke');
-
                     // approximate position of thumb relative to circle
                     circle_slider.style.top = `${(circle_slider.value - 50) / 1.66 - 1}%`;
-
                     // debug position
                     let debug = false;
                     if (debug) circle_slider.style.opacity = 0.3;
-
                     // pass each event to handler
                     ['click', 'input', 'mousedown', 'mouseup', 'touchstart', 'touchend'].forEach((event) => {
                         circle_slider.addEventListener(event, handler, { passive: true })
                     });
-
                     function handler(event) {
-
                         // "this" refers to slider
                         if (event.target === this) {
-
                             // bypass button-card tap_action
                             event.stopPropagation();
-
                             // update circle_value
                             circle_value.innerHTML = `${this.value}${tspan}${unit}</tspan>`;
-
                             // update stroke
                             circle_stroke.style.strokeDashoffset = c - this.value / 100 * c;
                             circle_stroke.style.strokeWidth = 'var(--c-stroke-width-dragging)';
-
                             // set cursor while dragging
                             if (event.type === 'mousedown' || event.type === 'input') {
                                 this.style.cursor = 'grabbing';
                             } else {
                                 this.style.cursor = 'grab';
                             }
-
                             // reset stroke width if value doesn't change
                             if (input == this.value && (event.type === 'click' || event.type === 'touchend'))
                                 circle_stroke.style.strokeWidth = 'var(--c-stroke-width)';
-
                             // on release
                             if (event.type === 'mouseup' || event.type === 'touchend') {
-
                                 // display loader if brightness is 0
                                 if (circle_slider.value == 0 && elt.getElementById('loader')) {
                                     elt.getElementById('loader').style.display = 'initial';
                                     elt.getElementById('circle').style.display = 'none';
                                 }
-
                                 // set cover
                                 hass.callService('cover', 'set_cover_position', {
                                     entity_id: entity.entity_id,
@@ -1191,7 +1043,6 @@ circle:
                         }
                     }
                 }, 0);
-
                 return circle(state, input, unit);
             }
            /* * * * * * * * * * * * * * * * * *
@@ -1199,19 +1050,16 @@ circle:
             *              OTHER              *
             *                                 *
             * * * * * * * * * * * * * * * * * */
-
             else if (variables.state_on) {
                 return circle(state, input, unit);
             }
         }
       ]]]
-
 #################################################
 #                                               #
 #               LOADER                          #
 #                                               #
 #################################################
-
 loader:
   custom_fields:
     loader: >
@@ -1270,7 +1118,6 @@ loader:
   #         }
   #       }
   #     ]]]
-
   styles:
     custom_fields:
       loader:
@@ -1287,13 +1134,11 @@ loader:
                   ? 'none'
                   : 'invert(1)';
             ]]]
-
 #################################################
 #                                               #
 #               SETTINGS                        #
 #                                               #
 #################################################
-
 settings:
   variables:
     entity_tablet: light.browser_iphone_hass_app_screen_2

@@ -1,6 +1,5 @@
 Main Theme:
   modes: { dark: { .: . } }
-
   # Fonts
   primary-font-family: Poppins, Raleway, SF Pro Text, sans-serif, system-ui
   paper-font-common-base_-_font-family: 'var(--primary-font-family)'
@@ -13,7 +12,6 @@ Main Theme:
   ha-card-header-font-family: 'var(--primary-font-family)'
   mdc-typography-body1-font-family: var(--primary-font-family)
   mdc-typography-font-family: var(--primary-font-family)
-
   # Text
   text-color: '#ffffffd9'
   rgb-primary-text-color: '255, 255, 255'
@@ -30,7 +28,6 @@ Main Theme:
   text-medium-light-color: '#A0A2A8'
   text-medium-color: '#80828A'
   disabled-text-color: '#626569'
-
   # Text Fields an Dropdown
   # mdc-text-field-fill-color: 'var(--background-color)'
   # mdc-text-field-ink-color: 'var(--text-color)'
@@ -47,20 +44,17 @@ Main Theme:
   # input-hover-line-color: 'var(--primary-color)'
   # code-editor-background-color: '#222c40'
   # codemirror-property: 'var(--accent-color)'
-
   # Main Colors
   app-header-background-color: rgba(0, 0, 0, 0.8)
   header-height: 48px
   accent-color: '#4089ed'
   accent-medium-color: 'var(--accent-color)'
-
   # Background
   background-color: '#000000'
   primary-background-color: 'var(--background-color)'
   background-color-2: '#FF9800'
   # secondary-background-color: '#2e4a74'
   # markdown-code-background-color: 'var(--background-color)'
-
   # Card
   card-background-color: 'var(--ha-card-background)'
   ha-card-background: '#1c1c1c'
@@ -72,11 +66,9 @@ Main Theme:
   border-color: 'none'
   grid-card-gap: '14px'
   border-style: 'none !important'
-
   # # Icons
   # paper-item-icon-color: 'var(--text-color)'
   # paper-item-icon-active-color: 'var(--accent-color)'
-
   # Sidebar
   sidebar-background-color: 'var(--background-color)'
   sidebar-icon-color: '#9e9e9e80'
@@ -85,31 +77,25 @@ Main Theme:
   paper-listbox-background-color: 'var(--sidebar-background-color)'
   divider-color: 'var(--background-color)'
   # light-primary-color: 'var(--ha-card-background)'
-
   # # Sliders
   paper-slider-knob-color: 'var(--accent-color)'
   paper-slider-pin-color: 'var(--background-color-2)'
   paper-slider-active-color: 'var(--accent-color)'
   paper-slider-container-color: 'var(--background-color-2)'
-
   # Toggle:
   paper-toggle-button-checked-bar-color: 'var(--accent-color)'
   mdc-theme-primary: 'var(--accent-color)'
   mdc-theme-secondary: 'var(--accent-color)'
-
   # Radio Button
   paper-radio-button-checked-color: 'var(--accent-color)'
-
   # # Switch
   # switch-unchecked-color: '#70889e'
   # switch-checked-button-color: 'var(--accent-color)'
   # switch-unchecked-track-color: 'var(--background-color-2)'
   # switch-checked-track-color: 'var(--background-color-2)'
-
   # Tables
   table-row-background-color: 'var(--background-color)'
   table-row-alternative-background-color: 'var(--ha-card-background)'
-
   # Badges
   label-badge-background-color: 'var(--background-color)'
   label-badge-text-color: 'var(--text-primary-color)'
@@ -117,7 +103,6 @@ Main Theme:
   label-badge-blue: 'rgba(26,137,245,1)'
   label-badge-green: 'rgba(0,202,139,1)'
   label-badge-yellow: 'rgba(222,176,107,1)'
-
   # POPUP MORE INFO
   dialog-backdrop-filter: blur(12px) brightness(0.3)
   popup-background-color: rgba(34,38,39,0.6)
@@ -132,7 +117,6 @@ Main Theme:
   tablet-popup-border-style: 1.5px solid rgba(0,0,0,0.2)
   tablet-popup-align-dialog: center
   tablet-popup-margin-top: 0px
-
   mdc-theme-surface: var(--popup-background-color)
   dialog-box-shadow: 0px 2px 4px 0px rgba(0, 0 ,0 , .2)
   state-icon-color: '#9da0a2'
@@ -148,14 +132,10 @@ Main Theme:
   # paper-slider-container-color: '#202020'
   paper-toast-color: var(--primary-text-color)
   paper-toast-background-color: '#1b1b1bf2'
-
   card-mod-theme: Main Theme
-
   card-mod-root-yaml: |
     .: |
-
       /* ___________ Bottom tabbar ___________  */
-
       .header {
         backdrop-filter: blur(50px) !important;;
         -webkit-backdrop-filter: blur(50px) !important;;
@@ -180,7 +160,6 @@ Main Theme:
         --bar-card-border-radius: 12px !important;
         --ha-card-box-shadow: none !important;
         --ha-card-background: none !important;
-
       }
       ha-dialog > div.content > div.container {
         padding: 0 !important;

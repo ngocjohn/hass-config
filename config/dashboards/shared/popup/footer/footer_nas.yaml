@@ -61,7 +61,6 @@ browser_mod:
               "nas"
       cards:
         ### HOME ASSISTANT
-
         - type: entities
           view_layout:
             grid-area: hass
@@ -70,20 +69,15 @@ browser_mod:
             - entity: sensor.current_version
               name: Installed
               icon: mdi:home-assistant
-
             - entity: sensor.home_assistant_versions
               name: Latest
-
             - entity: sensor.database_size
               name: Database
               icon: mdi:database
-
             - entity: sensor.uptime
               name: Last reboot
-
             - entity: input_boolean.notify_visible
               name: Notifications
-
             - type: custom:bar-card
               width: 55%
               height: 2em
@@ -109,7 +103,6 @@ browser_mod:
                     service: homeassistant.update_entity
                     service_data:
                       entity_id: sensor.processor_use
-
                 - entity: sensor.memory_use_percent
                   name: Memory
                   tap_action:
@@ -117,7 +110,6 @@ browser_mod:
                     service: homeassistant.update_entity
                     service_data:
                       entity_id: sensor.memory_use_percent
-
             - type: custom:hui-horizontal-stack-card
               cards:
                 - type: custom:button-card
@@ -134,7 +126,6 @@ browser_mod:
                         ]]]`
                       ]]]
                   template: icon_name
-
                 - type: custom:button-card
                   name: Theme
                   icon: mdi:reload
@@ -149,9 +140,7 @@ browser_mod:
                         ]]]`
                       ]]]
                   template: icon_name
-
         ### DOCKER
-
         - type: entities
           view_layout:
             grid-area: docker
@@ -172,24 +161,17 @@ browser_mod:
               entities:
                 - entity: sensor.docker_1cpu
                   name: Processor
-
                 - entity: sensor.docker_memory_percent
                   name: Minne
-
             - entity: sensor.docker_containers_total
               name: Containrar Totalt
-
             - entity: sensor.docker_containers_running
               name: Containrar Körs
-
             - entity: sensor.docker_containers_paused
               name: Containrar Pausade
-
             - entity: sensor.docker_containers_stopped
               name: Containrar Stoppade
-
             - entity: switch.docker_transmission_seed
-
           footer:
             type: custom:apexcharts-card
             layout: minimal
@@ -253,9 +235,7 @@ browser_mod:
               - entity: sensor.nas_upload_throughput
                 name: Upp
                 color: '#385581'
-
         ### NAS
-
         - type: entities
           view_layout:
             grid-area: nas
@@ -270,19 +250,14 @@ browser_mod:
               }
           entities:
             - entity: sensor.template_nas_status
-
             - entity: binary_sensor.nas_security_status
               name: Säkerhetsstatus
-
             - entity: sensor.nas_volume_1_average_disk_temp
-
             - entity: sensor.last_boot
               name: Senast omstart
-
             - entity: update.nas_dsm_update
               icon: mdi:package-up
               name: Uppdatering
-
             - type: custom:bar-card
               width: 55%
               height: 2em
@@ -300,7 +275,6 @@ browser_mod:
                     service: homeassistant.update_entity
                     service_data:
                       entity_id: sensor.processor_use
-
                 - entity: sensor.memory_use_percent
                   name: Minne - 4GB
                   tap_action:
@@ -308,7 +282,6 @@ browser_mod:
                     service: homeassistant.update_entity
                     service_data:
                       entity_id: sensor.memory_use_percent
-
                 - entity: sensor.disk_use_percent
                   name: Lagring - 10.5TB
                   tap_action:
@@ -316,7 +289,6 @@ browser_mod:
                     service: homeassistant.update_entity
                     service_data:
                       entity_id: sensor.disk_use_percent
-
             - type: custom:hui-horizontal-stack-card
               cards:
                 - type: custom:button-card
@@ -336,7 +308,6 @@ browser_mod:
                           data:
                             entity_id: button.nas_reboot
                   template: icon_name
-
                 - type: custom:button-card
                   name: Stäng av...
                   icon: mdi:alert

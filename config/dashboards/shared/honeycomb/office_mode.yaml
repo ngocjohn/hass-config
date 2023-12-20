@@ -14,26 +14,22 @@ service_data:
       hold_action: more-info
       tap_action:
         action: toggle
-
     - icon: mdi:floor-lamp
       entity: light.office_lamp_bulb
       autoclose: false
       hold_action: more-info
       tap_action:
         action: toggle
-
     - icon: mdi:led-strip
       entity: light.office_shelf_led
       hold_action: false
       tap_action:
         action: toggle
-
     - icon: mdi:alarm-light
       entity: input_boolean.brma
       hold_action: false
       tap_action:
         action: toggle
-
     - icon: cil:laptop-mac
       entity: switch.macbook
       hold_action: false

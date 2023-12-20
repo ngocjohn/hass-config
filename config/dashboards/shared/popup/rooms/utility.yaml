@@ -8,7 +8,6 @@ browser_mod:
     card_mod:
       style:
         .: |
-
         hui-grid-card$: |
           #root {
             margin: 0.8vw 1vw;
@@ -33,7 +32,6 @@ browser_mod:
           template:
             - base
             - icon_roborock
-
         - type: custom:button-card
           entity: switch.washer_dryer_power
           name: Washer

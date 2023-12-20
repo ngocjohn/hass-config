@@ -16,7 +16,6 @@ service_data:
         service: light.toggle
         service_data:
           entity_id: entity
-
     #1
     - icon: mdi:shower-head
       show: true
@@ -28,7 +27,6 @@ service_data:
         service: light.toggle
         service_data:
           entity_id: entity
-
     #2
     - icon: phu:arlo-baby
       show: true

@@ -282,7 +282,6 @@ browser_mod:
                               .dropdown-content.dropdown > a:hover {
                                 background: #41445f;
                               }
-
                 - type: custom:button-card
                   tap_action:
                     action: none

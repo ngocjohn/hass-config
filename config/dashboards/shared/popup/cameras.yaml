@@ -31,7 +31,6 @@ browser_mod:
               grid-template-areas: |
                 ". cam1 cam2 ."
                 ". cam3 cam4 ."
-
               mediaquery:
                 #hide_header: false
                 #phone
@@ -44,7 +43,6 @@ browser_mod:
                     ". cam2 ."
                     ". cam3 ."
                     ". cam4 ."
-
             cards:
               - type: picture-entity
                 entity: camera.terasa
@@ -94,7 +92,6 @@ browser_mod:
                     ha-card {
                       border-radius: 16px !important;
                     }
-
               - type: picture-entity
                 entity: camera.doorway
                 image: camera.doorway
@@ -119,7 +116,6 @@ browser_mod:
                     ha-card {
                       border-radius: 16px !important;
                     }
-
               - type: picture-entity
                 entity: camera.kids_room
                 image: camera.kids_room

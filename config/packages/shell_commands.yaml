@@ -9,7 +9,6 @@ shell_command:
   lock_mac: !secret lock_mac
   sleep_mbpro: !secret sleep_mbpro
   lock_mbpro: !secret lock_mbpro
-
   refresh_lovelace: !secret refresh_lovelace
   addons_cf_backup: !secret addons_cf_backup
   gitpush: !secret gitpush

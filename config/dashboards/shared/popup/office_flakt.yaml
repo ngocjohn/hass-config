@@ -15,10 +15,8 @@ browser_mod:
           card_mod:
             class: content
           entities:
-
             - entity: switch.gosund_fan_switch
               secondary_info: last-changed
-
             - type: custom:slider-entity-row
               entity: input_number.fan_timer
               hide_state: false

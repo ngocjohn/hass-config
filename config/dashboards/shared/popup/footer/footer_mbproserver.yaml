@@ -9,7 +9,6 @@ browser_mod:
     card_mod:
       style:
         # .: |
-
         layout-card:
           $grid-layout$:
             # card divider border
@@ -22,7 +21,6 @@ browser_mod:
                   display: block !important;
                 }
               }
-
             hui-entities-card:
               $: |
                 ha-card {
@@ -57,14 +55,12 @@ browser_mod:
             grid-template-rows: repeat(1, 1fr)
             grid-template-areas: |
               "hass"
-
       cards:
         #################################################
         #                                               #
         #                HOME ASSISTANT                 #
         #                                               #
         #################################################
-
         - type: entities
           view_layout:
             grid-area: hass
@@ -76,13 +72,10 @@ browser_mod:
             - entity: binary_sensor.macbookpro
               name: Active
               state_color: true
-
             - entity: sensor.mbproserver_connection_type
               name: Connection
-
             # - entity: sensor.mbpro_ip
             #   name: IP
-
             - type: custom:bar-card
               width: 55%
               height: 2em
@@ -103,13 +96,10 @@ browser_mod:
               entities:
                 - entity: sensor.mbpro_cpu
                   name: Processor
-
                 - entity: sensor.mbpro_mem
                   name: Memory
-
                 - entity: sensor.mbproserver_storage
                   name: Storage
-
             - type: custom:hui-horizontal-stack-card
               cards:
                 - type: custom:button-card
@@ -119,7 +109,6 @@ browser_mod:
                     action: call-service
                     service: shell_command.lock_mbpro
                   template: icon_name
-
                 - type: custom:button-card
                   name: Sleep
                   icon: mdi:power-sleep

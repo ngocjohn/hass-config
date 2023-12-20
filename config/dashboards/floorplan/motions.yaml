@@ -3,7 +3,6 @@
 #         DOORS                                 #
 #                                               #
 # ################################################
-
 - entities:
     - binary_sensor.motion_sensor_entrance_occupancy
     - binary_sensor.motion_sensor_utility_room_occupancy

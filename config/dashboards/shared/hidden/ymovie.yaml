@@ -63,7 +63,6 @@ card:
         #     attributes:
         #       label: Series
         #       icon: mdi:television
-
         #   # - card:
         #   #     type: iframe
         #   #     url: !secret kodi_movies

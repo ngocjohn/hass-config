@@ -26,8 +26,8 @@ blueprint:
         entity:
           multiple: false
           filter:
-          - domain:
-            - calendar
+            - domain:
+                - calendar
     calendar_duration:
       name: Calendar event duration
       description: How many hours ahead to look for upcoming calendar events.
@@ -42,8 +42,8 @@ blueprint:
         entity:
           multiple: false
           filter:
-          - domain:
-            - weather
+            - domain:
+                - weather
     zone_entity:
       name: Home zone entity
       description: The zone entity to use to determine approximate location for understanding
@@ -52,13 +52,12 @@ blueprint:
         entity:
           multiple: false
           filter:
-          - domain:
-            - zone
+            - domain:
+                - zone
     conversation_agent:
       name: Conversation agent
       description: 'The conversation agent to use for generating the notification
         text.
-
         This should be a OpenAI conversation agent for this Blueprint to work.'
       selector:
         conversation_agent: {}
@@ -82,40 +81,41 @@ trigger:
   platform: time
   at: !input notify_time
 action:
-- variables:
-    weather_entity: !input weather_entity
-    calendar_entity: !input calendar_entity
-    zone_entity: !input zone_entity
-    calendar_duration: !input calendar_duration
-    prompt: !input prompt
-- alias: Fetch Calendar Agenda
-  service: calendar.list_events
-  data:
-    duration: !input calendar_duration
-  target:
-    entity_id: !input calendar_entity
-  response_variable: agenda
-- alias: Conversation Agent Notification Text
-  service: conversation.process
-  data:
-    text: "Time: {{ now() }}\n{%- if zone_entity is defined %}\nLatitude: {{ state_attr(zone_entity,
-      'latitude') | round(1) }}\nLongitude: {{ state_attr(zone_entity, 'longitude')
-      | round(1) }}\n{% endif %}\n\n{%- if weather_entity is defined %}\n{%- set forecast
-      = state_attr(weather_entity, 'forecast')[0] %}\n{%- set temperature_unit = state_attr(weather_entity,
-      'temperature_unit') -%}\nWeather: {{ forecast.condition }} ({{ forecast.temperature
-      }}{{ temperature_unit }}, {{ forecast.precipitation }}% precipitation)\n{%-
-      endif %}\n\nCalendar \"{{ state_attr(calendar_entity, 'friendly_name') }}\"
-      events for the next {{ calendar_duration.hours }}:\n{%- if agenda.events %}\n
-      \ {%- for event in agenda.events %}\n  - Summary: {{ event.summary }}\n    Start-End:
-      {% if event.start is defined %}{{ event.start }} to {{ event.end }}{% else %}All
-      Day{% endif %}\n    {%- if event.descripton is defined %}\n    Descripton: {{
-      event.descripton }}\n    {% endif -%}\n    {%- if event.location is defined
-      %}\n      Location: {{ event.location }}\n    {% endif -%}\n  {%- endfor %}\n{%-
-      else %}\n  - No upcoming events.\n{%- endif %}\n\n{{ prompt }}"
-    agent_id: !input conversation_agent
-  response_variable: agent
-- alias: Send notification
-  service: !input notify_service
-  data:
-    title: '{{ now().strftime(''%A'') }} Agenda'
-    message: '{{ agent.response.speech.plain.speech }}'
+  - variables:
+      weather_entity: !input weather_entity
+      calendar_entity: !input calendar_entity
+      zone_entity: !input zone_entity
+      calendar_duration: !input calendar_duration
+      prompt: !input prompt
+  - alias: Fetch Calendar Agenda
+    service: calendar.list_events
+    data:
+      duration: !input calendar_duration
+    target:
+      entity_id: !input calendar_entity
+    response_variable: agenda
+  - alias: Conversation Agent Notification Text
+    service: conversation.process
+    data:
+      text:
+        "Time: {{ now() }}\n{%- if zone_entity is defined %}\nLatitude: {{ state_attr(zone_entity,
+        'latitude') | round(1) }}\nLongitude: {{ state_attr(zone_entity, 'longitude')
+        | round(1) }}\n{% endif %}\n\n{%- if weather_entity is defined %}\n{%- set forecast
+        = state_attr(weather_entity, 'forecast')[0] %}\n{%- set temperature_unit = state_attr(weather_entity,
+        'temperature_unit') -%}\nWeather: {{ forecast.condition }} ({{ forecast.temperature
+        }}{{ temperature_unit }}, {{ forecast.precipitation }}% precipitation)\n{%-
+        endif %}\n\nCalendar \"{{ state_attr(calendar_entity, 'friendly_name') }}\"
+        events for the next {{ calendar_duration.hours }}:\n{%- if agenda.events %}\n
+        \ {%- for event in agenda.events %}\n  - Summary: {{ event.summary }}\n    Start-End:
+        {% if event.start is defined %}{{ event.start }} to {{ event.end }}{% else %}All
+        Day{% endif %}\n    {%- if event.descripton is defined %}\n    Descripton: {{
+        event.descripton }}\n    {% endif -%}\n    {%- if event.location is defined
+        %}\n      Location: {{ event.location }}\n    {% endif -%}\n  {%- endfor %}\n{%-
+        else %}\n  - No upcoming events.\n{%- endif %}\n\n{{ prompt }}"
+      agent_id: !input conversation_agent
+    response_variable: agent
+  - alias: Send notification
+    service: !input notify_service
+    data:
+      title: "{{ now().strftime('%A') }} Agenda"
+      message: '{{ agent.response.speech.plain.speech }}'

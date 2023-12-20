@@ -510,11 +510,6 @@ grid_hallway:
     variables:
       light_entity: light.hallway_group
       motion: binary_sensor.motion_sensor_entrance_occupancy
-  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-  #                                               #
-  #                  CAMERAS                      #
-  #                                               #
-  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
   # CAM DOOR
 grid_cam_door:
   card:

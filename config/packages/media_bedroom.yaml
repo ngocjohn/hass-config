@@ -112,9 +112,7 @@ media_player:
               source: Spotify
             target:
               entity_id: media_player.shield_android_tv
-
   ### BEDROOM UNIVERSAL ###
-
   - platform: universal
     name: ShieldTV Kodi
     unique_id: shieldtv_kodi

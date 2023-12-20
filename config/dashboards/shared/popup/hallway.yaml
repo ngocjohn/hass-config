@@ -28,7 +28,6 @@ browser_mod:
         grid-template-rows: 1fr
         grid-template-areas: |
           ". hallway ."
-
         mediaquery:
           #phone
           '(max-width: 800px)':
@@ -44,7 +43,6 @@ browser_mod:
             grid-template-areas: |
               "hallway"
               "hallway"
-
       cards:
         - type: grid
           #title: hallway
@@ -58,28 +56,24 @@ browser_mod:
               template:
                 - lightpop
                 - icon_light_flush
-
             - type: custom:button-card
               entity: light.hallway_light
               name: Hallway
               template:
                 - lightpop
                 - icon_light_recessed
-
             - type: custom:button-card
               entity: light.office_led_light_strip
               name: Led strip
               template:
                 - lightpop
                 - icon_light_recessed
-
             - type: custom:button-card
               entity: light.utility_room_light
               name: Utility
               template:
                 - lightpop
                 - icon_light_recessed
-
             - type: custom:button-card
               entity: camera.doorway
               triggers_update:
@@ -92,7 +86,6 @@ browser_mod:
                 - loader
               double_tap_action:
                 action: more-info
-
             - type: custom:button-card
               entity: vacuum.robot_vacuum
               name: Roborock

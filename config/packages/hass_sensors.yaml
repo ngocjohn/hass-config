@@ -1,7 +1,6 @@
 ########################################
 #   HOME ASSISTANT CORE                #
 ########################################
-
 rest:
   - resource: https://api.github.com/repos/home-assistant/core/releases/latest
     sensor:
@@ -13,7 +12,6 @@ rest:
         - body
         - html_url
     scan_interval: 21600
-
   - resource: https://api.github.com/repos/home-assistant/core/releases?per_page=1
     sensor:
       name: hass_release_notes_beta
@@ -24,7 +22,6 @@ rest:
         - body
         - html_url
     scan_interval: 21600
-
 template:
   - sensor:
       # SENSOR - HASS CORE NEXT RELEASE
@@ -44,7 +41,6 @@ template:
             {% endif %}
           icon: mdi:dev-to
           device_class: timestamp
-
       - unique_id: updates
         state: >
           {{ this.attributes.values() | sum }}
@@ -56,7 +52,6 @@ template:
           update_entities: >
             {% set ignore_entities = device_entities("7353b70cac886bd0995d71776dfa49fb") | list %}
             {{ states.update | selectattr('state','eq','on') | rejectattr('entity_id', 'in', ignore_entities) | list | count }}
-
       # SENSOR - DOMAIN COUNTER
       - unique_id: domain_counter
         name: 'Domain Counter'
@@ -80,7 +75,6 @@ template:
           other: >
             {% set exclude = this.attributes | list %}
             {{ states | rejectattr('domain', 'in', exclude) | list | count }}
-
 command_line:
   - sensor:
       unique_id: hacs_installed
@@ -103,7 +97,6 @@ command_line:
       json_attributes:
         - repositories
       scan_interval: 86400
-
 sensor:
   - platform: systemmonitor
     resources:
@@ -115,12 +108,10 @@ sensor:
       - type: processor_use
       - type: last_boot
       - type: memory_free
-
   - platform: time_date
     display_options:
       - 'time'
       - 'date'
   - platform: folder
     folder: /config/www/tmp/snapshots
-
   - platform: websocket_api

@@ -73,7 +73,6 @@ browser_mod:
                           ha-card:hover {
                             rotate: 90deg;
                           }
-
                       icon: mdi:dots-horizontal
                       icon_color: white
                       tap_action:
@@ -90,7 +89,6 @@ browser_mod:
                         --chip-background: #ffffff0d;
                         padding: 15px 10px;
                       }
-
             # Homepods
             - type: custom:local-conditional-card
               default: hide
@@ -143,7 +141,6 @@ browser_mod:
                             background: #3182b78a !important;
                             border-radius: 12px !important;
                           }
-
                   - type: custom:mushroom-media-player-card
                     entity: media_player.owntone_output_bathroom
                     name: Bathroom
@@ -158,7 +155,6 @@ browser_mod:
                       action: toggle
                     card_mod:
                       style: *style
-
                   - type: custom:mushroom-media-player-card
                     entity: media_player.owntone_output_bedroom
                     show_volume_level: true
@@ -226,9 +222,7 @@ browser_mod:
                     {% else %}
                       --card-mod-icon: mdi:play;
                     {% endif %}
-
                     {{ 'animation: none;' if not is_state(config.entity, 'playing') }}
-
                   }
                   @keyframes flicker {
                     0%, 31.98%, 32.98%, 34.98%, 36.98%, 39.98%, 67.98%, 68.98%, 95.98%, 96.98%, 97.98%, 98.98%, 100% { --icon-color: rgba(var(--album-art-color), 1); }
@@ -254,7 +248,6 @@ browser_mod:
                     transform: translate3d(0,0,0);
                     -webkit-transform: translate3d(0,0,0);
                     content: "";
-
                     background: url('/local/img/idle_art.png') center no-repeat;
                     {% if is_state('media_player.spotify', 'playing') %}
                       background: url( '{{ state_attr('media_player.spotify', "entity_picture") }}' ) center no-repeat;

@@ -1,9 +1,3 @@
-#################################################
-#                                               #
-#                  ROOMS                        #
-#                                               #
-#################################################w
-
 room_group:
   template:
     - base
@@ -51,13 +45,11 @@ room_group:
             displayType: slider
             actionSize: 4.5em
             actionsInARow: 2
-
-#################################################
-#                                               #
-#                  SECTOR                       #
-#                                               #
-#################################################
-
+  #################################################
+  #                                               #
+  #                  SECTOR                       #
+  #                                               #
+  #################################################
 rooms_base:
   template:
     - base
@@ -108,7 +100,6 @@ rooms_base:
         }
       }
     ]]]
-
   styles:
     card:
       - background: >
@@ -133,8 +124,6 @@ rooms_base:
               ? 'rgb(139, 51, 51)'
               : 'rgba(255, 255, 255, 0.3)';
           ]]]
-
-# MOTION CIRCLE
 motion:
   custom_fields:
     motion: >
@@ -158,8 +147,6 @@ motion:
         #         ? 'rgba(255, 255, 255, 0.4)'
         #         : 'rgba(255, 255, 255, 0.8)';
         #     ]]]
-
-# MOTION CIRCLE
 babycam:
   custom_fields:
     babycam: >
@@ -183,8 +170,6 @@ babycam:
         #         ? 'rgba(255, 255, 255, 0.4)'
         #         : 'rgba(255, 255, 255, 0.8)';
         #     ]]]
-
-# SERVER CIRCLE
 server:
   custom_fields:
     server: >
@@ -218,8 +203,6 @@ server:
         #         ? 'rgba(255, 255, 255, 0.4)'
         #         : '#3082b787';
         #     ]]]
-
-# AIR DIFFUSER CIRCLE
 air_diffuser_circle:
   custom_fields:
     air_diffuser_circle: >
@@ -240,8 +223,6 @@ air_diffuser_circle:
         - width: 15%
         - top: "[[[return (states[variables.motion].state == 'on') ? '30%' : null;]]]"
         - transition: top 250ms ease-out
-
-# MACBOOK CIRCLE
 macbook:
   custom_fields:
     macbook: >
@@ -268,8 +249,6 @@ macbook:
         #         ? 'rgba(255, 255, 255, 0.4)'
         #         : '#3082b787';
         #     ]]]
-
-# DOOR STATE CIRCLE
 door_state:
   custom_fields:
     door: >
@@ -299,7 +278,6 @@ door_state:
                 ? 'rgba(255, 255, 255, 0.4)'
                 : null;
             ]]]
-
 icon_fanrotate:
   template:
     - rooms_base
@@ -310,7 +288,6 @@ icon_fanrotate:
       icon_fanrotate:
         - width: 25%
         - justify-self: end
-
   custom_fields:
     icon_fanrotate: >
       [[[
@@ -378,8 +355,6 @@ icon_fanrotate:
           }
         }
       ]]]
-
-# APPLIANCE CIRCLE
 appliance_circle:
   template:
     - circle
@@ -418,8 +393,6 @@ appliance_circle:
             </svg>
           `;
       ]]]
-
-# FAN STATE CIRCLE
 fan_circle:
   template:
     - rooms_base
@@ -458,8 +431,6 @@ fan_circle:
                 ? 'rgba(255, 255, 255, 0.15)'
                 : null;
             ]]]
-
-# CIRCLE STATE
 cooking_state:
   template:
     - base
@@ -476,13 +447,11 @@ cooking_state:
                 state = variables.state_on,
                 input = variables.circle_input || ' ',
                 unit = variables.circle_input_unit || ' ';
-
            /* * * * * * * * * * * * * * * * * *
             *                                 *
             *             CIRCLE              *
             *                                 *
             * * * * * * * * * * * * * * * * * */
-
             let circle = (state, input, unit) => {
                 return `
                   <svg viewBox="0 0 50 50">
@@ -520,13 +489,11 @@ cooking_state:
             }
         }
       ]]]
-
 kitchensensor:
   template:
     - base
     - circle
     - loader
-
   state_display: >
     [[[
       return variables.state == 'off' ? " " : null;
@@ -544,13 +511,11 @@ kitchensensor:
         }
       ]]]
     circle_input_unit: '%'
-
-#################################################
-#                                               #
-#                     LIGHTS                    #
-#                                               #
-#################################################
-
+  #################################################
+  #                                               #
+  #                     LIGHTS                    #
+  #                                               #
+  #################################################
 light:
   template:
     - base
@@ -570,9 +535,7 @@ light:
                 : brightness
         }
       ]]]
-
     circle_input_unit: '%'
-
   double_tap_action:
     action: fire-dom-event
     browser_mod:
@@ -592,7 +555,6 @@ light:
               ha-header-bar {
                 display: none !important;
               }
-
         content:
           type: entities
           card_mod:
@@ -607,7 +569,6 @@ light:
                       id = Boolean(entity.attributes.entity_id)
                           ? [entity.entity_id].concat(entity.attributes.entity_id)
                           : [entity.entity_id];
-
                   for (let i = 0; i < id.length; i++) {
                       lights.push({
                           "type": "custom:mushroom-light-card",
@@ -626,7 +587,6 @@ light:
                   return lights;
               }
             ]]]
-
 light_slider:
   template:
     - extra_styles
@@ -728,7 +688,6 @@ light_slider:
                 ? '#000000'
                 : '#A4A9B6';
           ]]]
-
 svetla:
   template:
     - base
@@ -783,7 +742,6 @@ svetla:
                           ha-attributes {
                             display: none !important;
                           }
-
 lightpop:
   template:
     - base
@@ -796,7 +754,6 @@ lightpop:
     custom_fields:
       icon:
         - width: 85%
-
   double_tap_action:
     action: fire-dom-event
     browser_mod:
@@ -824,7 +781,6 @@ lightpop:
                   background-color: var(--tablet-popup-header-color) !important;
                 }
               }
-
         content:
           type: entities
           card_mod:
@@ -842,13 +798,11 @@ lightpop:
                   ha-card {
                     border: none !important;
                   }
-
-#################################################
-#                                               #
-#                     PERSON                    #
-#                                               #
-#################################################
-
+  #################################################
+  #                                               #
+  #                     PERSON                    #
+  #                                               #
+  #################################################
 person:
   template:
     - base
@@ -891,14 +845,11 @@ person:
             ? `<img src="${variables.entity_picture}" width="100%">`
             : null;
       ]]]
-
-#################################################
-#                                               #
-#                  SECURITY                     #
-#                                               #
-#################################################
-
-# ALARM
+  #################################################
+  #                                               #
+  #                  SECURITY                     #
+  #                                               #
+  #################################################
 alarm:
   template:
     - base
@@ -929,7 +880,6 @@ alarm:
           ]]]
   tap_action:
     action: more-info
-
 front_door:
   template:
     - base
@@ -955,8 +905,6 @@ front_door:
         [[[
           return variables.entity_id;
         ]]]
-
-# BATTER ALERT CIRCLE
 battery_alert:
   custom_fields:
     battery_alert: >
@@ -975,8 +923,6 @@ battery_alert:
         - padding: 5%
         - margin: -10%
         - width: 15%
-
-# SENSORS
 sensors:
   template:
     - base
@@ -1005,8 +951,6 @@ sensors:
       }
       return 'Sensors';
     ]]]
-
-# DOORS
 doors:
   template:
     - base
@@ -1035,13 +979,11 @@ doors:
       }
       return 'Doors';
     ]]]
-
-#################################################
-#                                               #
-#                    CAMERA                     #
-#                                               #
-#################################################
-
+  #################################################
+  #                                               #
+  #                    CAMERA                     #
+  #                                               #
+  #################################################
 camera:
   template:
     - base
@@ -1169,8 +1111,6 @@ camera:
         `;
         }}
       ]]]
-
-# CIRCLE STATE
 circle_state:
   template:
     - base
@@ -1196,7 +1136,6 @@ circle_state:
                 : time(Date.now() - Date.parse(states[variables.retain].state)),
               stroke = variables.state === 'open' || variables.state === 'on' ? '#b2b2b2' : 'none',
               fill = variables.state === 'closed' || variables.state === 'off' ? 'rgba(255,255,255,0.04)' : 'none';
-
         return `
           <svg viewBox="0 0 50 50">
             <circle cx="25" cy="25" r="20.5" stroke="${stroke}" stroke-width="2.5" fill="${fill}" />

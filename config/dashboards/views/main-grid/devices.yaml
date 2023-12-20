@@ -3,7 +3,6 @@
 #                    DEVICES                    #
 #                                               #
 #################################################
-
 - type: grid
   title: Devices
   view_layout:
@@ -13,15 +12,12 @@
     # APPLE TV
     - type: custom:decluttering-card
       template: grid_atv
-
     # Samsung TV
     - type: custom:decluttering-card
       template: grid_samsung
-
     # PLAYSTATION
     - type: custom:decluttering-card
       template: grid_playstation
-
     # HOMEPODS
     - type: custom:decluttering-card
       template: grid_homepods

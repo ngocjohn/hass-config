@@ -3,7 +3,6 @@
 #      WIDE SPOTIFY PLAYER                      #
 #                                               #
 #################################################
-
 - type: custom:stack-in-card
   view_layout:
     grid-area: nowplaying
@@ -42,7 +41,6 @@
         {%else%}
         display: block;
         {%- endif%}
-
       }
       ha-card:hover {
         box-shadow: 0px 0px 20px 5px rgba(var(--album-art-color),.4);
@@ -96,7 +94,6 @@
               --card-mod-icon: mdi:play;
             {% endif %}
             {{ 'animation: none;' if not is_state(config.entity, 'playing') }}
-
           }
           @keyframes flicker {
             0%, 31.98%, 32.98%, 34.98%, 36.98%, 39.98%, 67.98%, 68.98%, 95.98%, 96.98%, 97.98%, 98.98%, 100% { --icon-color: rgba(var(--album-art-color), 1); }

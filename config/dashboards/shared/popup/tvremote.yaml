@@ -20,7 +20,6 @@ browser_mod:
               display: block !important;
             }
           }
-
     content:
       type: custom:layout-card
       layout_type: custom:grid-layout

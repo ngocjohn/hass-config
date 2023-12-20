@@ -14,7 +14,6 @@
     action: call-service
     service: floorplan.class_set
     service_data: 'cover-${entity.state}'
-
 - entities:
     - cover.living_room_terrace
   hold_action:

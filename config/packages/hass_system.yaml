@@ -75,7 +75,6 @@ recorder:
   include:
     entities:
       - device_tracker.findmy_d098350b38e241d3972ad394a27f38b6
-
 logger:
   default: error
   logs:
@@ -85,20 +84,17 @@ logger:
     homeassistant.components.websocket_api: error
     homeassistant.components.spotify: fatal
     frontend.js.latest: error
-
 # TTS
 tts:
   - platform: google_translate
   - platform: google_cloud
     key_file: google_stt.json
-
   - platform: edge_tts
     service_name: edge_eng_say
     language: en-US-JennyNeural
   - platform: edge_tts
     service_name: edge_vietnam_say
     language: vi-VN-HoaiMyNeural
-
 bluetooth:
 delete:
 sun:

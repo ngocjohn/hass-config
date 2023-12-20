@@ -8,7 +8,6 @@ browser_mod:
     card_mod:
       style:
         .: |
-
         # card divider border
         layout-card$grid-layout$:
           .: |
@@ -27,7 +26,6 @@ browser_mod:
                 border-radius: 0;
                 transition: none;
               }
-
               /* portrait */
               @media screen and (max-width: 1440px) {
                 ha-card {
@@ -82,7 +80,6 @@ browser_mod:
               forecast:
                 condition_icons: false
                 show_wind_forecast: false
-
         - type: entities
           view_layout:
             grid-area: radar
@@ -107,7 +104,6 @@ browser_mod:
               square_map: true
               show_recenter: true
               show_playback: false
-
         - type: entities
           view_layout:
             grid-area: moon

@@ -13,7 +13,6 @@
         if( entity.state === "above_horizon" )
             return "display: block;";
         return "display: none;"
-
 - element: icon-phone-rotate
   hold_action: false
   tap_action:

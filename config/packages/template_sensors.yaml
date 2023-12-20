@@ -12,7 +12,6 @@ homeassistant:
 #                SENSORS                        #
 #                                               #
 #################################################
-
 template:
   # SENSORS
   - sensor:
@@ -20,7 +19,6 @@ template:
       - name: GitHub NgocJohn
         unique_id: 'github_ngocjohn'
         state: '{{this.trigger.attributes.date_committed}}'
-
       # SENSOR CLIMATE
       - unique_id: climate_index
         name: Home Climate
@@ -86,7 +84,6 @@ template:
               states.climate.kids_room_thermostat,
               states.climate.living_room_thermostat ] %}
             {{ heateron | selectattr('attributes.hvac_action','eq','heating') | map(attribute='name') | list | replace('Thermostat', '') }}
-
       # SENSOR - ROOM ACTIVITY
       - unique_id: living_room_active
         name: 'Living-room Active'
@@ -179,7 +176,6 @@ template:
           lights_on: >-
             {%- set light = expand(states.light.office_group) | selectattr( 'state', 'eq', 'on') | map(attribute='name') | list | replace('Office ', '') %}
             {{- light }}
-
       # SENSOR - BATHROOM ACTIVITY
       - unique_id: bathroom_active
         name: 'Bathroom Active'
@@ -236,7 +232,6 @@ template:
             {%- if is_state('light.utility_room_light', 'on') %}
             [ "light" ]
             {%- endif %}
-
       # SENSOR - LIGHTS COUNT
       - name: Lights count
         unique_id: lights_on_count
@@ -252,7 +247,6 @@ template:
           bedroom: "{{ expand(states.light.bedroom_group) | selectattr( 'state', 'eq', 'on') | list | count }}"
           hallway_utility: "{{ expand(states.light.hallway_group) | selectattr( 'state', 'eq', 'on') | list | count }}"
           office: "{{ expand(states.light.office_group) | selectattr( 'state', 'eq', 'on') | list | count }}"
-
       # SENSOR - MEDIA PLAYER
       - name: Currently playing
         unique_id: currently_playing
@@ -274,7 +268,6 @@ template:
         unit_of_measurement: devices
         state: >-
           {{ expand(states.group.shades_cover) | selectattr( 'state', 'eq', 'open') | list | count }}
-
       # SENSOR - DEVICE LOW BATTERRY
       - name: Device with Low Battery
         unique_id: low_baterry_device
@@ -297,7 +290,6 @@ template:
           {% else %}
             mdi:battery-alert
           {% endif %}
-
       # SENSOR - WEATHER
       - unique_id: weather_min_temp
         name: 'Weather Min Temp'
@@ -305,7 +297,6 @@ template:
       - unique_id: weather_max_temp
         name: 'Weather Max Temp'
         state: '{{ states.sensor.weather_smichov_forecast_daily.attributes.forecast[0].temperature }}'
-
       - unique_id: weather_humidity
         name: 'Weather Humidity'
         unit_of_measurement: '%'
@@ -335,7 +326,6 @@ template:
           doors_open: >-
             {% set doors = expand(states.group.security_doors) %}
             {{ doors | selectattr('state', 'in', ['open', 'on', 'unlocked']) | map(attribute='name') | list | replace('Contact Sensor ', '') | replace('Balcony Door ', '') }}
-
       # SENSOR - HOME MODE
       - unique_id: home_mode
         name: 'Home mode'
@@ -355,7 +345,6 @@ template:
           {% else %}
           ios:house-fill
           {% endif %}
-
       # SENSOR - SECURITY - MOTION STATE
       - unique_id: motion_state
         name: 'Motion state'
@@ -375,7 +364,6 @@ template:
           motion_detected: >-
             {% set motions =  expand(states.group.motion_sensors) %}
             {{ motions | selectattr('state', 'in', ['detected', 'on']) | map(attribute='name') | list | replace('Motion Sensor ', '') }}
-
 sensor:
   - platform: template
     sensors:
@@ -383,7 +371,6 @@ sensor:
         value_template: "{{ ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'][now().weekday()] }}"
       date_en:
         value_template: "{%- set months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] -%} {{ now().day | string + ' ' + months[now().month-1]}}"
-
 command_line:
   - sensor:
       name: code_line_count

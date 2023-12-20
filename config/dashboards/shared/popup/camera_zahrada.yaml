@@ -20,7 +20,6 @@ browser_mod:
               #root {
                 justify-content: center !important;
               }
-
     content:
       type: custom:stack-in-card
       cards:

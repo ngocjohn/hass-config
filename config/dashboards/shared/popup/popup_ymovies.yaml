@@ -47,7 +47,6 @@ browser_mod:
             attributes:
               label: Series
               icon: mdi:television
-
           - card:
               type: iframe
               url: https://ymovie.streamcinema.cz/#/scc/browse/Popular-Movies

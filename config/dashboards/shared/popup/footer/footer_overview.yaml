@@ -8,7 +8,6 @@ browser_mod:
     card_mod:
       style:
         .: |
-
         layout-card$grid-layout$:
           .: |
             #root > * {
@@ -42,7 +41,6 @@ browser_mod:
         margin: 0
         gap: 5%
         grid-template-columns: 1fr 1fr 1fr
-
         mediaquery:
           #phone
           '(max-width: 800px)':
@@ -254,7 +252,6 @@ browser_mod:
                 layout_type: masonry
               sort:
                 method: friendly_name
-
         # - type: markdown
         #   title: 'Packages'
         #   card_mod:
@@ -289,18 +286,12 @@ browser_mod:
         #     %}
         #     {%- for state in status %}
         #     {%- if states['sensor'][state.sensor].state != '0' %}
-
         #     {% for package in
         #     states.sensor.seventeentrack_packages_in_transit.attributes.packages %}
-
         #     ### <ha-icon icon="{{ state.icon }}" style="color: '#b8860b';"></ha-icon> {{ package.friendly_name }} *({{ package.tracking_number }})*
-
         #     - {{package.info_text }}
-
         #     - {{package.status }}
-
         #     > *Update: {{ as_timestamp(package.timestamp) | timestamp_custom("%a, %d %b %Y %H:%M")}} - {{ relative_time(package.timestamp)}} ago*
-
         #     {% endfor %}
         #     {% endif -%}
         #     {% endfor %}

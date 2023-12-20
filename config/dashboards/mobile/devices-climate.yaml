@@ -10,20 +10,17 @@ layout:
   grid-template-rows: fit-content(100%)
   grid-template-areas: |
     ". devices   climate  ."
-
 #################################################
 #                                               #
 #                    DASHBOARD                  #
 #                                               #
 #################################################
-
 cards:
   #################################################
   #                                               #
   #                    DEVICES                    #
   #                                               #
   #################################################
-
   - type: grid
     title: Devices
     view_layout:
@@ -33,20 +30,15 @@ cards:
       # APPLE TV
       - type: custom:decluttering-card
         template: grid_atv
-
       # Samsung TV
       - type: custom:decluttering-card
         template: grid_samsung
-
       # PLAYSTATION
       - type: custom:decluttering-card
         template: grid_playstation
-
       # HOMEPODS
       - type: custom:decluttering-card
         template: grid_homepods
-
-
   #################################################
   #                                               #
   #                  CLIMATE                      #
@@ -61,17 +53,12 @@ cards:
       # AIR PURIFIER
       - type: custom:decluttering-card
         template: grid_air_purifier
-
       # THERMOSTAT
       - type: custom:decluttering-card
         template: grid_thermostat
-
       # LIVING ROOM COVERS
       - type: custom:decluttering-card
         template: grid_covers_living
-
       # BEDOOM COVERS
       - type: custom:decluttering-card
         template: grid_covers_bedroom
-
-

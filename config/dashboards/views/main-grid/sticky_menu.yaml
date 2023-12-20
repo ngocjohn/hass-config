@@ -3,7 +3,6 @@
 #      STICKY BOTTOM MENU                       #
 #                                               #
 #################################################
-
 - type: custom:stack-in-card
   view_layout:
     grid-area: nav
@@ -17,7 +16,6 @@
       animation: 1.2s position ease-in-out;
       z-index: 4;
     }
-
     @keyframes position {
       0% { bottom: -80px; }
       20% { bottom: -80px; }
@@ -25,7 +23,6 @@
       90% { bottom: 24px; }
       100% { bottom: 26px; }
     }
-
     ha-card {
       margin-bottom: 0px !important;
       border-radius: 34px !important;
@@ -95,7 +92,6 @@
             tap_action:
               action: navigate
               navigation_path: /d5369777_music_assistant_beta/ingress
-
           - type: custom:button-card
             template: icon_sticky_menu
             icon: mdi:chat

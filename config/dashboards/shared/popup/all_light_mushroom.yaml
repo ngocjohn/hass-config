@@ -8,13 +8,11 @@ browser_mod:
     card_mod:
       style:
         .: |
-
         layout-card$masonry-layout$:
           .: |
             :host {
               --card-margin: 4px !important;
             }
-
     content:
       type: custom:layout-card
       layout_type: custom:masonry-layout

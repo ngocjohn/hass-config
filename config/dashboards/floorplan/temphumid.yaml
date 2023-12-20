@@ -12,7 +12,6 @@
     action: call-service
     service: floorplan.class_set
     service_data: 'temphumid-${entity.state}'
-
 - entities:
     - sensor.bedroom_tem_humid_temperature
     - sensor.dyson_ph04_temperature

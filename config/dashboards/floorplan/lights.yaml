@@ -3,7 +3,6 @@
 #         LIGHTS                                #
 #                                               #
 #################################################
-
 - elements:
     - input_boolean.office_mode
     - light.office_lamp_bulb
@@ -11,7 +10,6 @@
   double_tap_action: more-info
   tap_action: toggle
   hold_action: !include ../shared/honeycomb/office_mode.yaml
-
 - entity:
     - light.bedroom_bed_light
   double_tap_action: more-info
@@ -32,11 +30,9 @@
           mix-blend-mode: lighten;
           filter: sepia(100%) hue-rotate(calc(-26deg)) saturate(calc(200%)) brightness(calc(0.4));
           `
-
 - elements:
     - area.utility
   hold_action: !include ../shared/honeycomb/utitlity.yaml
-
 - entities:
     - light.office_lamp_bulb
     - light.bedroom_bed_light
@@ -55,7 +51,6 @@
     action: call-service
     service: floorplan.class_set
     service_data: 'light-${entity.state}'
-
 - entities:
     - light.office_lamp_bulb
     - light.bedroom_closet_light

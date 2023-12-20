@@ -11,7 +11,6 @@ browser_mod:
     card_mod:
       style:
         .: |
-
         # card divider border
         layout-card$grid-layout$:
           .: |
@@ -25,7 +24,6 @@ browser_mod:
                 border-radius: 0;
                 transition: none;
               }
-
               /* portrait */
               @media screen and (max-width: 1400px) {
                 ha-card {
@@ -33,7 +31,6 @@ browser_mod:
                   border-bottom: 0.1vw solid rgba(58, 69, 73, 0.2);
                 }
               }
-
     content:
       type: custom:layout-card
       layout_type: custom:grid-layout
@@ -53,7 +50,6 @@ browser_mod:
               "sensor"
       cards:
         ### SUMMARY
-
         - type: entities
           view_layout:
             grid-area: info
@@ -90,7 +86,6 @@ browser_mod:
             - input_select.vacuum_mode
             - input_select.vacuum_sweep_type
             - input_select.vacuum_water_level
-
             - type: custom:mod-card
               card_mod:
                 style:
@@ -119,7 +114,6 @@ browser_mod:
                       service_data:
                         entity_id: vacuum.roidmi_eve
                     template: icon_only
-
                   - type: custom:button-card
                     entity: vacuum.roidmi_eve
                     icon: mdi:battery-charging
@@ -129,27 +123,21 @@ browser_mod:
                       service_data:
                         entity_id: vacuum.roidmi_eve
                     template: icon_only
-
                   - type: custom:button-card
                     icon: mdi:bell
                     tap_action:
                       action: call-service
                       service: script.vacuum_find_robot
                     template: icon_only
-
                   - type: custom:button-card
                     icon: mdi:delete-empty
                     tap_action:
                       action: call-service
                       service: script.vacuum_empty_bin
                     template: icon_only
-
         ### MAP
-
         - !include vacuum_roidmi.yaml
-
         ## SETTINGS
-
         - type: entities
           view_layout:
             grid-area: sensor

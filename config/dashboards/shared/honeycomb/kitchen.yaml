@@ -15,7 +15,6 @@ service_data:
         service: light.toggle
         service_data:
           entity_id: entity
-
     #1
     - icon: phu:ceiling-adore-flush
       show: true

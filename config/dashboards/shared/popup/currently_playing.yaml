@@ -17,7 +17,6 @@ browser_mod:
           ha-header-bar {
             display: none !important;
           }
-
     content:
       type: custom:stack-in-card
       cards:
@@ -55,7 +54,6 @@ browser_mod:
                 {% else %}
                   --card-mod-icon: mdi:play;
                 {% endif %}
-
                 {{ 'animation: none;' if not is_state(config.entity, 'playing') }}
               }
               @keyframes flicker {
@@ -84,7 +82,6 @@ browser_mod:
                 {% if not is_state(config.entity, 'idle') and not is_state(config.entity, 'off') %}
                   content: "";
                 {% endif %}
-
                 {% if not is_state('media_player.currently_playing', 'idle') and not is_state('media_player.currently_playing', 'off') %}
                 {% set source = state_attr('media_player.currently_playing', 'source') %}
                 {% set appname = state_attr('media_player.currently_playing', 'app_id') %}
@@ -100,7 +97,6 @@ browser_mod:
                 margin: 4px 4px 16px;
                 filter: drop-shadow(4px 4px 6px rgba(0, 0, 0, 0.5));
                 border-radius: var(--control-border-radius);
-
                 {% set active_child = state_attr(config.entity, 'active_child') %}
                 {% if active_child == 'media_player.spotify' %}
                   aspect-ratio: 1 / 1;

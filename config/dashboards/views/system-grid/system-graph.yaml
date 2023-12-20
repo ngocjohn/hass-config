@@ -3,7 +3,6 @@
 #            GRAPH HISTORY                      #
 #                                               #
 #################################################
-
 - type: vertical-stack
   view_layout:
     grid-area: cc

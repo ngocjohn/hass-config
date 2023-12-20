@@ -17,7 +17,6 @@ browser_mod:
           ha-header-bar {
             display: none !important;
           }
-
     content:
       type: horizontal-stack
       cards:
@@ -57,9 +56,7 @@ browser_mod:
                     {% else %}
                       --card-mod-icon: mdi:play;
                     {% endif %}
-
                     {{ 'animation: none;' if not is_state(config.entity, 'playing') }}
-
                   }
                   @keyframes flicker {
                     0%, 31.98%, 32.98%, 34.98%, 36.98%, 39.98%, 67.98%, 68.98%, 95.98%, 96.98%, 97.98%, 98.98%, 100% { --icon-color: rgba(var(--album-art-color), 1); }
@@ -85,12 +82,10 @@ browser_mod:
                     transform: translate3d(0,0,0);
                     -webkit-transform: translate3d(0,0,0);
                     content: "";
-
                     background: url('/local/idle_art.png') center no-repeat;
                     {% if is_state(config.entity, 'playing') %}
                       background: url( '{{ state_attr(config.entity, "entity_picture") }}') center no-repeat;
                     {% endif %}
-
                     background-size: contain;
                     margin: 4px 4px 16px 4px !important;
                     filter: drop-shadow(4px 4px 6px rgba(0, 0, 0, 0.5));

@@ -5,7 +5,6 @@ service_data:
   audio: /local/sound/popup.m4a
   autoclose: false
   active: true
-
   buttons:
     #0
     - icon: mdi:volume-mute

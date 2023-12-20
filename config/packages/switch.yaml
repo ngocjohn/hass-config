@@ -1,5 +1,4 @@
 #Humidifier switch Template
-
 switch:
   - platform: template
     switches:
@@ -10,7 +9,6 @@ switch:
           service: script.macbook_air_login
         turn_off:
           service: shell_command.lock_mac
-
       # VOCOLINC DIFFUSER
       office_humidifier:
         unique_id: sw_office_humid
@@ -34,7 +32,6 @@ switch:
           service: fan.turn_off
           target:
             entity_id: fan.bedroom_ripple_ripple
-
       watchtower:
         unique_id: watchtower_switch
         friendly_name: Watchtower
@@ -51,7 +48,6 @@ switch:
             target:
               entity_id: binary_sensor.container_watchtower
   # Humidifier
-
 generic_hygrostat:
   - name: Office Humidifier
     humidifier: switch.office_humidifier

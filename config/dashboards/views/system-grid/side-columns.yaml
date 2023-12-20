@@ -3,7 +3,6 @@
 #            SIDE COLUMNS                       #
 #                                               #
 #################################################
-
 - type: horizontal-stack
   view_layout:
     grid-area: c2
@@ -76,7 +75,6 @@
                 layout_type: masonry
               sort:
                 method: friendly_name
-
         # - type: entities
         #   title: Entities
         #   show_header_toggle: false

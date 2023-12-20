@@ -80,7 +80,6 @@ homeassistant:
       friendly_name: 'Operation'
     sensor.vacuum_accessories:
       friendly_name: 'Working time'
-
 camera:
   # ROIDMI EVE PLUS VACUUM
   - platform: xiaomi_cloud_map_extractor
@@ -124,7 +123,6 @@ camera:
       7: [0x00, 0x00, 0x00, 0x00]
       8: [0x00, 0x00, 0x00, 0x00]
       9: [0x00, 0x00, 0x00, 0x00]
-
     draw:
       - charger
       - path
@@ -163,7 +161,6 @@ camera:
       - vacuum_room
       - walls
       - zones
-
 template:
   - sensor:
       - name: 'vacuum_operation'
@@ -347,7 +344,6 @@ template:
         state: "{{ state_attr('vacuum.roidmi_eve','custom.total_clean_areas') }}"
       - name: 'vacuum_cleaning_count'
         state: "{{ state_attr('vacuum.roidmi_eve','custom.clean_counts') }}"
-
       - name: 'vacuum_position'
         state: >
           {% set room_dict = {
@@ -361,11 +357,9 @@ template:
             8: "Bathroom"
           } %}
           {{ room_dict[state_attr('camera.roidmi_eve', 'vacuum_room')] }}
-
   - binary_sensor:
       - name: 'vacuum_mop'
         state: "{{ state_attr('vacuum.roidmi_eve','custom.mop') }}"
-
 input_boolean:
   vacuum_lidar_collision:
     name: 'Collision Radar'
@@ -415,7 +409,6 @@ input_boolean:
   vacuum_room8:
     name: 'Bathroom'
     icon: 'mdi:shower'
-
 input_number:
   vacuum_volume:
     name: 'Volume level'
@@ -424,7 +417,6 @@ input_number:
     min: 0
     max: 100
     step: 1
-
 input_select:
   vacuum_water_level:
     name: 'Water use'
@@ -458,7 +450,6 @@ input_select:
       - Sweep
       - Mop
       - Mop And Sweep
-
 automation:
   # get the values from the vacuum cleaner
   - alias: vacuum_get_miot_property
@@ -591,7 +582,6 @@ automation:
               Mop And Sweep
             {%- else -%}
             {%- endif -%}
-
   # set the values in the vacuum cleaner
   - alias: vacuum_set_miot_property
     mode: queued
@@ -637,7 +627,6 @@ automation:
       - platform: state
         entity_id: input_select.vacuum_sweep_type
         id: 'vacuum_sweep_type'
-
     action:
       - choose:
           - conditions:

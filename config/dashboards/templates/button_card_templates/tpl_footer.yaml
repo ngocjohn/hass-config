@@ -61,7 +61,6 @@ footer:
       #         ? '#ff81812e'
       #         : null;
       #     ]]]
-
     custom_fields:
       notify:
         - display: >
@@ -91,7 +90,6 @@ footer:
     action: block
   double_tap_action:
     action: block
-
 #################################################
 #                                               #
 #                     UPDATES                   #
@@ -146,7 +144,6 @@ base_updates:
     code {
       background-color: var(--secondary-background-color);
     }
-
 updates_hass:
   template:
     - base_updates
@@ -155,30 +152,24 @@ updates_hass:
     [[[
       if (entity) {
           let available = states[variables.available].attributes.home_assistant;
-
           let links = new RegExp('<a href="([^"]+)"', "g"),
               installed = entity.state,
               hass_version_latest = states[variables.latest],
               hass_version_latest_beta = states[variables.latest_beta],
               hass_release_notes = states[variables.release_notes],
               hass_release_notes_beta = states[variables.release_notes_beta];
-
           let latest = installed.includes('b')
               ? hass_version_latest_beta.state
               : hass_version_latest.state;
-
           let release_notes = installed.includes('b')
               ? marked.parse(hass_release_notes.attributes.body)
               : marked.parse(hass_release_notes_beta.attributes.body);
-
           let subtitle = available === 0
               ? `${variables.translate_no_updates} <b>&larr;</b> ${installed}`
               : `${installed} <b>&rarr;</b> ${latest} ${variables.translate_available} ${String.fromCodePoint("0x1f389")}`;
-
           let output = available === 0
               ? '<ul></ul>'
               : release_notes.replace(links, '<a href="#" onclick="window.open(\'$1\')"');
-
           return `
             <ha-icon icon="mdi:home-assistant"></ha-icon> <span class="title">Home Assistant</span><br>
             <p class="subtitle">${subtitle}</p>
@@ -186,7 +177,6 @@ updates_hass:
           `;
       }
     ]]]
-
 updates_hass_icon_name:
   template: icon_name
   icon: mdi:update
@@ -204,7 +194,6 @@ updates_hass_icon_name:
               ? 'none'
               : 'flex';
           ]]]
-
 updates:
   template:
     - base_updates
@@ -219,7 +208,6 @@ updates:
           no_updates = variables.translate_no_updates,
           update_available = variables.translate_update_available,
           updates_available = variables.translate_updates_available;
-
       const rename = a => {
           return a.release_url && a.release_url.indexOf('github.com') > -1
               ? `${a.release_url.split('/')[3]}/${a.release_url.split('/')[4]}`
@@ -240,14 +228,12 @@ updates:
           subtitle = count === 0
               ? `${no_updates} <b>&larr;</b> ${hacs_update || ''}`
               : `${count} ${count === 1 ? update_available : updates_available} ${String.fromCodePoint('0x1f389')}`;
-
       return `
         <ha-icon icon="mdi:package-up"></ha-icon> <span class="title">Integrations</span><br>
         <p class="subtitle">${subtitle}</p>
         <ul>${output}</ul>
       `;
     ]]]
-
 updates_icon_name:
   template: icon_name
   icon: mdi:open-in-new
@@ -265,7 +251,6 @@ updates_icon_name:
               ? 'none'
               : 'flex';
           ]]]
-
 hacs_iframe:
   tap_action:
     action: fire-dom-event
@@ -290,7 +275,6 @@ hacs_iframe:
           url: >
             [[[ return `/${hass.panels.config.url_path}/updates` ]]]
   template: icon_name
-
 hacs_navigate_ios:
   tap_action:
     action: fire-dom-event
@@ -300,23 +284,19 @@ hacs_navigate_ios:
         code: >
           window.location.href = `/${hass.panels.config.url_path}/updates`;
   template: icon_name
-
 unifi_ios:
   tap_action:
     action: url
     url_path: shortcuts://run-shortcut?name=Open Unifi
-
 unifi_web:
   tap_action:
     action: url
     url_path: !secret unifi_url
-
 #################################################
 #                                               #
 #               POP UP                          #
 #                                               #
 #################################################
-
 icon_name:
   template:
     - extra_styles
@@ -335,7 +315,6 @@ icon_name:
       - font-weight: 500
       - letter-spacing: 0.03em
       - background: '#FFFFFF10'
-
 icon_only:
   template:
     - extra_styles
@@ -348,7 +327,6 @@ icon_only:
       - width: 4em
       - height: 3.7em
       - background: '#FFFFFF10'
-
 icon_sticky_menu:
   size: 1.7em
   show_name: false
@@ -357,12 +335,9 @@ icon_sticky_menu:
       [[[
         // add animation
         if (this.getElementsByTagName("style").length === 0) {
-
             // phone condition
             let mq = window.matchMedia('(max-width: 800px)').matches;
-
             let style = document.createElement('style');
-
             style.innerHTML = `
                 @keyframes card_bounce {
                     0%   { transform: scale(1); }
@@ -372,15 +347,12 @@ icon_sticky_menu:
                     100% { transform: scale(1); }
                 }
             `;
-
             this.appendChild(style);
         }
         // duration
         let duration = 800;
-
         // animate
         this.style.animation = `card_bounce ${duration}ms cubic-bezier(0.22, 1, 0.36, 1)`;
-
         // reset
         window.setTimeout(() => { this.style.animation = "none"; }, duration + 100)
       ]]]
@@ -392,7 +364,6 @@ icon_sticky_menu:
       - --mdc-ripple-press-opacity: 0.5
     icon:
       - color: '#ffffff'
-
 chat_icon_only:
   show_name: false
   color: '#9da0a2'
@@ -406,7 +377,6 @@ chat_icon_only:
       - background-size: cover
       - background-position: center
       - background-image: 'url("/local/img/voice.png")'
-
 remote_icon_only:
   show_name: false
   aspect_ratio: 1/1
@@ -444,7 +414,6 @@ remote_icon_arrow:
               ? '#000000'
               : '#9da0a2';
           ]]]
-
 sidebar_icon_only:
   show_name: false
   color: '#9da0a2'

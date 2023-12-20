@@ -3,7 +3,6 @@
 #                  HEADER                       #
 #                                               #
 #################################################
-
 - type: custom:stack-in-card
   view_layout:
     grid-area: header
@@ -20,7 +19,6 @@
         gpt_weather: 'input_text.gpt_weather_response'
       template:
         - wide_header
-
 #################################################
 #                                               #
 #                  WEATHER                      #
@@ -39,7 +37,6 @@
       entity: sensor.template_sidebar_time
       template:
         - timeclock
-
 - type: 'custom:layout-card'
   layout_type: 'custom:grid-layout'
   view_layout:

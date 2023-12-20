@@ -32,5 +32,4 @@ layout:
         ". c2          c2        ."
         ". footer      footer    ."
         ". nav         nav       ."
-
 cards: !include_dir_merge_list media-grid/

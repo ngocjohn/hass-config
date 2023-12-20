@@ -3,7 +3,6 @@
 #                  CLIMATE                      #
 #                                               #
 #################################################
-
 climate_base:
   show_icon: false
   styles:
@@ -13,7 +12,6 @@ climate_base:
       - font-weight: 600
     card:
       - border-radius: 10px
-
 climate_fan_mode:
   variables:
     fan_mode: false
@@ -23,10 +21,8 @@ climate_fan_mode:
     service_data:
       entity_id: >
         [[[ return !entity || entity.entity_id; ]]]
-
       fan_mode: >
         [[[ return variables.fan_mode; ]]]
-
   styles:
     card:
       - background-color: >
@@ -35,10 +31,8 @@ climate_fan_mode:
                 ? "rgba(158, 158, 158, 0.2)"
                 : "rgba(189, 189, 189, 0.05)";
           ]]]
-
   template:
     - climate_base
-
 climate_swing_mode:
   tap_action:
     action: call-service
@@ -46,14 +40,12 @@ climate_swing_mode:
     service_data:
       entity_id: >
         [[[ return !entity || entity.entity_id; ]]]
-
       swing_mode: >
         [[[
           return !entity || entity.attributes.swing_mode === 'off'
               ? 'on'
               : 'off';
         ]]]
-
   styles:
     card:
       - background-color: >
@@ -62,16 +54,13 @@ climate_swing_mode:
                 ? "rgba(158, 158, 158, 0.2)"
                 : "rgba(189, 189, 189, 0.05)";
           ]]]
-
   template:
     - climate_base
-
 #################################################
 #                                               #
 #            CLIMATE DEVICES                    #
 #                                               #
 #################################################
-
 airpurifier:
   template:
     - base
@@ -84,7 +73,6 @@ airpurifier:
       ]]]
     entity_id: >
       [[[ return !entity || entity.entity_id; ]]]
-
   custom_fields:
     humid: >
       [[[ return '💧' + Math.round(entity.attributes.average_humidity)+'%'; ]]]
@@ -124,14 +112,12 @@ airpurifier:
                 font-size: 1vw !important;
               }
             }
-
             ha-card[fill] .info {
               padding-bottom: 0 !important;
             }
             .info {
                 opacity: 0.5 !important;
             }
-
             .info__item__time {
                 display: none !important;
             }
@@ -165,7 +151,6 @@ airpurifier:
           ]]]
       - overflow: hidden
       - padding: 10.9% 9.9% 8.9% 10.9%
-
     custom_fields:
       humid:
         - place-self: flex-start
@@ -188,7 +173,6 @@ airpurifier:
         - position: absolute
         - place-self: start
         - overflow: hidden
-
         # - opacity: 0.7
         # - display: >
         #     [[[
@@ -196,7 +180,6 @@ airpurifier:
         #         ? 'none'
         #         : 'initial';
         #     ]]]
-
 thermostat:
   template:
     - base
@@ -208,13 +191,11 @@ thermostat:
       ]]]
     entity_id: >
       [[[ return !entity || entity.entity_id; ]]]
-
   custom_fields:
     temp: >
       [[[
         return '🔥'+Math.round(entity.attributes.average_temperature).toFixed(1)+'°';
       ]]]
-
     # state: >
     #   [[[
     #     if (variables.thermostat_on) {
@@ -264,7 +245,6 @@ thermostat:
                 font-size: 1vw !important;
               }
             }
-
             ha-card[fill] .info {
               padding-bottom: 0 !important;
             }
@@ -296,7 +276,6 @@ thermostat:
       - background: linear-gradient(to top, rgba(53,59,83,0.8) 0%, rgba(10,14,34,0.8) 100%)
       - overflow: hidden
       - padding: 10.9% 9.9% 8.9% 10.9%
-
     name:
       - overflow: inherit
     custom_fields:
@@ -343,15 +322,12 @@ thermostat:
         #         ? 'none'
         #         : 'initial';
         #     ]]]
-
   # extra_styles: |
   #   @media screen and (max-width: 1440px) {
   #     #temp {
   #       font-size: 2.5em !important;
-
   #     }
   #   }
-
 radiator:
   template:
     - base
@@ -367,7 +343,6 @@ radiator:
       [[[
         return ['heating'].indexOf(!entity || entity.attributes.hvac_action) !==-1;
       ]]]
-
     circle_input: >
       [[[
         if (entity) {
@@ -382,7 +357,6 @@ radiator:
     #   [[[
     #     return Math.round(entity.attributes.current_temperature).toString();
     #   ]]]
-
     circle_input_unit: '°C'
   state_display: >
     [[[ return variables.state === 'idle' || variables.state === 'heat' ? 'Inactive' : 'Heating'; ]]]
@@ -394,14 +368,12 @@ radiator:
       #           ? 'rgba(255, 255, 255, 0.85)'
       #           : 'rgba(115, 115, 115, 0.25)';
       #     ]]]
-
       - color: >
           [[[
             return variables.state === 'heating'
                 ? '#4b5254'
                 : '#97989c';
           ]]]
-
 purifier:
   template:
     - base
@@ -450,7 +422,6 @@ purifier:
           </svg>
         `;
       ]]]
-
 cover:
   template:
     - base
@@ -490,7 +461,6 @@ cover:
       else
           return variables.state;
     ]]]
-
   styles:
     state:
       - color: >
@@ -512,17 +482,14 @@ cover:
                 ? '#4b5254'
                 : '#97989c';
           ]]]
-
   tap_action:
     action: none
-
   # hold_action:
   #   action: call-service
   #   service: cover.toggle
   #   service_data:
   #     entity_id: >
   #       [[[ return variables.entity_id; ]]]
-
   double_tap_action:
     action: fire-dom-event
     browser_mod:
@@ -601,7 +568,6 @@ cover:
                     div.actions {
                       display: none !important;
                     }
-
             - type: entities
               view_layout:
                 grid-area: entity
@@ -623,7 +589,6 @@ cover:
                           id = Boolean(entity.attributes.entity_id)
                               ? [entity.entity_id].concat(entity.attributes.entity_id)
                               : [entity.entity_id];
-
                       for (let i = 1; i < id.length; i++) {
                           covers.push({
                               "type": "custom:mushroom-cover-card",
@@ -641,7 +606,6 @@ cover:
                       return covers;
                   }
                 ]]]
-
 homeclimate:
   template:
     - base
@@ -649,12 +613,10 @@ homeclimate:
   variables:
     state_on: >
       [[[ return ['Good', 'Excellent', 'Fair', 'Interior', 'Fair', 'Poor'].indexOf(entity === undefined || entity.state) !== -1; ]]]
-
     heat_on: >
       [[[
         return ['yes'].indexOf(!entity || entity.attributes.heating) !==-1;
       ]]]
-
   styles:
     state:
       - color: >
@@ -667,7 +629,6 @@ homeclimate:
       icon:
         - width: 90%
         - pointer-events: none
-
   custom_fields:
     circle: >
       [[[
@@ -675,7 +636,6 @@ homeclimate:
           let temp = Math.round(entity.attributes.average_temperature).toString(),
               stroke = variables.heat_on ? '#b2b2b2' : 'none',
               fill = variables.heat_on ? 'none' : 'rgba(255,255,255,0.04)';
-
           return `
               <svg viewBox="0 0 50 50">
                 <circle cx="25" cy="25" r="22.1" stroke="${stroke}" stroke-width="2.5" fill="${fill}" />
@@ -689,7 +649,6 @@ homeclimate:
           let temp = Math.round(entity.attributes.average_humidity).toString(),
               stroke = variables.heat_on ? '#b2b2b2' : 'none',
               fill = variables.heat_on ? 'none' : 'rgba(255,255,255,0.04)';
-
           return `
             <svg viewBox="0 0 50 50">
               <circle cx="25" cy="25" r="22.1" stroke="${stroke}" stroke-width="2.5" fill="${fill}" />
@@ -697,13 +656,11 @@ homeclimate:
             </svg>
           `;
       ]]]
-
 #################################################
 #                                               #
 #                   FORECAST                    #
 #                                               #
 #################################################
-
 widget_weather:
   template:
     - base
@@ -749,7 +706,6 @@ widget_weather:
                 : `linear-gradient(to top, rgba(155, 109, 129, 0.5) 0%, rgba(63,74,113,1) 100%) 100% / cover, url(/local/svg/weather/gif/${weather}.gif)`;
           ]]]
       - background-size: cover
-
     state:
       - text-transform: uppercase
       - margin-top: 5px
@@ -872,13 +828,11 @@ widget_weather:
         }
       `
     ]]]
-
 #################################################
 #                                               #
 #                   HORIZONTAL                  #
 #                                               #
 #################################################
-
 horizontal_widget_weather:
   template:
     - base
@@ -939,7 +893,6 @@ horizontal_widget_weather:
     #     show_forecast: true
     #     type: weather-forecast
     #     entity: weather.openweathermap
-
   styles:
     grid:
       - grid-template-areas: |
@@ -971,11 +924,9 @@ horizontal_widget_weather:
       - font-family: Futura
     state:
       - place-self: flex-start
-
     label:
       - justify-self: start
       - align-self: center
-
     custom_fields:
       temp:
         - align-self: center
@@ -1028,7 +979,6 @@ horizontal_widget_weather:
         }
       `
     ]]]
-
 wide_header:
   template:
     - base
@@ -1077,7 +1027,6 @@ wide_header:
               height: 100%
               width: 40%
             tap_action: !include ../../shared/popup/calendar.yaml
-
           - type: 'custom:button-card'
             aspect_ratio: 2/1
             show_name: false
@@ -1089,7 +1038,6 @@ wide_header:
               height: 100%
               width: 60%
             tap_action: !include ../../shared/popup/popup_weather.yaml
-
   label: >
     [[[
       return `
@@ -1123,7 +1071,6 @@ wide_header:
       else (weather == 'wind')
         return "/local/img/weather_new/wind.png";
     ]]]
-
   styles:
     grid:
       - grid-template-areas: |

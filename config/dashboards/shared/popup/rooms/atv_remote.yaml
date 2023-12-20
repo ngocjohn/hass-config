@@ -80,7 +80,6 @@ browser_mod:
                     {% else %}
                       --card-mod-icon: mdi:play;
                     {% endif %}
-
                     {{ 'animation: none;' if not is_state(config.entity, 'playing') }}
                   }
                   @keyframes flicker {
@@ -213,7 +212,6 @@ browser_mod:
             #       is_volume_muted: >
             #         [[[ return entity.attributes.is_volume_muted === 'false' ? 'true' : 'false'; ]]]
             #   template: remote_icon_only
-
             # - type: custom:button-card
             #   entity: media_player.living_room_tv
             #   icon: mdi:volume-minus
@@ -224,7 +222,6 @@ browser_mod:
             #       entity_id: >
             #         [[[ return entity.entity_id; ]]]
             #   template: remote_icon_only
-
             # - type: custom:button-card
             #   entity: media_player.living_room_tv
             #   icon: mdi:volume-plus
@@ -235,7 +232,6 @@ browser_mod:
             #       entity_id: >
             #         [[[ return entity.entity_id; ]]]
             #   template: remote_icon_only
-
             - type: custom:button-card
               icon: mdi:youtube
               tap_action:
@@ -246,7 +242,6 @@ browser_mod:
                   source: 'YouTube'
                 haptic: light
               template: remote_icon_only
-
             - type: custom:button-card
               entity: media_player.living_room_tv
               icon: mdi:menu
@@ -257,7 +252,6 @@ browser_mod:
                   entity_id: remote.atv
                   command: home_hold
               template: remote_icon_only
-
             - type: custom:button-card
               entity: media_player.living_room_tv
               icon: mdi:arrow-up-drop-circle-outline
@@ -268,7 +262,6 @@ browser_mod:
                   entity_id: remote.atv
                   command: up
               template: remote_icon_arrow
-
             - type: custom:button-card
               entity: media_player.sony_bravia_tv
               icon: mdi:power
@@ -293,7 +286,6 @@ browser_mod:
               #             ? 'rgba(206, 245, 149, 0.4)'
               #             : 'rgba(139, 51, 51, 0.9)';
               #         ]]]
-
             - type: custom:button-card
               entity: media_player.living_room_tv
               icon: mdi:spotify
@@ -305,7 +297,6 @@ browser_mod:
                   source: 'Spotify'
                 haptic: light
               template: remote_icon_only
-
             - type: custom:button-card
               entity: media_player.living_room_tv
               icon: mdi:arrow-left-drop-circle-outline
@@ -316,7 +307,6 @@ browser_mod:
                   entity_id: remote.atv
                   command: left
               template: remote_icon_arrow
-
             - type: custom:button-card
               entity: media_player.living_room_tv
               icon: mdi:crop-square
@@ -327,7 +317,6 @@ browser_mod:
                   entity_id: remote.atv
                   command: select
               template: remote_icon_arrow
-
             - type: custom:button-card
               entity: media_player.living_room_tv
               icon: mdi:arrow-right-drop-circle-outline
@@ -338,7 +327,6 @@ browser_mod:
                   entity_id: remote.atv
                   command: right
               template: remote_icon_arrow
-
             - type: custom:button-card
               entity: media_player.living_room_tv
               icon: mdi:netflix
@@ -350,7 +338,6 @@ browser_mod:
                   source: 'Netflix'
                 haptic: light
               template: remote_icon_only
-
             - type: custom:button-card
               entity: media_player.living_room_tv
               icon: mdi:keyboard-backspace
@@ -361,7 +348,6 @@ browser_mod:
                   entity_id: remote.atv
                   command: menu
               template: remote_icon_only
-
             - type: custom:button-card
               entity: media_player.living_room_tv
               icon: mdi:arrow-down-drop-circle-outline
@@ -372,7 +358,6 @@ browser_mod:
                   entity_id: remote.atv
                   command: down
               template: remote_icon_arrow
-
             - type: custom:button-card
               entity: rmedia_player.living_room_tv
               icon: mdi:home
@@ -383,7 +368,6 @@ browser_mod:
                   entity_id: remote.atv
                   command: home
               template: remote_icon_only
-
     # content:
     #   type: vertical-stack
     #   cards:
@@ -423,7 +407,6 @@ browser_mod:
     #                 {% else %}
     #                   --card-mod-icon: mdi:play;
     #                 {% endif %}
-
     #                 {{ 'animation: none;' if not is_state(config.entity, 'playing') }}
     #               }
     #               @keyframes flicker {
@@ -452,7 +435,6 @@ browser_mod:
     #                 {% if not is_state(config.entity, 'idle') and not is_state(config.entity, 'off') %}
     #                   content: "";
     #                 {% endif %}
-
     #                 {% if not is_state('media_player.currently_playing', 'idle') and not is_state('media_player.currently_playing', 'off') %}
     #                 {% set source = state_attr('media_player.currently_playing', 'source') %}
     #                 {% set appname = state_attr('media_player.currently_playing', 'app_id') %}
@@ -468,7 +450,6 @@ browser_mod:
     #                 margin: 4px 4px 16px;
     #                 filter: drop-shadow(4px 4px 6px rgba(0, 0, 0, 0.5));
     #                 border-radius: var(--control-border-radius);
-
     #                 {% set active_child = state_attr(config.entity, 'active_child') %}
     #                 {% if active_child == 'media_player.spotify' %}
     #                   aspect-ratio: 1 / 1;
@@ -556,7 +537,6 @@ browser_mod:
     #             var(--mush-rgb-blue-grey)
     #             {% endif %};
     #           }
-
     #     - type: grid
     #       columns: 4
     #       cards:
@@ -570,7 +550,6 @@ browser_mod:
     #               source: 'YouTube'
     #             haptic: light
     #           template: remote_icon_only
-
     #         - type: custom:button-card
     #           entity: media_player.living_room_tv
     #           icon: mdi:volume-mute
@@ -583,7 +562,6 @@ browser_mod:
     #               is_volume_muted: >
     #                 [[[ return entity.attributes.is_volume_muted === 'false' ? 'true' : 'false'; ]]]
     #           template: remote_icon_only
-
     #         - type: custom:button-card
     #           entity: media_player.living_room_tv
     #           icon: mdi:volume-minus
@@ -594,7 +572,6 @@ browser_mod:
     #               entity_id: >
     #                 [[[ return entity.entity_id; ]]]
     #           template: remote_icon_only
-
     #         - type: custom:button-card
     #           entity: media_player.living_room_tv
     #           icon: mdi:volume-plus
@@ -605,7 +582,6 @@ browser_mod:
     #               entity_id: >
     #                 [[[ return entity.entity_id; ]]]
     #           template: remote_icon_only
-
     #         - type: custom:button-card
     #           entity: media_player.living_room_tv
     #           icon: mdi:kodi
@@ -617,7 +593,6 @@ browser_mod:
     #               source: 'Kodi'
     #             haptic: light
     #           template: remote_icon_only
-
     #         - type: custom:button-card
     #           entity: media_player.living_room_tv
     #           icon: mdi:menu
@@ -628,7 +603,6 @@ browser_mod:
     #               entity_id: remote.atv
     #               command: home_hold
     #           template: remote_icon_only
-
     #         - type: custom:button-card
     #           entity: media_player.living_room_tv
     #           icon: mdi:arrow-up-drop-circle-outline
@@ -639,7 +613,6 @@ browser_mod:
     #               entity_id: remote.atv
     #               command: up
     #           template: remote_icon_arrow
-
     #         - type: custom:button-card
     #           entity: media_player.living_room_tv
     #           icon: mdi:power
@@ -659,7 +632,6 @@ browser_mod:
     #                       ? 'rgba(206, 245, 149, 0.4)'
     #                       : 'rgba(139, 51, 51, 0.9)';
     #                   ]]]
-
     #         - type: custom:button-card
     #           entity: media_player.living_room_tv
     #           icon: mdi:spotify
@@ -671,7 +643,6 @@ browser_mod:
     #               source: 'Spotify'
     #             haptic: light
     #           template: remote_icon_only
-
     #         - type: custom:button-card
     #           entity: media_player.living_room_tv
     #           icon: mdi:arrow-left-drop-circle-outline
@@ -682,7 +653,6 @@ browser_mod:
     #               entity_id: remote.atv
     #               command: left
     #           template: remote_icon_arrow
-
     #         - type: custom:button-card
     #           entity: media_player.living_room_tv
     #           icon: mdi:crop-square
@@ -693,7 +663,6 @@ browser_mod:
     #               entity_id: remote.atv
     #               command: select
     #           template: remote_icon_arrow
-
     #         - type: custom:button-card
     #           entity: media_player.living_room_tv
     #           icon: mdi:arrow-right-drop-circle-outline
@@ -704,7 +673,6 @@ browser_mod:
     #               entity_id: remote.atv
     #               command: right
     #           template: remote_icon_arrow
-
     #         - type: custom:button-card
     #           entity: media_player.living_room_tv
     #           icon: mdi:netflix
@@ -716,7 +684,6 @@ browser_mod:
     #               source: 'Netflix'
     #             haptic: light
     #           template: remote_icon_only
-
     #         - type: custom:button-card
     #           entity: media_player.living_room_tv
     #           icon: mdi:keyboard-backspace
@@ -727,7 +694,6 @@ browser_mod:
     #               entity_id: remote.atv
     #               command: menu
     #           template: remote_icon_only
-
     #         - type: custom:button-card
     #           entity: media_player.living_room_tv
     #           icon: mdi:arrow-down-drop-circle-outline
@@ -738,7 +704,6 @@ browser_mod:
     #               entity_id: remote.atv
     #               command: down
     #           template: remote_icon_arrow
-
     #         - type: custom:button-card
     #           entity: rmedia_player.living_room_tv
     #           icon: mdi:home

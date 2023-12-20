@@ -1,13 +1,11 @@
 ########################################
 #   DOCKER RASPBERRY PI                #
 ########################################
-
 template:
   - binary_sensor:
       ########################################
       #           RASPBERRY SYSTEM           #
       ########################################
-
       - unique_id: raspberry_docker
         name: Raspberry Docker
         icon: mdi:raspberry-pi
@@ -23,7 +21,6 @@ template:
             {% endif %}
           last_reboot: >
             {{ as_timestamp(state_attr('sensor.rpi_monitor_pidocker', 'last_update')) | timestamp_custom('%d.%m.%y at %H:%M') }}
-
   - sensor:
       - unique_id: pidocker_mem
         state: >

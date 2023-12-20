@@ -8,7 +8,6 @@ browser_mod:
     card_mod:
       style:
         .: |
-
         # card divider border
         layout-card$grid-layout$:
           .: |
@@ -22,7 +21,6 @@ browser_mod:
                 border-radius: 0;
                 transition: none;
               }
-
               /* portrait */
               @media screen and (max-width: 1440px) {
                 ha-card {
@@ -42,7 +40,6 @@ browser_mod:
           '(max-width: 1440px)':
             grid-template-columns: 1fr
             grid-template-rows: fit-content(100%)
-
       cards:
         - type: entities
           title: "[[[ return states['sensor.date_en'].state;]]]"

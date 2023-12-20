@@ -52,7 +52,6 @@ browser_mod:
             grid-template-areas: |
               "leva"
               "prava"
-
       cards:
         - type: entities
           view_layout:

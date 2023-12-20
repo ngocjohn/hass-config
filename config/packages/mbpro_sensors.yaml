@@ -7,14 +7,12 @@ command_line:
       value_template: >
         {{ (100 - value[:-1] | float(default=0)) | round(1) }}
       scan_interval: 120
-
   - sensor:
       name: mbpro_mem
       unique_id: 'ad232858-7c85-4523-8c5a-24409dcf5f7c'
       command: !secret mbpro_mem
       unit_of_measurement: '%'
       scan_interval: 120
-
   - sensor:
       name: mbpro_uptime
       unique_id: '27ffe3b0-8147-4709-a749-f3eaabd65404'
@@ -24,12 +22,10 @@ command_line:
         {% set year = 120 * 365 %}
         {{ timestamp | timestamp_local if (as_timestamp(now()) - timestamp) < year else None}}
       scan_interval: 120
-
   - sensor:
       name: mbpro_ip
       command: !secret mbpro_ip
       scan_interval: 86400
-
 template:
   - binary_sensor:
       - name: 'MacbookPro'
@@ -37,7 +33,6 @@ template:
         device_class: running
         icon: ios:desktopcomputer
         state: "{{ is_state_attr('binary_sensor.mbproserver_active', 'Sleeping', false ) }}"
-
 homeassistant:
   customize:
     sensor.mbpro_cpu:

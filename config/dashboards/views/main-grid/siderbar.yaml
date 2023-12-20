@@ -15,7 +15,6 @@
       template:
         - timesidebar
 # iphone sidebar #
-
 # - type: custom:button-card
 #   view_layout:
 #     grid-area: sidebar
@@ -24,7 +23,6 @@
 #   entity: sensor.template_sidebar
 #   template:
 #     - timesidebar
-
 # - type: 'custom:layout-card'
 #   layout_type: 'custom:grid-layout'
 #   view_layout:
@@ -77,7 +75,6 @@
 #       template: footer
 #       variables: *notify
 #       styles: *styles
-
 #     - type: custom:button-card
 #       name: >
 #         <ha-icon icon="custom:tvhifi"></ha-icon>
@@ -86,7 +83,6 @@
 #       template: footer
 #       variables: *notify
 #       styles: *styles
-
 # - type: custom:button-card
 #   entity: vacuum.robot_vacuum
 #   icon: mdi:play-pause

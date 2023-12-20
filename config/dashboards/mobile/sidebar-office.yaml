@@ -10,13 +10,11 @@ layout:
   grid-template-rows: fit-content(100%)
   grid-template-areas: |
     ". sidebar   office  ."
-
 #################################################
 #                                               #
 #                    DASHBOARD                  #
 #                                               #
 #################################################
-
 cards:
   #################################################
   #                                               #
@@ -32,7 +30,6 @@ cards:
       # OFFICE
       - type: custom:decluttering-card
         template: grid_office
-
       # MacBook
       - type: custom:button-card
         entity: switch.macbook
@@ -60,11 +57,9 @@ cards:
         template:
           - base
           - icon_brma
-
       # Sensors
       - type: custom:decluttering-card
         template: grid_motion_sensors
-
   # - type: vertical-stack
   #   view_layout:
   #     grid-area: sidebar
@@ -78,7 +73,6 @@ cards:
   #                     MEDIA                     #
   #                                               #
   #################################################
-
   - type: grid
     title: 'Neklanka'
     view_layout:
@@ -101,7 +95,6 @@ cards:
           coverflowEffect:
             rotate: 80
             depth: 300
-
         cards:
           - type: horizontal-stack
             cards:
@@ -127,7 +120,6 @@ cards:
                     - conditional_media
                     - icon_apple_tv
                     - progress_bar
-
               - type: conditional
                 conditions:
                   - entity: select.conditional_media
@@ -141,7 +133,6 @@ cards:
                     - conditional_media
                     - icon_shieldtv_text
                     - progress_bar
-
               - type: conditional
                 conditions:
                   - entity: select.conditional_media
@@ -154,7 +145,6 @@ cards:
                   template:
                     - currently_playing
                     # - conditional_media
-
               # - type: conditional
               #   conditions:
               #     - entity: select.conditional_media
@@ -170,7 +160,6 @@ cards:
               #       service: input_boolean.toggle
               #       service_data:
               #         entity_id: input_boolean.upcoming_shows
-
               - type: conditional
                 conditions:
                   - entity: select.conditional_media
@@ -181,7 +170,6 @@ cards:
                   template:
                     - conditional_media
                     - icon_playstation
-
               - type: conditional
                 conditions:
                   - entity: select.conditional_media

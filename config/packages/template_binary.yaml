@@ -3,7 +3,6 @@
 #                BINARY SENSORS                 #
 #                                               #
 #################################################
-
 template:
   - binary_sensor:
       #BINARY SENSOR - ROOM OCCUPANCY
@@ -16,7 +15,6 @@ template:
             is_state('binary_sensor.contact_sensor_shower_room', 'off')
             or is_state('binary_sensor.motion_sensor_shower_room', 'on')
           }}
-
       - name: 'Bathroom Occupancy'
         unique_id: bathroom_occupancy
         icon: mdi:motion-sensor
@@ -26,7 +24,6 @@ template:
             is_state('binary_sensor.contact_sensor_bathroom_contact', 'off')
             or is_state('binary_sensor.motion_sensor_bathroom', 'on')
           }}
-
       - name: 'People Home'
         unique_id: home_occupancy
         device_class: occupancy

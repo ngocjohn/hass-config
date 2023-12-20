@@ -23,7 +23,6 @@ browser_mod:
                   justify-content: space-evenly !important;
                   margin-bottom: 10px;
                 }
-
     content:
       type: custom:layout-card
       layout_type: grid
@@ -34,7 +33,6 @@ browser_mod:
         grid-template-areas: |
           ". cam ."
           ". button ."
-
         mediaquery:
           #phone
           '(max-width: 800px)':
@@ -44,7 +42,6 @@ browser_mod:
             grid-template-areas: |
               "cam"
               "button"
-
           #tablet with 2000x1200 res
           '(max-width: 1400px)':
             grid-gap: 0.5vw
@@ -53,7 +50,6 @@ browser_mod:
             grid-template-areas: |
               ". cam ."
               ". button ."
-
       cards:
         - type: picture-entity
           entity: >
@@ -74,7 +70,6 @@ browser_mod:
                 ]]]
           view_layout:
             grid-area: cam
-
         - type: horizontal-stack
           view_layout:
             grid-area: button
@@ -91,7 +86,6 @@ browser_mod:
                       return variables.entity_id;
                     ]]]
               template: icon_name
-
             - type: custom:button-card
               name: ON / OFF
               icon: mdi:power

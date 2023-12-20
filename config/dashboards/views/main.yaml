@@ -15,7 +15,6 @@ layout:
     ". cameras   climate    media     movies   floorplan  floorplan  ."
     ". footer    footer     footer    footer   nowplaying nowplaying ."
     ". .         .          .         .        .          .          ."
-
   mediaquery:
     #laptop
     '(min-width: 1441px) and (max-width: 1772px)':
@@ -32,7 +31,6 @@ layout:
         ".  floorplan  floorplan   floorplan ."
         ".  footer     footer      footer    ."
         ".  .          .           .         ."
-
     # phone
     '(max-width: 800px)':
       # grid-gap: calc(var(--custom-layout-card-padding) * 1.7)
@@ -52,11 +50,9 @@ layout:
         ". floorplan   floorplan ."
         ". footer      footer    ."
         ". nav         nav       ."
-
 #################################################
 #                                               #
 #                    DASHBOARD                  #
 #                                               #
 #################################################
-
 cards: !include_dir_merge_list main-grid/

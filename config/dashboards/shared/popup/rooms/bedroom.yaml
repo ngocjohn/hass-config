@@ -27,35 +27,30 @@ browser_mod:
           template:
             - lightpop
             - icon_ensis
-
         - type: custom:button-card
           entity: light.bedroom_main_light
           name: Main light
           template:
             - lightpop
             - icon_light_recessed
-
         - type: custom:button-card
           entity: light.bedroom_closet_light
           name: Closet light
           template:
             - lightpop
             - icon_light_recessed
-
         - type: custom:button-card
           entity: light.shower_room_mirror_light
           name: Shower mirror light
           template:
             - lightpop
             - icon_light_recessed
-
         - type: custom:button-card
           entity: light.shower_room_main_light
           name: Shower main
           template:
             - lightpop
             - icon_light_recessed
-
         # Samsung TV
         - type: custom:button-card
           entity: media_player.bedroom_tv

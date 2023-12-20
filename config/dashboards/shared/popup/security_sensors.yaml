@@ -75,7 +75,6 @@ browser_mod:
                 type: custom:layout-card
                 cards: []
                 layout_type: masonry
-
         - type: entities
           view_layout:
             grid-area: contact
@@ -87,7 +86,6 @@ browser_mod:
               ha-card {
                 border: none !important;
               }
-
           entities:
             - type: custom:auto-entities
               filter:

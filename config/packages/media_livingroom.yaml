@@ -1,7 +1,6 @@
 ########################################
 #   LIVING ROOM MEDIA                  #
 ########################################
-
 # LIVING ROOM TV ###
 media_player:
   - platform: universal
@@ -27,7 +26,6 @@ media_player:
     #   {% else %}
     #     {{ states('media_player.atv') }}
     #   {% endif %}
-
     # attributes:
     # state: remote.sony_bravia_tv
     # source_list: media_player.atv|source_list

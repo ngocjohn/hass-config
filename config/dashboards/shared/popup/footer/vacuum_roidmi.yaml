@@ -93,7 +93,6 @@ entities:
           background-size: contain;
           background-repeat: no-repeat;
         }
-
   # - type: custom:state-switch
   #   entity: vacuum.roidmi_eve
   #   default: docked

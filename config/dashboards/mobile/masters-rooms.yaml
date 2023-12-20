@@ -10,20 +10,17 @@ layout:
   grid-template-rows: fit-content(100%)
   grid-template-areas: |
     ". mainrooms   other  ."
-
 #################################################
 #                                               #
 #                    DASHBOARD                  #
 #                                               #
 #################################################
-
 cards:
   #################################################
   #                                               #
   #                  MAIN ROOMS                   #
   #                                               #
   #################################################
-
   - type: grid
     title: Masters
     view_layout:
@@ -33,29 +30,22 @@ cards:
       # Living Room
       - type: custom:decluttering-card
         template: grid_living_room
-
       # OFFICE
       - type: custom:decluttering-card
         template: grid_office
-
       # Kitchen
       - type: custom:decluttering-card
         template: grid_kitchen_normal
-
       - type: custom:decluttering-card
         template: grid_kitchen_dishwasing
-
       # Bedroom
       - type: custom:decluttering-card
         template: grid_bedroom
-
-
   #################################################
   #                                               #
   #                    ROOMS 2                    #
   #                                               #
   #################################################
-
   - type: grid
     title: Rooms
     view_layout:
@@ -65,23 +55,18 @@ cards:
       # SHOWER ROOM
       - type: custom:decluttering-card
         template: grid_shower
-
       # BATHROOM
       - type: custom:decluttering-card
         template: grid_bathroom
-
       # UTILITY NORMAL
       - type: custom:decluttering-card
         template: grid_utility_normal
-
       # UTILITY VACUUM
       - type: custom:decluttering-card
         template: grid_utility_vacuum
-
       # UTILITY VACUUM
       - type: custom:decluttering-card
         template: grid_utility_washing
-
       # HALLWAY
       - type: custom:decluttering-card
         template: grid_hallway

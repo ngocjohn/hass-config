@@ -9,7 +9,6 @@ test_template:
       - background-size: 120%
       - background-position: center
       - background-image: 'url(/local/img/charger_trans.png), linear-gradient(rgb(0, 255, 119) 0%, rgb(244, 67, 54) 100%)'
-
 iphone:
   template:
     - tilt

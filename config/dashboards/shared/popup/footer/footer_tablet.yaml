@@ -15,10 +15,8 @@ browser_mod:
           card_mod:
             class: content
           entities:
-
             - entity: switch.galaxy_tab_a_screen
               secondary_info: last-changed
-
             - type: custom:slider-entity-row
               entity: number.galaxy_tab_a_screen_brightness
               name: Ljusstyrka
@@ -31,11 +29,8 @@ browser_mod:
                     div {
                       flex: auto !important;
                     }
-
             - entity: switch.galaxy_tab_a_screensaver
-
             - entity: binary_sensor.galaxy_tab_a_plugged_in
-
             - type: custom:bar-card
               width: 55%
               height: 2em
@@ -54,7 +49,6 @@ browser_mod:
                   to: 999
               entity_row: true
               entities:
-
                 - entity: sensor.galaxy_tab_a_battery
                   icon: mdi:battery
                   tap_action:
@@ -62,7 +56,6 @@ browser_mod:
                     service: homeassistant.update_entity
                     service_data:
                       entity_id: sensor.galaxy_tab_a_battery_level
-
             - type: custom:bar-card
               width: 55%
               height: 2em
@@ -75,7 +68,6 @@ browser_mod:
                   to: 999
               entity_row: true
               entities:
-
                 - entity: sensor.template_fullykiosk_memory
                   name: Minne - 2GB
                   icon: mdi:memory
@@ -84,7 +76,6 @@ browser_mod:
                     service: homeassistant.update_entity
                     service_data:
                       entity_id: sensor.template_fullykiosk_memory
-
                 - entity: sensor.template_fullykiosk_storage
                   name: Lagring - 32GB
                   icon: mdi:sd
@@ -93,7 +84,6 @@ browser_mod:
                     service: homeassistant.update_entity
                     service_data:
                       entity_id: sensor.template_fullykiosk_storage
-
         - type: custom:mod-card
           card_mod:
             style:
@@ -120,7 +110,6 @@ browser_mod:
                         data:
                           entity_id: button.galaxy_tab_a_load_start_url
                 template: icon_name
-
               - type: custom:button-card
                 name: Hela appen
                 icon: mdi:reload

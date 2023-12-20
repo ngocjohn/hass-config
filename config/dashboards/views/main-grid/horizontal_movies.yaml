@@ -3,7 +3,6 @@
 #                  HORIZONTAL                   #
 #                                               #
 #################################################
-
 - type: grid
   title: Movies
   view_layout:
@@ -27,20 +26,17 @@
         coverflowEffect:
           rotate: 80
           depth: 300
-
       cards:
         # - type: custom:button-card
         #   entity: sensor.ymovie_added_5
         #   template:
         #     - movies_base
-
         - type: horizontal-stack
           cards:
             - type: grid
               columns: 1
               cards:
                 #Conditional Media
-
                 - type: custom:auto-entities
                   filter:
                     include:
@@ -71,7 +67,6 @@
                       autoHeight: true
                       followFinger: true
                   card_param: cards
-
                 # - type: custom:swipe-card
                 #   start_card: 1
                 #   parameters:
@@ -97,32 +92,26 @@
                 #       entity: sensor.ymovie_added_1
                 #       template:
                 #         - added_movies
-
                 #     - type: custom:button-card
                 #       entity: sensor.ymovie_added_2
                 #       template:
                 #         - added_movies
-
                 #     - type: custom:button-card
                 #       entity: sensor.ymovie_added_3
                 #       template:
                 #         - added_movies
-
                 #     - type: custom:button-card
                 #       entity: sensor.ymovie_added_4
                 #       template:
                 #         - added_movies
-
                 #     - type: custom:button-card
                 #       entity: sensor.ymovie_added_5
                 #       template:
                 #         - added_movies
-
                 #     - type: custom:button-card
                 #       entity: sensor.ymovie_added_6
                 #       template:
                 #         - added_movies
-
         - type: conditional
           conditions:
             - condition: state

@@ -3,7 +3,6 @@
 #           GRID MEDIA MIN 1441px               #
 #                                               #
 #################################################
-
 - type: grid
   title: Media
   view_layout:
@@ -44,7 +43,6 @@
                   - tpl_spotify
                 variables:
                   playlist_type: default
-
             - type: conditional
               conditions:
                 - entity: select.conditional_media
@@ -59,7 +57,6 @@
                   - progress_bar
                   - tpl_minicontrol
                   - icon_apple_tv
-
             - type: conditional
               conditions:
                 - entity: select.conditional_media
@@ -73,13 +70,11 @@
                   - conditional_media
                   - icon_shieldtv_text
                   - progress_bar
-
             - type: conditional
               conditions:
                 - entity: select.conditional_media
                   state: Spotify
               card: *spotify
-
             - type: conditional
               conditions:
                 - entity: select.conditional_media
@@ -91,7 +86,6 @@
                 template:
                   - conditional_media
                   - icon_playstation
-
             - type: conditional
               conditions:
                 - entity: select.conditional_media
@@ -113,7 +107,6 @@
                           [[[
                             return `inset(75% 3.45% 3.45% 5.45% round 0 0 calc(var(--button-card-border-radius) / 2) calc(var(--button-card-border-radius) / 2))`;
                           ]]]
-
                 double_tap_action:
                   action: fire-dom-event
                   browser_mod:
@@ -125,7 +118,6 @@
                         type: iframe
                         # aspect_ratio: '100%'
                         url: /api/hassio_ingress/vY3Npsvoa2MxygW4H78Jr2ZEpMXsTJtX8DuZsXbT6mE/#/home
-
         # VN FEATURED Playlist
         - type: grid
           columns: 1
@@ -136,7 +128,6 @@
                 - tpl_spotify
               variables:
                 playlist_type: featured
-
         # - type: grid
         #   columns: 1
         #   cards:
@@ -144,7 +135,6 @@
         #       entity: sensor.kodi_media_sensor_recently_added_tvshow
         #       template:
         #         - conditional_media_shows
-
         #Media Players
         - type: grid
           columns: 2
@@ -175,13 +165,11 @@
               template:
                 - media
                 - icon_spotify
-
 #################################################
 #                                               #
 #                     MEDIA                     #
 #                                               #
 #################################################
-
 - type: grid
   title: Media
   view_layout:
@@ -206,7 +194,6 @@
         coverflowEffect:
           rotate: 80
           depth: 300
-
       cards:
         - type: horizontal-stack
           cards:
@@ -248,7 +235,6 @@
                         autoHeight: true
                         followFinger: true
                     card_param: cards
-
                   # - type: custom:swipe-card
                   #   start_card: 1
                   #   parameters:
@@ -268,7 +254,6 @@
                   #     followFinger: false
                   #     grabCursor: true
                   #     roundLengths: true
-
                   #   cards:
                   #     - type: grid
                   #       columns: 1
@@ -312,19 +297,16 @@
                   #           entity: sensor.ymovie_added_6
                   #           template:
                   #             - added_movies
-
             - type: conditional
               conditions:
                 - entity: select.conditional_media
                   state: Living Room TV
               card: *ATV
-
             - type: conditional
               conditions:
                 - entity: select.conditional_media
                   state: Bedroom TV
               card: *BEDROOMTV
-
             - type: conditional
               conditions:
                 - entity: select.conditional_media
@@ -337,19 +319,16 @@
                 template:
                   - currently_playing
                   # - conditional_media
-
             - type: conditional
               conditions:
                 - entity: select.conditional_media
                   state: PS5 Activity
               card: *PS5
-
             - type: conditional
               conditions:
                 - entity: select.conditional_media
                   state: MASS Airplay Group
               card: *MASSAIRPLAY
-
         - type: conditional
           conditions:
             - condition: state
@@ -363,7 +342,6 @@
                 entity: sensor.trakt_upcoming_shows
                 template:
                   - conditional_media_shows
-
         #Media Players
         - type: conditional
           conditions:

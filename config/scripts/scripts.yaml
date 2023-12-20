@@ -322,15 +322,13 @@ fade_music:
           - condition: template
             value_template: '{{ repeat.index < total_steps }}'
           - condition: template
-            value_template:
-              '{{ ((state_attr(target_player, "volume_level") - target_volume)
+            value_template: '{{ ((state_attr(target_player, "volume_level") - target_volume)
               | abs) > 0.001 }}'
         sequence:
           - service: media_player.volume_set
             data_template:
               entity_id: '{{ target_player }}'
-              volume_level:
-                "{% set t = repeat.index / total_steps %} {% if curve == 'logarithmic'
+              volume_level: "{% set t = repeat.index / total_steps %} {% if curve == 'logarithmic'
                 %}\n  {{ (start_volume + (t / (1 + (1 - t))) * start_diff) | float(0)
                 }}\n{% elif curve == 'bezier' %}\n  {{ (start_volume + (t * t * (3 - 2
                 * t)) * start_diff) | float(0) }}\n{% else %}\n  {{ (start_volume + t
@@ -404,8 +402,7 @@ morning_cover:
               data: {}
               target:
                 entity_id: cover.living_room_cover
-            - wait_template:
-                '{{ state_attr("cover.living_room_cover", "current_position")
+            - wait_template: '{{ state_attr("cover.living_room_cover", "current_position")
                 == 0 }}'
               continue_on_timeout: true
             - service: cover.set_cover_tilt_position
@@ -418,8 +415,7 @@ morning_cover:
               entity_id: cover.living_room_cover
               state: closed
             - condition: template
-              value_template:
-                '{{ state_attr("cover.living_room_cover", "current_tilt_position")
+              value_template: '{{ state_attr("cover.living_room_cover", "current_tilt_position")
                 == 0 }}'
           sequence:
             - service: cover.set_cover_tilt_position
@@ -493,29 +489,20 @@ vacuum_start_clean:
   sequence:
     - condition: template
       value_template: "{% if is_state('input_boolean.vacuum_room1','on') or
-
         is_state('input_boolean.vacuum_room2','on') or
-
         is_state('input_boolean.vacuum_room3','on') or
-
         is_state('input_boolean.vacuum_room4','on') or
-
         is_state('input_boolean.vacuum_room5','on') or
-
         is_state('input_boolean.vacuum_room6','on') or
-
         is_state('input_boolean.vacuum_room7','on') or
-
         is_state('input_boolean.vacuum_room8','on')%}True{% else %}False{% endif
         %}
-
         "
     - service: script.turn_on
       entity_id: script.vacuum_clean_select_room
       data_template:
         variables:
-          rooms:
-            "{%- set text = '' -%}\n{%- if is_state('input_boolean.vacuum_room1','on')
+          rooms: "{%- set text = '' -%}\n{%- if is_state('input_boolean.vacuum_room1','on')
             %}\n  {%- set text = '1' %}{% endif %}\n{%- if is_state('input_boolean.vacuum_room2','on')
             %}\n  {%- if text != '' %}{%- set text = text+',' %}{% endif %}\n  {%- set
             text = text+'2' %}{% endif %}\n{%- if is_state('input_boolean.vacuum_room3','on')

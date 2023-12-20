@@ -3,7 +3,6 @@
 #                    FOOTER                     #
 #                                               #
 #################################################
-
 # AHOJ!!!
 - type: horizontal-stack
   view_layout:
@@ -21,10 +20,8 @@
             - service: browser_mod.javascript
               data:
                 code: lovelace_reload()
-
       template:
         - footer
-
     - type: custom:button-card
       name: >
         <ha-icon icon="mdi:vacuum"></ha-icon> Vacuum
@@ -39,21 +36,18 @@
           ]]]
       template:
         - footer
-
     - type: custom:button-card
       name: >
         <ha-icon icon="mdi:server"></ha-icon> System
       tap_action: !include ../../shared/popup/footer/footer_system.yaml
       template:
         - footer
-
     - type: custom:button-card
       name: >
         <ha-icon icon="ios:pc"></ha-icon> Server
       tap_action: !include ../../shared/popup/footer/footer_mbproserver.yaml
       template:
         - footer
-
     - type: custom:button-card
       entity: sensor.template_updates
       name: >
@@ -78,7 +72,6 @@
       #     ]]]
       template:
         - footer
-
     - type: custom:button-card
       name: >
         <ha-icon icon="mdi:router-wireless"></ha-icon> Network

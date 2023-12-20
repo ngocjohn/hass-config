@@ -3,7 +3,6 @@
 #             CHIPS MAX 800px                   #
 #                                               #
 #################################################
-
 - type: horizontal-stack
   view_layout:
     grid-area: chips

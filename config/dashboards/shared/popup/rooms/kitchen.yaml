@@ -8,7 +8,6 @@ browser_mod:
     card_mod:
       style:
         .: |
-
         hui-grid-card$: |
           #root {
             margin: 0.8vw 1vw;
@@ -24,21 +23,18 @@ browser_mod:
           template:
             - lightpop
             # - icon_ensis
-
         - type: custom:button-card
           entity: light.kitchen_main_light
           name: Main light
           template:
             - lightpop
             # - icon_light_recessed
-
         - type: custom:button-card
           entity: light.hood_lighting
           name: Cooker hood
           template:
             - lightpop
             # - icon_light_recessed
-
           # Cooker Hood
         - type: custom:button-card
           entity: fan.hood_power
@@ -84,7 +80,6 @@ browser_mod:
                         - entity: switch.hood_program_venting
                           name: Program Venting
                       title: Hood
-
         - type: custom:button-card
           entity: switch.hob_power
           name: Hob
@@ -92,7 +87,6 @@ browser_mod:
             - lightpop
             - loader
             # - icon_oven
-
         - type: custom:button-card
           entity: switch.mycka_nadobi_power
           name: Dishwasher

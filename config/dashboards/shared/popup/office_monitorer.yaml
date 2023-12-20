@@ -8,19 +8,15 @@ browser_mod:
         #popup header
         .:
     content:
-
       type: vertical-stack
       cards:
-
         - type: entities
           state_color: true
           card_mod:
             class: content
           entities:
-
             - entity: switch.gosund_monitors_switch
               secondary_info: last-changed
-
             - type: custom:slider-entity-row
               card_mod:
                 style:
@@ -45,11 +41,8 @@ browser_mod:
                     }
               entity: input_number.monitors_volume
               hide_state: false
-
             - entity: automation.monitors_turn_off
-
             - entity: automation.monitors_calibration
-
         - type: custom:mod-card
           card_mod:
             style:
@@ -59,17 +52,14 @@ browser_mod:
                   padding: var(--tablet-popup-button-padding);
                 }
           card:
-
             type: horizontal-stack
             cards:
-
               - type: custom:button-card
                 entity: switch.monitors_mute
                 icon: mdi:volume-mute
                 tap_action:
                   action: toggle
                 template: icon_only
-
               - type: custom:button-card
                 icon: mdi:volume-minus
                 tap_action:
@@ -78,7 +68,6 @@ browser_mod:
                   service_data:
                     entity_id: input_number.monitors_volume
                 template: icon_only
-
               - type: custom:button-card
                 icon: mdi:volume-plus
                 tap_action:

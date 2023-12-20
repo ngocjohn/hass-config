@@ -32,11 +32,9 @@ layout:
         ". c2          c2        ."
         ". footer      footer    ."
         ". nav         nav       ."
-
 #################################################
 #                                               #
 #                    DASHBOARD                  #
 #                                               #
 #################################################
-
 cards: !include_dir_merge_list system-grid/

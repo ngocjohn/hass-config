@@ -3,7 +3,6 @@
 #         DOORS                                 #
 #                                               #
 # ################################################
-
 - entities:
     - binary_sensor.contact_sensor_bedroom_balcony
     - binary_sensor.contact_sensor_kid_balcony
@@ -17,7 +16,6 @@
     action: call-service
     service: floorplan.class_set
     service_data: 'door-${entity.state}'
-
 - element: icon-front-door
   entity: lock.nuki_neklanka_byt_lock
   tap_action: false

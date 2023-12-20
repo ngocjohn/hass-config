@@ -26,10 +26,8 @@ browser_mod:
           entities:
             - entity: binary_sensor.template_internet
               secondary_info: last-changed
-
             - entity: sensor.template_udm_cpu_temp
               name: CPU Temperatur
-
             # - type: custom:bar-card
             #   width: 55%
             #   height: 2em
@@ -48,9 +46,7 @@ browser_mod:
             #     - entity: sensor.template_udm_cpu
             #     - entity: sensor.template_udm_mem
             #     - entity: sensor.template_udm_disk
-
             - entity: sensor.template_udm_uptime
-
         - type: custom:mod-card
           card_mod:
             style:
@@ -69,7 +65,6 @@ browser_mod:
                   action: url
                   url_path: https://192.168.1.1/network/default/clients
                 template: icon_name
-
               - type: custom:button-card
                 name: System
                 icon: mdi:cog

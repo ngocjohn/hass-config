@@ -8,7 +8,6 @@ browser_mod:
     card_mod:
       style:
         .: |
-
         layout-card$grid-layout$:
           .: |
             #root > * {
@@ -21,7 +20,6 @@ browser_mod:
                 border-radius: 0;
                 transition: none;
               }
-
               /* portrait */
               @media screen and (max-width: 1400px) {
                 ha-card {
@@ -70,27 +68,21 @@ browser_mod:
             - entity: sensor.current_version
               name: Installed
               icon: mdi:home-assistant
-
             # - entity: sensor.home_assistant_versions
             #   name: Latest
-
             # - entity: sensor.template_hass_next_release
-
             - entity: sensor.ha_db
               name: Database
               icon: mdi:database
-
             # - entity: sensor.home_assistant_log_size
             #   name: Logfile
             #   icon: mdi:file-document
-
             - type: attribute
               entity: sensor.backup_state
               attribute: last_backup
               name: Last backup
               icon: mdi:cloud-upload
               format: relative
-
             - type: custom:bar-card
               width: 55%
               height: 2em
@@ -116,11 +108,9 @@ browser_mod:
                     service: homeassistant.update_entity
                     service_data:
                       entity_id: sensor.processor_use
-
                 - entity: sensor.processor_temperature
                   name: Temperature
                   icon: mdi:thermostat
-
                 - entity: sensor.memory_use_percent
                   name: Memory
                   tap_action:
@@ -135,7 +125,6 @@ browser_mod:
                     service: homeassistant.update_entity
                     service_data:
                       entity_id: sensor.disk_use
-
             - type: custom:hui-horizontal-stack-card
               cards:
                 - type: custom:button-card
@@ -147,7 +136,6 @@ browser_mod:
                       text: Are you sure you want to restart?
                     service: homeassistant.restart
                   template: icon_name
-
                 - type: custom:button-card
                   name: Reload YAML
                   icon: mdi:reload
@@ -161,7 +149,6 @@ browser_mod:
                             message: Reload all YAML configuration...
                         - service: homeassistant.reload_all
                   template: icon_name
-
         #################################################
         #                                               #
         #                Raspberry Docker               #
@@ -174,21 +161,17 @@ browser_mod:
           show_header_toggle: false
           card_mod:
             class: header
-
           entities:
             - entity: binary_sensor.raspberry_docker
               icon: si:docker
               secondary_info: last-changed
               name: Status
-
             - entity: switch.watchtower
-
             - type: attribute
               entity: sensor.rpi_monitor_docker
               attribute: up_time
               name: Uptime
               icon: mdi:update
-
             - type: custom:bar-card
               width: 55%
               height: 2em
@@ -205,11 +188,9 @@ browser_mod:
                     service: homeassistant.update_entity
                     service_data:
                       entity_id: sensor.rpi_monitor_docker_rpi_cpu_use_pidocker
-
                 - entity: sensor.rpi_monitor_docker_rpi_temp_pidocker
                   name: Temperature
                   icon: mdi:thermostat
-
                 - entity: sensor.rpi_monitor_docker_rpi_used_pidocker
                   name: Memory 4GB
                   icon: mdi:memory
@@ -218,7 +199,6 @@ browser_mod:
                     service: homeassistant.update_entity
                     service_data:
                       entity_id: sensor.sensor.rpi_monitor_docker_rpi_used_pidocker
-
                 - entity: sensor.rpi_monitor_docker
                   type: attribute
                   attribute: fs_free_prcnt
@@ -230,7 +210,6 @@ browser_mod:
                     service: homeassistant.update_entity
                     service_data:
                       entity_id: sensor.rpi_monitor_docker
-
             - type: custom:hui-horizontal-stack-card
               cards:
                 - type: custom:button-card
@@ -242,7 +221,6 @@ browser_mod:
                       text: Are you sure you want to restart?
                     service: script.restart_pi_docker
                   template: icon_name
-
                 - type: custom:button-card
                   name: Purge logs
                   icon: mdi:archive-remove
@@ -250,13 +228,11 @@ browser_mod:
                     action: call-service
                     service: script.purge_dockerlog
                   template: icon_name
-
         #################################################
         #                                               #
         #                CONTAINERS                     #
         #                                               #
         #################################################
-
         - type: entities
           view_layout:
             grid-area: containers
@@ -272,7 +248,6 @@ browser_mod:
               #states {
                 text-transform: capitalize !important;
               }
-
           entities:
             - entity: sensor.docker_portainer
               name: Portainer

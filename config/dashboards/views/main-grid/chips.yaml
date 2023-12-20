@@ -3,7 +3,6 @@
 #             CHIPS MAX 800px                   #
 #                                               #
 #################################################
-
 - type: horizontal-stack
   view_layout:
     grid-area: chips
@@ -52,7 +51,6 @@
                 if (variables.playing == '0 Playing') return 'None';
                 else return variables.playing;
             ]]]
-
         # - &homemode
         #   type: custom:button-card
         #   name: Home Mode
@@ -60,7 +58,6 @@
         #   icon: mdi:account-multiple-plus
         #   template:
         #     - chips
-
         - &air
           type: custom:button-card
           name: Air Quality
@@ -69,13 +66,11 @@
             - chips
             - chip_notify
           show_icon: true
-
 #################################################
 #                                               #
 #             CHIPS MIN 1700px                  #
 #                                               #
 #################################################
-
 - type: horizontal-stack
   view_layout:
     grid-area: chips
@@ -84,7 +79,6 @@
   cards:
     - *lights
     - *media
-
     - type: custom:button-card
       name: Home Mode
       entity: sensor.home_mode
@@ -109,9 +103,7 @@
                 }
                 return `${state}`
               ]]]
-
     - *air
-
     - type: custom:button-card
       name: Viet Ngoc
       double_tap_action: !include ../../shared/popup/home_vietngoc.yaml
@@ -123,7 +115,6 @@
           - padding: 3px
           - background-color: null
           - width: 50%
-
     - type: custom:button-card
       name: Huong Giang
       entity: person.huong_giang

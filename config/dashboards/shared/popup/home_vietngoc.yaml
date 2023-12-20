@@ -24,7 +24,6 @@ browser_mod:
           entities:
             - entity: person.viet_ngoc
               secondary_info: last-changed
-
         - type: history-graph
           card_mod:
             style: |
@@ -33,7 +32,6 @@ browser_mod:
               }
           entities:
             - entity: person.viet_ngoc
-
         - type: custom:mod-card
           card_mod:
             style:
@@ -60,7 +58,6 @@ browser_mod:
                           name: findmy.wav
                           critical: 1
                           volume: 1
-
         - type: map
           default_zoom: 16
           dark_mode: true

@@ -3,7 +3,6 @@
 #                  MAIN ROOMS                   #
 #                                               #
 #################################################
-
 - type: grid
   title: Masters
   view_layout:
@@ -13,18 +12,14 @@
     # Living Room
     - type: custom:decluttering-card
       template: grid_living_room
-
     # OFFICE
     - type: custom:decluttering-card
       template: grid_office
-
     # Kitchen
     - type: custom:decluttering-card
       template: grid_kitchen_normal
-
     - type: custom:decluttering-card
       template: grid_kitchen_dishwasing
-
     # Bedroom
     - type: custom:decluttering-card
       template: grid_bedroom
