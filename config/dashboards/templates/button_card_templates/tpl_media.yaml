@@ -754,6 +754,7 @@ added_movies_base:
       - line-height: 100%
       - color: rgba(255,255,255,0.6)
     state:
+      - color: '#ffffff8c'
       - line-height: normal
       - text-shadow: black 3px 2px 4px
     # label:
@@ -792,21 +793,80 @@ added_movies:
         - landscape: hide
         - portrait: hide
         - ymovie: show
+  tap_action:
+    action: fire-dom-event
+    browser_mod:
+      service: browser_mod.popup
+      data:
+        style: |
+          --popup-min-width: 1400px;
+        card_mod:
+          style:
+            #popup header
+            .: |
+              @media (max-width: 450px), (max-height: 500px) {
+                ha-dialog {
+                  --mdc-dialog-min-width: 100vw !important;
+                  --mdc-dialog-min-height: 100vh !important;
+                  --popup-border-radius: 0 !important;
+                }
+              }
+              .content .container {
+                padding: 0 !important;
+              }
+        title: >
+          [[[
+            if (entity) {
+              if (entity && entity.attributes ) {
+                let title = entity.attributes.title;
+                return `${title}`;
+              }
+            }
+          ]]]
+        content:
+          type: custom:layout-card
+          layout_type: custom:grid-layout
+          layout:
+            margin: 0
+            grid-template-columns: 1fr
+            grid-template-rows: fit-content(100%)
+          cards:
+            - type: iframe
+              aspect_ratio: >
+                [[[
+                  if (window.matchMedia('(max-width: 800px)').matches)
+                    return '180%';
+                  else return '100%';
+                ]]]
+              url: >
+                [[[
+                  if (entity) {
+                    if (entity && entity.attributes ) {
+                      let tmdb = entity.attributes.tmdb_link;
+                      return `${tmdb}`;
+                    }
+                  }
+                ]]]
   state_display: >
     [[[
       if (entity) {
           let elt = this.shadowRoot,
               await = setTimeout(marquee, 100);
         if (entity && entity.attributes) {
-          let cztitle = entity.attributes.Title,
-              rating = entity.attributes.Rating,
-              year = entity.attributes.Year,
-              genre = entity.attributes.Genre;
+          let cztitle = entity.attributes.title,
+              originaltitle = entity.attributes.original_title,
+              rating = entity.attributes.rating,
+              country = entity.attributes.country,
+              year = entity.attributes.year,
+              genre = entity.attributes.genre;
 
-          var title = `<span style="font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #ffffff90;"> ${cztitle} </span>`;
+          var title = cztitle == originaltitle
+            ? `<span style="font-weight: 700; text-transform: uppercase; letter-spacing: 2px;">${cztitle}</span>`
+            : `<span style="font-weight: 700; text-transform: uppercase;">${cztitle}</span>&nbsp;·&nbsp<span style="text-transform: capitalize; font-family: Raleway;">${originaltitle}</span>`;
+
           var output = `
             <div id="title">${title}</div>
-            <span class="year" role="img">${year}</span>
+            <span class="year" role="img">${country}&nbsp;·&nbsp${year}</span>
             <span class="info" style="color: #ffffff80;">${genre}</span>
             `;
         }
@@ -843,7 +903,7 @@ added_movies:
       [[[
         if (entity) {
           if (entity && entity.attributes ) {
-              let rating = Math.round(( entity.attributes.Rating * 10));
+              let rating = Math.round(( entity.attributes.rating * 10));
               var stroke = '#20d07b';
                 if (rating <= 40) { stroke = '#ff0000' };
                 if (rating <= 60) { stroke = '#ffcc00' };

@@ -221,7 +221,7 @@
                   - type: custom:auto-entities
                     filter:
                       include:
-                        - entity_id: 'sensor.ymovie_added_*'
+                        - entity_id: 'sensor.kodi_added_movie_*'
                           options:
                             type: custom:button-card
                             template:
@@ -232,20 +232,21 @@
                       parameters:
                         pagination:
                           type: bullets
-                          clickable: false
+                          clickable: true
                         autoplay:
-                          delay: 5000
+                          delay: 7000
                           disableOnInteraction: false
                           reverseDirection: false
-                        threshold: 7
+                          pauseOnMouseEnter: true
                         speed: 650
-                        spaceBetween: 70
+                        slidesPerView: auto
+                        roundLengths: true
+                        grabCursor: true
+                        loop: false
+                        spaceBetween: 50
                         direction: vertical
                         autoHeight: true
-                        slidesPerView: auto
-                        followFinger: false
-                        grabCursor: true
-                        roundLengths: true
+                        followFinger: true
                     card_param: cards
 
                   # - type: custom:swipe-card
