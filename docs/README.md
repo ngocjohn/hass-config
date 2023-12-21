@@ -36,15 +36,15 @@ I frequently refresh my configuration files. My current Home Assistant version i
       </thead>
       <tbody>
           <tr>
-              <td>31,122 </td>
-              <td>29</td>
-              <td>169</td>
-              <td>32</td>
+              <td>28,819 </td>
+              <td>26</td>
+              <td>154</td>
+              <td>33</td>
               <td>53</td>
               <td>34</td>
-              <td>755</td>
-              <td>188</td>
-              <td>37</td>
+              <td>661</td>
+              <td>194</td>
+              <td>36</td>
           </tr>
       </tbody>
   </table>
@@ -64,9 +64,7 @@ I frequently refresh my configuration files. My current Home Assistant version i
 - Cloudflared
 - eufy-security-ws
 - Glances
-- Hakit
 - Home Assistant Google Drive Backup
-- Log Viewer
 - Mosquitto broker
 - Music Assistant BETA
 - Node-RED
@@ -95,18 +93,14 @@ I frequently refresh my configuration files. My current Home Assistant version i
 - [Govee](https://github.com/LaggAt/hacs-govee)
 - [HACS](https://github.com/hacs/integration)
 - [Hass Favicon](https://github.com/thomasloven/hass-favicon)
-- [Kodi Media Sensors](https://github.com/jtbgroup/kodi-media-sensors)
-- [Media Player Template](https://github.com/Sennevds/media_player.template)
 - [Mercedesme 2020](https://github.com/ReneNulschDE/mbapi2020)
 - [Music Assistant](https://github.com/music-assistant/hass-music-assistant)
 - [Node Red Companion](https://github.com/zachowj/hass-node-red)
 - [Nuki Lock](https://github.com/kvj/hass_nuki_ng)
-- [Powercalc](https://github.com/bramstroker/homeassistant-powercalc)
 - [Simpleicons](https://github.com/vigonotion/hass-simpleicons)
 - [Spook 👻 Not Your Homie](https://github.com/frenck/spook)
 - [Spotcast](https://github.com/fondberg/spotcast)
 - [Trakt](https://github.com/dylandoamaral/trakt-integration)
-- [Unifi Status](https://github.com/zvldz/unifi_status)
 - [Xiaomi Cloud Map Extractor](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor)
 - [Xiaomi Miot Auto](https://github.com/al-one/hass-xiaomi-miot)
 - [Ytube Music Player](https://github.com/KoljaWindeler/ytube_music_player)
@@ -139,7 +133,6 @@ I frequently refresh my configuration files. My current Home Assistant version i
 - [Hourly Weather Card](https://github.com/decompil3d/lovelace-hourly-weather)
 - [Hui Element](https://github.com/thomasloven/lovelace-hui-element)
 - [Kiosk Mode](https://github.com/NemesisRE/kiosk-mode)
-- [Kodi Playlist Card](https://github.com/jtbgroup/kodi-playlist-card)
 - [Layout Card](https://github.com/thomasloven/lovelace-layout-card)
 - [Local Conditional Card](https://github.com/PiotrMachowski/Home-Assistant-Lovelace-Local-Conditional-card)
 - [Logbook Card](https://github.com/royto/logbook-card)

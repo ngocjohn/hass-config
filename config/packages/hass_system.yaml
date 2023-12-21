@@ -69,8 +69,6 @@ recorder:
       - sensor.playlists_sensor
       - sensor.template_sidebar
       - sensor.time
-      - sensor.unifi_status_lan
-      - sensor.unifi_status_wlan
       - sensor.zhimi_mb4_b008_moto_speed_rpm
   include:
     entities:
@@ -98,5 +96,4 @@ tts:
 bluetooth:
 delete:
 sun:
-powercalc:
 websocket_api:

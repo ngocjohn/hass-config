@@ -20,17 +20,7 @@ media_player:
       {% else %}
       media_player.sony_bravia_tv
       {% endif %}
-    # state_template: >
-    #   {% if is_state('media_player.sony_bravia_tv', 'off') %}
-    #     off
-    #   {% else %}
-    #     {{ states('media_player.atv') }}
-    #   {% endif %}
-    # attributes:
-    # state: remote.sony_bravia_tv
-    # source_list: media_player.atv|source_list
-    # source: media_player.sony_bravia_tv|source
-    # volume_level: media_player.sony_bravia_tv|volume_level
+
     commands:
       turn_on:
         service: remote.turn_on

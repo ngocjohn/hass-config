@@ -26,7 +26,7 @@
         speed: 650
         spaceBetween: 20
         threshold: 7
-        observer: false
+        observer: true
         followFinger: true
         grabCursor: true
       cards:
@@ -42,7 +42,7 @@
                 template:
                   - tpl_spotify
                 variables:
-                  playlist_type: default
+                  playlist_type: featured
             - type: conditional
               conditions:
                 - entity: select.conditional_media
@@ -127,7 +127,7 @@
               template:
                 - tpl_spotify
               variables:
-                playlist_type: featured
+                playlist_type: default
         # - type: grid
         #   columns: 1
         #   cards:

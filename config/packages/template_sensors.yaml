@@ -18,7 +18,7 @@ template:
       # Test sensor github
       - name: GitHub NgocJohn
         unique_id: 'github_ngocjohn'
-        state: '{{this.trigger.attributes.date_committed}}'
+        state: '{{ok}}'
       # SENSOR CLIMATE
       - unique_id: climate_index
         name: Home Climate
@@ -291,12 +291,6 @@ template:
             mdi:battery-alert
           {% endif %}
       # SENSOR - WEATHER
-      - unique_id: weather_min_temp
-        name: 'Weather Min Temp'
-        state: '{{ states.sensor.weather_smichov_forecast_daily.attributes.forecast[0].templow }}'
-      - unique_id: weather_max_temp
-        name: 'Weather Max Temp'
-        state: '{{ states.sensor.weather_smichov_forecast_daily.attributes.forecast[0].temperature }}'
       - unique_id: weather_humidity
         name: 'Weather Humidity'
         unit_of_measurement: '%'

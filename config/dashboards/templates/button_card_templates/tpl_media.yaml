@@ -730,38 +730,32 @@ movies_base:
 added_movies_base:
   template:
     - base
-  aspect_ratio: 1000/996
+  aspect_ratio: 1/1
   show_state: true
-  show_label: false
+  show_label: true
   show_name: false
   tap_action: block
   styles:
     grid:
       - grid-template-areas: |
           "poster poster"
-          "l l"
           "n n"
           "s s"
+          "l l"
       - grid-template-columns: 1fr 1fr
       - grid-template-rows: auto min-content min-content min-content
       - gap: 0
       - align-items: flex-start
       - -webkit-backdrop-filter: var(--blur-intensity)
       - backdrop-filter: var(--blur-intensity)
-    name:
-      - justify-self: flex-start
-      - line-height: 100%
-      - color: rgba(255,255,255,0.6)
+    label:
+      - padding-bottom: 2%
     state:
-      - color: '#ffffff8c'
+      - color: 'rgba(255, 255, 255, 0.8)'
       - line-height: normal
       - text-shadow: black 3px 2px 4px
-    # label:
-    #   - position: absolute
-    #   - width: unset
-    #   - justify-self: center
-    #   - bottom: 10%
-    #   - overflow: visible
+      - width: 100%
+
     card:
       - padding: 0%
       - border-radius: calc(var(--button-card-border-radius) / 2)
@@ -776,14 +770,11 @@ added_movies_base:
       - background-image: >
           [[[
             if (entity && entity.attributes)
-              return `linear-gradient(to top, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 0) 100%), url("${entity.attributes.entity_picture}")`
+              return `linear-gradient(to top, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 0) 100%), url("${entity.attributes.fanart_url}")`
           ]]]
 added_movies:
   template:
     - added_movies_base
-  show_state: true
-  show_label: true
-  show_name: false
   double_tap_action:
     action: fire-dom-event
     local_conditional_card:
@@ -846,6 +837,24 @@ added_movies:
                     }
                   }
                 ]]]
+  label: >
+    [[[
+      if (entity) {
+        if (entity && entity.attributes) {
+          let cztitle = entity.attributes.title,
+              originaltitle = entity.attributes.original_title,
+              rating = entity.attributes.rating,
+              country = entity.attributes.country,
+              year = entity.attributes.year,
+              genre = entity.attributes.genre;
+          var info = `
+            <span style="font-weight: 700;font-family: Raleway;">${country}&nbsp;·&nbsp${year}</span>
+            <span style="color: #ffffff8c;font-family: Raleway;">${genre}</span>
+            `;
+            return `${info}`;
+          }
+        }
+    ]]]
   state_display: >
     [[[
       if (entity) {
@@ -858,13 +867,12 @@ added_movies:
               country = entity.attributes.country,
               year = entity.attributes.year,
               genre = entity.attributes.genre;
+
           var title = cztitle == originaltitle
             ? `<span style="font-weight: 700; text-transform: uppercase; letter-spacing: 2px;">${cztitle}</span>`
             : `<span style="font-weight: 700; text-transform: uppercase;">${cztitle}</span>&nbsp;·&nbsp<span style="text-transform: capitalize; font-family: Raleway;">${originaltitle}</span>`;
           var output = `
-            <div id="title">${title}</div>
-            <span class="year" role="img">${country}&nbsp;·&nbsp${year}</span>
-            <span class="info" style="color: #ffffff80;">${genre}</span>
+            <div id="title" style="display:flex; align-items: baseline;width: fit-content;">${title}</div>
             `;
         }
           function marquee() {
@@ -884,7 +892,7 @@ added_movies:
                           state.classList.remove("marquee");
                       }
                       else if (r && s.contentRect.width >= c.contentRect.width) {
-                          state.innerHTML = `${title} ${spacer} ${title} &nbsp;`;
+                          state.innerHTML = `${title} ${spacer} ${title}`;
                           state.classList.add("marquee");
                       }
                   });

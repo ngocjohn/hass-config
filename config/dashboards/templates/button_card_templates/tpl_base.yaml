@@ -193,6 +193,7 @@ tilt:
 #               EXTRA STYLES                    #
 #                                               #
 #################################################
+
 extra_styles:
   extra_styles: >
     [[[
@@ -325,7 +326,7 @@ extra_styles:
           font-weight: var(--button-card-font-weight);
           letter-spacing: var(--button-card-letter-spacing);
         }
-        #state {
+        #state, #label{
           font-size: var(--button-card-state-size);
           font-weight: var(--button-card-font-weight);
           letter-spacing: var(--button-card-letter-spacing);
@@ -336,7 +337,7 @@ extra_styles:
           #name {
             font-size: calc(var(--button-card-font-size) * var(--card-portrait));
           }
-          #state {
+          #state, label {
             font-size: calc(var(--button-card-state-size) * var(--card-portrait));
           }
         }
@@ -345,7 +346,7 @@ extra_styles:
           #name {
             font-size: calc(var(--button-card-font-size) * var(--card-phone));
           }
-          #state {
+          #state, #label {
             font-size: calc(var(--button-card-state-size) * var(--card-phone));
           }
         }
@@ -377,7 +378,7 @@ extra_styles:
             }
             /* phone */
             @media screen and (max-width: 800px) {
-              #name, #state {
+              #name, #state,  {
                 font-size: calc(calc(var(--button-card-font-size) * var(--card-phone)) - var(--z-axis-adjustment));
               }
             }
@@ -438,7 +439,7 @@ extra_styles:
             #name {
               font-size: calc(var(--button-card-font-size) * var(--card-phone));
             }
-            #state {
+            #state, #label {
               font-size: calc(var(--button-card-movie-state-size) * var(--card-phone));
             }
           }
@@ -491,17 +492,46 @@ extra_styles:
           .badge--ddp {
             content: url("/local/svg/media/ddp.svg");
           }
-          .year {
-            background-color: #ffffff20;
-            color: #6a7377;
-            border: solid 2.2px #6a737780;
-            border-radius: 0.5vh;
-            padding: 0px 4px;
-            font-size: 0.8em;
-            font-weight: 700;
-            font-family: 'Roboto';
-            text-shadow: none;
-            display: inline;
+        `:''}
+        ${(this._config.template.includes('added_movies_base')) ? `
+          #container {
+            padding: 0px 5%;
+          }
+          #poster {
+            border-radius: 12px !important;
+          }
+          #label {
+            display: inline-flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-items: baseline;
+            width: 100%;
+            justify-content: space-between;
+          }
+        `:''}
+        ${(this._config.template.includes('movies_base')) ? `
+          #card {
+            display: flex;
+            flex-wrap: wrap;
+            align-content: flex-start;
+            width: 150px;
+            min-width: 150px;
+            overflow: visible;
+            border-radius: 8px !important;
+          }
+          #image {
+            display: block;
+            width: 100%;
+            min-height: calc(150px * 1.5);
+            height: calc(150px * 1.5);
+            background: #dbdbdb;
+            overflow: visible;
+            box-shadow: 0 2px 8px rgba(0,0,0,.1);
+          }
+          #image img {
+            display: inline-block;
+            width: 100%;
+            height: 100%;
           }
         `:''}
         ${this._config.template.includes('footer') ? `
@@ -603,39 +633,6 @@ extra_styles:
           }
           #icon:hover, #name:hover {
             color: rgb(255, 255, 255) !important;
-          }
-        `:''}
-        ${(this._config.template.includes('added_movies_base')) ? `
-          #container {
-            padding: 0px 5%;
-          }
-          #poster {
-            border-radius: 12px !important;
-          }
-        `:''}
-        ${(this._config.template.includes('movies_base')) ? `
-          #card {
-            display: flex;
-            flex-wrap: wrap;
-            align-content: flex-start;
-            width: 150px;
-            min-width: 150px;
-            overflow: visible;
-            border-radius: 8px !important;
-          }
-          #image {
-            display: block;
-            width: 100%;
-            min-height: calc(150px * 1.5);
-            height: calc(150px * 1.5);
-            background: #dbdbdb;
-            overflow: visible;
-            box-shadow: 0 2px 8px rgba(0,0,0,.1);
-          }
-          #image img {
-            display: inline-block;
-            width: 100%;
-            height: 100%;
           }
         `:''}
         ${this._config.template.includes('chips')  ? `
