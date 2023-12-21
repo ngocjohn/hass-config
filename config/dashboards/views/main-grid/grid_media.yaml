@@ -26,7 +26,7 @@
         speed: 650
         spaceBetween: 20
         threshold: 7
-        observer: true
+        observer: false
         followFinger: true
         grabCursor: true
       cards:
@@ -220,6 +220,8 @@
                         pagination:
                           type: bullets
                           clickable: true
+                          dynamicBullets: true
+                          dynamicMainBullets: 1
                         autoplay:
                           delay: 7000
                           disableOnInteraction: false

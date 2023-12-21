@@ -36,14 +36,14 @@ I frequently refresh my configuration files. My current Home Assistant version i
       </thead>
       <tbody>
           <tr>
-              <td>28,819 </td>
+              <td>28,740 </td>
               <td>26</td>
               <td>154</td>
               <td>33</td>
               <td>53</td>
-              <td>34</td>
-              <td>661</td>
-              <td>194</td>
+              <td>35</td>
+              <td>654</td>
+              <td>188</td>
               <td>36</td>
           </tr>
       </tbody>

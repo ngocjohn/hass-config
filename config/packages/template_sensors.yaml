@@ -106,7 +106,6 @@ template:
         name: 'Bedroom Active'
         state: >-
           {% if not is_state('light.bedroom_group', 'off') %} yes
-          {% elif not is_state('media_player.bedroom_tv', 'off') %} yes
           {% elif is_state('media_player.bedroom_homepod', 'playing') %} yes
           {% else %} no
           {% endif %}

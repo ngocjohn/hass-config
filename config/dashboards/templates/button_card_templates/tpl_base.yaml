@@ -326,7 +326,7 @@ extra_styles:
           font-weight: var(--button-card-font-weight);
           letter-spacing: var(--button-card-letter-spacing);
         }
-        #state, #label{
+        #state, #label {
           font-size: var(--button-card-state-size);
           font-weight: var(--button-card-font-weight);
           letter-spacing: var(--button-card-letter-spacing);
@@ -337,7 +337,7 @@ extra_styles:
           #name {
             font-size: calc(var(--button-card-font-size) * var(--card-portrait));
           }
-          #state, label {
+          #state, #label {
             font-size: calc(var(--button-card-state-size) * var(--card-portrait));
           }
         }
