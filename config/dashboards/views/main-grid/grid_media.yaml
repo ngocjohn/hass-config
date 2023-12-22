@@ -219,7 +219,7 @@
                       parameters:
                         pagination:
                           type: bullets
-                          clickable: true
+                          clickable: false
                           dynamicBullets: true
                           dynamicMainBullets: 1
                         autoplay:
@@ -237,68 +237,7 @@
                         autoHeight: true
                         followFinger: true
                     card_param: cards
-                  # - type: custom:swipe-card
-                  #   start_card: 1
-                  #   parameters:
-                  #     pagination:
-                  #       type: bullets
-                  #       clickable: false
-                  #     autoplay:
-                  #       delay: 5000
-                  #       disableOnInteraction: false
-                  #       reverseDirection: false
-                  #     threshold: 7
-                  #     speed: 650
-                  #     spaceBetween: 70
-                  #     direction: vertical
-                  #     autoHeight: true
-                  #     slidesPerView: auto
-                  #     followFinger: false
-                  #     grabCursor: true
-                  #     roundLengths: true
-                  #   cards:
-                  #     - type: grid
-                  #       columns: 1
-                  #       cards:
-                  #         - type: custom:button-card
-                  #           entity: sensor.ymovie_added_1
-                  #           template:
-                  #             - added_movies
-                  #     - type: grid
-                  #       columns: 1
-                  #       cards:
-                  #         - type: custom:button-card
-                  #           entity: sensor.ymovie_added_2
-                  #           template:
-                  #             - added_movies
-                  #     - type: grid
-                  #       columns: 1
-                  #       cards:
-                  #         - type: custom:button-card
-                  #           entity: sensor.ymovie_added_3
-                  #           template:
-                  #             - added_movies
-                  #     - type: grid
-                  #       columns: 1
-                  #       cards:
-                  #         - type: custom:button-card
-                  #           entity: sensor.ymovie_added_4
-                  #           template:
-                  #             - added_movies
-                  #     - type: grid
-                  #       columns: 1
-                  #       cards:
-                  #         - type: custom:button-card
-                  #           entity: sensor.ymovie_added_5
-                  #           template:
-                  #             - added_movies
-                  #     - type: grid
-                  #       columns: 1
-                  #       cards:
-                  #         - type: custom:button-card
-                  #           entity: sensor.ymovie_added_6
-                  #           template:
-                  #             - added_movies
+
             - type: conditional
               conditions:
                 - entity: select.conditional_media
