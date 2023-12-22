@@ -34,7 +34,7 @@
           autoplay:
             delay: 15000
             disableOnInteraction: false
-            reverseDirection: true
+            reverseDirection: false
             pauseOnMouseEnter: true
           speed: 700
           roundLengths: true

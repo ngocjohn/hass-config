@@ -671,29 +671,12 @@
       data: {}
     - service: readme.generate
       data: {}
-    - wait_template: '{{ is_state(''binary_sensor.macbook_air_wifi'', ''on'') }}'
-      continue_on_timeout: false
-      timeout: 00:05:00
     - service: shell_command.gitpush
       data: {}
     - service: notify.persistent_notification
       data:
         message: Git public repo pushed!
         title: Github Public
-    - wait_for_trigger:
-      - platform: state
-        entity_id:
-        - sensor.ngocjohn_hass_config_latest_commit
-      continue_on_timeout: false
-      timeout:
-        hours: 0
-        minutes: 0
-        seconds: 5
-        milliseconds: 0
-    - service: notify.persistent_notification
-      data:
-        title: Github Public
-        message: '{{ states.sensor.ngocjohn_hass_config_latest_commit.state }}'
   mode: single
 - id: '1701556784590'
   alias: Update YouTube Sensor

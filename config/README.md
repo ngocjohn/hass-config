@@ -36,13 +36,13 @@ I frequently refresh my configuration files. My current Home Assistant version i
       </thead>
       <tbody>
           <tr>
-              <td>28,740 </td>
+              <td>28,742 </td>
               <td>26</td>
-              <td>154</td>
+              <td>168</td>
               <td>33</td>
               <td>53</td>
               <td>35</td>
-              <td>654</td>
+              <td>718</td>
               <td>188</td>
               <td>36</td>
           </tr>
@@ -59,7 +59,6 @@ I frequently refresh my configuration files. My current Home Assistant version i
 
 ### Add-ons
 - Advanced SSH & Web Terminal
-- AppDaemon
 - ArgonOne Active Linear Cooling
 - Cloudflared
 - eufy-security-ws
