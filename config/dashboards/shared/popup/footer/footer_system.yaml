@@ -161,10 +161,12 @@ browser_mod:
           card_mod:
             class: header
           entities:
-            - entity: binary_sensor.raspberry_docker
+            - entity: binary_sensor.rpi_docker
               icon: si:docker
-              secondary_info: last-changed
-              name: Status
+              state_color: true
+              secondary_info:
+                attribute: ip_adress
+              name: Raspberry Docker
             - entity: switch.watchtower
             - type: attribute
               entity: sensor.rpi_monitor_docker
@@ -258,65 +260,10 @@ browser_mod:
                   {{
                     { 'entity': sensor.entity_id,
                       'name': name,
+                      'state_color': true,
                       'secondary_info': {
                         'attribute': 'Uptime'
                       }
                     } }},
                 {%- endif -%}
               {%- endfor %}
-
-            # - entity: sensor.docker_portainer
-            #   name: Portainer
-            #   icon: si:portainer
-            #   secondary_info:
-            #     attribute: Uptime
-            # - entity: sensor.docker_homebridge
-            #   name: Homebridge
-            #   icon: si:homebridge
-            #   secondary_info:
-            #     attribute: Uptime
-            # - entity: sensor.docker_watchtower
-            #   name: Watchtower
-            #   icon: cil:docker-watchtower
-            #   secondary_info:
-            #     attribute: Uptime
-            # - entity: sensor.docker_unificontroller
-            #   name: Unifi Controller
-            #   icon: si:ubiquiti
-            #   secondary_info:
-            #     attribute: Uptime
-            # - entity: sensor.docker_hadockermon
-            #   name: HA-Dockermon
-            #   icon: si:docker
-            #   secondary_info:
-            #     attribute: Uptime
-            # - entity: sensor.docker_cloudflare
-            #   name: Cloudflare
-            #   icon: si:cloudflare
-            #   secondary_info:
-            #     attribute: Uptime
-
-        # - type: custom:auto-entities
-        #   filter:
-        #     include:
-        #       - entity_id: sensor.docker_*
-        #         options:
-        #           secondary_info:
-        #             attribute: Uptime
-        #     exclude: []
-        #   card:
-        #     type: entities
-        #     view_layout:
-        #       grid-area: containers
-        #     title: Containers
-        #     show_header_toggle: false
-        #     card_mod:
-        #       class: header
-        #       # no border on last card
-        #       style: |
-        #         ha-card {
-        #           border: none !important;
-        #         }
-        #         #states {
-        #           text-transform: capitalize !important;
-        #         }

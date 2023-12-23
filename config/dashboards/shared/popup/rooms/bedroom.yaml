@@ -3,21 +3,7 @@ browser_mod:
   service: browser_mod.popup
   data:
     title: Bedroom
-    style: >
-      --tablet-popup-header-color: rgba(0, 0, 0, 0);
-      --popup-background-color: rgba(0, 0, 0, 0);
-      --button-card-border-radius: 10%;
-    card_mod:
-      style:
-        .: |
-
-        layout-card:
-          $grid-layout$:
-            # card divider border
-            .: |
-              #root > * {
-                margin: 0px !important;
-              }
+    style: !include ../../snippets/style_popup_transparent.yaml
 
     content:
       type: custom:layout-card
@@ -34,7 +20,14 @@ browser_mod:
                 options:
                   type: custom:button-card
                   template:
-                    - tpl_popup_base
+                    - tpl_popup_light
+              - entity_id: switch.lidl_3_gang_socket_l1
+                options:
+                  type: custom:button-card
+                  double_tap_action:
+                    action: more-info
+                  template:
+                    - tpl_popup_device
               - entity_id: media_player.bedroom_tv
                 options:
                   type: custom:button-card

@@ -688,67 +688,14 @@ light_slider:
                 ? '#000000'
                 : '#A4A9B6';
           ]]]
-svetla:
-  template:
-    - base
-  double_tap_action:
-    action: fire-dom-event
-    browser_mod:
-      service: browser_mod.popup
-      data:
-        title: >
-          [[[
-            return !entity || entity.attributes.friendly_name;
-          ]]]
-        style: >
-          --tablet-popup-header-color: rgba(0, 0, 0, 0);
-          --popup-background-color: rgba(0, 0, 0, 0);
-          --popup-border-width: 0;
-          --button-card-border-radius: 10%;
-          --grid-card-gap: 5%;
-          --tablet-popup-button-padding: 0.1em 2em 1.8em 2em;
-          //--tablet-popup-content-padding: 1.4em 2.2em 1.6em 1.5em;
-        content:
-          type: vertical-stack
-          cards:
-            - type: entities
-              state_color: true
-              show_header_toggle: false
-              card_mod:
-                class: content
-              entities:
-                - type: custom:more-info-card
-                  entity: >
-                    [[[ return entity.entity_id ]]]
-                  card_mod:
-                    style:
-                      # hide everything but ha-select
-                      $: |
-                        h1 {
-                          display: none !important;
-                        }
-                      .: |
-                        h1, state-card-content {
-                          display: none !important;
-                        }
-                        .card-content {
-                          padding: {{ is_state(config.entity, 'off') | iif('0', '1.2em 0 0.5em 0') }};
-                        }
-                      more-info-light$:
-                        .: |
-                          ha-more-info-state-header {
-                            display: none !important;
-                          }
-                          ha-attributes {
-                            display: none !important;
-                          }
+
 tpl_popup_base:
   template:
     - base
   name: >
     [[[
       if (entity)
-        return `${entity.attributes.friendly_name.replace(/Bedroom|Shower Room|Living Room|Light|Kitchen|Power/g, '')}`;
+        return `${entity.attributes.friendly_name.replace(/Bedroom|Shower Room|Living Room|Light|Kitchen|Power|Office/g, '')}`;
     ]]]
   custom_fields:
     icon: >
@@ -760,7 +707,9 @@ tpl_popup_base:
       icon:
         - width: 85%
 
-tpl_popup_dev_action:
+tpl_popup_device:
+  template:
+    - tpl_popup_base
   tap_action:
     action: call-service
     service: homeassistant.toggle
@@ -777,10 +726,7 @@ tpl_popup_dev_action:
             if (entity)
             return entity.attributes.friendly_name.split(' ')[0];
           ]]]
-        style: >
-          --popup-background-color: rgba(0, 0, 0, 0);
-          --popup-border-width: 0px;
-          --tablet-popup-header-color: rgba(0, 0, 0, 0);
+        style: !include ../../shared/snippets/style_popup_transparent.yaml
         card_mod:
           style:
             #popup header
@@ -800,10 +746,14 @@ tpl_popup_dev_action:
             exclude:
               - state: unavailable
               - domain: binary_sensor
+              - domain: light
               - entity_id: '*_remote*'
+              - entity_id: '*_operation*'
           sort:
             method: entity_id
-tpl_popup_light_action:
+tpl_popup_light:
+  template:
+    - tpl_popup_base
   double_tap_action:
     action: fire-dom-event
     browser_mod:
@@ -814,10 +764,8 @@ tpl_popup_light_action:
         #     return !entity || entity.attributes.friendly_name;
         #   ]]]
         title: ' '
-        style: >
-          --popup-background-color: rgba(0, 0, 0, 0);
-          --popup-border-width: 0px;
-          --tablet-popup-header-color: rgba(0, 0, 0, 0);
+        style: !include ../../shared/snippets/style_popup_transparent.yaml
+
         card_mod:
           style:
             #popup header

@@ -2,67 +2,38 @@ action: fire-dom-event
 browser_mod:
   service: browser_mod.popup
   data:
-    title: Entrance & Utility
-    style: >
-      --button-card-border-radius: 10%;
-    card_mod:
-      style:
-        .: |
-        hui-grid-card$: |
-          #root {
-            margin: 0.8vw 1vw;
-            grid-gap: 2% !important;
-          }
+    title: Utility Room
+    style: !include ../../snippets/style_popup_transparent.yaml
+
     content:
-      type: grid
-      columns: 3
+      type: custom:layout-card
+      layout_type: custom:grid-layout
+      layout:
+        margin: 1.5%
+        gap: 5%
+        grid-template-columns: 1fr
       cards:
-        - type: custom:button-card
-          entity: light.utility_room_light
-          name: Utility
-          template:
-            - lightpop
-            - icon_light_recessed
-        - type: custom:button-card
-          entity: vacuum.robot_vacuum
-          name: Roborock
-          icon: phu:roborock
-          tap_action: !include ../footer/footer_vacuum.yaml
-          double_tap_action: !include ../footer/footer_vacuum.yaml
-          template:
-            - base
-            - icon_roborock
-        - type: custom:button-card
-          entity: switch.washer_dryer_power
-          name: Washer
-          template:
-            - base
-            - icon_washer
-          tap_action: block
-          double_tap_action:
-            action: fire-dom-event
-            browser_mod:
-              service: browser_mod.popup
-              data:
-                title: 'Washer-Dryer'
-                card_mod:
-                  style:
-                    #popup header
-                    .:
-                content:
-                  type: vertical-stack
-                  cards:
-                    - type: entities
-                      entities:
-                        - entity: switch.washer_dryer_power
-                          name: Power
-                          icon: mdi:power
-                          secondary_info: last-changed
-                        - entity: binary_sensor.washer_dryer_door
-                          name: Door
-                        - entity: sensor.washer_dryer_operation_state
-                          name: Operation State
-                        - entity: sensor.washer_dryer_program_progress
-                          name: Program Progress
-                        - entity: sensor.washer_dryer_remaining_program_time
-                          name: Remaining Program Time
+        - type: custom:auto-entities
+          filter:
+            include:
+              - entity_id: light.utility_room_light
+                options:
+                  type: custom:button-card
+                  template:
+                    - tpl_popup_light
+              - entity_id: vacuum.roidmi_eve
+                options:
+                  type: custom:button-card
+                  tap_action: !include ../footer/footer_vacuum.yaml
+                  double_tap_action: !include ../footer/footer_vacuum.yaml
+                  template:
+                    - tpl_popup_device
+              - entity_id: switch.washer_dryer_power
+                options:
+                  type: custom:button-card
+                  template:
+                    - tpl_popup_device
+          card:
+            type: grid
+            columns: 3
+          card_param: cards

@@ -1,0 +1,6 @@
+>
+  --tablet-popup-header-color: rgba(0, 0, 0, 0);
+  --popup-background-color: rgba(0, 0, 0, 0);
+  --button-card-border-radius: 10%;
+  --dialog-box-shadow: none;
+  --tablet-popup-border-style: none;

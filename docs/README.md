@@ -38,11 +38,11 @@ I frequently refresh my configuration files. My current Home Assistant version i
           <tr>
               <td>28,734 </td>
               <td>26</td>
-              <td>153</td>
+              <td>168</td>
               <td>34</td>
               <td>53</td>
               <td>35</td>
-              <td>656</td>
+              <td>719</td>
               <td>188</td>
               <td>36</td>
           </tr>

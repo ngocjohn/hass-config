@@ -47,6 +47,7 @@ grid_office:
     type: custom:button-card
     entity: light.office_group
     name: Office
+    double_tap_action: !include ../shared/popup/rooms/office.yaml
     hold_action: !include ../shared/honeycomb/office_mode.yaml
     template:
       - rooms_base
@@ -72,13 +73,11 @@ grid_living_room:
     type: custom:button-card
     entity: light.living_room_group
     name: Lounge
+    double_tap_action: !include ../shared/popup/rooms/livingroom.yaml
     hold_action: !include ../shared/honeycomb/living.yaml
     template:
       - rooms_base
-      # - icon_living_sofa
-      # - icon_sofa
       - icon_couch_lamp
-      - light
     variables:
       light_entity: light.living_room_group
       active: sensor.living_room_active
