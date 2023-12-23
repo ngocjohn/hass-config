@@ -43,6 +43,7 @@
                   - tpl_spotify
                 variables:
                   playlist_type: featured
+                  country_code: 'VN'
             - type: conditional
               conditions:
                 - entity: select.conditional_media
@@ -128,13 +129,7 @@
                 - tpl_spotify
               variables:
                 playlist_type: default
-        # - type: grid
-        #   columns: 1
-        #   cards:
-        #     - type: custom:button-card
-        #       entity: sensor.kodi_media_sensor_recently_added_tvshow
-        #       template:
-        #         - conditional_media_shows
+                country_code: vn
         #Media Players
         - type: grid
           columns: 2
@@ -219,7 +214,6 @@
                       parameters:
                         pagination:
                           type: bullets
-                          clickable: false
                           dynamicBullets: true
                           dynamicMainBullets: 1
                         autoplay:
@@ -227,15 +221,15 @@
                           disableOnInteraction: false
                           reverseDirection: false
                           pauseOnMouseEnter: true
-                        speed: 650
+                        speed: 700
                         slidesPerView: auto
                         roundLengths: true
-                        grabCursor: true
-                        loop: false
+                        grabCursor: false
                         spaceBetween: 50
                         direction: vertical
                         autoHeight: true
                         followFinger: true
+                        observer: true
                     card_param: cards
 
             - type: conditional

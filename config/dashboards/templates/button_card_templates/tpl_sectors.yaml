@@ -742,9 +742,14 @@ svetla:
                           ha-attributes {
                             display: none !important;
                           }
-lightpop:
+tpl_popup_base:
   template:
     - base
+  name: >
+    [[[
+      if (entity)
+        return `${entity.attributes.friendly_name.replace(/Bedroom|Shower Room|Living Room|Light|Kitchen|Power/g, '')}`;
+    ]]]
   custom_fields:
     icon: >
       [[[
@@ -754,6 +759,51 @@ lightpop:
     custom_fields:
       icon:
         - width: 85%
+
+tpl_popup_dev_action:
+  tap_action:
+    action: call-service
+    service: homeassistant.toggle
+    service_data:
+      entity_id: >
+        [[[return variables.entity_id;]]]
+  double_tap_action:
+    action: fire-dom-event
+    browser_mod:
+      service: browser_mod.popup
+      data:
+        title: >
+          [[[
+            if (entity)
+            return entity.attributes.friendly_name.split(' ')[0];
+          ]]]
+        style: >
+          --popup-background-color: rgba(0, 0, 0, 0);
+          --popup-border-width: 0px;
+          --tablet-popup-header-color: rgba(0, 0, 0, 0);
+        card_mod:
+          style:
+            #popup header
+            .: |
+
+        content:
+          type: custom:auto-entities
+          card:
+            type: entities
+          filter:
+            include:
+              - device: >
+                  [[[
+                    if (entity)
+                      return entity.attributes.friendly_name.split(' ')[0];
+                  ]]]
+            exclude:
+              - state: unavailable
+              - domain: binary_sensor
+              - entity_id: '*_remote*'
+          sort:
+            method: entity_id
+tpl_popup_light_action:
   double_tap_action:
     action: fire-dom-event
     browser_mod:

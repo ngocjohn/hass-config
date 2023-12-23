@@ -60,24 +60,24 @@
           ]]]
       template:
         - footer
-    - type: custom:button-card
-      name: >
-        <ha-icon icon="mdi:chart-box"></ha-icon> Overview
-      tap_action: !include ../../shared/popup/footer/footer_overview.yaml
-      # variables:
-      #   notify: >
-      #     [[[
-      #       let id = states['binary_sensor.galaxy_tab_a_plugged_in'];
-      #       if (id) return id.state === 'off';
-      #     ]]]
-      template:
-        - footer
+    # - type: custom:button-card
+    #   name: >
+    #     <ha-icon icon="mdi:chart-box"></ha-icon> Overview
+    #   tap_action: !include ../../shared/popup/footer/footer_overview.yaml
+    #   # variables:
+    #   #   notify: >
+    #   #     [[[
+    #   #       let id = states['binary_sensor.galaxy_tab_a_plugged_in'];
+    #   #       if (id) return id.state === 'off';
+    #   #     ]]]
+    #   template:
+    #     - footer
     - type: custom:button-card
       name: >
         <ha-icon icon="mdi:router-wireless"></ha-icon> Network
       tap_action: !include ../../shared/popup/footer/footer_network.yaml
       triggers_update:
-        - binary_sensor.template_unifi_alerts
+        - binary_sensor.unifi_controller_alert
         - update.unifi_status_update
       variables:
         notify: >

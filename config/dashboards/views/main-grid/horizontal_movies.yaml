@@ -23,6 +23,12 @@
         type: custom:swipe-card
         parameters:
           watchSlidesProgress: true
+          slidesPerView: 1
+          speed: 700
+          roundLengths: true
+          grabCursor: true
+
+          followFinger: true
           pagination:
             type: bullets
             clickable: true
@@ -30,15 +36,10 @@
             dynamicMainBullets: 1
           effect: cube
           cubeEffect:
-            shadow: false
+            shadow: true
           autoplay:
-            delay: 15000
+            delay: 10000
             disableOnInteraction: false
             reverseDirection: false
             pauseOnMouseEnter: true
-          speed: 700
-          roundLengths: true
-          grabCursor: true
-          loop: true
-          followFinger: true
       card_param: cards

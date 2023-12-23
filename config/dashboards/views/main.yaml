@@ -26,7 +26,7 @@ layout:
       grid-template-rows: fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) 0fr
       grid-template-areas: |
         ".  sidebar    home        security  ."
-        ".  media      cameras     climate   ."
+        ".  cameras      media     climate   ."
         ".  mainrooms  devices     other     ."
         ".  floorplan  floorplan   floorplan ."
         ".  footer     footer      footer    ."

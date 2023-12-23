@@ -7,7 +7,6 @@ browser_mod:
       --popup-max-width: calc(455px + 455px + 455px);
     card_mod:
       style:
-        .: |
         layout-card$grid-layout$:
           .: |
             #root > * {
@@ -233,52 +232,70 @@ browser_mod:
         #                CONTAINERS                     #
         #                                               #
         #################################################
-        - type: entities
-          view_layout:
-            grid-area: containers
-          title: Containers
-          show_header_toggle: false
-          card_mod:
-            class: header
-            # no border on last card
-            style: |
-              ha-card {
-                border: none !important;
-              }
-              #states {
-                text-transform: capitalize !important;
-              }
-          entities:
-            - entity: sensor.docker_portainer
-              name: Portainer
-              icon: si:portainer
-              secondary_info:
-                attribute: Uptime
-            - entity: sensor.docker_homebridge
-              name: Homebridge
-              icon: si:homebridge
-              secondary_info:
-                attribute: Uptime
-            - entity: sensor.docker_watchtower
-              name: Watchtower
-              icon: cil:docker-watchtower
-              secondary_info:
-                attribute: Uptime
-            - entity: sensor.docker_unificontroller
-              name: Unifi Controller
-              icon: si:ubiquiti
-              secondary_info:
-                attribute: Uptime
-            - entity: sensor.docker_hadockermon
-              name: HA-Dockermon
-              icon: si:docker
-              secondary_info:
-                attribute: Uptime
-            - entity: sensor.docker_cloudflare
-              name: Cloudflare
-              icon: si:cloudflare
-              secondary_info:
-                attribute: Uptime
+
+        - type: custom:auto-entities
+          card:
+            type: entities
+            view_layout:
+              grid-area: containers
+            title: Containers
+            show_header_toggle: false
+            card_mod:
+              class: header
+              # no border on last card
+              style: |
+                ha-card {
+                  border: none !important;
+                }
+                #states {
+                  text-transform: capitalize !important;
+                }
+          filter:
+            template: |
+              {% for sensor in states.sensor -%}
+                {%- if sensor.entity_id | regex_match('sensor.docker_',ignorecase=False) -%}
+                  {%- set name = state_attr(sensor.entity_id, "friendly_name") | regex_replace(find='Docker ', replace='') -%}
+                  {{
+                    { 'entity': sensor.entity_id,
+                      'name': name,
+                      'secondary_info': {
+                        'attribute': 'Uptime'
+                      }
+                    } }},
+                {%- endif -%}
+              {%- endfor %}
+
+            # - entity: sensor.docker_portainer
+            #   name: Portainer
+            #   icon: si:portainer
+            #   secondary_info:
+            #     attribute: Uptime
+            # - entity: sensor.docker_homebridge
+            #   name: Homebridge
+            #   icon: si:homebridge
+            #   secondary_info:
+            #     attribute: Uptime
+            # - entity: sensor.docker_watchtower
+            #   name: Watchtower
+            #   icon: cil:docker-watchtower
+            #   secondary_info:
+            #     attribute: Uptime
+            # - entity: sensor.docker_unificontroller
+            #   name: Unifi Controller
+            #   icon: si:ubiquiti
+            #   secondary_info:
+            #     attribute: Uptime
+            # - entity: sensor.docker_hadockermon
+            #   name: HA-Dockermon
+            #   icon: si:docker
+            #   secondary_info:
+            #     attribute: Uptime
+            # - entity: sensor.docker_cloudflare
+            #   name: Cloudflare
+            #   icon: si:cloudflare
+            #   secondary_info:
+            #     attribute: Uptime
+
         # - type: custom:auto-entities
         #   filter:
         #     include:

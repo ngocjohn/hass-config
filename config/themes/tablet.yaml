@@ -292,9 +292,9 @@ tablet:
                 height: 100%;
               }
               .swiper-container {
-                margin: -1vw !important;
-                padding: 1vw !important;
-                margin-bottom: 0vw !important;
+                margin: -1.5vw !important;
+                padding: 1.5vw !important;
+                margin-bottom: -1vw !important;
               }
               .swiper-pagination {
                 right: 10% !important;
@@ -308,10 +308,7 @@ tablet:
                   width: 0.5em !important;
                   height: 0.5em !important;
                 }
-                .swiper-pagination {
-                  right: 5% !important;
-                  top: 60% !important;
-                }
+
               }
     #################################################
     #                                               #

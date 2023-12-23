@@ -6,58 +6,45 @@ browser_mod:
     style: >
       --tablet-popup-header-color: rgba(0, 0, 0, 0);
       --popup-background-color: rgba(0, 0, 0, 0);
-      --popup-border-width: 0;
       --button-card-border-radius: 10%;
-      --grid-card-gap: 5%;
     card_mod:
       style:
         .: |
-        hui-grid-card:
-          $: |
-            #root {
-              margin: 0.8em 0.8vw 1vw;
-            }
+
+        layout-card:
+          $grid-layout$:
+            # card divider border
+            .: |
+              #root > * {
+                margin: 0px !important;
+              }
+
     content:
-      type: grid
-      columns: 3
+      type: custom:layout-card
+      layout_type: custom:grid-layout
+      layout:
+        margin: 1.5%
+        gap: 5%
+        grid-template-columns: 1fr
       cards:
-        - type: custom:button-card
-          entity: light.bedroom_bed_light
-          name: Bed light
-          template:
-            - lightpop
-            - icon_ensis
-        - type: custom:button-card
-          entity: light.bedroom_main_light
-          name: Main light
-          template:
-            - lightpop
-            - icon_light_recessed
-        - type: custom:button-card
-          entity: light.bedroom_closet_light
-          name: Closet light
-          template:
-            - lightpop
-            - icon_light_recessed
-        - type: custom:button-card
-          entity: light.shower_room_mirror_light
-          name: Shower mirror light
-          template:
-            - lightpop
-            - icon_light_recessed
-        - type: custom:button-card
-          entity: light.shower_room_main_light
-          name: Shower main
-          template:
-            - lightpop
-            - icon_light_recessed
-        # Samsung TV
-        - type: custom:button-card
-          entity: media_player.bedroom_tv
-          name: Samsung
-          double_tap_action:
-            action: more-info
-          hold_action: !include ../../honeycomb/shield.yaml
-          template:
-            - mediaplayer
-            - icon_tv
+        - type: custom:auto-entities
+          filter:
+            include:
+              - group: group.light_bedroom
+                options:
+                  type: custom:button-card
+                  template:
+                    - tpl_popup_base
+              - entity_id: media_player.bedroom_tv
+                options:
+                  type: custom:button-card
+                  double_tap_action:
+                    action: more-info
+                  hold_action: !include ../../honeycomb/shield.yaml
+                  template:
+                    - mediaplayer
+                    - icon_tv
+          card:
+            type: grid
+            columns: 3
+          card_param: cards

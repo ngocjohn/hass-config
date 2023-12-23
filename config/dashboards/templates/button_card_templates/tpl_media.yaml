@@ -2295,7 +2295,8 @@ tpl_spotify:
   template:
     - base
   variables:
-    playlist_type: ' '
+    country_code: ''
+    playlist_type: ''
   show_state: false
   show_icon: false
   show_name: false
@@ -2305,8 +2306,11 @@ tpl_spotify:
         type: 'custom:spotify-card'
         limit: 9
         spotify_entity: media_player.spotify
+        default_device: MBProServer
         playlist_type: >
           [[[ return variables.playlist_type ]]]
+        country_code: >
+          [[[ return variables.country_code ]]]
         hide_warning: true
         display_style: grid
         always_play_random_song: true
