@@ -661,7 +661,8 @@
       id:
       - private_commit
     - condition: template
-      value_template: '{{ has_value(''sensor.github_ngocjohn'') }}'
+      value_template: '{{ has_value(''sensor.github_ngocjohn'') and not is_state(''sensor.github_ngocjohn'',
+        ''ok'') }}'
     then:
     - event: private_repo_push
       event_data: {}
@@ -675,7 +676,7 @@
       data: {}
     - service: notify.persistent_notification
       data:
-        message: Git public repo pushed!
+        message: '{{ states.sensor.ngocjohn_hass_config_latest_commit.state }}'
         title: Github Public
   mode: single
 - id: '1701556784590'

@@ -36,13 +36,13 @@ I frequently refresh my configuration files. My current Home Assistant version i
       </thead>
       <tbody>
           <tr>
-              <td>28,734 </td>
+              <td>0 </td>
               <td>26</td>
-              <td>168</td>
+              <td>154</td>
               <td>34</td>
               <td>53</td>
               <td>35</td>
-              <td>719</td>
+              <td>688</td>
               <td>188</td>
               <td>36</td>
           </tr>
@@ -92,7 +92,9 @@ I frequently refresh my configuration files. My current Home Assistant version i
 - [Govee](https://github.com/LaggAt/hacs-govee)
 - [HACS](https://github.com/hacs/integration)
 - [Hass Favicon](https://github.com/thomasloven/hass-favicon)
+- [Kodi Media Sensors](https://github.com/jtbgroup/kodi-media-sensors)
 - [Mercedesme 2020](https://github.com/ReneNulschDE/mbapi2020)
+- [Multiscrape](https://github.com/danieldotnl/ha-multiscrape)
 - [Music Assistant](https://github.com/music-assistant/hass-music-assistant)
 - [Node Red Companion](https://github.com/zachowj/hass-node-red)
 - [Nuki Lock](https://github.com/kvj/hass_nuki_ng)
@@ -154,7 +156,6 @@ I frequently refresh my configuration files. My current Home Assistant version i
 - [Spotify Lovelace Card](https://github.com/custom-cards/spotify-card)
 - [Stack In Card](https://github.com/custom-cards/stack-in-card)
 - [State Switch](https://github.com/thomasloven/lovelace-state-switch)
-- [Swipe Card](https://github.com/bramkragten/swipe-card)
 - [Tabbed Card](https://github.com/kinghat/tabbed-card)
 - [Timer Bar Card](https://github.com/rianadon/timer-bar-card)
 - [Tv Remote Card (With Touchpad And Haptic Feedback)](https://github.com/usernein/tv-card)
