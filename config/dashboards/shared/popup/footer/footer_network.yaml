@@ -4,7 +4,7 @@ browser_mod:
   data:
     title: Network
     style: >
-      --popup-max-width: calc(450px + 450px);
+      --popup-max-width: calc(100vw);
     card_mod:
       style:
         .: |
@@ -46,7 +46,7 @@ browser_mod:
       layout_type: custom:grid-layout
       layout:
         margin: 0
-        grid-template-columns: 450px 450px
+        grid-template-columns: 20vw 20vw
         grid-template-areas: |
           "router ap"
         mediaquery:

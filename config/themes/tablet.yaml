@@ -29,7 +29,6 @@ tablet:
       popup-border-radius: 1em
       popup-padding-x: 0px
       popup-padding-y: 0px
-      popup-min-width: 440px
       tablet-popup-header-color: rgba(200, 218, 222, 0.05)
       tablet-popup-content-padding: 1.4em 2.2em 1.6em 1.5em
       tablet-popup-button-padding: 0.1em 2em 1.8em 2em
@@ -391,9 +390,6 @@ tablet:
       font-weight: 500;
       line-height: initial;
       cursor: default;
-    }
-    .content .card-content {
-      padding: var(--tablet-popup-content-padding);
     }
     /* * * * * * * * * * * * * * * * * *
     *                                 *

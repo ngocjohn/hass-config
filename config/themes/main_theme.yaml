@@ -111,7 +111,8 @@ Main Theme:
       popup-border-radius: 1em
       popup-padding-x: 0px
       popup-padding-y: 0px
-      popup-min-width: 440px
+      popup-min-width: 20vw
+      popup-max-width: 100vw
       tablet-popup-header-color: rgba(200, 218, 222, 0.05)
       tablet-popup-content-padding: 1.4em 2.2em 1.6em 1.5em
       tablet-popup-button-padding: 0.1em 2em 1.8em 2em
@@ -186,4 +187,7 @@ Main Theme:
     ha-dialog$: |
       div.mdc-dialog__surface {
         background-color: var(--popup-background-color) !important;
+      }
+      .mdc-dialog .mdc-dialog__content {
+        padding: 0 0 !important;
       }

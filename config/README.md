@@ -36,13 +36,13 @@ I frequently refresh my configuration files. My current Home Assistant version i
       </thead>
       <tbody>
           <tr>
-              <td>0 </td>
+              <td>29,823 </td>
               <td>26</td>
               <td>154</td>
               <td>34</td>
               <td>53</td>
               <td>35</td>
-              <td>688</td>
+              <td>746</td>
               <td>188</td>
               <td>36</td>
           </tr>
@@ -111,6 +111,7 @@ I frequently refresh my configuration files. My current Home Assistant version i
   <summary>Lovelace plugins</summary>
 
 ### Lovelace plugins
+- [Analog Clock](https://github.com/tomasrudh/analogclock)
 - [Apexcharts Card](https://github.com/RomRider/apexcharts-card)
 - [Apple Tv Remote Control](https://github.com/madmicio/Apple-Tv-Card)
 - [Atomic Calendar Revive](https://github.com/totaldebug/atomic-calendar-revive)

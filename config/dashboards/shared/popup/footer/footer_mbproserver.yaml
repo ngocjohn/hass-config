@@ -4,8 +4,6 @@ browser_mod:
   data:
     title: MBPro Server
     # timeout: 30000
-    style: >
-      --popup-max-width: 450px;
     card_mod:
       style:
         # .: |
@@ -45,7 +43,7 @@ browser_mod:
       layout_type: custom:grid-layout
       layout:
         margin: 0
-        grid-template-columns: 450px
+        grid-template-columns: 20vw
         grid-template-areas: |
           "hass"
         mediaquery:

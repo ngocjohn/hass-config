@@ -158,3 +158,10 @@ group:
     entities:
       - media_player.living_room_tv
       - media_player.bedroom_tv
+
+notify:
+  - platform: group
+    name: ngoc_devices
+    services:
+      - service: mobile_app_viet_ngoc
+      - service: mobile_app_macbook_air

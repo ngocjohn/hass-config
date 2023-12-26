@@ -27,7 +27,6 @@
           speed: 700
           roundLengths: true
           grabCursor: true
-
           followFinger: true
           pagination:
             type: bullets

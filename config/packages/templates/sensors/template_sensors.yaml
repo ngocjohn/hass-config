@@ -368,5 +368,5 @@ command_line:
   - sensor:
       name: code_line_count
       unique_id: '2760a667-469c-4b41-8c76-722e87b236df'
-      command: find . -name "*.yaml" -not -path "*/custom_components/*" -not -path "*/blueprints/*" | xargs wc -l | grep "total" | grep "[0-9]*" -o
+      command: find . -name "*.yaml" -not -path "*/custom_components/*" -not -path "*/ui/*" -not -path "*/blueprints/*" | xargs wc -l | grep "total" | grep "[0-9]*" -o
       scan_interval: 3600

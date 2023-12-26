@@ -9,9 +9,9 @@ browser_mod:
       type: custom:layout-card
       layout_type: custom:grid-layout
       layout:
-        margin: 1.5%
+        margin: 1.5% 0
         gap: 5%
-        grid-template-columns: 1fr
+        grid-template-columns: 20vw
       cards:
         - type: custom:auto-entities
           filter:

@@ -1,4 +1,4 @@
-#Humidifier switch Template
+# SWITCHED TEMPLATE
 switch:
   - platform: template
     switches:

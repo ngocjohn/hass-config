@@ -1,0 +1,7 @@
+intent_script:
+  EnCustomOutsideHumidity:
+    speech:
+      text: "It is currently {{ states('sensor.weather_humidity') }} percent humidity outside."
+  ViCustomOutsideHumidity:
+    speech:
+      text: "Hiện tại, độ ẩm bên ngoài là {{ states('sensor.weather_humidity') }} phần trăm."

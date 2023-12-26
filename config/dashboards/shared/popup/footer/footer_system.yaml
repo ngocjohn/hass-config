@@ -4,7 +4,7 @@ browser_mod:
   data:
     title: System Information
     style: >
-      --popup-max-width: calc(455px + 455px + 455px);
+      --popup-max-width: calc(100vw);
     card_mod:
       style:
         layout-card$grid-layout$:
@@ -38,7 +38,7 @@ browser_mod:
       layout_type: custom:grid-layout
       layout:
         margin: 0
-        grid-template-columns: 450px  450px  450px
+        grid-template-columns: 20vw 20vw 20vw
         grid-template-areas: |
           "hass docker containers"
         mediaquery:

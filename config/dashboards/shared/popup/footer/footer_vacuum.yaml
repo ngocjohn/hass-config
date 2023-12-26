@@ -4,14 +4,11 @@ browser_mod:
   data:
     title: Roidmi EVE Plus
     style: |
-      --popup-max-width: calc(395px + 505px + 395px);
       --tablet-popup-button-padding: 0.1em 2em 1.8em 2em;
       --swiper-pagination-color: rgb(255, 165, 0);
       --swiper-navigation-size: 2em;
     card_mod:
       style:
-        .: |
-        # card divider border
         layout-card$grid-layout$:
           .: |
             #root > * {
@@ -36,10 +33,10 @@ browser_mod:
       layout_type: custom:grid-layout
       layout:
         margin: 0
-        grid-template-columns: 0 395px 505px 395px 0
+        grid-template-columns: 20vw 20vw 20vw
         grid-template-rows: 1fr
         grid-template-areas: |
-          ". info map sensor ."
+          "info map sensor"
         mediaquery:
           #phone
           '(max-width: 800px)':
