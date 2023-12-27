@@ -82,8 +82,10 @@
     - type: custom:button-card
       name: Home Mode
       entity: sensor.home_mode
+      show_label: false
       template:
         - chips
+
       styles:
         icon:
           - color: >

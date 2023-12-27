@@ -4,6 +4,7 @@ browser_mod:
   data:
     title: Utility Room
     style: !include ../../snippets/style_popup_transparent.yaml
+    card_mod: !include ../../snippets/style_popup_cardmod.yaml
 
     content:
       type: custom:layout-card
@@ -12,6 +13,10 @@ browser_mod:
         margin: 1.5% 0
         gap: 5%
         grid-template-columns: 20vw
+        grid-template-rows: fit-content(100%)
+        mediaquery:
+          '(max-width: 800px)':
+            grid-template-columns: 100%
       cards:
         - type: custom:auto-entities
           filter:

@@ -44,6 +44,10 @@ browser_mod:
       layout:
         margin: 0
         grid-template-columns: 20vw
+        grid-template-rows: fit-content(100%)
+        mediaquery:
+          '(max-width: 800px)':
+            grid-template-columns: 100%
         grid-template-areas: |
           "hass"
         mediaquery:

@@ -26,7 +26,6 @@ frontend:
   javascript_version: latest
   extra_module_url:
     - /local/community/lovelace-card-mod/card-mod.js
-    - https://unpkg.com/moment@2.29.3/min/moment.min.js
   themes: !include_dir_merge_named themes
 
 # HTTP

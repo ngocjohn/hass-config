@@ -775,21 +775,21 @@ added_movies_base:
 added_movies:
   template:
     - added_movies_base
-  double_tap_action:
-    action: fire-dom-event
-    local_conditional_card:
-      action: set
-      ids:
-        - landscape: hide
-        - portrait: hide
-        - ymovie: show
+  double_tap_action: !include ../../shared/popup/popup_kodi.yaml
+  # double_tap_action:
+  #   action: fire-dom-event
+  #   local_conditional_card:
+  #     action: set
+  #     ids:
+  #       - landscape: hide
+  #       - portrait: hide
+  #       - ymovie: show
+
   tap_action:
     action: fire-dom-event
     browser_mod:
       service: browser_mod.popup
       data:
-        style: |
-          --popup-min-width: 1400px;
         card_mod:
           style:
             #popup header
@@ -818,8 +818,11 @@ added_movies:
           layout_type: custom:grid-layout
           layout:
             margin: 0
-            grid-template-columns: 1fr
+            grid-template-columns: 60vw
             grid-template-rows: fit-content(100%)
+            mediaquery:
+              '(max-width: 800px)':
+                grid-template-columns: 100vw
           cards:
             - type: iframe
               aspect_ratio: >

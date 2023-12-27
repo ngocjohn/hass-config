@@ -3,6 +3,7 @@
 #                  CLIMATE                      #
 #                                               #
 #################################################
+
 climate_base:
   show_icon: false
   styles:
@@ -56,11 +57,13 @@ climate_swing_mode:
           ]]]
   template:
     - climate_base
+
 #################################################
 #                                               #
 #            CLIMATE DEVICES                    #
 #                                               #
 #################################################
+
 airpurifier:
   template:
     - base
@@ -656,11 +659,13 @@ homeclimate:
             </svg>
           `;
       ]]]
+
 #################################################
 #                                               #
 #                   FORECAST                    #
 #                                               #
 #################################################
+
 widget_weather:
   template:
     - base
@@ -828,11 +833,13 @@ widget_weather:
         }
       `
     ]]]
+
 #################################################
 #                                               #
 #                   HORIZONTAL                  #
 #                                               #
 #################################################
+
 horizontal_widget_weather:
   template:
     - base

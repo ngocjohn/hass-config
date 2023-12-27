@@ -23,7 +23,9 @@ tablet:
       paper-toast-color: var(--primary-text-color)
       paper-toast-background-color: '#1b1b1bf2'
       dialog-backdrop-filter: blur(12px) brightness(0.3)
-      dialog-box-shadow: 0px 2px 4px 0px rgba(0, 0 ,0 , .2)
+      rgb-accent-color: '101,115,134'
+      dialog-box-shadow: var(--rgb-accent-color)
+      # dialog-box-shadow: 0px 2px 4px 0px rgba(0, 0 ,0 , .2)
       popup-background-color: rgba(34,38,39,0.6)
       popup-border-width: 1px
       popup-border-radius: 1em
@@ -187,6 +189,7 @@ tablet:
   card-mod-view-yaml: |
     .: |
       #view {
+        display: block;
         background-image: linear-gradient(155deg, rgba(60,66,80,1) 0%, rgba(23,26,37,1) 42%, rgba(21,25,35,1) 100%);
         overflow: hidden;
         margin-top: 0px !important;
@@ -390,6 +393,9 @@ tablet:
       font-weight: 500;
       line-height: initial;
       cursor: default;
+    }
+    .content .card-content {
+      padding: var(--tablet-popup-content-padding);
     }
     /* * * * * * * * * * * * * * * * * *
     *                                 *

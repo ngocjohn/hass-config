@@ -1,0 +1,8 @@
+style:
+  layout-card$grid-layout$:
+    .: |
+      @media screen and (min-width: 800px) {
+        #root {
+          padding: 14px !important;
+        }
+      }

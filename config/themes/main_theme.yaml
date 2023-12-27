@@ -45,18 +45,22 @@ Main Theme:
       # input-hover-line-color: 'var(--primary-color)'
       # code-editor-background-color: '#222c40'
       # codemirror-property: 'var(--accent-color)'
+
       # Main Colors
       app-header-background-color: rgba(0, 0, 0, 0.8)
       header-height: 48px
       accent-color: '#4089ed'
       accent-medium-color: 'var(--accent-color)'
+
       # Background
       background-color: '#000000'
       primary-background-color: 'var(--background-color)'
       background-color-2: '#FF9800'
       # secondary-background-color: '#2e4a74'
       # markdown-code-background-color: 'var(--background-color)'
+
       # Card
+      masonry-view-card-margin: 0
       card-background-color: 'var(--ha-card-background)'
       ha-card-background: '#1c1c1c'
       ha-card-box-shadow: 'none'
@@ -105,6 +109,8 @@ Main Theme:
       label-badge-green: 'rgba(0,202,139,1)'
       label-badge-yellow: 'rgba(222,176,107,1)'
       # POPUP MORE INFO
+      rgb-accent-color: '101,115,134'
+      dialog-box-shadow: var(--rgb-accent-color)
       dialog-backdrop-filter: blur(12px) brightness(0.3)
       popup-background-color: rgba(34,38,39,0.6)
       # popup-border-width: 1px
@@ -120,7 +126,7 @@ Main Theme:
       tablet-popup-align-dialog: center
       tablet-popup-margin-top: 0px
       mdc-theme-surface: var(--popup-background-color)
-      dialog-box-shadow: 0px 2px 4px 0px rgba(0, 0 ,0 , .2)
+      # dialog-box-shadow: 0px 2px 4px 0px rgba(0, 0 ,0 , .2)
       state-icon-color: '#9da0a2'
       state-icon-active-color: '#3182b7'
       state-active-color: '#b68349'
@@ -172,6 +178,13 @@ Main Theme:
         --vertical-align-dialog: var(--tablet-popup-align-dialog) !important;
         --dialog-surface-margin-top: var(--tablet-popup-margin-top) !important;
       }
+      @media (max-width: 450px), (max-height: 500px) {
+        ha-dialog {
+          --mdc-dialog-min-width: 100vw !important;
+          --mdc-dialog-min-height: 100vh !important;
+          --popup-border-radius: 0 !important;
+        }
+      }
       ha-dialog > div:focus {
         outline: none;
       }
@@ -180,13 +193,18 @@ Main Theme:
         background-color: var(--tablet-popup-header-color) !important;
         border-bottom: var(--tablet-popup-border-style);
       }
+    $: |
+      .mdc-dialog__surface {
+        box-shadow: 0 0px 16px 4px rgba(var(--dialog-box-shadow), .15), 0 16px 64px 32px rgba(var(--dialog-box-shadow), .5);
+      }
     ha-dialog-header$header: |
       div.header-bar {
         padding: 10px 17px 8px 17px;
       }
     ha-dialog$: |
-      div.mdc-dialog__surface {
+      .mdc-dialog__surface {
         background-color: var(--popup-background-color) !important;
+        box-shadow: 0 0px 16px 4px rgba(var(--dialog-box-shadow), .15), 0 16px 64px 32px rgba(var(--dialog-box-shadow), .5) !important;
       }
       .mdc-dialog .mdc-dialog__content {
         padding: 0 0 !important;

@@ -554,7 +554,7 @@ extra_styles:
             padding: var(--footer-card-padding-v) var(--footer-card-padding-h);
             letter-spacing: 0.06vw;
           }
-          ha-icon {
+          ha-icon, iconify-icon {
             width: var(--footer-card-icon-size);
             vertical-align: 7%;
             padding-right: 0.1vw;
@@ -583,7 +583,7 @@ extra_styles:
               font-size: calc(var(--footer-card-font-size) * var(--footer-portrait));
               padding: calc(var(--footer-card-padding-v) * var(--footer-portrait)) calc(var(--footer-card-padding-h) * var(--footer-portrait));
             }
-            ha-icon {
+            ha-icon, iconify-icon {
               width: calc(var(--footer-card-icon-size) * var(--footer-portrait));
             }
             #card {
@@ -604,7 +604,7 @@ extra_styles:
               padding: calc(var(--footer-card-padding-v) * var(--footer-phone)) calc(var(--footer-card-padding-h) * var(--footer-phone));
               letter-spacing: 0.05vw;
             }
-            ha-icon {
+            ha-icon, iconify-icon {
               width: calc(var(--footer-card-icon-size) * var(--footer-phone));
             }
             #card {

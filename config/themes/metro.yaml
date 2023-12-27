@@ -148,7 +148,7 @@ ________________________________________Common Base (Do Not Use): &common-colors
   mush-chip-font-weight: normal
 
   # Layout
-  masonry-view-card-margin: '2px 1px'
+  masonry-view-card-margin: '0px'
   grid-card-gap: '2px'
   stack-card-margin: '1px'
   horizontal-stack-card-margin: '1px'
@@ -279,7 +279,7 @@ ________________________________________Common Base (Do Not Use): &common-colors
 
   # Home Assistant override
   ha-card-box-shadow: 'none'
-
+  ha-card-border-radius: 0
   # Mushroom
   mush-rgb-pink: var(--rgb-primary-color)
   mush-rgb-state-entity: var(--rgb-pink)
@@ -676,7 +676,7 @@ ________________________________________Common Base 4 (Do Not Use):
       card-background-color: 'rgb(19,19,19)'
       rgb-card-background-color: '19,19,19'
 
-      ha-card-border-radius: 0
+      ha-card-border-radius: 0px
       ha-config-card-border-radius: 0
       ha-dialog-border-radius: 0
       vertical-stack-card-margin: '1px 0px 1px 0px'
@@ -698,7 +698,7 @@ ________________________________________Common Base 4 (Do Not Use):
       card-background-color: 'rgba(247,247,247)'
       rgb-card-background-color: '247,247,247'
 
-      ha-card-border-radius: 0
+      ha-card-border-radius: 0px
       ha-config-card-border-radius: 0
       ha-dialog-border-radius: 0
       vertical-stack-card-margin: '1px 0px 1px 0px'
@@ -1007,7 +1007,7 @@ Metro Slate:
   rgb-primary-color-darker: '57,65,76'
   rgb-primary-color-lighter: '101,115,134'
   hue-primary-color: '214deg'
-
+  ha-card-border-radius: '0px'
   accent-color: '#677385'
   rgb-accent-color: '101,115,134'
 

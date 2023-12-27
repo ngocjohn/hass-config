@@ -9,7 +9,7 @@ Hey there! Welcome to my little corner of the tech world! 👨‍💻
 
 This is where I store all the cool configurations for my Home Assistant system. Well, it's a mix of awesome codes and setups I discovered from the Home Assistant community. Seriously, those folks are wizards! 🧙‍♂️ As a bit of an internet newbie turned tech enthusiast, I stumbled upon the magic of IT, and this repository is my way of sharing the joy and knowledge I've gained along the way. Dive in, explore, and let the tech magic begin! ✨
 
-I frequently refresh my configuration files. My current Home Assistant version is <b>2023.12.3</b>. If you find something you like, don't forget to give my repository a ⭐️!
+I frequently refresh my configuration files. My current Home Assistant version is <b>2023.12.4</b>. If you find something you like, don't forget to give my repository a ⭐️!
 
 <video width="100%" controls loop muted>
   <source src="https://github-production-user-asset-6210df.s3.amazonaws.com/96962827/285987130-48cc5542-0ca7-480b-9c95-77aa9464eb10.mp4" type="video/mp4">
@@ -36,13 +36,13 @@ I frequently refresh my configuration files. My current Home Assistant version i
       </thead>
       <tbody>
           <tr>
-              <td>29,823 </td>
+              <td>29,935 </td>
               <td>26</td>
-              <td>154</td>
+              <td>153</td>
               <td>34</td>
               <td>53</td>
               <td>35</td>
-              <td>746</td>
+              <td>741</td>
               <td>188</td>
               <td>36</td>
           </tr>
@@ -62,6 +62,7 @@ I frequently refresh my configuration files. My current Home Assistant version i
 - ArgonOne Active Linear Cooling
 - Cloudflared
 - eufy-security-ws
+- Fusion
 - Glances
 - Home Assistant Google Drive Backup
 - Mosquitto broker
@@ -157,6 +158,7 @@ I frequently refresh my configuration files. My current Home Assistant version i
 - [Spotify Lovelace Card](https://github.com/custom-cards/spotify-card)
 - [Stack In Card](https://github.com/custom-cards/stack-in-card)
 - [State Switch](https://github.com/thomasloven/lovelace-state-switch)
+- [Sun Card](https://github.com/edwardtfn/home-assistant-sun-card)
 - [Tabbed Card](https://github.com/kinghat/tabbed-card)
 - [Timer Bar Card](https://github.com/rianadon/timer-bar-card)
 - [Tv Remote Card (With Touchpad And Haptic Feedback)](https://github.com/usernein/tv-card)
