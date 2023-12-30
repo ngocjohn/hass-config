@@ -39,23 +39,24 @@
       id: landscape
       card:
         type: custom:floorplan-card
-        style: &style_portrait >
-          ha-card {
-            margin: 1% 13%;
-            background: radial-gradient(circle, rgb(255 255 255 / 14%) 27%, rgba(57,14,14,0) 61%);
-            box-shadow: none;
-          }
-          @media screen and (max-width: 1440px) {
-            ha-card  {
-              margin: 0 13% !important;
+        card_mod:
+          style: &style_portrait >
+            ha-card {
+              margin: 1% 13%;
+              background: radial-gradient(circle, rgb(255 255 255 / 14%) 27%, rgba(57,14,14,0) 61%);
+              box-shadow: none;
             }
-          }
-          @media screen and (max-width: 800px) {
-            ha-card  {
-              margin: 0 !important;
-              padding-top: 3vh;
+            @media screen and (max-width: 1440px) {
+              ha-card  {
+                margin: 0 13% !important;
+              }
             }
-          }
+            @media screen and (max-width: 800px) {
+              ha-card  {
+                margin: 0 !important;
+                padding-top: 3vh;
+              }
+            }
         config:
           image: /local/hafloor/plan_opt.svg
           stylesheet: /local/hafloor/style.css
@@ -71,7 +72,8 @@
       card:
         type: custom:floorplan-card
         # full_height: true
-        style: *style_portrait
+        card_mod:
+          style: *style_portrait
         # config: !include floorplan/floor_plan.yaml
         config:
           image: /local/hafloor/ip_floorplan/iphone_opt.svg

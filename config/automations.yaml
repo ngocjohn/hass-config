@@ -365,7 +365,9 @@
         action: '{{ action_stop }}'
   - alias: Perform the action
     choose:
-    - conditions: '{{ wait.trigger.event.data.action == action_stop }}'
+    - conditions:
+      - condition: template
+        value_template: '{{ wait.trigger.event.data.action == action_stop }}'
       sequence:
       - service: media_player.media_pause
         data: {}
@@ -373,7 +375,7 @@
           entity_id:
           - media_player.office_2
           - media_player.bedroom
-  mode: restart
+  mode: single
 - id: '1693488019712'
   alias: Nuki Vchod Open
   description: ''

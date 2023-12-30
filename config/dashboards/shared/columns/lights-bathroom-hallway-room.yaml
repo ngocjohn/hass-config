@@ -1,0 +1,46 @@
+- view_layout:
+    grid-column: span 2
+  type: 'custom:button-card'
+  template:
+    - light_button_card_group
+  entity: group.light_bathroom
+  name: All Main Lights
+  icon: 'mdi:ceiling-light-multiple'
+  variables:
+    aspect_ratio: 2/1
+
+- type: 'custom:decluttering-card'
+  template: light_card
+  variables:
+    - entity: light.bathroom_main_light
+    - name: Bathroom Main
+
+- type: 'custom:decluttering-card'
+  template: light_card
+  variables:
+    - entity: light.bathroom_mirror_light
+    - name: Bathroom Mirror
+
+- type: 'custom:decluttering-card'
+  template: light_card
+  variables:
+    - entity: light.hallway_group
+    - name: Hallway group
+
+- type: 'custom:decluttering-card'
+  template: light_card
+  variables:
+    - entity: light.aqara_hub
+    - name: Aqara hub
+
+- type: 'custom:decluttering-card'
+  template: light_card
+  variables:
+    - entity: light.hallway_light
+    - name: Hallway light
+
+- type: 'custom:decluttering-card'
+  template: light_card
+  variables:
+    - entity: light.utility_room_light
+    - name: Utility light

@@ -1,0 +1,40 @@
+- view_layout:
+    grid-column: span 2
+  type: 'custom:button-card'
+  template:
+    - light_button_card_group
+  entity: group.light_office
+  name: All Main Lights
+  icon: 'mdi:ceiling-light-multiple'
+  variables:
+    aspect_ratio: 2/1
+
+- type: 'custom:decluttering-card'
+  template: light_card
+  variables:
+    - entity: light.office_main_light
+    - name: Ceiling
+
+- type: 'custom:decluttering-card'
+  template: light_card
+  variables:
+    - entity: light.office_shelf_led
+    - name: Shelf
+
+- type: 'custom:decluttering-card'
+  template: light_card
+  variables:
+    - entity: light.office_led_light_strip
+    - name: Led strip
+
+- type: 'custom:decluttering-card'
+  template: light_card
+  variables:
+    - entity: light.office_lamp_bulb
+    - name: Floor Lamp
+
+- type: 'custom:decluttering-card'
+  template: light_card
+  variables:
+    - entity: light.office_ripple_mood_light
+    - name: Mood light

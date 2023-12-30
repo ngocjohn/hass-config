@@ -22,7 +22,11 @@
           type: custom:button-card
           name: Lights
           entity: group.light_all
-          tap_action: !include ../../shared/popup/all_light_mushroom.yaml
+          # tap_action: !include ../../shared/popup/all_light_mushroom.yaml
+          tap_action: !include ../../shared/popup/ymovies.yaml
+          # tap_action:
+          #   action: navigate
+          #   navigation_path: /lovelace-yaml/lights
           icon: phu:bulb-group-classic-3-alt
           template:
             - chips

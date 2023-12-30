@@ -1,0 +1,12 @@
+slideToClickedSlide: true
+centeredSlides: false
+speed: 420
+slidesPerView: 1
+spaceBetween: 25
+breakpoints:
+  500:
+    slidesPerView: auto
+    spaceBetween: 25
+  320:
+    slidesPerView: 2
+    spaceBetween: 0

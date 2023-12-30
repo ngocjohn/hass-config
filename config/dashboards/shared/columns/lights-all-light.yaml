@@ -1,0 +1,76 @@
+type: 'custom:auto-entities'
+filter:
+  include:
+    - group: light.all_light_group
+      state: 'on'
+      options:
+        type: 'custom:slider-button-card'
+        slider:
+          direction: left-right
+          background: solid
+          use_state_color: true
+          use_percentage_bg_opacity: true
+          show_track: true
+          toggle_on_click: false
+          force_square: true
+        show_name: true
+        show_state: true
+        compact: false
+        icon:
+          show: true
+          use_state_color: true
+          tap_action:
+            action: more-info
+          icon: ''
+        action_button:
+          mode: custom
+          icon: 'mdi:power'
+          show: true
+          show_spinner: false
+          tap_action:
+            action: toggle
+        card_mod:
+          style: |
+            .name {
+              overflow: visible !important;
+              white-space: normal !important;
+              line-height: 1.33 !important;
+              padding: 10px 12px !important;
+              position: absolute;
+              bottom: 0 !important;
+            }
+            .icon {
+              --mdc-icon-size: 20px;
+              bottom: 10px !important;
+              position: absolute !important;
+              right: 8px !important;
+            }
+            .text {
+              bottom: 0 !important;
+              width: 100%;
+              height: 100%;
+              padding: 0 !important;
+              max-width: calc(100% - 24px) !important;
+            }
+            .slider {
+              background: linear-gradient(to right, rgba(var(--rgb-card-background-color),0.8), rgba(var(--rgb-card-background-color),0.8)), linear-gradient(to right, var(--slider-color), var(--slider-color));
+            }
+            .slider-bg {
+              height: 4px !important;
+              top: auto !important;
+              bottom: 0 !important;
+            }
+            .state {
+              font-size: var(--h3-font-size);
+              font-weight: var(--h3-font-weight);
+              line-height: 2 !important;
+              padding: 14px 12px;
+            }
+            .slider-thumb::after {
+              background: var(--slider-thumb-color) !important;
+            }
+
+card:
+  type: 'custom:layout-card'
+  layout_type: 'custom:grid-layout'
+  layout: !include ../../shared/snippets/layout-live-tile.yaml
