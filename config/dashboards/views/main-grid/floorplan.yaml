@@ -40,7 +40,7 @@
       card:
         type: custom:floorplan-card
         card_mod:
-          style: &style_portrait >
+          style: |
             ha-card {
               margin: 1% 13%;
               background: radial-gradient(circle, rgb(255 255 255 / 14%) 27%, rgba(57,14,14,0) 61%);
@@ -72,9 +72,9 @@
       card:
         type: custom:floorplan-card
         # full_height: true
-        card_mod:
-          style: *style_portrait
-        # config: !include floorplan/floor_plan.yaml
+        # card_mod:
+        #   style: *style_portrait
+        # # config: !include floorplan/floor_plan.yaml
         config:
           image: /local/hafloor/ip_floorplan/iphone_opt.svg
           stylesheet: /local/hafloor/style.css

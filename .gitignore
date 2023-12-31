@@ -12,3 +12,5 @@ config/templates
 config/.vscode
 secrets.yaml
 *.sh
+config/www/*
+!config/www/hafloor

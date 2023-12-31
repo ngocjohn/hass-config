@@ -240,13 +240,11 @@ conditional_media:
       - max-width: unset
       - text-shadow: 3px 1px 4px black
       - text-transform: uppercase
-      # - padding-bottom: >
-      #     [[[
-      #       return window.matchMedia('(max-width: 800px)').matches
-      #         ? '4%'
-      #         : '10.5%';
-      #     ]]]
-      # - overflow: visible
+      - padding-bottom: >
+          [[[
+            return variables.is_kodi ? '9%' : '4%';
+          ]]]
+      - overflow: visible
     card:
       - padding: 5.75% 5.75% 0 5.75%
       - border-radius: calc(var(--button-card-border-radius) / 2)
