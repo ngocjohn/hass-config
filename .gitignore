@@ -1,6 +1,7 @@
 .vscode
 config/README.md
 config/addons_config_backup/
+config/node-red-backup/
 config/scripts.yaml
 config/gitpush.sh
 private_repo.sh
