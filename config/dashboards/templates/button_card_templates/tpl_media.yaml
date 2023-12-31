@@ -25,6 +25,13 @@ base_media:
             return true;
         }
       ]]]
+    is_homepod: >
+      [[[
+        let is_homepod = states['media_player.mass_airplay_group'].state === 'playing';
+          if (is_homepod) {
+            return true;
+          }
+      ]]]
   tap_action:
     action: >
       [[[
@@ -242,7 +249,7 @@ conditional_media:
       - text-transform: uppercase
       - padding-bottom: >
           [[[
-            return variables.is_kodi ? '9%' : '4%';
+            return variables.is_kodi || variables.media_on ? '9%' : '4%';
           ]]]
       - overflow: visible
     card:

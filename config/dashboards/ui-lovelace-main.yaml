@@ -14,7 +14,7 @@ swipe_nav:
   wrap: false
   enable_mouse_swipe: true
   animate: swipe
-  prevent_default: true
+  prevent_default: false
 
 button_card_templates: !include_dir_merge_named ./templates/button_card_templates
 decluttering_templates: !include ./templates/decluttering-card.yaml

@@ -49,9 +49,7 @@ browser_mod:
           #phone
           '(max-width: 800px)':
             grid-template-columns: 1fr
-            grid-template-rows: repeat(1, 1fr)
-            grid-template-areas: |
-              "hass"
+            grid-template-rows: auto
       cards:
         #################################################
         #                                               #
@@ -59,8 +57,6 @@ browser_mod:
         #                                               #
         #################################################
         - type: entities
-          view_layout:
-            grid-area: hass
           title: ' '
           show_header_toggle: false
           card_mod:
