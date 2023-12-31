@@ -1,5 +1,12 @@
-# Created by https://www.toptal.com/developers/gitignore/api/homeassistant,visualstudiocode
-# Edit at https://www.toptal.com/developers/gitignore?templates=homeassistant,visualstudiocode
+!.gitignore
+!*.js*
+!*.md
+!*.yaml
+._*
+.cloud
+.DS_Store
+
+secrets.yaml
 
 ### HomeAssistant ###
 # Files with personal details
@@ -16,6 +23,7 @@
 
 icloud/
 custom_sentences/
+
 
 google_calendars.yaml
 harmony_media_room.conf
@@ -59,8 +67,12 @@ home-assistant.log.*
 ozw_log.txt
 
 # Development files
-custom_components
+custom_components/*/*
+!custom_components/*/manifest.json
+
 glances/
+
+
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
@@ -69,28 +81,7 @@ glances/
 !.vscode/extensions.json
 !.vscode/*.code-snippets
 
-# Local History for Visual Studio Code
-.history/
 
-# Built Visual Studio Code Extensions
-*.vsix
-
-### VisualStudioCode Patch ###
-# Ignore all local history of files
-.history
-.ionide
-
-# End of https://www.toptal.com/developers/gitignore/api/homeassistant,visualstudiocode
-
-
-!.gitignore
-!*.js*
-!*.md
-!*.yaml
-._*
-.cloud
-.DS_Store
-!.gitignore
 
 
 
@@ -119,9 +110,8 @@ tmp/
 tts/
 www/*
 !www/hafloor
+!www/dashboard-resources
 zigbee2mqtt/
 known_devices.yaml
-packages/integrations.yaml
-packages/intent_script.yaml
-secrets.yaml
-ui/
+
+custom_components/spook_inverse

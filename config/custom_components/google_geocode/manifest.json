@@ -1,0 +1,10 @@
+{
+  "domain": "google_geocode",
+  "name": "Google Geocode",
+  "documentation": "https://github.com/gregoryduckworth/GoogleGeocode-HASS",
+  "issue_tracker": "https://github.com/gregoryduckworth/GoogleGeocode-HASS/issues",
+  "version": "0.1.9",
+  "dependencies": [],
+  "codeowners": [],
+  "requirements": []
+}
