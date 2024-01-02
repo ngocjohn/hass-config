@@ -4,20 +4,13 @@ browser_mod:
   data:
     title: Weather
     style: >
-      --popup-max-width: calc(450px + 450px + 450px );
+      --popup-max-width: calc(100vw);
     card_mod:
       style:
-        .: |
-        # card divider border
         layout-card$grid-layout$:
           .: |
             #root > * {
               margin: 0px !important;
-            }
-            @media (max-width: 450px), (max-height: 500px) {
-              #root {
-                display: block !important;
-              }
             }
           hui-entities-card:
             $: |
@@ -27,7 +20,7 @@ browser_mod:
                 transition: none;
               }
               /* portrait */
-              @media screen and (max-width: 1440px) {
+              @media screen and (max-width: 1400px) {
                 ha-card {
                   border-right: none;
                   border-bottom: 0.1vw solid rgba(58, 69, 73, 0.2);
@@ -38,13 +31,13 @@ browser_mod:
       layout_type: custom:grid-layout
       layout:
         margin: 0
-        grid-template-columns: 0 450px 450px 450px 0
+        grid-template-columns: 20vw 20vw 20vw
         grid-template-rows: auto
         grid-template-areas: |
-          ". sum radar moon ."
+          "sum radar moon"
         mediaquery:
           #portrait
-          '(max-width: 1450px)':
+          '(max-width: 1440px)':
             grid-template-columns: 1fr
             grid-template-rows: fit-content(100%)
             grid-template-areas: |
@@ -115,26 +108,27 @@ browser_mod:
                 border: none !important;
               }
           entities:
-            - type: custom:horizon-card
-              moon: true
-              refresh_period: 60
-              fields:
-                sunrise: true
-                sunset: true
-                dawn: true
-                noon: true
-                dusk: true
-                azimuth: false
-                elevation: false
-                moonrise: true
-                moonset: true
-                moon_phase: true
-              southern_flip: false
-              moon_phase_rotation: -10
-              language: en
-              time_format: 24
-              latitude: 50.55
-              longitude: 14.25
-              elevation: 300
-              time_zone: Europe/Prague
-              debug_level: 0
+            # - type: custom:horizon-card
+            #   moon: true
+            #   refresh_period: 60
+            #   fields:
+            #     sunrise: true
+            #     sunset: true
+            #     dawn: true
+            #     noon: true
+            #     dusk: true
+            #     azimuth: false
+            #     elevation: false
+            #     moonrise: true
+            #     moonset: true
+            #     moon_phase: true
+            #   southern_flip: false
+            #   moon_phase_rotation: -10
+            #   language: en
+            #   time_format: 24
+            #   latitude: 50.55
+            #   longitude: 14.25
+            #   elevation: 300
+            #   time_zone: Europe/Prague
+            #   debug_level: 0
+            - type: custom:sun-card

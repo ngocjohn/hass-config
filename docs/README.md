@@ -36,14 +36,14 @@ I frequently refresh my configuration files. My current Home Assistant version i
       </thead>
       <tbody>
           <tr>
-              <td>31,785 </td>
+              <td>31,787 </td>
               <td>26</td>
-              <td>154</td>
+              <td>153</td>
               <td>34</td>
               <td>53</td>
               <td>32</td>
-              <td>693</td>
-              <td>188</td>
+              <td>695</td>
+              <td>189</td>
               <td>36</td>
           </tr>
       </tbody>
@@ -128,7 +128,7 @@ I frequently refresh my configuration files. My current Home Assistant version i
 - [Custom Icons](https://github.com/Mariusthvdb/custom-icons)
 - [Decluttering Card](https://github.com/custom-cards/decluttering-card)
 - [Fold Entity Row](https://github.com/thomasloven/lovelace-fold-entity-row)
-- [Ha Floorplan](https://github.com/ExperienceLovelace/ha-floorplan)
+- [Ha Floorplan 🖌🎨   Your Imagination Just Become The New Limit](https://github.com/ExperienceLovelace/ha-floorplan)
 - [Home Assistant Swipe Navigation](https://github.com/zanna-37/hass-swipe-navigation)
 - [Honeycomb Menu](https://github.com/Sian-Lee-SA/honeycomb-menu)
 - [Horizon Card](https://github.com/rejuvenate/lovelace-horizon-card)
