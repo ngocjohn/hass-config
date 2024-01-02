@@ -12,4 +12,4 @@ shell_command:
   refresh_lovelace: !secret refresh_lovelace
   addons_cf_backup: !secret addons_cf_backup
   gitpush: !secret gitpush
-  nodered_copy: cp /addon_configs/a0d7b954_nodered/{flows.json,.flows.json.backup,settings.js} /config/node-red-backup/
+  nodered_copy: 'cp /addon_configs/a0d7b954_nodered/{flows.json,.flows.json.backup,settings.js} /config/node-red-backup/'

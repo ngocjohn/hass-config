@@ -5,7 +5,3 @@ views:
 
 button_card_templates: !include_dir_merge_named ./templates/button_card_templates
 decluttering_templates: !include ./templates/decluttering-card.yaml
-
-swipe_nav:
-  animate: swipe
-  prevent_default: true

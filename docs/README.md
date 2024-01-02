@@ -42,7 +42,7 @@ I frequently refresh my configuration files. My current Home Assistant version i
               <td>34</td>
               <td>53</td>
               <td>32</td>
-              <td>695</td>
+              <td>693</td>
               <td>189</td>
               <td>36</td>
           </tr>

@@ -48,7 +48,7 @@ Main Theme:
 
       # Main Colors
       app-header-background-color: rgba(0, 0, 0, 0.8)
-      header-height: 48px
+      header-height: 56px
       accent-color: '#4089ed'
       accent-medium-color: 'var(--accent-color)'
 
@@ -153,9 +153,6 @@ Main Theme:
         -o-backdrop-filter: blur(50px) !important;;
         -ms-backdrop-filter: blur(50px) !important;;
         background-color: rgba(255,255,255,0.02) !important;
-      }
-      :host([scrolled]) .header {
-        box-shadow: none !important;
       }
       .toolbar {
         background-color: rgba(0,0,0,0) !important;

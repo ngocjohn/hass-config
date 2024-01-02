@@ -284,19 +284,19 @@ live_tile_with_small_picture:
         - background-repeat: no-repeat
         - box-shadow: 0 0 0 2px rgba(var(--rgb-primary-text-color), .1)
 
-# Live Tile (with Last Changed Label)
+# # Live Tile (with Last Changed Label)
 
-live_tile_with_last_changed_label:
-  show_label: true
-  triggers_update: all
-  label: |
-    [[[
-      var diff = (new Date() - new Date(entity.last_changed)) / 1000 / 60
-      if (isNaN(diff)) { return 'Unknown' }
-      if (diff <= 0.05) { return 'Just now' }
-      else if (diff <= 1) { return Math.round(diff * 60) + ' seconds ago' }
-      else { return moment(entity.last_changed).fromNow() }
-    ]]]
+# live_tile_with_last_changed_label:
+#   show_label: true
+#   triggers_update: all
+#   label: |
+#     [[[
+#       var diff = (new Date() - new Date(entity.last_changed)) / 1000 / 60
+#       if (isNaN(diff)) { return 'Unknown' }
+#       if (diff <= 0.05) { return 'Just now' }
+#       else if (diff <= 1) { return Math.round(diff * 60) + ' seconds ago' }
+#       else { return moment(entity.last_changed).fromNow() }
+#     ]]]
 
 # Live Tile (with State Countdown)
 

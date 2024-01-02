@@ -1,5 +1,4 @@
 tablet:
-  #enable mode
   modes:
     dark:
       #edited default dark mode
