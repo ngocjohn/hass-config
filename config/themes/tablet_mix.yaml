@@ -1,12 +1,16 @@
-tablet_orig:
+############################################
+############################################
+############################################
+
+# BASE THEME
+
+________________________________________Common Base (Do Not Use):
   modes:
-    dark:
-      #edited default dark mode
+    dark: &common-colors
       ha-card-box-shadow: none
       ha-card-background: none
-      grid-card-gap: 5%
+
       # grid-card-gap: 0.8vw
-      masonry-view-card-margin: 0px
       vertical-stack-card-margin: 0
       state-icon-color: '#9da0a2'
       state-icon-active-color: '#3182b7'
@@ -116,9 +120,7 @@ tablet_orig:
       mdc-typography-body1-font-family: var(--primary-font-family)
       mdc-typography-font-family: var(--primary-font-family)
       #custom variables
-      # ha-card-background-color: none
-      ha-card-header-background-color: rgba(48,52,52,0.8)
-      app-header-background-color: rgba(0, 0, 0, 0)
+
       # custom-layout-card-padding: 2.2w #3.3vw or #3vw...#1.9...sidebar OK
       custom-layout-card-padding: 3vw
       state-light-color: '#9da0a2'
@@ -179,13 +181,14 @@ tablet_orig:
       swiper-pagination-bullet-opacity: 1
       swiper-pagination-bullet-horizontal-gap: 4px
       swiper-pagination-bullet-vertical-gap: 6px
-  ####################################################
-  #                                                  #
-  #                     CARD-MOD                     #
-  #                                                  #
-  ####################################################
-  card-mod-theme: tablet_orig
-  card-mod-view-yaml: |
+
+############################################
+############################################
+############################################
+
+________________________________________Common Base 3 (Do Not Use): &common-card-mods # Card Mod
+
+  card-mod-view-yaml: &card-mod-view-yaml |
     .: |
       #view {
         display: block;
@@ -194,7 +197,7 @@ tablet_orig:
         margin-top: 0px !important;
       }
       hui-view {
-        background: none !important;
+        background: var(--primary-background-color) !important;
       }
       /* phone */
       @media screen and (max-width: 800px) {
@@ -202,12 +205,6 @@ tablet_orig:
           background-image: linear-gradient(0deg, rgb(20 25 37) 0%, rgba(21,25,35,1) 72%, rgba(23,26,37,1) , rgb(0 0 0) 100%);
           overflow: visible !important;
           margin-top: 0px !important;
-        }
-      }
-      /* phone wide */
-      @media screen and (max-height: 375px) {
-        #view {
-          background-image: linear-gradient(155deg, rgba(60,66,80,1) 0%, rgba(23,26,37,1) 42%, rgba(21,25,35,1) 100%);
         }
       }
     #################################################
@@ -380,13 +377,8 @@ tablet_orig:
           padding: 10px 0 20px;
           background-image: linear-gradient(0deg, #000000, transparent);
         }
-    #################################################
-    #                                               #
-    #                    CARD-MOD                   #
-    #                                               #
-    #################################################
 
-  card-mod-card: |
+  card-mod-card: &card-mod-card |
     .header .card-header {
       letter-spacing: 0.005em;
       font-size: 1.6em;
@@ -426,3 +418,29 @@ tablet_orig:
       border-radius: 0.3em;
       overflow: hidden;
     }
+
+tablet:
+  card-mod-theme: 'tablet'
+  <<: *common-card-mods
+
+  masonry-view-card-margin: 0px
+  primary-background-color: none
+  app-header-background-color: '#00000'
+  modes:
+    dark:
+      <<: *common-colors
+      rgb-header-background: '255,255,255'
+kodi:
+  card-mod-theme: 'kodi'
+  <<: *common-card-mods
+
+  primary-background-color: 'rgb(0,0,0)'
+  title-font-size: 3.5rem
+  title-font-weight: 600
+  title-line-height: normal
+  app-header-background-color: '#00000'
+
+  modes:
+    dark:
+      <<: *common-colors
+      rgb-header-background: '0,0,1'

@@ -1,7 +1,9 @@
-type: custom:grid-layout
 icon: mdi:home-circle
-theme: tablet
 path: summary
+subview: false
+
+theme: tablet
+type: custom:grid-layout
 layout:
   default:
   margin: 0

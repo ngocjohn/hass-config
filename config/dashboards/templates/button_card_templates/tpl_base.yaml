@@ -413,7 +413,7 @@ extra_styles:
               background-color: rgba(0,0,0,0.9);
             }
         `:''}
-        ${(this._config.template.includes('conditional_media') || this._config.template.includes('conditional_media_shows') || this._config.template.includes('conditional_added_media')|| this._config.template.includes('movies_base') || this._config.template.includes('added_movies')) ? `
+        ${(this._config.template.includes('conditional_media') || this._config.template.includes('conditional_media_shows') || this._config.template.includes('conditional_added_media')|| this._config.template.includes('kodi_lib_base') || this._config.template.includes('added_movies')) ? `
          /* * * * * * * * * * * * * * * * * *
           *                                 *
           *              MEDIA              *
@@ -509,14 +509,14 @@ extra_styles:
             justify-content: space-between;
           }
         `:''}
-        ${(this._config.template.includes('movies_base')) ? `
+        ${(this._config.template.includes('kodi_lib_base')) ? `
           #card {
             display: flex;
             flex-wrap: wrap;
             align-content: flex-start;
             width: 150px;
             min-width: 150px;
-            overflow: visible;
+            overflow: hidden;
             border-radius: 8px !important;
           }
           #image {
@@ -524,9 +524,6 @@ extra_styles:
             width: 100%;
             min-height: calc(150px * 1.5);
             height: calc(150px * 1.5);
-            background: #dbdbdb;
-            overflow: visible;
-            box-shadow: 0 2px 8px rgba(0,0,0,.1);
           }
           #image img {
             display: inline-block;

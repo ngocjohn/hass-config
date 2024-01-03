@@ -718,3 +718,31 @@
   - event: archive_alerts
     event_data: {}
   mode: single
+- id: '1704240576441'
+  alias: 'HA Backup '
+  description: Backup automation at 5:30AM
+  trigger:
+  - platform: time
+    at: 05:30:00
+  condition: []
+  action:
+  - if:
+    - condition: time
+      weekday:
+      - mon
+      - wed
+      - fri
+      - sun
+    then:
+    - service: hassio.backup_full
+      data:
+        compressed: true
+        homeassistant_exclude_database: true
+        location: mbprobackup
+    else:
+    - service: hassio.backup_full
+      data:
+        compressed: true
+        homeassistant_exclude_database: false
+        location: mbprobackup
+  mode: single

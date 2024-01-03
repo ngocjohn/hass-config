@@ -47,7 +47,7 @@ Main Theme:
       # codemirror-property: 'var(--accent-color)'
 
       # Main Colors
-      app-header-background-color: rgba(0, 0, 0, 0.8)
+
       header-height: 56px
       accent-color: '#4089ed'
       accent-medium-color: 'var(--accent-color)'
@@ -56,6 +56,7 @@ Main Theme:
       background-color: '#000000'
       primary-background-color: 'var(--background-color)'
       background-color-2: '#FF9800'
+      rgb-header-background: '255, 255, 255'
       # secondary-background-color: '#2e4a74'
       # markdown-code-background-color: 'var(--background-color)'
 
@@ -147,12 +148,12 @@ Main Theme:
     .: |
       /* ___________ Bottom tabbar ___________  */
       .header {
-        backdrop-filter: blur(50px) !important;;
-        -webkit-backdrop-filter: blur(50px) !important;;
-        -moz-backdrop-filter: blur(50px) !important;;
-        -o-backdrop-filter: blur(50px) !important;;
-        -ms-backdrop-filter: blur(50px) !important;;
-        background-color: rgba(255,255,255,0.02) !important;
+        backdrop-filter: blur(50px) !important;
+        -webkit-backdrop-filter: blur(50px) !important;
+        -moz-backdrop-filter: blur(50px) !important;
+        -o-backdrop-filter: blur(50px) !important;
+        -ms-backdrop-filter: blur(50px) !important;
+        background-color: var(--app-header-background-color) !important;
       }
       .toolbar {
         background-color: rgba(0,0,0,0) !important;
