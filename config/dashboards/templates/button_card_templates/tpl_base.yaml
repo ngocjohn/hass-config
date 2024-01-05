@@ -164,7 +164,7 @@ tilt:
             parallax: '25px'
         };
 
-          const templatesToCheck = ['conditional_media', 'conditional_media_shows', 'tpl_spotify', 'minicontrol', 'added_movies'];
+          let templatesToCheck = ['conditional_media', 'conditional_media_shows', 'tpl_spotify', 'minicontrol', 'added_movies'];
 
         if (templatesToCheck.some(template => this._config.template.includes(template))) {
             options.scale = options.scale % parseInt(options.scale) / 3 + parseInt(options.scale);
@@ -497,12 +497,12 @@ extra_styles:
             content: url("/local/svg/media/ddp.svg");
           }
         `:''}
-        ${(this._config.template.includes('added_movies_base')) ? `
+        ${(this._config.template.includes('added_movies')) ? `
           #container {
             padding: 0px 5%;
           }
           #poster {
-            border-radius: 12px !important;
+            border-radius: 8px !important;
           }
           #label {
             display: inline-flex;

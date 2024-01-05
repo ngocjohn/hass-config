@@ -4,41 +4,41 @@
 #                                               #
 #################################################
 - type: grid
-	title: Movies
-	view_layout:
-		grid-area: movies
-		show:
-			mediaquery: '(min-width: 1441px)'
-	columns: 1
-	cards:
-		- type: custom:auto-entities
-			filter:
-				include:
-					- entity_id: 'sensor.kodi_added_movie_*'
-						options:
-							type: custom:button-card
-							template:
-								- added_movies
-			card:
-				type: custom:swipe-card
-				parameters:
-					watchSlidesProgress: true
-					slidesPerView: 1
-					speed: 700
-					roundLengths: true
-					grabCursor: true
-					followFinger: true
-					pagination:
-						type: bullets
-						clickable: true
-						dynamicBullets: true
-						dynamicMainBullets: 1
-					effect: cube
-					cubeEffect:
-						shadow: true
-					autoplay:
-						delay: 10000
-						disableOnInteraction: false
-						reverseDirection: false
-						pauseOnMouseEnter: true
-			card_param: cards
+  title: Movies
+  view_layout:
+    grid-area: movies
+    show:
+      mediaquery: '(min-width: 1441px)'
+  columns: 1
+  cards:
+    - type: custom:auto-entities
+      filter:
+        include:
+          - entity_id: 'sensor.kodi_added_movie_*'
+            options:
+              type: custom:button-card
+              template:
+                - added_movies
+      card:
+        type: custom:swipe-card
+        parameters:
+          watchSlidesProgress: true
+          slidesPerView: 1
+          speed: 700
+          roundLengths: true
+          grabCursor: true
+          followFinger: true
+          pagination:
+            type: bullets
+            clickable: true
+            dynamicBullets: true
+            dynamicMainBullets: 1
+          effect: cube
+          cubeEffect:
+            shadow: true
+          autoplay:
+            delay: 10000
+            disableOnInteraction: false
+            reverseDirection: false
+            pauseOnMouseEnter: true
+      card_param: cards

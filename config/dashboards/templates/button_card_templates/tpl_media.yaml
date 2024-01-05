@@ -547,64 +547,14 @@ kodi_lib_base:
   #     ]]]
 
   #ADDED MOVIES
-added_movies_base:
+added_movies:
   template:
     - base
   aspect_ratio: 1/1
   show_state: true
   show_label: true
   show_name: false
-  tap_action: block
-  styles:
-    grid:
-      - grid-template-areas: |
-          "poster poster"
-          "n n"
-          "s s"
-          "l l"
-      - grid-template-columns: 1fr 1fr
-      - grid-template-rows: auto min-content min-content min-content
-      - gap: 0
-      - align-items: flex-start
-      - -webkit-backdrop-filter: var(--blur-intensity)
-      - backdrop-filter: var(--blur-intensity)
-    label:
-      - padding-bottom: 2%
-    state:
-      - color: 'rgba(255, 255, 255, 0.8)'
-      - line-height: normal
-      - text-shadow: black 3px 2px 4px
-      - width: 100%
-
-    card:
-      - padding: 0%
-      - border-radius: calc(var(--button-card-border-radius) / 2)
-      - background-color: '#00000'
-      - overflow: hidden
-      - background: >
-          [[[
-              if (entity && entity.attributes)
-                return  `center center/cover no-repeat`
-                return `center center/contain no-repeat`;
-          ]]]
-      - background-image: >
-          [[[
-            if (entity && entity.attributes)
-              return `linear-gradient(to top, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 0) 100%), url("${entity.attributes.fanart_url}")`
-          ]]]
-added_movies:
-  template:
-    - added_movies_base
   double_tap_action: !include ../../shared/popup/popup_kodi.yaml
-  # double_tap_action:
-  #   action: fire-dom-event
-  #   local_conditional_card:
-  #     action: set
-  #     ids:
-  #       - landscape: hide
-  #       - portrait: hide
-  #       - ymovie: show
-
   tap_action:
     action: fire-dom-event
     browser_mod:
@@ -807,7 +757,43 @@ added_movies:
         }
       ]]]
     poster: ''
+    blur_overlay: ''
   styles:
+    grid:
+      - grid-template-areas: |
+          "poster poster"
+          "s s"
+          "l l"
+      - grid-template-columns: 1fr 1fr
+      - grid-template-rows: auto min-content min-content
+      - gap: 0
+      - align-items: flex-start
+      - -webkit-backdrop-filter: var(--blur-intensity)
+      - backdrop-filter: var(--blur-intensity)
+    label:
+      - padding-bottom: 4%
+      - z-index: 4
+    state:
+      - color: 'rgba(255, 255, 255, 0.8)'
+      - line-height: normal
+      - text-shadow: black 3px 2px 4px
+      - width: 100%
+      - z-index: 4
+    card:
+      - padding: 0%
+      - border-radius: calc(var(--button-card-border-radius) / 2)
+      - background-color: '#00000'
+      - overflow: hidden
+      - background: >
+          [[[
+              if (entity && entity.attributes)
+                return  `center center/cover no-repeat`;
+          ]]]
+      - background-image: >
+          [[[
+            if (entity && entity.attributes)
+              return `linear-gradient(to top, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 0) 100%), url("${entity.attributes.fanart_url}")`
+          ]]]
     custom_fields:
       rating:
         - display: block
@@ -832,6 +818,20 @@ added_movies:
                     return `linear-gradient(to top, rgba(0, 0, 0, 1) 5%, rgba(0, 0, 0, 0) 45%), url("${entity.attributes.entity_picture}")`
                   return `url("/local/img/movie_time.png")`;
             ]]]
+        - z-index: 1
+      blur_overlay:
+        - display: block
+        - position: absolute
+        - filter: blur(2vw) brightness(0.7)
+        - width: 103.1%
+        - height: 103.1%
+        - clip-path: >
+            inset(74.5% 1.45% 1.45% 1.45% round 0 0 calc(var(--button-card-border-radius) / 2) calc(var(--button-card-border-radius) / 2))
+        - background: 'rgba(62, 62, 62, 0.5)'
+        - left: -1.5%
+        - bottom: -1.6%
+        - z-index: 2
+
   #################################################
   #                                               #
   #               PROGRESS BAR                    #
