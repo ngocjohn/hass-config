@@ -506,37 +506,45 @@ conditional_media_shows:
 kodi_lib_base:
   template:
     - base
-  aspect_ratio: 1/2
-  show_name: false
+  aspect_ratio: 2/3
+  show_name: true
   show_state: true
   show_entity_picture: false
   show_icon: false
-  show_label: true
+  show_label: tru
   variables:
     tilt_enable: >
       [[[ return false;]]]
   styles:
     grid:
       - grid-template-areas: |
-          "image"
-          "l"
+          "n"
           "s"
+          "l"
       - grid-template-columns: 1fr
-      - grid-template-rows: min-content min-content min-content
+      - grid-template-rows: auto auto auto
+      - gap: 0
     card:
       - padding: 0
-    state:
-      - justify-self: start
-  custom_fields:
-    image: >
-      [[[
-        if (entity)
-          return  `
-          <div class="image">
-            <img class="poster" src="${entity.attributes.poster_url}">
-          </div>
-          `;
-      ]]]
+      - background: 'center center/contain'
+      - background-image: >
+          [[[
+            if (entity)
+              return  `
+                  url(${entity.attributes.poster_url})
+              `;
+          ]]]
+
+  # custom_fields:
+  #   image: >
+  #     [[[
+  #       if (entity)
+  #         return  `
+  #         <div class="image">
+  #           <img class="poster" src="${entity.attributes.poster_url}">
+  #         </div>
+  #         `;
+  #     ]]]
 
   #ADDED MOVIES
 added_movies_base:

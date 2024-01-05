@@ -53,6 +53,7 @@ room_group:
 rooms_base:
   template:
     - base
+    - loader
   variables:
     light_entity: ''
     active: ''
@@ -688,7 +689,6 @@ light_slider:
                 ? '#000000'
                 : '#A4A9B6';
           ]]]
-
 tpl_popup_base:
   template:
     - base
@@ -706,7 +706,6 @@ tpl_popup_base:
     custom_fields:
       icon:
         - width: 85%
-
 tpl_popup_device:
   template:
     - tpl_popup_base

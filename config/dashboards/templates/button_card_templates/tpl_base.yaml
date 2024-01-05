@@ -162,14 +162,18 @@ tilt:
             perspective: 800,
             speed: 800,
             parallax: '25px'
-        }
-        if (this._config.template.includes('conditional_media') || this._config.template.includes('conditional_media_shows')|| this._config.template.includes('conditional_media_movies') || this._config.template.includes('conditional_added_media') || this._config.template.includes('spotify') || this._config.template.includes('minicontrol') || this._config.template.includes('added_movies')) {
+        };
+
+          const templatesToCheck = ['conditional_media', 'conditional_media_shows', 'tpl_spotify', 'minicontrol', 'added_movies'];
+
+        if (templatesToCheck.some(template => this._config.template.includes(template))) {
             options.scale = options.scale % parseInt(options.scale) / 3 + parseInt(options.scale);
             options.perspective = options.perspective * 3;
-            return options;
         }
+
         return options;
       ]]]
+
   custom_fields:
     tilt: >
       [[[
@@ -513,17 +517,12 @@ extra_styles:
           #card {
             display: flex;
             flex-wrap: wrap;
-            align-content: flex-start;
-            width: 150px;
-            min-width: 150px;
             overflow: hidden;
             border-radius: 8px !important;
           }
           #image {
             display: block;
             width: 100%;
-            min-height: calc(150px * 1.5);
-            height: calc(150px * 1.5);
           }
           #image img {
             display: inline-block;

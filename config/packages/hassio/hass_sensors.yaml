@@ -98,16 +98,6 @@ command_line:
         - repositories
       scan_interval: 86400
 sensor:
-  - platform: systemmonitor
-    resources:
-      - type: disk_use_percent
-        arg: /
-      - type: memory_use_percent
-      - type: memory_use
-      - type: processor_temperature
-      - type: processor_use
-      - type: last_boot
-      - type: memory_free
   - platform: time_date
     display_options:
       - 'time'

@@ -22,7 +22,8 @@ cards:
           grid-column: 1/-1
         cards:
           - type: markdown
-            style: !include ../shared/snippets/style-markdown-page-title.yaml
+            card_mod:
+              style: !include ../shared/snippets/style-markdown-page-title.yaml
             content: >
               # Kodi library
 
@@ -62,11 +63,6 @@ cards:
         layout_type: 'custom:grid-layout'
         layout:
           margin: -1
-        card_mod:
-          style: |
-            #root {
-              align-content: flex-end !important;
-            }
         cards:
           - type: 'custom:button-card'
             template: header_card
@@ -112,10 +108,7 @@ cards:
                 entity: sensor.kodi_added_movie_0
                 template:
                   - kodi_lib_base
-              - type: custom:button-card
-                entity: sensor.kodi_added_movie_0
-                template:
-                  - kodi_lib_base
+
       # [Column] Living Room
 
       - type: 'custom:layout-card'

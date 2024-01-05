@@ -6,11 +6,7 @@
 
 ________________________________________Common Base (Do Not Use):
   modes:
-    dark: &common-colors
-      ha-card-box-shadow: none
-      ha-card-background: none
-
-      # grid-card-gap: 0.8vw
+    dark: &common-colors # grid-card-gap: 0.8vw
       vertical-stack-card-margin: 0
       state-icon-color: '#9da0a2'
       state-icon-active-color: '#3182b7'
@@ -25,6 +21,7 @@ ________________________________________Common Base (Do Not Use):
       paper-slider-container-color: '#202020'
       paper-toast-color: var(--primary-text-color)
       paper-toast-background-color: '#1b1b1bf2'
+
       dialog-backdrop-filter: blur(12px) brightness(0.3)
       rgb-accent-color: '101,115,134'
       dialog-box-shadow: var(--rgb-accent-color)
@@ -40,73 +37,7 @@ ________________________________________Common Base (Do Not Use):
       tablet-popup-border-style: 1.5px solid rgba(0,0,0,0.2)
       tablet-popup-align-dialog: center
       tablet-popup-margin-top: 0px
-      #Mushroom color
-      mush-rgb-red: 244, 67, 54
-      mush-rgb-pink: 233, 30, 99
-      mush-rgb-purple: 156, 39, 176
-      mush-rgb-deep-purple: 103, 58, 183
-      mush-rgb-indigo: 63, 81, 181
-      mush-rgb-blue: 33, 150, 243
-      mush-rgb-light-blue: 3, 169, 244
-      mush-rgb-teal: 0, 150, 136
-      mush-rgb-cyan: 0, 188, 212
-      mush-rgb-green: 76, 175, 80
-      mush-rgb-light-green: 139, 195, 74
-      mush-rgb-lime: 205, 220, 57
-      mush-rgb-yellow: 255, 235, 59
-      mush-rgb-amber: 255, 193, 7
-      mush-rgb-orange: 255, 152, 0
-      mush-rgb-deep-orange: 255, 87, 34
-      mush-rgb-brown: 121, 85, 72
-      mush-rgb-grey: 158, 158, 158
-      mush-rgb-blue-grey: 96, 125, 139
-      mush-rgb-black: 0, 0, 0
-      mush-rgb-white: 255, 255, 255
-      #temporarily revert 2022.12 icon colors
-      rgb-state-default-color: 49, 130, 183
-      rgb-state-alarm-armed-color: var(--rgb-state-default-color)
-      rgb-state-alarm-arming-color: var(--rgb-state-default-color)
-      rgb-state-alarm-pending-color: var(--rgb-state-default-color)
-      rgb-state-alarm-triggered-color: var(--rgb-state-default-color)
-      rgb-state-alert-color: var(--rgb-state-default-color)
-      rgb-state-automation-color: var(--rgb-state-default-color)
-      rgb-state-binary-sensor-alerting-color: var(--rgb-state-default-color)
-      rgb-state-binary-sensor-color: var(--rgb-state-default-color)
-      rgb-state-calendar-color: var(--rgb-state-default-color)
-      rgb-state-camera-color: var(--rgb-state-default-color)
-      rgb-state-climate-auto-color: var(--rgb-state-default-color)
-      rgb-state-climate-cool-color: var(--rgb-state-default-color)
-      rgb-state-climate-dry-color: var(--rgb-state-default-color)
-      rgb-state-climate-fan-only-color: var(--rgb-state-default-color)
-      rgb-state-climate-heat-color: var(--rgb-state-default-color)
-      rgb-state-climate-heat-cool-color: var(--rgb-state-default-color)
-      rgb-state-climate-idle-color: var(--rgb-state-default-color)
-      rgb-state-cover-color: var(--rgb-state-default-color)
-      rgb-state-fan-color: var(--rgb-state-default-color)
-      rgb-state-group-color: var(--rgb-state-default-color)
-      rgb-state-humidifier-color: var(--rgb-state-default-color)
-      rgb-state-input-boolean-color: var(--rgb-state-default-color)
-      rgb-state-light-color: var(--rgb-state-default-color)
-      rgb-state-lock-jammed-color: var(--rgb-state-default-color)
-      rgb-state-lock-locked-color: var(--rgb-state-default-color)
-      rgb-state-lock-pending-color: var(--rgb-state-default-color)
-      rgb-state-media-player-color: var(--rgb-state-default-color)
-      rgb-state-person-home-color: var(--rgb-state-default-color)
-      rgb-state-person-zone-color: var(--rgb-state-default-color)
-      rgb-state-remote-color: var(--rgb-state-default-color)
-      rgb-state-script-color: var(--rgb-state-default-color)
-      rgb-state-sensor-battery-high-color: var(--rgb-state-default-color)
-      rgb-state-sensor-battery-low-color: var(--rgb-state-default-color)
-      rgb-state-sensor-battery-medium-color: var(--rgb-state-default-color)
-      rgb-state-sensor-battery-unknown-color: var(--rgb-state-default-color)
-      rgb-state-siren-color: var(--rgb-state-default-color)
-      rgb-state-sun-day-color: var(--rgb-state-default-color)
-      rgb-state-sun-night-color: var(--rgb-state-default-color)
-      rgb-state-switch-color: var(--rgb-state-default-color)
-      rgb-state-timer-color: var(--rgb-state-default-color)
-      rgb-state-update-color: var(--rgb-state-default-color)
-      rgb-state-update-installing-color: var(--rgb-state-default-color)
-      rgb-state-vacuum-color: var(--rgb-state-default-color)
+
       #font
       primary-font-family: Poppins, Raleway, SF Pro Text, SF Pro Display, SF Mono, sans-serif, system-ui
       paper-font-common-base_-_font-family: var(--primary-font-family)
@@ -187,24 +118,19 @@ ________________________________________Common Base (Do Not Use):
 ############################################
 
 ________________________________________Common Base 3 (Do Not Use): &common-card-mods # Card Mod
-
   card-mod-view-yaml: &card-mod-view-yaml |
     .: |
-      #view {
-        display: block;
-        background-image: linear-gradient(155deg, rgba(60,66,80,1) 0%, rgba(23,26,37,1) 42%, rgba(21,25,35,1) 100%);
-        overflow: hidden;
-        margin-top: 0px !important;
-      }
       hui-view {
         background: var(--primary-background-color) !important;
+      }
+      #view {
+        background-image: linear-gradient(180deg, rgb(0 0 0) 0%, rgba(23,26,37,1) 42%, rgba(21,25,35,1) 100%);
+        overflow: hidden;
       }
       /* phone */
       @media screen and (max-width: 800px) {
         #view {
           background-image: linear-gradient(0deg, rgb(20 25 37) 0%, rgba(21,25,35,1) 72%, rgba(23,26,37,1) , rgb(0 0 0) 100%);
-          overflow: visible !important;
-          margin-top: 0px !important;
         }
       }
     #################################################
@@ -258,9 +184,6 @@ ________________________________________Common Base 3 (Do Not Use): &common-card
     #################################################
         $swipe-card$:
           .: |
-            div {
-              height: 100%;
-            }
             .swiper-pagination {
               top: 95%;
             }
@@ -287,9 +210,6 @@ ________________________________________Common Base 3 (Do Not Use): &common-card
               }
           hui-horizontal-stack-card$hui-grid-card$swipe-card$:
             .: |
-              div {
-                height: 100%;
-              }
               .swiper-container {
                 margin: -1.5vw !important;
                 padding: 1.5vw !important;
@@ -307,7 +227,6 @@ ________________________________________Common Base 3 (Do Not Use): &common-card
                   width: 0.5em !important;
                   height: 0.5em !important;
                 }
-
               }
     #################################################
     #                                               #
@@ -419,28 +338,30 @@ ________________________________________Common Base 3 (Do Not Use): &common-card
       overflow: hidden;
     }
 
+kodi:
+  card-mod-theme: 'kodi'
+  <<: *common-card-mods
+
+  ha-card-background: rgb(19,19,19)
+  primary-background-color: 'rgb(0,0,0)'
+  title-font-size: 3.5rem
+  title-font-weight: 600
+  title-line-height: normal
+
+  modes:
+    dark:
+      <<: *common-colors
+
 tablet:
   card-mod-theme: 'tablet'
   <<: *common-card-mods
 
   masonry-view-card-margin: 0px
+  ha-card-box-shadow: none
+  ha-card-background: none
   primary-background-color: none
-  app-header-background-color: '#00000'
+
   modes:
     dark:
       <<: *common-colors
       rgb-header-background: '255,255,255'
-kodi:
-  card-mod-theme: 'kodi'
-  <<: *common-card-mods
-
-  primary-background-color: 'rgb(0,0,0)'
-  title-font-size: 3.5rem
-  title-font-weight: 600
-  title-line-height: normal
-  app-header-background-color: '#00000'
-
-  modes:
-    dark:
-      <<: *common-colors
-      rgb-header-background: '0,0,1'
