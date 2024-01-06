@@ -49,7 +49,6 @@ Main Theme:
 
   # Main Colors
 
-  header-height: 56px
   accent-color: '#4089ed'
   accent-medium-color: 'var(--accent-color)'
 
@@ -73,7 +72,6 @@ Main Theme:
   ha-card-border-width: 0px
   ha-card-border-color: 'none !important'
   border-color: 'none'
-  grid-card-gap: '14px'
   border-style: 'none !important'
   # # Icons
   # paper-item-icon-color: 'var(--text-color)'
@@ -151,45 +149,6 @@ Main Theme:
 
   card-mod-theme: Main Theme
 
-  card-mod-root-yaml: |
-    .: |
-      /* ___________ Bottom tabbar ___________  */
-      .header {
-        backdrop-filter: blur(50px) !important;
-        -webkit-backdrop-filter: blur(50px) !important;
-        -moz-backdrop-filter: blur(50px) !important;
-        -o-backdrop-filter: blur(50px) !important;
-        -ms-backdrop-filter: blur(50px) !important;
-        background-color: rgba(var(--rgb-primary-background-color),.33) !important;
-      }
-      .toolbar {
-        background-color: hsla(0, 0.00%, 0.00%, 0.00) !important;
-        padding: 0px 12px !important;
-      }
-
-  # card-mod-root-yaml: &card-mod-root |
-  #   .: |
-  #     @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
-  #       app-header, app-toolbar {
-  #         background-color: "rgba(var(--rgb-primary-background-color),.33)"
-  #         backdrop-filter: blur(50px);
-  #         -webkit-backdrop-filter: blur(50px);
-  #       }
-  #     }
-  #     app-toolbar [main-title] {
-  #       font-size: var(--h5-font-size);
-  #       line-height: 1.1;
-  #       font-weight: var(--h5-font-weight);
-  #       text-transform: uppercase;
-  #       margin-left: 8px !important;
-  #     }
-  #   app-header$: |
-  #     :host::before {
-  #       box-shadow: inset 0px 4px 6px -4px rgb(0 0 0 / 10%) !important;
-  #     }
-  #   ha-app-layout$app-header$app-toolbar$ha-tabs$: |
-  #     .iron-selected paper-tab {
-  #     }
   card-mod-more-info-yaml: |
     .: |
       :host {

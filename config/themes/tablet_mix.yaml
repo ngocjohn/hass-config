@@ -338,8 +338,8 @@ ________________________________________Common Base 3 (Do Not Use): &common-card
       overflow: hidden;
     }
 
-kodi:
-  card-mod-theme: 'kodi'
+library:
+  card-mod-theme: 'library'
   <<: *common-card-mods
 
   ha-card-background: rgb(19,19,19)
@@ -356,7 +356,7 @@ tablet:
   card-mod-theme: 'tablet'
   <<: *common-card-mods
 
-  masonry-view-card-margin: 0px
+  masonry-view-card-margin: 0
   ha-card-box-shadow: none
   ha-card-background: none
   primary-background-color: none

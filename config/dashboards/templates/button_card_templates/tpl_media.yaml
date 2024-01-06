@@ -243,8 +243,7 @@ conditional_media:
           ]]]
     state:
       - line-height: 120%
-      - padding-bottom: 1.5%
-      - max-width: unset
+      - max-width: 100%
       - text-shadow: 3px 1px 4px black
       - text-transform: uppercase
       - padding-bottom: >
@@ -2209,63 +2208,62 @@ tpl_minicontrol:
   custom_fields:
     minicontrol:
       card:
-        type: picture-elements
-        image: /local/img/svg/overlay.svg
+        # type: picture-elements
+        # image: /local/img/svg/overlay.svg
+        # card_mod:
+        #   style: |
+        #     ha-card {
+        #       --ha-card-background: none !important;
+        #     }
+        # elements:
+        type: custom:mini-media-player
+        entity: >
+          [[[ return variables.entity_id; ]]]
+        hide:
+          icon: true
+          name: true
+          runtime: true
+          source: true
+          power: true
+          state_label: true
+          volume: false
+          info: true
+          progress: true
+          controls: false
+        volume_stateless: true
         card_mod:
-          style: |
-            ha-card {
-              --ha-card-background: none !important;
-            }
-        elements:
-          - type: custom:mini-media-player
-            entity: >
-              [[[ return variables.entity_id; ]]]
-            hide:
-              icon: true
-              name: true
-              runtime: true
-              source: true
-              power: true
-              state_label: true
-              volume: false
-              info: true
-              progress: true
-              controls: false
-            volume_stateless: true
-            card_mod:
-              style:
-                mmp-media-controls$: |
-                  ha-icon-button {
-                    filter: drop-shadow(2px 4px 4px rgba(0,0,0,0.7));
-                    color: #ffffff70 !important;
-                  }
-                  ha-icon-button:hover {
-                    color: #ffffff !important;
-                    transform: scale(1.2);
-                    transition-duration: 0.2s;
-                    background: none !important;
-                  }
-                .: |
-                  ha-card>div.mmp-player{
-                    padding: 0px !important;
-                  }
-            style:
-              top: 90%
-              left: 50%
-              width: 105%
+          style:
+            mmp-media-controls$: |
+              ha-icon-button {
+                filter: drop-shadow(2px 4px 4px rgba(0,0,0,0.7));
+                color: #ffffff70 !important;
+              }
+              ha-icon-button:hover {
+                color: #ffffff !important;
+                transform: scale(1.2);
+                transition-duration: 0.2s;
+                background: none !important;
+              }
+            .: |
+              ha-card>div.mmp-player{
+                padding: 0px !important;
+              }
+              ha-card>div.mmp_bg {
+                display: none !important;
+              }
   styles:
     custom_fields:
       minicontrol:
-        - display: block
+        - display: flex
         - position: absolute
+        - width: 100%
         - justify-self: center
-        - width: '100%'
-        - top: '9%'
+        - bottom: 0%
         - display: >
             [[[
               return window.matchMedia('(max-width: 800px)').matches
                 ? 'none'
-                : null;
+                : 'inline-block';
             ]]]
 tpl_minicontrol_mass:
   custom_fields:

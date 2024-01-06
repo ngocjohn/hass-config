@@ -7,25 +7,24 @@ type: custom:grid-layout
 layout:
   default:
   margin: 0
-  grid-gap: 0.7% 1.9%
+  grid-gap: 0px 32px
   grid-template-columns: 0 1fr 1fr 1fr 1fr 1fr 1fr 0
-  grid-template-rows: 0 min-content fit-content(100%) fit-content(100%) min-content 0
+  grid-template-rows: min-content fit-content(100%) fit-content(100%) min-content 0
   grid-template-areas: |
-    ". .         .          .         .        .          .          ."
     ". chips     chips      chips     chips    header     header     ."
     ". security  mainrooms  devices   other    floorplan  floorplan  ."
     ". cameras   climate    media     movies   floorplan  floorplan  ."
     ". footer    footer     footer    footer   nowplaying nowplaying ."
     ". .         .          .         .        .          .          ."
   mediaquery:
-    #laptop
-    '(min-width: 1441px) and (max-width: 1772px)':
-      grid-gap: 1.3%
+    # #laptop
+    # '(min-width: 1441px) and (max-width: 2560px)':
+    #   grid-gap: 32px
     #portrait
     '(min-width: 801px) and (max-width: 1440px)':
-      grid-gap: 1vw
+      grid-gap: 16px
       grid-template-columns: 0 1fr 1fr 1fr 0
-      grid-template-rows: fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) 0fr
+      grid-template-rows: fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) 0
       grid-template-areas: |
         ".  sidebar    home        security  ."
         ".  cameras    media       climate   ."
@@ -36,13 +35,11 @@ layout:
     # phone
     '(max-width: 800px)':
       # grid-gap: calc(var(--custom-layout-card-padding) * 1.7)
-      grid-gap: 1.8vw
+      grid-gap: 8px
       margin: 0
-      # grid-template-columns: 0 repeat(2, 1fr) 0
       grid-template-columns: 0 1fr 1fr 0
-      grid-template-rows: 0 min-content min-content fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%)  fit-content(100%) fit-content(100%) 0fr
+      grid-template-rows: min-content min-content repeat(6, fit-content(100%)) min-content 50px
       grid-template-areas: |
-        ". .           .         ."
         ". header      weather   ."
         ". chips       chips     ."
         ". home        security  ."
@@ -52,6 +49,7 @@ layout:
         ". floorplan   floorplan ."
         ". footer      footer    ."
         ". nav         nav       ."
+        ". .           .         ."
 #################################################
 #                                               #
 #                    DASHBOARD                  #
