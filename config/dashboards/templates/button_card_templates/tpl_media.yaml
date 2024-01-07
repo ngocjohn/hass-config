@@ -2245,7 +2245,11 @@ tpl_minicontrol:
                 background: none !important;
               }
             .: |
-              ha-card>div.mmp-player{
+              :host {
+                --mmp-scale: 0.6;
+              }
+              ha-card>div.mmp-player {
+                flex-wrap: nowrap;
                 padding: 0px !important;
               }
               ha-card>div.mmp_bg {

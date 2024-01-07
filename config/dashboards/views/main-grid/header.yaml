@@ -10,20 +10,14 @@
     show:
       mediaquery: '(min-width: 1441px)'
   layout:
-    grid-template-columns: 1fr
+    grid-template-columns: fit-content(100%) 1fr
+    grid-gap: 0
+    margin: 0
+    align-items: center
   cards:
     - type: custom:button-card
       template:
         - clock
-- type: 'custom:layout-card'
-  layout_type: 'custom:grid-layout'
-  view_layout:
-    grid-area: weather
-    show:
-      mediaquery: '(min-width: 1441px)'
-  layout:
-    grid-template-columns: 1fr
-  cards:
     - type: custom:button-card
       entity: weather.prague
       template:
@@ -33,6 +27,7 @@
 #                  WEATHER                      #
 #                                               #
 #################################################
+
 - type: 'custom:layout-card'
   layout_type: 'custom:grid-layout'
   view_layout:
@@ -40,22 +35,15 @@
     show:
       mediaquery: '(max-width: 800px)'
   layout:
-    grid-template-columns: 1fr
+    grid-template-columns: 1fr 1fr
+    grid-gap: 0
+    margin: 0
+    align-items: flex-end
   cards:
     - type: custom:button-card
       entity: sensor.template_sidebar_time
       template:
         - timeclock
-- type: 'custom:layout-card'
-  layout_type: 'custom:grid-layout'
-  view_layout:
-    grid-area: weather
-    show:
-      mediaquery: '(max-width: 800px'
-  layout:
-    grid-template-columns: 1fr
-    margin: 0
-  cards:
     - type: custom:button-card
       entity: weather.prague
       tap_action: !include ../../shared/popup/popup_weather.yaml

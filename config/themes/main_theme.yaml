@@ -80,6 +80,7 @@ Main Theme:
   # Sidebar
   sidebar-background-color: 'var(--background-color)'
   sidebar-icon-color: '#9e9e9e80'
+  scrollbar-thumb-color: '#303030'
   sidebar-selected-icon-color: 'var(--accent-color)'
   sidebar-selected-text-color: 'var(--text-color)'
   paper-listbox-background-color: 'var(--sidebar-background-color)'

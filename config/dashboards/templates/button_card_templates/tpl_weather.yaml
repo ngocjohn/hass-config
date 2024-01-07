@@ -3,19 +3,15 @@ weather_sun:
   show_name: false
   show_state: true
   show_label: true
+  tap_action: !include ../../shared/popup/popup_weather.yaml
   state_display: >
     [[[
         var realtemp = entity.attributes.temperature;
         var apparent_temperature = entity.attributes.apparent_temperature;
 
         return `
-          <div>
-            <span style="font-size: 2.5vw; font-weight: 500; font-family: 'Raleway';">${realtemp}°C</span><br>
-            <span>${entity.state.toLowerCase()}</span>
-          </div>
-          <div style="padding-top:5px;">
-            <span style="font-size: 1em; font-weight: 400; font-family: 'Raleway'; letter-spacing: 0.3px;">Feel like: ${apparent_temperature}°C</span>
-          </div>
+            <span style="font-size: 2.6vw; font-weight: 500; font-family: 'Raleway';letter-spacing: -2px; padding-bottom: 5%;justify-self: baseline;">${realtemp}°C</span>
+            <span style="font-size: 0.9rem; font-weight: 400; font-family: 'Roboto';">Feels like: ${apparent_temperature}°C</span>
         `;
     ]]]
   entity_picture: >
@@ -52,19 +48,19 @@ weather_sun:
   label: >
     [[[
       return `
-          <span><ha-icon icon="mdi:thermometer"></ha-icon>${entity.attributes.apparent_temperature} °C</span>
-          <span><ha-icon icon="mdi:water-percent"></ha-icon>${entity.attributes.humidity} %</span>
-          <span><ha-icon icon="mdi:weather-windy"></ha-icon>${entity.attributes.wind_speed} km/H</span>
-          <span><ha-icon icon="mdi:gauge"></ha-icon>${entity.attributes.pressure} hPa</span>
-      `
+          <ul>
+            <li class="apparent-temperature">${entity.attributes.apparent_temperature} °C</li>
+            <li class="humidity">${entity.attributes.humidity} %</li>
+            <li class="wind-speed">${entity.attributes.wind_speed} km/H</li>
+            <li class="pressure">${entity.attributes.pressure} hPa</li>
+          </ul>
+        `
     ]]]
   styles:
     grid:
       - grid-template-areas: |
-          "i   s"
-          "l   l"
-      - grid-template-columns: 1fr 1fr
-      - grid-template-rows: auto min-content
+          "i   s   l"
+      - grid-template-columns: 1fr 1fr 1fr
       - gap: 0
       - margin: 0
     card:
@@ -75,55 +71,51 @@ weather_sun:
       - padding: 0
       - color: rgba(255, 255, 255, 0.6)
       - overflow: visible
-    img_cell:
-      - justify-content: flex-start
-      - overflow: visible
     icon:
-      - width: 75%
-    state:
-      - max-width: 100%
-      - align-self: baseline
-      - text-align: end
+      - width: 100%
   extra_styles: |
     @keyframes marquee {
       0%,
       70% {
-        transform: translateX(0%);
+        transform: translateX(-25%);
         scale: 0.9;
       }
       40%,
       100% {
-        transform: translateX(-25%);
+        transform: translateX(15%);
         scale: 1.1;
       }
     }
-    @keyframes gptmarquee {
-      from {
-        transform: translateX(0%);
-      }
-      to {
-        transform: translateX(-200%);
-      }
-    }
     #img-cell {
-      animation: marquee 10s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+      animation: marquee 20s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
       animation-direction: alternate-reverse;
     }
-    #label {
-      font-size: 0.9em;
+    #state {
+      display: grid;
+      max-width: 100%;
       text-align: end;
-      width: 100%;
-      font-family: 'Roboto';
-      padding-top: 10px;
-      font-weight: 400;
-
+      place-self: normal;
     }
-    #label ha-icon {
-      width: 1em;
-      height: auto;
-      padding-right: 1%;
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-block: 0;
+      display: inline-block;
     }
-
-    #label span {
-      padding-inline: 5px;
+    li {
+      font-size: 0.9rem;
+      padding-left: 2rem;
+      text-align: left;
+    }
+    li.wind-speed {
+      background: url('https://api.iconify.design/meteocons/windsock-fill.svg') no-repeat left center / contain;
+    }
+    li.humidity {
+      background: url('https://api.iconify.design/meteocons/humidity-fill.svg') no-repeat left center / contain;
+    }
+    li.pressure {
+      background: url('https://api.iconify.design/meteocons/barometer.svg') no-repeat left center / contain;
+    }
+    li.apparent-temperature {
+      background: url('https://api.iconify.design/meteocons/thermometer-celsius.svg') no-repeat left center / contain;
     }
