@@ -2,7 +2,11 @@
   ha-card {
     background: none !important;
   }
-
+  @media screen and (max-width: 800px) {
+    ha-card {
+      padding-top: 5vh;
+    }
+  }
 ha-markdown:
   $: |
     h1 {

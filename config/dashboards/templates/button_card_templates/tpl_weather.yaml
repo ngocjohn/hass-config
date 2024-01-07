@@ -1,0 +1,129 @@
+weather_sun:
+  show_entity_picture: true
+  show_name: false
+  show_state: true
+  show_label: true
+  state_display: >
+    [[[
+        var realtemp = entity.attributes.temperature;
+        var apparent_temperature = entity.attributes.apparent_temperature;
+
+        return `
+          <div>
+            <span style="font-size: 2.5vw; font-weight: 500; font-family: 'Raleway';">${realtemp}°C</span><br>
+            <span>${entity.state.toLowerCase()}</span>
+          </div>
+          <div style="padding-top:5px;">
+            <span style="font-size: 1em; font-weight: 400; font-family: 'Raleway'; letter-spacing: 0.3px;">Feel like: ${apparent_temperature}°C</span>
+          </div>
+        `;
+    ]]]
+  entity_picture: >
+    [[[
+      if (entity) {
+        const weatherIcons = {
+          sunny: 'clear-day.png',
+          'clear-night': 'clear-night.png',
+          fog: 'fog.png',
+          partlycloudy: {
+            above_horizon: 'partly-cloudy-day.png',
+            below_horizon: 'partly-cloudy-night.png',
+          },
+          rainy: 'rain.png',
+          sleet: 'sleet.png',
+          snowy: 'snow.png',
+          cloudy: 'cloudy.png',
+          wind: 'wind.png',
+        };
+        const weather = entity.state.toLowerCase();
+        const sunState = states['sun.sun'].state;
+
+        if (weatherIcons[weather]) {
+          if (typeof weatherIcons[weather] === 'object') {
+            return `/local/img/weather_new/${weatherIcons[weather][sunState]}`;
+          } else {
+            return `/local/img/weather_new/${weatherIcons[weather]}`;
+          }
+        } else {
+          return '';
+        }
+      }
+    ]]]
+  label: >
+    [[[
+      return `
+          <span><ha-icon icon="mdi:thermometer"></ha-icon>${entity.attributes.apparent_temperature} °C</span>
+          <span><ha-icon icon="mdi:water-percent"></ha-icon>${entity.attributes.humidity} %</span>
+          <span><ha-icon icon="mdi:weather-windy"></ha-icon>${entity.attributes.wind_speed} km/H</span>
+          <span><ha-icon icon="mdi:gauge"></ha-icon>${entity.attributes.pressure} hPa</span>
+      `
+    ]]]
+  styles:
+    grid:
+      - grid-template-areas: |
+          "i   s"
+          "l   l"
+      - grid-template-columns: 1fr 1fr
+      - grid-template-rows: auto min-content
+      - gap: 0
+      - margin: 0
+    card:
+      - background: none
+      - --webkit-tap-highlight-color: none
+      - --mdc-ripple-color: none
+      - box-shadow: none
+      - padding: 0
+      - color: rgba(255, 255, 255, 0.6)
+      - overflow: visible
+    img_cell:
+      - justify-content: flex-start
+      - overflow: visible
+    icon:
+      - width: 75%
+    state:
+      - max-width: 100%
+      - align-self: baseline
+      - text-align: end
+  extra_styles: |
+    @keyframes marquee {
+      0%,
+      70% {
+        transform: translateX(0%);
+        scale: 0.9;
+      }
+      40%,
+      100% {
+        transform: translateX(-25%);
+        scale: 1.1;
+      }
+    }
+    @keyframes gptmarquee {
+      from {
+        transform: translateX(0%);
+      }
+      to {
+        transform: translateX(-200%);
+      }
+    }
+    #img-cell {
+      animation: marquee 10s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+      animation-direction: alternate-reverse;
+    }
+    #label {
+      font-size: 0.9em;
+      text-align: end;
+      width: 100%;
+      font-family: 'Roboto';
+      padding-top: 10px;
+      font-weight: 400;
+
+    }
+    #label ha-icon {
+      width: 1em;
+      height: auto;
+      padding-right: 1%;
+    }
+
+    #label span {
+      padding-inline: 5px;
+    }

@@ -125,7 +125,7 @@ chips:
       - background-color: >
           [[[
               return variables.state_on
-                ? 'rgba(250, 250, 250, 0.7)'
+                ? 'rgba(250, 250, 250, 0.75)'
                 : 'rgba(115, 115, 115, 0.2)';
           ]]]
     state:

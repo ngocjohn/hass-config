@@ -4,6 +4,7 @@
 #                                               #
 #################################################
 - type: grid
+  title: ' '
   view_layout:
     grid-area: floorplan
     show:

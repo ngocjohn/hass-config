@@ -5,7 +5,6 @@
 #################################################
 - type: custom:stack-in-card
   view_layout:
-    grid-area: nav
     show:
       mediaquery: '(max-width: 800px)'
   card_mod:
@@ -13,7 +12,7 @@
       :host {
         position: fixed !important;
         bottom: 0px;
-        z-index: 100 !important;
+        z-index: 4;
       }
       @keyframes position {
         0% {
@@ -37,7 +36,6 @@
         animation: position 500ms linear both;
         animation-delay: 1000ms;
         padding: 12px 8px 22px;
-        margin-top: 20px !imporant;
         width: 100vw;
       }
   cards:

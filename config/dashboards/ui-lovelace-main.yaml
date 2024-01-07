@@ -14,6 +14,7 @@ swipe_nav:
 
 button_card_templates: !include_dir_merge_named ./templates/button_card_templates
 decluttering_templates: !include ./templates/decluttering-card.yaml
+title: Example
 views:
   - !include views/main.yaml
   - !include subviews/lights.yaml

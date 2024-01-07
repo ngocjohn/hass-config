@@ -6,7 +6,7 @@ card:
   card_mod:
     style: |
       ha-card {
-        margin: 4% 16% -1.5vw !important;
+        margin: 0% 17.5% !important;
         box-shadow: none;
         opacity: 0;
         animation: slide-opacity 1000ms cubic-bezier(0.4, 0, 0.2, 1) 500ms both;

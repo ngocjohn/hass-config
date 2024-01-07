@@ -5,21 +5,22 @@ subview: false
 theme: tablet
 type: custom:grid-layout
 layout:
-  default:
+  # default:
   margin: 0
-  grid-gap: 0px 32px
+  grid-gap: 0.9% 1.7%
   grid-template-columns: 0 1fr 1fr 1fr 1fr 1fr 1fr 0
-  grid-template-rows: min-content fit-content(100%) fit-content(100%) min-content 0
+  grid-template-rows: 0 min-content fit-content(100%) fit-content(100%) fit-content(100%) 0
   grid-template-areas: |
-    ". chips     chips      chips     chips    header     header     ."
+    ". .         .          .         .        .          .          ."
+    ". chips     chips      chips     chips    header     weather    ."
     ". security  mainrooms  devices   other    floorplan  floorplan  ."
     ". cameras   climate    media     movies   floorplan  floorplan  ."
     ". footer    footer     footer    footer   nowplaying nowplaying ."
     ". .         .          .         .        .          .          ."
   mediaquery:
-    # #laptop
-    # '(min-width: 1441px) and (max-width: 2560px)':
-    #   grid-gap: 32px
+    #laptop
+    '(min-width: 1441px) and (max-width: 1770px)':
+      grid-gap: 0px 32px
     #portrait
     '(min-width: 801px) and (max-width: 1440px)':
       grid-gap: 16px
@@ -36,9 +37,8 @@ layout:
     '(max-width: 800px)':
       # grid-gap: calc(var(--custom-layout-card-padding) * 1.7)
       grid-gap: 8px
-      margin: 0
       grid-template-columns: 0 1fr 1fr 0
-      grid-template-rows: min-content min-content repeat(6, fit-content(100%)) min-content 50px
+      grid-template-rows: min-content min-content repeat(6, fit-content(100%)) 50px
       grid-template-areas: |
         ". header      weather   ."
         ". chips       chips     ."
@@ -48,7 +48,6 @@ layout:
         ". other       climate   ."
         ". floorplan   floorplan ."
         ". footer      footer    ."
-        ". nav         nav       ."
         ". .           .         ."
 #################################################
 #                                               #

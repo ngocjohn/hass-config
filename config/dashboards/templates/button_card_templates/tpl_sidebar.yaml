@@ -201,11 +201,6 @@ timesidebar:
       }
     }
 clock:
-  variables:
-    ulm_language: >
-      [[[
-        return hass["language"];
-      ]]]
   show_icon: false
   show_name: true
   show_state: false
@@ -226,29 +221,40 @@ clock:
       return formatted_date;
     ]]]
   styles:
+    grid:
+      - grid-template-columns: 1fr
+      - grid-template-rows: min-content
+      - gap: 0
+      - grid-template-areas: |
+          "n"
+          "l"
     card:
-      - background-color: 'transparent'
-      - box-shadow: 'none'
-      - justify-content: start
-    name:
-      - font-family: Futura
-      - font-weight: 300
-      - letter-spacing: 0.11vw
-      - color: rgba(255, 255, 255, 0.7)
-      - justify-self: start
-    label:
-      - justify-self: start
-      - font-size: 0.9em
+      - padding: 0
   extra_styles: |
-    /* phone */
-    @media screen and (max-width: 800px) {
-      #card {
-        padding: 1vw !important;
-      }
-      #name {
-        font-size: calc(var(--sidebar-time-font-size) * 2.3);
-      }
+    #container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
+    #name {
+      justify-self: center;
+      line-height: 100%;
+      font-size: 3.5vw;
+      font-weight: 800;
+      color: #97989c;
+      font-family: auto;
+      letter-spacing: 0.15vw;
+    }
+    #label {
+      justify-self: center;
+      font-size: 0.6vw;
+      text-transform: uppercase;
+      font-weight: 700;
+      font-family: 'Raleway';
+      letter-spacing: 1.5px;
+      color: #97989c;
+    }
+
 timeclock:
   show_state: false
   show_icon: false

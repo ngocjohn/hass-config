@@ -6,7 +6,7 @@ card:
   card_mod:
     style: |
       ha-card {
-        margin: 14% 0;
+        margin: 0;
         background: radial-gradient(circle, rgb(255 255 255 / 14%) 27%, rgba(57,14,14,0) 61%);
         box-shadow: none;
         opacity: 0;

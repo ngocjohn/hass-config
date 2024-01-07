@@ -841,15 +841,12 @@ widget_weather:
 #################################################
 
 horizontal_widget_weather:
-  template:
-    - base
   variables:
     temp_min: ''
     temp_max: ''
     humidity: ''
     current_weather: ''
     tilt_enable: false
-  aspect_ratio: 3/1
   show_entity_picture: true
   show_name: false
   show_state: false
@@ -869,27 +866,34 @@ horizontal_widget_weather:
     ]]]
   entity_picture: >
     [[[
-      let weather = states[variables.current_weather].state.toLowerCase();
-      if ((weather == 'sunny') && (states['sun.sun'].state == 'above_horizon'))
-        return "/local/img/weather_new/clear-day.png";
-        if ((weather == 'sunny') || (weather == 'clear-night') && (states['sun.sun'].state == 'below_horizon'))
-          return "/local/img/weather_new/clear-night.png";
-            if (weather == 'fog')
-              return "/local/img/weather_new/fog.png";
-                if ((weather == 'partlycloudy') && (states['sun.sun'].state == 'above_horizon'))
-                  return "/local/img/weather_new/partly-cloudy-day.png";
-                    if ((weather == 'partlycloudy') && (states['sun.sun'].state == 'below_horizon'))
-                      return "/local/img/weather_new/partly-cloudy-night.png";
-                        if (weather == 'rainy')
-                          return "/local/img/weather_new/rain.png";
-                            if (weather == 'sleet')
-                              return "/local/img/weather_new/sleet.png";
-                                if (weather == 'snow')
-                                  return "/local/img/weather_new/snow.png";
-                                    if (weather == 'cloudy')
-                                      return "/local/img/weather_new/cloudy.png";
-      else (weather == 'wind')
-        return "/local/img/weather_new/wind.png";
+      if (entity) {
+        const weatherIcons = {
+          sunny: 'clear-day.png',
+          'clear-night': 'clear-night.png',
+          fog: 'fog.png',
+          partlycloudy: {
+            above_horizon: 'partly-cloudy-day.png',
+            below_horizon: 'partly-cloudy-night.png',
+          },
+          rainy: 'rain.png',
+          sleet: 'sleet.png',
+          snowy: 'snow.png',
+          cloudy: 'cloudy.png',
+          wind: 'wind.png',
+        };
+        const weather = entity.state.toLowerCase();
+        const sunState = states['sun.sun'].state;
+
+        if (weatherIcons[weather]) {
+          if (typeof weatherIcons[weather] === 'object') {
+            return `/local/img/weather_new/${weatherIcons[weather][sunState]}`;
+          } else {
+            return `/local/img/weather_new/${weatherIcons[weather]}`;
+          }
+        } else {
+          return '';
+        }
+      }
     ]]]
   custom_fields:
     temp: >
@@ -904,10 +908,9 @@ horizontal_widget_weather:
     grid:
       - grid-template-areas: |
           "i   temp"
-          "i   temp"
           "i   l"
       - grid-template-columns: 1fr 1fr
-      - grid-template-rows: fit-content(100%) fit-content(100%) min-content
+      - grid-template-rows: min-content min-content
       - gap: 0
     card:
       - background: none
@@ -915,7 +918,6 @@ horizontal_widget_weather:
       - --mdc-ripple-color: none
       - box-shadow: none
       - padding: 0
-      - margin: 3% 0 0 0
       - color: rgba(255, 255, 255, 0.6)
       - overflow: visible
     img_cell:
@@ -1083,10 +1085,9 @@ wide_header:
       - grid-template-areas: |
           "time   i   temp  l"
           "date   i   temp  l"
-          "gpt    gpt gpt   gpt"
       - grid-template-columns: 40% 25% 20% 15%
       - grid-template-rows: auto
-      - gap: 0%
+      - gap: 0
       - margin: 0
     card:
       - --mdc-ripple-color: none

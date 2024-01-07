@@ -54,6 +54,7 @@ ________________________________________Common Base (Do Not Use):
 
       # custom-layout-card-padding: 2.2w #3.3vw or #3vw...#1.9...sidebar OK
       custom-layout-card-padding: 3vw
+      grid-card-gap: 5%
       state-light-color: '#9da0a2'
       state-light-active-color: '#b68349'
       sidebar-time-font-size: 4.2vw
@@ -61,6 +62,7 @@ ________________________________________Common Base (Do Not Use):
       sidebar-font-size: 1vw
       sidebar-line-height: 2vw
       bar-card-color: '#303435'
+
       #button_card_templates
       button-card-font-size: 0.9vw
       button-card-state-size: 0.8vw
