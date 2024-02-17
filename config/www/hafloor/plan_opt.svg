@@ -1,0 +1,274 @@
+<svg id="svg2237" width="2462.2" height="2061.4" version="1.1" viewBox="0 0 2462.2 2061.4"
+	xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<defs id="defs2234">
+		<filter id="filter4188" x="-.12906" y="-.15846" width="1.2531" height="1.3109" color-interpolation-filters="sRGB">
+			<feGaussianBlur id="feGaussianBlur4190" stdDeviation="8.830405" />
+		</filter>
+		<filter id="filter3420" x="-.043002" y="-.062067" width="1.0855" height="1.1238" color-interpolation-filters="sRGB">
+			<feGaussianBlur id="feGaussianBlur3422" stdDeviation="3.5640773" />
+		</filter>
+	</defs>
+	<g id="Background" transform="translate(131.36 178.01)">
+		<g id="base-background">
+			<image id="bellow_horizon" transform="rotate(10)" x="131.36" y="-203.92" width="2199" height="1705"
+				href="/local/hafloor/bg_bellow_horizon.webp" preserveAspectRatio="none" xlink:href="bg_bellow_horizon.png" />
+			<image id="above_horizon" transform="rotate(10)" x="131.36" y="-203.92" width="2199" height="1705"
+				href="/local/hafloor/bg_above_horizon.webp" preserveAspectRatio="none" xlink:href="bg_above_horizon.png" />
+		</g>
+		<g id="light-overlays">
+			<image id="light_overlay.living_room_floor_lamp" transform="rotate(10)" x="131.36" y="-203.92" width="2199"
+				height="1705" href="/local/hafloor/bg_living_lamp.webp" preserveAspectRatio="none"
+				xlink:href="bg_living_lamp.png" />
+			<image id="light_overlay.shelly_rgbw_kitchen_led_strip" transform="rotate(10)" x="131.36" y="-203.92"
+				width="2199.5" height="1705.4" href="/local/hafloor/bg_living_main.webp" preserveAspectRatio="none"
+				xlink:href="bg_living_main.png" />
+			<image id="light_overlay.kitchen_table_light" transform="rotate(10)" x="131.36" y="-203.92" width="2199"
+				height="1705" href="/local/hafloor/bg_kitchen_table.webp" preserveAspectRatio="none"
+				xlink:href="bg_kitchen_table.png" />
+			<image id="light_overlay.kitchen_main_light" transform="rotate(10)" x="131.36" y="-203.92" width="2199"
+				height="1705" href="/local/hafloor/bg_kitchen_main.webp" preserveAspectRatio="none"
+				xlink:href="bg_kitchen_main.png" />
+			<image id="light_overlay.bathroom_group" transform="rotate(10)" x="131.36" y="-203.92" width="2199" height="1705"
+				href="/local/hafloor/bg_bathroom.webp" preserveAspectRatio="none" xlink:href="bg_bathroom.png" />
+			<image id="light_overlay.utility_room_light" transform="rotate(10)" x="131.36" y="-203.92" width="2199"
+				height="1705" href="/local/hafloor/bg_utility.webp" preserveAspectRatio="none" xlink:href="bg_utility.png" />
+			<image id="light_overlay.hallway_group" transform="rotate(10)" x="131.36" y="-203.92" width="2199" height="1705"
+				href="/local/hafloor/bg_hallway.webp" preserveAspectRatio="none" xlink:href="bg_hallway.png" />
+			<image id="light_overlay.office_led_light_strip" transform="rotate(10)" x="131.36" y="-203.92" width="2199"
+				height="1705" href="/local/hafloor/bg_office_table.webp" preserveAspectRatio="none"
+				xlink:href="bg_office_table.png" />
+			<image id="light_overlay.office_lamp_bulb" transform="rotate(10)" x="131.36" y="-203.92" width="2199"
+				height="1705" fill="none" style="paint-order:stroke fill markers" href="/local/hafloor/bg_office_lamp.webp"
+				preserveAspectRatio="none" xlink:href="bg_office_lamp.png" />
+			<image id="light_overlay.vanesska_ceiling_light" transform="rotate(10)" x="131.36" y="-203.92" width="2199"
+				height="1705" href="/local/hafloor/bg_kidsroom.webp" preserveAspectRatio="none" xlink:href="bg_kidsroom.png" />
+			<image id="light_overlay.bedroom_closet_light" transform="rotate(10)" x="131.36" y="-203.92" width="2199"
+				height="1705" href="/local/hafloor/bg_bedroom_closet.webp" preserveAspectRatio="none"
+				xlink:href="bg_bedroom_closet.png" />
+			<image id="light_overlay.shower_room_mirror_light" transform="rotate(10)" x="131.36" y="-203.92" width="2199"
+				height="1705" href="/local/hafloor/bg_shower.webp" preserveAspectRatio="none" xlink:href="bg_shower.png" />
+			<image id="light_overlay.bed_light" transform="rotate(10)" x="131.36" y="-203.92" width="2199" height="1705"
+				href="/local/hafloor/bg_bedroom_main.webp" preserveAspectRatio="none" xlink:href="bg_bedroom_main.png" />
+		</g>
+		<g id="tv_overlays">
+			<image id="media_player_overlay.living_room_tv" transform="rotate(10)" x="663.38" y="431.15" width="377.43"
+				height="385.4" href="/local/hafloor/bg_atv_idle_trim.webp" preserveAspectRatio="none"
+				xlink:href="bg_atv_idle_trim.png" />
+			<path id="atv_idle_path" transform="rotate(10 1099.7 852.68)"
+				d="m524.33 730.04 254.31-98.276 10.694 96.411-246.93 97.831z" fill="none" filter="url(#filter3420)"
+				stroke="#f00" stroke-width="5" style="mix-blend-mode:lighten" />
+			<g id="g2115">
+				<path id="light.sony_tv_backlight"
+					d="m547.86 579.71c350.29-64.604 421.83-78.167 421.83-78.167l-28.017 156.01-422.41 80.972z" fill="none" />
+				<image id="atv-entity-picture" transform="matrix(.98292 -.18401 -.17789 .98405 0 0)" x="688.53" y="719.49"
+					width="426.97" height="157.64" preserveAspectRatio="none" />
+			</g>
+		</g>
+	</g>
+	<g id="areas" transform="translate(131.36 178.01)" stroke-width="0">
+		<g id="area.living_room">
+			<path id="path1190" d="m630.53 1188.7 391.18-100.2-166.55-347.22-349.7 76.759z" fill="none" />
+			<use id="light.shelly_rgbw_kitchen_led_strip" href="#path1190" />
+		</g>
+		<g id="area.kitchen">
+			<path id="path1435"
+				d="m855.06 741.43 76-116.34 241.36-47.775 9.315 15.581 6.6976-1.4996 12.852-65.283 39.264 66.163-5.5786 20.997 36.837-8.2475 178.88 302.01-28.278 90.441-267.59 62.719-133.63 28.171z"
+				fill="none" />
+			<use id="light.kitchen_main_light" href="#path1435" />
+		</g>
+		<g id="area.bathroom">
+			<path id="path1476"
+				d="m878.87 517.19-29.809-67.548 4.4441-2.0715 3.5315-38.534 88.603-3.646 5.6786-39.358 19.684 37.145 135.8-6.9549 44.074 75.815 11.802-64.506 30.061 48.48-18.417 65.875 19.455 37.432-236.04 40.541 17.579-101.09z"
+				fill="none" />
+			<use id="light.bathroom_group" href="#path1476" />
+		</g>
+		<g id="area.utility">
+			<path id="path1481"
+				d="m849.08 449.65-81.15-159.04 6.8503-101.99 108.84-17.421 7.489 10.955 138.92-24.106 24.849 37.568-13.703 97.143 5.6327 12.983 3.3098-1.7716 9.0417-65.849 26.108 43.785-8.663 66.13 30.47 48.194-136.37 7.2133-19.719-37.52-5.4666 39.502-88.505 4.0919-3.549 38.342z"
+				fill="none" />
+			<use id="light.utility_room_light" href="#path1481" />
+		</g>
+		<g id="area.hallway">
+			<path id="path1523"
+				d="m1029.5 158.28 177.57-23.583 93.706 138.37-15.86 82.871 14.64 18.384-16.644 73.168 17.37 28.846 16.503-65.291 35.618 57.431-16.313 66.572 8.9461 15.301-16.891 6.1706 21.499 33.733-78.032 15.364-36.208 7.8502 5.1741-20.694-39.424-66.178-5.3182 27.278-15.956-32.046 11.94-66.272-29.299-48.633-11.81 65.533-74.351-124.7 8.648-66.344-25.644-43.413-9.0541 65.764-3.3931 1.9436-5.8458-12.978 13.879-97.45z"
+				fill="none" />
+			<use id="light.hallway_group" href="#path1523" />
+		</g>
+		<g id="area.office">
+			<path id="path1567"
+				d="m1207.4 134.77 373.32-57.463 150.1 197.53-447.26 173.87 15.908-74.4-14.15-18.29 15.415-83.841z"
+				fill="none" />
+			<use id="light.office_led_light_strip" href="#path1567" />
+			<use id="light.officelamp" href="#path1567" />
+		</g>
+		<g id="area.kidsroom">
+			<path id="path1633"
+				d="m1730.7 274.74 144.97 189.58-88.31 24.92-4.1996 12.17-401.07 149.63-32.532-61.778-21.302-33.042 16.644-5.8474-8.4859-14.962 16.179-67.405-35.769-57.244-16.602 65.379-16.771-27.743z"
+				fill="none" />
+			<use id="light.vanesska_ceiling_light" href="#path1633" />
+		</g>
+		<g id="area.bedroom">
+			<path id="path1724"
+				d="m1875 463.91 226.84 288.59-112.17 43.226-191.51 45.217-22.965 52.564-127.25 51.068 26.453-69.755-32.172-37.632-29.281-38.492-1.354 2.5006-69.086-82.036-5.6259 0.83424-0.1251-3.034-2.0275-6.2988c-2.1712-3.8369-5.3844-6.6543-9.9279-9.1229-4.3385-1.0437-11.232-2.4478-18.144-1.9746-5.3873 0.3689-12.301 2.2015-17.416 4.275-24.736 10.028-28.492 15.515-28.492 15.515l-64.881-2.3091 3.7744-16.227-28.683-47.061 11.486-2.9969 400.8-149.85 3.8012-11.2z"
+				fill="none" />
+			<path id="path981"
+				d="m1375.7 661.88 139.27-52.366 31.57 111.79-9.617-1.2526s1.2162-4.1005-1.2742-8.8546c-2.4905-4.7541-7.2102-8.052-7.2102-8.052s-2.694-2.201-11.922-3.7048c-9.2278-1.5038-22.717 2.2819-22.717 2.2819s-9.7125 3.3421-12.821 4.8899c-3.1085 1.5477-5.6965 2.9407-8.6644 4.3899-2.9678 1.4493-1.3995 0.24637-4.7119 2.2513-3.3124 2.0049-5.823 3.6581-6.6106 4.6288s-1.8848 0.90051-1.8848 0.90051l-62.976-2.2278 3.2824-15.818z"
+				fill="none" />
+			<use id="light.bedroom_bed_light" href="#path1724" />
+			<use id="light.bedroom_closet_light" href="#path981" />
+		</g>
+		<g id="area.shower">
+			<path id="path1774"
+				d="m1396 716.99-59.094-2.052 113.87 192.9-28.49 89.946 225.99-52.935 25.666-69.798-32.083-38.447-29.02-37.907-1.2052 2.7022-68.877-81.854-6.2214 0.84611 0.069-3.1983s0.3065-2.4481-1.9065-6.2162c-2.213-3.7681-6.7672-8.4495-10.365-9.334-3.5972-0.88451-11.584-2.4179-15.395-2.0891-3.8112 0.32886-15.095 2.5929-16.865 3.4068-1.7699 0.81389-14.188 5.255-17.814 7.3681s-8.1643 4.4405-11.083 6.8033c-2.9188 2.3628-3.0615 2.4628-3.0615 2.4628z"
+				fill="none" />
+			<use id="light.shower_room_mirror_light" href="#path1774" />
+		</g>
+	</g>
+	<g id="doors" transform="translate(131.36 178.01)" fill="none" stroke="#000">
+		<path id="binary_sensor.contact_sensor_kid_balcony_contact"
+			d="m1768.3 352.18-54.431 146.43 13.162 16.627 32.949-13.19 38.917-109.15z" />
+		<path id="binary_sensor.contact_sensor_bedroom_balcony_contact"
+			d="m1932 565.66 38.156 46.646-66.172 144.58-39.002-48.316z" />
+		<path id="binary_sensor.contact_sensor_garden_door" d="m1063.9 1028.4 80.87-21.299-30.189 141.56-77.458 19.331z" />
+		<path id="binary_sensor.contact_sensor_terrace_door"
+			d="m502.97 910.78 1.4151 127.09 50.48 138.09 0.82441-128.37z" />
+		<path id="lock.nuki_neklanka_byt_lock"
+			d="m1054.7 194.33 79.141-13.296-24.887 156.17-31.675 4.6497 7.6077-60.218-25.903-44.302-7.3511 53.64-8.1593-16.038z" />
+		<path id="binary_sensor.contact_sensor_office_balcony_contact"
+			d="m1616.2 151.97-45.726 147.96 20.536 23.671 15.071-3.4183 42.621-126.09z" />
+	</g>
+	<g id="cover" transform="translate(131.36 178.01)">
+		<path id="cover.living_room_terrace" d="m435.68 720.21 126.21 339.42-6.6573 148.17-112.57-317.54z" />
+		<path id="cover.window" d="m917.77 1061.4 121.78-30.132-17.241 99.813-119.04 30.224z" />
+		<path id="cover.door" d="m1034.5 1169.1 26.631-142.53 87.864-22-32.506 147.49-82.717 21.158z" />
+		<path id="cover.bedroom_shutters" d="m1809.2 844.23 155.7-37.59-42.604 88.722-151.37 37.748z" />
+	</g>
+	<g id="icons" transform="translate(131.36 178.01)">
+		<path id="icon-front-door"
+			d="m1089.2 224.82a2.8507 3.8341 53.696 0 0 3.9883-3.6373c0.28-1.7759-1.0641-3.0031-2.9806-2.7625a2.8507 3.8341 53.696 0 0-3.9884 3.6374 2.8507 3.8341 53.696 0 0 2.9807 2.7625m12.721-15.712a2.8507 3.8341 53.696 0 1 2.9807 2.7625l-2.5194 16a2.8507 3.8341 53.696 0 1-3.9884 3.6373l-20.907 2.6245a2.8507 3.8341 53.696 0 1-2.9806-2.7625l2.5194-16c0.2799-1.7759 2.0719-3.3968 3.9883-3.6374l1.7424-0.21859 0.5044-3.1998a7.1268 9.5852 53.696 0 1 9.971-9.0934 7.1268 9.5852 53.696 0 1 7.4516 6.9062l-0.5044 3.1998 1.7422-0.21866m-9.1938-6.6875a4.2761 5.7511 53.696 0 0-5.9827 5.456l-0.5044 3.1998 10.454-1.3122 0.5044-3.1998a4.2761 5.7511 53.696 0 0-4.4709-4.1438z"
+			stroke-width="1.653" />
+	</g>
+	<g id="temphumid" transform="translate(131.36 178.01)" fill="#ffffff" font-family="Futura" font-weight="500">
+		<text id="sensor.bedroom_tem_humid_temperature" transform="matrix(1.0266 -.2387 .46542 .86589 0 0)" x="1030.3096"
+			y="1167.0083" font-size="45.288px" opacity=".37079" stroke-width="2.4299"
+			style="font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal"
+			xml:space="preserve">
+			<tspan id="tspan974" transform="matrix(.92917 .12622 -.039746 1.0708 129.59 -230.92)" x="1030.3096" y="1167.0083"
+				fill="#ffffff" stroke-width="2.4299">21.6°C</tspan>
+		</text>
+		<text id="sensor.bedroom_tem_humid_humidity" transform="matrix(1.0186 -.26406 .48969 .85483 0 0)" x="1028.2416"
+			y="1251.3998" font-size="45.288px" opacity=".37079" stroke-width="2.4299"
+			style="font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal"
+			xml:space="preserve">
+			<tspan id="tspan12129" transform="matrix(.92917 .12622 -.039746 1.0708 129.59 -230.92)" x="1028.2416"
+				y="1251.3998" fill="#ffffff" stroke-width="2.4299">42%</tspan>
+		</text>
+		<text id="sensor.dyson_ph04_temperature" transform="matrix(1.0596 -.22913 .51617 .83214 0 0)" x="-37.814266"
+			y="1170.0012" font-size="63.191px" opacity=".37079" stroke-width="3.3905"
+			style="font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal"
+			xml:space="preserve">
+			<tspan id="tspan12704" transform="matrix(.92917 .12622 -.039746 1.0708 129.59 -230.92)" x="-37.814266"
+				y="1170.0012" fill="#ffffff" stroke-width="3.3905">21.6°C</tspan>
+		</text>
+		<text id="sensor.dyson_ph04_humidity" transform="matrix(1.0686 -.23114 .53251 .82064 0 0)" x="176.70476"
+			y="1044.8867" font-size="52.178px" opacity=".37079" stroke-width="2.7996"
+			style="font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal"
+			xml:space="preserve">
+			<tspan id="tspan12708" transform="matrix(.92917 .12622 -.039746 1.0708 129.59 -230.92)" x="176.70476"
+				y="1044.8867" fill="#ffffff" stroke-width="2.7996">42%</tspan>
+		</text>
+		<text id="sensor.kids_room_temp_humid_humidity" transform="matrix(.66621 .83502 -.88597 .39056 0 0)" x="1024.6912"
+			y="-908.31018" font-size="38.546px" opacity=".37079" stroke-width="2.7996"
+			style="font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal"
+			xml:space="preserve">
+			<tspan id="tspan15133" transform="matrix(.92917 .12622 -.039746 1.0708 129.59 -230.92)" x="1024.6912"
+				y="-908.31018" fill="#ffffff" stroke-width="2.7996">42%</tspan>
+		</text>
+		<text id="sensor.kids_room_temp_humid_temperature" transform="matrix(.43326 .724 -1.1749 .34469 0 0)" x="1093.8727"
+			y="-811.87091" font-size="31.949px" opacity=".37079" stroke-width="3.3905"
+			style="font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal"
+			xml:space="preserve">
+			<tspan id="tspan15137" transform="matrix(.92917 .12622 -.039746 1.0708 129.59 -230.92)" x="1093.8727"
+				y="-811.87091" fill="#ffffff" stroke-width="3.3905">21.6°C</tspan>
+		</text>
+		<text id="sensor.office_temp_humid_temperature" transform="matrix(.82623 -.22965 -.1439 1.2503 0 0)" x="1826.0891"
+			y="636.82501" font-size="33.322px" opacity=".37079" stroke-width="3.3905"
+			style="font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal"
+			xml:space="preserve">
+			<tspan id="tspan15180" transform="matrix(.92917 .12622 -.039746 1.0708 129.59 -230.92)" x="1826.0891"
+				y="636.82501" fill="#ffffff" stroke-width="3.3905">21.6°C</tspan>
+		</text>
+		<text id="sensor.office_temp_humid_humidity" transform="matrix(.82623 -.22965 -.1439 1.2503 0 0)" x="1816.5963"
+			y="595.27899" font-size="33.322px" opacity=".37079" stroke-width="3.3905"
+			style="font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal"
+			xml:space="preserve">
+			<tspan id="tspan15184" transform="matrix(.92917 .12622 -.039746 1.0708 129.59 -230.92)" x="1816.5963"
+				y="595.27899" fill="#ffffff" stroke-width="3.3905">21.6°C</tspan>
+		</text>
+		<text id="sensor.bathroom_temp_humid_temperature" transform="matrix(.8701 -.15955 -.21143 1.1881 0 0)" x="1272.6008"
+			y="557.76202" font-size="31.949px" opacity=".37079" stroke-width="3.3905"
+			style="font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal"
+			xml:space="preserve">
+			<tspan id="tspan15188" transform="matrix(.92917 .12622 -.039746 1.0708 129.59 -230.92)" x="1272.6008"
+				y="557.76202" fill="#ffffff" stroke-width="3.3905">21.6°C</tspan>
+		</text>
+		<text id="sensor.bathroom_temp_humid_humidity" transform="matrix(.8701 -.15955 -.21143 1.1881 0 0)" x="1304.0946"
+			y="655.02856" font-size="31.949px" opacity=".37079" stroke-width="3.3905"
+			style="font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal"
+			xml:space="preserve">
+			<tspan id="tspan15192" transform="matrix(.92917 .12622 -.039746 1.0708 129.59 -230.92)" x="1304.0946"
+				y="655.02856" fill="#ffffff" stroke-width="3.3905">21.6°C</tspan>
+		</text>
+	</g>
+	<g id="entities" transform="translate(131.36 178.01)" fill="none">
+		<ellipse id="light.living_room_floor_lamp" transform="rotate(10)" cx="816.73" cy="953.82" rx="22.85" ry="20.044"
+			stroke="#000" />
+		<path id="media_player.living_room_tv" d="m559.37 634.88 259.3-51.564-6.154 90.795-252.35 51.835z"
+			stroke-width="0" />
+		<path id="media_player.bedroom_tv" d="m1623 567.78-21.028 63.364 128.45-28.27 22.574-62.817z" stroke-width="0" />
+		<ellipse id="light.office_lamp_bulb" transform="rotate(10)" cx="1631.6" cy="1.0551" rx="15.157" ry="12.035"
+			stroke="#000" />
+		<path id="light.kitchen_table_light"
+			d="m974.2 794.98 88.464-19.967 70.205 135.48-47.344 10.989-4.1039 23.274-31.625 7.027z" stroke="#fff" />
+		<path id="input_boolean.office_mode"
+			d="m1211.1 137.13 92.809 138.27-13.171 55.599 62.718 91.206 140.08-53.426-167.94-254.56z" opacity=".7" />
+		<path id="bedroom_bed_light" transform="rotate(10 1099.7 852.68)"
+			d="m1713.6 799.01-72.098-72.592 3.9506-20.247 121.48-57.777 11.358 3.4568 48.395 47.901-0.4938-0.49382"
+			filter="url(#filter4188)" stroke="#ffe100" stroke-width="5" />
+	</g>
+	<g id="motions" transform="translate(131.36 178.01)" fill="none">
+		<g id="binary_sensor.motion_sensor_hallway_occupancy" transform="rotate(10 1099.7 852.68)">
+			<circle id="circle3026" cx="1195.2" cy="545.73" r="1" />
+			<circle id="circle3028" cx="1195.2" cy="545.73" r="1" />
+		</g>
+		<g id="binary_sensor.motion_sensor_entrance_occupancy" transform="rotate(10 1099.7 852.68)">
+			<circle id="circle3032" cx="1039.2" cy="366.53" r="1" />
+			<circle id="circle3034" cx="1039.2" cy="366.53" r="1" />
+		</g>
+		<g id="binary_sensor.motion_sensor_utility_room_occupancy" transform="rotate(10 1099.7 852.68)">
+			<circle id="path2781" cx="894.19" cy="399.55" r="1" />
+			<circle id="circle2816" cx="894.19" cy="399.55" r="1" />
+		</g>
+		<g id="binary_sensor.motion_sensor_bathroom" transform="rotate(10 1099.7 852.68)">
+			<circle id="circle3192" cx="992.16" cy="582.92" r="1" />
+			<circle id="circle3194" cx="992.16" cy="582.92" r="1" />
+		</g>
+		<g id="binary_sensor.motion_sensor_kitchen_occupancy" transform="rotate(10 1099.7 852.68)">
+			<circle id="circle3202" cx="1215.9" cy="899.31" r="1" />
+			<circle id="circle3204" cx="1215.9" cy="899.31" r="1" />
+		</g>
+		<g id="binary_sensor.motion_sensor_shower_room_occupancy" transform="rotate(10 1099.7 852.68)">
+			<circle id="circle3208" cx="1492.5" cy="860.79" r="1" />
+			<circle id="circle3210" cx="1492.5" cy="860.79" r="1" />
+		</g>
+		<g id="binary_sensor.motion_sensor_bedroom_occupancy" transform="rotate(10 1099.7 852.68)">
+			<circle id="circle3214" cx="1674.2" cy="643.5" r="1" />
+			<circle id="circle3216" cx="1674.2" cy="643.5" r="1" />
+		</g>
+	</g>
+	<g id="homepods" transform="translate(131.36 178.01)">
+		<path id="media_player.office_2"
+			d="m1430.4 193.31c-3.5678-1.8213-8.0862-3.2426-13.565-4.2086-4.9831-0.87866-9.3928-1.1453-13.159-0.87265 3.7394 1.6529 8.4505 3.1081 13.902 4.0693 4.7354 0.83497 9.0851 1.1194 12.823 1.012zm3.9889 2.4917c-5.1852 0.59018-11.378 0.29307-17.297-0.75063-6.6074-1.165-13.265-3.3325-18.12-6.0622-5.5884 1.4275-9.0146 4.5988-9.8544 9.3616l-5.5923 31.715c-0.8981 5.0932 1.5576 9.3584 7.0332 12.595 1.2442 3.569 11.96 5.7424 15.484 6.3638 3.5515 0.62622 14.53 2.2781 16.796-0.75698 6.2248-1.1733 9.9587-4.3188 10.847-9.3569l5.5923-31.715c0.7767-4.4049-0.9517-8.2864-4.889-11.393z"
+			stroke-width="2.7955" />
+	</g>
+</svg>

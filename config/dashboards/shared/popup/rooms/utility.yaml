@@ -1,0 +1,44 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Utility Room
+    style: !include ../../snippets/style_popup_transparent.yaml
+    card_mod: !include ../../snippets/style_popup_cardmod.yaml
+
+    content:
+      type: custom:layout-card
+      layout_type: custom:grid-layout
+      layout:
+        margin: 1.5% 0
+        gap: 5%
+        grid-template-columns: 20vw
+        grid-template-rows: fit-content(100%)
+        mediaquery:
+          '(max-width: 800px)':
+            grid-template-columns: 100%
+      cards:
+        - type: custom:auto-entities
+          filter:
+            include:
+              - entity_id: light.utility_room_light
+                options:
+                  type: custom:button-card
+                  template:
+                    - tpl_popup_light
+              - entity_id: vacuum.roidmi_eve
+                options:
+                  type: custom:button-card
+                  tap_action: !include ../footer/footer_vacuum.yaml
+                  double_tap_action: !include ../footer/footer_vacuum.yaml
+                  template:
+                    - tpl_popup_device
+              - entity_id: switch.washer_dryer_power
+                options:
+                  type: custom:button-card
+                  template:
+                    - tpl_popup_device
+          card:
+            type: grid
+            columns: 3
+          card_param: cards

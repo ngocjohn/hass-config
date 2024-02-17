@@ -1,0 +1,63 @@
+type: custom:local-conditional-card
+default: hide
+id: upcomingmovie
+card:
+  type: 'custom:layout-card'
+  layout_type: 'custom:grid-layout'
+  layout:
+    grid-gap: 1em
+    margin: -1
+  cards:
+    - type: custom:state-switch
+      entity: hash
+      default: p1
+      states:
+        p1:
+          type: 'custom:decluttering-card'
+          template: tailwind_movies
+          variables:
+            - entity: sensor.upcoming_movies_1
+        p2:
+          type: 'custom:decluttering-card'
+          template: tailwind_movies
+          variables:
+            - entity: sensor.upcoming_movies_2
+
+    - type: 'custom:layout-card'
+      layout:
+        margin: 0
+      view_layout:
+        place-self: center
+      cards:
+        - type: custom:stack-in-card
+          mode: horizontal
+          keep:
+            - margin: true
+          card_mod:
+            style: |
+              ha-card {
+                {% if states('sensor.upcoming_movies_2') | int <= 0 %}
+                  display: none;
+                {% endif %}
+              }
+          cards:
+            - type: custom:button-card
+              name: « PREV
+              tap_action:
+                action: navigate
+                navigation_path: '#p1'
+              styles:
+                card:
+                  - width: max-content
+                  - box-sizing: border-box
+                  - padding: 0.5em 1em
+            - type: custom:button-card
+              name: NEXT »
+              tap_action:
+                action: navigate
+                navigation_path: '#p2'
+              styles:
+                card:
+                  - width: max-content
+                  - box-sizing: border-box
+                  - padding: 0.5em 1em

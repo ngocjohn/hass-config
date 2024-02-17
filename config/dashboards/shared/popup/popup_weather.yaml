@@ -1,0 +1,92 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Weather
+    card_mod: !include ../snippets/style_popup_footer.yaml
+    content:
+      type: custom:layout-card
+      layout_type: custom:grid-layout
+      layout: !include ../snippets/popup_footer_layout.yaml
+      cards:
+        #################################################
+        #                                               #
+        #                WEATHER POPUP                  #
+        #                                               #
+        #################################################
+        - type: entities
+          title: Prague
+          card_mod:
+            class: header
+          entities:
+            - type: custom:mod-card
+              card:
+                type: weather-forecast
+                show_current: true
+                show_forecast: true
+                entity: weather.prague
+                name: ' '
+                forecast_type: hourly
+            - type: divider
+            - type: custom:weather-chart-card
+              entity: weather.home
+              show_main: false
+              show_attributes: false
+              forecast:
+                condition_icons: false
+                show_wind_forecast: false
+        - type: entities
+          title: Radar
+          card_mod:
+            class: header
+          entities:
+            - type: custom:weather-radar-card
+              static_map: false
+              map_style: Dark
+              data_source: RainViewer-DarkSky
+              show_scale: false
+              show_range: false
+              extra_labels: false
+              center_longitude: 14.42036
+              show_marker: false
+              show_zoom: false
+              center_latitude: 50.075763
+              marker_latitude: 50.075763
+              marker_longitude: 14.42036
+              zoom_level: 5
+              square_map: true
+              show_recenter: true
+              show_playback: false
+        - type: entities
+          title: Sunrise & Sunset
+          card_mod:
+            class: header
+            style: |
+              ha-card {
+                border: none !important;
+              }
+          entities:
+            # - type: custom:horizon-card
+            #   moon: true
+            #   refresh_period: 60
+            #   fields:
+            #     sunrise: true
+            #     sunset: true
+            #     dawn: true
+            #     noon: true
+            #     dusk: true
+            #     azimuth: false
+            #     elevation: false
+            #     moonrise: true
+            #     moonset: true
+            #     moon_phase: true
+            #   southern_flip: false
+            #   moon_phase_rotation: -10
+            #   language: en
+            #   time_format: 24
+            #   latitude: 50.55
+            #   longitude: 14.25
+            #   elevation: 300
+            #   time_zone: Europe/Prague
+            #   debug_level: 0
+            - type: custom:sun-card

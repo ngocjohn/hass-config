@@ -1,0 +1,155 @@
+system_button_card:
+  variables:
+    memory: ''
+    cpu: ''
+  show_state: true
+  show_label: false
+  show_name: true
+  show_icon: true
+  size: 24px
+  state_display: |
+    [[[
+      let memory_state = states[variables.memory].state,
+          sys_temp_state = states[variables.sys_temp].state,
+          cpu_state = states[variables.cpu].state;
+        return `
+          <div class="state-items" style="text-align: start;">
+            <div><span class="state" style="color: ${variables.memory_color};">${memory_state}</span><span class="unit">%</span></div>
+            <span class="label">Memory rate</span>
+          </div>
+          <div class="state-items" style="text-align: center;">
+            <div><span class="state" style="color: ${variables.sys_temp_color};">${sys_temp_state}</span><span class="unit">°C</span></div>
+          <span class="label">CPU Temperature</span>
+          </div>
+          <div class="state-items" style="text-align: end;">
+            <div><span class="state" style="color: ${variables.cpu_color};">${cpu_state}</span><span class="unit">%</span></div>
+          <span class="label">Processor rate</span>
+          </div>
+        `;
+    ]]]
+  # label: |
+  #   [[[
+  #     let memory_state = states[variables.memory].state,
+  #         cpu_state = states[variables.cpu].state;
+  #       return `
+  #       <div class="bar-bg">
+  #         <div class="bar_memory" style="width: ${memory_state}%;"> </div>
+  #         <div class="bar_cpu" style="width: ${cpu_state}%;"> </div>
+  #       </div>
+  #       `
+  #   ]]]
+  custom_fields:
+    graph:
+      card:
+        type: 'custom:mini-graph-card'
+        entities:
+          - entity: '[[[return variables.memory]]]'
+            color: '[[[return variables.memory_color]]]'
+          - entity: '[[[return variables.cpu]]]'
+            color: '[[[return variables.cpu_color]]]'
+        hours_to_show: 96
+        points_per_hour: 10
+        line_width: 1
+        show:
+          name: false
+          icon: false
+          state: false
+          labels: false
+          legend: false
+          points: false
+          fill: fade
+          extrema: false
+          average: false
+        card_mod:
+          style: |
+            ha-card {
+              background: none !important;
+            }
+  styles:
+    grid:
+      - grid-template-areas: >
+          "n i"
+          "s s"
+      - grid-template-columns: 1fr min-content
+      - grid-template-rows: min-content auto
+      - grid-gap: 0.5rem 0
+    card:
+      - padding: 1rem
+      - border-radius: 0.75rem
+      - background-color: rgba(17,24,39,1)
+    custom_fields:
+      graph:
+        - position: absolute
+        - width: 100%
+        - left: 0
+        - bottom: -10px
+        - opacity: 0.3
+
+  extra_styles: >
+    #container {
+      z-index: 1;
+    }
+    #graph {
+      z-index: -1;
+    }
+    #name {
+      display: block;
+      font-size: 1.5rem;
+      line-height: 2rem;
+      place-self: center start !important;
+    }
+    #state {
+      display: flex;
+      padding-top: 1rem;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+      text-shadow:
+    }
+    #state span.state {
+      font-size: 2.2rem;
+      line-height: 130%;
+      font-weight: 500;
+    }
+    #state span.unit {
+      opacity: 0.7;
+      padding-left: 4px;
+    }
+    #state span.label {
+      font-size: 1rem;
+      line-height: 1.25rem;
+    }
+    #state .state-items {
+      display: flex;
+      flex-direction: column;
+    }
+    #graph {
+      filter: blur(0.6px) saturate(1.4);
+
+    }
+    #label {
+      display: block;
+      width: 100%;
+      padding-top: 0.5rem;
+    }
+    #label .bar-bg {
+      width: 100%;
+      border-radius: 9999px;
+      height: 0.6rem;
+      background-color: #374151;
+    }
+    #label .bar_memory {
+      border-radius: 9999px;
+      height: 0.6rem;
+      background-color: #4ade80cf;
+    }
+    #label .bar_cpu {
+      border-radius: 9999px;
+      height: 0.6rem;
+      background-color: #fb923ccf;
+    }
+    @media (max-width: 800px) {
+      #name {
+        font-size: 1.125rem;
+      }
+    }

@@ -1,0 +1,32 @@
+.: |
+  .swiper-container {
+    z-index: 0 !important;
+  }
+  @media screen and (max-width: 799.99px) {
+    .swiper-slide {width: auto !important;}
+  }
+  @media screen and (min-width: 1024px) {
+    .swiper-slide {width: auto !important;}
+  }
+mushroom-entity-card: &mushroom-ha-card
+  $: |
+    ha-card {
+      -webkit-transition: all 500ms linear; /* For Safari 3.0 to 6.0 */
+      transition: all 500ms linear; /* For modern browsers */
+    }
+    ha-card:hover {
+      background-color: #2b3c54;
+      border-radius: 0.75rem;
+    }
+    @media screen and (max-width: 799.99px), @media screen and (min-width: 1024px) {
+      ha-card, mushroom-card, mushroom-state-item, mushroom-state-info {width: fit-content;}
+    }
+mushroom-template-card: *mushroom-ha-card
+mushroom-entity-card:nth-child(3)$ha-state-icon$: |
+  ha-icon:hover {
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin {
+      from {transform:rotate(0deg);}
+      to {transform:rotate(360deg);}
+  }

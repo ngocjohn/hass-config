@@ -1,0 +1,879 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: ' '
+    content:
+      type: picture-elements
+      card_mod:
+        style: |
+          ha-card {
+            background: rgba(44, 45, 68, 0.4);
+            height: 346px !important;
+            width: 535px !important;
+          }
+      elements:
+        - type: custom:state-switch
+          entity: media_player.spotify
+          transition: flip
+          transition_time: 200
+          default: idle
+          style:
+            top: 10px
+            left: 0px
+            height: 346px
+            width: 500px
+            transform: translate(0%, 0%)
+          states:
+            idle:
+              type: picture-elements
+              card_mod:
+                style: |
+                  ha-card {
+                    background: transparent;
+                    height: 346px !important;
+                    width: 535px !important;
+                  }
+              elements:
+                - type: custom:button-card
+                  show_state: false
+                  show_name: true
+                  show_label: true
+                  tap_action:
+                    action: none
+                  name: Streaming
+                  label: Playlists
+                  styles:
+                    card:
+                      - background-color: transparent
+                      - height: 50px
+                    grid:
+                      - grid-template-areas: '"n l"'
+                      - grid-template-columns: auto auto
+                      - grid-template-rows: auto
+                    name:
+                      - font-size: 30px
+                      - color: '#74e5f2'
+                      - font-weight: lighter
+                    label:
+                      - font-size: 24px
+                      - align-self: start
+                      - color: transparent
+                      - justify-self: start
+                      - padding: 2px 0px 0px 9px
+                      - font-weight: lighter
+                  style:
+                    top: 0px
+                    left: 32px
+                    transform: translate(0%, 0%)
+                - type: custom:swipe-card
+                  start_card: 1
+                  card_mod:
+                    style: |
+                      ha-card {
+                        width: 500px;
+                        height: 346px;
+                        top: 0px;
+                        transform: translate(0%, 0%);
+                      }
+                      .swiper-wrapper {
+                        height: 300px !important;
+                      }
+                      .swiper-container .swiper-button-next {
+                        display: none;
+                      }
+                      .swiper-container .swiper-button-next::after {
+                        display: none;
+                      }
+                      .swiper-container .swiper-button-prev {
+                        display: none;
+                      }
+                      .swiper-container .swiper-button-prev::after {
+                        display: none;
+                      }
+                      .swiper-pagination {
+                        top: 262px !important;
+                        height: 30px;
+                        width: 42% !important;
+                        left: 290px !important;
+                      }
+                      .swiper-pagination-bullet {
+                        margin: 0px 18px 0px !important;
+                        height: 30px !important;
+                        width: 30px !important;
+                        background: transparent !important;
+                      }
+                  parameters:
+                    navigation: null
+                    allowTouchMove: false
+                    speed: 300
+                    effect: fade
+                    fadeEffect:
+                      crossFade: true
+                    pagination:
+                      type: bullets
+                      clickable: true
+                  style:
+                    width: 500px
+                    height: 346px
+                    top: 0px
+                    transform: translate(0%, 0%)
+                  cards:
+                    - type: picture-elements
+                      image: /local/img/box.png
+                      card_mod:
+                        style: |
+                          ha-card {
+                            background: transparent;
+                            height: 300px;
+                            width: 500px;
+                            left: 6px;
+                          }
+                      elements:
+                        - type: custom:button-card
+                          show_state: false
+                          show_name: false
+                          show_label: false
+                          tap_action:
+                            action: none
+                          styles:
+                            card:
+                              - background-color: transparent
+                              - width: 160px
+                              - height: 48px
+                            grid:
+                              - grid-template-areas: '"play albm featr"'
+                              - grid-template-columns: auto
+                              - grid-template-rows: auto
+                            custom_fields:
+                              play:
+                                - height: 37px
+                                - width: 37px
+                                - position: absolute
+                                - left: '-5px'
+                                - top: 4px
+                                - opacity: 50%
+                              albm:
+                                - height: 28px
+                                - width: 28px
+                                - position: absolute
+                                - left: 66px
+                                - top: 9px
+                                - opacity: 50%
+                              featr:
+                                - height: 28px
+                                - width: 28px
+                                - position: absolute
+                                - right: 0px
+                                - top: 9px
+                                - color: '#afbfdf'
+                          custom_fields:
+                            play: >
+                              [[[ return `<ha-icon
+                              icon="mdi:playlist-music"></ha-icon>`]]]
+                            albm: >
+                              [[[ return `<ha-icon
+                              icon="fas:compact-disc"></ha-icon>`]]]
+                            featr: |
+                              [[[ return `<ha-icon icon="fab:spotify"></ha-icon>`]]]
+                          style:
+                            top: 254px
+                            left: 309px
+                            transform: translate(0%, 0%)
+                        - type: custom:button-card
+                          show_state: false
+                          show_name: true
+                          show_label: true
+                          tap_action:
+                            action: none
+                          name: Streaming
+                          label: Featured
+                          styles:
+                            card:
+                              - background-color: transparent
+                              - height: 50px
+                            grid:
+                              - grid-template-areas: '"n l"'
+                              - grid-template-columns: auto auto
+                              - grid-template-rows: auto
+                            name:
+                              - font-size: 30px
+                              - color: transparent
+                              - font-weight: lighter
+                            label:
+                              - font-size: 24px
+                              - align-self: start
+                              - justify-self: start
+                              - padding: 2.5px 0px 0px 9px
+                              - font-weight: lighter
+                          style:
+                            top: 0px
+                            left: 26px
+                            transform: translate(0%, 0%)
+                        - type: custom:spotify-card
+                          spotify_entity: media_player.spotify
+                          playlist_type: featured
+                          always_play_random_song: true
+                          shuffle: true
+                          hide_top_header: true
+                          hide_currently_playing: true
+                          hide_connect_devices: true
+                          hide_warning: true
+                          display_style: grid
+                          limit: 10
+                          grid_covers_per_row: '5'
+                          style:
+                            transform: translate(0%, 0%) scale(90%)
+                            top: 52px
+                          card_mod:
+                            style: |
+                              ha-card {
+                                background: transparent;
+                                padding: 2px 0px 0px !important;
+                                overflow: visible !important;
+                              }
+                              #header-track {
+                                margin-top: -26px !important;
+                                height: 25px !important;
+                                margin-left: 161px !important;
+                                width: 332px !important;
+                                white-space: nowrap !important;
+                                overflow: hidden !important;
+                                text-overflow: ellipsis !important;
+                              }
+                              #content {
+                                border: 0px !important;
+                                background-color: transparent !important;
+                                padding: 0px !important;
+                                overflow: visible !important;
+                              }
+                              div#footer {
+                                display: none !important;
+                              }
+                              .grid-item {
+                                border-radius: 10px;
+                                box-shadow: 2px 3px 15px -3px rgba(0, 0, 0, 0.3) !important;
+                                transition-duration: 0.25s;
+                              }
+                              .grid-item-album-image.playing {
+                                border-radius: 10px !important;
+                                box-shadow: 0px 0px 20px rgba(175, 191, 223, 1) !important;
+                              }
+                              .grid-item:hover {
+                                box-shadow: 0px 0px 17px #afbfdf !important;
+                                transition-duration: 0.5s;
+                              }
+                              .grid-item-album-image > img {
+                                border-radius: 10px;
+                              }
+                              .dropdown {
+                                border-radius: 10px !important;
+                                max-height: none !important;
+                                box-shadow: none !important;
+                              }
+                              .dropdown-content.dropdown > p {
+                                font-weight: 300;
+                                color: #afbfdf;
+                              }
+                              .dropdown-content.dropdown > a {
+                                font-weight: 300;
+                                border-radius: 10px;
+                              }
+                              .dropdown-content.dropdown > a:hover {
+                                background: #41445f;
+                              }
+                - type: custom:button-card
+                  tap_action:
+                    action: none
+                  styles:
+                    card:
+                      - height: 45px
+                      - width: 94px
+                      - padding: 0px
+                      - overflow: visible
+                      - background-color: transparent
+                    custom_fields:
+                      icon1:
+                        - height: 28px
+                        - width: 28px
+                        - position: absolute
+                        - top: 8px
+                        - left: 0px
+                      icon2:
+                        - height: 28px
+                        - width: 28px
+                        - position: absolute
+                        - top: 8px
+                        - right: 0px
+                  custom_fields:
+                    icon1: |
+                      [[[ return `<ha-icon icon="fab:spotify"></ha-icon>` ]]]
+                    icon2: |
+                      [[[ return `<ha-icon icon="fas:play-circle"></ha-icon>` ]]]
+                  style:
+                    top: 255px
+                    left: 36px
+                    overflow: visible
+                    transform: translate(0%, 0%)
+                    border-radius: 10px
+                - type: custom:hui-element
+                  card_type: media-control
+                  entity: media_player.homepod_mass
+                  style:
+                    top: 257px
+                    right: 390px
+                    overflow: visible
+                    transform: translate(0%, 0%)
+                  card_mod:
+                    style:
+                      .: |
+                        ha-card {
+                          background-color: transparent;
+                          width: 300px;
+                          height: 40px !important;
+                        }
+                        ha-icon-button {
+                          display: none;
+                        }
+                        paper-progress {
+                          display: none;
+                        }
+                        div.top-info {
+                          display: none;
+                        }
+                        div.media-info {
+                          display: none;
+                        }
+                        div.background {
+                          display: none;
+                        }
+                        mwc-icon-button.browse-media {
+                          height: 75px;
+                          bottom: 6px;
+                          left: 0px;
+                        }
+                        ha-svg-icon {
+                          display: none;
+                        }
+                      mwc-icon-button.browse-media$: |
+                        button.mdc-icon-button {
+                          height: 28px;
+                          width: 28px;
+                          bottom: -47px;
+                          left: 257px;
+                          border-radius: 100%;
+                          xopacity: 60%;
+                        }
+                        mwc-ripple {
+                          display: none;
+                        }
+                        .mdc-icon-button > i {
+                          display: none;
+                        }
+                - type: custom:hui-element
+                  card_type: media-control
+                  entity: media_player.spotify
+                  style:
+                    top: 257px
+                    right: 460px
+                    overflow: visible
+                    transform: translate(0%, 0%)
+                  card_mod:
+                    style:
+                      .: |
+                        ha-card {
+                          background-color: transparent;
+                          width: 300px;
+                          height: 40px !important;
+                        }
+                        ha-icon-button {
+                          display: none;
+                        }
+                        paper-progress {
+                          display: none;
+                        }
+                        div.top-info {
+                          display: none;
+                        }
+                        div.media-info {
+                          display: none;
+                        }
+                        div.background {
+                          display: none;
+                        }
+                        mwc-icon-button.browse-media {
+                          height: 75px;
+                          bottom: -3px;
+                          left: 13px;
+                        }
+                        ha-svg-icon {
+                          display: none;
+                        }
+                      mwc-icon-button.browse-media$: |
+                        button.mdc-icon-button {
+                          height: 28px;
+                          width: 28px;
+                          bottom: -38px;
+                          left: 248px;
+                          border-radius: 100%;
+                          xopacity: 50%;
+                        }
+                        mwc-ripple {
+                          display: none;
+                        }
+                        .mdc-icon-button > i {
+                          display: none !important;
+                        }
+              image: /local/img/box.png
+            playing:
+              type: picture-elements
+              card_mod:
+                style: |
+                  ha-card {
+                    top: 12px;
+                    left: 31px;
+                    height: 293px !important;
+                    width: 450px;
+                    overflow: visible !important;
+                    background: transparent;
+                  }
+              elements:
+                - type: custom:mini-media-player
+                  entity: media_player.spotify
+                  artwork: cover
+                  hide:
+                    name: true
+                    info: true
+                    source: true
+                    sound_mode: true
+                    controls: true
+                    volume: true
+                    power: true
+                    progress: true
+                    runtime: true
+                    icon: true
+                  style:
+                    top: 0px
+                    left: 0px
+                    opacity: 50%
+                    backdrop-filter: blur(8px)
+                    border-radius: 10px
+                    transform: translate(0%, 0%)
+                  card_mod:
+                    style: |
+                      ha-card {
+                        height: 293px !important;
+                        width: 450px !important;
+                      }
+                      ha-card > div.mmp__container {
+                        backdrop-filter: blur(12px);
+                      }
+                - type: custom:hui-element
+                  card_type: picture-elements
+                  style:
+                    top: 10px
+                    right: 0px
+                    transform: translate(0%, 0%)
+                  card_mod:
+                    style: |
+                      ha-card {
+                        height: 263px !important;
+                        width: 172px;
+                        background: transparent;
+                      }
+                  elements:
+                    - type: custom:mini-media-player
+                      entity: media_player.spotify
+                      style:
+                        top: 16px
+                        right: 90px
+                        transform: translate(0%, 0%)
+                      group: true
+                      hide:
+                        source: true
+                        info: true
+                        sound_mode: true
+                        controls: true
+                        volume: true
+                        power: true
+                        progress: true
+                        runtime: true
+                        icon: true
+                    - type: custom:button-card
+                      show_state: false
+                      show_name: false
+                      show_label: false
+                      tap_action:
+                        action: none
+                      styles:
+                        card:
+                          - background-color: transparent
+                          - height: 263px
+                          - width: 172px
+                      style:
+                        top: 15px
+                        right: 0px
+                        transform: translate(0%, 0%)
+                    - type: custom:button-card
+                      entity: media_player.spotify
+                      show_name: false
+                      tap_action:
+                        action: call-service
+                        service: media_player.media_play_pause
+                        service_data:
+                          entity_id: media_player.spotify
+                      styles:
+                        card:
+                          - height: 60px
+                          - width: 60px
+                          - border-radius: 100%
+                          - background: transparent
+                        custom_fields:
+                          icn:
+                            - height: 60px
+                            - width: 60px
+                      custom_fields:
+                        icn: |
+                          [[[
+                            if (entity.state === 'playing')
+                            return `<ha-icon icon="fas:pause-circle"></ha-icon>`
+                            else return `<ha-icon icon="fas:play-circle"></ha-icon>`
+                          ]]]
+                      style:
+                        top: 50px
+                        right: 56px
+                        border-radius: 100%
+                        transform: translate(0%, 0%)
+                    - type: custom:button-card
+                      icon: fas:step-forward
+                      tap_action:
+                        action: call-service
+                        service: media_player.media_next_track
+                        service_data:
+                          entity_id: |
+                            [[[
+                              if (states['media_player.spotify'].state === 'playing')
+                                return 'media_player.spotify'
+                              else if (states['media_player.homepod_mass'].state === 'playing')
+                                return 'media_player.homepod_mass'
+                              else return 'media_player.spotify'
+                            ]]]
+                      styles:
+                        card:
+                          - height: 30px
+                          - width: 30px
+                          - border-radius: 100%
+                          - background: transparent
+                        icon:
+                          - height: 30px
+                          - width: 30px
+                      style:
+                        top: 65px
+                        right: 10px
+                        transform: translate(0%, 0%)
+                    - type: custom:button-card
+                      icon: fas:step-backward
+                      tap_action:
+                        action: call-service
+                        service: media_player.media_previous_track
+                        service_data:
+                          entity_id: |
+                            [[[
+                              if (states['media_player.spotify'].state === 'playing')
+                                return 'media_player.spotify'
+                              else if (states['media_player.homepod_mass'].state === 'playing')
+                                return 'media_player.homepod_mass'
+                              else return 'media_player.spotify'
+                            ]]]
+                      styles:
+                        card:
+                          - height: 30px
+                          - width: 30px
+                          - border-radius: 100%
+                          - background: transparent
+                        icon:
+                          - height: 30px
+                          - width: 30px
+                      style:
+                        top: 65px
+                        right: 132px
+                        transform: translate(0%, 0%)
+                    - type: custom:button-card
+                      icon: fas:random
+                      tap_action:
+                        action: toggle
+                      styles:
+                        card:
+                          - height: 30px
+                          - width: 30px
+                          - background: transparent
+                        icon:
+                          - height: 20px
+                          - width: 20px
+                          - opacity: 45%
+                      style:
+                        top: 110px
+                        right: 104px
+                        transform: translate(0%, 0%)
+                    - type: custom:state-switch
+                      style:
+                        top: 110px
+                        right: 104px
+                        transform: translate(0%, 0%)
+                      entity: media_player.homepod_mass
+                      states:
+                        playing:
+                          type: custom:button-card
+                          icon: fas:random
+                          tap_action:
+                            action: call-service
+                            service: script.toggle_shuffle
+                            service_data:
+                              entity_id: media_player.homepod_mass
+                          styles:
+                            card:
+                              - height: 30px
+                              - width: 30px
+                              - background: transparent
+                            icon:
+                              - height: 20px
+                              - width: 20px
+                              - color: var(--text-color-sensor)
+                              - '--text-color-sensor': |-
+                                  [[[
+                                    if (states['media_player.homepod_mass'].attributes.shuffle === 'true') return '#74e5f2';
+                                    else return '#A0A2A8';
+                                  ]]]
+                    - type: custom:state-switch
+                      style:
+                        top: 110px
+                        right: 104px
+                        transform: translate(0%, 0%)
+                      entity: media_player.spotify
+                      states:
+                        playing:
+                          type: custom:button-card
+                          icon: fas:random
+                          tap_action:
+                            action: call-service
+                            service: script.toggle_shuffle
+                            service_data:
+                              entity_id: media_player.spotify
+                          styles:
+                            card:
+                              - height: 30px
+                              - width: 30px
+                              - background: transparent
+                            icon:
+                              - height: 20px
+                              - width: 20px
+                              - color: var(--text-color-sensor)
+                              - '--text-color-sensor': |-
+                                  [[[
+                                    if (states['media_player.spotify'].attributes.shuffle == true) return '#74e5f2';
+                                    else return '#A0A2A8';
+                                  ]]]
+                    - type: custom:button-card
+                      icon: fas:sync-alt
+                      tap_action:
+                        action: toggle
+                      styles:
+                        card:
+                          - height: 30px
+                          - width: 30px
+                          - background: transparent
+                        icon:
+                          - height: 20px
+                          - width: 20px
+                          - opacity: 45%
+                      style:
+                        top: 110px
+                        right: 39px
+                        transform: translate(0%, 0%)
+                    - type: custom:state-switch
+                      style:
+                        top: 110px
+                        right: 39px
+                        transform: translate(0%, 0%)
+                      entity: media_player.homepod_mass
+                      states:
+                        playing:
+                          type: custom:button-card
+                          icon: fas:sync-alt
+                          tap_action:
+                            action: call-service
+                            service: script.toggle_repeat
+                            service_data:
+                              entity_id: media_player.homepod_mass
+                          styles:
+                            card:
+                              - height: 30px
+                              - width: 30px
+                              - background: transparent
+                            icon:
+                              - height: 20px
+                              - width: 20px
+                              - color: var(--text-color-sensor)
+                              - '--text-color-sensor': |-
+                                  [[[
+                                    if (states['media_player.homepod_mass'].attributes.repeat === 'all') return '#74e5f2';
+                                    else return '#A0A2A8';
+                                  ]]]
+                    - type: custom:state-switch
+                      style:
+                        top: 110px
+                        right: 39px
+                        transform: translate(0%, 0%)
+                      entity: media_player.spotify
+                      states:
+                        playing:
+                          type: custom:button-card
+                          icon: fas:sync-alt
+                          tap_action:
+                            action: call-service
+                            service: script.toggle_repeat
+                            service_data:
+                              entity_id: media_player.spotify
+                          styles:
+                            card:
+                              - height: 30px
+                              - width: 30px
+                              - background: transparent
+                            icon:
+                              - height: 20px
+                              - width: 20px
+                              - color: var(--text-color-sensor)
+                              - '--text-color-sensor': |-
+                                  [[[
+                                    if (states['media_player.spotify'].attributes.repeat === 'all') return '#74e5f2';
+                                    else return '#A0A2A8';
+                                  ]]]
+                    - type: custom:mini-media-player
+                      entity: media_player.spotify
+                      style:
+                        top: 145px
+                        right: 5px
+                        transform: translate(0%, 0%)
+                      group: true
+                      toggle_power: true
+                      hide:
+                        name: true
+                        power: true
+                        source: true
+                        sound_mode: true
+                        controls: true
+                        info: true
+                        progress: true
+                        runtime: true
+                        icon: true
+                        artwork: true
+                      card_mod:
+                        style:
+                          mmp-powerstrip$mmp-media-controls$: |
+                            div > ha-slider {
+                              display: none !important;
+                            }
+                    - type: custom:mini-media-player
+                      entity: media_player.spotify
+                      style:
+                        top: 149px
+                        right: 30px
+                        width: 141px
+                        transform: translate(0%, 0%)
+                      group: true
+                      volume_step: 5
+                      hide:
+                        name: true
+                        source: true
+                        volume_level: true
+                        power: true
+                        mute: true
+                        sound_mode: true
+                        controls: true
+                        info: true
+                        progress: true
+                        runtime: true
+                        icon: true
+                        artwork: true
+                    - type: custom:mini-media-player
+                      entity: media_player.spotify
+                      style:
+                        top: 6px
+                        right: 4px
+                        width: 44px
+                        transform: translate(0%, 0%) scale(0.8)
+                      group: true
+                      toggle_power: true
+                      hide:
+                        name: true
+                        mute: true
+                        source: true
+                        sound_mode: true
+                        controls: true
+                        info: true
+                        progress: true
+                        runtime: true
+                        icon: true
+                        artwork: true
+                      card_mod:
+                        style:
+                          mmp-powerstrip$mmp-media-controls$: |
+                            div > ha-slider {
+                              display: none !important;
+                            }
+                  image: /local/img/box.png
+                - type: custom:mini-media-player
+                  entity: media_player.spotify
+                  style:
+                    top: 261px
+                    left: 0px
+                    width: 450px
+                    border-radius: 10px
+                    background: transparent
+                    background-color: transparent
+                    transform: translate(0%, 0%)
+                  card_mod:
+                    style: |
+                      ha-card {
+                        --ha-card-background: transparent;
+                      }
+                  hide:
+                    name: true
+                    source: true
+                    power: true
+                    mute: true
+                    volume: true
+                    sound_mode: true
+                    controls: true
+                    info: true
+                    runtime: true
+                    icon: true
+                    artwork: true
+                - type: custom:mini-media-player
+                  entity: media_player.spotify
+                  artwork: cover
+                  info: scroll
+                  hide:
+                    name: true
+                    source: true
+                    sound_mode: true
+                    controls: true
+                    volume: true
+                    power: true
+                    progress: true
+                    runtime: true
+                    icon: true
+                  style:
+                    top: 15px
+                    left: 15px
+                    transform: translate(0%, 0%)
+                  card_mod:
+                    style: |
+                      ha-card {
+                        height: 263px !important;
+                        width: 263px !important;
+                        overflow: visible !important;
+                        box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3);
+                      }
+              image: /local/img/box.png
+      image: /local/img/box.png

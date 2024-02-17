@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Assistant Configuration</title>
+    <style>
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+          Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+          sans-serif;
+        background: linear-gradient(
+          120deg,
+          rgba(60, 66, 80, 1) 0%,
+          rgba(23, 26, 37, 1) 42%,
+          rgba(21, 25, 35, 1) 100%
+        );
+        background-repeat: no-repeat;
+        background-size: cover;
+        color: #c9c9c9;
+        margin: 0;
+        padding: 0;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      /* Unvisited link */
+      a {
+        color: #eeeeee;
+      }
+
+      /* Visited link */
+      a:visited {
+        color: #bbbbbb;
+      }
+
+      #markdown-content {
+        max-width: 1200px;
+        /* Adjust this value to control the width of the content */
+        margin: auto;
+        padding: 2vw;
+        /* Center the content */
+        backdrop-filter: blur(12px);
+        background: #08080840;
+      }
+
+      /* Default styles for larger screens */
+      img,
+      video {
+        max-width: 100%;
+        height: auto;
+      }
+
+      /* Media query for smaller screens */
+      @media only screen and (max-width: 600px) {
+        img,
+        video {
+          max-width: 100%;
+          height: auto;
+        }
+      }
+
+      /* Responsive styles for tables */
+      .table-container {
+        max-width: 100%;
+        overflow-x: auto;
+        /* Enable horizontal scrolling for the table container */
+      }
+
+      table {
+        width: 100%;
+        margin-bottom: 20px;
+      }
+
+      th,
+      td {
+        border: 1px solid #f8f8f830;
+        padding: 8px;
+        text-align: center;
+        word-break: break-word;
+        /* Ensure that words don't overflow table cells */
+        white-space: nowrap;
+        /* Prevent line breaks in table cells */
+      }
+
+      .popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.9);
+        z-index: 1000;
+        text-align: center;
+        overflow: auto;
+      }
+
+      .popup img {
+        width: 100%;
+        height: auto;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .popup p {
+        color: white;
+        font-size: 18px;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        cursor: pointer;
+      }
+
+      /* Media Queries for Responsive Design */
+      @media screen and (max-width: 600px) {
+        /* Styles for screens less than 600px wide */
+        #markdown-content {
+          padding: 5px;
+          margin: auto;
+          background: none;
+          max-width: 100%;
+        }
+      }
+
+      @media screen and (min-width: 601px) and (max-width: 1024px) {
+        /* Styles for screens between 601px and 1024px wide */
+        #markdown-content {
+          padding: 15px;
+          margin: auto;
+          max-width: 100%;
+          background: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="markdown-content"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.1/showdown.min.js"></script>
+    <script>
+      const converter = new showdown.Converter();
+      const githubRepoUrl = 'README.md';
+
+      // Fetch the Markdown content from the GitHub repository
+      fetch(githubRepoUrl)
+        .then((response) => response.text())
+        .then((markdownContent) => {
+          // Convert Markdown to HTML
+          const html = converter.makeHtml(markdownContent);
+          document.getElementById('markdown-content').innerHTML = html;
+        })
+        .catch((error) =>
+          console.error('Error fetching Markdown from GitHub:', error)
+        );
+    </script>
+    <script>
+      // Function to open the popup with the specified image source and title
+      function openPopup(imageSrc, title) {
+        const popup = document.getElementById('popup');
+        const popupImage = document.getElementById('popup-image');
+        const popupTitle = document.getElementById('popup-title');
+
+        popupImage.src = imageSrc;
+        popupTitle.textContent = title;
+
+        popup.style.display = 'block';
+      }
+
+      // Function to close the popup
+      function closePopup() {
+        const popup = document.getElementById('popup');
+        popup.style.display = 'none';
+      }
+    </script>
+    <!-- Add the following HTML at the end of your document, just before the closing </body> tag -->
+
+    <div id="popup" class="popup" onclick="closePopup()">
+      <img id="popup-image" src="" alt="Popup Image" />
+      <p id="popup-title"></p>
+    </div>
+  </body>
+</html>

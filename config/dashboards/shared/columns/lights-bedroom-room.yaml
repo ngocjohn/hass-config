@@ -1,0 +1,53 @@
+- view_layout:
+    grid-column: span 2
+  type: 'custom:button-card'
+  template:
+    - light_button_card_group
+  entity: group.light_bedroom
+  name: All Main Lights
+  icon: 'mdi:ceiling-light-multiple'
+  variables:
+    aspect_ratio: 2/1
+
+- type: 'custom:button-card'
+  template:
+    - live_tile_with_graph
+    - live_tile_with_state_unit
+  entity: sensor.motion_sensor_entrance_illuminance_lux
+  name: Hallway Light Level
+
+- type: 'custom:decluttering-card'
+  template: light_card
+  variables:
+    - entity: light.bedroom_main_light
+    - name: Ceiling
+
+- type: 'custom:decluttering-card'
+  template: light_card
+  variables:
+    - entity: light.bedroom_bed_light
+    - name: Bed light
+
+- type: 'custom:decluttering-card'
+  template: light_card
+  variables:
+    - entity: light.bedroom_closet_light
+    - name: Closet light
+
+- type: 'custom:decluttering-card'
+  template: light_card
+  variables:
+    - entity: light.bedroom_ripple_mood_light
+    - name: Mood light
+
+- type: 'custom:decluttering-card'
+  template: light_card
+  variables:
+    - entity: light.shower_room_main_light
+    - name: Shower main
+
+- type: 'custom:decluttering-card'
+  template: light_card
+  variables:
+    - entity: light.shower_room_mirror_light
+    - name: Shower mirror

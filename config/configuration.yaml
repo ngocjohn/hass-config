@@ -1,0 +1,42 @@
+#
+#     ______            _____                        __  _
+#    / ____/___  ____  / __(_)___ ___  ___________ _/ /_(_)___  ____
+#   / /   / __ \/ __ \/ /_/ / __ `/ / / / ___/ __ `/ __/ / __ \/ __ \
+#  / /___/ /_/ / / / / __/ / /_/ / /_/ / /  / /_/ / /_/ / /_/ / / / /
+#  \____/\____/_/ /_/_/ /_/\__, /\__,_/_/   \__,_/\__/_/\____/_/ /_/
+#                         /____/
+homeassistant:
+  latitude: !secret homeassistant_latitude
+  longitude: !secret homeassistant_longitude
+  elevation: !secret homeassistant_elevation
+  external_url: !secret external_url
+  packages: !include_dir_named packages
+  time_zone: 'Europe/Prague'
+  unit_system: 'metric'
+  temperature_unit: 'C'
+  country: 'CZ'
+  allowlist_external_dirs:
+    - /config
+  media_dirs:
+    movies: /media/movies
+    media: /media
+default_config:
+# FRONT - END
+frontend:
+  themes: !include_dir_merge_named themes
+
+# HTTP
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 172.30.33.0/24
+    - 0.0.0.0/0
+# STT
+stt:
+  - platform: google_cloud_stt
+    key_file: google_stt.json
+    model: command_and_search
+# INCLUDES
+automation ui: !include automations.yaml
+script: !include scripts.yaml
+api:

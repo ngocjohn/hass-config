@@ -1,0 +1,32 @@
+blueprint:
+  name: Disable vacuum camera update when docked
+  description: Disable the automatic update of the vacuum camera when the robot is
+    docked.
+  domain: automation
+  source_url: https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor/blob/master/blueprints/automation/disable_vacuum_camera_update_when_docked.yaml
+  input:
+    vacuum:
+      name: Vacuum device
+      selector:
+        entity:
+          domain: vacuum
+          multiple: false
+    camera:
+      name: Vacuum camera
+      selector:
+        entity:
+          domain: camera
+          multiple: false
+mode: restart
+trigger:
+- platform: state
+  entity_id: !input vacuum
+condition:
+- condition: template
+  value_template: '{{ trigger.to_state.state != trigger.from_state.state }}'
+action:
+- condition: trigger
+  id: 0
+- service: "{% if trigger.to_state.state in [\"unavailable\", \"unknown\", \"docked\"]
+    %}\n  camera.turn_off\n{% else %}\n  camera.turn_on\n{% endif %}\n"
+  entity_id: !input camera

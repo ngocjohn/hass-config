@@ -1,0 +1,51 @@
+---
+kodi:
+  h1-font-size: 2.85rem
+  h2-font-size: 2.25rem
+  h3-font-size: 2rem
+  h4-font-size: 1.5rem
+  h5-font-size: 1.15rem
+  h6-font-size: .7rem
+
+  h1-font-weight: 100
+  h2-font-weight: 100
+  h3-font-weight: 100
+  h4-font-weight: 600
+  h5-font-weight: 400
+  h6-font-weight: 400
+
+  body-font-size: 1rem
+  body-font-weight: normal
+  body-line-height: normal
+  card-title-font-size: 1.5rem
+  card-title-font-weight: 600
+  card-title-line-height: normal
+  title-font-size: 3.5rem
+  title-font-weight: 600
+  title-line-height: normal
+  subtitle-font-size: 1rem
+  subtitle-font-weight: 600
+  subtitle-line-height: normal
+  small-font-size: 0.9rem
+
+  body-font: 'var(--body-font-weight) var(--body-font-size)'
+  card-title-font: 'var(--card-title-font-weight) var(--card-title-font-size)'
+  h1-font: 'var(--h1-font-weight) var(--h1-font-size)'
+  h2-font: 'var(--h2-font-weight) var(--h2-font-size)'
+  h3-font: 'var(--h3-font-weight) var(--h3-font-size)'
+  h4-font: 'var(--h4-font-weight) var(--h4-font-size)'
+  h5-font: 'var(--h5-font-weight) var(--h5-font-size)'
+  h6-font: 'var(--h6-font-weight) var(--h6-font-size)'
+
+  ha-card-header-font-size: var(--card-title-font-size)
+  masonry-view-card-margin: 2px 1px
+  lovelace-background: rgb(0,0,0)
+  card-mod-theme: 'kodi'
+  card-mod-view-yaml: |
+    .: |
+      hui-view {
+        background: none !important;
+      }
+      #view {
+        overflow: hidden;
+      }

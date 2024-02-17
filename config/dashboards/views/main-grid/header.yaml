@@ -1,0 +1,57 @@
+#################################################
+#                                               #
+#                  HEADER                       #
+#                                               #
+#################################################
+- type: 'custom:layout-card'
+  layout_type: 'custom:grid-layout'
+  view_layout:
+    grid-area: header
+    show:
+      mediaquery: '(max-width: 800px), (min-width: 1441px)'
+  layout:
+    grid-template-columns: fit-content(100%) 1fr
+    grid-gap: 0
+    margin: 0
+    place-items: 'center flex-end'
+  cards:
+    - type: custom:button-card
+      entity: sensor.time
+      template:
+        - header_clock
+    - type: custom:button-card
+      entity: weather.prague
+      template:
+        - header_weather
+#################################################
+#                                               #
+#                  WEATHER                      #
+#                                               #
+#################################################
+
+# - type: 'custom:layout-card'
+#   layout_type: 'custom:grid-layout'
+#   view_layout:
+#     grid-area: header
+#     show:
+#       mediaquery: '(max-width: 800px)'
+#   layout:
+#     grid-template-columns: 1fr 1fr
+#     grid-gap: 0
+#     margin: 0
+#     align-items: flex-end
+#   cards:
+#     - type: custom:button-card
+#       entity: sensor.template_sidebar_time
+#       template:
+#         - timeclock
+#     - type: custom:button-card
+#       entity: weather.prague
+#       tap_action: !include ../../shared/popup/popup_weather.yaml
+#       name: Prague
+#       variables:
+#         temp_min: sensor.weather_min_temp
+#         temp_max: sensor.weather_max_temp
+#         humidity: sensor.weather_humidity
+#       template:
+#         - horizontal_widget_weather

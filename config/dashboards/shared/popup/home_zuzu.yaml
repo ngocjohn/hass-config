@@ -1,0 +1,118 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Zuzu
+    style: !include ../snippets/style_footer_transparent.yaml
+
+    card_mod: !include ../snippets/style_popup_footer.yaml
+    content:
+      type: custom:layout-card
+      layout_type: custom:grid-layout
+      layout: !include ../snippets/popup_footer_layout.yaml
+      cards:
+        #################################################
+        #                                               #
+        #                PERSON POPUP                   #
+        #                                               #
+        #################################################
+        - type: entities
+          title: Zuzu
+          show_header_toggle: false
+          card_mod:
+            class: header
+          entities:
+            - entity: person.huong_giang
+              secondary_info: last-changed
+            - type: attribute
+              entity: sensor.gle
+              attribute: 'Formatted Address'
+              icon: mdi:car
+              name: GLE
+          footer:
+            type: custom:stack-in-card
+            cards:
+              - type: history-graph
+                card_mod:
+                  style: |
+                    ha-card > div {
+                      padding: 0 0.5em !important;
+                    }
+                entities:
+                  - entity: person.huong_giang
+                    name: ' '
+              - type: map
+                default_zoom: 14
+                dark_mode: true
+                hours_to_show: 12
+                entities:
+                  - device_tracker.findmy_d098350b38e241d3972ad394a27f38b6
+                card_mod:
+                  style:
+                    .: |
+                      #root {
+                        height: 25em;
+                        padding-bottom: 0 !important;
+                      }
+                      ha-icon-button {
+                        color: var(--primary-color);
+                        zoom: 140%;
+                        margin-left: -0.2em;
+                      }
+                      ha-card {
+                        border-radius: 12px;
+                        transition: none;
+                        height: 25em !important;
+                      }
+                    ha-map$: |
+                      #map {
+                        background-color: #191919 !important;
+                      }
+                      .leaflet-control-attribution {
+                        display: none;
+                      }
+                      .leaflet-bar a {
+                        background-color: rgba(115, 123, 124, 0.2) !important;
+                        color: #9da0a2 !important;
+                        backdrop-filter: blur(0.25em);
+                        zoom: 140%;
+                      }
+                      a.leaflet-control-zoom-in {
+                        border-bottom: 1px solid #181818 !important;
+                      }
+                      .leaflet-pane.leaflet-tile-pane {
+                        filter: invert(0.95) grayscale(0.95) contrast(95%);
+                      }
+
+        - type: entities
+          title: Logbook
+          show_header_toggle: false
+          card_mod:
+            class: header
+          entities:
+            - type: custom:stack-in-card
+              cards:
+                - type: logbook
+                  entities:
+                    - sensor.gle
+                  hours_to_show: 24
+                  style: |
+                    ha-card {
+                      display: block !imporant;
+                      border: none !important;
+                      justify-content: unset;
+                      align-items: stretch;
+                      margin-inline: 5px;
+                    }
+                    ha-logbook {
+                      height: 470px !important;
+                    }
+                    .content {
+                      padding: 0 !important;
+                    }
+                    lit-virtualizer {
+                      overflow: hidden !important;
+                    }
+                    .narrow .entry {
+                      line-height: unset;
+                    }

@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg width="2462.177" height="2061.3804" viewBox="0 0 2462.177 2061.3803" version="1.1" id="svg2237"
+	xml:space="preserve" inkscape:version="1.3.2 (091e20e, 2023-11-25)" sodipodi:docname="planek.svg"
+	xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+	xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+	<sodipodi:namedview id="namedview2239" pagecolor="#505050" bordercolor="#eeeeee" borderopacity="1"
+		inkscape:showpageshadow="false" inkscape:pageopacity="0" inkscape:pagecheckerboard="false"
+		inkscape:deskcolor="#505050" inkscape:document-units="mm" showgrid="false" inkscape:zoom="0.56835938"
+		inkscape:cx="1231.6151" inkscape:cy="1029.2783" inkscape:window-width="2560" inkscape:window-height="1314"
+		inkscape:window-x="0" inkscape:window-y="863" inkscape:window-maximized="0" inkscape:current-layer="Background"
+		inkscape:lockguides="false" borderlayer="true" />
+	<defs id="defs2234">
+		<linearGradient inkscape:collect="always" id="linearGradient2807">
+			<stop style="stop-color:#000000;stop-opacity:1;" offset="0" id="stop2803" />
+			<stop style="stop-color:#000000;stop-opacity:0;" offset="1" id="stop2805" />
+		</linearGradient>
+		<linearGradient inkscape:collect="always" id="linearGradient2683">
+			<stop style="stop-color:#ffffff;stop-opacity:1;" offset="0" id="stop2679" />
+			<stop style="stop-color:#ffffff;stop-opacity:0;" offset="1" id="stop2681" />
+		</linearGradient>
+		<rect x="1594.7495" y="637.89978" width="195.9093" height="51.366463" id="rect911" />
+		<linearGradient inkscape:collect="always" xlink:href="#linearGradient2683" id="linearGradient2687" x1="972.68964"
+			y1="1351.3412" x2="1166.8936" y2="1351.3412" gradientUnits="userSpaceOnUse" />
+		<linearGradient inkscape:collect="always" xlink:href="#linearGradient2807" id="linearGradient2809" x1="972.68964"
+			y1="1351.3412" x2="1166.8936" y2="1351.3412" gradientUnits="userSpaceOnUse" />
+		<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="28.1996" y1="-108.3677" x2="14.1068"
+			y2="-79.065697" gradientTransform="matrix(-1,0,0,1,124.8804,0)">
+			<stop offset="0.3098" style="stop-color:#FCE8B2" id="stop2215" />
+			<stop offset="0.3987" style="stop-color:#FFCC80" id="stop2217" />
+		</linearGradient>
+		<clipPath clipPathUnits="userSpaceOnUse" id="clipPath1454">
+			<use x="0" y="0" xlink:href="#g1450" id="use1456" />
+		</clipPath>
+		<filter inkscape:collect="always" style="color-interpolation-filters:sRGB" id="filter4188" x="-0.12906307"
+			y="-0.15846028" width="1.2530519" height="1.3108652" inkscape:label="filter4188">
+			<feGaussianBlur inkscape:collect="always" stdDeviation="8.830405" id="feGaussianBlur4190" />
+		</filter>
+		<filter inkscape:collect="always" style="color-interpolation-filters:sRGB" id="filter3420" x="-0.043002496"
+			y="-0.062066532" width="1.0854511" height="1.1238145">
+			<feGaussianBlur inkscape:collect="always" stdDeviation="3.5640773" id="feGaussianBlur3422" />
+		</filter>
+	</defs>
+	<g inkscape:label="Background" id="Background" style="display:inline" transform="translate(131.35865,178.01198)"
+		inkscape:groupmode="layer">
+
+		<g id="base-background" inkscape:label="Base background" style="display:inline">
+			<image width="2199" height="1705" preserveAspectRatio="none" xlink:href="bg_bellow_horizon.png"
+				id="bellow_horizon" x="131.35866" y="-203.92018" inkscape:label="bellow_horizon" inkscape:svg-dpi="1"
+				href="/local/hafloor/bg_bellow_horizon.png" style="display:inline" transform="rotate(10)"
+				sodipodi:absref="/Users/vietngoc/Documents/Floorplan Final/floorplan 4/final/local/hafloor/bg_bellow_horizon.png" />
+			<image width="2199" height="1705" preserveAspectRatio="none" xlink:href="bg_above_horizon.png" id="above_horizon"
+				x="131.35866" y="-203.92018" inkscape:label="above_horizon" inkscape:svg-dpi="1"
+				href="/local/hafloor/bg_above_horizon.png" style="display:inline" transform="rotate(10)"
+				sodipodi:absref="/Users/vietngoc/Documents/Floorplan Final/floorplan 4/final/local/hafloor/bg_above_horizon.png" />
+		</g>
+		<g id="light-overlays" inkscape:label="Light Overlays" style="display:inline">
+			<image width="2199" height="1705" preserveAspectRatio="none" xlink:href="bg_living_lamp.png"
+				id="light_overlay.living_room_floor_lamp" x="131.35866" y="-203.92018" href="/local/hafloor/bg_living_lamp.png"
+				style="display:inline" inkscape:svg-dpi="1" transform="rotate(10)"
+				sodipodi:absref="/Users/vietngoc/Documents/Floorplan Final/floorplan 4/final/local/hafloor/bg_living_lamp.png" />
+			<image width="2199.4597" height="1705.3564" preserveAspectRatio="none" xlink:href="bg_living_main.png"
+				id="light_overlay.shelly_rgbw_kitchen_led_strip" x="131.35866" y="-203.92018"
+				href="/local/hafloor/bg_living_main.png" inkscape:svg-dpi="1" style="display:inline" transform="rotate(10)"
+				sodipodi:absref="/Users/vietngoc/Documents/Floorplan Final/floorplan 4/final/local/hafloor/bg_living_main.png" />
+			<image width="2199" height="1705" preserveAspectRatio="none" xlink:href="bg_kitchen_table.png"
+				id="light_overlay.kitchen_table_light" x="131.35866" y="-203.92018" href="/local/hafloor/bg_kitchen_table.png"
+				inkscape:svg-dpi="1" style="display:inline" transform="rotate(10)"
+				sodipodi:absref="/Users/vietngoc/Documents/Floorplan Final/floorplan 4/final/local/hafloor/bg_kitchen_table.png" />
+			<image width="2199" height="1705" preserveAspectRatio="none" xlink:href="bg_kitchen_main.png"
+				id="light_overlay.kitchen_main_light" x="131.35866" y="-203.92018" href="/local/hafloor/bg_kitchen_main.png"
+				inkscape:svg-dpi="1" style="display:inline" transform="rotate(10)"
+				sodipodi:absref="/Users/vietngoc/Documents/Floorplan Final/floorplan 4/final/local/hafloor/bg_kitchen_main.png" />
+			<image width="2199" height="1705" preserveAspectRatio="none" xlink:href="bg_bathroom.png"
+				id="light_overlay.bathroom_group" x="131.35866" y="-203.92018" href="/local/hafloor/bg_bathroom.png"
+				style="display:inline" transform="rotate(10)"
+				sodipodi:absref="/Users/vietngoc/Documents/Floorplan Final/floorplan 4/final/local/hafloor/bg_bathroom.png" />
+			<image width="2199" height="1705" preserveAspectRatio="none" xlink:href="bg_utility.png"
+				id="light_overlay.utility_room_light" x="131.35866" y="-203.92018" href="/local/hafloor/bg_utility.png"
+				style="display:inline" transform="rotate(10)"
+				sodipodi:absref="/Users/vietngoc/Documents/Floorplan Final/floorplan 4/final/local/hafloor/bg_utility.png" />
+			<image width="2199" height="1705" preserveAspectRatio="none" xlink:href="bg_hallway.png"
+				id="light_overlay.hallway_group" x="131.35866" y="-203.92018" href="/local/hafloor/bg_hallway.png"
+				style="display:inline" transform="rotate(10)"
+				sodipodi:absref="/Users/vietngoc/Documents/Floorplan Final/floorplan 4/final/local/hafloor/bg_hallway.png" />
+			<image width="2199" height="1705" preserveAspectRatio="none" xlink:href="bg_office_table.png"
+				id="light_overlay.office_led_light_strip" x="131.35866" y="-203.92018" href="/local/hafloor/bg_office_table.png"
+				style="display:inline" transform="rotate(10)"
+				sodipodi:absref="/Users/vietngoc/Documents/Floorplan Final/floorplan 4/final/local/hafloor/bg_office_table.png" />
+			<image width="2199" height="1705" preserveAspectRatio="none" xlink:href="bg_office_lamp.png"
+				id="light_overlay.office_lamp_bulb" x="131.35866" y="-203.92018" href="/local/hafloor/bg_office_lamp.png"
+				style="display:inline;fill:none;stroke:none;stroke-width:15;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+				transform="rotate(10)"
+				sodipodi:absref="/Users/vietngoc/Documents/Floorplan Final/floorplan 4/final/local/hafloor/bg_office_lamp.png" />
+			<image width="2199" height="1705" preserveAspectRatio="none" xlink:href="bg_kidsroom.png"
+				id="light_overlay.vanesska_ceiling_light" x="131.35866" y="-203.92018" href="/local/hafloor/bg_kidsroom.png"
+				style="display:inline" transform="rotate(10)"
+				sodipodi:absref="/Users/vietngoc/Documents/Floorplan Final/floorplan 4/final/local/hafloor/bg_kidsroom.png" />
+			<image width="2199" height="1705" preserveAspectRatio="none" xlink:href="bg_bedroom_closet.png"
+				id="light_overlay.bedroom_closet_light" x="131.35866" y="-203.92018" href="/local/hafloor/bg_bedroom_closet.png"
+				style="display:inline" transform="rotate(10)"
+				sodipodi:absref="/Users/vietngoc/Documents/Floorplan Final/floorplan 4/final/local/hafloor/bg_bedroom_closet.png" />
+			<image width="2199" height="1705" preserveAspectRatio="none" xlink:href="bg_shower.png"
+				id="light_overlay.shower_room_mirror_light" x="131.35866" y="-203.92018" href="/local/hafloor/bg_shower.png"
+				style="display:inline" transform="rotate(10)"
+				sodipodi:absref="/Users/vietngoc/Documents/Floorplan Final/floorplan 4/final/local/hafloor/bg_shower.png" />
+			<image width="2199" height="1705" preserveAspectRatio="none" xlink:href="bg_bedroom_main.png"
+				id="light_overlay.bed_light" x="131.35866" y="-203.92018" href="/local/hafloor/bg_bedroom_main.png"
+				style="display:inline" inkscape:svg-dpi="1" transform="rotate(10)"
+				sodipodi:absref="/Users/vietngoc/Documents/Floorplan Final/floorplan 4/final/local/hafloor/bg_bedroom_main.png" />
+		</g>
+		<g id="tv_overlays" inkscape:label="TV Overlays" style="display:inline">
+			<image width="377.43277" height="385.39969" preserveAspectRatio="none" xlink:href="bg_atv_idle_trim.png"
+				id="media_player_overlay.living_room_tv" x="663.37915" y="431.14523" style="display:inline"
+				href="/local/hafloor/bg_atv_idle_trim.png" inkscape:label="ATV idle overlay" inkscape:svg-dpi="1"
+				transform="rotate(10)"
+				sodipodi:absref="/Users/vietngoc/Documents/Floorplan Final/floorplan 4/final/local/hafloor/bg_atv_idle_trim.png" />
+			<path d="M 524.32594,730.04256 778.63348,631.76614 789.3271,728.1767 542.40148,826.00767 Z" id="atv_idle_path"
+				inkscape:label="ATV Idle path"
+				style="mix-blend-mode:lighten;fill:none;stroke:#ff0000;stroke-width:5;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter3420)"
+				transform="rotate(10,1099.7299,852.67822)" />
+			<g id="g2115" inkscape:label="ATV Youtube Kodi">
+				<path
+					d="M 547.85538,579.70743 C 898.14995,515.10317 969.68369,501.54066 969.68369,501.54066 L 941.66681,657.5529 519.2567,738.52523 Z"
+					id="light.sony_tv_backlight" inkscape:label="light.sony_tv_backlight" sodipodi:nodetypes="ccccc"
+					style="display:inline;fill:none;stroke:none" />
+				<image preserveAspectRatio="none" id="atv-entity-picture" x="688.53284" y="719.49127"
+					inkscape:transform-center-x="8.8226005" inkscape:transform-center-y="0.48153121"
+					transform="matrix(0.98292376,-0.18401327,-0.1778947,0.98404953,0,0)"
+					sodipodi:absref="/Users/vietngoc/Documents/Floorplan Final/floorplan 4/final/maxresdefault.jpg"
+					inkscape:label="ATV Youtube bg" inkscape:svg-dpi="1" style="display:inline" width="426.9715"
+					height="157.64468" />
+			</g>
+
+		</g>
+	</g>
+	<g id="areas" inkscape:label="Areas" style="display:inline;stroke-width:0;stroke-dasharray:none"
+		transform="translate(131.35865,178.01198)" inkscape:groupmode="layer">
+		<g id="area.living_room" inkscape:label="Living Room" style="display:inline;stroke-width:0;stroke-dasharray:none">
+			<path style="fill:none;stroke:#ffffff;stroke-width:0;stroke-dasharray:none"
+				d="M 630.53037,1188.7078 1021.7127,1088.5041 855.16674,741.28465 505.46974,818.04342 Z" id="path1190"
+				sodipodi:nodetypes="ccccc" />
+			<use id="light.shelly_rgbw_kitchen_led_strip" inkscape:label="light.shelly_rgbw_kitchen_led_strip"
+				href="#path1190" style="stroke-width:0;stroke-dasharray:none" />
+		</g>
+		<g id="area.kitchen" inkscape:label="Kitchen" style="display:inline;stroke-width:0;stroke-dasharray:none">
+			<path style="fill:none;stroke:#ffffff;stroke-width:0;stroke-dasharray:none"
+				d="M 855.05819,741.42803 931.05832,625.0915 1172.42,577.31639 l 9.315,15.58121 6.6976,-1.49955 12.8515,-65.28317 39.2636,66.16284 -5.5786,20.99665 36.8371,-8.24751 178.8817,302.0066 -28.2776,90.4406 -267.5853,62.71904 -133.6325,28.171 z"
+				id="path1435" />
+			<use id="light.kitchen_main_light" inkscape:label="light.kitchen_main_light" href="#path1435"
+				style="display:inline;stroke-width:0;stroke-dasharray:none" />
+		</g>
+		<g id="area.bathroom" inkscape:label="Bathroom" style="display:inline;stroke-width:0;stroke-dasharray:none">
+			<path style="fill:none;stroke:#ffffff;stroke-width:0;stroke-dasharray:none"
+				d="m 878.86781,517.18841 -29.80872,-67.54773 4.44408,-2.07154 3.5315,-38.53377 88.60347,-3.64605 5.6786,-39.35762 19.68359,37.14522 135.79817,-6.95492 44.0745,75.81451 11.8024,-64.506 30.0613,48.48027 -18.4174,65.87497 19.4547,37.43222 -236.03745,40.54093 17.57852,-101.0905 z"
+				id="path1476" sodipodi:nodetypes="cccccccccccccccc" />
+			<use id="light.bathroom_group" inkscape:label="light.bathroom_group" href="#path1476"
+				style="stroke-width:0;stroke-dasharray:none" />
+		</g>
+		<g id="area.utility" inkscape:label="Utility" style="display:inline;stroke-width:0;stroke-dasharray:none">
+			<path style="fill:none;stroke:#ffffff;stroke-width:0;stroke-dasharray:none"
+				d="m 849.07602,449.65287 -81.15033,-159.04489 6.8503,-101.99137 108.84027,-17.4207 7.48897,10.95529 138.92347,-24.10619 24.8494,37.5681 -13.7033,97.1432 5.6327,12.98314 3.3098,-1.77155 9.0417,-65.8492 26.1083,43.78506 -8.663,66.13008 30.4695,48.19386 -136.37302,7.21329 -19.71929,-37.51995 -5.46656,39.5022 -88.50513,4.09194 -3.54905,38.34156 z"
+				id="path1481" />
+			<use id="light.utility_room_light" inkscape:label="light.utility_room_light" href="#path1481"
+				style="stroke-width:0;stroke-dasharray:none" />
+		</g>
+		<g id="area.hallway" inkscape:label="Hallway" style="display:inline;stroke-width:0;stroke-dasharray:none">
+			<path style="fill:none;stroke:#ffffff;stroke-width:0;stroke-dasharray:none"
+				d="m 1029.5173,158.27575 177.5719,-23.58279 93.7058,138.36979 -15.8599,82.87061 14.6404,18.38415 -16.6442,73.16754 17.3701,28.84613 16.5029,-65.2911 35.6179,57.43115 -16.3129,66.57219 8.9461,15.30081 -16.8907,6.17062 21.4988,33.73273 -78.0316,15.36401 -36.2084,7.85023 5.1741,-20.694 -39.4236,-66.17819 -5.3182,27.27758 -15.9559,-32.04553 11.9399,-66.27234 -29.2993,-48.63309 -11.8095,65.53275 -74.3507,-124.70034 8.648,-66.34439 -25.6442,-43.41315 -9.0541,65.7644 -3.3931,1.94363 -5.8458,-12.97779 13.8786,-97.4503 z"
+				id="path1523" />
+			<use id="light.hallway_group" inkscape:label="light.hallway_group" href="#path1523"
+				style="stroke-width:0;stroke-dasharray:none" />
+		</g>
+		<g id="area.office" inkscape:label="Office" style="display:inline;stroke-width:0;stroke-dasharray:none">
+			<path style="fill:none;stroke:#ffffff;stroke-width:0;stroke-dasharray:none"
+				d="m 1207.3677,134.76533 373.3197,-57.462888 150.0993,197.525148 -447.2604,173.87115 15.9084,-74.39975 -14.1498,-18.29049 15.4153,-83.84119 z"
+				id="path1567" />
+			<use id="light.office_led_light_strip" inkscape:label="light.office_led_light_strip" href="#path1567"
+				style="stroke-width:0;stroke-dasharray:none" />
+			<use id="light.officelamp" inkscape:label="light.officelamp" href="#path1567"
+				style="stroke-width:0;stroke-dasharray:none" />
+		</g>
+		<g id="area.kidsroom" inkscape:label="Kids Room" style="display:inline;stroke-width:0;stroke-dasharray:none">
+			<path style="fill:none;stroke:#ffffff;stroke-width:0;stroke-dasharray:none"
+				d="m 1730.6954,274.73699 144.9672,189.57951 -88.3102,24.91954 -4.1996,12.16966 -401.073,149.63324 -32.5319,-61.77816 -21.3023,-33.04161 16.644,-5.84743 -8.4859,-14.96237 16.1788,-67.40495 -35.769,-57.24388 -16.6022,65.37869 -16.771,-27.74253 z"
+				id="path1633" />
+			<use id="light.vanesska_ceiling_light" inkscape:label="light.vanesska_ceiling_light" href="#path1633"
+				style="stroke-width:0;stroke-dasharray:none" />
+		</g>
+		<g id="area.bedroom" inkscape:label="Bedroom" style="display:inline;stroke-width:0;stroke-dasharray:none">
+			<path style="fill:none;stroke:#ffffff;stroke-width:0;stroke-dasharray:none"
+				d="m 1874.9598,463.91464 226.8353,288.58699 -112.1745,43.2261 -191.5107,45.21665 -22.9654,52.56422 -127.2541,51.06807 26.4531,-69.75513 -32.1721,-37.63212 -29.2813,-38.49207 -1.354,2.50062 -69.0856,-82.03558 -5.6259,0.83424 -0.1251,-3.034 -2.0275,-6.2988 c -2.1712,-3.83691 -5.3844,-6.6543 -9.9279,-9.12293 -4.3385,-1.04369 -11.2321,-2.44785 -18.1439,-1.97455 -5.3873,0.3689 -12.3014,2.20151 -17.4159,4.27501 -24.7356,10.0285 -28.4925,15.51473 -28.4925,15.51473 l -64.8812,-2.30906 3.7744,-16.22726 -28.6832,-47.0613 11.4859,-2.99689 400.8025,-149.84695 3.8012,-11.20035 z"
+				id="path1724" sodipodi:nodetypes="cccccccccccccccsscccccccc" />
+			<path style="fill:none;stroke:#000000;stroke-width:0;stroke-dasharray:none"
+				d="m 1375.659,661.87631 139.2708,-52.36622 31.57,111.79422 -9.617,-1.25262 c 0,0 1.2162,-4.10054 -1.2742,-8.85463 -2.4905,-4.75413 -7.2102,-8.05205 -7.2102,-8.05205 0,0 -2.694,-2.20102 -11.9218,-3.70483 -9.2278,-1.50384 -22.7169,2.28192 -22.7169,2.28192 0,0 -9.7125,3.34214 -12.8209,4.88988 -3.1085,1.54773 -5.6965,2.94068 -8.6644,4.38992 -2.9678,1.44926 -1.3995,0.24637 -4.7119,2.2513 -3.3124,2.00492 -5.823,3.65808 -6.6106,4.62877 -0.7876,0.97069 -1.8848,0.90051 -1.8848,0.90051 l -62.9758,-2.2278 3.2824,-15.81816 z"
+				id="path981" />
+			<use id="light.bedroom_bed_light" inkscape:label="light.bedroom_bed_light" href="#path1724"
+				style="stroke-width:0;stroke-dasharray:none" />
+			<use id="light.bedroom_closet_light" inkscape:label="light.bedroom_closet_light" href="#path981"
+				style="stroke-width:0;stroke-dasharray:none" />
+		</g>
+		<g id="area.shower" inkscape:label="Shower" style="display:inline;stroke-width:0;stroke-dasharray:none">
+			<path
+				d="m 1396.0139,716.99023 -59.0935,-2.052 113.8736,192.90371 -28.49,89.94554 225.9896,-52.93503 25.6662,-69.79801 -32.0828,-38.44689 -29.0205,-37.90694 -1.2052,2.70215 -68.8774,-81.85373 -6.2214,0.84611 0.069,-3.19832 c 0,0 0.3065,-2.44811 -1.9065,-6.21624 -2.213,-3.76814 -6.7672,-8.44953 -10.3646,-9.33405 -3.5972,-0.88451 -11.584,-2.41791 -15.3952,-2.08906 -3.8112,0.32886 -15.0949,2.59291 -16.8648,3.40681 -1.7699,0.81389 -14.1881,5.25496 -17.8135,7.36808 -3.6254,2.11312 -8.1643,4.4405 -11.0831,6.80331 -2.9188,2.36284 -3.0615,2.46278 -3.0615,2.46278 z"
+				id="path1774" style="fill:none;stroke:#ffffff;stroke-width:0;stroke-dasharray:none" />
+			<use id="light.shower_room_mirror_light" inkscape:label="light.shower_room_mirror_light" href="#path1774"
+				style="stroke-width:0;stroke-dasharray:none" />
+		</g>
+	</g>
+	<g inkscape:groupmode="layer" id="doors" inkscape:label="Doors" inkscape:highlight-color="#2173f3"
+		style="display:inline" transform="translate(131.35865,178.01198)">
+		<path d="m 1768.324,352.1848 -54.4307,146.42624 13.1624,16.62679 32.9494,-13.19017 38.9166,-109.14994 z"
+			id="binary_sensor.contact_sensor_kid_balcony_contact"
+			inkscape:label="binary_sensor.contact_sensor_kid_balcony_contact"
+			style="fill:none;stroke:#000000;stroke-opacity:1" />
+		<path d="m 1932.0178,565.66306 38.1557,46.64564 -66.1717,144.58163 L 1865,708.57483 Z"
+			id="binary_sensor.contact_sensor_bedroom_balcony_contact"
+			inkscape:label="binary_sensor.contact_sensor_bedroom_balcony_contact"
+			style="fill:none;stroke:#000000;stroke-opacity:1" />
+		<path d="m 1063.9072,1028.3744 80.8703,-21.2992 -30.1894,141.5637 -77.458,19.3309 z"
+			id="binary_sensor.contact_sensor_garden_door" inkscape:label="binary_sensor.contact_sensor_garden_door"
+			style="fill:none;stroke:#000000;stroke-opacity:1" />
+		<path d="m 502.97222,910.7786 1.41514,127.0905 50.48031,138.0911 0.82441,-128.3735 z"
+			id="binary_sensor.contact_sensor_terrace_door" inkscape:label="binary_sensor.contact_sensor_terrace_door"
+			style="fill:none;stroke:#000000;stroke-opacity:1" />
+		<path
+			d="m 1054.7365,194.33424 79.1406,-13.29566 -24.887,156.17451 -31.6746,4.64967 7.6077,-60.21758 -25.9028,-44.30229 -7.3511,53.64035 -8.1593,-16.03829 z"
+			id="lock.nuki_neklanka_byt_lock" inkscape:label="lock.nuki_neklanka_byt_lock"
+			style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+		<path d="m 1616.2263,151.96523 -45.7262,147.96108 20.5365,23.67116 15.071,-3.41833 42.6213,-126.08809 z"
+			id="binary_sensor.contact_sensor_office_balcony_contact"
+			inkscape:label="binary_sensor.contact_sensor_office_balcony_contact"
+			style="fill:none;stroke:#000000;stroke-opacity:1" sodipodi:nodetypes="cccccc" />
+	</g>
+	<g inkscape:groupmode="layer" id="cover" inkscape:label="Covers" inkscape:highlight-color="#21f34e"
+		style="display:inline" transform="translate(131.35865,178.01198)">
+		<path d="M 435.6845,720.20742 561.89519,1059.6249 555.23792,1207.7911 442.66726,890.24734 Z"
+			id="cover.living_room_terrace" inkscape:label="cover.living_room_terrace" />
+		<path d="m 917.77441,1061.4136 121.78379,-30.1317 -17.2412,99.8126 -119.03557,30.2237 z" id="cover.window"
+			inkscape:label="cover.window" />
+		<path d="m 1034.5392,1169.1412 26.6313,-142.5283 87.8645,-22.0005 -32.5056,147.4915 -82.7169,21.1584 z"
+			id="cover.door" inkscape:label="cover.door" />
+		<path d="m 1809.2337,844.22803 155.695,-37.58972 -42.6044,88.72226 -151.3704,37.74777 z" id="cover.bedroom_shutters"
+			inkscape:label="cover.bedroom_shutters" />
+	</g>
+
+
+	<g inkscape:groupmode="layer" id="icons" inkscape:label="Icons" style="display:inline"
+		transform="translate(131.35865,178.01198)">
+		<path
+			d="m 1089.1685,224.82108 a 2.8507001,3.8340816 53.696356 0 0 3.9883,-3.63734 c 0.28,-1.77592 -1.0641,-3.00309 -2.9806,-2.76252 a 2.8507001,3.8340816 53.696356 0 0 -3.9884,3.63736 2.8507001,3.8340816 53.696356 0 0 2.9807,2.7625 m 12.7209,-15.71192 a 2.8507001,3.8340816 53.696356 0 1 2.9807,2.76251 l -2.5194,15.99963 a 2.8507001,3.8340816 53.696356 0 1 -3.9884,3.6373 l -20.9072,2.62449 a 2.8507001,3.8340816 53.696356 0 1 -2.9806,-2.76248 l 2.5194,-15.9996 c 0.2799,-1.7759 2.0719,-3.39677 3.9883,-3.63736 l 1.7424,-0.21859 0.5044,-3.19984 a 7.1267503,9.5852039 53.696356 0 1 9.971,-9.09336 7.1267503,9.5852039 53.696356 0 1 7.4516,6.90624 l -0.5044,3.19985 1.7422,-0.21866 m -9.1938,-6.68752 a 4.2760501,5.7511224 53.696356 0 0 -5.9827,5.45598 l -0.5044,3.19983 10.4536,-1.31224 0.5044,-3.19982 a 4.2760501,5.7511224 53.696356 0 0 -4.4709,-4.14375 z"
+			id="icon-front-door" inkscape:transform-center-x="6.1423663" inkscape:transform-center-y="-4.398945"
+			style="stroke-width:1.65301" />
+	</g>
+	<g inkscape:groupmode="layer" id="temphumid" inkscape:label="Temp humid" style="display:inline"
+		transform="translate(131.35865,178.01198)"><text xml:space="preserve"
+			style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:45.2876px;font-family:Futura;-inkscape-font-specification:'Futura, Medium';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;opacity:0.370787;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2.42992;stroke-opacity:1"
+			x="1030.3096" y="1167.0083" id="sensor.bedroom_tem_humid_temperature" inkscape:label="bedroom temp"
+			transform="matrix(1.0265785,-0.23870158,0.46541633,0.8658903,0,0)">
+			<tspan sodipodi:role="line" x="1030.3096" y="1167.0083" id="tspan974"
+				style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2.42992;stroke-opacity:1"
+				transform="matrix(0.92917162,0.12621746,-0.03974616,1.0708284,129.58518,-230.92313)">21.6°C</tspan>
+		</text><text xml:space="preserve"
+			style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:45.2876px;font-family:Futura;-inkscape-font-specification:'Futura, Medium';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;opacity:0.370787;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2.42992;stroke-opacity:1"
+			x="1028.2416" y="1251.3998" id="sensor.bedroom_tem_humid_humidity" inkscape:label="bedroom humid"
+			transform="matrix(1.0185516,-0.26406347,0.4896885,0.85483261,0,0)">
+			<tspan sodipodi:role="line" x="1028.2416" y="1251.3998" id="tspan12129"
+				style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2.42992;stroke-opacity:1"
+				transform="matrix(0.92917162,0.12621746,-0.03974616,1.0708284,129.58518,-230.92313)">42%</tspan>
+		</text><text xml:space="preserve"
+			style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:63.1907px;font-family:Futura;-inkscape-font-specification:'Futura, Medium';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;opacity:0.370787;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:3.39052;stroke-opacity:1"
+			x="-37.814266" y="1170.0012" id="sensor.dyson_ph04_temperature" inkscape:label="living temp"
+			transform="matrix(1.0595924,-0.22912697,0.51616759,0.83214272,0,0)" inkscape:transform-center-x="-72.748176"
+			inkscape:transform-center-y="38.692727">
+			<tspan sodipodi:role="line" x="-37.814266" y="1170.0012" id="tspan12704"
+				style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:3.39052;stroke-opacity:1"
+				transform="matrix(0.92917162,0.12621746,-0.03974616,1.0708284,129.58518,-230.92313)">21.6°C</tspan>
+		</text><text xml:space="preserve"
+			style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:52.1775px;font-family:Futura;-inkscape-font-specification:'Futura, Medium';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;opacity:0.370787;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2.79961;stroke-opacity:1"
+			x="176.70476" y="1044.8867" id="sensor.dyson_ph04_humidity" inkscape:label="living humid"
+			transform="matrix(1.0685811,-0.23114085,0.53250615,0.82063593,0,0)">
+			<tspan sodipodi:role="line" x="176.70476" y="1044.8867" id="tspan12708"
+				style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2.79961;stroke-opacity:1"
+				transform="matrix(0.92917162,0.12621746,-0.03974616,1.0708284,129.58518,-230.92313)">42%</tspan>
+		</text><text xml:space="preserve"
+			style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:38.5458px;font-family:Futura;-inkscape-font-specification:'Futura, Medium';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;opacity:0.370787;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2.79961;stroke-opacity:1"
+			x="1024.6912" y="-908.31018" id="sensor.kids_room_temp_humid_humidity" inkscape:label="kids humid"
+			transform="matrix(0.66620722,0.83502229,-0.88596809,0.39056451,0,0)">
+			<tspan sodipodi:role="line" x="1024.6912" y="-908.31018" id="tspan15133"
+				style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2.79961;stroke-opacity:1"
+				transform="matrix(0.92917162,0.12621746,-0.03974616,1.0708284,129.58518,-230.92313)">42%</tspan>
+		</text><text xml:space="preserve"
+			style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:31.9494px;font-family:Futura;-inkscape-font-specification:'Futura, Medium';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;opacity:0.370787;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:3.39052;stroke-opacity:1"
+			x="1093.8727" y="-811.87091" id="sensor.kids_room_temp_humid_temperature" inkscape:label="kids temp"
+			transform="matrix(0.43325687,0.72399716,-1.1749499,0.34469065,0,0)" inkscape:transform-center-x="25.383468"
+			inkscape:transform-center-y="24.89721">
+			<tspan sodipodi:role="line" x="1093.8727" y="-811.87091" id="tspan15137"
+				style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:3.39052;stroke-opacity:1"
+				transform="matrix(0.92917162,0.12621746,-0.03974616,1.0708284,129.58518,-230.92313)">21.6°C</tspan>
+		</text><text xml:space="preserve"
+			style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:33.3221px;font-family:Futura;-inkscape-font-specification:'Futura, Medium';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;opacity:0.370787;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:3.39052;stroke-opacity:1"
+			x="1826.0891" y="636.82501" id="sensor.office_temp_humid_temperature" inkscape:label="office temp"
+			transform="matrix(0.82622769,-0.22965097,-0.14389921,1.2503171,0,0)" inkscape:transform-center-x="-3.3831947"
+			inkscape:transform-center-y="21.0773">
+			<tspan sodipodi:role="line" x="1826.0891" y="636.82501" id="tspan15180"
+				style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:3.39052;stroke-opacity:1"
+				transform="matrix(0.92917162,0.12621746,-0.03974616,1.0708284,129.58518,-230.92313)">21.6°C</tspan>
+		</text><text xml:space="preserve"
+			style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:33.3221px;font-family:Futura;-inkscape-font-specification:'Futura, Medium';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;opacity:0.370787;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:3.39052;stroke-opacity:1"
+			x="1816.5963" y="595.27899" id="sensor.office_temp_humid_humidity" inkscape:label="office humid"
+			transform="matrix(0.82622769,-0.22965097,-0.14389921,1.2503171,0,0)" inkscape:transform-center-x="-1.5184218"
+			inkscape:transform-center-y="-28.68837">
+			<tspan sodipodi:role="line" x="1816.5963" y="595.27899" id="tspan15184"
+				style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:3.39052;stroke-opacity:1"
+				transform="matrix(0.92917162,0.12621746,-0.03974616,1.0708284,129.58518,-230.92313)">21.6°C</tspan>
+		</text><text xml:space="preserve"
+			style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:31.9494px;font-family:Futura;-inkscape-font-specification:'Futura, Medium';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;opacity:0.370787;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:3.39052;stroke-opacity:1"
+			x="1272.6008" y="557.76202" id="sensor.bathroom_temp_humid_temperature" inkscape:label="bathroom temp"
+			transform="matrix(0.87010163,-0.15954507,-0.21142781,1.1880592,0,0)" inkscape:transform-center-x="-11.593881"
+			inkscape:transform-center-y="31.349756">
+			<tspan sodipodi:role="line" x="1272.6008" y="557.76202" id="tspan15188"
+				style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:3.39052;stroke-opacity:1"
+				transform="matrix(0.92917162,0.12621746,-0.03974616,1.0708284,129.58518,-230.92313)">21.6°C</tspan>
+		</text><text xml:space="preserve"
+			style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:31.9494px;font-family:Futura;-inkscape-font-specification:'Futura, Medium';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;opacity:0.370787;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:3.39052;stroke-opacity:1"
+			x="1304.0946" y="655.02856" id="sensor.bathroom_temp_humid_humidity" inkscape:label="bathroom humid"
+			transform="matrix(0.87010163,-0.15954507,-0.21142781,1.1880592,0,0)" inkscape:transform-center-x="-11.593881"
+			inkscape:transform-center-y="31.349753">
+			<tspan sodipodi:role="line" x="1304.0946" y="655.02856" id="tspan15192"
+				style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:3.39052;stroke-opacity:1"
+				transform="matrix(0.92917162,0.12621746,-0.03974616,1.0708284,129.58518,-230.92313)">21.6°C</tspan>
+		</text></g>
+	<g inkscape:groupmode="layer" id="entities" inkscape:label="Entities" inkscape:highlight-color="#f3ea21"
+		style="display:inline" transform="translate(131.35865,178.01198)">
+		<ellipse style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+			id="light.living_room_floor_lamp" cx="816.73114" cy="953.82349" rx="22.850203" ry="20.044039"
+			inkscape:label="light.living_room_floor_lamp" transform="rotate(10)" />
+		<path style="display:inline;fill:none;stroke:#4f83ca;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"
+			d="m 559.36962,634.87639 259.29964,-51.56376 -6.15398,90.79543 -252.35309,51.83485 z"
+			id="media_player.living_room_tv" inkscape:label="media_player.living_room_tv" />
+		<path style="fill:none;stroke:#4f83ca;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"
+			d="m 1623.0068,567.77928 -21.0282,63.36388 128.4516,-28.27028 22.5744,-62.81748 z" id="media_player.bedroom_tv"
+			inkscape:label="media_player.bedroom_tv" />
+		<ellipse style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-opacity:1" id="light.office_lamp_bulb"
+			cx="1631.6113" cy="1.0551425" rx="15.157183" ry="12.034599" inkscape:label="light.office_lamp_bulb"
+			transform="rotate(10)" />
+		<path style="fill:none;stroke:#ffffff;stroke-opacity:1"
+			d="m 974.19614,794.97604 88.46356,-19.967 70.205,135.47717 -47.3441,10.98855 -4.1039,23.27446 -31.6251,7.02696 z"
+			id="light.kitchen_table_light" inkscape:label="light.kitchen_table_light" />
+		<path style="opacity:0.7;fill:none;stroke:none"
+			d="m 1211.054,137.13492 92.8088,138.26859 -13.1711,55.59876 62.7178,91.20558 140.0799,-53.42638 -167.9405,-254.56213 z"
+			id="input_boolean.office_mode" inkscape:label="input_boolean.office_mode" />
+		<path
+			style="display:inline;opacity:1;fill:none;fill-opacity:1;stroke:#ffe100;stroke-width:5;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter4188)"
+			d="m 1713.5711,799.00808 -72.0984,-72.5922 3.9506,-20.24681 121.4809,-57.77747 11.3579,3.45678 48.3948,47.90097 -0.4938,-0.49382"
+			id="bedroom_bed_light" inkscape:label="light.bedroom_bed_light" transform="rotate(10,1099.7299,852.67822)" />
+	</g>
+	<g inkscape:groupmode="layer" id="motions" inkscape:label="Motion Sensors" style="display:inline"
+		transform="translate(131.35865,178.01198)">
+		<g id="binary_sensor.motion_sensor_hallway_occupancy" inkscape:label="Hallway" style="display:inline;fill:none"
+			transform="rotate(10,1099.7299,852.67822)">
+			<circle style="display:inline;fill:none;fill-opacity:0.772021" id="circle3026" cx="1195.1807" cy="545.72742"
+				r="1" />
+			<circle style="display:inline;fill:none;fill-opacity:0.772021" id="circle3028" cx="1195.1807" cy="545.72742"
+				r="1" />
+		</g>
+		<g id="binary_sensor.motion_sensor_entrance_occupancy" inkscape:label="Entrance" style="display:inline;fill:none"
+			transform="rotate(10,1099.7299,852.67822)">
+			<circle style="display:inline;fill:none;fill-opacity:0.772021" id="circle3032" cx="1039.1749" cy="366.53015"
+				r="1" />
+			<circle style="display:inline;fill:none;fill-opacity:0.772021" id="circle3034" cx="1039.1749" cy="366.53015"
+				r="1" />
+		</g>
+		<g id="binary_sensor.motion_sensor_utility_room_occupancy" inkscape:label="Utility" style="display:inline;fill:none"
+			transform="rotate(10,1099.7299,852.67822)">
+			<circle style="fill:none;fill-opacity:0.772021" id="path2781" cx="894.19208" cy="399.55392" r="1" />
+			<circle style="fill:none;fill-opacity:0.772021" id="circle2816" cx="894.19208" cy="399.55392" r="1" />
+		</g>
+		<g id="binary_sensor.motion_sensor_bathroom" inkscape:label="Bathroom" style="display:inline;fill:none"
+			transform="rotate(10,1099.7299,852.67822)">
+			<circle style="display:inline;fill:none;fill-opacity:0.772021" id="circle3192" cx="992.15637" cy="582.91791"
+				r="1" />
+			<circle style="display:inline;fill:none;fill-opacity:0.772021" id="circle3194" cx="992.15637" cy="582.91791"
+				r="1" />
+		</g>
+		<g id="binary_sensor.motion_sensor_kitchen_occupancy" inkscape:label="Kitchen" style="display:inline"
+			transform="rotate(10,1099.7299,852.67822)">
+			<circle style="display:inline;fill:none;fill-opacity:0.772021" id="circle3202" cx="1215.9214" cy="899.30579"
+				r="1" />
+			<circle style="display:inline;fill:none;fill-opacity:0.772021" id="circle3204" cx="1215.9214" cy="899.30579"
+				r="1" />
+		</g>
+		<g id="binary_sensor.motion_sensor_shower_room_occupancy" inkscape:label="Shower" style="display:inline;fill:none"
+			transform="rotate(10,1099.7299,852.67822)">
+			<circle style="display:inline;fill:none;fill-opacity:0.772021" id="circle3208" cx="1492.4631" cy="860.78748"
+				r="1" />
+			<circle style="display:inline;fill:none;fill-opacity:0.772021" id="circle3210" cx="1492.4631" cy="860.78748"
+				r="1" />
+		</g>
+		<g id="binary_sensor.motion_sensor_bedroom_occupancy" inkscape:label="Bedroom" style="display:inline;fill:none"
+			transform="rotate(10,1099.7299,852.67822)">
+			<circle style="display:inline;fill:none;fill-opacity:0.772021" id="circle3214" cx="1674.1906" cy="643.5047"
+				r="1" />
+			<circle style="display:inline;fill:none;fill-opacity:0.772021" id="circle3216" cx="1674.1906" cy="643.5047"
+				r="1" />
+		</g>
+	</g>
+	<g inkscape:groupmode="layer" id="homepods" inkscape:label="Homepods" inkscape:highlight-color="#506900"
+		style="display:inline" transform="translate(131.35865,178.01198)">
+		<path
+			d="m 1430.3857,193.31276 c -3.5678,-1.82133 -8.0862,-3.24255 -13.5648,-4.20857 -4.9831,-0.87866 -9.3928,-1.14526 -13.1594,-0.87265 3.7394,1.6529 8.4505,3.1081 13.9015,4.06926 4.7354,0.83497 9.0851,1.11936 12.8227,1.01196 z m 3.9889,2.49172 c -5.1852,0.59018 -11.3779,0.29307 -17.297,-0.75063 -6.6074,-1.16505 -13.265,-3.3325 -18.1204,-6.06216 -5.5884,1.42749 -9.0146,4.59876 -9.8544,9.36156 l -5.5923,31.71532 c -0.8981,5.09317 1.5576,9.35836 7.0332,12.59478 1.2442,3.56903 11.9602,5.74241 15.4841,6.36376 3.5515,0.62622 14.5296,2.2781 16.7964,-0.75698 6.2248,-1.17333 9.9587,-4.31875 10.8471,-9.35686 l 5.5923,-31.71532 c 0.7767,-4.4049 -0.9517,-8.28637 -4.889,-11.39347 z"
+			id="media_player.office_2" style="stroke-width:2.79554" inkscape:label="media_player.office_2" />
+	</g>
+</svg>

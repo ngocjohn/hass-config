@@ -1,0 +1,77 @@
+#################################################
+#                                               #
+#            SIDE COLUMNS                       #
+#                                               #
+#################################################
+- type: horizontal-stack
+  view_layout:
+    grid-area: c2
+  cards:
+    - type: vertical-stack
+      cards:
+        - type: entities
+          title: Devices state
+          show_header_toggle: false
+          card_mod:
+            class: header
+          entities:
+            - type: custom:auto-entities
+              filter:
+                include:
+                  - attributes:
+                      device_class: battery
+                    state: < 30
+                    options:
+                      type: custom:mushroom-template-card
+                      primary: '{{ states(entity) }}%'
+                      secondary: "{{ state_attr(entity, 'friendly_name') | title }}"
+                      icon: >
+                        {% set battery_level = (states(entity) | int / 10) |
+                        round(0) | int * 10 %} {% if battery_level == 100 %}
+                          mdi:battery
+                        {% elif battery_level > 0 %}
+                          mdi:battery-{{ battery_level }}
+                        {% else %}
+                          mdi:battery-outline
+                        {% endif %}
+                      icon_color: |-
+                        {% set battery_level = states(entity) | int %}
+                        {% if battery_level > 90 %}
+                          green
+                        {% elif battery_level > 60 %}
+                          light-green
+                        {% elif battery_level > 50 %}
+                          lime
+                        {% elif battery_level > 40 %}
+                          yellow
+                        {% elif battery_level > 30 %}
+                          amber
+                        {% elif battery_level > 20 %}
+                          orange
+                        {% elif battery_level > 10 %}
+                          deep-orange
+                        {% else %}
+                          red
+                        {% endif %}
+                      layout: horizontal
+                      tap_action:
+                        action: none
+                      badge_icon: |-
+                        {% set battery_level = states(entity) | int %}
+                        {% if battery_level < 10 %}
+                          mdi:exclamation-thick
+                        {% endif %}
+                      badge_color: red
+                      card_mod:
+                        style: |
+                          ha-card {
+                            padding: 4px 12px !important;
+                          }
+                exclude: null
+              show_empty: false
+              card:
+                type: custom:layout-card
+                cards: []
+                layout_type: masonry
+              sort:
+                method: friendly_name

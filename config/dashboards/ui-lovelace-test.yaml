@@ -1,0 +1,8 @@
+title: Dashboard
+
+views:
+  # - !include subviews/lights.yaml
+  - !include subviews/test_view.yaml
+
+button_card_templates: !include_dir_merge_named ./templates/button_card_templates
+decluttering_templates: !include ./templates/decluttering-card.yaml

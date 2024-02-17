@@ -1,0 +1,8 @@
+margin: 0
+grid-template-columns: repeat(auto-fit, minmax(400px, 20vw) minmax(400px, 20vw) minmax(400px, 20vw))
+grid-template-rows: auto
+mediaquery:
+  #portrait
+  '(max-width: 1200px)':
+    grid-template-columns: 1fr
+    grid-template-rows: fit-content(100%)

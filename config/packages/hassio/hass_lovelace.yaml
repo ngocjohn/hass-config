@@ -1,0 +1,17 @@
+# LOVELACE
+lovelace:
+  mode: storage
+  dashboards:
+    lovelace-yaml:
+      mode: yaml
+      title: Dashboard
+      icon: mdi:home-circle
+      show_in_sidebar: true
+      filename: dashboards/ui-lovelace-main.yaml
+
+    ui-lovelace-test:
+      mode: yaml
+      title: Test
+      icon: mdi:test-tube
+      show_in_sidebar: true
+      filename: dashboards/ui-lovelace-test.yaml

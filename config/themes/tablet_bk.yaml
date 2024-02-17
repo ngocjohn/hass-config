@@ -1,0 +1,428 @@
+tablet_orig:
+  modes:
+    dark:
+      #edited default dark mode
+      ha-card-box-shadow: none
+      ha-card-background: none
+      grid-card-gap: 5%
+      # grid-card-gap: 0.8vw
+      masonry-view-card-margin: 0px
+      vertical-stack-card-margin: 0
+      state-icon-color: '#9da0a2'
+      state-icon-active-color: '#3182b7'
+      state-active-color: '#b68349'
+      switch-checked-color: '#9e9e9e'
+      switch-unchecked-button-color: '#9E9E9E'
+      switch-unchecked-track-color: '#9E9E9E'
+      paper-slider-knob-color: '#a4abb1'
+      paper-slider-knob-start-color: '#a4abb1'
+      paper-slider-pin-color: '#626a6f'
+      paper-slider-active-color: '#626a6f'
+      paper-slider-container-color: '#202020'
+      paper-toast-color: var(--primary-text-color)
+      paper-toast-background-color: '#1b1b1bf2'
+      dialog-backdrop-filter: blur(12px) brightness(0.3)
+      rgb-accent-color: '101,115,134'
+      dialog-box-shadow: var(--rgb-accent-color)
+      # dialog-box-shadow: 0px 2px 4px 0px rgba(0, 0 ,0 , .2)
+      popup-background-color: rgba(34,38,39,0.6)
+      popup-border-width: 1px
+      popup-border-radius: 1em
+      popup-padding-x: 0px
+      popup-padding-y: 0px
+      tablet-popup-header-color: rgba(200, 218, 222, 0.05)
+      tablet-popup-content-padding: 1.4em 2.2em 1.6em 1.5em
+      tablet-popup-button-padding: 0.1em 2em 1.8em 2em
+      tablet-popup-border-style: 1.5px solid rgba(0,0,0,0.2)
+      tablet-popup-align-dialog: center
+      tablet-popup-margin-top: 0px
+      #Mushroom color
+      mush-rgb-red: 244, 67, 54
+      mush-rgb-pink: 233, 30, 99
+      mush-rgb-purple: 156, 39, 176
+      mush-rgb-deep-purple: 103, 58, 183
+      mush-rgb-indigo: 63, 81, 181
+      mush-rgb-blue: 33, 150, 243
+      mush-rgb-light-blue: 3, 169, 244
+      mush-rgb-teal: 0, 150, 136
+      mush-rgb-cyan: 0, 188, 212
+      mush-rgb-green: 76, 175, 80
+      mush-rgb-light-green: 139, 195, 74
+      mush-rgb-lime: 205, 220, 57
+      mush-rgb-yellow: 255, 235, 59
+      mush-rgb-amber: 255, 193, 7
+      mush-rgb-orange: 255, 152, 0
+      mush-rgb-deep-orange: 255, 87, 34
+      mush-rgb-brown: 121, 85, 72
+      mush-rgb-grey: 158, 158, 158
+      mush-rgb-blue-grey: 96, 125, 139
+      mush-rgb-black: 0, 0, 0
+      mush-rgb-white: 255, 255, 255
+      #temporarily revert 2022.12 icon colors
+      rgb-state-default-color: 49, 130, 183
+      rgb-state-alarm-armed-color: var(--rgb-state-default-color)
+      rgb-state-alarm-arming-color: var(--rgb-state-default-color)
+      rgb-state-alarm-pending-color: var(--rgb-state-default-color)
+      rgb-state-alarm-triggered-color: var(--rgb-state-default-color)
+      rgb-state-alert-color: var(--rgb-state-default-color)
+      rgb-state-automation-color: var(--rgb-state-default-color)
+      rgb-state-binary-sensor-alerting-color: var(--rgb-state-default-color)
+      rgb-state-binary-sensor-color: var(--rgb-state-default-color)
+      rgb-state-calendar-color: var(--rgb-state-default-color)
+      rgb-state-camera-color: var(--rgb-state-default-color)
+      rgb-state-climate-auto-color: var(--rgb-state-default-color)
+      rgb-state-climate-cool-color: var(--rgb-state-default-color)
+      rgb-state-climate-dry-color: var(--rgb-state-default-color)
+      rgb-state-climate-fan-only-color: var(--rgb-state-default-color)
+      rgb-state-climate-heat-color: var(--rgb-state-default-color)
+      rgb-state-climate-heat-cool-color: var(--rgb-state-default-color)
+      rgb-state-climate-idle-color: var(--rgb-state-default-color)
+      rgb-state-cover-color: var(--rgb-state-default-color)
+      rgb-state-fan-color: var(--rgb-state-default-color)
+      rgb-state-group-color: var(--rgb-state-default-color)
+      rgb-state-humidifier-color: var(--rgb-state-default-color)
+      rgb-state-input-boolean-color: var(--rgb-state-default-color)
+      rgb-state-light-color: var(--rgb-state-default-color)
+      rgb-state-lock-jammed-color: var(--rgb-state-default-color)
+      rgb-state-lock-locked-color: var(--rgb-state-default-color)
+      rgb-state-lock-pending-color: var(--rgb-state-default-color)
+      rgb-state-media-player-color: var(--rgb-state-default-color)
+      rgb-state-person-home-color: var(--rgb-state-default-color)
+      rgb-state-person-zone-color: var(--rgb-state-default-color)
+      rgb-state-remote-color: var(--rgb-state-default-color)
+      rgb-state-script-color: var(--rgb-state-default-color)
+      rgb-state-sensor-battery-high-color: var(--rgb-state-default-color)
+      rgb-state-sensor-battery-low-color: var(--rgb-state-default-color)
+      rgb-state-sensor-battery-medium-color: var(--rgb-state-default-color)
+      rgb-state-sensor-battery-unknown-color: var(--rgb-state-default-color)
+      rgb-state-siren-color: var(--rgb-state-default-color)
+      rgb-state-sun-day-color: var(--rgb-state-default-color)
+      rgb-state-sun-night-color: var(--rgb-state-default-color)
+      rgb-state-switch-color: var(--rgb-state-default-color)
+      rgb-state-timer-color: var(--rgb-state-default-color)
+      rgb-state-update-color: var(--rgb-state-default-color)
+      rgb-state-update-installing-color: var(--rgb-state-default-color)
+      rgb-state-vacuum-color: var(--rgb-state-default-color)
+      #font
+      primary-font-family: Poppins, Raleway, SF Pro Text, SF Pro Display, SF Mono, sans-serif, system-ui
+      paper-font-common-base_-_font-family: var(--primary-font-family)
+      paper-font-common-code_-_font-family: var(--primary-font-family)
+      paper-font-body1_-_font-family: var(--primary-font-family)
+      paper-font-subhead_-_font-family: var(--primary-font-family)
+      paper-font-headline_-_font-family: var(--primary-font-family)
+      paper-font-caption_-_font-family: var(--primary-font-family)
+      paper-font-title_-_font-family: var(--primary-font-family)
+      ha-card-header-font-family: Futura
+      mdc-typography-body1-font-family: var(--primary-font-family)
+      mdc-typography-font-family: var(--primary-font-family)
+      #custom variables
+      # ha-card-background-color: none
+      ha-card-header-background-color: rgba(48,52,52,0.8)
+      app-header-background-color: rgba(0, 0, 0, 0)
+      # custom-layout-card-padding: 2.2w #3.3vw or #3vw...#1.9...sidebar OK
+      custom-layout-card-padding: 3vw
+      state-light-color: '#9da0a2'
+      state-light-active-color: '#b68349'
+      sidebar-time-font-size: 4.2vw
+      sidebar-time-line-height: 4.3vw
+      sidebar-font-size: 1vw
+      sidebar-line-height: 2vw
+      bar-card-color: '#303435'
+      #button_card_templates
+      button-card-font-size: 0.9vw
+      button-card-state-size: 0.8vw
+      button-card-movie-state-size: 0.8vw
+      z-axis-adjustment: 0.05vw #tilt compensation
+      button-card-font-weight: 500
+      button-card-letter-spacing: 0
+      button-card-border-radius: 10%
+      chips-card-font-size: 0.8vw
+      chips-card-state-size: 0.7vw
+      chips-card-padding-v: 0.3vw
+      chips-card-padding-h: 0.2vw
+      chips-card-border-radius: 0.9vw
+      footer-card-font-size: 1vw
+      footer-card-icon-size: 1.2vw
+      footer-card-padding-v: 0.5vw
+      footer-card-padding-h: 1vw
+      footer-card-border-radius: 0.65vw
+      footer-notify-font-size: 0.9vw
+      footer-notify-box-size: 1.8vw
+      footer-notify-top: -0.9vw
+      footer-notify-right: -1vw
+      button-card-light-color-temp: hsl(204, 58%, 38%)
+      # Progress bar conditional card
+      progress-bar-color: '#e5a00d'
+      progress-bar-background-color: rgba(0,0,0,0.33)
+      progress-bar-height: 2%
+      # Honeycomb buttons
+      honeycomb-menu-background-color: 'linear-gradient(0deg, rgba(60,66,80,1) 0%, rgba(23,26,37,0.7) 42%, rgba(21,25,35,0.6) 100%)'
+      honeycomb-menu-active-background-color: 'linear-gradient(45deg, #eee, #2d6ca0)'
+      honeycomb-menu-icon-color: '#FFFFFF80'
+      honeycomb-menu-icon-active-color: '#ffffffbd'
+      honeycomb-menu-disabled: '#00000033'
+      # Swiper
+      swiper-theme-color: rgb(179, 179, 179)
+      swiper-pagination-color: var(--swiper-theme-color)
+      swiper-pagination-left: auto
+      swiper-pagination-right: 8px
+      swiper-pagination-bottom: 8px
+      swiper-pagination-top: auto
+      swiper-pagination-fraction-color: inherit
+      swiper-pagination-progressbar-bg-color: rgba(0, 0, 0, 0.25)
+      swiper-pagination-progressbar-size: 4px
+      swiper-pagination-bullet-size: 8px
+      swiper-pagination-bullet-width: 8px
+      swiper-pagination-bullet-height: 8px
+      swiper-pagination-bullet-inactive-color: '#000'
+      swiper-pagination-bullet-inactive-opacity: 0.2
+      swiper-pagination-bullet-opacity: 1
+      swiper-pagination-bullet-horizontal-gap: 4px
+      swiper-pagination-bullet-vertical-gap: 6px
+  ####################################################
+  #                                                  #
+  #                     CARD-MOD                     #
+  #                                                  #
+  ####################################################
+  card-mod-theme: tablet_orig
+  card-mod-view-yaml: |
+    .: |
+      #view {
+        display: block;
+        background-image: linear-gradient(155deg, rgba(60,66,80,1) 0%, rgba(23,26,37,1) 42%, rgba(21,25,35,1) 100%);
+        overflow: hidden;
+        margin-top: 0px !important;
+      }
+      hui-view {
+        background: none !important;
+      }
+      /* phone */
+      @media screen and (max-width: 800px) {
+        #view {
+          background-image: linear-gradient(0deg, rgb(20 25 37) 0%, rgba(21,25,35,1) 72%, rgba(23,26,37,1) , rgb(0 0 0) 100%);
+          overflow: visible !important;
+          margin-top: 0px !important;
+        }
+      }
+      /* phone wide */
+      @media screen and (max-height: 375px) {
+        #view {
+          background-image: linear-gradient(155deg, rgba(60,66,80,1) 0%, rgba(23,26,37,1) 42%, rgba(21,25,35,1) 100%);
+        }
+      }
+    #################################################
+    #                                               #
+    #              GRID CARD HEADINGS               #
+    #                                               #
+    #################################################
+    grid-layout$:
+      hui-grid-card:
+        .: |
+          hui-grid-card {
+            padding-bottom: 1.5vw;
+          }
+          /* phone */
+          @media screen and (max-width: 800px) {
+            hui-grid-card {
+              padding-bottom: 3vw;
+            }
+          }
+        $: |
+          /* default */
+          h1 {
+            font-size: 1.4vw !important;
+            line-height: 0 !important;
+            font-weight: 700 !important;
+            font-family: raleway !important;
+            letter-spacing: 0.05em !important;
+            color: rgba(255, 255, 255, 0.7) !important;
+            padding: 1vw 0 1.2vw 0.5vw !important;
+            width: 100%;
+          }
+          /* secondmonitor */
+          @media screen and (max-width: 1440px) {
+            h1 {
+              font-size: 2vw !important;
+              padding-bottom: 1.7vw !important;
+            }
+          }
+          /* phone */
+          @media screen and (max-width: 800px) {
+            h1 {
+              font-size: 4vw !important;
+              line-height: 100% !important;
+              margin-inline: 1vw;
+            }
+          }
+    #################################################
+    #                                               #
+    #               SWIPE CARD MARGIN               #
+    #                                               #
+    #################################################
+        $swipe-card$:
+          .: |
+            div {
+              height: 100%;
+            }
+            .swiper-pagination {
+              top: 95%;
+            }
+            .swiper-container {
+              margin: -1.5vw !important;
+              padding: 1.5vw !important;
+              margin-bottom: -2.5vw !important;
+            }
+            .swiper-pagination-bullet {
+              background-color: rgba(255, 255, 255, .7) !important;
+            }
+            @media screen and (max-width: 800px) {
+              .swiper-container {
+                margin-bottom: 0vw !important;
+              }
+              .swiper-pagination {
+                top: 92%;
+              }
+            }
+          hui-horizontal-stack-card$:
+            .: |
+              hui-conditional-card {
+                margin: 0 0.1vw 0 0 !important;
+              }
+          hui-horizontal-stack-card$hui-grid-card$swipe-card$:
+            .: |
+              div {
+                height: 100%;
+              }
+              .swiper-container {
+                margin: -1.5vw !important;
+                padding: 1.5vw !important;
+                margin-bottom: -1vw !important;
+              }
+              .swiper-pagination {
+                right: 10% !important;
+                top: 50% !important;
+              }
+              .swiper-pagination-bullet {
+                background-color: rgba(255, 255, 255, .7) !important;
+              }
+              @media screen and (max-width: 800px) {
+                .swiper-pagination-bullet {
+                  width: 0.5em !important;
+                  height: 0.5em !important;
+                }
+
+              }
+    #################################################
+    #                                               #
+    #                    FOOTER                     #
+    #                                               #
+    #################################################
+    grid-layout$hui-horizontal-stack-card:
+      $: |
+        #root {
+          flex-wrap: wrap;
+          justify-content: space-between;
+          overflow: visible;
+          margin-top: 0.5em;
+        }
+        @media only screen and (max-width: 1440px) {
+          #root {
+            justify-content: space-evenly;
+          }
+        }
+        /* phone */
+        @media screen and (max-width: 800px) {
+          #root {
+            margin-top: 1em;
+            padding-bottom: 1em;
+            justify-content: center;
+          }
+        }
+    #################################################
+    #                                               #
+    #                   CHIPS                       #
+    #                                               #
+    #################################################
+    grid-layout$hui-horizontal-stack-card:nth-child(2):
+      $: |
+        #root {
+          justify-content: space-between;
+          align-items: center;
+        }
+    grid-layout$hui-horizontal-stack-card:nth-child(3):
+      $: |
+        #root {
+          justify-content: space-between;
+          align-items: center;
+        }
+    #################################################
+    #                                               #
+    #                STICKY BOTTOM MENU             #
+    #                                               #
+    #################################################
+    grid-layout$hui-vertical-stack-card$hui-vertical-stack-card:
+      $: |
+        #root {
+          background-color: #1b1b1bf2 !important;
+        }
+    grid-layout$hui-horizontal-stack-card:nth-child(16):
+      $: |
+        #root {
+          justify-content: space-evenly;
+          align-items: center;
+        }
+        :host {
+          position: fixed !important;
+          bottom: 0;
+          z-index: 1;
+          justify-self: center;
+          width: 100%;
+          padding: 10px 0 20px;
+          background-image: linear-gradient(0deg, #000000, transparent);
+        }
+    #################################################
+    #                                               #
+    #                    CARD-MOD                   #
+    #                                               #
+    #################################################
+
+  card-mod-card: |
+    .header .card-header {
+      letter-spacing: 0.005em;
+      font-size: 1.6em;
+      font-weight: 500;
+      line-height: initial;
+      cursor: default;
+    }
+    .content .card-content {
+      padding: var(--tablet-popup-content-padding);
+    }
+    /* * * * * * * * * * * * * * * * * *
+    *                                 *
+    *         CUSTOM BAR CARD         *
+    *                                 *
+    * * * * * * * * * * * * * * * * * */
+    .type-custom-bar-card bar-card-name {
+      padding-left: 0.25em;
+      letter-spacing: normal;
+    }
+    .type-custom-bar-card bar-card-iconbar {
+      padding-left: 0.23em;
+    }
+    .type-custom-bar-card bar-card-value {
+      font-size: 0.9em;
+      font-weight: 400;
+      color: #e0e1e1;
+      letter-spacing: 0.01em;
+      text-shadow: none;
+      margin-right: auto;
+    }
+    .type-custom-bar-card bar-card-backgroundbar {
+      background: none;
+    }
+    .type-custom-bar-card bar-card-background {
+      background: radial-gradient(circle, rgba(52, 57, 58, 0.1) 0%, rgba(17, 18, 18, 0.2) 75%);
+      box-shadow: inset 0 0 25px #00000045;
+      border-radius: 0.3em;
+      overflow: hidden;
+    }

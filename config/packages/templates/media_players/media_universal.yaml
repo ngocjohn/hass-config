@@ -1,0 +1,69 @@
+media_player:
+  - platform: universal ### CURRENTLY PLAYING ###
+    name: Currently Playing
+    unique_id: currently_playing
+    children:
+      - media_player.homepod_mass
+      - media_player.spotify
+      - media_player.living_room_tv
+      - media_player.bedroom_tv
+  - platform: universal ### CURRENTLY PLAYING ###
+    name: Homepod Airplay Group
+    unique_id: homepod_airplay_media
+    children:
+      - media_player.office
+      - media_player.bathroom_homepod
+      - media_player.bedroom_homepod
+      - media_player.living_room
+  - platform: universal ### CURRENTLY PLAYING ###
+    name: MASS Airplay Group
+    children:
+      - media_player.office_2
+      - media_player.bathroom
+      - media_player.bedroom
+      - media_player.living_room_2
+template:
+  - select:
+      - name: conditional_media
+        state: >-
+          {% set recently_added = 'Recently added' %}
+          {% set paused_timeout_minutes = 0.5 %}
+          {% set media_players = [
+            states.media_player.spotify,
+            states.sensor.ps5_activity,
+            states.media_player.living_room_tv,
+            states.media_player.ytube_music_player,
+            states.media_player.bedroom_tv ] %}
+          {% macro media(state) %}
+          {% set state = media_players | selectattr('state','eq',state) | list %}
+          {% set last_changed = recently_added if state | length == 0 else state | map(attribute='last_changed') | list | max %}
+            {{ state | selectattr('last_changed','eq', last_changed) | map(attribute='name') | list | join }}
+          {% endmacro %}
+          {% set playing = media_players | selectattr('state','eq','playing') | list %}
+          {% set timeout_playing = False if playing | length == 0 else (as_timestamp(now()) - as_timestamp(playing | map(attribute='last_changed') | list | max)) < paused_timeout_minutes * 60 %}
+          {% set paused = media_players | selectattr('state','eq','paused') | list %}
+          {% set timeout_paused = False if paused | length == 0 else (as_timestamp(now()) - as_timestamp(paused | map(attribute='last_changed') | list | max)) < paused_timeout_minutes * 60 %}
+          {% if playing %}
+            {{ media('playing') if timeout_playing else media('paused') if timeout_paused else media('playing') }}
+          {% elif paused %}
+            {{ media('paused') if timeout_paused else recently_added }}
+          {% else %}
+            {{ recently_added }}
+          {% endif %}
+        options: >
+          {% set recently_added = ['Recently added'] %}
+          {% set upcoming_shows = ['Trakt Upcoming Shows'] %}
+          {% set media_players = [
+            states.media_player.spotify,
+            states.sensor.ps5_activity,
+            states.media_player.living_room_tv,
+            states.media_player.ytube_music_player,
+            states.media_player.bedroom_tv ] %}
+          {{ recently_added + upcoming_shows + media_players | map(attribute='name') | list }}
+        select_option:
+          service: select.select_option
+          target:
+            entity_id: select.conditional_media
+          data:
+            option: >
+              {{ option }}

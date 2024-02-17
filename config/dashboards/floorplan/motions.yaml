@@ -1,0 +1,16 @@
+# ################################################
+#                                               #
+#         MOTIONS                                 #
+#                                               #
+# ################################################
+- entities:
+    - binary_sensor.motion_sensor_bathroom_occupancy
+    - binary_sensor.motion_sensor_shower_room_occupancy
+    - binary_sensor.motion_sensor_bedroom_occupancy
+    - binary_sensor.motion_sensor_utility_room_occupancy
+    - binary_sensor.motion_sensor_kitchen_occupancy
+    - binary_sensor.motion_sensor_entrance_occupancy
+    - binary_sensor.motion_sensor_hallway_occupancy
+  state_action:
+    - service: floorplan.class_set
+      service_data: 'motion-${entity.state}'

@@ -1,0 +1,15 @@
+enabled: true
+centeredSlides: false
+speed: 420
+slidesPerView: 2
+width: 480
+spaceBetween: 10
+breakpoints:
+  800:
+    enabled: false
+    slidesPerView: 3
+    width: 360
+  1024:
+    enabled: false
+    slidesPerView: auto
+    width: 600

@@ -1,0 +1,114 @@
+header_weather:
+  template:
+    - extra_styles
+  show_entity_picture: true
+  show_name: false
+  show_state: true
+  show_label: true
+  tap_action: !include ../../shared/popup/popup_weather.yaml
+  state_display: >
+    [[[
+        var realtemp = entity.attributes.temperature;
+        var apparent_temperature = entity.attributes.apparent_temperature;
+
+        return `
+            <span class="realtemp">${realtemp}°<span class="degree-symbol">C</span></span>
+            <span class="feels_like">Feels like: ${apparent_temperature}°C</span>
+        `;
+    ]]]
+  entity_picture: >
+    [[[
+      if (entity) {
+        const weatherIcons = {
+          sunny: 'clear-day.png',
+          'clear-night': 'clear-night.png',
+          fog: 'fog.png',
+          partlycloudy: {
+            above_horizon: 'partly-cloudy-day.png',
+            below_horizon: 'partly-cloudy-night.png',
+          },
+          rainy: 'rain.png',
+          sleet: 'sleet.png',
+          snowy: 'snow.png',
+          cloudy: 'cloudy.png',
+          wind: 'wind.png',
+        };
+        const weather = entity.state.toLowerCase();
+        const sunState = states['sun.sun'].state;
+
+        if (weatherIcons[weather]) {
+          if (typeof weatherIcons[weather] === 'object') {
+            return `/local/img/weather_new/${weatherIcons[weather][sunState]}`;
+          } else {
+            return `/local/img/weather_new/${weatherIcons[weather]}`;
+          }
+        } else {
+          return '';
+        }
+      }
+    ]]]
+  label: >
+    [[[
+        let next_rising = states['sun.sun'].attributes.next_rising,
+            sunrise_time = new Date(Date.parse(next_rising)),
+            sunrise = sunrise_time.getHours() + ":" + sunrise_time.getMinutes();
+        let next_dusk = states['sun.sun'].attributes.next_dusk,
+            sunset_time = new Date(Date.parse(next_dusk)),
+            sunset = sunset_time.getHours() + ":" + sunset_time.getMinutes();
+        let precipitation = states['sensor.prague_forecast_precipitation'].state;
+        return `
+            <ul>
+              <li class="precipitation">Precipitation - ${precipitation} mm</li>
+              <li class="humidity">Humidity - ${entity.attributes.humidity} %</li>
+              <li class="wind-speed">Wind - ${entity.attributes.wind_speed} km/H</li>
+              <li class="sunrise">Sunrise - ${sunrise}</li>
+              <li class="sunset">Sunset - ${sunset}</li>
+            </ul>
+          `
+    ]]]
+  styles:
+    grid:
+      - grid-template-areas: |
+          "i   s   l"
+      - grid-template-columns: 1fr 1fr 1fr
+      - grid-template-rows: auto
+      - margin: 0
+    card:
+      - background: none
+      - --webkit-tap-highlight-color: none
+      - --mdc-ripple-color: none
+      - box-shadow: none
+      - padding: 0
+      - color: rgba(255, 255, 255, 0.6)
+      - overflow: visible;
+
+header_clock:
+  template:
+    - extra_styles
+  show_icon: false
+  show_name: true
+  show_state: false
+  show_label: true
+  tap_action: !include ../../shared/popup/calendar.yaml
+  name: >
+    [[[
+      return `${states['sensor.time'].state}`;
+    ]]]
+  label: >
+    [[[
+      const event = new Date();
+      const options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      var locale = variables.ulm_language;
+      let formatted_date = event.toLocaleDateString('en-GB', options);
+      return formatted_date;
+    ]]]
+  styles:
+    grid:
+      - grid-template-areas: |
+          "n"
+          "l"
+      - grid-template-columns: 1fr
+      - grid-template-rows: auto auto
+      - gap: 4px
+    card:
+      - padding: 0

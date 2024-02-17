@@ -1,0 +1,157 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Network
+    style: !include ../../snippets/style_footer_transparent.yaml
+    card_mod: !include ../../snippets/style_popup_footer.yaml
+    content:
+      type: custom:layout-card
+      layout_type: custom:grid-layout
+      layout: !include ../../snippets/popup_footer_layout.yaml
+      cards:
+        #################################################
+        #                                               #
+        #                UNIFI ACCES POINT              #
+        #                                               #
+        #################################################
+        - type: entities
+          title: Access Points
+          show_header_toggle: false
+          card_mod:
+            class: header
+
+          entities:
+            - type: custom:tabbed-card
+              # styles: # global styles applied to all tabs
+              #   --mdc-theme-primary: 'rgba(250, 250, 250, 0.75)'
+              #   --mdc-tab-text-label-color-default: '#97989c'
+              #   --mdc-typography-button-font-size: 1em
+              tabs:
+                - !include ../../hidden/ap_office.yaml
+                - !include ../../hidden/ap_bedroom.yaml
+                - !include ../../hidden/ap_wall.yaml
+            - type: divider
+            - type: custom:hui-horizontal-stack-card
+              cards:
+                - type: custom:button-card
+                  name: Vodafone
+                  icon: mdi:router-wireless
+                  tap_action:
+                    action: url
+                    url_path: !secret router_url
+                  template: icon_name
+                - type: custom:button-card
+                  name: Unifi
+                  icon: phu:ubiquiti-logo
+                  template:
+                    - icon_name
+                    - >
+                      [[[
+                        return window.navigator.userAgent.match(/iPhone/i)
+                          ? 'unifi_ios'
+                          : 'unifi_web';
+                      ]]]
+                - type: custom:button-card
+                  name: ZigBee
+                  icon: si:zigbee
+                  tap_action:
+                    action: fire-dom-event
+                    browser_mod:
+                      service: browser_mod.popup
+                      data:
+                        title: 'ZigBee map'
+                        size: fullscreen
+                        content:
+                          type: iframe
+                          url: /api/hassio_ingress/Ew2YSafnnerR2_NXuuOG-3KWDZvnNgFBSfdzoUmcR_Y/#/map
+                  template:
+                    - icon_name
+        #################################################
+        #                                               #
+        #                UNIFI CONTROLLER               #
+        #                                               #
+        #################################################
+        - type: entities
+          title: Router
+          show_header_toggle: false
+          card_mod:
+            class: header
+          entities:
+            - entity: binary_sensor.arris_tg3442de_wan_status
+              name: WAN Status
+            # - entity: sensor.external_ip
+            # - entity: binary_sensor.template_unifi_upgradable
+            # - entity: sensor.template_ap_adopted
+            - type: custom:multiple-entity-row
+              entity: sensor.unifi_controller_clients
+              icon: mdi:devices
+              name: 'Total Clients'
+              show_state: false
+              secondary_info:
+                entity: sensor.unifi_controller_clients
+                unit: true
+              entities:
+                - attribute: wifi0
+                  name: 2.4GhZ
+                  unit: ' '
+                - attribute: wifi1
+                  name: 5GhZ
+                  unit: ' '
+                - attribute: wired
+                  name: Wired
+                  unit: ' '
+            - type: custom:multiple-entity-row
+              entity: binary_sensor.unifi_controller_alert
+              name: 'Alert'
+              state_color: true
+              show_state: true
+              secondary_info:
+                attribute: Message
+              entities:
+                - icon: mdi:archive-minus
+                  tap_action:
+                    action: call-service
+                    confirmation:
+                      text: Are you sure you want to archive?
+                    service: input_button.press
+                    service_data:
+                      entity_id: input_button.unifi_archive_alerts
+          footer:
+            type: custom:mini-graph-card
+            name: Speedtest
+            tap_action:
+              action: call-service
+              service: homeassistant.update_entity
+              service_data:
+                entity_id: sensor.speedtest_download
+            entities:
+              - entity: sensor.speedtest_download
+                name: Download
+                color: '#00bb33'
+              - entity: sensor.speedtest_upload
+                name: Upload
+                show_state: false
+                color: '#2196f3'
+                y_axis: secondary
+            hours_to_show: 48
+            hour24: true
+            line_width: 3
+            animate: true
+            upper_bound_secondary: 100
+            show:
+              name: True
+              icon: false
+              state: true
+              legend: true
+              fill: fade
+              labels: true
+              labels_secondary: false
+              average: true
+              extrema: true
+              points: hover
+            card_mod:
+              style: |
+                .info__item__time {
+                  display: none !important;
+                }

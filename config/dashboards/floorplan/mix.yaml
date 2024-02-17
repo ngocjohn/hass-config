@@ -1,0 +1,67 @@
+- element:
+    - above_horizon
+  entity: sun.sun
+  tap_action: false
+  hold_action: false
+  double_tap_action: false
+  state_action:
+    action: call-service
+    service: floorplan.style_set
+    service_data:
+      style: |
+        >
+        if( entity.state === "above_horizon" )
+            return "display: block;";
+        return "display: none;"
+- element: icon-phone-rotate
+  hold_action:
+    - service: floorplan.execute
+      service_data:
+        my_custom_exec_calling_browser_mod: |
+          >
+          try{
+            // Remember that ha-floorplan exposes a lot of useful properties
+            console.log(
+              "this",this, "\nentitiy",entity, "\nelements", elements, "\nentities", entities,
+              "\nconfig",config, "\nutil", util, "\nelement", element, "\nstates", states);
+
+            // Call browser_mod service
+            browser_mod.service('popup',{title: "My custom function with browser-mod call",
+            content:
+              {
+                // Create vertical stack card
+                type: "vertical-stack",
+                cards: [
+                  {
+                    // Entities card
+                    type: "entities",
+                    entities: [
+                      // Define each entity
+                      { entity: "sensor.time", name: "Time" },
+                      { entity: "sun.sun", name: "Sun" }
+                    ]
+                  }
+                ]
+              }
+            })
+          }catch(e){
+            console.log("Well.. That didn't go as planned",e);
+          }
+  tap_action:
+    action: fire-dom-event
+    local_conditional_card:
+      action: toggle
+      ids:
+        - landscape
+        - portrait
+  state_action:
+    action: call-service
+    service: floorplan.style_set
+    service_data:
+      style: |
+        >
+          return `
+            fill: #ffffff40;
+            stroke: #606060;
+            opacity: 0.2;
+          `

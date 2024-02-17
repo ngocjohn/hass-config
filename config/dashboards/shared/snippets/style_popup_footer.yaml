@@ -1,0 +1,38 @@
+style:
+  layout-card:
+    $grid-layout$:
+      # card divider border
+      .: |
+        #root > * {
+          margin: 0px !important;
+        }
+        @media (max-width: 450px), (max-height: 500px) {
+          #root {
+            display: block !important;
+          }
+        }
+      hui-entities-card:
+        $: |
+          ha-card {
+            border-right: 0.1vw solid rgba(58, 69, 73, 0.2);
+            border-radius: 0;
+            transition: none;
+          }
+          /* portrait */
+          @media screen and (max-width: 800px) {
+            ha-card {
+              border-right: none;
+              border-bottom: 0.1vw solid rgba(58, 69, 73, 0.2);
+            }
+          }
+        $hui-horizontal-stack-card:
+          $: |
+            #root {
+              justify-content: space-evenly;
+              margin-top: 1.7em;
+            }
+      hui-entities-card:last-child:
+        $: |
+          ha-card {
+            border: none;
+          }

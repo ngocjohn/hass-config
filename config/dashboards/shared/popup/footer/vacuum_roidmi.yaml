@@ -1,0 +1,422 @@
+type: custom:xiaomi-vacuum-map-card
+map_source:
+  camera: camera.roidmi_eve
+calibration_source:
+  camera: true
+entity: vacuum.roidmi_eve
+vacuum_platform: default
+map_locked: true
+map_modes:
+  - template: vacuum_goto
+  - template: vacuum_clean_zone
+    max_selections: 3
+    repeats_type: REPEAT
+    service_call_schema:
+      service: xiaomi_miot.call_action
+      evaluate_data_as_template: true
+      service_data:
+        entity_id: '[[entity_id]]'
+        siid: 14
+        aiid: 1
+        params:
+          - 2
+          - >-
+            {% set s_s = [[selection]] %}{"MapId":[[map_id]],"ExtraAreas":[{%for
+            s in s_s %}{"name":"[[name]]", "id":[[id]], "tag":"[[tag]]",
+            "vertexs":[[{{s[0]}},{{s[1]}}],[{{s[2]}},{{s[1]}}],[{{s[2]}},{{s[3]}}],[{{s[0]}},{{s[3]}}]],"active":"normal","mode":"area"}{%
+            if not loop.last%},{% endif%}{%endfor%}]}
+    variables:
+      map_id: 1696538829
+      name: hi
+      id: 300
+      tag: 4
+card_mod:
+  style: |
+    ha-card {
+      --map-card-primary-color: #FFFFFF30;
+      --map-card-secondary-color: #FFFFFF10;
+      --map-card-secondary-text-color: #9da0a2;
+      --map-card-zoomer-background: none;
+      --map-card-predefined-rectangle-fill-color: none;
+      --map-card-predefined-rectangle-line-color: none;
+      --map-card-predefined-rectangle-line-color-selected:rgba(255, 92, 10, 0.5);
+      --map-card-predefined-rectangle-fill-color-selected: rgba(255, 92, 10, 0.5);
+      --map-card-room-outline-fill-color-selected: rgba(255, 92, 10, 0.5);
+      --map-card-predefined-rectangle-icon-background-color-selected: rgb(255, 159, 26);
+      --map-card-predefined-rectangle-icon-color: #1d1d1d;
+      --map-card-predefined-rectangle-icon-background-color: rgba(255, 255, 255, 0.7);
+      --map-card-internal-big-radius: 0.6em !important;
+    }
+    div.map-wrapper {
+      padding: 2vw 0px 0.6vw !important;
+    }
+    div.controls-wrapper {
+      padding-top: 0;
+      padding-bottom: 0;
+      letter-spacing: normal;
+      margin: 0;
+    }
+    div.tiles-wrapper, div.vacuum-controls, div.icons-wrapper {
+      display: none;
+    }
+    div.map-controls-wrapper {
+      padding: var(--tablet-popup-button-padding);
+    }
+    paper-button {
+      --mdc-icon-size: 1.5em;
+      color: #9da0a2 !important;
+      padding: 0.42em;
+    }
+    #map-image {
+      filter: brightness(0.7);
+    }
+    #map-zoomer-content {
+      background-image: url(/local/img/roidme_plan.png);
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+# - type: custom:state-switch
+#   entity: vacuum.roidmi_eve
+#   default: docked
+#   states:
+#     docked:
+#       type: custom:xiaomi-vacuum-map-card
+#       vacuum_platform: default
+#       preset_name: Rooms
+#       map_source:
+#         image: /local/img/roidme_plan.png
+#       entity: vacuum.roidmi_eve
+#       two_finger_pan: true
+#       map_locked: true
+#       calibration_source:
+#         calibration_points:
+#           - vacuum:
+#               x: 0
+#               'y': 0
+#             map:
+#               x: 391
+#               'y': 88
+#           - vacuum:
+#               x: 1000
+#               'y': 0
+#             map:
+#               x: 451
+#               'y': 88
+#           - vacuum:
+#               x: 0
+#               'y': 1000
+#             map:
+#               x: 391
+#               'y': 28
+#       map_modes:
+#         - template: vacuum_clean_segment
+#           max_selections: 8
+#           repeats_type: EXTERNAL
+#           max_repeats: 3
+#           service_call_schema:
+#             service: xiaomi_miot.call_action
+#             service_data:
+#               entity_id: '[[entity_id]]'
+#               did: 558429891
+#               siid: 14
+#               aiid: 1
+#               params:
+#                 - 2
+#                 - '{"mapId":1696538829,"segmentId":[[selection]]}'
+#           predefined_selections:
+#             - id: '1'
+#               icon:
+#                 name: mdi:broom
+#                 x: 125.00009685754776
+#                 'y': -6525.0007174909115
+#               outline:
+#                 - - -810
+#                   - -3958
+#                 - - 1510
+#                   - -3958
+#                 - - 1541
+#                   - -5463
+#                 - - 1102
+#                   - -5525
+#                 - - 1134
+#                   - -8661
+#                 - - -685
+#                   - -8723
+#                 - - -810
+#                   - -4020
+#             - id: '2'
+#               icon:
+#                 name: mdi:broom
+#                 x: 850.0001076608896
+#                 'y': -0.0006202608340117877
+#               outline:
+#                 - - -685
+#                   - 589
+#                 - - 224
+#                   - 589
+#                 - - 256
+#                   - -164
+#                 - - 1792
+#                   - -258
+#                 - - 1824
+#                   - -1387
+#                 - - -653
+#                   - -1324
+#                 - - -653
+#                   - 557
+#             - id: '3'
+#               icon:
+#                 name: mdi:broom
+#                 x: 5800.0001814216375
+#                 'y': -725.0006310641756
+#               outline:
+#                 - - 3862
+#                   - 902
+#                 - - 3799
+#                   - -1324
+#                 - - 3360
+#                   - -2453
+#                 - - 8032
+#                   - -2296
+#                 - - 8094
+#                   - 871
+#                 - - 3893
+#                   - 934
+#             - id: '4'
+#               icon:
+#                 name: mdi:broom
+#                 x: 4925.0001683831215
+#                 'y': -7175.000727176666
+#               outline:
+#                 - - 2294
+#                   - -5400
+#                 - - 8094
+#                   - -5369
+#                 - - 8126
+#                   - -9194
+#                 - - 1667
+#                   - -9068
+#                 - - 1729
+#                   - -7062
+#                 - - 2388
+#                   - -6905
+#                 - - 2294
+#                   - -5400
+#             - id: '5'
+#               icon:
+#                 name: mdi:broom
+#                 x: 5675.000179558992
+#                 'y': -3900.0006783753624
+#               outline:
+#                 - - 3234
+#                   - -2703
+#                 - - 8063
+#                   - -2484
+#                 - - 8063
+#                   - -5212
+#                 - - 3046
+#                   - -5243
+#                 - - 3015
+#                   - -3989
+#                 - - 3329
+#                   - -3989
+#                 - - 3266
+#                   - -2798
+#             - id: '6'
+#               icon:
+#                 name: mdi:broom
+#                 x: -3424.9999560415745
+#                 'y': -6525.0007174909115
+#               outline:
+#                 - - -5137
+#                   - -3958
+#                 - - -873
+#                   - -3926
+#                 - - -779
+#                   - -8755
+#                 - - -4918
+#                   - -8755
+#                 - - -5137
+#                   - -4020
+#             - id: '7'
+#               icon:
+#                 name: mdi:broom
+#                 x: 2800.000136718154
+#                 'y': -2225.000653415918
+#               outline:
+#                 - - 1635
+#                   - -3895
+#                 - - 1635
+#                   - -5274
+#                 - - 2921
+#                   - -5243
+#                 - - 2921
+#                   - -3989
+#                 - - 3109
+#                   - -3989
+#                 - - 3015
+#                   - -822
+#                 - - 3015
+#                   - 338
+#                 - - 1918
+#                   - 338
+#                 - - 1855
+#                   - -3864
+#                 - - 1729
+#                   - -3864
+#             - id: '8'
+#               icon:
+#                 name: mdi:broom
+#                 x: 825.0001072883606
+#                 'y': -2200.0006530433884
+#               outline:
+#                 - - -653
+#                   - -1575
+#                 - - 1792
+#                   - -1575
+#                 - - 1792
+#                   - -3707
+#                 - - -685
+#                   - -3707
+#                 - - -653
+#                   - -1637
+#         - template: vacuum_clean_zone
+#           max_selections: 3
+#           repeats_type: REPEAT
+#           service_call_schema:
+#             service: xiaomi_miot.call_action
+#             evaluate_data_as_template: true
+#             service_data:
+#               entity_id: '[[entity_id]]'
+#               siid: 14
+#               aiid: 1
+#               params:
+#                 - 2
+#                 - >-
+#                   {% set s_s = [[selection]]
+#                   %}{"MapId":[[map_id]],"ExtraAreas":[{%for s in s_s
+#                   %}{"name":"[[name]]", "id":[[id]], "tag":"[[tag]]",
+#                   "vertexs":[[{{s[0]}},{{s[1]}}],[{{s[2]}},{{s[1]}}],[{{s[2]}},{{s[3]}}],[{{s[0]}},{{s[3]}}]],"active":"normal","mode":"area"}{%
+#                   if not loop.last%},{% endif%}{%endfor%}]}
+#           variables:
+#             map_id: 1696538829
+#             name: hi
+#             id: 300
+#             tag: 4
+#       additional_presets:
+#         - preset_name: Live map
+#           map_source:
+#             camera: camera.roidmi_eve
+#           calibration_source:
+#             camera: true
+#           entity: vacuum.roidmi_eve
+#           vacuum_platform: default
+#           map_locked: true
+#           map_modes:
+#             - template: vacuum_goto
+#             - template: vacuum_clean_zone
+#               max_selections: 3
+#               repeats_type: REPEAT
+#               service_call_schema:
+#                 service: xiaomi_miot.call_action
+#                 evaluate_data_as_template: true
+#                 service_data:
+#                   entity_id: '[[entity_id]]'
+#                   siid: 14
+#                   aiid: 1
+#                   params:
+#                     - 2
+#                     - >-
+#                       {% set s_s = [[selection]]
+#                       %}{"MapId":[[map_id]],"ExtraAreas":[{%for s in s_s
+#                       %}{"name":"[[name]]", "id":[[id]], "tag":"[[tag]]",
+#                       "vertexs":[[{{s[0]}},{{s[1]}}],[{{s[2]}},{{s[1]}}],[{{s[2]}},{{s[3]}}],[{{s[0]}},{{s[3]}}]],"active":"normal","mode":"area"}{%
+#                       if not loop.last%},{% endif%}{%endfor%}]}
+#               variables:
+#                 map_id: 1696538829
+#                 name: hi
+#                 id: 300
+#                 tag: 4
+#       card_mod:
+#         style: &style |
+#           ha-card {
+#             --map-card-primary-color: #FFFFFF30;
+#             --map-card-secondary-color: #FFFFFF10;
+#             --map-card-secondary-text-color: #9da0a2;
+#             --map-card-zoomer-background: none;
+#             --map-card-predefined-rectangle-fill-color: none;
+#             --map-card-predefined-rectangle-line-color: none;
+#             --map-card-predefined-rectangle-line-color-selected:rgba(255, 92, 10, 0.5);
+#             --map-card-predefined-rectangle-fill-color-selected: rgba(255, 92, 10, 0.5);
+#             --map-card-room-outline-fill-color-selected: rgba(255, 92, 10, 0.5);
+#             --map-card-predefined-rectangle-icon-background-color-selected: rgb(255, 159, 26);
+#             --map-card-predefined-rectangle-icon-color: #1d1d1d;
+#             --map-card-predefined-rectangle-icon-background-color: rgba(255, 255, 255, 0.7);
+#             --map-card-internal-big-radius: 0.6em !important;
+#           }
+#           div.map-wrapper {
+#             padding: 2vw 0px 0.6vw !important;
+#             margin-right: 6px;
+#           }
+#           div.controls-wrapper {
+#             padding-top: 0;
+#             padding-bottom: 0;
+#             letter-spacing: normal;
+#             margin: 0;
+#           }
+#           div.tiles-wrapper, div.vacuum-controls, div.icons-wrapper {
+#             display: none;
+#           }
+#           div.map-controls-wrapper {
+#             padding: var(--tablet-popup-button-padding);
+#           }
+#           paper-button {
+#             --mdc-icon-size: 1.5em;
+#             color: #9da0a2 !important;
+#             padding: 0.42em;
+#           }
+#           #map-image {
+#             filter: brightness(0.7);
+#           }
+#     cleaning:
+#       type: custom:xiaomi-vacuum-map-card
+#       map_source:
+#         camera: camera.roidmi_eve
+#       calibration_source:
+#         camera: true
+#       entity: vacuum.roidmi_eve
+#       vacuum_platform: default
+#       map_locked: true
+#       map_modes:
+#         - template: vacuum_goto
+#         - template: vacuum_clean_zone
+#           max_selections: 3
+#           repeats_type: REPEAT
+#           service_call_schema:
+#             service: xiaomi_miot.call_action
+#             evaluate_data_as_template: true
+#             service_data:
+#               entity_id: '[[entity_id]]'
+#               siid: 14
+#               aiid: 1
+#               params:
+#                 - 2
+#                 - >-
+#                   {% set s_s = [[selection]]
+#                   %}{"MapId":[[map_id]],"ExtraAreas":[{%for s in s_s
+#                   %}{"name":"[[name]]", "id":[[id]], "tag":"[[tag]]",
+#                   "vertexs":[[{{s[0]}},{{s[1]}}],[{{s[2]}},{{s[1]}}],[{{s[2]}},{{s[3]}}],[{{s[0]}},{{s[3]}}]],"active":"normal","mode":"area"}{%
+#                   if not loop.last%},{% endif%}{%endfor%}]}
+#           variables:
+#             map_id: 1696538829
+#             name: hi
+#             id: 300
+#             tag: 4
+#       card_mod:
+#         style: |
+#           #map-zoomer-content {
+#             background-image: url(/local/img/roidme_plan.png) !important;
+#             background-size: contain;
+#             background-repeat: no-repeat;
+#           }
