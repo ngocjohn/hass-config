@@ -1,0 +1,139 @@
+icon: si:kodi
+path: movies
+subview: false
+theme: kodi
+
+type: custom:grid-layout
+layout:
+  grid-template-rows: auto
+  grid-template-columns: 16px auto 16px
+  grid-template-areas: |
+    ". cc ."
+    ".  . ."
+  grid-column-gap: 0
+  margin: 0
+  card_margin: 0
+  place-content: space-around
+  mediaquery:
+    '(max-width: 800px)':
+      grid-template-columns: 8px auto 8px
+      grid-template-rows: auto 80px
+cards:
+  - type: 'custom:layout-card'
+    layout_type: 'custom:grid-layout'
+    layout:
+      grid-template-columns: auto
+      grid-template-rows: auto
+      grid-column-gap: 16px
+      margin: -1px
+      mediaquery:
+        '(max-width: 799.99px)':
+          margin: -1
+    view_layout:
+      grid-area: cc
+
+    cards:
+      # [Header] Summary
+
+      - type: 'custom:layout-card'
+        layout_type: 'custom:grid-layout'
+        layout:
+          grid-template-columns: auto max-content
+          grid-template-rows: auto
+          mediaquery:
+            '(min-width: 1024px)':
+              grid-template-columns: auto max-content
+            '(min-width: 800px)':
+              grid-template-columns: auto max-content
+            '(max-width: 799.99px)':
+              grid-template-columns: calc(100vw - 16px)
+          margin: 0
+        cards:
+          - type: markdown
+            card_mod:
+              style:
+                .: |
+                  ha-card {
+                    background: none !important;
+                  }
+                ha-markdown$: |
+                  h1 {
+                    font-weight: 600;
+                    line-height: 1.1;
+                    margin-left: -2px;
+                    margin-block-end: -8px;
+                    font-size: 3.5rem !important;
+                  }
+
+            content: >
+              # Kodi library
+
+          - type: 'custom:layout-card'
+            layout_type: 'custom:grid-layout'
+            layout:
+              margin: 0
+            view_layout:
+              place-self: center auto
+            cards:
+              - type: 'custom:swipe-card'
+                parameters: !include ../shared/snippets/parameters-page-title-swipe-card.yaml
+                card_mod:
+                  style: !include ../shared/snippets/style-page-title-swipe-card.yaml
+                cards:
+                  - type: 'custom:mushroom-entity-card'
+                    entity: sensor.kodi_all_movies
+                    secondary_info: last-updated
+                    name: Recently Added
+                    icon: mdi:filmstrip-box-multiple
+                    tap_action:
+                      action: fire-dom-event
+                      local_conditional_card:
+                        action: set
+                        ids:
+                          - upcomingmovie: hide
+                          - addedmovie: show
+
+                  - type: custom:mushroom-template-card
+                    primary: Movies in {{ now().strftime('%B') }}
+                    secondary: >-
+                      {{ (states('sensor.upcoming_movies_1') | int) +
+                      (states('sensor.upcoming_movies_2') | int) }} Movies
+                    icon: mdi:theater
+                    icon_color: '#FF6F00'
+                    tap_action:
+                      action: fire-dom-event
+                      local_conditional_card:
+                        action: set
+                        ids:
+                          - upcomingmovie: show
+                          - addedmovie: hide
+
+                  - type: custom:mushroom-entity-card
+                    entity: automation.kodi_lib_scan
+                    icon: mdi:sync-circle
+                    name: Scan Library
+                    secondary_info: last-updated
+                    tap_action:
+                      action: none
+                    double_tap_action:
+                      action: call-service
+                      service: automation.trigger
+                      target:
+                        entity_id: automation.kodi_lib_scan
+                      data:
+                        skip_condition: true
+
+      - !include kodi-recently-added.yaml
+      - !include kodi-upcoming-movies.yaml
+
+  # # STICKY MENU
+
+  # - type: custom:stack-in-card
+  #   view_layout:
+  #     show:
+  #       mediaquery: '(max-width: 800px)'
+  #   card_mod:
+  #     style: !include ../shared/snippets/card-style-sticky-menu.yaml
+
+  #   cards:
+  #     - !include ../shared/cards-sticky-menu.yaml

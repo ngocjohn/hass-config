@@ -1,0 +1,106 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Lights
+    style: |
+      --popup-min-width: calc(460px + 460px + 460px);
+    card_mod:
+      style:
+        .: |
+        layout-card$masonry-layout$:
+          .: |
+            :host {
+              --card-margin: 4px !important;
+            }
+    content:
+      type: custom:layout-card
+      layout_type: custom:masonry-layout
+      cards:
+        - type: custom:auto-entities
+          card:
+            square: false
+            columns: 3
+            title: Lights On
+            type: grid
+          card_param: cards
+          filter:
+            include:
+              - entity_id: light.all_light_group
+                state: 'on'
+                options:
+                  type: custom:mushroom-light-card
+                  layout: vertical
+                  secondary_info: none
+                  tap_action:
+                    action: toggle
+                  card_mod:
+                    style: |
+                      ha-card {
+                        background:
+                        {% if is_state(config.entity, 'on') %}
+                          rgba(var(--rgb-state-light), 0.1);
+                        {% endif %}
+                          #cfcfcf1a !important;
+                        border-radius: 12px !important;
+                      }
+              - group: light.all_light_group
+                state: 'on'
+                options:
+                  type: custom:mushroom-light-card
+                  fill_container: true
+                  use_light_color: true
+                  layout: vertical
+                  secondary_info: name
+                  primary_info: none
+                  tap_action:
+                    action: toggle
+                  card_mod:
+                    style: |
+                      ha-card {
+                        background:
+                        {% if is_state(config.entity, 'on') %}
+                          rgba(var(--rgb-state-light), 0.1);
+                        {% endif %}
+                          #cfcfcf1a !important;
+                        border-radius: 12px !important;
+                      }
+            exclude: []
+          sort:
+            method: domain
+          show_empty: false
+        - type: custom:decluttering-card
+          template: light_auto_entitites
+          variables:
+            - group: light.living_room_group
+            - title: Living Room
+        - type: custom:decluttering-card
+          template: light_auto_entitites
+          variables:
+            - group: light.office_group
+            - title: Office
+        - type: custom:decluttering-card
+          template: light_auto_entitites
+          variables:
+            - group: light.kitchen_group
+            - title: Kitchen
+        - type: custom:decluttering-card
+          template: light_auto_entitites
+          variables:
+            - group: light.bathroom_group
+            - title: Bathroom
+        - type: custom:decluttering-card
+          template: light_auto_entitites
+          variables:
+            - group: light.bedroom_group
+            - title: Bedroom
+        - type: custom:decluttering-card
+          template: light_auto_entitites
+          variables:
+            - group: light.shower_group
+            - title: Shower Room
+        - type: custom:decluttering-card
+          template: light_auto_entitites
+          variables:
+            - group: light.hallway_group
+            - title: Hallway & Utility

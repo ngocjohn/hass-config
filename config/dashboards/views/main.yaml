@@ -1,0 +1,57 @@
+icon: mdi:home-circle
+path: summary
+subview: false
+
+theme: tablet
+type: custom:grid-layout
+layout:
+  # default:
+  margin: 0
+  grid-gap: 1.3%
+  grid-template-columns: 0 1fr 1fr 1fr 1fr 1fr 1fr 0
+  grid-template-rows: 0 min-content fit-content(100%) fit-content(100%) fit-content(100%) 0
+  grid-template-areas: |
+    ". .         .          .         .        .          .          ."
+    ". chips     chips      chips     chips    header     header     ."
+    ". security  mainrooms  devices   other    floorplan  floorplan  ."
+    ". cameras   climate    media     movies   floorplan  floorplan  ."
+    ". footer    footer     footer    footer   nowplaying nowplaying ."
+    ". .         .          .         .        .          .          ."
+  mediaquery:
+    #laptop
+    '(min-width: 1441px) and (max-width: 1770px)':
+      grid-gap: 16px
+    #portrait
+    '(min-width: 801px) and (max-width: 1440px)':
+      grid-gap: 16px
+      grid-template-columns: 0 1fr 1fr 1fr 0
+      grid-template-rows: fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) 0
+      grid-template-areas: |
+        ".  sidebar    home        security  ."
+        ".  cameras    media       climate   ."
+        ".  mainrooms  devices     other     ."
+        ".  floorplan  floorplan   floorplan ."
+        ".  footer     footer      footer    ."
+        ".  .          .           .         ."
+    # phone
+    '(max-width: 800px)':
+      # grid-gap: calc(var(--custom-layout-card-padding) * 1.7)
+      grid-gap: 8px
+      grid-template-columns: 0px 1fr 1fr 0px
+      grid-template-rows: min-content min-content fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) 80px
+      grid-template-areas: |
+        ". header      header    ."
+        ". chips       chips     ."
+        ". home        security  ."
+        ". media       cameras   ."
+        ". mainrooms   devices   ."
+        ". other       climate   ."
+        ". floorplan   floorplan ."
+        ". footer      footer    ."
+        ". .           .         ."
+#################################################
+#                                               #
+#                    DASHBOARD                  #
+#                                               #
+#################################################
+cards: !include_dir_merge_list main-grid/

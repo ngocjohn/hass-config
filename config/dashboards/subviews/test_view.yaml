@@ -1,0 +1,329 @@
+path: test
+subview: false
+theme: kodi
+title: test
+
+type: custom:grid-layout
+layout:
+  grid-template-rows: auto
+  grid-template-columns: 16px auto 16px
+  grid-template-areas: |
+    ". cc ."
+    ".  . ."
+  grid-column-gap: 0
+  margin: 0
+  card_margin: 0
+
+  mediaquery:
+    '(max-width: 800px)':
+      grid-template-columns: 8px auto 8px
+      grid-template-rows: auto 80px
+      place-content: center
+cards:
+  - type: 'custom:layout-card'
+    layout_type: 'custom:grid-layout'
+    layout:
+      grid-template-columns: 'repeat(auto-fill, minmax(450px, 1fr))'
+      grid-template-rows: auto
+      grid-column-gap: 16px
+      margin: -1px
+      mediaquery:
+        '(min-width: 800px) and (max-width: 1023.99px)':
+          grid-template-columns: 'repeat(auto-fill, minmax(365px, 1fr))'
+        '(max-width: 799.99px)':
+          grid-template-columns: fit-content(100%)
+          margin: -1
+    view_layout:
+      grid-area: cc
+
+    cards:
+      # [Header] Summary
+
+      - type: 'custom:layout-card'
+        layout_type: 'custom:grid-layout'
+        layout:
+          grid-template-columns: auto max-content
+          grid-template-rows: auto
+          mediaquery:
+            '(min-width: 1024px)':
+              grid-template-columns: auto max-content
+            '(min-width: 800px)':
+              grid-template-columns: auto max-content
+            '(max-width: 799.99px)':
+              grid-template-columns: calc(100vw - 16px)
+          margin: 0
+        view_layout:
+          grid-column: 1/-1
+        cards:
+          - type: markdown
+            card_mod:
+              style:
+                .: |
+                  ha-card {
+                    background: none !important;
+                  }
+                ha-markdown$: |
+                  h1 {
+                    font-weight: 600;
+                    line-height: 1.1;
+                    margin-left: -2px;
+                    margin-block-end: -8px;
+                    font-size: 3.5rem !important;
+                  }
+
+            content: >
+              # Kodi library
+
+          - type: 'custom:layout-card'
+            layout_type: 'custom:grid-layout'
+            layout:
+              margin: 0
+            view_layout:
+              place-self: center auto
+            cards:
+              - type: 'custom:swipe-card'
+                parameters: !include ../shared/snippets/parameters-page-title-swipe-card.yaml
+                card_mod:
+                  style: !include ../shared/snippets/style-page-title-swipe-card.yaml
+                cards:
+                  - type: 'custom:mushroom-entity-card'
+                    entity: sensor.kodi_all_movies
+                    secondary_info: last-updated
+                    name: Recently Added
+                    icon: mdi:filmstrip-box-multiple
+                    tap_action:
+                      action: fire-dom-event
+                      local_conditional_card:
+                        action: set
+                        ids:
+                          - upcomingmovie: hide
+                          - addedmovie: show
+
+                  - type: custom:mushroom-template-card
+                    primary: Movies in {{ now().strftime('%B') }}
+                    secondary: >-
+                      {{ (states('sensor.upcoming_movies_1') | int) +
+                      (states('sensor.upcoming_movies_2') | int) }} Movies
+                    icon: mdi:theater
+                    icon_color: '#FF6F00'
+                    tap_action:
+                      action: fire-dom-event
+                      local_conditional_card:
+                        action: set
+                        ids:
+                          - upcomingmovie: show
+                          - addedmovie: hide
+
+                  - type: custom:mushroom-entity-card
+                    entity: automation.kodi_lib_scan
+                    icon: mdi:sync-circle
+                    name: Scan Library
+                    secondary_info: last-updated
+                    tap_action:
+                      action: none
+                    double_tap_action:
+                      action: call-service
+                      service: automation.trigger
+                      target:
+                        entity_id: automation.kodi_lib_scan
+                      data:
+                        skip_condition: true
+      # Columns cards
+      - type: 'custom:layout-card'
+        layout_type: 'custom:grid-layout'
+        layout:
+          margin: -1
+        cards:
+          - type: 'custom:button-card'
+            template: header_card
+            variables:
+              name: LIVING ROOM & KITCHEN
+              label: Scenes
+              action: more-info
+              link: popup.living_room_scenes
+
+          # - type: 'custom:layout-card'
+          #   layout_type: 'custom:grid-layout'
+          #   layout: !include ../shared/snippets/layout-live-tile.yaml
+          #   cards: !include ../shared/columns/lights-living-room.yaml
+          - type: custom:tailwindcss-template-card
+            card_mod:
+              style: |
+                ha-card {
+                  background: none !important;
+                }
+            entity: ''
+            content: |
+              <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-2">
+              <div class="bg-gray-900 rounded-xl p-4">
+                <div class="flex items-center justify-between mb-6">
+                  <h3 class="text-white text-2xl">Isolation room</h3>
+                  <ha-icon icon="fas:arrow-circle-right" class="text-purple-400 w-4"></ha-icon>
+                </div>
+                <div class="flex items-center justify-between">
+                  <ha-icon icon="fas:procedures" class="text-purple-400"></ha-icon>
+                  <div class="text-right">
+                    <p class="text-white text-sm">Usage rate</p>
+                    <p class="text-purple-400 text-2xl">20%</p>
+                  </div>
+                </div>
+                <div class="w-full bg-gray-700 rounded-full h-2.5 dark:bg-gray-700">
+                  <div
+                    class="bg-purple-400 h-2.5 rounded-full"
+                    style="width: 20%">
+                  </div>
+                </div>
+              </div>
+              <div class="bg-gray-900 rounded-xl p-4">
+                <div class="flex items-center justify-between mb-6">
+                  <h3 class="text-white text-lg">Isolation room</h3>
+                  <ha-icon icon="fas:arrow-circle-right" class="text-purple-400 w-4"></ha-icon>
+                </div>
+                <div class="flex items-center justify-between">
+                  <ha-icon icon="fas:procedures" class="text-purple-400"></ha-icon>
+                  <div class="text-right">
+                    <p class="text-white text-sm">Usage rate</p>
+                    <p class="text-purple-400 text-2xl">20%</p>
+                  </div>
+                </div>
+                <div class="w-full bg-gray-700 rounded-full h-2.5 dark:bg-gray-700">
+                  <div
+                    class="bg-purple-400 h-2.5 rounded-full"
+                    style="width: 20%">
+                  </div>
+                </div>
+              </div>
+              <div class="bg-gray-900 rounded-xl p-4 col-span-2">
+                <div class="flex items-center justify-between mb-6">
+                  <h3 class="text-white text-lg">Isolation room</h3>
+                  <ha-icon icon="fas:arrow-circle-right" class="text-purple-400 w-4"></ha-icon>
+                </div>
+                <div class="flex items-center justify-between">
+                  <ha-icon icon="fas:procedures" class="text-purple-400"></ha-icon>
+                  <div class="text-right">
+                    <p class="text-white text-sm">Usage rate</p>
+                    <p class="text-purple-400 text-2xl">20%</p>
+                  </div>
+                </div>
+                <div class="w-full bg-gray-700 rounded-full h-2.5 dark:bg-gray-700">
+                  <div
+                    class="bg-purple-400 h-2.5 rounded-full"
+                    style="width: 20%">
+                  </div>
+                </div>
+              </div>
+              <div class="bg-gray-900 rounded-xl p-4">
+                <div class="flex items-center justify-between mb-6">
+                  <h3 class="text-white text-lg">Dining hall</h3>
+                  <i class="fas fa-arrow-circle-right text-orange-400"></i>
+                </div>
+                <div class="flex items-center justify-between">
+                  <i class="fas fa-utensils fa-2x text-orange-400"></i>
+                  <div class="text-right">
+                    <p class="text-white text-sm">Usage rate</p>
+                    <p class="text-orange-400 text-2xl">58%</p>
+                  </div>
+                </div>
+                <div class="w-full bg-gray-700 rounded-full h-2.5 dark:bg-gray-700">
+                  <div
+                    class="bg-orange-400 h-2.5 rounded-full"
+                    style="width: 58%"
+                  ></div>
+                </div>
+              </div>
+              </div>
+            ignore_line_breaks: true
+            always_update: false
+            parse_jinja: true
+            code_editor: Ace
+            entities: []
+            bindings: []
+            actions: []
+            debounceChangePeriod: 100
+            plugins:
+              daisyui:
+                enabled: true
+                url: https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.css
+                theme: dark - dark
+                overrideCardBackground: false
+              tailwindElements:
+                enabled: false
+
+      - type: 'custom:layout-card'
+        layout_type: 'custom:grid-layout'
+        layout:
+          margin: -1
+        cards:
+          - type: 'custom:button-card'
+            template: header_card
+            variables:
+              name: LIVING ROOM & KITCHEN
+              label: Scenes
+              action: more-info
+              link: popup.living_room_scenes
+
+          - type: 'custom:layout-card'
+            layout_type: 'custom:grid-layout'
+            layout:
+              grid-template-columns: 1fr 1fr
+              grid-gap: 0.5rem
+              margin: -1px
+            cards:
+              - type: 'custom:button-card'
+                template: system_button_card
+                name: HA system
+                icon: mdi:home-assistant
+                variables:
+                  memory: sensor.memory_use_percent
+                  memory_color: '#4ade80'
+                  cpu: sensor.processor_use
+                  cpu_color: '#fb923c'
+                  sys_temp: sensor.processor_temperature
+                  sys_temp_color: '#38bdf8'
+                view_layout:
+                  grid-column: span 2
+
+              # - type: 'custom:button-card'
+              #   template: system_button_card
+              #   entity: sensor.memory_use_percent
+
+              # - type: 'custom:button-card'
+              #   template: system_button_card
+              #   entity: sensor.memory_use_percent
+
+              # - type: 'custom:button-card'
+              #   template: system_button_card
+              #   entity: sensor.memory_use_percent
+              #   view_layout:
+              #     grid-column: 2
+              #     grid-row: 3
+
+      - type: 'custom:layout-card'
+        layout_type: 'custom:grid-layout'
+        layout:
+          margin: -1
+        cards:
+          - type: 'custom:button-card'
+            template: header_card
+            variables:
+              name: LIVING ROOM & KITCHEN
+              label: Scenes
+              action: more-info
+              link: popup.living_room_scenes
+
+          - type: 'custom:layout-card'
+            layout_type: 'custom:grid-layout'
+            layout: !include ../shared/snippets/layout-live-tile.yaml
+            cards: !include ../shared/columns/lights-living-room.yaml
+
+  # # STICKY MENU
+
+  # - type: custom:stack-in-card
+  #   view_layout:
+  #     show:
+  #       mediaquery: '(max-width: 800px)'
+  #   card_mod:
+  #     style: !include ../shared/snippets/card-style-sticky-menu.yaml
+
+  #   cards:
+  #     - !include ../shared/cards-sticky-menu.yaml

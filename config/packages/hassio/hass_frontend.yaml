@@ -1,0 +1,44 @@
+# PANEL CUSTOM
+panel_custom:
+  - name: integrations
+    sidebar_title: Integrations
+    sidebar_icon: mdi:devices
+    js_url: /api/hassio/app/entrypoint.js
+    url_path: 'config/integrations'
+    config:
+      ingress: core_configurator
+  - name: addons
+    sidebar_title: Addons
+    sidebar_icon: mdi:puzzle
+    js_url: /api/hassio/app/entrypoint.js
+    url_path: 'hassio/dashboard'
+    config:
+      ingress: core_configurator
+  - name: logs
+    sidebar_title: Logs
+    sidebar_icon: mdi:file-alert
+    js_url: /api/hassio/app/entrypoint.js
+    url_path: 'config/logs'
+    config:
+      ingress: core_configurator
+  - name: ha_system
+    sidebar_title: Supervisor
+    sidebar_icon: mdi:information-variant
+    js_url: /api/hassio/app/entrypoint.js
+    url_path: 'hassio/system/info'
+    config:
+      ingress: core_configurator
+  - name: automations
+    sidebar_title: Automations
+    sidebar_icon: mdi:robot
+    js_url: /api/hassio/app/entrypoint.js
+    url_path: 'config/automation/dashboard'
+    config:
+      ingress: core_configurator
+  - name: iframe-fullscreen
+    sidebar_icon: mdi:language-python
+    module_url: '/local/dashboard-resources/iframe-fullscreen.js'
+    sidebar_title: 'Appdaemon'
+    url_path: appdaemon
+    config:
+      url: !secret appdaemon_url

@@ -1,0 +1,85 @@
+#################################################
+#                                               #
+#         MEDIA PLAYERS                         #
+#                                               #
+#################################################
+- entity:
+    - media_player.living_room_tv
+  elements:
+    - media_player.living_room_tv
+    - media_player_overlay.living_room_tv
+    - atv-entity-picture
+    - light.sony_tv_backlight
+    - atv_idle_path
+  tap_action: !include ../shared/honeycomb/atv.yaml
+  double_tap_action: more-info
+  state_action:
+    - service: floorplan.class_set
+      service_data: 'media-living-${entity.state}'
+
+- element:
+    - atv-entity-picture
+  entities:
+    - media_player.living_room_tv
+    - sensor.youtube_thumbnail
+  state_action:
+    - service: floorplan.image_set
+      service_data:
+        image: >
+          > let kodi = states['media_player.living_room_tv'].attributes.entity_picture,
+                atv = states['sensor.youtube_thumbnail'].state;
+            if (states['media_player.living_room_tv'].attributes.active_child === "media_player.kodi_atv")
+            return kodi;
+          return atv;
+
+- entity:
+    - light.sony_tv_backlight
+  state_action:
+    - service: floorplan.style_set
+      service_data:
+        element: light.sony_tv_backlight
+        style: |
+          >
+          if (entity.state !== "on")
+              return "display: none;";
+          let rgb0 = 0;
+          let rgb1 = 0;
+          let rgb2 = 0;
+          if (entity.attributes.rgb_color) {
+                rgb0 = entity.attributes.rgb_color[0];
+                rgb1 = entity.attributes.rgb_color[1];
+                rgb2 = entity.attributes.rgb_color[2];
+                }
+            if ( entity.state === "on" && states['media_player.atv'].state === 'playing') {
+                return `
+                  stroke: rgb(${rgb0}, ${rgb1}, ${rgb2});
+                  fill: none;
+                  stroke-width: 15;
+                  filter: blur(5px) contrast(0.5);
+                  /* stroke-dasharray: 400;
+                  stroke-dashoffset: 400;
+                  animation: 5s ease-in-out 0s infinite strokeAnimation; */
+                  `;
+                }
+    - service: floorplan.style_set
+      service_data:
+        element: atv_idle_path
+        style: |
+          >
+          if (entity.state !== "on")
+              return "display: none;";
+          if (entity.state === "on" && states['media_player.atv'].state !== "playing") {
+            return `
+              stroke: "rgb(255, 0, 0)" !important;
+              stroke-width: 5 !important;
+              animation: 5s ease-in-out 0s infinite strokeAnimation;
+              `;
+          }
+
+- entity:
+    - media_player.bedroom_tv
+  double_tap_action: more-info
+  tap_action: !include ../shared/honeycomb/shield.yaml
+  state_action:
+    - service: floorplan.class_set
+      service_data: 'media-player-tv media-player-${entity.state}'

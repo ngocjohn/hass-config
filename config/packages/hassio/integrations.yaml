@@ -1,0 +1,55 @@
+# roidmi.vacuum.v60 (Roidmi EVE Plus)
+xiaomi_miot:
+  username: !secret vacuum_username
+  password: !secret vacuum_password
+  server_country: de
+  device_customizes:
+    roidmi.vacuum.v60:
+      exclude_miot_services: null
+
+# Integrations
+spotcast:
+  sp_dc: !secret sp_dc
+  sp_key: !secret sp_key
+
+# Trakt TV
+
+trakt_tv:
+  language: en # Prefered language for movie/show title
+  timezone: Europe/Prague # Prefered timezone
+  sensors:
+    upcoming:
+      show:
+        days_to_fetch: 14
+        max_medias: 10
+      movie:
+        days_to_fetch: 30
+        max_medias: 5
+    recommendation:
+      show:
+        max_medias: 3
+      movie:
+        max_medias: 3
+
+sensor:
+  - platform: google_geocode
+    origin: device_tracker.findmy_d098350b38e241d3972ad394a27f38b6
+    name: GLE
+    options: street
+    display_zone: hide
+    api_key: !secret google_api
+    language: cs
+    region: CS
+
+  - platform: google_geocode
+    origin: device_tracker.findmy_521d68e4ecef4686a97a2b77ccd20056
+    name: AMG
+    options: street, city
+    display_zone: hide
+    api_key: !secret google_api
+    language: cs
+    region: CS
+
+  - platform: seventeentrack
+    username: !secret tracking_username
+    password: !secret tracking_password

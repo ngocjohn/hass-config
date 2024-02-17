@@ -1,0 +1,12 @@
+.: |
+  ha-card {
+    -webkit-transition: background-color 500ms; /* For Safari 3.0 to 6.0 */
+    transition: background-color 500ms; /* For modern browsers */
+  }
+  ha-card:hover {
+    background-color: #2b3c54;
+    border-radius: 0.75rem;
+  }
+  @media screen and (max-width: 799.99px), @media screen and (min-width: 1024px) {
+    ha-card, mushroom-card, mushroom-state-item, mushroom-state-info {width: fit-content;}
+  }

@@ -1,0 +1,112 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Lights
+    style: >
+      --popup-max-width: calc(100vw);
+      --tablet-popup-header-color: rgba(0, 0, 0, 0);
+      --popup-background-color: rgba(0, 0, 0, .4);
+      --masonry-view-card-margin: '2px 1px';
+      --grid-card-gap: '2px';
+      --slider-thumb-color: #121212;
+      --slider-color: #ff9d00;
+      --rgb-card-background-color: 19,19,19;
+      --ha-card-background: rgb(19,19,19);
+      --rgb-secondary-background-color: '24,24,24';
+      --card-background-color: 'rgb(19,19,19)';
+      --h3-font-size: 2rem;
+      --paper-item-icon-active-color: #ff8c00;
+    content:
+      type: 'custom:layout-card'
+      layout_type: 'custom:grid-layout'
+      layout: !include ../snippets/layout-page-margin.yaml
+      cards:
+        - type: 'custom:layout-card'
+          layout_type: 'custom:grid-layout'
+          layout:
+            grid-template-columns: 25vw 25vw
+            grid-template-rows: auto
+            grid-column-gap: 32px
+            margin: -1px
+            mediaquery:
+              '(max-width: 799.99px)':
+                grid-template-columns: 1fr
+                grid-template-rows: auto
+                margin: -1
+          view_layout:
+            grid-area: cc
+          cards:
+            # [Column] Living Room
+            - type: 'custom:layout-card'
+              layout_type: 'custom:grid-layout'
+              layout:
+                margin: -1
+              cards:
+                - type: 'custom:button-card'
+                  template: header_card_no_link
+                  variables:
+                    name: LIVING ROOM & KITCHEN
+                    label: Scenes
+                    action: more-info
+                    link: popup.living_room_scenes
+                - type: 'custom:layout-card'
+                  layout_type: 'custom:grid-layout'
+                  layout: !include ../snippets/layout-live-tile-popup.yaml
+                  cards: !include ../columns/lights-living-room.yaml
+
+              # [Column] Office Room
+
+            - type: 'custom:layout-card'
+              layout_type: 'custom:grid-layout'
+              layout:
+                margin: -1
+              cards:
+                - type: 'custom:button-card'
+                  template: header_card_no_link
+                  variables:
+                    name: OFFICE
+                    label: Scenes
+                    action: more-info
+                    link: popup.living_room_scenes
+
+                - type: 'custom:layout-card'
+                  layout_type: 'custom:grid-layout'
+                  layout: !include ../snippets/layout-live-tile-popup.yaml
+                  cards: !include ../columns/lights-office-room.yaml
+
+            - type: 'custom:layout-card'
+              layout_type: 'custom:grid-layout'
+              layout:
+                margin: -1
+              cards:
+                - type: 'custom:button-card'
+                  template: header_card_no_link
+                  variables:
+                    name: BEDROOM
+                    label: Scenes
+                    action: more-info
+                    link: popup.living_room_scenes
+
+                - type: 'custom:layout-card'
+                  layout_type: 'custom:grid-layout'
+                  layout: !include ../snippets/layout-live-tile-popup.yaml
+                  cards: !include ../columns/lights-bedroom-room.yaml
+
+            - type: 'custom:layout-card'
+              layout_type: 'custom:grid-layout'
+              layout:
+                margin: -1
+              cards:
+                - type: 'custom:button-card'
+                  template: header_card_no_link
+                  variables:
+                    name: BATHROOM & HALLWAY
+                    label: Scenes
+                    action: more-info
+                    link: popup.living_room_scenes
+
+                - type: 'custom:layout-card'
+                  layout_type: 'custom:grid-layout'
+                  layout: !include ../snippets/layout-live-tile-popup.yaml
+                  cards: !include ../columns/lights-bathroom-hallway-room.yaml

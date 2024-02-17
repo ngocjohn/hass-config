@@ -1,0 +1,169 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Living Room TV
+    card_mod:
+      style:
+        #popup header
+        .:
+    content:
+      type: picture-elements
+      image: /local/atvremote/apple-tv-remote_VOL.png
+      elements:
+        - type: icon
+          icon: none
+          tap_action:
+            action: fire-dom-event
+            browser_mod:
+              service: browser_mod.close_popup
+          style:
+            top: 6%
+            left: 14%
+            transform: translate(-50%, -50%) scale(380%, 380%)
+            opacity: 0
+        - type: icon
+          icon: none
+          tap_action:
+            action: call-service
+            service: script.apple_tv_power
+          style:
+            top: 6%
+            left: 85%
+            transform: translate(-50%, -50%) scale(380%, 380%)
+            opacity: 0
+        - type: icon
+          icon: none
+          tap_action:
+            action: call-service
+            service: remote.send_command
+            service_data:
+              entity_id: remote.atv
+              command: up
+          style:
+            top: 23.5%
+            left: 50%
+            transform: translate(-50%, -50%) scale(600%, 800%)
+            opacity: 0
+        - type: icon
+          icon: none
+          tap_action:
+            action: call-service
+            service: remote.send_command
+            service_data:
+              entity_id: remote.atv
+              command: down
+          style:
+            top: 62%
+            left: 50%
+            transform: translate(-50%, -50%) scale(600%, 800%)
+            opacity: 0
+        - type: icon
+          icon: none
+          tap_action:
+            action: call-service
+            service: remote.send_command
+            service_data:
+              entity_id: remote.atv
+              command: left
+          style:
+            top: 42.6%
+            left: 21%
+            transform: translate(-50%, -50%) scale(600%, 500%)
+            opacity: 0
+        - type: icon
+          icon: none
+          tap_action:
+            action: call-service
+            service: remote.send_command
+            service_data:
+              entity_id: remote.atv
+              command: right
+          style:
+            top: 42.6%
+            left: 79%
+            transform: translate(-50%, -50%) scale(600%, 500%)
+            opacity: 0
+        - type: icon
+          icon: none
+          tap_action:
+            action: call-service
+            service: remote.send_command
+            service_data:
+              entity_id: remote.atv
+              command: select
+          style:
+            top: 42.4%
+            left: 50%
+            transform: translate(-50%, -50%) scale(400%, 400%)
+            opacity: 0
+        - type: icon
+          icon: none
+          tap_action:
+            action: call-service
+            service: remote.send_command
+            service_data:
+              entity_id: remote.atv
+              command: top_menu
+          hold_action:
+            action: call-service
+            service: remote.send_command
+            service_data:
+              entity_id: remote.atv
+              command: home_hold
+          style:
+            top: 80%
+            left: 15.5%
+            transform: translate(-50%, -50%) scale(380%, 380%)
+            opacity: 0
+        - type: icon
+          icon: none
+          tap_action:
+            action: call-service
+            service: media_player.media_play_pause
+            service_data:
+              entity_id: media_player.atv
+          style:
+            top: 91%
+            left: 15.5%
+            transform: translate(-50%, -50%) scale(380%, 380%)
+            opacity: 0
+        - type: icon
+          icon: none
+          tap_action:
+            action: call-service
+            service: remote.send_command
+            service_data:
+              entity_id: remote.atv
+              command: menu
+          style:
+            top: 85.5%
+            left: 50%
+            transform: translate(-50%, -50%) scale(750%, 750%)
+            opacity: 0
+        - type: icon
+          icon: none
+          tap_action:
+            action: call-service
+            service: remote.send_command
+            service_data:
+              entity_id: remote.atv
+              command: volume_up
+          style:
+            top: 80%
+            left: 84.5%
+            transform: translate(-50%, -50%) scale(380%, 380%)
+            opacity: 0
+        - type: icon
+          icon: none
+          tap_action:
+            action: call-service
+            service: remote.send_command
+            service_data:
+              entity_id: remote.atv
+              command: volume_down
+          style:
+            top: 91%
+            left: 84.5%
+            transform: translate(-50%, -50%) scale(380%, 380%)
+            opacity: 0

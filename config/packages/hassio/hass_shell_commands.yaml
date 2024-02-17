@@ -1,0 +1,13 @@
+shell_command:
+  pidocker_restart: !secret pidocker_restart
+  pause_watchtower: !secret pause_watchtower
+  unpause_watchtower: !secret unpause_watchtower
+  purge_dockerlog: !secret purge_dockerlog
+  wake_mac: !secret wake_mac
+  login_mac: !secret login_mac
+  sleep_mac: !secret sleep_mac
+  lock_mac: !secret lock_mac
+  sleep_mbpro: !secret sleep_mbpro
+  lock_mbpro: !secret lock_mbpro
+  refresh_lovelace: !secret refresh_lovelace
+  gitpush: !secret gitpush

@@ -1,0 +1,12 @@
+- type: grid
+  view_layout:
+    grid-area: cc
+  cards:
+    - type: custom:button-card
+      entity: sensor.ymovie_added_2
+      template:
+        - movies_base
+    - type: custom:button-card
+      entity: sensor.ymovie_added_2
+      template:
+        - movies_base

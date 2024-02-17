@@ -1,0 +1,63 @@
+- type: custom:mod-card
+  card_mod:
+    style:
+      # horizontal bottom buttons
+      hui-horizontal-stack-card$: |
+        #root {
+          justify-content: space-between !important;
+          padding: 8px 8px 12px;
+        }
+  card:
+    type: horizontal-stack
+    cards:
+      - type: custom:button-card
+        template: icon_sticky_menu
+        icon: mdi:home-circle
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace-yaml/summary
+        styles:
+          icon:
+            - color: >
+                [[[
+                    if (location.pathname.split('/').slice(-1) === "summary")
+                    return '#ffb300';
+                ]]]
+      - type: custom:button-card
+        template: icon_sticky_menu
+        icon: mdi:kodi
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace-yaml/movies
+        styles:
+          icon:
+            - color: >
+                [[[
+                    if (location.pathname.split('/').slice(-1) === "movies")
+                    return '#ffb300';
+                ]]]
+      - type: custom:button-card
+        template: icon_sticky_menu
+        icon: mdi:map
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace-yaml/map
+        styles:
+          icon:
+            - color: >
+                [[[
+                    if (location.pathname.split('/').slice(-1) === "map")
+                    return '#ffb300';
+                ]]]
+      - type: custom:button-card
+        template: icon_sticky_menu
+        icon: mdi:music-circle
+        tap_action:
+          action: navigate
+          navigation_path: /d5369777_music_assistant_beta/ingress
+      - type: custom:button-card
+        template: icon_sticky_menu
+        icon: mdi:chat
+        tap_action:
+          action: assist
+          start_listening: false

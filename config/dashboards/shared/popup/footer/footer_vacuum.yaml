@@ -1,0 +1,111 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Roidmi EVE Plus
+    style: !include ../../snippets/style_footer_transparent.yaml
+    card_mod: !include ../../snippets/style_popup_footer.yaml
+    content:
+      type: custom:layout-card
+      layout_type: custom:grid-layout
+      layout: !include ../../snippets/popup_footer_layout.yaml
+      cards:
+        ### SUMMARY
+        - type: entities
+          title: Summary
+          show_header_toggle: false
+          card_mod:
+            class: header
+          entities:
+            - entity: vacuum.roidmi_eve
+              name: Roidmi EVE plus
+              icon: phu:roborock
+              secondary_info:
+                entity: sensor.roidmi_v60_029d_battery_level
+                postfix: ' %'
+                prefix: 'Battery: '
+            - entity: sensor.vacuum_fault
+              secondary_info:
+                entity: sensor.vacuum_position
+                prefix: 'Position: '
+            # - sensor.vacuum_fan_speed
+            # - sensor.vacuum_sweep_mode
+            - binary_sensor.vacuum_mop
+            - type: divider
+            - input_boolean.vacuum_double_clean
+            - input_boolean.vacuum_edge_sweep
+            - input_select.vacuum_mode
+            - input_select.vacuum_sweep_type
+            - input_select.vacuum_water_level
+            - type: custom:mod-card
+              card_mod:
+                style:
+                  # horizontal bottom buttons
+                  hui-horizontal-stack-card$: |
+                    #root {
+                      justify-content: space-between!important;
+                      padding: 1em;
+                    }
+              card:
+                type: horizontal-stack
+                cards:
+                  - type: custom:button-card
+                    entity: vacuum.roidmi_eve
+                    icon: mdi:play-pause
+                    tap_action:
+                      action: call-service
+                      service: >
+                        [[[
+                          return `[[[
+                            return entity.state === 'docked' || entity.state === 'paused'
+                              ? 'vacuum.start'
+                              : 'vacuum.pause';
+                          ]]]`
+                        ]]]
+                      service_data:
+                        entity_id: vacuum.roidmi_eve
+                    template: icon_only
+                  - type: custom:button-card
+                    entity: vacuum.roidmi_eve
+                    icon: mdi:battery-charging
+                    tap_action:
+                      action: call-service
+                      service: vacuum.return_to_base
+                      service_data:
+                        entity_id: vacuum.roidmi_eve
+                    template: icon_only
+                  - type: custom:button-card
+                    icon: mdi:bell
+                    tap_action:
+                      action: call-service
+                      service: script.vacuum_find_robot
+                    template: icon_only
+                  - type: custom:button-card
+                    icon: mdi:delete-empty
+                    tap_action:
+                      action: call-service
+                      service: script.vacuum_empty_bin
+                    template: icon_only
+        ### MAP
+        - type: entities
+          title: Map
+          show_header_toggle: false
+          entities:
+            - !include vacuum_roidmi.yaml
+
+        ## SETTINGS
+        - type: entities
+          title: Settings
+          show_header_toggle: false
+          entities:
+            - input_number.vacuum_volume
+            - input_boolean.vacuum_mute
+            - input_boolean.vacuum_lidar_collision
+            - input_boolean.vacuum_led_switch
+            - input_boolean.vacuum_auto_boost
+            - sensor.vacuum_on
+            - sensor.vacuum_cleaned_area
+            - sensor.vacuum_cleaning_time
+            - sensor.vacuum_total_cleaned_area
+            - sensor.vacuum_total_cleaning_time
+            - sensor.vacuum_cleaning_count

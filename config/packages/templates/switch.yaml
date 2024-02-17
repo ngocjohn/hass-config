@@ -1,0 +1,61 @@
+# SWITCHED TEMPLATE
+switch:
+  - platform: template
+    switches:
+      macbook:
+        value_template: "{{ is_state('binary_sensor.macbook_air_active', 'on') }}"
+        unique_id: macbook_switch
+        turn_on:
+          service: script.macbook_air_login
+        turn_off:
+          service: shell_command.lock_mac
+      # VOCOLINC DIFFUSER
+      office_humidifier:
+        unique_id: sw_office_humid
+        value_template: "{{ is_state('fan.office_ripple_ripple', 'on') }}"
+        turn_on:
+          service: fan.turn_on
+          target:
+            entity_id: fan.office_ripple_ripple
+        turn_off:
+          service: fan.turn_off
+          target:
+            entity_id: fan.office_ripple_ripple
+      bedroom_humidifier:
+        unique_id: sw_bedroom_humid
+        value_template: "{{ is_state('fan.bedroom_ripple_ripple', 'on') }}"
+        turn_on:
+          service: fan.turn_on
+          target:
+            entity_id: fan.bedroom_ripple_ripple
+        turn_off:
+          service: fan.turn_off
+          target:
+            entity_id: fan.bedroom_ripple_ripple
+      watchtower:
+        unique_id: watchtower_switch
+        friendly_name: Watchtower
+        value_template: >
+          {{ is_state('sensor.docker_watchtower', 'running') }}
+        turn_on:
+          - service: shell_command.unpause_watchtower
+          - service: homeassistant.update_entity
+            target:
+              entity_id: binary_sensor.container_watchtower
+        turn_off:
+          - service: shell_command.pause_watchtower
+          - service: homeassistant.update_entity
+            target:
+              entity_id: binary_sensor.container_watchtower
+  # Humidifier
+generic_hygrostat:
+  - name: Office Humidifier
+    humidifier: switch.office_humidifier
+    target_sensor: sensor.office_temp_humid_humidity
+    target_humidity: 100
+    device_class: 'humidifier'
+  - name: Bedroom Humidifier
+    humidifier: switch.bedroom_humidifier
+    target_sensor: sensor.bedroom_tem_humid_humidity
+    target_humidity: 100
+    device_class: 'humidifier'

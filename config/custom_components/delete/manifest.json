@@ -1,0 +1,10 @@
+{
+  "domain": "delete",
+  "name": "Delete",
+  "documentation": "https://github.com/chomupashchuk/delete-file-home-assistant",
+  "requirements": [],
+  "dependencies": [],
+  "codeowners": ["@chomupashchuk"],
+  "version": "1.9",
+  "issue_tracker": "https://github.com/chomupashchuk/delete-file-home-assistant/issues"
+}

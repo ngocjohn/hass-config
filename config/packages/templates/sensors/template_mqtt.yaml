@@ -1,0 +1,19 @@
+mqtt:
+  sensor:
+    - name: 'Ngoc Weight Static'
+      unique_id: 'ngoc_weight'
+      state_topic: 'miscale/Ngoc/weight'
+      value_template: "{{ value_json['weight'] }}"
+      unit_of_measurement: 'kg'
+      json_attributes_topic: 'miscale/USER_NAME/weight'
+      icon: mdi:scale-bathroom
+      # Below lines only needed if long term statistics are required
+      state_class: 'measurement'
+    - name: 'Ngoc BMI Statis'
+      unique_id: 'ngoc_bmi'
+      state_topic: 'miscale/Ngoc/weight'
+      value_template: "{{ value_json['bmi'] }}"
+      icon: mdi:human
+      unit_of_measurement: 'kg/m2'
+      # Below lines only needed if long term statistics are required
+      state_class: 'measurement'

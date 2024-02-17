@@ -1,0 +1,66 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Updates
+    style: !include ../../snippets/style_footer_transparent.yaml
+
+    content:
+      type: custom:mod-card
+      card_mod:
+        style:
+          hui-grid-card:
+            $: |
+              button-card:nth-child(2) {
+                margin: 0.6em 0 2.1em 0.8em;
+              }
+              button-card:nth-child(4) {
+                margin: 0.6em 0 0.5em 0.8em;
+              }
+              #root {
+                grid-gap: 0 !important;
+                padding: var(--tablet-popup-content-padding);
+              }
+      card:
+        type: grid
+        columns: 1
+        square: false
+        cards:
+          - type: custom:button-card
+            entity: sensor.current_version
+            template: updates_hass
+            variables:
+              available: sensor.template_updates
+              latest: sensor.home_assistant_versions
+              latest_beta: sensor.home_assistant_versions_beta
+              release_notes: sensor.hass_release_notes
+              release_notes_beta: sensor.hass_release_notes_beta
+          - type: custom:button-card
+            entity: sensor.current_version
+            name: Github Release
+            variables:
+              latest: sensor.home_assistant_versions
+            tap_action:
+              action: url
+              url_path: >
+                [[[
+                  return states['sensor.hass_release_notes'].attributes.html_url;
+                ]]]
+            template: updates_hass_icon_name
+          ############################################
+          - type: custom:button-card
+            variables:
+              updates: sensor.template_updates
+              hacs_installed: sensor.hacs_installed
+            template: updates
+          - type: custom:button-card
+            entity: sensor.template_updates
+            name: Updates
+            template:
+              - updates_icon_name
+              - >
+                [[[
+                  return window.navigator.userAgent.match(/iPhone/i)
+                    ? 'hacs_navigate_ios'
+                    : 'hacs_iframe';
+                ]]]

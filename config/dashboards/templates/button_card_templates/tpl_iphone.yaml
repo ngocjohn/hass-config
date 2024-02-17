@@ -1,0 +1,196 @@
+test_template:
+  template: base
+  aspect_ratio: 1/2
+  show_state: false
+  show_name: true
+  styles:
+    card:
+      - background-color: none
+      - background-size: 120%
+      - background-position: center
+      - background-image: 'url(/local/img/charger_trans.png), linear-gradient(rgb(0, 255, 119) 0%, rgb(244, 67, 54) 100%)'
+iphone:
+  template:
+    - tilt
+  aspect_ratio: 1
+  show_icon: false
+  show_state: true
+  show_name: true
+  styles:
+    card:
+      - border-radius: var(--button-card-border-radius)
+      - border-width: 0
+      - -webkit-tap-highlight-color: rgba(0,0,0,0)
+      - transition: none
+      - box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.15)
+      - overflow: auto
+      - background-color: 'rgba(115, 115, 115, 0.2)'
+      # - padding: 11.5% 10.5% 10.5% 11.5%
+    name:
+      - font-size: 14px
+      - top: 20px
+      - left: 20px
+      - position: absolute
+    custom_fields:
+      iphonese:
+        - top: 40px
+        - left: '-5px'
+        - width: 110%
+        - border-bottom: 1px solid rgb(255,255,255,0.1)
+        - padding: 10px
+        - position: absolute
+        - font-size: 14px
+        - text-shadow: 0px 0px 1px black
+      iphonesebattery:
+        - top: 60px
+        - right: 15px
+        - position: absolute
+        - font-size: 14px
+      iphone11:
+        - top: 100px
+        - left: '-5px'
+        - width: 110%
+        - border-bottom: 1px solid rgb(255,255,255,0.1)
+        - padding: 10px
+        - position: absolute
+        - font-size: 16px
+        - text-shadow: 0px 0px 1px black
+      iphone11battery:
+        - top: 120px
+        - right: 15px
+        - position: absolute
+        - font-size: 14px
+      ipad:
+        - top: 160px
+        - left: '-5px'
+        - width: 110%
+        - padding: 10px
+        - position: absolute
+        - font-size: 16px
+        - text-shadow: 0px 0px 1px black
+      ipadbattery:
+        - top: 180px
+        - right: 15px
+        - position: absolute
+        - font-size: 14px
+  custom_fields:
+    iphonese: |
+      [[[
+        return `<div align="left"> <ha-icon
+          icon="mdi:cellphone"
+          style="width: 20px; height: 20px; color:grey; padding: 10px;">
+          </ha-icon>iPhone SE</div>`
+      ]]]
+    iphonesebattery: |
+      [[[
+        if (states["sensor.viet_ngoc_battery_level"].state > 40) {
+          let input = states["sensor.viet_ngoc_battery_level"].state / 3,
+            state = states["sensor.viet_ngoc_battery_level"].state,
+            color = '#08ff4e';
+          return `
+            <svg width="86" height="24">
+              <rect x="45" y="1" rx="5" ry="5" width="40" height="18" stroke="gray" fill="transparent" stroke-width="2"/>
+              <rect x="48" y="4" rx="3" ry="3" width="${input}" height="12" fill="${color}" stroke-width="0"/>
+              <text x="5" y="15" fill="grey">${state}%</text>
+          `;
+        } if (states["sensor.viet_ngoc_battery_level"].state > 15) {
+          let input = states["sensor.viet_ngoc_battery_level"].state / 3,
+            state = states["sensor.viet_ngoc_battery_level"].state,
+            color = 'orange';
+          return `
+            <svg width="86" height="24">
+              <rect x="45" y="1" rx="5" ry="5" width="40" height="18" stroke="gray" fill="transparent" stroke-width="2"/>
+              <rect x="48" y="4" rx="3" ry="3" width="${input}" height="12" fill="${color}" stroke-width="0"/>
+              <text x="5" y="15" fill="grey">${state}%</text>
+          `;
+        } else {
+          let state = states["sensor.viet_ngoc_battery_level"].state,
+            color = 'red';
+          return `
+            <svg width="86" height="24">
+              <rect x="45" y="1" rx="5" ry="5" width="40" height="18" stroke="gray" fill="transparent" stroke-width="2"/>
+              <rect x="48" y="4" rx="3" ry="3" width="5" height="12" fill="${color}" stroke-width="0"/>
+              <text x="5" y="15" fill="grey">${state}%</text>
+          `;
+        }
+      ]]]
+    ipad: |
+      [[[
+        return `<div align="left"> <ha-icon
+          icon="mdi:cellphone"
+          style="width: 20px; height: 20px; color:grey; padding: 10px;">
+          </ha-icon>iPhone SE</div>`
+      ]]]
+    ipadbattery: |
+      [[[
+        if (states["sensor.viet_ngoc_battery_level"].state > 40) {
+          let input = states["sensor.viet_ngoc_battery_level"].state / 3,
+            state = states["sensor.viet_ngoc_battery_level"].state,
+            color = '#08ff4e';
+          return `
+            <svg width="86" height="24">
+              <rect x="45" y="1" rx="5" ry="5" width="40" height="18" stroke="gray" fill="transparent" stroke-width="2"/>
+              <rect x="48" y="4" rx="3" ry="3" width="${input}" height="12" fill="${color}" stroke-width="0"/>
+              <text x="5" y="15" fill="grey">${state}%</text>
+          `;
+        } if (states["sensor.viet_ngoc_battery_level"].state > 15) {
+          let input = states["sensor.viet_ngoc_battery_level"].state / 3,
+            state = states["sensor.viet_ngoc_battery_level"].state,
+            color = 'orange';
+          return `
+            <svg width="86" height="24">
+              <rect x="45" y="1" rx="5" ry="5" width="40" height="18" stroke="gray" fill="transparent" stroke-width="2"/>
+              <rect x="48" y="4" rx="3" ry="3" width="${input}" height="12" fill="${color}" stroke-width="0"/>
+              <text x="5" y="15" fill="grey">${state}%</text>
+          `;
+        } else {
+          let state = states["sensor.viet_ngoc_battery_level"].state,
+            color = 'red';
+          return `
+            <svg width="86" height="24">
+              <rect x="45" y="1" rx="5" ry="5" width="40" height="18" stroke="gray" fill="transparent" stroke-width="2"/>
+              <rect x="48" y="4" rx="3" ry="3" width="5" height="12" fill="${color}" stroke-width="0"/>
+              <text x="5" y="15" fill="grey">${state}%</text>
+          `;
+        }
+      ]]]
+    iphone11: |
+      [[[
+        return `<div align="left"> <ha-icon
+          icon="mdi:cellphone"
+          style="width: 20px; height: 20px; color:grey; padding: 10px;">
+          </ha-icon>iPhone SE</div>`
+      ]]]
+    iphone11battery: |
+      [[[
+        if (states["sensor.viet_ngoc_battery_level"].state > 40) {
+          let input = states["sensor.viet_ngoc_battery_level"].state / 3,
+            state = states["sensor.viet_ngoc_battery_level"].state,
+            color = '#08ff4e';
+          return `
+            <svg width="86" height="24">
+              <rect x="45" y="1" rx="5" ry="5" width="40" height="18" stroke="gray" fill="transparent" stroke-width="2"/>
+              <rect x="48" y="4" rx="3" ry="3" width="${input}" height="12" fill="${color}" stroke-width="0"/>
+              <text x="5" y="15" fill="grey">${state}%</text>
+          `;
+        } if (states["sensor.viet_ngoc_battery_level"].state > 15) {
+          let input = states["sensor.viet_ngoc_battery_level"].state / 3,
+            state = states["sensor.viet_ngoc_battery_level"].state,
+            color = 'orange';
+          return `
+            <svg width="86" height="24">
+              <rect x="45" y="1" rx="5" ry="5" width="40" height="18" stroke="gray" fill="transparent" stroke-width="2"/>
+              <rect x="48" y="4" rx="3" ry="3" width="${input}" height="12" fill="${color}" stroke-width="0"/>
+              <text x="5" y="15" fill="grey">${state}%</text>
+          `;
+        } else {
+          let state = states["sensor.viet_ngoc_battery_level"].state,
+            color = 'red';
+          return `
+            <svg width="86" height="24">
+              <rect x="45" y="1" rx="5" ry="5" width="40" height="18" stroke="gray" fill="transparent" stroke-width="2"/>
+              <rect x="48" y="4" rx="3" ry="3" width="5" height="12" fill="${color}" stroke-width="0"/>
+              <text x="5" y="15" fill="grey">${state}%</text>
+          `;
+        }
+      ]]]

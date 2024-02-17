@@ -1,0 +1,59 @@
+- view_layout:
+    grid-column: span 2
+  type: 'custom:button-card'
+  template:
+    - light_button_card_group
+  entity: group.light_living_room
+  name: All Main Lights
+  icon: 'mdi:ceiling-light-multiple'
+  variables:
+    aspect_ratio: 2/1
+
+- type: 'custom:button-card'
+  template:
+    - live_tile_with_graph
+    - live_tile_with_state_unit
+  entity: sensor.motion_sensor_kitchen_illuminance_lux
+  name: Light Level
+
+- type: 'custom:decluttering-card'
+  template: light_card
+  variables:
+    - entity: light.shelly_dimmer
+    - name: Ceiling
+
+- type: 'custom:decluttering-card'
+  template: light_card
+  variables:
+    - entity: light.sony_tv_backlight
+    - name: TV Backlight
+
+- type: 'custom:decluttering-card'
+  template: light_card
+  variables:
+    - entity: light.shelly_rgbw_kitchen_led_strip
+    - name: Led strip
+
+- type: 'custom:decluttering-card'
+  template: light_card
+  variables:
+    - entity: light.living_room_floor_lamp
+    - name: Floor Lamp
+
+- type: 'custom:decluttering-card'
+  template: light_card
+  variables:
+    - entity: light.kitchen_main_light
+    - name: Kitchen main
+
+- type: 'custom:decluttering-card'
+  template: light_card
+  variables:
+    - entity: light.kitchen_table_light
+    - name: Kitchen table
+
+- type: 'custom:decluttering-card'
+  template: light_card
+  variables:
+    - entity: light.hood_lighting
+    - name: Kitchen Hood

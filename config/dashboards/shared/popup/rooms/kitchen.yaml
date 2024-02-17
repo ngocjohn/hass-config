@@ -1,0 +1,46 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Kitchen
+    style: !include ../../snippets/style_popup_transparent.yaml
+    card_mod: !include ../../snippets/style_popup_cardmod.yaml
+    content:
+      type: custom:layout-card
+      layout_type: custom:grid-layout
+      layout:
+        margin: 1.5% 0
+        gap: 5%
+        grid-template-columns: 20vw
+        grid-template-rows: fit-content(100%)
+        mediaquery:
+          '(max-width: 800px)':
+            grid-template-columns: 100%
+      cards:
+        - type: custom:auto-entities
+          filter:
+            include:
+              - group: group.light_kitchen
+                options:
+                  type: custom:button-card
+                  template:
+                    - tpl_popup_light
+              - entity_id: fan.hood_power
+                options:
+                  type: custom:button-card
+                  template:
+                    - tpl_popup_device
+              - entity_id: switch.mycka_nadobi_power
+                options:
+                  type: custom:button-card
+                  template:
+                    - tpl_popup_device
+              - entity_id: switch.hob_power
+                options:
+                  type: custom:button-card
+                  template:
+                    - tpl_popup_device
+          card:
+            type: grid
+            columns: 3
+          card_param: cards

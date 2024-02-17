@@ -1,0 +1,19 @@
+.: |
+  ha-card {
+    background-color: transparent !important;
+    overflow: hidden !important;
+    position: relative;
+    opacity: 0;
+    animation-name: slide-opacity;
+    animation-duration: 800ms;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+  }
+  @keyframes slide-opacity {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }

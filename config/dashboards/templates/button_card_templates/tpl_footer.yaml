@@ -1,0 +1,428 @@
+#################################################
+#                                               #
+#                     FOOTER                    #
+#                                               #
+#################################################
+footer:
+  template:
+    - settings
+    - tilt
+    - extra_styles
+  variables:
+    notify: >
+      [[[
+        return false;
+      ]]]
+    tilt_options: >
+      [[[
+        return {
+          max: 5,
+          scale: 1.1,
+          glare: true,
+          'max-glare': 0.07,
+          perspective: 1000,
+          speed: 800,
+          parallax: '10px'
+        };
+      ]]]
+  size: 2vw
+  show_icon: false
+  color: '#9da0a2'
+  custom_fields:
+    notify: >
+      [[[
+        if (Number.isInteger(variables.notify)) {
+            return variables.notify;
+        } else {
+          if (variables.notify) {
+            //return `<span style="font-weight: 900;">!</span>`;
+            return `<ha-icon icon="mdi:alert-rhombus" style="padding: 0; margin: -2px; size: 1em;"></ha-icon>`;
+          }
+        }
+      ]]]
+  styles:
+    card:
+      # - color: >
+      #     [[[
+      #       return variables.notify
+      #         ? '#b68349'
+      #         : '#97989c';
+      #     ]]]
+      - color: '#97989c'
+      - width: fit-content
+      - border: 0.12vw solid rgba(115, 115, 115, 0.2)
+      - transition: none
+      - padding: 0 0 0.05vw 0
+      - overflow: visible
+      - --mdc-ripple-color: rgba(0, 0, 0, 0.8)
+      # - background-color: >
+      #     [[[
+      #       return variables.notify
+      #         ? '#ff81812e'
+      #         : null;
+      #     ]]]
+    custom_fields:
+      notify:
+        - display: >
+            [[[
+              if (Number.isInteger(variables.notify)) {
+                  return variables.notify > 0
+                      ? 'initial'
+                      : 'none';
+              }
+              else if (variables.notify) {
+                  return variables.notify
+                      ? 'initial'
+                      : 'none';
+              }
+            ]]]
+        - position: absolute
+        - font-weight: 700
+        - color: '#d6d6d6'
+        - background: '#8b3333'
+        - border-radius: 50%
+        - text-align: center
+        - text-overflow: unset
+        - z-index: 1
+  tap_action:
+    haptic: medium
+  hold_action:
+    action: block
+  double_tap_action:
+    action: block
+#################################################
+#                                               #
+#                     UPDATES                   #
+#                                               #
+#################################################
+base_updates:
+  show_state: true
+  show_name: false
+  show_icon: false
+  styles:
+    state:
+      - text-align: left
+      - justify-self: left
+      - white-space: normal
+    card:
+      - cursor: default
+      - padding: 0.2em 0 0 0.6em
+      - letter-spacing: var(--mdc-typography-body1-letter-spacing)
+  tap_action:
+    href:
+  extra_styles: |
+    #ripple {
+      display: none;
+    }
+    ha-icon {
+      width: 1.4em;
+      vertical-align: 12%;
+      opacity: 0.5;
+      padding-right: 2px;
+    }
+    .title {
+      font-size: 1.3em;
+      font-weight: 500;
+    }
+    .subtitle {
+      font-size: 0.95em;
+      line-height: 0.7em;
+      padding-left: 3px;
+      padding-bottom: 10px;
+      font-weight: 500;
+      color: #828383;
+    }
+    a {
+      color: var(--primary-color);
+    }
+    ul {
+      margin-top: -0.6em;
+      font-size: 0.88em;
+      letter-spacing: 0.5px;
+      line-height: 1.6em;
+    }
+    code {
+      background-color: var(--secondary-background-color);
+    }
+updates_hass:
+  template:
+    - base_updates
+    - settings
+  state_display: |
+    [[[
+      if (entity) {
+          let available = states[variables.available].attributes.home_assistant;
+          let links = new RegExp('<a href="([^"]+)"', "g"),
+              installed = entity.state,
+              hass_version_latest = states[variables.latest],
+              hass_version_latest_beta = states[variables.latest_beta],
+              hass_release_notes = states[variables.release_notes],
+              hass_release_notes_beta = states[variables.release_notes_beta];
+          let latest = installed.includes('b')
+              ? hass_version_latest_beta.state
+              : hass_version_latest.state;
+          let release_notes = installed.includes('b')
+              ? marked.parse(hass_release_notes.attributes.body)
+              : marked.parse(hass_release_notes_beta.attributes.body);
+          let subtitle = available === 0
+              ? `${variables.translate_no_updates} <b>&larr;</b> ${installed}`
+              : `${installed} <b>&rarr;</b> ${latest} ${variables.translate_available} ${String.fromCodePoint("0x1f389")}`;
+          let output = available === 0
+              ? '<ul></ul>'
+              : release_notes.replace(links, '<a href="#" onclick="window.open(\'$1\')"');
+          return `
+            <ha-icon icon="mdi:home-assistant"></ha-icon> <span class="title">Home Assistant</span><br>
+            <p class="subtitle">${subtitle}</p>
+            ${output}
+          `;
+      }
+    ]]]
+updates_hass_icon_name:
+  template: icon_name
+  icon: mdi:update
+  styles:
+    card:
+      - opacity: >
+          [[[
+            return entity && (entity.state === states[variables.latest].state)
+                ? '0.3'
+                : '1';
+          ]]]
+      - display: >
+          [[[
+            return entity && (entity.state === states[variables.latest].state)
+              ? 'none'
+              : 'flex';
+          ]]]
+updates:
+  template:
+    - base_updates
+    - settings
+  state_display: |
+    [[[
+      // variables
+      let output = '',
+          updates = states[variables.updates],
+          hacs_installed = states[variables.hacs_installed]?.attributes.repositories,
+          hacs_update = states['update.hacs_update']?.attributes.installed_version,
+          no_updates = variables.translate_no_updates,
+          update_available = variables.translate_update_available,
+          updates_available = variables.translate_updates_available;
+      const rename = a => {
+          return a.release_url && a.release_url.indexOf('github.com') > -1
+              ? `${a.release_url.split('/')[3]}/${a.release_url.split('/')[4]}`
+              : a?.friendly_name;
+      };
+      // update entities
+      Object.keys(states).forEach(key => {
+        let s = states[key], e = s.entity_id, a = s.attributes;
+        if (e.includes('update.') && s.state === 'on') {
+            output += `
+            <li>
+              <b><a href="#" onclick="window.open('${a.release_url}');">${rename(a)}</a></b> ${a.installed_version} <b>&rarr;</b> ${a.latest_version}
+            </li>`;
+        }
+      });
+      // subtitle
+      let count = updates?.attributes.update_entities,
+          subtitle = count === 0
+              ? `${no_updates} <b>&larr;</b> ${hacs_update || ''}`
+              : `${count} ${count === 1 ? update_available : updates_available} ${String.fromCodePoint('0x1f389')}`;
+      return `
+        <ha-icon icon="mdi:package-up"></ha-icon> <span class="title">Integrations</span><br>
+        <p class="subtitle">${subtitle}</p>
+        <ul>${output}</ul>
+      `;
+    ]]]
+updates_icon_name:
+  template: icon_name
+  icon: mdi:open-in-new
+  styles:
+    card:
+      - opacity: >
+          [[[
+            return entity?.attributes?.update_entities === 0
+                ? '0.3'
+                : '1';
+          ]]]
+      - display: >
+          [[[
+            return entity?.attributes?.update_entities === 0
+              ? 'none'
+              : 'flex';
+          ]]]
+hacs_iframe:
+  tap_action:
+    action: fire-dom-event
+    browser_mod:
+      service: browser_mod.popup
+      data:
+        # card_mod:
+        #   style:
+        #     .: |
+        #       .header-bar {
+        #         display: none !important;
+        #       }
+        card_mod:
+          style:
+            .: |
+              ha-dialog>ha-dialog-header {
+                display: none !important;
+              }
+        content:
+          type: iframe
+          aspect_ratio: '9:16'
+          url: >
+            [[[ return `/${hass.panels.config.url_path}/updates` ]]]
+  template: icon_name
+hacs_navigate_ios:
+  tap_action:
+    action: fire-dom-event
+    browser_mod:
+      service: browser_mod.javascript
+      data:
+        code: >
+          window.location.href = `/${hass.panels.config.url_path}/updates`;
+  template: icon_name
+unifi_ios:
+  tap_action:
+    action: url
+    url_path: shortcuts://run-shortcut?name=Open Unifi
+unifi_web:
+  tap_action:
+    action: url
+    url_path: !secret unifi_url
+#################################################
+#                                               #
+#               POP UP                          #
+#                                               #
+#################################################
+icon_name:
+  template:
+    - extra_styles
+  size: 1.4em
+  color: '#9da0a2'
+  styles:
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-column-gap: 0.3em
+    card:
+      - color: '#9da0a2'
+      - border-radius: 0.6em
+      - padding: 1em 1.4em 1em 1.2em
+      - width: max-content
+      - font-size: 1.06em
+      - font-weight: 500
+      - letter-spacing: 0.03em
+      - background: '#FFFFFF10'
+icon_only:
+  template:
+    - extra_styles
+  show_name: false
+  color: '#9da0a2'
+  styles:
+    card:
+      - color: '#9da0a2'
+      - border-radius: 0.6em
+      - width: 4em
+      - height: 3.7em
+      - background: '#FFFFFF10'
+icon_sticky_menu:
+  size: 1.7em
+  show_name: false
+  tap_action:
+    card_bounce: |
+      [[[
+        // add animation
+        if (this.getElementsByTagName("style").length === 0) {
+            // phone condition
+            let mq = window.matchMedia('(max-width: 800px)').matches;
+            let style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes card_bounce {
+                    0%   { transform: scale(1); }
+                    10%  { transform: scale(${ mq ? '0.92' : '0.94' }); }
+                    25%  { transform: scale(1); }
+                    30%  { transform: scale(${ mq ? '0.96' : '0.98' }); }
+                    100% { transform: scale(1); }
+                }
+            `;
+            this.appendChild(style);
+        }
+        // duration
+        let duration = 800;
+        // animate
+        this.style.animation = `card_bounce ${duration}ms cubic-bezier(0.22, 1, 0.36, 1)`;
+        // reset
+        window.setTimeout(() => { this.style.animation = "none"; }, duration + 100)
+      ]]]
+    action: navigate
+    haptic: medium
+  styles:
+    card:
+      - background: none
+      - --mdc-ripple-color: none
+      - --mdc-ripple-press-opacity: 0.5
+    icon:
+      - color: '#ffffff'
+chat_icon_only:
+  show_name: false
+  color: '#9da0a2'
+  styles:
+    card:
+      - color: '#9da0a2'
+      - border-radius: 50px
+      - width: 3em
+      - height: 3em
+      - background-color: none
+      - background-size: cover
+      - background-position: center
+      - background-image: 'url("/local/img/voice.png")'
+remote_icon_only:
+  show_name: false
+  aspect_ratio: 1/1
+  color: '#9da0a2'
+  tap_action:
+    haptic: heavy
+  styles:
+    card:
+      - color: '#9da0a2'
+      - border-radius: 0.6em
+      - background: '#FFFFFF10'
+remote_icon_arrow:
+  variables:
+    state_on: >
+      [[[ return ['on', 'playing', 'idle', 'standby', 'paused'].indexOf(!entity || entity.state) !== -1; ]]]
+  show_name: false
+  color: '#9da0a2'
+  aspect_ratio: 1/1
+  tap_action:
+    haptic: heavy
+  styles:
+    card:
+      - color: '#9da0a2'
+      - border-radius: 0.6em
+      - background: >
+          [[[
+            return variables.state_on
+              ? 'rgba(250, 250, 250, 0.4)'
+              : '#FFFFFF10';
+          ]]]
+    icon:
+      - color: >
+          [[[
+            return variables.state_on
+              ? '#000000'
+              : '#9da0a2';
+          ]]]
+sidebar_icon_only:
+  show_name: false
+  color: '#9da0a2'
+  styles:
+    card:
+      - color: '#9da0a2'
+      - border-radius: 20%
+      - height: 3em
+      - width: 3.3em
+      - border: 0.12vw solid rgba(115, 115, 115, 0.2)
+      - background: '#FFFFFF10'

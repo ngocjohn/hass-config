@@ -1,0 +1,1395 @@
+#################################################
+#                                               #
+#                     BASE                      #
+#                                               #
+#################################################
+base:
+  template:
+    - settings
+    - tilt
+    - extra_styles
+  variables:
+    state_on: >
+      [[[ return ['on', 'home', 'cool', 'fan_only', 'unlocked', 'open', 'streaming', 'yes', 'Blažičkova', 'Plzeňská', 'active' ].indexOf(!entity || entity.state) !== -1; ]]]
+    state_error: >
+      [[[ return ['error', 'unavailable'].indexOf(entity === undefined || entity.state) !== -1; ]]]
+    state: >
+      [[[ return !entity || entity.state; ]]]
+    entity_id: >
+      [[[ return !entity || entity.entity_id; ]]]
+    entity_picture: >
+      [[[ return !entity || entity.attributes.entity_picture; ]]]
+    timeout: >
+      [[[ return !entity || Date.now() - Date.parse(entity.last_changed); ]]]
+  triggers_update: all
+  aspect_ratio: 1/1
+  show_state: true
+  show_icon: false
+  tap_action:
+    card_bounce: |
+      [[[
+        // add animation
+        if (this.getElementsByTagName("style").length === 0) {
+            // phone condition
+            let mq = window.matchMedia('(max-width: 800px)').matches;
+            let style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes card_bounce {
+                    0%   { transform: scale(1); }
+                    10%  { transform: scale(${ mq ? '0.92' : '0.94' }); }
+                    25%  { transform: scale(1); }
+                    30%  { transform: scale(${ mq ? '0.96' : '0.98' }); }
+                    100% { transform: scale(1); }
+                }
+            `;
+            this.appendChild(style);
+        }
+        // duration
+        let duration = 800;
+        // animate
+        this.style.animation = `card_bounce ${duration}ms cubic-bezier(0.22, 1, 0.36, 1)`;
+        // reset
+        window.setTimeout(() => { this.style.animation = "none"; }, duration + 100)
+      ]]]
+    action: toggle
+    haptic: medium
+  double_tap_action:
+    haptic: success
+  hold_action:
+    haptic: medium
+  styles:
+    grid:
+      - grid-template-areas: |
+          "icon  circle"
+          "n     n"
+          "s     s"
+      - grid-template-columns: 1fr 1fr
+      - grid-template-rows: auto min-content min-content
+      - gap: 1.3%
+      - align-items: start
+      - will-change: transform
+    name:
+      - justify-self: start
+      - line-height: 130%
+      - overflow: hidden
+    state:
+      - justify-self: start
+      - line-height: 130%
+      - color: >
+          [[[
+            return variables.state_on
+                ? 'rgb(139, 51, 51)'
+                : 'rgba(255, 255, 255, 0.3)';
+          ]]]
+    card:
+      - border-radius: var(--button-card-border-radius)
+      - border-width: 0
+      - --webkit-tap-highlight-color: rgba(250,250,250,1)
+      - transition: none
+      - box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.15)
+      # - padding: 11.5% 10.5% 10.5% 11.5%
+      - --mdc-ripple-color: >
+          [[[
+            return variables.state_on
+                ? 'rgb(0, 0, 0)'
+                : '#97989c';
+          ]]]
+      - color: >
+          [[[
+            return variables.state_on
+                ? '#4b5254'
+                : '#97989c';
+          ]]]
+      - background-color: >
+          [[[
+            if (variables.state_error) {
+              return variables.state_error
+                ? 'rgba(139, 51, 51, 0.9)'
+                : 'rgba(115, 115, 115, 0.2)';
+            }
+            else {
+              return variables.state_on
+                ? 'rgba(250, 250, 250, 0.75)'
+                : 'rgba(115, 115, 115, 0.2)';
+            }
+          ]]]
+#################################################
+#                                               #
+#                     TILT                      #
+#                                               #
+#################################################
+# dashboard resource link: https://micku7zu.github.io/vanilla-tilt.js/
+tilt:
+  variables:
+    tilt_enable: >
+      [[[
+        // disable on macos app, text appears over popup
+        if (window.navigator.userAgent.includes("Home Assistant")) {
+            return false
+        }
+        // enable on macos browsers
+        else if (window.navigator.userAgent.match(/Macintosh; Intel Mac OS X/i)) {
+            return true;
+        }
+        // default - phones, tablets etc
+        return false;
+      ]]]
+    tilt_options: >
+      [[[
+        let options = {
+            max: 5,
+            scale: 1.06,
+            glare: true,
+            'max-glare': 0.15,
+            perspective: 800,
+            speed: 800,
+            parallax: '25px'
+        };
+
+          let templatesToCheck = ['conditional_media', 'conditional_media_shows', 'tpl_spotify', 'minicontrol', 'added_movies'];
+
+        if (templatesToCheck.some(template => this._config.template.includes(template))) {
+            options.scale = options.scale % parseInt(options.scale) / 3 + parseInt(options.scale);
+            options.perspective = options.perspective * 3;
+        }
+
+        return options;
+      ]]]
+
+  custom_fields:
+    tilt: >
+      [[[
+        setTimeout(() => {
+            let elt = this.shadowRoot,
+                card = elt.getElementById('card'),
+                tilt = typeof VanillaTilt === 'function';
+            if (elt && card && tilt && variables.tilt_enable) {
+                VanillaTilt.init(card, variables.tilt_options);
+            } else {
+                setTimeout(() => {
+                    if (elt && card && tilt && variables.tilt_enable) {
+                        VanillaTilt.init(card, variables.tilt_options);
+                    }
+                }, 1000);
+            }
+        }, 0);
+      ]]]
+#################################################
+#                                               #
+#               EXTRA STYLES                    #
+#                                               #
+#################################################
+
+extra_styles:
+  extra_styles: >
+    [[[
+      if (entity) {
+          if (entity.entity_id.split('.')[0] === 'light' && variables.state_on) {
+              // theme variable and conditions
+              let style = getComputedStyle(document.body),
+                  theme_var = style.getPropertyValue('--button-card-light-color-temp'),
+                  is_hsl = theme_var.startsWith('hsl('),
+                  is_color_temp = entity.attributes.color_mode === 'color_temp';
+              if (is_hsl && is_color_temp && entity.attributes.brightness) {
+                  // calculate lightness in hsl
+                  let regex_pattern = /(\d+)(?!.*\d)/g,
+                      brightness = entity.attributes.brightness / 2.54,
+                      lightness = parseFloat(theme_var.match(regex_pattern)[0]),
+                      min = lightness - 10,
+                      max = lightness + 10,
+                      calc_lightness = brightness * (max - min) / 100 + min;
+                  var light_color = theme_var.replace(regex_pattern, calc_lightness);
+              }
+              else {
+                  var light_color = 'var(--button-card-light-color)';
+              }
+          }
+      }
+      return `
+       /* * * * * * * * * * * * * * * * * *
+        *                                 *
+        *              LIGHT              *
+        *                                 *
+        * * * * * * * * * * * * * * * * * */
+        svg {
+          --light-color:
+          ${ variables.state_on && entity.attributes.brightness
+              ? light_color
+              : variables.state_on && !entity.attributes.brightness
+                ? 'var(--state-icon-active-color);'
+                : 'var(--state-icon-color);'
+          }
+        }
+        .light-color {
+          fill: var(--light-color);
+          transition: all 0.25s ease-out;
+        }
+        /* magnification */
+        :host {
+          --card-portrait: 1.8;
+          --card-phone: 3.8;
+        }
+        ${(this._config.template.includes('light') || this._config.template.includes('mediaplayer') || this._config.template.includes('cover')) ? `
+         /* * * * * * * * * * * * * * * * * *
+          *                                 *
+          *          CIRCLE SLIDER          *
+          *                                 *
+          * * * * * * * * * * * * * * * * * */
+          #circle_slider {
+            opacity: 0;
+            appearance: none;
+            transform: rotate(270deg);
+            width: 90%;
+            position: absolute;
+            pointer-events: none;
+            cursor: grab;
+            left: 33%;
+            margin-top: 10%;
+          }
+          #circle_slider::-webkit-slider-thumb {
+            pointer-events: initial;
+            appearance: none;
+            width: 3vw;
+            height: 3vw;
+            border-radius: 50%;
+            background: green;
+          }
+          #circle_slider::-webkit-slider-runnable-track {
+            background: cornflowerblue;
+          }
+          #circle_slider::-moz-range-thumb {
+            pointer-events: initial;
+            appearance: none;
+            width: 3vw;
+            height: 3vw;
+            border-radius: 50%;
+            background: green;
+          }
+          #circle_slider::-moz-range-track {
+            background: cornflowerblue;
+            height: 3vw;
+          }
+          /* portrait */
+          @media screen and (max-width: 1440px) {
+            #circle_slider::-webkit-slider-thumb {
+              width: 4vw;
+              height: 4vw;
+            }
+            #circle_slider::-moz-range-thumb {
+              width: 4vw;
+              height: 4vw;
+            }
+          }
+          /* phone */
+          @media screen and (max-width: 800px) {
+            #circle_slider::-webkit-slider-thumb {
+              width: 7.8vw;
+              height: 7.8vw;
+            }
+            #circle_slider::-moz-range-thumb {
+              width: 7.8vw;
+              height: 7.8vw;
+            }
+          }
+        `:''}
+       /* * * * * * * * * * * * * * * * * *
+        *                                 *
+        *              BASE               *
+        *                                 *
+        * * * * * * * * * * * * * * * * * */
+        #container {
+          text-align: left !important;
+          z-index: 1;
+        }
+        #card {
+          padding: 10.9% 9.9% 8.9% 10.9%;
+          cursor: url("data:image/svg+xml,%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='24px' height='24px' viewBox='0 0 512 512' style='enable-background:new 0 0 512.011 512.011;' xml:space='preserve'%3E %3Cpath fill='SteelBlue' stroke='white' stroke-width='10' d='M434.215,344.467L92.881,3.134c-4.16-4.171-10.914-4.179-15.085-0.019  c-2.011,2.006-3.139,4.731-3.134,7.571v490.667c0.003,4.382,2.685,8.316,6.763,9.92c4.081,1.603,8.727,0.545,11.712-2.667  l135.509-145.92h198.016c5.891,0.011,10.675-4.757,10.686-10.648C437.353,349.198,436.226,346.473,434.215,344.467z'/%3E %3C/svg%3E"), pointer;
+        }
+        #state::first-letter {
+          text-transform: uppercase;
+        }
+        #name {
+          font-size: var(--button-card-font-size);
+          font-weight: var(--button-card-font-weight);
+          letter-spacing: var(--button-card-letter-spacing);
+        }
+        #state, #label, #detail {
+          font-size: var(--button-card-state-size);
+          font-weight: var(--button-card-font-weight);
+          letter-spacing: var(--button-card-letter-spacing);
+          font-family: Poppins;
+        }
+        /* portrait */
+        @media screen and (max-width: 1440px) {
+          #name {
+            font-size: calc(var(--button-card-font-size) * var(--card-portrait));
+          }
+          #state, #label {
+            font-size: calc(var(--button-card-state-size) * var(--card-portrait));
+          }
+        }
+        /* phone */
+        @media screen and (max-width: 800px) {
+          #name {
+            font-size: calc(var(--button-card-font-size) * var(--card-phone));
+          }
+          #state, #label, #detail {
+            font-size: calc(var(--button-card-state-size) * var(--card-phone));
+          }
+        }
+        @media (pointer: coarse) {
+          #name, #state {
+            font-family: Futura;
+          }
+        }
+        ${variables.tilt_enable === true ? `
+         /* * * * * * * * * * * * * * * * * *
+          *                                 *
+          *              TILT               *
+          *                                 *
+          * * * * * * * * * * * * * * * * * */
+            #name {
+              font-size: calc(var(--button-card-font-size) - var(--z-axis-adjustment));
+            }
+            #state {
+              font-size: calc(var(--button-card-state-size) - var(--z-axis-adjustment));
+            }
+            /* portrait */
+            @media screen and (max-width: 1440px) {
+              #name {
+                font-size: calc(calc(var(--button-card-font-size) * var(--card-portrait)) - var(--z-axis-adjustment));
+              }
+              #state {
+                font-size: calc(calc(var(--button-card-state-size) * var(--card-portrait)) - var(--z-axis-adjustment));
+              }
+            }
+            /* phone */
+            @media screen and (max-width: 800px) {
+              #name, #state,  {
+                font-size: calc(calc(var(--button-card-font-size) * var(--card-phone)) - var(--z-axis-adjustment));
+              }
+            }
+            #container {
+              transform: translateZ(${variables.tilt_options.parallax});
+            }
+            #circle_slider {
+              width: 100%;
+              margin-top: 0;
+            }
+            /* adjust circle_slider position for firefox */
+            @supports (-moz-appearance:none) {
+              #circle_slider {
+                margin-top: 13%;
+              }
+            }
+            #card {
+              padding: 12% 11% 10.5% 12%;
+              transform-style: preserve-3d;
+              overflow: visible;
+              /* firefox pixelated edges */
+              outline: 1px solid transparent;
+            }
+            #ripple, .js-tilt-glare {
+              clip-path: inset(0 round var(--button-card-border-radius));
+              overflow: hidden;
+            }
+            .js-tilt-glare {
+              z-index: 1;
+            }
+            .js-tilt-glare-inner {
+              background-color: rgba(0,0,0,0.9);
+            }
+        `:''}
+        ${(this._config.template.includes('conditional_media') || this._config.template.includes('conditional_media_shows') || this._config.template.includes('kodi_lib_base') || this._config.template.includes('added_movies')) ? `
+         /* * * * * * * * * * * * * * * * * *
+          *                                 *
+          *              MEDIA              *
+          *                                 *
+          * * * * * * * * * * * * * * * * * */
+          :host {
+            --blur-intensity: blur(0.3em) brightness(0.7);
+          }
+          /* phone */
+          @media screen and (max-width: 800px) {
+            :host {
+              --blur-intensity: blur(0.3em) brightness(0.7);
+            }
+          }
+          #ripple, .js-tilt-glare {
+            clip-path: inset(0 round calc(var(--button-card-border-radius) / 2));
+          }
+          #container {
+            overflow: hidden;
+          }
+          /* phone */
+          @media screen and (max-width: 800px) {
+            #name {
+              font-size: calc(var(--button-card-font-size) * var(--card-phone));
+            }
+            #state, #label, #detail {
+              font-size: calc(var(--button-card-movie-state-size) * var(--card-phone));
+            }
+          }
+          @media (pointer: coarse) {
+            #name, #state {
+              font-family: Futura;
+            }
+            .tooltiptext {
+              display: none;
+            }
+          }
+          .marquee {
+            animation: marquee 20s linear infinite;
+          }
+          @keyframes marquee {
+            from {
+              transform: translateX(0%);
+            }
+            to {
+              transform: translateX(-80%);
+            }
+          }
+          /* phone */
+          @media screen and (max-width: 800px) {
+            #quality {
+              display: none !important;
+            }
+          }
+          .badge {
+            display: inline-block;
+            padding-right: 5%;
+            height: 1em;
+            opacity: 1;
+          }
+          .badge--cc {
+            content: url("/local/svg/media/cc.svg");
+          }
+          .badge--sdh {
+            content: url("/local/svg/media/sdh.svg");
+          }
+          .badge--hd {
+            content: url("/local/svg/media/hd.svg");
+          }
+          .badge--4k {
+            content: url("/local/svg/media/4k.svg");
+          }
+          .badge--dd {
+            content: url("/local/svg/media/dd.svg");
+          }
+          .badge--ddp {
+            content: url("/local/svg/media/ddp.svg");
+          }
+        `:''}
+        ${(this._config.template.includes('added_movies')) ? `
+          #container {
+            padding: 0px 5%;
+          }
+          #state, #label, #rating {
+            z-index: 3;
+          }
+          #poster {
+            display: flex;
+            justify-content: center;
+            z-index: 2;
+            padding-top: 3%;
+          }
+          #poster img {
+            width: 65%;
+            border-radius: 5px;
+            opacity: 1;
+            transition: all 500ms ease-in-out;
+            box-shadow: 0px 0px 4px 0px #00000075;
+          }
+
+          #fanart {
+            z-index: 1;
+            filter: var(--blur-intensity);
+          }
+
+          #state {
+            display: flex;
+            position: absolute;
+            align-self: center;
+            background-image: linear-gradient(to top, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 0) 100%);
+          }
+          #detail {
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+          }
+          .infoicon {
+            display: block;
+            position: fixed;
+            right: 3%;
+            top: 3%;
+            width: 2.3rem;
+            z-index: 4;
+          }
+          .moreinfo {
+            display: flex;
+            opacity: 0;
+            position: absolute;
+            font-size: 1.2rem;
+            line-height: 150%;
+            flex-flow: column;
+            text-wrap: wrap;
+            height: 100%;
+            color: #d3d3d3;
+            background-color: rgb(0 0 0 / 30%);
+            backdrop-filter: blur(15px);
+            margin: 0;
+            padding: 5%;
+            text-shadow: 2px 2px 4px black;
+            box-sizing: border-box;
+            overflow: auto;
+            z-index: 3;
+            transition-property: all;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 500ms;
+          }
+
+          .infoicon:hover + .moreinfo {
+            opacity: 1;
+
+          }
+
+          #label {
+            color: rgb(199, 199, 199);
+            background-color: #000000;
+            display: block;
+            width: 100%;
+            padding: 0px 6%;
+          }
+
+          .info {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-items: baseline;
+            width: 100%;
+            justify-content: space-between;
+          }
+        `:''}
+        ${(this._config.template.includes('kodi_lib_base')) ? `
+          #card {
+            padding: 0.75rem;
+            border-radius: 0.5rem !important;
+            background-color: rgba(31,41,55,1) !important;
+            background-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
+            max-height: 210px !important;
+          }
+          #name {
+            color: rgba(226,232,240,1);
+            display: flex !important;
+            font-size: 1.25rem;
+            line-height: 1.75rem !important;
+            letter-spacing: 0.025em;
+            font-weight: 500;
+            white-space: normal;
+          }
+          #label {
+            display: -webkit-box !important;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 6;
+            text-align: justify;
+            place-self: baseline !important;
+            font-size: 1rem;
+            white-space: normal;
+            font-weight: 400;
+            text-align: justify;
+            color: #9ca3af;
+          }
+          #poster {
+            padding: 0.5rem;
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            grid-row: 1/3 !important;
+            align-self: center;
+            justify-self: center;
+          }
+          #poster .image {
+            display: flex;
+            position: relative;
+            width: calc(100% - 0.5rem);
+            height: auto;
+          }
+          #poster img {
+            width: 125px;
+            height: calc(125px * 1.5);
+            object-fit: cover;
+            border-radius: 0.5rem;
+          }
+        `:''}
+        ${this._config.template.includes('footer') ? `
+         /* * * * * * * * * * * * * * * * * *
+          *                                 *
+          *             FOOTER              *
+          *                                 *
+          * * * * * * * * * * * * * * * * * */
+          /* magnification */
+          :host {
+            --footer-portrait: 1.4;
+            --footer-phone: 3;
+          }
+          #ripple, .js-tilt-glare {
+            border-radius: calc(var(--footer-card-border-radius) - 0.1vw);
+            clip-path: inset(0 round calc( var(--button-card-border-radius) - 0.1vw ));
+          }
+          #name {
+            font-size: var(--footer-card-font-size);
+            padding: var(--footer-card-padding-v) var(--footer-card-padding-h);
+            letter-spacing: 0.06vw;
+          }
+          ha-icon, iconify-icon {
+            width: var(--footer-card-icon-size);
+            vertical-align: 7%;
+            padding-right: 0.1vw;
+            opacity: 0.4;
+          }
+          #card {
+            border-radius: var(--footer-card-border-radius);
+            background: rgba(115, 115, 115, 0.20);
+          }
+          #card:hover {
+            background: rgba(115, 115, 115, 0.4) !important;
+          }
+          #notify {
+            font-size: var(--footer-notify-font-size);
+            width: var(--footer-notify-box-size);
+            height: var(--footer-notify-box-size);
+            line-height: var(--footer-notify-box-size);
+            padding-right: 0.5%;
+            padding-top: 0.5%;
+            top: var(--footer-notify-top);
+            right: var(--footer-notify-right);
+          }
+          /* portrait */
+          @media screen and (max-width: 1200px) {
+            #name {
+              font-size: calc(var(--footer-card-font-size) * var(--footer-portrait));
+              padding: calc(var(--footer-card-padding-v) * var(--footer-portrait)) calc(var(--footer-card-padding-h) * var(--footer-portrait));
+            }
+            ha-icon, iconify-icon {
+              width: calc(var(--footer-card-icon-size) * var(--footer-portrait));
+            }
+            #card {
+              border-radius: calc(var(--footer-card-border-radius) * var(--footer-portrait));
+              margin: 0 0.5vw;
+            }
+            #notify {
+              font-size: calc(var(--footer-notify-font-size) * var(--footer-portrait));
+              width: calc(var(--footer-notify-box-size) * var(--footer-portrait));
+              height: calc(var(--footer-notify-box-size) * var(--footer-portrait));
+              line-height: calc(var(--footer-notify-box-size) * var(--footer-portrait));
+            }
+          }
+          /* phone */
+          @media screen and (max-width: 800px) {
+            #name {
+              font-size: calc(var(--footer-card-font-size) * var(--footer-phone));
+              padding: calc(var(--footer-card-padding-v) * var(--footer-phone)) calc(var(--footer-card-padding-h) * var(--footer-phone));
+              letter-spacing: 0.05vw;
+            }
+            ha-icon, iconify-icon {
+              width: calc(var(--footer-card-icon-size) * var(--footer-phone));
+            }
+            #card {
+              border-radius: calc(var(--footer-card-border-radius) * var(--footer-phone));
+              background: rgba(115, 115, 115, 0.12);
+              margin: 0 0.5vw;
+            }
+            #notify {
+              font-size: calc(var(--footer-notify-font-size) * var(--footer-phone));
+              width: calc(var(--footer-notify-box-size) * var(--footer-phone));
+              height: calc(var(--footer-notify-box-size) * var(--footer-phone));
+              line-height: calc(var(--footer-notify-box-size) * var(--footer-phone) + 1px);
+              top: calc(var(--footer-notify-top) * var(--footer-phone));
+              right: calc(var(--footer-notify-right) * var(--footer-phone) + 2%);
+              padding: 0;
+            }
+          }
+        `:''}
+        ${(this._config.template.includes('icon_name') || this._config.template.includes('icon_only')) ? `
+          #card {
+            background: rgba(255, 255, 255, 0.06);
+          }
+          #card:hover {
+            background: rgba(255, 255, 255, 0.15) !important;
+            scale: 1.05;
+          }
+          #icon:hover, #name:hover {
+            color: rgb(255, 255, 255) !important;
+          }
+        `:''}
+        ${this._config.template.includes('chips')  ? `
+         /* * * * * * * * * * * * * * * * * *
+          *                                 *
+          *             CHIPS               *
+          *                                 *
+          * * * * * * * * * * * * * * * * * */
+          /* magnification */
+          :host {
+            --chips-portrait: 1.4;
+            --chips-phone: 4.1;
+          }
+          #ripple, .js-tilt-glare {
+            border-radius: calc(var(--chips-card-border-radius) - 0.1vw);
+            clip-path: inset(0 round calc( var(--button-card-border-radius) - 0.1vw ));
+          }
+          #name {
+            font-size: var(--chips-card-font-size);
+            padding: var(--chips-card-padding-v) var(--chips-card-padding-h);
+          }
+          #state {
+            font-size: var(--chips-card-state-size);
+            padding: var(--chips-card-padding-v) var(--chips-card-padding-h);
+            letter-spacing: 0.06vw;
+          }
+          #card {
+            border-radius: var(--chips-card-border-radius);
+          }
+          #container {
+            overflow: hidden;
+          }
+          .svgicon {
+            width: 70%;
+            position: relative;
+            height: auto;
+            place-self: center center;
+          }
+          /* phone */
+          @media screen and (max-width: 800px) {
+            #card {
+              border-radius: 0.5rem;
+            }
+            #name {
+              font-size: calc(var(--chips-card-font-size) * var(--chips-phone));
+              letter-spacing: 0.2vw;
+            }
+            #state {
+              font-size: calc(var(--chips-card-state-size) * var(--chips-phone));
+              font-weight: 400 !important;
+              letter-spacing: 0.2vw;
+            }
+            ha-icon {
+              width: calc(var(--chips-card-icon-size) * var(--chips-phone));
+            }
+            .svgicon {
+              width: 80%;
+            }
+            ha-state-icon#icon {
+              background: none !important;
+              width: 70% !important;
+              padding: 0px 0px !important;
+            }
+          }
+          .marquee {
+            animation: marquee 20s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+          }
+          @keyframes marquee {
+            from {
+              transform: translateX(0%);
+            }
+            to {
+              transform: translateX(-50%);
+            }
+          }
+        `:''}
+        ${this._config.template.includes('header_weather')  ? `
+         /* * * * * * * * * * * * * * * * * *
+          *                                 *
+          *       HEADER WEATHER            *
+          *                                 *
+          * * * * * * * * * * * * * * * * * */
+          @keyframes marquee {
+            0%,
+            70% {
+              transform: translateX(-25%);
+              scale: 0.9;
+            }
+            40%,
+            100% {
+              transform: translateX(15%);
+              scale: 1.1;
+            }
+          }
+          #container {
+            gap: 8px;
+          }
+          #img-cell {
+            display: grid;
+            place-self: center;
+            animation: marquee 20s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+            animation-direction: alternate-reverse;
+          }
+          #icon {
+            width: auto !important;
+          }
+          #state {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            gap: 5px;
+            place-content: center;
+          }
+
+          .feels_like {
+            font-size: 1.2rem;
+            font-weight: 400;
+            font-family: 'Roboto';
+            text-align: -webkit-match-parent;
+          }
+          .realtemp {
+            font-size: 5rem;
+            font-weight: 500;
+            font-family: 'Raleway';
+            position: relative;
+            text-align: start;
+          }
+          .degree-symbol {
+            font-size: smaller;
+            position: relative;
+            right: 5%;
+            top: 13%;
+            opacity: 0.7;
+          }
+          #label {
+            display: flex;
+            place-self: end;
+          }
+          @media screen and (max-width: 800px) {
+            #container {
+              grid-template-columns: 1fr 1fr auto !important;
+            }
+            #label {
+              display: none !important;
+            }
+            #icon {
+              width: 50% !important;
+            }
+            .realtemp {
+              font-size: 2.3rem;
+            }
+            .feels_like {
+              font-size: 0.8rem;
+            }
+            .degree-symbol {
+              right: auto;
+            }
+          }
+          ul {
+            list-style: none;
+            padding: 0;
+            margin-block: 0;
+            display: inline-block;
+          }
+          li {
+            font-size: 1rem;
+            padding-left: 2rem;
+            text-align: left;
+          }
+
+          li.precipitation {
+            background: url('https://api.iconify.design/meteocons/umbrella-fill.svg') no-repeat left center / contain;
+          }
+          li.humidity {
+            background: url('https://api.iconify.design/meteocons/humidity-fill.svg') no-repeat left center / contain;
+          }
+          li.pressure {
+            background: url('https://api.iconify.design/meteocons/barometer.svg') no-repeat left center / contain;
+          }
+          li.wind-speed {
+            background: url('https://api.iconify.design/meteocons/windsock-fill.svg') no-repeat left center / contain;
+          }
+          li.apparent-temperature {
+            background: url('https://api.iconify.design/meteocons/thermometer-celsius.svg') no-repeat left center / contain;
+          }
+          li.sunrise {
+            background: url('https://api.iconify.design/meteocons/sunrise-fill.svg') no-repeat left center / contain;
+          }
+          li.sunset {
+            background: url('https://api.iconify.design/meteocons/moonset-fill.svg') no-repeat left center / contain;
+          }
+        `:''}
+        ${this._config.template.includes('header_clock')  ? `
+         /* * * * * * * * * * * * * * * * * *
+          *                                 *
+          *       HEADER CLOCK              *
+          *                                 *
+          * * * * * * * * * * * * * * * * * */
+          #container {
+            display: flex;
+            flex-direction: column;
+          }
+          #name {
+            place-self: center;
+            line-height: 100%;
+            font-size: 3.5vw;
+            font-weight: 800;
+            color: #97989c;
+            font-family: auto;
+            letter-spacing: 0.15vw;
+          }
+          #label {
+            place-self: end;
+            font-size: 0.5vw;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-family: 'Raleway';
+            letter-spacing: 0.5px;
+            color: #97989c;
+          }
+          @media screen and (max-width: 800px) {
+            #card {
+              padding: 8px 0;
+            }
+            #name {
+              font-size: 2.8rem;
+              justify-self: flex-start;
+            }
+            #label {
+              justify-self: start;
+              font-size: 0.5rem;
+            }
+          }
+        `:''}
+      `;
+    ]]]
+#################################################
+#                                               #
+#               CIRCLE                          #
+#                                               #
+#################################################
+circle:
+  styles:
+    card:
+      # - --c-stroke-color-on: '#7d7e80'
+      - --c-stroke-color-on: 'rgba(48, 128, 181, 0.8)'
+      - --c-stroke-color-off: 'rgba(255,255,255,0.04)'
+      - --c-fill-color-on: none
+      - --c-fill-color-off: rgba(255,255,255,0.04)
+      - --c-stroke-width: 3
+      - --c-stroke-width-dragging: 5
+      - --c-font-color: '#8d8e90'
+      - --c-font-size: 14px
+      - --c-unit-font-size: 10px
+      - --c-font-weight: 500
+      - --c-letter-spacing: -0.03rem
+    custom_fields:
+      circle:
+        - display: initial
+        - width: 85%
+        - margin: -10% -10% 0px 0px
+        - justify-self: end
+        - opacity: 1
+  custom_fields:
+    circle: >
+      [[[
+        if (entity) {
+            let r = 20.5,
+                c = r * 2 * Math.PI,
+                tspan = '<tspan dx=".2" dy="-.4">',
+                domain = entity.entity_id.split('.')[0],
+                state = variables.state_on,
+                input = variables.circle_input || ' ',
+                unit = variables.circle_input_unit || ' ';
+           /* * * * * * * * * * * * * * * * * *
+            *                                 *
+            *             CIRCLE              *
+            *                                 *
+            * * * * * * * * * * * * * * * * * */
+            let circle = (state, input, unit) => {
+                return `
+                  <svg viewBox="0 0 50 50">
+                    <style>
+                      circle {
+                        transform: rotate(-90deg);
+                        transform-origin: 50% 50%;
+                        stroke-dasharray: ${c};
+                        stroke-linecap: round;
+                        fill: ${state ? 'var(--c-fill-color-on)' : 'var(--c-fill-color-off)'};
+                      }
+                      text {
+                        font-size: var(--c-font-size);
+                        font-weight: var(--c-font-weight);
+                        letter-spacing: var(--c-letter-spacing);
+                        fill: var(--c-font-color);
+                      }
+                      tspan {
+                        font-size: var(--c-unit-font-size);
+                      }
+                      #circle_value, tspan {
+                        text-anchor: middle;
+                        dominant-baseline: central;
+                      }
+                    </style>
+                    <circle id="circle_stroke_bg" cx="25" cy="25" r="${r}" opacity="0.5" stroke-width="var(--c-stroke-width)" stroke="#b8b8b8"/>
+                    <circle id="circle_stroke_prev" cx="25" cy="25" r="${r}" opacity="1" stroke-width="2.5" stroke="#ffd945"  stroke-dashoffset="${typeof input === 'number' && c - input / 100 * c}" stroke-dasharray="${c}"/>
+                    <circle id="circle_stroke" cx="25" cy="25" r="${r}" opacity="1.0" stroke-width="var(--c-stroke-width)" stroke="${state ? 'var(--c-stroke-color-on)' : 'var(--c-stroke-color-off)'}" stroke-dashoffset="${typeof input === 'number' && c - input / 100 * c}" stroke-dasharray="${c}"/>
+                    <text id="circle_value" x="50%" y="52%" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle">${input}${tspan}<tspan>${unit}</tspan></text>
+                  </svg>
+                  ${(domain === 'light' || domain === 'media_player' || domain === 'cover') && `
+                      <input id="circle_slider" type="range" min="0" max="100" value="${input}">
+                  `}
+                `;
+            }
+           /* * * * * * * * * * * * * * * * * *
+            *                                 *
+            *              LIGHT              *
+            *                                 *
+            * * * * * * * * * * * * * * * * * */
+            if (domain === 'light' && state) {
+                // wait 0ms for shadow dom
+                setTimeout(() => {
+                    // then get elements
+                    let elt = this.shadowRoot,
+                        circle_slider = elt.getElementById('circle_slider'),
+                        circle_value = elt.getElementById('circle_value'),
+                        circle_stroke_prev = elt.getElementById('circle_stroke_prev'),
+                        circle_stroke = elt.getElementById('circle_stroke');
+                    // approximate position of thumb relative to circle
+                    circle_slider.style.top = `${(circle_slider.value - 50) / 1.66 - 1}%`;
+                    // debug position
+                    let debug = false;
+                    if (debug) circle_slider.style.opacity = 0.3;
+                    // pass each event to handler
+                    ['click', 'input', 'mousedown', 'mouseup', 'touchstart', 'touchend'].forEach((event) => {
+                        circle_slider.addEventListener(event, handler, { passive: true })
+                    });
+                    function handler(event) {
+                        // "this" refers to slider
+                        if (event.target === this) {
+                            // bypass button-card tap_action
+                            event.stopPropagation();
+                            // update circle_value
+                            circle_value.innerHTML = `${this.value}${tspan}${unit}</tspan>`;
+                            // update stroke
+                            circle_stroke.style.strokeDashoffset = c - this.value / 100 * c;
+                            circle_stroke.style.strokeWidth = 'var(--c-stroke-width-dragging)';
+                            // set cursor while dragging
+                            if (event.type === 'mousedown' || event.type === 'input') {
+                                this.style.cursor = 'grabbing';
+                            } else {
+                                this.style.cursor = 'grab';
+                            }
+                            // reset stroke width if value doesn't change
+                            if (input == this.value && (event.type === 'click' || event.type === 'touchend'))
+                                circle_stroke.style.strokeWidth = 'var(--c-stroke-width)';
+                            // on release
+                            if (event.type === 'mouseup' || event.type === 'touchend') {
+                                // display loader if brightness is 0
+                                if (circle_slider.value == 0 && elt.getElementById('loader')) {
+                                    elt.getElementById('loader').style.display = 'initial';
+                                    elt.getElementById('circle').style.display = 'none';
+                                }
+                                // set brightness
+                                hass.callService('light', 'turn_on', {
+                                    entity_id: entity.entity_id,
+                                    brightness_pct: this.value
+                                });
+                            }
+                        }
+                    }
+                }, 0);
+                return circle(state, input, unit);
+            }
+           /* * * * * * * * * * * * * * * * * *
+            *                                 *
+            *             PERSON              *
+            *                                 *
+            * * * * * * * * * * * * * * * * * */
+            else if (domain === 'person') {
+                return `
+                  <svg viewBox="0 0 50 50">
+                    <style>
+                      circle {
+                        transform: rotate(-90deg);
+                        transform-origin: 50% 50%;
+                        stroke-dasharray: ${c};
+                        stroke-linecap: round;
+                        stroke: ${state ? '#9da0a2' : 'rgba(255,255,255,0.1)'};
+                        fill: ${state ? 'var(--c-fill-color-on)' : 'var(--c-fill-color-off)'};
+                      }
+                      text {
+                        font-size: var(--c-font-size);
+                        font-weight: var(--c-font-weight);
+                        letter-spacing: var(--c-letter-spacing);
+                        fill: var(--c-font-color);
+                      }
+                      tspan {
+                        font-size: var(--c-unit-font-size);
+                      }
+                      #circle_value, tspan {
+                        text-anchor: middle;
+                        dominant-baseline: central;
+                      }
+                    </style>
+                    <circle id="circle_stroke_bg" cx="25" cy="25" r="${r}" opacity="0.7" stroke-width="var(--c-stroke-width)" stroke="#9da0a2"/>
+                    <text id="circle_value" x="50%" y="52%" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle">${input}${tspan}${unit}</tspan></text>
+                  </svg>
+                `;
+            }
+           /* * * * * * * * * * * * * * * * * *
+            *                                 *
+            *             CLIMATE             *
+            *                                 *
+            * * * * * * * * * * * * * * * * * */
+            else if (domain === 'climate' || domain === 'fan') {
+                return `
+                  <svg viewBox="0 0 50 50">
+                    <style>
+                      circle {
+                        transform: rotate(-90deg);
+                        transform-origin: 50% 50%;
+                        stroke-dasharray: ${c};
+                        stroke-linecap: round;
+                        stroke: ${state ? '#9da0a2' : 'rgba(255,255,255,0.1)'};
+                        fill: ${state ? 'var(--c-fill-color-on)' : 'var(--c-fill-color-off)'};
+                      }
+                      text {
+                        font-size: var(--c-font-size);
+                        font-weight: var(--c-font-weight);
+                        letter-spacing: var(--c-letter-spacing);
+                        fill: var(--c-font-color);
+                      }
+                      tspan {
+                        font-size: var(--c-unit-font-size);
+                      }
+                      #circle_value, tspan {
+                        text-anchor: middle;
+                        dominant-baseline: central;
+                      }
+                    </style>
+                    <circle id="circle_stroke_bg" cx="25" cy="25" r="${r}" opacity="0.7" stroke-width="var(--c-stroke-width)"/>
+                    <text id="circle_value" x="50%" y="52%" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle">${input}${tspan}${unit}</tspan></text>
+                  </svg>
+                `;
+            }
+            /* * * * * * * * * * * * * * * * * *
+            *                                 *
+            *              MEDIAPLAYER        *
+            *                                 *
+            * * * * * * * * * * * * * * * * * */
+            else if (domain === 'media_player' && state) {
+                // wait 0ms for shadow dom
+                setTimeout(() => {
+                    // then get elements
+                    let elt = this.shadowRoot,
+                        circle_slider = elt.getElementById('circle_slider'),
+                        circle_value = elt.getElementById('circle_value'),
+                        circle_stroke_prev = elt.getElementById('circle_stroke_prev'),
+                        circle_stroke = elt.getElementById('circle_stroke');
+                    // approximate position of thumb relative to circle
+                    circle_slider.style.top = `${(circle_slider.value - 50) / 1.66 - 1}%`;
+                    // debug position
+                    let debug = false;
+                    if (debug) circle_slider.style.opacity = 0.3;
+                    // pass each event to handler
+                    ['click', 'input', 'mousedown', 'mouseup', 'touchstart', 'touchend'].forEach((event) => {
+                        circle_slider.addEventListener(event, handler, { passive: true })
+                    });
+                    function handler(event) {
+                        // "this" refers to slider
+                        if (event.target === this) {
+                            // bypass button-card tap_action
+                            event.stopPropagation();
+                            // update circle_value
+                            circle_value.innerHTML = `${this.value}${tspan}${unit}</tspan>`;
+                            // update stroke
+                            circle_stroke.style.strokeDashoffset = c - this.value / 100 * c;
+                            circle_stroke.style.strokeWidth = 'var(--c-stroke-width-dragging)';
+                            // set cursor while dragging
+                            if (event.type === 'mousedown' || event.type === 'input') {
+                                this.style.cursor = 'grabbing';
+                            } else {
+                                this.style.cursor = 'grab';
+                            }
+                            // reset stroke width if value doesn't change
+                            if (input == this.value && (event.type === 'click' || event.type === 'touchend'))
+                                circle_stroke.style.strokeWidth = 'var(--c-stroke-width)';
+                            // on release
+                            if (event.type === 'mouseup' || event.type === 'touchend') {
+                                // display loader if brightness is 0
+                                if (circle_slider.value == 0 && elt.getElementById('loader')) {
+                                    elt.getElementById('loader').style.display = 'initial';
+                                    elt.getElementById('circle').style.display = 'none';
+                                }
+                                // set volume
+                                hass.callService('media_player', 'volume_set', {
+                                    entity_id: entity.entity_id,
+                                    volume_level: this.value / 100
+                                });
+                            }
+                        }
+                    }
+                }, 0);
+                return circle(state, input, unit);
+            }
+           /* * * * * * * * * * * * * * * * * *
+            *                                 *
+            *              COVER              *
+            *                                 *
+            * * * * * * * * * * * * * * * * * */
+            else if (domain === 'cover' && state) {
+                // wait 0ms for shadow dom
+                setTimeout(() => {
+                    // then get elements
+                    let elt = this.shadowRoot,
+                        circle_slider = elt.getElementById('circle_slider'),
+                        circle_value = elt.getElementById('circle_value'),
+                        circle_stroke_prev = elt.getElementById('circle_stroke_prev'),
+                        circle_stroke = elt.getElementById('circle_stroke');
+                    // approximate position of thumb relative to circle
+                    circle_slider.style.top = `${(circle_slider.value - 50) / 1.66 - 1}%`;
+                    // debug position
+                    let debug = false;
+                    if (debug) circle_slider.style.opacity = 0.3;
+                    // pass each event to handler
+                    ['click', 'input', 'mousedown', 'mouseup', 'touchstart', 'touchend'].forEach((event) => {
+                        circle_slider.addEventListener(event, handler, { passive: true })
+                    });
+                    function handler(event) {
+                        // "this" refers to slider
+                        if (event.target === this) {
+                            // bypass button-card tap_action
+                            event.stopPropagation();
+                            // update circle_value
+                            circle_value.innerHTML = `${this.value}${tspan}${unit}</tspan>`;
+                            // update stroke
+                            circle_stroke.style.strokeDashoffset = c - this.value / 100 * c;
+                            circle_stroke.style.strokeWidth = 'var(--c-stroke-width-dragging)';
+                            // set cursor while dragging
+                            if (event.type === 'mousedown' || event.type === 'input') {
+                                this.style.cursor = 'grabbing';
+                            } else {
+                                this.style.cursor = 'grab';
+                            }
+                            // reset stroke width if value doesn't change
+                            if (input == this.value && (event.type === 'click' || event.type === 'touchend'))
+                                circle_stroke.style.strokeWidth = 'var(--c-stroke-width)';
+                            // on release
+                            if (event.type === 'mouseup' || event.type === 'touchend') {
+                                // display loader if brightness is 0
+                                if (circle_slider.value == 0 && elt.getElementById('loader')) {
+                                    elt.getElementById('loader').style.display = 'initial';
+                                    elt.getElementById('circle').style.display = 'none';
+                                }
+                                // set cover
+                                hass.callService('cover', 'set_cover_position', {
+                                    entity_id: entity.entity_id,
+                                    position: this.value
+                                });
+                            }
+                        }
+                    }
+                }, 0);
+                return circle(state, input, unit);
+            }
+           /* * * * * * * * * * * * * * * * * *
+            *                                 *
+            *              OTHER              *
+            *                                 *
+            * * * * * * * * * * * * * * * * * */
+            else if (variables.state_on) {
+                return circle(state, input, unit);
+            }
+        }
+      ]]]
+#################################################
+#                                               #
+#               LOADER                          #
+#                                               #
+#################################################
+loader:
+  custom_fields:
+    loader: >
+      <img src="/local/img/loader.svg" width="100%">
+  tap_action:
+    loader: >
+      [[[
+        if (entity) {
+          var domain = entity.entity_id.split('.')[0];
+          if (domain === 'light' || domain ==='camera' || domain === 'media_player' || domain === 'switch') {
+            let elt = this.shadowRoot,
+              loader = (id, style, timeout) => {
+                elt.getElementById(id) && (elt.getElementById(id).style.display = style,
+                  window.setTimeout(() => {
+                    elt.getElementById('loader').style.display = 'none'
+                  }, 20000))
+              };
+            loader('circle', 'none', 'initial'),
+            loader('loader', 'initial', 'none');
+          }
+        }
+      ]]]
+  hold_action:
+    loader: >
+      [[[
+        if (entity) {
+          var domain = entity.entity_id.split('.')[0];
+          if (domain === 'lock' || domain === 'cover') {
+            let elt = this.shadowRoot,
+              loader = (id, style, timeout) => {
+                elt.getElementById(id) && (elt.getElementById(id).style.display = style,
+                  window.setTimeout(() => {
+                    elt.getElementById('loader').style.display = 'none'
+                  }, 20000))
+              };
+            loader('circle', 'none', 'initial'),
+            loader('loader', 'initial', 'none');
+          }
+        }
+      ]]]
+  # double_tap_action:
+  #   loader: >
+  #     [[[
+  #       if (entity) {
+  #         var domain = entity.entity_id.split('.')[0];
+  #         if (domain === 'cover') {
+  #           let elt = this.shadowRoot,
+  #             loader = (id, style, timeout) => {
+  #               elt.getElementById(id) && (elt.getElementById(id).style.display = style,
+  #                 window.setTimeout(() => {
+  #                   elt.getElementById('loader').style.display = 'none'
+  #                 }, 20000))
+  #             };
+  #           loader('circle', 'none', 'initial'),
+  #           loader('loader', 'initial', 'none');
+  #         }
+  #       }
+  #     ]]]
+  styles:
+    custom_fields:
+      loader:
+        - display: none
+        - top: -5.8%
+        - right: -5.3%
+        - width: 50%
+        - position: absolute
+        - opacity: 0.5
+        - pointer-events: none
+        - filter: >
+            [[[
+              return variables.state_on
+                  ? 'none'
+                  : 'invert(1)';
+            ]]]
+#################################################
+#                                               #
+#               SETTINGS                        #
+#                                               #
+#################################################
+settings:
+  variables:
+    translate_unknown: unknown
+    translate_idle: idle
+    translate_home: home
+    translate_not_home: away
+    translate_available: available
+    translate_no_updates: no updates
+    translate_update_available: update available
+    translate_updates_available: updates available

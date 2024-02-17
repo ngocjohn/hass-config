@@ -1,0 +1,39 @@
+type: custom:local-conditional-card
+default: hide
+id: portrait
+card:
+  type: custom:floorplan-card
+  card_mod:
+    style: |
+      ha-card {
+        margin: 0% 17.5% !important;
+        box-shadow: none;
+        position: relative;
+        opacity: 0;
+        left: 100%;
+        animation-name: fade-in2;
+        animation-duration: 2s;
+        animation-fill-mode: forwards;
+        animation-iteration-count: 1;
+      }
+      @keyframes slide-opacity {
+        0% {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        100% {
+          transform: translateX(0%);
+          opacity: 1;
+        }
+      }
+      @keyframes fade-in2 {
+        0%   {opacity: 0; left: 100%;}
+        100% {opacity: 1; left: 0;}
+      }
+  config:
+    image: /local/hafloor/ip_floorplan/iphone_opt.svg
+    stylesheet: /local/hafloor/style.css
+    defaults:
+      hover_action: false
+      tap_action: false
+    rules: !include_dir_merge_list /config/dashboards/floorplan/
