@@ -618,8 +618,8 @@ homepod_alarm:
     data: {}
     target:
       entity_id:
-      - media_player.bedroom
-      - media_player.office_2
+      - media_player.mass_bedroom
+      - media_player.mass_office
   - delay:
       hours: 0
       minutes: 0
@@ -630,8 +630,8 @@ homepod_alarm:
       volume_level: 0.2
     target:
       entity_id:
-      - media_player.office_2
-      - media_player.bedroom
+      - media_player.mass_office
+      - media_player.mass_bedroom
   - delay:
       hours: 0
       minutes: 0
@@ -640,8 +640,8 @@ homepod_alarm:
   - service: media_player.play_media
     target:
       entity_id:
-      - media_player.bedroom
-      - media_player.office_2
+      - media_player.mass_bedroom
+      - media_player.mass_office
     data:
       media_content_id: library://playlist/55
       media_content_type: music
@@ -665,12 +665,12 @@ homepod_alarm:
         target_volume: 0.7
         duration: 30
         curve: logarithmic
-        target_player: media_player.bedroom
+        target_player: media_player.mass_bedroom
     - service: script.fade_music
       data:
         target_volume: 0.7
         duration: 30
         curve: logarithmic
-        target_player: media_player.office_2
+        target_player: media_player.mass_office
   mode: single
   icon: phu:homepod-mini

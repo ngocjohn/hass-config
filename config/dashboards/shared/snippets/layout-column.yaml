@@ -1,0 +1,5 @@
+grid-template-columns: repeat(auto-fill, minmax(max(155px, calc((100% - 16px) / 3)), 1fr))
+grid-template-rows: auto
+grid-auto-flow: dense
+grid-gap: 8px
+margin: 0

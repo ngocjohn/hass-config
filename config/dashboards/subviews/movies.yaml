@@ -2,7 +2,9 @@ icon: si:kodi
 path: movies
 subview: false
 theme: kodi
-
+background: >-
+  linear-gradient(180deg, rgb(0 0 0) 0%, rgba(23,26,37,1) 42%,
+  rgba(21,25,35,1) 100%)
 type: custom:grid-layout
 layout:
   grid-template-rows: auto
@@ -126,14 +128,14 @@ cards:
       - !include kodi-recently-added.yaml
       - !include kodi-upcoming-movies.yaml
 
-  # # STICKY MENU
+  # STICKY MENU
 
-  # - type: custom:stack-in-card
-  #   view_layout:
-  #     show:
-  #       mediaquery: '(max-width: 800px)'
-  #   card_mod:
-  #     style: !include ../shared/snippets/card-style-sticky-menu.yaml
+  - type: custom:stack-in-card
+    view_layout:
+      show:
+        mediaquery: '(max-width: 800px)'
+    card_mod:
+      style: !include ../shared/snippets/card-style-sticky-menu.yaml
 
-  #   cards:
-  #     - !include ../shared/cards-sticky-menu.yaml
+    cards:
+      - !include ../shared/cards-sticky-menu.yaml

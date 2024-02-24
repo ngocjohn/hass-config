@@ -1,0 +1,215 @@
+sys_button_card:
+  template:
+    - sys_base
+  state_display: |
+    [[[
+      if ( !entity || entity == undefined) {
+        // variables
+        let html = '';
+        for (let i = 1; i <= 3; i++) {
+          let entityState = states[variables[`ent_${i}`]]?.state;
+          let color = variables[`color_${i}`];
+          let name = variables[`name_${i}`];
+          if (entityState !== undefined && color !== undefined && name !== undefined) {
+            html += `
+              <div class="state-items" style="text-align: start;">
+                <div>
+                  <span class="state" style="color: ${color};">${entityState}</span><span class="unit">%</span>
+                </div>
+                <span class="label">${name}</span>
+              </div>
+            `;
+          }
+        }
+        return html;
+      }
+    ]]]
+  styles:
+    grid:
+      - grid-template-areas: >
+          "n i"
+          "s s"
+      - grid-template-columns: 1fr min-content
+      - grid-template-rows: min-content auto
+      - grid-gap: 0.5rem 0
+
+    custom_fields:
+      graph:
+        - position: absolute
+        - width: 100%
+        - left: 0
+        - bottom: -10px
+        - opacity: 0.3
+
+sys_with_bar:
+  template:
+    - sys_base
+  variables:
+    free: ''
+    usage: ''
+    use: ''
+  label: |
+    [[[
+      let free_state = states[variables.free].state,
+          usage_state = states[variables.usage].state;
+        return `
+        <div class="bar-bg">
+          <div class="bar" style="width: ${usage_state}%;"> </div>
+        </div>
+        `
+    ]]]
+  state_display: |
+    [[[
+      let free_state = states[variables.free].state,
+          usage_state = states[variables.usage].state,
+          use_state = states[variables.use].state;
+        const color_1 = '#4ade80',
+            color_2 = '#c084fc';
+        return `
+            <div class="item-left">
+              <p class="state" style="color:${color_1};">${free_state}<span class="unit">${states[variables.free].attributes.unit_of_measurement}</span></p>
+              <p class="label">Free</p>
+            </div>
+            <div class="item-right">
+              <p class="state" style="color:${color_2};">${usage_state}<span class="unit">${states[variables.usage].attributes.unit_of_measurement}</span></p>
+              <p class="label">Usage</p>
+            </div>
+        `;
+    ]]]
+  styles:
+    grid:
+      - grid-template-areas: >
+          "n i"
+          "s s"
+          "l l"
+      - grid-template-columns: 1fr min-content
+      - grid-template-rows: min-content auto min-content
+      - grid-gap: 0
+      - place-items: baseline
+sys_with_gauge:
+  template:
+    - sys_base
+    - graph_items
+  show_label: false
+  show_state: false
+  custom_fields:
+    gauge: >
+      [[[
+        if (!entity) {
+          // constant
+          // variables
+          let gauge = '';
+          for (let i = 1; i <= 3; i++) {
+            let entityState = states[variables[`ent_${i}`]]?.state;
+            let entityValue = Math.round(entityState);
+            let dash = entityValue + " " + (105 - entityValue);
+            let keyPoints = "0" + ";" + entityValue / 100;
+            let unit = entityState ? states[variables[`ent_${i}`]].attributes.unit_of_measurement : '';
+            let name = variables[`name_${i}`];
+            let color = i === 1 ? '#fb923c' : (i === 2 ? '#60a5fa' : '#c084fc');
+            let tspan = '<tspan dx=".2" dy="-.4">';
+            gauge += `
+                <svg viewbox="0 0 100 100" width="100" height="100">
+
+                  <path class="bg" stroke="${color}" d="M 20,80 A 40 40 0 1 1 85,85" />
+                  <path id="value" class="value" stroke-dasharray="${dash}" stroke="${color}" d="M 20,80 A 40 40 0 1 1 85,85" pathLength="100" />
+                  <circle class="point" stroke="${color}" cx="0" cy="0" r="3">
+                  <animateMotion dur="1s" path="M 20,80 A 40 40 0 1 1 85,85" keyPoints="${keyPoints}" fill="freeze" keyTimes="0;1" calcMode="linear" />
+                  </circle>
+                  <text class="state-value" x="55%" y="57%">${entityValue}${tspan}${unit}</tspan>
+                  </text>
+                  <text font-size="1rem" x="53%" y="90%">${name}</text>
+                </svg>
+              `;
+          }
+          return gauge;
+        }
+      ]]]
+
+  styles:
+    grid:
+      - grid-template-areas: >
+          "n     i"
+          "gauge gauge"
+          "gr    gr"
+      - grid-template-columns: 1fr min-content
+      - grid-template-rows: min-content min-content auto
+      - grid-gap: 0
+graph_items:
+  styles:
+    custom_fields:
+      gr:
+        - width: 110%
+        - position: relative
+        - left: -5%
+        - box-sizing: border-box
+        - margin-bottom: -1.1rem
+  custom_fields:
+    gr:
+      card:
+        type: 'custom:mini-graph-card'
+        entities:
+          - entity: '[[[ return variables.ent_1; ]]]'
+            name: '[[[ return variables.name_1; ]]]'
+            color: '#fb923c'
+          - entity: '[[[ return variables.ent_2; ]]]'
+            name: '[[[ return variables.name_2; ]]]'
+            color: '#60a5fa'
+          - entity: '[[[ return variables.ent_3; ]]]'
+            name: '[[[ return variables.name_3; ]]]'
+            color: '#c084fc'
+        hours_to_show: 12
+        points_per_hour: 1
+        line_width: 3
+        aggregate_func: max
+        animate: false
+        show:
+          name: false
+          icon: false
+          state: false
+          labels: true
+          legend: false
+          points: true
+          fill: fade
+          extrema: false
+          average: false
+        card_mod:
+          style: |
+            ha-card {
+              padding: 0 !important;
+              background: none;
+              filter: drop-shadow(2px 4px 6px black);
+            }
+
+sys_summary:
+  template:
+    - sys_base
+  show_label: true
+  label: |
+    [[[
+        let e1_state = states[variables.e1_entity].state,
+            e1_icon = states[variables.e1_entity].attributes.icon,
+            e2_icon = states[variables.e2_entity].attributes.icon,
+            e2_state = states[variables.e2_entity].state;
+            ;
+
+        return `
+          <div class="sum-items">
+            <span class="sum-name">${variables.e1_name}</span>
+            <span class="sum-state">${e1_state}</span>
+          </div>
+          <div class="sum-items">
+            <span class="sum-name">${variables.e2_name}</span>
+            <span class="sum-state">${e2_state}</span>
+          </div>
+
+        `
+    ]]]
+
+  styles:
+    grid:
+      - grid-template-areas: >
+          "n i"
+          "l l"
+      - grid-template-columns: 1fr min-content
+      - grid-template-rows: min-content auto
