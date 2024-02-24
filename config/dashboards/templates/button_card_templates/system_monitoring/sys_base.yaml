@@ -1,0 +1,280 @@
+#################################################
+#                                               #
+#          SUBVIEWS BASE TEMPLATE               #
+#                                               #
+#################################################
+sys_base:
+  size: 20px
+  template:
+    - sys_extra_styles
+    - tilt
+  variables:
+    state_on: >
+      [[[ return ['on', 'home', 'cool', 'fan_only', 'unlocked', 'open', 'running', 'yes', 'active' ].indexOf(!entity || entity.state) !== -1; ]]]
+    state_error: >
+      [[[ return ['error', 'unavailable'].indexOf(entity === undefined || entity.state) !== -1; ]]]
+    state: >
+      [[[ return !entity || entity.state; ]]]
+    entity_id: >
+      [[[ return !entity || entity.entity_id; ]]]
+    entity_picture: >
+      [[[ return !entity || entity.attributes.entity_picture; ]]]
+    timeout: >
+      [[[ return !entity || Date.now() - Date.parse(entity.last_changed); ]]]
+  triggers_update: all
+  show_state: true
+  show_name: true
+  show_label: true
+  show_icon: true
+  tap_action:
+    card_bounce: |
+      [[[
+        // add animation
+        if (this.getElementsByTagName("style").length === 0) {
+            // phone condition
+            let mq = window.matchMedia('(max-width: 800px)').matches;
+            let style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes card_bounce {
+                    0%   { transform: scale(1); }
+                    10%  { transform: scale(${ mq ? '0.92' : '0.94' }); }
+                    25%  { transform: scale(1); }
+                    30%  { transform: scale(${ mq ? '0.96' : '0.98' }); }
+                    100% { transform: scale(1); }
+                }
+            `;
+            this.appendChild(style);
+        }
+        // duration
+        let duration = 800;
+        // animate
+        this.style.animation = `card_bounce ${duration}ms cubic-bezier(0.22, 1, 0.36, 1)`;
+        // reset
+        window.setTimeout(() => { this.style.animation = "none"; }, duration + 100)
+      ]]]
+    haptic: medium
+  double_tap_action:
+    haptic: success
+  hold_action:
+    haptic: medium
+  styles:
+    card:
+      - padding: 1rem
+      - border-radius: 0.75rem
+      - min-height: 100%
+      - background: rgba(171, 171, 171, 0.1)
+      - box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1)
+      - backdrop-filter: blur(15px)
+      - -webkit-backdrop-filter: blur(15px)
+      - border: 1px solid rgba(171, 171, 171, 0.1)
+      - place-items: baseline
+      - overflow: hidden
+#################################################
+#                                               #
+#         SYSTEM EXTRA STYLES                   #
+#                                               #
+#################################################
+
+sys_extra_styles:
+  extra_styles: >
+    [[[
+      return `
+       /* * * * * * * * * * * * * * * * * *
+        *                                 *
+        *          SYS BASE               *
+        *                                 *
+        * * * * * * * * * * * * * * * * * */
+        #container {
+          z-index: 1;
+        }
+        #name {
+          display: block;
+          font-size: 1.2rem;
+          line-height: 2rem;
+          place-self: center start !important;
+        }
+        #img-cell {
+          width: min-content !important;
+          justify-self: end !important;
+        }
+        #card {
+          cursor: url("data:image/svg+xml,%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='24px' height='24px' viewBox='0 0 512 512' style='enable-background:new 0 0 512.011 512.011;' xml:space='preserve'%3E %3Cpath fill='SteelBlue' stroke='white' stroke-width='10' d='M434.215,344.467L92.881,3.134c-4.16-4.171-10.914-4.179-15.085-0.019  c-2.011,2.006-3.139,4.731-3.134,7.571v490.667c0.003,4.382,2.685,8.316,6.763,9.92c4.081,1.603,8.727,0.545,11.712-2.667  l135.509-145.92h198.016c5.891,0.011,10.675-4.757,10.686-10.648C437.353,349.198,436.226,346.473,434.215,344.467z'/%3E %3C/svg%3E"), pointer;
+        }
+        ${variables.tilt_enable === true ? `
+         /* * * * * * * * * * * * * * * * * *
+          *                                 *
+          *              TILT               *
+          *                                 *
+          * * * * * * * * * * * * * * * * * */
+            #container {
+              transform: translateZ(${variables.tilt_options.parallax});
+            }
+            #circle_slider {
+              width: 100%;
+              margin-top: 0;
+            }
+            /* adjust circle_slider position for firefox */
+            @supports (-moz-appearance:none) {
+              #circle_slider {
+                margin-top: 13%;
+              }
+            }
+            #card {
+              padding: 12% 11% 10.5% 12%;
+              transform-style: preserve-3d;
+              overflow: visible;
+              /* firefox pixelated edges */
+              outline: 1px solid transparent;
+            }
+            #ripple, .js-tilt-glare {
+              clip-path: inset(0 round 0.75rem);
+              overflow: hidden;
+            }
+            .js-tilt-glare {
+              z-index: 1;
+            }
+            .js-tilt-glare-inner {
+              background-color: rgba(0,0,0,0.9);
+            }
+        `:''}
+        ${(this._config.template.includes('sys_button_card')) ? `
+          #graph {
+            z-index: -1;
+          }
+          #state {
+            display: flex;
+            padding-top: 1rem;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 100%;
+            text-shadow:
+          }
+          #state span.state {
+            font-size: 2.2rem;
+            line-height: 130%;
+          }
+          #state span.unit {
+            opacity: 0.7;
+            padding-left: 4px;
+          }
+          #state span.label {
+            font-size: 1rem;
+            line-height: 1.25rem;
+          }
+          #state .state-items {
+            display: flex;
+            flex-direction: column;
+          }
+          #graph {
+            filter: blur(0.6px) saturate(1.4);
+
+          }
+          @media (max-width: 800px) {
+            #name {
+              font-size: 1.125rem;
+            }
+          }
+        `:''}
+        ${(this._config.template.includes('sys_with_bar')) ? `
+
+          #state {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            padding-top: 10%;
+          }
+          #state .item-left {
+            text-align: left;
+          }
+          #state .item-right {
+            text-align: right;
+          }
+          #state p {
+            margin: 0;
+          }
+          #state p.state {
+            font-size: 1.5rem;
+            line-height: 2rem;
+            font-weight: 500;
+          }
+          #state span.unit {
+            font-size: small;
+            opacity: 0.4;
+          }
+          #state p.label {
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+          }
+          #label {
+            display: block;
+            width: 100%;
+            padding-top: 0.5rem;
+          }
+          #label .bar-bg {
+            width: 100%;
+            border-radius: 9999px;
+            height: 0.6rem;
+            background-color: var(--tw-gray);
+          }
+          #label .bar {
+            border-radius: 9999px;
+            height: 0.6rem;
+            background-color: var(--tw-green);
+          }
+          #label .bar_cpu {
+            border-radius: 9999px;
+            height: 0.6rem;
+            background-color: var(--tw-orange);
+          }
+        `:''}
+        ${(this._config.template.includes('sys_with_gauge')) ? `
+          .bg {
+            stroke-width: 7;
+            fill: none;
+            stroke-linecap: round;
+            opacity: 0.2;
+          }
+          .value {
+            fill: none;
+            stroke-width: 7;
+            stroke-linecap: round;
+          }
+          .point {
+            fill: #111827;
+            stroke-width: 1;
+            opacity: 1;
+          }
+          text {
+            font-family: 'Roboto', sans-serif;
+            fill: #ffffff;
+            text-anchor: middle;
+            alignment-baseline: central;
+            opacity: 0.8;
+          }
+          .state-value {
+            font-size: 2rem;
+          }
+          tspan {
+            font-size: .5em;
+            opacity: 0.8;
+          }
+        `:''}
+
+        ${(this._config.template.includes('sys_summary')) ? `
+          #label {
+            width: 100%;
+            padding-top: 1rem;
+          }
+          #label .sum-items {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            line-height: 160%;
+          }
+          #label .sum-state {
+            font-weight: 500;
+          }
+        `:''}
+      `;
+    ]]]

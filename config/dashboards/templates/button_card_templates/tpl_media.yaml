@@ -554,69 +554,13 @@ kodi_lib_base:
 added_movies:
   template:
     - base
+    - movie_tap_info
   aspect_ratio: 1/1
   show_state: true
   show_label: true
   show_name: false
   double_tap_action: !include ../../shared/popup/popup_kodi.yaml
-  tap_action:
-    action: fire-dom-event
-    browser_mod:
-      service: browser_mod.popup
-      data:
-        card_mod:
-          style:
-            #popup header
-            .: |
-              @media (max-width: 450px), (max-height: 500px) {
-                ha-dialog {
-                  --mdc-dialog-min-width: 100vw !important;
-                  --mdc-dialog-min-height: 100vh !important;
-                  --popup-border-radius: 0 !important;
-                }
-              }
-              .content .container {
-                padding: 0 !important;
-              }
-        title: >
-          [[[
-            if (entity) {
-              if (entity && entity.attributes ) {
-                let title = entity.attributes.title;
-                return `${title}`;
-              }
-            }
-          ]]]
-        content:
-          type: custom:layout-card
-          layout_type: custom:grid-layout
-          layout:
-            margin: 0
-            grid-template-columns: 60vw
-            grid-template-rows: fit-content(100%)
-            mediaquery:
-              '(max-width: 800px)':
-                grid-template-columns: 100vw
-          cards:
-            - type: iframe
-              aspect_ratio: >
-                [[[
-                  return (window.matchMedia('(max-width: 800px)').matches)
-                    ? '180%'
-                    : '100%';
-                  /*if (window.matchMedia('(max-width: 800px)').matches)
-                    return '180%';
-                  else return '100%';*/
-                ]]]
-              url: >
-                [[[
-                  if (entity) {
-                    if (entity && entity.attributes ) {
-                      let tmdb = entity.attributes.tmdb_link;
-                      return `${tmdb}`;
-                    }
-                  }
-                ]]]
+
   label: >
     [[[
       if (entity) {
@@ -798,45 +742,6 @@ added_movies:
           return output;
         }
       ]]]
-    # info-icon: >
-    #   [[[
-    #     if (entity) {
-    #       let chevron = `<ha-icon icon="mdi:dots-horizontal-circle" style="color: var(--disabled-text-color);"></ha-icon>`;
-    #       if (entity.attributes) {
-    #         let elt = this.shadowRoot,
-    #             icon = elt.getElementById("info-icon"),
-    #             detail = elt.getElementById("detail");
-    #         if (icon && detail) {
-    #           icon.addEventListener("click", function () {
-    #             if (detail.style.getPropertyValue("transform") === "translateY(0%)") {
-    #               detail.style.setProperty("transform", "translateY(100%)");
-    #             } else {
-    #               detail.style.setProperty("transform", "translateY(0%)");
-    #             }
-    #           });
-    #           detail.addEventListener("click", function () {
-    #             detail.style.setProperty("transform", "translateY(100%)");
-    #           });
-    #         }
-    #         return chevron;
-    #       }
-    #     }
-    #   ]]]
-    # tailwind:
-    #   card:
-    #     type: custom:tailwindcss-template-card
-    #     content: >
-    #       <div class="bg-zinc-900 rounded-3xl overflow-clip flex flex-col bg-[url('https://picsum.photos/600/400')] bg-cover bg-center">
-    #         <div class="flex flex-col transition-all translate-y-1/2 hover:translate-y-0 h-full duration-500 px-8 py-4 bg-zinc-700 bg-opacity-50">
-    #           <div class="font-bold text-3xl">Title</div>
-    #           <div class="mt-3 font-medium text-sm">
-    #             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in quam semper, vestibulum velit ut, faucibus est. Suspendisse commodo, tortor et varius pretium, est tortor mollis mauris, in fringilla felis arcu quis lacus. Aenean placerat risus sed nulla egestas, quis pellentesque tortor ultrices. Cras vel sem eu libero commodo tempus. Pellentesque mi erat, mattis id lectus nec, ullamcorper porta sapien.
-    #           </div>
-    #           <div class="self-center transition-all cursor-pointer items-center rounded-xl w-24 h-10 mt-2 bg-zinc-700 hover:scale-105 hover:brightness-90 flex justify-center">
-    #             Click me
-    #           </div>
-    #         </div>
-    #       </div>
 
     poster: >
       [[[
@@ -2453,3 +2358,159 @@ tpl_minicontrol_mass:
                 ? 'none'
                 : null;
             ]]]
+kodi_movie_card:
+  template:
+    - extra_styles
+    - movie_tap_info
+  show_name: true
+  show_state: true
+  show_label: true
+  show_entity_picture: false
+  show_icon: false
+  name: >
+    [[[
+      let title = entity.attributes.friendly_name;
+      let rating = Math.round(entity.attributes.rating);
+      var output = title !== undefined && rating === 0
+        ? `<div class="title">${title}</div>`
+        : `
+          <div class="title">${title}</div>
+          <div class="rating">
+          <span>${rating}</span>
+          <ha-icon icon="fas:star" style="display: flex;width: 1rem; height: auto; margin-left: 0.25rem; margin-right: 0.25rem; color: #fde047;"></ha-icon>
+          </div>`;
+      return output;
+    ]]]
+  state_display: |
+    [[[
+      if (entity) {
+          let year = entity.attributes?.year,
+              runtime = entity.attributes?.runtime,
+              genres = entity.attributes?.genres;
+
+          var output = '';
+
+          if (year !== undefined && genres !== undefined) {
+              output += `
+                  <div>
+                      <ha-icon class="state-icon" icon="mdi:calendar-month" ></ha-icon>
+                      <span class="year">${year}</span>
+                  </div>`;
+          }
+
+          if (runtime !== '' && runtime !== undefined) {
+              output += `
+                  <div>
+                      <ha-icon class="state-icon"  icon="mdi:clock"></ha-icon>
+                      <span class="year">${runtime}</span>
+                  </div>`;
+          }
+
+          if (year !== undefined && genres !== undefined) {
+              output += `
+                  <div>${genres}</div>`;
+          }
+
+          return output;
+      }
+
+
+
+    ]]]
+  label: |
+    [[[
+      let plot = entity.attributes.overview;
+      return `
+        ${plot}
+      `
+    ]]]
+  custom_fields:
+    poster: >
+      [[[
+        if (entity) {
+          if (entity && entity.attributes) {
+            let poster = entity.attributes.poster_url;
+            return`
+              <div class="poster-wrapper">
+                <img src="${poster}">
+                <div class="moreinfo">
+                  More
+                </div>
+              </div>
+            `;
+          }
+        }
+      ]]]
+  styles:
+    grid:
+      - grid-template-areas: |
+          "poster   n"
+          "poster   s"
+          "poster   l"
+      - grid-template-columns: min-content 1fr
+      - grid-template-rows: min-content min-content 1fr
+      - grid-gap: 8px
+      - margin: 0
+    card:
+      - transition-property: all
+      - transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1)
+      - transition-duration: 300ms
+movie_tap_info:
+  tap_action:
+    action: fire-dom-event
+    browser_mod:
+      service: browser_mod.popup
+      data:
+        card_mod:
+          style:
+            #popup header
+            .: |
+              @media (max-width: 450px), (max-height: 500px) {
+                ha-dialog {
+                  --mdc-dialog-min-width: 100vw !important;
+                  --mdc-dialog-min-height: 100vh !important;
+                  --popup-border-radius: 0 !important;
+                }
+              }
+              .content .container {
+                padding: 0 !important;
+              }
+        title: >
+          [[[
+            if (entity) {
+              if (entity && entity.attributes ) {
+                let title = entity.attributes.title;
+                return `${title}`;
+              }
+            }
+          ]]]
+        content:
+          type: custom:layout-card
+          layout_type: custom:grid-layout
+          layout:
+            margin: 0
+            grid-template-columns: 60vw
+            grid-template-rows: fit-content(100%)
+            mediaquery:
+              '(max-width: 800px)':
+                grid-template-columns: 100vw
+          cards:
+            - type: iframe
+              aspect_ratio: >
+                [[[
+                  return (window.matchMedia('(max-width: 800px)').matches)
+                    ? '180%'
+                    : '';
+                  /*if (window.matchMedia('(max-width: 800px)').matches)
+                    return '180%';
+                  else return '100%';*/
+                ]]]
+              url: >
+                [[[
+                  if (entity) {
+                    if (entity && entity.attributes ) {
+                      let tmdb = entity.attributes.tmdb_link;
+                      return `${tmdb}`;
+                    }
+                  }
+                ]]]

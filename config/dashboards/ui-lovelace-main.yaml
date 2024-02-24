@@ -1,7 +1,7 @@
 kiosk_mode:
   mobile_settings:
     hide_header: true
-    custom_width: 800
+    custom_width: 424
 swipe_nav:
   wrap: false
   animate_duration: 250
@@ -16,6 +16,4 @@ title: Example
 views:
   - !include views/main.yaml
   - !include subviews/movies.yaml
-  # - !include subviews/lights.yaml
-  # - !include subviews/cinema.yaml
-  # - !include subviews/kodi.yaml
+  - !include subviews/system-monitoring.yaml

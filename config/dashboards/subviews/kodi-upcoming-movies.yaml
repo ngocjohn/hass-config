@@ -5,23 +5,35 @@ card:
   type: 'custom:layout-card'
   layout_type: 'custom:grid-layout'
   layout:
-    grid-gap: 1em
-    margin: -1
+    grid-gap: 0.5em
+    margin: 0
   cards:
     - type: custom:state-switch
       entity: hash
       default: p1
+      transition: 'swap-right'
+      transition_time: 800
       states:
         p1:
-          type: 'custom:decluttering-card'
-          template: tailwind_movies
+          type: custom:decluttering-card
+          template: kodi_movie_cards
           variables:
-            - entity: sensor.upcoming_movies_1
+            - filter:
+                include:
+                  - entity_id: '/sensor\.upcoming_movie_(0[1-9]|1\d|2[0-5])/'
+                    options:
+                      type: custom:button-card
+                      template: kodi_movie_card
         p2:
-          type: 'custom:decluttering-card'
-          template: tailwind_movies
+          type: custom:decluttering-card
+          template: kodi_movie_cards
           variables:
-            - entity: sensor.upcoming_movies_2
+            - filter:
+                include:
+                  - entity_id: '/sensor\.upcoming_movie_(2[6-9]|[3-9]\d|\d{3,})/'
+                    options:
+                      type: custom:button-card
+                      template: kodi_movie_card
 
     - type: 'custom:layout-card'
       layout:

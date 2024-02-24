@@ -92,6 +92,7 @@ header_card:
           card:
             - background: none
             - padding: 0
+            - position: -webkit-sticky
           img_cell:
             - width: 16px
             - background: var(--ha-card-background)

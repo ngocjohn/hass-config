@@ -209,7 +209,7 @@ chip_air:
                   <path id="value" class="value" d="M 20,80 A 40 40 0 1 1 80,80" pathLength="99" />
                   <circle class="circle" cx="0" cy="0" r="3">
                       <animateMotion dur="1.5s" path="M 20,80 A 40 40 0 1 1 80,80" keyPoints="${keyPoints}" fill="freeze" keyTimes="0;1"
-                          calcMode="linear" />
+                          calcMode="paced" />
                   </circle>
                     <text font-size="2.5rem" fill="#97989c" font-weight="400" x="50%" y="52%">${value}</text>
                     <text font-size="1rem" fill="#ffffff80" x="50%" y="80%">µg/m³</text>

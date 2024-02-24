@@ -41,3 +41,5 @@
             disableOnInteraction: false
             pauseOnMouseEnter: true
       card_param: cards
+      sort:
+        count: 10

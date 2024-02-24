@@ -147,10 +147,11 @@ group:
     name: 'Homepod MASS Airplay'
     icon: mdi:speaker
     entities:
-      - media_player.office_2
-      - media_player.bathroom
-      - media_player.bedroom
-      - media_player.living_room_2
+      - media_player.mass_office
+      - media_player.mass_bathroom
+      - media_player.mass_bedroom
+      - media_player.mass_living_room
+
   television:
     name: Television
     icon: mdi:television

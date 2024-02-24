@@ -1,0 +1,61 @@
+- type: 'custom:button-card'
+  template: sys_with_gauge
+  name: HA system
+  icon: mdi:home-assistant
+  variables:
+    ent_1: sensor.memory_use_percent
+    name_1: Memory
+    ent_2: sensor.processor_temperature
+    name_2: Temp
+    ent_3: sensor.processor_use
+    name_3: CPU
+  view_layout:
+    grid-column: span 2
+
+- type: 'custom:button-card'
+  template:
+    - sys_with_bar
+  name: Disk
+  icon: mdi:harddisk
+  variables:
+    free: sensor.disk_free
+    usage: sensor.disk_use_percent
+    usage_color: '#4ade80'
+    use: sensor.disk_use
+
+- type: 'custom:button-card'
+  template:
+    - sys_summary
+  name: Summary
+  icon: mdi:information-outline
+  variables:
+    e1_entity: sensor.current_version
+    e1_name: Installed
+    e2_entity: sensor.ha_db
+    e2_name: Database
+  view_layout:
+    grid-row: span 2
+
+- type: 'custom:button-card'
+  template:
+    - sys_with_bar
+  name: Disk
+  icon: mdi:harddisk
+  variables:
+    free: sensor.disk_free
+    usage: sensor.disk_use_percent
+    usage_color: '#4ade80'
+    use: sensor.disk_use
+# - type: 'custom:button-card'
+#   template: sys_button_card
+#   name: HA system
+#   icon: mdi:home-assistant
+#   variables:
+#     memory: sensor.memory_use_percent
+#     memory_color: '#4ade80'
+#     cpu: sensor.processor_use
+#     cpu_color: '#fb923c'
+#     sys_temp: sensor.processor_temperature
+#     sys_temp_color: '#38bdf8'
+#   view_layout:
+#     grid-column: span 2

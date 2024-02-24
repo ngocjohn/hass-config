@@ -1,0 +1,180 @@
+type: custom:apexcharts-card
+card_mod:
+  style: |
+    ha-card {
+      background: rgba(171, 171, 171, 0.1);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(171, 171, 171, 0.1);
+      padding: 1rem 0;
+    }
+    .apexcharts-tooltip {
+      background: rgba(30, 30, 30, 0.8);
+    }
+    @media screen and (min-width: 426px) {
+      #header__states {
+        justify-content: space-evenly !important;
+        margin: 0 !important;
+        font-size: 1.1rem !important;
+      }
+      #state__name {
+        font-size: 1em !important;
+        font-weight: 400 !important;
+        font-family: 'Poppins' !important;
+      }
+      #brush {
+        margin: 0 !important;
+      }
+    }
+header:
+  show: true
+  floating: false
+  show_states: true
+  colorize_states: true
+color_list: ['#fb923c', '#60a5fa', '#c084fc']
+update_interval: 1h
+graph_span: 5d
+span:
+  end: hour
+  offset: -1h
+experimental:
+  brush: true # This is required
+brush:
+  selection_span: 1d
+  apex_config:
+    enabled: true
+    chart:
+      foreColor: '#c7c7c7'
+      height: 150
+    yaxis:
+      min: 0
+      max: 100
+      tickAmount: 3
+    xaxis:
+      type: 'datetime'
+      labels:
+        format: dd/MM
+    grid:
+      borderColor: '#555'
+      clipMarkers: false
+      yaxis:
+        lines:
+          show: false
+    fill:
+      type: gradient
+      gradient:
+        type: horizontal
+        shadeIntensity: 0.1
+        opacityFrom: 0.3
+        opacityTo: 0.9
+
+show:
+  loading: false
+  last_updated: true
+yaxis:
+  - id: chart
+    min: 0
+    max: 100
+    decimals: 0
+    apex_config:
+      tickAmount: 3
+apex_config:
+  grid:
+    borderColor: '#555'
+    clipMarkers: false
+    yaxis:
+      lines:
+        show: false
+  yaxis:
+    forceNiceScale: true
+  xaxis:
+    tooltip:
+      enabled: false
+  legend:
+    show: false
+  chart:
+    foreColor: '#c7c7c7'
+    fontFamily: SF Pro Text
+
+    dropshadow:
+      enabled: true
+    height: 300
+    zoom:
+      enabled: true
+    toolbar:
+      autoSelected: 'pan'
+      show: true
+      tools:
+        zoom: true
+        zoomin: true
+        zoomout: true
+        pan: true
+        reset: true
+        download: false
+  tooltip:
+    theme: dark
+    x:
+      format: 'd/M - HH:mm'
+    fixed:
+      enabled: true
+      position: topRight
+      offsetY: 35
+
+  fill:
+    type: gradient
+    gradient:
+      type: 'vertical'
+      shadeIntensity: 0.4
+      opacityFrom: 0.7
+      opacityTo: 0.2
+      stops: [0, 100]
+
+  markers:
+    size: 2
+    strokeWidth: 1
+    fillOpacity: 0.7
+
+all_series_config:
+  type: area
+  float_precision: 0
+  stroke_width: 3
+  curve: straight
+  group_by:
+    func: max
+    duration: 30min
+series:
+  - entity: sensor.memory_use_percent
+    name: MEMORY
+    yaxis_id: chart
+    show:
+      extremas: true
+      in_chart: true
+  - entity: sensor.processor_use
+    name: CPU
+    yaxis_id: chart
+    show:
+      extremas: true
+      in_chart: true
+  - entity: sensor.processor_temperature
+    name: TEMP
+    color: '#FF0080'
+    type: column
+    float_precision: 0
+    stroke_width: 2
+    show:
+      in_brush: false
+      in_chart: false
+      in_header: true
+  - entity: sensor.memory_use_percent
+    color: '#FF0080'
+    type: column
+    float_precision: 0
+    stroke_width: 2
+    group_by:
+      func: max
+      duration: 30min
+    show:
+      in_brush: true
+      in_chart: false
+      in_header: false

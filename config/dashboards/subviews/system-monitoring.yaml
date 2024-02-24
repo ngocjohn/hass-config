@@ -1,0 +1,345 @@
+title: System
+icon: mdi:server-network
+path: system-monitoring
+subview: false
+theme: kodi
+
+background: linear-gradient(180deg, rgb(0,0,0) 15%, rgba(0,0,0,0) 25%), radial-gradient(ellipse at bottom, rgb(0,0,0), transparent), url('/local/bg/bg_system_monitoring.WEBP')
+
+type: custom:grid-layout
+layout:
+  grid-template-rows: auto
+  grid-template-columns: 16px auto 16px
+  grid-template-areas: |
+    ". cc ."
+    ". . ."
+  grid-column-gap: 0
+  margin: 0
+  card_margin: 0
+  mediaquery:
+    '(max-width: 800px)':
+      grid-template-columns: 8px auto 8px
+      grid-template-rows: auto 80px
+      margin: 0
+cards:
+  - type: 'custom:layout-card'
+    layout_type: 'custom:grid-layout'
+    layout:
+      grid-template-columns: auto
+      grid-template-rows: auto
+      grid-column-gap: 16px
+      margin: -1
+    view_layout:
+      grid-area: cc
+    cards:
+      # [Header] Summary
+      - type: 'custom:layout-card'
+        view_layout:
+          grid-column: 1/-1
+        layout_type: 'custom:grid-layout'
+        layout:
+          grid-template-columns: auto max-content
+          grid-template-rows: auto
+          mediaquery:
+            '(min-width: 1024px)':
+              grid-template-columns: auto max-content
+            '(min-width: 800px)':
+              grid-template-columns: auto max-content
+            '(max-width: 799.99px)':
+              grid-template-columns: calc(100vw - 16px)
+          margin: 0
+        cards:
+          - type: markdown
+            card_mod:
+              style:
+                .: |
+                  ha-card {
+                    background: none !important;
+                    padding: 0 !important;
+                  }
+                ha-markdown$: |
+                  h1 {
+                    font-weight: 600;
+                    line-height: 1.1;
+                    margin-left: -2px;
+                    margin-block-end: -8px;
+                    font-size: 3rem;
+                  }
+                  @media screen and (max-width: 1023px) {
+                    h1 {
+                      font-size: 2.3rem;
+                    }
+                  }
+
+            content: >
+              # System Monitoring
+
+          # - type: 'custom:layout-card'
+          #   layout_type: 'custom:grid-layout'
+          #   layout:
+          #     margin: 0
+          #   view_layout:
+          #     place-self: center auto
+          #   cards:
+          #     - type: 'custom:swipe-card'
+          #       parameters: !include ../shared/snippets/parameters-page-title-swipe-card.yaml
+          #       card_mod:
+          #         style: !include ../shared/snippets/style-page-title-swipe-card.yaml
+          #       cards:
+          #         - type: 'custom:mushroom-entity-card'
+          #           entity: sensor.kodi_all_movies
+          #           secondary_info: last-updated
+          #           name: Recently Added
+          #           icon: mdi:filmstrip-box-multiple
+          #           tap_action:
+          #             action: fire-dom-event
+          #             local_conditional_card:
+          #               action: set
+          #               ids:
+          #                 - upcomingmovie: hide
+          #                 - addedmovie: show
+
+          #         - type: custom:mushroom-template-card
+          #           primary: Movies in {{ now().strftime('%B') }}
+          #           secondary: >-
+          #             {{ (states('sensor.upcoming_movies_1') | int) +
+          #             (states('sensor.upcoming_movies_2') | int) }} Movies
+          #           icon: mdi:theater
+          #           icon_color: '#FF6F00'
+          #           tap_action:
+          #             action: fire-dom-event
+          #             local_conditional_card:
+          #               action: set
+          #               ids:
+          #                 - upcomingmovie: show
+          #                 - addedmovie: hide
+
+          #         - type: custom:mushroom-entity-card
+          #           entity: automation.kodi_lib_scan
+          #           icon: mdi:sync-circle
+          #           name: Scan Library
+          #           secondary_info: last-updated
+          #           tap_action:
+          #             action: none
+          #           double_tap_action:
+          #             action: call-service
+          #             service: automation.trigger
+          #             target:
+          #               entity_id: automation.kodi_lib_scan
+          #             data:
+          #               skip_condition: true
+
+      - type: 'custom:layout-card'
+        layout_type: 'custom:grid-layout'
+        layout:
+          margin: -1px
+          mediaquery:
+            '(min-width: 1600px)':
+              grid-template-columns: repeat(auto-fit, minmax(max(300px, calc((100vw - 64px) / 5)), 1fr))
+              grid-column-gap: 16px
+            '(min-width: 1440px)':
+              grid-template-columns: repeat(auto-fit, minmax(max(300px, calc((100vw - 48px) / 4)), 1fr))
+              grid-column-gap: 16px
+            '(min-width: 768px)':
+              grid-template-columns: repeat(auto-fit, minmax(max(300px, calc((100vw - 32px) / 3)), 1fr))
+              grid-column-gap: 8px
+        cards:
+          # Col 1
+
+          - type: 'custom:layout-card'
+            layout_type: 'custom:grid-layout'
+            layout:
+              margin: -1
+            cards:
+              - type: 'custom:button-card'
+                template: header_card
+                variables:
+                  name: HOME ASSISTANT
+                  label: System
+                  action: more-info
+                  link: popup.living_room_scenes
+
+              - type: 'custom:layout-card'
+                layout_type: 'custom:grid-layout'
+                layout: !include ../shared/snippets/layout-column.yaml
+                cards: !include ../shared/columns/system-hassio.yaml
+
+          # Col 4
+          - type: 'custom:layout-card'
+            layout_type: 'custom:grid-layout'
+            layout:
+              margin: -1
+            cards:
+              - type: 'custom:button-card'
+                template: header_card
+                variables:
+                  name: HOME ASSISTANT
+                  label: System
+                  action: more-info
+                  link: popup.living_room_scenes
+
+              - type: 'custom:layout-card'
+                layout_type: 'custom:grid-layout'
+                layout:
+                  grid-template-columns: repeat(auto-fill, minmax(max(155px, calc((100% - 16px) / 3)), 1fr))
+                  grid-template-rows: auto
+                  grid-auto-flow: dense
+                  grid-gap: 8px
+                  margin: 0
+                cards:
+                  - type: 'custom:button-card'
+                    template: sys_button_card
+                    name: 3 column text
+                    icon: mdi:home-assistant
+                    variables:
+                      ent_1: sensor.memory_use_percent
+                      color_1: '#4ade80'
+                      name_1: Memory
+                      ent_2: sensor.processor_use
+                      color_2: '#fb923c'
+                      name_2: CPU
+                      ent_3: sensor.processor_temperature
+                      color_3: '#38bdf8'
+                      name_3: Temp
+                    view_layout:
+                      grid-column: span 2
+
+                  - type: 'custom:button-card'
+                    template:
+                      - sys_with_bar
+                    name: Disk
+                    icon: mdi:harddisk
+                    variables:
+                      free: sensor.disk_free
+                      usage: sensor.disk_use_percent
+                      use: sensor.disk_use
+
+                  - type: 'custom:button-card'
+                    template:
+                      - sys_with_bar
+                    name: Disk
+                    icon: mdi:harddisk
+                    variables:
+                      free: sensor.disk_free
+                      usage: sensor.disk_use_percent
+                      usage_color: '#4ade80'
+                      use: sensor.disk_use
+                  - type: 'custom:button-card'
+                    template:
+                      - sys_with_bar
+                    name: Disk
+                    icon: mdi:harddisk
+                    variables:
+                      free: sensor.disk_free
+                      usage: sensor.disk_use_percent
+                      usage_color: '#4ade80'
+                      use: sensor.disk_use
+          # Col 4
+          - type: 'custom:layout-card'
+            layout_type: 'custom:grid-layout'
+            layout:
+              margin: -1
+            cards:
+              - type: 'custom:button-card'
+                template: header_card
+                variables:
+                  name: HOME ASSISTANT
+                  label: System
+                  action: more-info
+                  link: popup.living_room_scenes
+
+              - type: 'custom:layout-card'
+                layout_type: 'custom:grid-layout'
+                layout:
+                  grid-template-columns: repeat(auto-fill, minmax(max(155px, calc((100% - 16px) / 3)), 1fr))
+                  grid-template-rows: auto
+                  grid-auto-flow: dense
+                  grid-gap: 8px
+                  margin: 0
+                cards:
+                  - type: 'custom:button-card'
+                    template: sys_button_card
+                    name: 3 column text
+                    icon: mdi:home-assistant
+                    variables:
+                      ent_1: sensor.memory_use_percent
+                      color_1: '#4ade80'
+                      name_1: Memory
+                      ent_2: sensor.processor_use
+                      color_2: '#fb923c'
+                      name_2: CPU
+                      ent_3: sensor.processor_temperature
+                      color_3: '#38bdf8'
+                      name_3: Temp
+                    view_layout:
+                      grid-column: span 2
+
+                  - type: 'custom:button-card'
+                    template:
+                      - sys_with_bar
+                    name: Disk
+                    icon: mdi:harddisk
+                    variables:
+                      free: sensor.disk_free
+                      usage: sensor.disk_use_percent
+                      use: sensor.disk_use
+
+                  - type: 'custom:button-card'
+                    template:
+                      - sys_with_bar
+                    name: Disk
+                    icon: mdi:harddisk
+                    variables:
+                      free: sensor.disk_free
+                      usage: sensor.disk_use_percent
+                      usage_color: '#4ade80'
+                      use: sensor.disk_use
+                  - type: 'custom:button-card'
+                    template:
+                      - sys_with_bar
+                    name: Disk
+                    icon: mdi:harddisk
+                    variables:
+                      free: sensor.disk_free
+                      usage: sensor.disk_use_percent
+                      usage_color: '#4ade80'
+                      use: sensor.disk_use
+
+          # Col 2
+          - type: 'custom:layout-card'
+            layout_type: 'custom:grid-layout'
+            layout:
+              margin: -1
+            view_layout:
+              grid-column: span 2
+              show:
+                mediaquery: '(min-width: 426px)'
+            cards: &graph-card
+              - type: 'custom:button-card'
+                template: header_card
+                variables:
+                  name: HISTORY GRAPH
+                  label: System
+                  action: more-info
+                  link: popup.living_room_scenes
+              - !include ../shared/columns/system-hass-chart.yaml
+          # Col 2
+          - type: 'custom:layout-card'
+            layout_type: 'custom:grid-layout'
+            layout:
+              margin: -1
+            view_layout:
+              show:
+                mediaquery: '(max-width: 425px)'
+            cards: *graph-card
+  # STICKY MENU
+
+  - type: custom:stack-in-card
+    view_layout:
+      show:
+        mediaquery: '(max-width: 800px)'
+    card_mod:
+      style: !include ../shared/snippets/card-style-sticky-menu.yaml
+
+    cards:
+      - !include ../shared/cards-sticky-menu.yaml

@@ -37,15 +37,15 @@ card:
               ]]]
     - type: custom:button-card
       template: icon_sticky_menu
-      icon: mdi:map
+      icon: mdi:server-network
       tap_action:
         action: navigate
-        navigation_path: /lovelace-yaml/map
+        navigation_path: /lovelace-yaml/system-monitoring
       styles:
         icon:
           - color: >
               [[[
-                  if (location.pathname === "/lovelace-yaml/map")
+                  if (location.pathname === "/lovelace-yaml/system-monitoring")
                   return '#ffb300';
               ]]]
     - type: custom:button-card
