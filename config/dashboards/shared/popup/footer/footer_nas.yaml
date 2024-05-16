@@ -96,20 +96,20 @@ browser_mod:
                   to: 200
               entity_row: true
               entities:
-                - entity: sensor.processor_use
+                - entity: sensor.system_monitor_processor_use
                   name: Processor
                   tap_action:
                     action: call-service
                     service: homeassistant.update_entity
                     service_data:
-                      entity_id: sensor.processor_use
-                - entity: sensor.memory_use_percent
+                      entity_id: sensor.system_monitor_processor_use
+                - entity: sensor.system_monitor_memory_usage
                   name: Memory
                   tap_action:
                     action: call-service
                     service: homeassistant.update_entity
                     service_data:
-                      entity_id: sensor.memory_use_percent
+                      entity_id: sensor.system_monitor_memory_usage
             - type: custom:hui-horizontal-stack-card
               cards:
                 - type: custom:button-card
@@ -267,28 +267,28 @@ browser_mod:
               severity: *bar_card_severity
               entity_row: true
               entities:
-                - entity: sensor.processor_use
+                - entity: sensor.system_monitor_processor_use
                   name: Processor
                   icon: mdi:chip
                   tap_action:
                     action: call-service
                     service: homeassistant.update_entity
                     service_data:
-                      entity_id: sensor.processor_use
-                - entity: sensor.memory_use_percent
+                      entity_id: sensor.system_monitor_processor_use
+                - entity: sensor.system_monitor_memory_usage
                   name: Minne - 4GB
                   tap_action:
                     action: call-service
                     service: homeassistant.update_entity
                     service_data:
-                      entity_id: sensor.memory_use_percent
-                - entity: sensor.disk_use_percent
+                      entity_id: sensor.system_monitor_memory_usage
+                - entity: sensor.system_monitor_disk_usage
                   name: Lagring - 10.5TB
                   tap_action:
                     action: call-service
                     service: homeassistant.update_entity
                     service_data:
-                      entity_id: sensor.disk_use_percent
+                      entity_id: sensor.system_monitor_disk_usage
             - type: custom:hui-horizontal-stack-card
               cards:
                 - type: custom:button-card

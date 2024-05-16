@@ -1,0 +1,21 @@
+.: |
+  ha-card {
+    background: none !important;
+  }
+  ha-markdown.no-header {
+    padding-bottom: 0 !important;
+  }
+ha-markdown$: |
+  h1 {
+    font-weight: 600;
+    line-height: 1.1;
+    margin-left: -2px;
+    margin-block-end: -8px;
+    font-size: 3.5rem;
+  }
+  @media screen and (max-width: 768px) {
+    h1 {
+      font-size: 2.5rem;
+    }
+
+  }

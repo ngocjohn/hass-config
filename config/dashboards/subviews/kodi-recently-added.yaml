@@ -5,3 +5,4 @@ card:
   type: custom:decluttering-card
   template: kodi_movie_cards
   variables:
+    - padding: 0

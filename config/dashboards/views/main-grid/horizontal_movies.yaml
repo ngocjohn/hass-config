@@ -22,9 +22,9 @@
       card:
         type: custom:swipe-card
         parameters:
-          watchSlidesProgress: false
+          watchSlidesProgress: true
           slidesPerView: 1
-          speed: 700
+          speed: 600
           roundLengths: true
           grabCursor: false
           followFinger: false
@@ -37,9 +37,12 @@
           cubeEffect:
             shadow: false
           autoplay:
-            delay: 10000
+            delay: 15000
             disableOnInteraction: false
             pauseOnMouseEnter: true
+          keyboard:
+            enabled: true
+
       card_param: cards
       sort:
         count: 10

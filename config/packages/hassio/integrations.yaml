@@ -50,6 +50,15 @@ sensor:
     language: cs
     region: CS
 
+  - platform: google_geocode
+    origin: device_tracker.findmy_f28d260523a64f37b0595dfcd64d3b73
+    name: Ngoc Keys Airtag
+    options: street, city
+    display_zone: hide
+    api_key: !secret google_api
+    language: cs
+    region: CS
+
   - platform: seventeentrack
     username: !secret tracking_username
     password: !secret tracking_password

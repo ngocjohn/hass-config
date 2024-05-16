@@ -1,5 +1,6 @@
 # RECORDER
 recorder:
+  db_url: !secret mariadb_url
   auto_purge: true
   purge_keep_days: 7
   commit_interval: 10
@@ -50,7 +51,6 @@ recorder:
       - sensor.unifi_*_activity
     event_types:
       - call_service
-      - service_registered
       - component_loaded
     entities:
       - cover.curtain_4d3d
@@ -74,6 +74,16 @@ recorder:
   include:
     entities:
       - device_tracker.findmy_d098350b38e241d3972ad394a27f38b6
+
+influxdb:
+  host: a0d7b954-influxdb
+  port: 8086
+  database: homeassistant
+  username: !secret mariadb_username
+  password: !secret mariadb_pass
+  max_retries: 3
+  default_measurement: state
+
 logger:
   default: error
   logs:

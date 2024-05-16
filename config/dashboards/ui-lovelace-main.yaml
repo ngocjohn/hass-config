@@ -1,4 +1,5 @@
 kiosk_mode:
+  hide_header: false
   mobile_settings:
     hide_header: true
     custom_width: 424
@@ -15,5 +16,6 @@ decluttering_templates: !include ./templates/decluttering-card.yaml
 title: Example
 views:
   - !include views/main.yaml
-  - !include subviews/movies.yaml
-  - !include subviews/system-monitoring.yaml
+  - !include subviews/movie-panel.yaml
+  # - !include subviews/kodi-library.yaml
+  # - !include subviews/system-monitoring.yaml

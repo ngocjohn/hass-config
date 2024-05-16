@@ -36,7 +36,7 @@
             - entity: sensor.*_memory_percent
         - type: line
           entities:
-            - entity: sensor.processor_temperature
+            - entity: sensor.system_monitor_processor_temperature
               lineMode: curves
-            - entity: sensor.processor_use
-            - entity: sensor.memory_use_percent
+            - entity: sensor.system_monitor_processor_use
+            - entity: sensor.system_monitor_memory_usage

@@ -1,0 +1,10 @@
+title: movie
+path: movie
+type: panel
+icon: mdi:kodi
+cards:
+  - type: custom:movie-library-panel
+    entity: sensor.kodi_movies_details
+    players:
+      - media_player.kodi_atv
+      - media_player.kodiair

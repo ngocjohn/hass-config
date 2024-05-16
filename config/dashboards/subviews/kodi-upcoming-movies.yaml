@@ -2,20 +2,20 @@ type: custom:local-conditional-card
 default: hide
 id: upcomingmovie
 card:
-  type: 'custom:layout-card'
-  layout_type: 'custom:grid-layout'
-  layout:
-    grid-gap: 0.5em
-    margin: 0
-  cards:
-    - type: custom:state-switch
-      entity: hash
-      default: p1
-      transition: 'swap-right'
-      transition_time: 800
-      states:
-        p1:
-          type: custom:decluttering-card
+  type: custom:state-switch
+  entity: hash
+  default: p1
+  transition: 'swap-right'
+  transition_time: 800
+  states:
+    p1:
+      type: 'custom:layout-card'
+      layout_type: 'custom:grid-layout'
+      layout:
+        grid-gap: 0.5em
+        margin: 0
+      cards:
+        - type: custom:decluttering-card
           template: kodi_movie_cards
           variables:
             - filter:
@@ -24,8 +24,57 @@ card:
                     options:
                       type: custom:button-card
                       template: kodi_movie_card
-        p2:
-          type: custom:decluttering-card
+        - &bottom-nav
+          type: 'custom:layout-card'
+          layout_type: 'custom:grid-layout'
+          layout:
+            grid-template-columns: 1fr
+            padding: 0 0 112px
+            margin: 0
+          view_layout:
+            place-self: center
+          cards:
+            - type: custom:stack-in-card
+              mode: horizontal
+              keep:
+                - margin: true
+              card_mod:
+                style: |
+                  ha-card {
+                    {% if states('sensor.upcoming_movies_2') | int <= 0 %}
+                      display: none;
+                    {% endif %}
+                  }
+              cards:
+                - type: custom:button-card
+                  name: « PREV
+                  tap_action:
+                    action: navigate
+                    navigation_path: '#p1'
+                  styles:
+                    card:
+                      - width: max-content
+                      - box-sizing: border-box
+                      - padding: 0.5em 1em
+                - type: custom:button-card
+                  name: NEXT »
+                  tap_action:
+                    action: navigate
+                    navigation_path: '#p2'
+                  styles:
+                    card:
+                      - width: max-content
+                      - box-sizing: border-box
+                      - padding: 0.5em 1em
+
+    p2:
+      type: 'custom:layout-card'
+      layout_type: 'custom:grid-layout'
+      layout:
+        grid-gap: 0.5em
+        margin: 0
+      cards:
+        - type: custom:decluttering-card
           template: kodi_movie_cards
           variables:
             - filter:
@@ -34,42 +83,4 @@ card:
                     options:
                       type: custom:button-card
                       template: kodi_movie_card
-
-    - type: 'custom:layout-card'
-      layout:
-        margin: 0
-      view_layout:
-        place-self: center
-      cards:
-        - type: custom:stack-in-card
-          mode: horizontal
-          keep:
-            - margin: true
-          card_mod:
-            style: |
-              ha-card {
-                {% if states('sensor.upcoming_movies_2') | int <= 0 %}
-                  display: none;
-                {% endif %}
-              }
-          cards:
-            - type: custom:button-card
-              name: « PREV
-              tap_action:
-                action: navigate
-                navigation_path: '#p1'
-              styles:
-                card:
-                  - width: max-content
-                  - box-sizing: border-box
-                  - padding: 0.5em 1em
-            - type: custom:button-card
-              name: NEXT »
-              tap_action:
-                action: navigate
-                navigation_path: '#p2'
-              styles:
-                card:
-                  - width: max-content
-                  - box-sizing: border-box
-                  - padding: 0.5em 1em
+        - *bottom-nav

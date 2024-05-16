@@ -9,7 +9,7 @@ Hey there! Welcome to my little corner of the tech world! 👨‍💻
 
 This is where I store all the cool configurations for my Home Assistant system. Well, it's a mix of awesome codes and setups I discovered from the Home Assistant community. Seriously, those folks are wizards! 🧙‍♂️ As a bit of an internet newbie turned tech enthusiast, I stumbled upon the magic of IT, and this repository is my way of sharing the joy and knowledge I've gained along the way. Dive in, explore, and let the tech magic begin! ✨
 
-I frequently refresh my configuration files. My current Home Assistant version is <b>2024.2.1</b>. If you find something you like, don't forget to give my repository a ⭐️!
+I frequently refresh my configuration files. My current Home Assistant version is <b>2024.5.3</b>. If you find something you like, don't forget to give my repository a ⭐️!
 
 <video width="100%" controls loop muted>
   <source src="https://github-production-user-asset-6210df.s3.amazonaws.com/96962827/297112091-acc1a4db-b92e-4ab1-ac9d-df067d4ba4d1.mp4" type="video/mp4">
@@ -36,15 +36,15 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>32,428 </td>
-              <td>28</td>
-              <td>200</td>
-              <td>35</td>
-              <td>54</td>
-              <td>33</td>
-              <td>943</td>
-              <td>199</td>
-              <td>36</td>
+              <td>34,291 </td>
+              <td>27</td>
+              <td>197</td>
+              <td>17</td>
+              <td>52</td>
+              <td>32</td>
+              <td>1055</td>
+              <td>192</td>
+              <td>37</td>
           </tr>
       </tbody>
   </table>
@@ -65,13 +65,15 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - File editor
 - Glances
 - Home Assistant Google Drive Backup
+- InfluxDB
+- MariaDB
 - Mosquitto broker
-- Music Assistant BETA
+- Music Assistant
 - Node-RED
+- phpMyAdmin
 - PS5 MQTT
 - RTSP Simple Server Add-on
 - Samba share
-- SQLite Web
 - Studio Code Server
 - Xiaomi Mi Scale
 - Zigbee2MQTT
@@ -99,8 +101,9 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Node Red Companion](https://github.com/zachowj/hass-node-red)
 - [Nuki Lock](https://github.com/kvj/hass_nuki_ng)
 - [Portainer](https://github.com/tomaae/homeassistant-portainer)
+- [Remote Home Assistant](https://github.com/custom-components/remote_homeassistant)
 - [Simpleicons](https://github.com/vigonotion/hass-simpleicons)
-- [Spook 👻 Not Your Homie](https://github.com/frenck/spook)
+- [Spook 👻 Your Homie](https://github.com/frenck/spook)
 - [Spotcast](https://github.com/fondberg/spotcast)
 - [Trakt](https://github.com/dylandoamaral/trakt-integration)
 - [Xiaomi Cloud Map Extractor](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor)
@@ -137,10 +140,13 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Layout Card](https://github.com/thomasloven/lovelace-layout-card)
 - [Local Conditional Card](https://github.com/PiotrMachowski/Home-Assistant-Lovelace-Local-Conditional-card)
 - [Logbook Card](https://github.com/royto/logbook-card)
+- [Lovelace Custom Movie Panel](https://github.com/ngocjohn/lovelace-movie-panel)
 - [Mini Graph Card](https://github.com/kalkih/mini-graph-card)
 - [Mini Media Player](https://github.com/kalkih/mini-media-player)
 - [Multiple Entity Row](https://github.com/benct/lovelace-multiple-entity-row)
 - [Mushroom](https://github.com/piitaya/lovelace-mushroom)
+- [My Custom Media Player Card](https://github.com/ngocjohn/custom-media-player-card)
+- [Navbar Position](https://github.com/javawizard/ha-navbar-position)
 - [Paper Buttons Row](https://github.com/jcwillox/lovelace-paper-buttons-row)
 - [Platinum Weather Card](https://github.com/Makin-Things/platinum-weather-card)
 - [Plotly Graph Card](https://github.com/dbuezas/lovelace-plotly-graph-card)

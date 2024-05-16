@@ -23,7 +23,7 @@
         coverflowEffect:
           rotate: 80
           depth: 300
-        speed: 650
+        speed: 600
         spaceBetween: 20
         threshold: 7
         observer: false
@@ -43,6 +43,14 @@
                   - tpl_spotify
                 variables:
                   playlist_type: default
+                # type: media-control
+                # entity: media_player.spotify
+                # card_mod:
+                #   style: |
+                #     ha-card {
+                #       aspect-ratio: 1/1 !important;
+                #     }
+
             - type: conditional
               conditions:
                 - entity: select.conditional_media
@@ -57,6 +65,20 @@
                   - progress_bar
                   - tpl_minicontrol
                   - icon_apple_tv
+            - type: conditional
+              conditions:
+                - entity: select.conditional_media
+                  state: Kodi ATV
+              card: &KODIATV
+                type: custom:button-card
+                entity: media_player.kodi_atv
+                name: ' '
+                triggers_update: sensor.kodi_picture
+                template:
+                  - conditional_media
+                  - progress_bar
+                  - tpl_minicontrol
+                  - icon_kodi
             - type: conditional
               conditions:
                 - entity: select.conditional_media
@@ -155,45 +177,13 @@
                         url: /api/hassio_ingress/vY3Npsvoa2MxygW4H78Jr2ZEpMXsTJtX8DuZsXbT6mE/#/home
 
         # YOUTUBE MUSIC Playlist
-        - type: grid
-          columns: 1
-          cards: &YOUTUBEPLAYLIST
-            # - type: custom:polr-ytube-playing-card
-            #   entity_id: media_player.ytube_music_player
-            #   coverNavigation: true
-            #   initialAction:
-            #     media_content_id: RDCLAK5uy_mfdqvCAl8wodlx2P2_Ai2gNkiRDAufkkI
-            #     media_content_type: playlist
-            #   card_mod:
-            #     style: |
-            #       ha-card {
-            #         height: auto !important;
-            #         aspect-ratio: 1/1 !important;
-            #         padding: 0% !important;
-            #       }
-            #       .background, .header {
-            #         display: none !important;
-            #       }
-            #       .content {
-            #         padding: 0 !important;
-            #       }
-            #       polr-media-control, polr-ytube-playing, polr-tab-bar {
-            #         display: none;
-            #       }
-            #       polr-ytube-browser {
-            #         display: flex !important;
-            #       }
-            #       .grid-item {
-            #         border-radius: var(--button-card-border-radius) !important;
-            #         object-fit: cover !important;  /* fill the whole card */
-            #         aspect-ratio: unset;  /* undo image aspect-ratio when clicked */
-            #         box-shadow:none !important;
-            #         color: transparent !important;
-            #       }
-            - type: custom:button-card
-              entity: media_player.ytube_music_player
-              template:
-                - tpl_ytube_music
+        # - type: grid
+        #   columns: 1
+        #   cards: &YOUTUBEPLAYLIST
+        #     - type: custom:button-card
+        #       entity: media_player.ytube_music_player
+        #       template:
+        #         - tpl_ytube_music
         # VN FEATURED Playlist
         - type: grid
           columns: 1
@@ -321,6 +311,11 @@
             - type: conditional
               conditions:
                 - entity: select.conditional_media
+                  state: Kodi ATV
+              card: *KODIATV
+            - type: conditional
+              conditions:
+                - entity: select.conditional_media
                   state: Spotify
               card:
                 type: custom:button-card
@@ -340,11 +335,11 @@
                 - entity: select.conditional_media
                   state: Mass Player Group
               card: *MASSAIRPLAY
-            - type: conditional
-              conditions:
-                - entity: select.conditional_media
-                  state: Youtube Music Player
-              card: *YOUTUBEPLAYER
+            # - type: conditional
+            #   conditions:
+            #     - entity: select.conditional_media
+            #       state: Youtube Music Player
+            #   card: *YOUTUBEPLAYER
         - type: conditional
           conditions:
             - condition: state

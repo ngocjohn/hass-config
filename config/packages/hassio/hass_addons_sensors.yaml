@@ -1,0 +1,22 @@
+#################################################
+#                                               #
+#                SENSORS                        #
+#                                               #
+#################################################
+template:
+  - sensor:
+      #ADDONS MEMORY USE
+      - unique_id: hassio_addons_use
+        name: hassio_addons_use
+        state: >-
+          {%- set memory = states.sensor.system_monitor_memory_usage.state | float -%}
+          {%- set cpu = states.sensor.system_monitor_processor_use.state | float -%}
+            MEMORY: {{memory}}% | CPU: {{cpu}}%
+        icon: mdi:home-assistant
+        attributes:
+          addons_memory: >-
+            { {%- for ent in expand(integration_entities('hassio')) -%}
+            {% if ent.entity_id.endswith('_memory_percent') -%}
+            "{{ ent.name }}": {{ ent.state }},
+            {% endif -%}
+            {% endfor -%} }
