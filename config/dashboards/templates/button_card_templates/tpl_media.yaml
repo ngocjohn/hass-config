@@ -27,7 +27,7 @@ base_media:
       ]]]
     is_homepod: >
       [[[
-        let is_homepod = states['media_player.mass_airplay_group'].state === 'playing';
+        let is_homepod = states['media_player.mass_universal_airplay'].state === 'playing';
           if (is_homepod) {
             return true;
           }
@@ -61,7 +61,7 @@ base_media:
       - color: >
           [[[
             let game_image = entity.attributes.title_image;
-            if (variables.is_youtube) {
+            if (variables.is_youtube || variables.is_kodi) {
                 return '#efefef';
             } else {
                 return entity && game_image !== undefined
@@ -76,7 +76,7 @@ base_media:
       - text-shadow: >
           [[[
             let game_image = entity.attributes.title_image;
-            if (variables.is_youtube) {
+            if (variables.is_youtube || variables.is_kodi) {
                 return `1px 1px 5px rgba(18, 22, 23, 0.9)`;
             } else {
                 return entity && game_image !== undefined
@@ -122,6 +122,7 @@ media:
       - background-image: >
           [[[
             let game_image = entity.attributes.title_image;
+
             if (variables.is_youtube) {
                 return `linear-gradient(0deg, rgba(0,0,0,.8) 0%, rgba(0,0,0,0) 100%), url(${states[this._config?.triggers_update].state})`;
             } else {
@@ -274,6 +275,11 @@ conditional_media:
             if (entity) {
               if (variables.is_youtube) {
                   return `url(${states[this._config?.triggers_update].attributes.entity_picture})`;
+              }
+              if (variables.is_kodi) {
+                  let fanart = states[this._config?.triggers_update].attributes.fanart;
+                  let poster = states[this._config?.triggers_update].attributes.poster;
+                  return `url(${poster})`;
               }
               if (entity?.attributes?.app_id === 'com.google.ios.youtubekids') {
                   return `url(/local/img/channels/youtubekids.png)`;
@@ -777,6 +783,18 @@ added_movies:
       - border-radius: calc(var(--button-card-border-radius) / 2)
       - background-color: '#00000'
       - overflow: hidden
+      - --speed: >
+          [[[
+            let cztitle = entity.attributes.title,
+                originaltitle = entity.attributes.original_title;
+            const containerWidth = 24;
+            var title = cztitle == originaltitle
+              ? cztitle
+              : cztitle + " " + originaltitle;
+            var speed = Math.round((title.length / containerWidth) * 6);
+
+            return `${speed}s`;
+          ]]]
 
     custom_fields:
       # tailwind:
@@ -970,8 +988,8 @@ currently_playing:
               -webkit-transform: translate3d(0,0,0);
               content: "";
               background:
-                {% if is_state('media_player.mass_airplay_group', 'playing') %}
-                  url( '{{ state_attr('media_player.mass_airplay_group', "entity_picture") }}')
+                {% if is_state('media_player.mass_universal_airplay', 'playing') %}
+                  url( '{{ state_attr('media_player.mass_universal_airplay', "entity_picture") }}')
                 {% else %}
                   url( '{{ state_attr('media_player.spotify', "entity_picture") }}')
                 {% endif %} center no-repeat;
@@ -1210,20 +1228,17 @@ currently_playing:
   #                                               #
   #################################################
 music_card_speaker_button:
-  aspect_ratio: 1/1
   show_name: false
+  show_state: false
   show_icon: true
-  entity: >
-    [[[ return entity.entity_id; ]]]
-  size: 100%
+  size: 24px
+  tap_action:
+    action: call-service
+    service: >
+      [[[ return variables.media_service; ]]]
+    service_data:
+      entity_id: '[[[ return variables.entity_id; ]]]'
   styles:
-    card:
-      - background: none
-      - padding: 0px
-      - border-radius: 50%
-      - box-shadow: none
-      - -webkit-box-shadow: none
-      - border-style: none
     icon:
       - color: rgba(255, 255, 255, 1)
       - filter: drop-shadow(2px 4px 4px rgba(0,0,0,0.7))
@@ -2312,7 +2327,7 @@ tpl_minicontrol_mass:
     minicontrol:
       card:
         type: custom:mini-media-player
-        entity: media_player.mass_airplay_group
+        entity: media_player.mass_universal_airplay
         hide:
           icon: true
           name: true
@@ -2362,9 +2377,10 @@ kodi_movie_card:
   template:
     - extra_styles
     - movie_tap_info
+    - movie_double_tap
   show_name: true
   show_state: true
-  show_label: true
+  show_label: false
   show_entity_picture: false
   show_icon: false
   name: >
@@ -2413,40 +2429,33 @@ kodi_movie_card:
 
           return output;
       }
-
-
-
-    ]]]
-  label: |
-    [[[
-      let plot = entity.attributes.overview;
-      return `
-        ${plot}
-      `
     ]]]
   custom_fields:
+    plot: >
+      [[[
+        let plot = entity.attributes.overview;
+        return `
+          ${plot}
+        `
+      ]]]
     poster: >
       [[[
-        if (entity) {
-          if (entity && entity.attributes) {
-            let poster = entity.attributes.poster_url;
-            return`
-              <div class="poster-wrapper">
-                <img src="${poster}">
-                <div class="moreinfo">
-                  More
-                </div>
+        let poster = entity.attributes.poster_url;
+        return`
+            <div class="poster-wrapper">
+              <img src="${poster}">
+              <div class="moreinfo">
+                <ha-icon icon="mdi:play"></ha-icon>
               </div>
-            `;
-          }
-        }
+            </div>
+          `;
       ]]]
   styles:
     grid:
       - grid-template-areas: |
           "poster   n"
           "poster   s"
-          "poster   l"
+          "poster   plot"
       - grid-template-columns: min-content 1fr
       - grid-template-rows: min-content min-content 1fr
       - grid-gap: 8px
@@ -2455,6 +2464,37 @@ kodi_movie_card:
       - transition-property: all
       - transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1)
       - transition-duration: 300ms
+
+kodi_upcoming_poster:
+  show_icon: false
+  show_entity_picture: false
+  show_state: false
+  show_label: true
+  show_name: false
+  label: |
+    [[[
+      return `<span>${entity.attributes.genres}</span>`;
+    ]]]
+  styles:
+    card:
+      - background-image: |
+          [[[ return `url(${entity.attributes.poster_url})`; ]]]
+      - background-size: contain
+      - width: 150px
+      - height: calc(150px * 1.5)
+      - padding: 0
+      - margin: 0
+    grid:
+      - grid-template-columns: auto
+      - grid-template-rows: 1fr
+
+movie_double_tap:
+  double_tap_action:
+    action: call-service
+    service: script.run_plugin
+    service_data:
+      file: >
+        [[[ return entity.attributes.strm_url; ]]]
 movie_tap_info:
   tap_action:
     action: fire-dom-event
@@ -2514,3 +2554,184 @@ movie_tap_info:
                     }
                   }
                 ]]]
+
+new_media_player:
+  template:
+    # - progress_bar
+  variables:
+    media_on: >
+      [[[ return !entity || ['playing', 'on'].indexOf(entity.state) !== -1; ]]]
+    vibrant_color: >
+      [[[ return states['sensor.light_vibrant_color'].state; ]]]
+    entity_picture: >
+      [[[ return !entity || entity.attributes.entity_picture; ]]]
+    entity_id: >
+      [[[ return !entity || entity.entity_id; ]]]
+  triggers_update: all
+  show_state: true
+  show_label: false
+  show_icon: true
+  show_name: false
+  show_entity_picture: false
+  tap_action:
+    action: none
+  size: 20px
+  state_display: |
+    [[[
+      let album = entity.attributes.media_album_name,
+          artist = entity.attributes.media_artist,
+          title = entity.attributes.media_title;
+      return `
+        <span>${title}</span>
+        <span>${artist}</span>
+      `
+    ]]]
+
+  custom_fields:
+    thumbnail: >
+      [[[
+        return `<img src="${variables.entity_picture}">`;
+      ]]]
+
+    # player: >
+    #   [[[
+    #     if (entity)
+
+    #       setTimeout(() => {
+    #       let elt = this.shadowRoot,
+    #           playButton = elt.getElementById('playButton');
+
+    #       playButton.addEventListener('click', () => {
+    #           if (entity.state === "playing") {
+    #             // Call the Home Assistant service to play media
+    #             hass.callService('media_player', 'media_pause', { "entity_id": entity.entity_id });
+    #           } else {
+    #             // Call the Home Assistant service to pause media
+    #             hass.callService('media_player', 'media_play', { "entity_id": entity.entity_id });
+    #           }
+    #         }, { passive: true });
+    #       }, 0);
+
+    #       let output = `
+    #         <div class="playbutton" id="playButton" style="cursor: pointer;">
+    #           <svg xmlns="http://www.w3.org/2000/svg" height="24" width="18" viewBox="0 0 384 512">
+    #             <path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/>
+    #           </svg>
+    #         </div>`;
+
+    #       return output;
+
+    #   ]]]
+    player:
+      # do_not_eval: true
+      card:
+        type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            template:
+              - music_card_speaker_button
+            icon: mdi:skip-next
+            variables:
+              media_service: 'media_player.media_next_track'
+              entity_id: '[[[ return entity.entity_id; ]]]'
+
+          - type: custom:button-card
+            template:
+              - music_card_speaker_button
+            show_icon: false
+            custom_fields:
+              icon: >
+                [[[
+                  return `
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24" width="18" viewBox="0 0 384 512">
+                    <path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/>
+                    </svg>
+                  `
+                ]]]
+            variables:
+              media_service: >
+                [[[
+                  return variables.media_on
+                    ? "media_player.media_pause"
+                    : "media_player.media_play";
+                ]]]
+              entity_id: '[[[ return entity.entity_id; ]]]'
+
+          - type: custom:button-card
+            show_state: false
+            show_name: false
+            show_icon: true
+            icon: mdi:skip-previous
+            size: 20px
+            entity: media_player.spotify
+            tap_action:
+              action: call-service
+              service: media_player.media_play_pause
+              service_data:
+                entity_id: '[[[ return entity.entity_id; ]]]'
+          - type: custom:button-card
+            show_state: false
+            show_name: false
+            show_icon: true
+            icon: mdi:shuffle
+            size: 20px
+            entity: media_player.spotify
+            tap_action:
+              action: call-service
+              service: media_player.media_play_pause
+              service_data:
+                entity_id: '[[[ return entity.entity_id; ]]]'
+
+  styles:
+    grid:
+      - grid-template-columns: minmax(112px, 150px) 1fr min-content
+      - grid-template-rows: min-content 1fr min-content
+      - grid-template-areas: |
+          "thumbnail  .   i"
+          "thumbnail  s   s"
+          "thumbnail  player player"
+      - grid-gap: 0 1rem
+
+    card:
+      - padding: 1rem
+      - border-radius: 0.75rem
+      - min-height: 100%
+      - background: >
+          [[[ return `rgba(${variables.vibrant_color}, 0.2)`; ]]]
+      - box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1)
+      - backdrop-filter: blur(15px)
+      - -webkit-backdrop-filter: blur(15px)
+      - border: 1px solid rgba(171, 171, 171, 0.1)
+      - place-items: baseline
+      - overflow: hidden
+
+  extra_styles: >
+    #card {
+      height: 200px;
+      min-with: 224px;
+    }
+    #thumbnail {
+      display: flex;
+      width: 100%;
+      height: auto;
+      justify-content: center;
+      align-items: center;
+    }
+    img {
+      border-radius: 1rem;
+      object-fit: cover;
+      max-width: 100%;
+      height: auto;
+    }
+    #state {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+    ha-icon {
+      width: 24px !important;
+      height: 24px !important;
+    }

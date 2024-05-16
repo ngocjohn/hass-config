@@ -105,9 +105,15 @@ kodi:
   h4-font: 'var(--h4-font-weight) var(--h4-font-size)'
   h5-font: 'var(--h5-font-weight) var(--h5-font-size)'
   h6-font: 'var(--h6-font-weight) var(--h6-font-size)'
+  # Progress bar conditional card
+  progress-bar-color: '#e5a00d'
+  progress-bar-background-color: rgba(0,0,0,0.33)
+  progress-bar-height: 2%
+
+  swiper-theme-color: '#ffffff'
 
   ha-card-header-font-size: var(--card-title-font-size)
-  masonry-view-card-margin: 2px 1px
+  masonry-view-card-margin: 0
   card-mod-theme: 'kodi'
   card-mod-view-yaml: |
     .: |

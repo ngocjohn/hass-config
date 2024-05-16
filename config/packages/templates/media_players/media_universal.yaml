@@ -3,7 +3,7 @@ media_player:
     name: Currently Playing
     unique_id: currently_playing
     children:
-      - media_player.homepod_mass
+      - media_player.mass_homepod_airplay
       - media_player.spotify
       - media_player.living_room_tv
       - media_player.bedroom_tv
@@ -23,7 +23,7 @@ media_player:
       - media_player.mass_office
       - media_player.mass_bathroom
       - media_player.mass_bedroom
-      - media_player.mass_living_room
+      - media_player.mass_living_room_hp
 template:
   - select:
       - name: conditional_media
@@ -34,6 +34,7 @@ template:
             states.media_player.spotify,
             states.sensor.ps5_activity,
             states.media_player.living_room_tv,
+            states.media_player.kodi_atv,
             states.media_player.ytube_music_player,
             states.media_player.bedroom_tv ] %}
           {% macro media(state) %}
@@ -59,6 +60,7 @@ template:
             states.media_player.spotify,
             states.sensor.ps5_activity,
             states.media_player.living_room_tv,
+            states.media_player.kodi_atv,
             states.media_player.ytube_music_player,
             states.media_player.bedroom_tv ] %}
           {{ recently_added + upcoming_shows + media_players | map(attribute='name') | list }}

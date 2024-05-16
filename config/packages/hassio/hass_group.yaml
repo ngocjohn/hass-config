@@ -150,7 +150,7 @@ group:
       - media_player.mass_office
       - media_player.mass_bathroom
       - media_player.mass_bedroom
-      - media_player.mass_living_room
+      - media_player.mass_living_room_hp
 
   television:
     name: Television

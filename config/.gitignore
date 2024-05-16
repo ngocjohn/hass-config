@@ -111,6 +111,7 @@ tts/
 www/*
 !www/hafloor
 !www/dashboard-resources
+!www/lovelace-media-player-card
 zigbee2mqtt/
 known_devices.yaml
 

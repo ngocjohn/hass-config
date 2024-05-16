@@ -50,6 +50,11 @@
     zone: zone.smichov
     event: enter
     id: smichov
+  - platform: state
+    entity_id:
+    - sensor.ngoc_keys_airtag
+    attribute: Street
+    id: ngockey
   condition: []
   action:
   - if:
@@ -89,6 +94,25 @@
             latitude_delta: '0'
             longitude_delta: '0.01'
     enabled: true
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - ngockey
+      sequence:
+      - service: notify.ngoc_devices
+        data:
+          title: Ngoc Key
+          message: '{{ state_attr(''sensor.ngoc_keys_airtag'', ''Formatted Address'')
+            }}'
+          data:
+            action_data:
+              latitude: '{{ state_attr(''device_tracker.findmy_f28d260523a64f37b0595dfcd64d3b73'',
+                ''latitude'') }}'
+              longitude: '{{ state_attr(''device_tracker.findmy_f28d260523a64f37b0595dfcd64d3b73'',
+                ''longitude'') }}'
+              latitude_delta: '0'
+              longitude_delta: '0.01'
   mode: single
 - id: '1681905795903'
   alias: camera snapshot
@@ -427,7 +451,7 @@
         entity_id: 952057f8ccc2766d1d825168186a225a
         type: is_playing
       - condition: state
-        entity_id: media_player.mass_airplay_group
+        entity_id: media_player.mass_universal_airplay
         state: playing
   action:
   - service: light.turn_on
@@ -563,8 +587,8 @@
   trigger:
   - platform: numeric_state
     entity_id:
-    - sensor.memory_use_percent
-    - sensor.processor_use
+    - sensor.system_monitor_memory_usage
+    - sensor.system_monitor_processor_use
     for:
       hours: 0
       minutes: 5
@@ -575,8 +599,8 @@
   - parallel:
     - service: notify.notify
       data:
-        message: Memory {{ states.sensor.memory_use_percent.state }}% - CPU {{ states.sensor.processor_use.state
-          }}%
+        message: Memory {{ states.sensor.system_monitor_memory_usage.state }}% - CPU
+          {{ states.sensor.system_monitor_processor_use.state }}%
         title: System
   mode: single
 - id: '1701118898607'
@@ -634,34 +658,6 @@
   - event: archive_alerts
     event_data: {}
   mode: single
-- id: '1704240576441'
-  alias: 'HA Backup '
-  description: Backup automation at 5:30AM
-  trigger:
-  - platform: time
-    at: 05:30:00
-  condition: []
-  action:
-  - if:
-    - condition: time
-      weekday:
-      - mon
-      - wed
-      - fri
-      - sun
-    then:
-    - service: hassio.backup_full
-      data:
-        compressed: true
-        homeassistant_exclude_database: true
-        location: mbprobackup
-    else:
-    - service: hassio.backup_full
-      data:
-        compressed: true
-        homeassistant_exclude_database: false
-        location: mbprobackup
-  mode: single
 - id: '1706827614119'
   alias: kodi_lib_scan
   description: ''
@@ -705,53 +701,23 @@
         - camera.roidmi_eve
       data: {}
   mode: single
-- id: '1708017166569'
-  alias: Test Webhook
+- id: '1715819993809'
+  alias: Kodi Update Picture Sensor
   description: ''
   trigger:
-  - platform: webhook
-    allowed_methods:
-    - POST
-    - PUT
-    - GET
-    - HEAD
-    local_only: false
-    id: appdaemon
-    webhook_id: repo_appdaemon
-  - platform: webhook
-    allowed_methods:
-    - POST
-    - PUT
-    - GET
-    - HEAD
-    local_only: false
-    id: homeassistant
-    webhook_id: repo_homeassistant
-  - platform: webhook
-    allowed_methods:
-    - POST
-    - PUT
-    - GET
-    - HEAD
-    local_only: false
-    id: hass_config_public
-    webhook_id: repo_hass_config
+  - platform: state
+    entity_id:
+    - media_player.kodi_atv
+    attribute: media_title
+  condition: []
   action:
-  - choose:
-    - conditions:
-      - condition: trigger
-        id:
-        - homeassistant
-      sequence:
-      - event: githubrepositories
-        event_data:
-          data: '{{trigger.json}}'
-    - conditions:
-      - condition: trigger
-        id:
-        - hass_config_public
-      sequence:
-      - event: repo_hass_config
-        event_data:
-          data:
-            '[object Object]':
+  - service: kodi.call_method
+    target:
+      entity_id: media_player.kodi_atv
+    data:
+      method: Player.GetItem
+      playerid: 0
+      properties:
+      - title
+      - art
+  mode: single

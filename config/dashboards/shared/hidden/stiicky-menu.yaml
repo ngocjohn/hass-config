@@ -1,0 +1,101 @@
+type: custom:stack-in-card
+# view_layout:
+#   show:
+#     mediaquery: '(max-width: 800px)'
+card_mod:
+  style:
+    .: |
+      :host {
+        position: fixed !important;
+        bottom: 0px;
+        z-index: 4;
+      }
+      @keyframes position {
+        0% {
+          bottom: -100px;
+          opacity: 0;
+        }
+        100% {
+          bottom: 0px;
+          opacity: 1;
+        }
+      }
+      ha-card {
+        border-radius: 0;
+        background-color: #0000004d !important;
+        backdrop-filter: blur(50px) brightness(1.6);
+        -webkit-backdrop-filter: blur(50px) brightness(1.6);
+        -moz-backdrop-filter: blur(50px) brightness(1.6);
+        -o-backdrop-filter: blur(50px) brightness(1.6);
+        -ms-backdrop-filter: blur(50px) brightness(1.6);
+        box-shadow: 0px 2px 4px 0px #0000008c;
+        animation: position 500ms linear both;
+        animation-delay: 1000ms;
+        padding: 12px 8px 22px;
+        width: 100vw;
+        margin-bottom: -2px;
+      }
+
+cards:
+  - type: custom:mod-card
+    card_mod:
+      style:
+        # horizontal bottom buttons
+        hui-horizontal-stack-card$: |
+          #root {
+            justify-content: space-between !important;
+          }
+    card:
+      type: horizontal-stack
+      cards:
+        - type: custom:button-card
+          template: icon_sticky_menu
+          icon: mdi:home-circle
+          tap_action:
+            action: navigate
+            navigation_path: /lovelace-yaml/summary
+          styles:
+            icon:
+              - color: >
+                  [[[
+                      if (location.pathname === "/lovelace-yaml/summary")
+                      return '#ffb300';
+                  ]]]
+        - type: custom:button-card
+          template: icon_sticky_menu
+          icon: mdi:kodi
+          tap_action:
+            action: navigate
+            navigation_path: /lovelace-yaml/movies
+          styles:
+            icon:
+              - color: >
+                  [[[
+                      if (location.pathname === "/lovelace-yaml/movies")
+                      return '#ffb300';
+                  ]]]
+        - type: custom:button-card
+          template: icon_sticky_menu
+          icon: mdi:server-network
+          tap_action:
+            action: navigate
+            navigation_path: /lovelace-yaml/system-monitoring
+          styles:
+            icon:
+              - color: >
+                  [[[
+                      if (location.pathname === "/lovelace-yaml/system-monitoring")
+                      return '#ffb300';
+                  ]]]
+        - type: custom:button-card
+          template: icon_sticky_menu
+          icon: mdi:music-circle
+          tap_action:
+            action: navigate
+            navigation_path: /d5369777_music_assistant_beta/ingress
+        - type: custom:button-card
+          template: icon_sticky_menu
+          icon: mdi:chat
+          tap_action:
+            action: assist
+            start_listening: false

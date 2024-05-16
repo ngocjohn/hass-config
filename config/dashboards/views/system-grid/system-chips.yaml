@@ -23,13 +23,13 @@
       cards:
         - type: custom:button-card
           name: Processor
-          entity: sensor.processor_use
+          entity: sensor.system_monitor_processor_use
           show_icon: true
           template:
             - chip_system
         - type: custom:button-card
           name: Memory use %
-          entity: sensor.memory_use_percent
+          entity: sensor.system_monitor_memory_usage
           show_icon: true
           template:
             - chip_system
@@ -41,19 +41,19 @@
             - chip_system
         - type: custom:button-card
           name: Temperature
-          entity: sensor.processor_temperature
+          entity: sensor.system_monitor_processor_temperature
           show_icon: true
           template:
             - chip_system
         - type: custom:button-card
           name: Disk used
-          entity: sensor.disk_use_percent
+          entity: sensor.system_monitor_disk_usage
           show_icon: true
           template:
             - chip_system
         - type: custom:button-card
           name: Database
-          entity: sensor.ha_db
+          entity: sensor.hass_db
           show_icon: true
           template:
             - chip_system

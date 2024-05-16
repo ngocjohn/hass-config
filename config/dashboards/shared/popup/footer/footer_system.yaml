@@ -28,7 +28,7 @@ browser_mod:
             # - entity: sensor.home_assistant_versions
             #   name: Latest
             # - entity: sensor.template_hass_next_release
-            - entity: sensor.ha_db
+            - entity: sensor.hass_db
               name: Database
               icon: mdi:database
             # - entity: sensor.home_assistant_log_size
@@ -58,30 +58,30 @@ browser_mod:
                   to: 100
               entity_row: true
               entities:
-                - entity: sensor.processor_use
+                - entity: sensor.system_monitor_processor_use
                   name: Processor
                   tap_action:
                     action: call-service
                     service: homeassistant.update_entity
                     service_data:
-                      entity_id: sensor.processor_use
-                - entity: sensor.processor_temperature
+                      entity_id: sensor.system_monitor_processor_use
+                - entity: sensor.system_monitor_processor_temperature
                   name: Temperature
                   icon: mdi:thermostat
-                - entity: sensor.memory_use_percent
+                - entity: sensor.system_monitor_memory_usage
                   name: Memory
                   tap_action:
                     action: call-service
                     service: homeassistant.update_entity
                     service_data:
-                      entity_id: sensor.memory_use_percent
-                - entity: sensor.disk_use_percent
+                      entity_id: sensor.system_monitor_memory_usage
+                - entity: sensor.system_monitor_disk_usage
                   name: Disk used
                   tap_action:
                     action: call-service
                     service: homeassistant.update_entity
                     service_data:
-                      entity_id: sensor.disk_use
+                      entity_id: sensor.system_monitor_disk_use
             - type: custom:hui-horizontal-stack-card
               cards:
                 - type: custom:button-card

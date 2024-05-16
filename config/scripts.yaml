@@ -617,9 +617,7 @@ homepod_alarm:
   - service: media_player.turn_on
     data: {}
     target:
-      entity_id:
-      - media_player.mass_bedroom
-      - media_player.mass_office
+      entity_id: media_player.mass_bedroom
   - delay:
       hours: 0
       minutes: 0
@@ -629,31 +627,27 @@ homepod_alarm:
     data:
       volume_level: 0.2
     target:
-      entity_id:
-      - media_player.mass_office
-      - media_player.mass_bedroom
+      entity_id: media_player.mass_bedroom
   - delay:
       hours: 0
       minutes: 0
       seconds: 3
       milliseconds: 0
   - service: media_player.play_media
-    target:
-      entity_id:
-      - media_player.mass_bedroom
-      - media_player.mass_office
     data:
-      media_content_id: library://playlist/55
+      media_content_id: library://playlist/13
       media_content_type: music
     metadata:
       title: Chill Mix
-      thumbnail: https://seed-mix-image.spotifycdn.com/v6/img/chill/4D262YaVKbDcp0MIl7Dvbc/en/large
+      thumbnail: https://seed-mix-image.spotifycdn.com/v6/img/chill/246dkjvS1zLTtiykXe5h60/en/default
       media_class: playlist
       children_media_class:
       navigateIds:
       - {}
       - media_content_type: mass
         media_content_id: playlists
+    target:
+      entity_id: media_player.mass_bedroom
   - delay:
       hours: 0
       minutes: 0
@@ -672,5 +666,18 @@ homepod_alarm:
         duration: 30
         curve: logarithmic
         target_player: media_player.mass_office
+      enabled: false
   mode: single
   icon: phu:homepod-mini
+run_plugin:
+  alias: run plugin
+  sequence:
+  - service: kodi.call_method
+    metadata: {}
+    data:
+      method: Player.Open
+      item:
+        file: '{{ file }}'
+    target:
+      entity_id: media_player.kodi_atv
+  mode: single

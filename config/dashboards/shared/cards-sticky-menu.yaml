@@ -27,12 +27,12 @@ card:
       icon: mdi:kodi
       tap_action:
         action: navigate
-        navigation_path: /lovelace-yaml/movies
+        navigation_path: /lovelace-yaml/movie
       styles:
         icon:
           - color: >
               [[[
-                  if (location.pathname === "/lovelace-yaml/movies")
+                  if (location.pathname === "/lovelace-yaml/movie")
                   return '#ffb300';
               ]]]
     - type: custom:button-card

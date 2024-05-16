@@ -1,7 +1,4 @@
 .: |
-  .swiper-container {
-    z-index: 0 !important;
-  }
   @media screen and (max-width: 799.99px) {
     .swiper-slide {width: auto !important;}
   }

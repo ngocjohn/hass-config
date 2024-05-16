@@ -3,11 +3,11 @@
   name: HA system
   icon: mdi:home-assistant
   variables:
-    ent_1: sensor.memory_use_percent
+    ent_1: sensor.system_monitor_memory_usage
     name_1: Memory
-    ent_2: sensor.processor_temperature
+    ent_2: sensor.system_monitor_processor_temperature
     name_2: Temp
-    ent_3: sensor.processor_use
+    ent_3: sensor.system_monitor_processor_use
     name_3: CPU
   view_layout:
     grid-column: span 2
@@ -18,10 +18,10 @@
   name: Disk
   icon: mdi:harddisk
   variables:
-    free: sensor.disk_free
-    usage: sensor.disk_use_percent
+    free: sensor.system_monitor_disk_free
+    usage: sensor.system_monitor_disk_usage
     usage_color: '#4ade80'
-    use: sensor.disk_use
+    use: sensor.system_monitor_disk_use
 
 - type: 'custom:button-card'
   template:
@@ -31,7 +31,7 @@
   variables:
     e1_entity: sensor.current_version
     e1_name: Installed
-    e2_entity: sensor.ha_db
+    e2_entity: sensor.hass_db
     e2_name: Database
   view_layout:
     grid-row: span 2
@@ -42,20 +42,20 @@
   name: Disk
   icon: mdi:harddisk
   variables:
-    free: sensor.disk_free
-    usage: sensor.disk_use_percent
+    free: sensor.system_monitor_disk_free
+    usage: sensor.system_monitor_disk_usage
     usage_color: '#4ade80'
-    use: sensor.disk_use
+    use: sensor.system_monitor_disk_use
 # - type: 'custom:button-card'
 #   template: sys_button_card
 #   name: HA system
 #   icon: mdi:home-assistant
 #   variables:
-#     memory: sensor.memory_use_percent
+#     memory: sensor.system_monitor_memory_usage
 #     memory_color: '#4ade80'
-#     cpu: sensor.processor_use
+#     cpu: sensor.system_monitor_processor_use
 #     cpu_color: '#fb923c'
-#     sys_temp: sensor.processor_temperature
+#     sys_temp: sensor.system_monitor_processor_temperature
 #     sys_temp_color: '#38bdf8'
 #   view_layout:
 #     grid-column: span 2

@@ -301,7 +301,7 @@ grid_playstation:
 grid_homepods:
   card:
     type: custom:button-card
-    entity: media_player.mass_airplay_group
+    entity: media_player.mass_universal_airplay
     template:
       - base
       - icon_homepod
@@ -352,7 +352,7 @@ grid_homepods:
         ]]]
     card_mod:
       style: |
-        {%- if is_state('media_player.mass_airplay_group', 'off') %}
+        {%- if is_state('media_player.mass_universal_airplay', 'off') %}
         #circle {
           display: none !important;
         }
@@ -1141,6 +1141,7 @@ kodi_movie_cards:
             options:
               type: custom:button-card
               template: kodi_movie_card
+    - padding: ''
   card:
     type: custom:auto-entities
     filter: '[[filter]]'
@@ -1149,7 +1150,9 @@ kodi_movie_cards:
       type: 'custom:layout-card'
       layout_type: 'custom:grid-layout'
       layout:
+        grid-template-columns: repeat(auto-fit, minmax(max(300px, calc((100vw - 70px) / 6)), 1fr))
         margin: 0
+        padding: '[[padding]]'
         mediaquery:
           '(min-width: 1770px)':
             grid-template-columns: repeat(auto-fit, minmax(max(300px, calc((100vw - 70px) / 6)), 1fr))

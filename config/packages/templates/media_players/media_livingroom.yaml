@@ -9,18 +9,25 @@ media_player:
     unique_id: living_room_tv
     children:
       - media_player.atv
-      - media_player.kodi_atv
       - media_player.sony_bravia_tv
     active_child_template: >
       {% if is_state_attr('media_player.atv', 'app_id', 'org.xbmc.kodi-tvos')
       and not is_state('media_player.kodi_atv', 'off') %}
-      media_player.kodi_atv
+      media_player.atv
       {% elif is_state_attr('media_player.sony_bravia_tv', 'source', 'HDMI 2') %}
       media_player.atv
       {% else %}
       media_player.sony_bravia_tv
       {% endif %}
-
+    state_template: >
+      {% if is_state_attr('media_player.atv', 'app_id', 'org.xbmc.kodi-tvos')
+      and not is_state('media_player.kodi_atv', 'off') %}
+      on
+      {% elif is_state_attr('media_player.sony_bravia_tv', 'source', 'HDMI 2') %}
+      {{ states.media_player.atv.state }}
+      {% else %}
+      {{ states.media_player.sony_bravia_tv.state  }}
+      {% endif %}
     commands:
       turn_on:
         service: remote.turn_on

@@ -144,19 +144,19 @@ all_series_config:
     func: max
     duration: 30min
 series:
-  - entity: sensor.memory_use_percent
+  - entity: sensor.system_monitor_memory_usage
     name: MEMORY
     yaxis_id: chart
     show:
       extremas: true
       in_chart: true
-  - entity: sensor.processor_use
+  - entity: sensor.system_monitor_processor_use
     name: CPU
     yaxis_id: chart
     show:
       extremas: true
       in_chart: true
-  - entity: sensor.processor_temperature
+  - entity: sensor.system_monitor_processor_temperature
     name: TEMP
     color: '#FF0080'
     type: column
@@ -166,7 +166,7 @@ series:
       in_brush: false
       in_chart: false
       in_header: true
-  - entity: sensor.memory_use_percent
+  - entity: sensor.system_monitor_memory_usage
     color: '#FF0080'
     type: column
     float_precision: 0

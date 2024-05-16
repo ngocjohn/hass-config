@@ -21,16 +21,17 @@
     - atv-entity-picture
   entities:
     - media_player.living_room_tv
+    - media_player.kodi_atv
     - sensor.youtube_thumbnail
   state_action:
     - service: floorplan.image_set
       service_data:
-        image: >
-          > let kodi = states['media_player.living_room_tv'].attributes.entity_picture,
-                atv = states['sensor.youtube_thumbnail'].state;
-            if (states['media_player.living_room_tv'].attributes.active_child === "media_player.kodi_atv")
-            return kodi;
-          return atv;
+        image: |
+          >
+          let kodi = states['sensor.kodi_picture'].attributes.fanart,
+              atv = states['sensor.youtube_thumbnail'].state;
+          if (states['media_player.kodi_atv'].state === 'playing' || states['media_player.living_room_tv'].state === 'playing');
+          if (states['media_player.kodi_atv'].state !== "off") return kodi; return atv;
 
 - entity:
     - light.sony_tv_backlight
