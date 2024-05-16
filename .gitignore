@@ -21,3 +21,4 @@ config/www/*
 private_repo.sh
 secrets.yaml
 config/.gitignore
+config/automations.yaml
