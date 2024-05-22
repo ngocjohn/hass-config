@@ -35,10 +35,3 @@ panel_custom:
     url_path: 'config/automation/dashboard'
     config:
       ingress: core_configurator
-  - name: iframe-fullscreen
-    sidebar_icon: mdi:language-python
-    module_url: '/local/dashboard-resources/iframe-fullscreen.js'
-    sidebar_title: 'Appdaemon'
-    url_path: appdaemon
-    config:
-      url: !secret appdaemon_url

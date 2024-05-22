@@ -1,0 +1,14 @@
+pagination:
+  type: bullets
+  clickable: true
+roundLengths: true
+effect: coverflow
+coverflowEffect:
+  rotate: 80
+  depth: 300
+speed: 600
+spaceBetween: 20
+threshold: 7
+observer: false
+followFinger: true
+grabCursor: true
