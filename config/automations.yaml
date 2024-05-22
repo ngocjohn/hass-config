@@ -55,6 +55,7 @@
     - sensor.ngoc_keys_airtag
     attribute: Street
     id: ngockey
+    enabled: false
   condition: []
   action:
   - if:

@@ -635,11 +635,11 @@ homepod_alarm:
       milliseconds: 0
   - service: media_player.play_media
     data:
-      media_content_id: library://playlist/13
+      media_content_id: library://playlist/29
       media_content_type: music
     metadata:
-      title: Chill Mix
-      thumbnail: https://seed-mix-image.spotifycdn.com/v6/img/chill/246dkjvS1zLTtiykXe5h60/en/default
+      title: Deep remix
+      thumbnail: https://i.ytimg.com/vi/_u66_SqrqqA/hq720.jpg?sqp=-oaymwEXCKAGEMIDIAQqCwjVARCqCBh4INgESFo&rs=AMzJL3n3YKk4fP_Wn--WLgVQLKgX09YHtg
       media_class: playlist
       children_media_class:
       navigateIds:

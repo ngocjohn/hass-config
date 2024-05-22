@@ -13,5 +13,5 @@ lovelace:
       mode: yaml
       title: Test
       icon: mdi:test-tube
-      show_in_sidebar: true
+      show_in_sidebar: false
       filename: dashboards/ui-lovelace-test.yaml

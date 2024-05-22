@@ -200,8 +200,8 @@ browser_mod:
           filter:
             template: |
               {% for sensor in states.sensor -%}
-                {%- if sensor.entity_id | regex_match('sensor.portainer_pidocker_',ignorecase=False) -%}
-                  {%- set name = state_attr(sensor.entity_id, "friendly_name") | regex_replace(find='Portainer pidocker ', replace='') | capitalize -%}
+                {%- if sensor.entity_id | regex_match('sensor.docker_',ignorecase=False) -%}
+                  {%- set name = state_attr(sensor.entity_id, "friendly_name") | regex_replace(find='Docker ', replace='') | capitalize -%}
                   {{
                     { 'entity': sensor.entity_id,
                       'name': name,

@@ -27,8 +27,8 @@ browser_mod:
               state_color: true
             - entity: sensor.mbproserver_connection_type
               name: Connection
-            # - entity: sensor.mbpro_ip
-            #   name: IP
+            - entity: sensor.mbpro_uptime_usage
+              name: Uptime
             - type: custom:bar-card
               width: 55%
               height: 2em
@@ -47,12 +47,10 @@ browser_mod:
                   to: 100
               entity_row: true
               entities:
-                - entity: sensor.mbpro_cpu
+                - entity: sensor.mbpro_cpu_usage
                   name: Processor
-                - entity: sensor.mbpro_mem
+                - entity: sensor.mbpro_memory_usage
                   name: Memory
-                - entity: sensor.mbproserver_storage
-                  name: Storage
             - type: custom:hui-horizontal-stack-card
               cards:
                 - type: custom:button-card
@@ -76,12 +74,12 @@ browser_mod:
               action: call-service
               service: homeassistant.update_entity
               service_data:
-                entity_id: sensor.mbpro_cpu
+                entity_id: sensor.mbpro_cpu_usage
             entities:
-              - entity: sensor.mbpro_cpu
+              - entity: sensor.mbpro_cpu_usage
                 name: Processor
                 color: '#00bb33'
-              - entity: sensor.mbpro_mem
+              - entity: sensor.mbpro_memory_usage
                 name: Memory
                 show_state: false
                 color: '#2196f3'

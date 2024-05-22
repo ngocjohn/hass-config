@@ -22,38 +22,44 @@
   entities:
     - media_player.living_room_tv
     - media_player.kodi_atv
-    - sensor.youtube_thumbnail
   state_action:
     - service: floorplan.image_set
       service_data:
         image: |
           >
-          let kodi = states['sensor.kodi_picture'].attributes.fanart,
-              atv = states['sensor.youtube_thumbnail'].state;
-          if (states['media_player.kodi_atv'].state === 'playing' || states['media_player.living_room_tv'].state === 'playing');
-          if (states['media_player.kodi_atv'].state !== "off") return kodi; return atv;
+          let picture = states['sensor.youtube_thumbnail'].state;
+            if (states['media_player.kodi_atv'].state !== "off") {
+              picture = states['sensor.kodi_picture'].attributes.fanart;
+            }
+          return picture;
 
-- entity:
+- entities:
     - light.sony_tv_backlight
+    - sensor.dark_vibrant_color
+    - media_player.atv
+    - media_player.kodi_atv
   state_action:
     - service: floorplan.style_set
       service_data:
-        element: light.sony_tv_backlight
+        element: 'light.sony_tv_backlight'
         style: |
           >
-          if (entity.state !== "on")
+          let ligtState = states['light.sony_tv_backlight'].state;
+          if (ligtState !== "on")
               return "display: none;";
+
           let rgb0 = 0;
           let rgb1 = 0;
           let rgb2 = 0;
-          if (entity.attributes.rgb_color) {
-                rgb0 = entity.attributes.rgb_color[0];
-                rgb1 = entity.attributes.rgb_color[1];
-                rgb2 = entity.attributes.rgb_color[2];
-                }
-            if ( entity.state === "on" && states['media_player.atv'].state === 'playing') {
+
+          let vibrantState = states['sensor.dark_vibrant_color'].state;
+          let vibrantArray = vibrantState.split(','); // Split the state by commas
+          let rgbValue = `rgb(${vibrantArray[0]}, ${vibrantArray[1]}, ${vibrantArray[2]})`; // Merge it as rgb
+
+          let playing = states['media_player.atv'].state === 'playing' || states['media_player.kodi_atv'].state === 'playing';
+            if ( ligtState === "on" && playing) {
                 return `
-                  stroke: rgb(${rgb0}, ${rgb1}, ${rgb2});
+                  stroke: ${rgbValue};
                   fill: none;
                   stroke-width: 15;
                   filter: blur(5px) contrast(0.5);
@@ -61,15 +67,19 @@
                   stroke-dashoffset: 400;
                   animation: 5s ease-in-out 0s infinite strokeAnimation; */
                   `;
+                } else {
+                  return "display: none;";
                 }
+
     - service: floorplan.style_set
       service_data:
-        element: atv_idle_path
+        element: 'atv_idle_path'
         style: |
           >
-          if (entity.state !== "on")
+          let ligtState = states['light.sony_tv_backlight'].state;
+          if (ligtState !== "on")
               return "display: none;";
-          if (entity.state === "on" && states['media_player.atv'].state !== "playing") {
+          if (ligtState === "on" && states['media_player.atv'].state !== "playing") {
             return `
               stroke: "rgb(255, 0, 0)" !important;
               stroke-width: 5 !important;

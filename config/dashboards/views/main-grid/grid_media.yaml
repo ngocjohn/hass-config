@@ -14,21 +14,7 @@
     #Conditional Media
     - type: custom:swipe-card
       start_card: 1
-      parameters:
-        pagination:
-          type: bullets
-          clickable: true
-        roundLengths: true
-        effect: coverflow
-        coverflowEffect:
-          rotate: 80
-          depth: 300
-        speed: 600
-        spaceBetween: 20
-        threshold: 7
-        observer: false
-        followFinger: true
-        grabCursor: true
+      parameters: !include ../../shared/snippets/main-grid-swipe-params.yaml
       cards:
         - type: horizontal-stack
           cards:
@@ -207,17 +193,6 @@
               template:
                 - media
                 - icon_apple_tv
-            # Samsung TV
-            - &grid-shield-kodi
-              type: custom:button-card
-              entity: media_player.shield_android_tv
-              name: Kodi Shield
-              template:
-                - media
-                - icon_shieldtv_text
-              variables:
-                media_on: >
-                  [[[ return states['media_player.shield_android_tv'].attributes.source === 'Kodi'; ]]]
             - &grid-spotify-media
               type: custom:button-card
               entity: media_player.spotify
@@ -364,5 +339,4 @@
             columns: 2
             cards:
               - *grid-atv-kodi
-              - *grid-shield-kodi
               - *grid-spotify-media

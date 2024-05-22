@@ -3,6 +3,7 @@
 #                  HORIZONTAL                   #
 #                                               #
 #################################################
+
 - type: grid
   title: Movies
   view_layout:
@@ -10,39 +11,49 @@
     show:
       mediaquery: '(min-width: 1441px)'
   columns: 1
+  square: true
   cards:
-    - type: custom:auto-entities
-      filter:
-        include:
-          - entity_id: 'sensor.kodi_added_movie_*'
-            options:
-              type: custom:button-card
-              template:
-                - added_movies
-      card:
-        type: custom:swipe-card
-        parameters:
-          watchSlidesProgress: true
-          slidesPerView: 1
-          speed: 600
-          roundLengths: true
-          grabCursor: false
-          followFinger: false
-          pagination:
-            type: bullets
-            clickable: true
-            dynamicBullets: true
-            dynamicMainBullets: 1
-          effect: cube
-          cubeEffect:
-            shadow: false
-          autoplay:
-            delay: 15000
-            disableOnInteraction: false
-            pauseOnMouseEnter: true
-          keyboard:
-            enabled: true
+    - type: custom:added-movie-card
+      entity: sensor.kodi_all_movies
+      show_item_count: 10
 
-      card_param: cards
-      sort:
-        count: 10
+    # - type: custom:swipe-card
+    #   start_card: 1
+    #   parameters: !include ../../shared/snippets/main-grid-swipe-params.yaml
+    #   cards:
+
+    # - type: custom:auto-entities
+    #   filter:
+    #     include:
+    #       - entity_id: 'sensor.kodi_added_movie_*'
+    #         options:
+    #           type: custom:button-card
+    #           template:
+    #             - added_movies
+    #   card:
+    #     type: custom:swipe-card
+    #     parameters:
+    #       watchSlidesProgress: true
+    #       slidesPerView: 1
+    #       speed: 600
+    #       roundLengths: true
+    #       grabCursor: false
+    #       followFinger: false
+    #       pagination:
+    #         type: bullets
+    #         clickable: true
+    #         dynamicBullets: true
+    #         dynamicMainBullets: 1
+    #       effect: cube
+    #       cubeEffect:
+    #         shadow: false
+    #       autoplay:
+    #         delay: 15000
+    #         disableOnInteraction: false
+    #         pauseOnMouseEnter: true
+    #       keyboard:
+    #         enabled: true
+
+    #   card_param: cards
+    #   sort:
+    #     count: 10
