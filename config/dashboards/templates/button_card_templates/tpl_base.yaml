@@ -965,6 +965,8 @@ extra_styles:
             height: 100%;
             gap: 5px;
             place-content: center;
+            max-width: max-content !important;
+            place-self: flex-end !important;
           }
 
           .feels_like {
@@ -997,6 +999,7 @@ extra_styles:
             }
             #label {
               display: none !important;
+
             }
             #icon {
               width: 50% !important;
