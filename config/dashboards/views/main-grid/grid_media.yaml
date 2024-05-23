@@ -241,37 +241,40 @@
                 type: grid
                 columns: 1
                 cards:
-                  - type: custom:auto-entities
-                    filter:
-                      include:
-                        - entity_id: 'sensor.kodi_added_movie_*'
-                          options:
-                            type: custom:button-card
-                            template:
-                              - added_movies
-                    card:
-                      type: custom:swipe-card
-                      start_card: 1
-                      parameters:
-                        pagination:
-                          type: bullets
-                          dynamicBullets: true
-                          dynamicMainBullets: 1
-                        autoplay:
-                          delay: 7000
-                          disableOnInteraction: false
-                          reverseDirection: false
-                          pauseOnMouseEnter: true
-                        speed: 700
-                        slidesPerView: auto
-                        roundLengths: true
-                        grabCursor: false
-                        spaceBetween: 50
-                        direction: vertical
-                        autoHeight: true
-                        followFinger: true
-                        observer: true
-                    card_param: cards
+                  - type: custom:added-movie-card
+                    entity: sensor.kodi_all_movies
+                    show_item_count: 10
+                  # - type: custom:auto-entities
+                  #   filter:
+                  #     include:
+                  #       - entity_id: 'sensor.kodi_added_movie_*'
+                  #         options:
+                  #           type: custom:button-card
+                  #           template:
+                  #             - added_movies
+                  #   card:
+                  #     type: custom:swipe-card
+                  #     start_card: 1
+                  #     parameters:
+                  #       pagination:
+                  #         type: bullets
+                  #         dynamicBullets: true
+                  #         dynamicMainBullets: 1
+                  #       autoplay:
+                  #         delay: 7000
+                  #         disableOnInteraction: false
+                  #         reverseDirection: false
+                  #         pauseOnMouseEnter: true
+                  #       speed: 700
+                  #       slidesPerView: auto
+                  #       roundLengths: true
+                  #       grabCursor: false
+                  #       spaceBetween: 50
+                  #       direction: vertical
+                  #       autoHeight: true
+                  #       followFinger: true
+                  #       observer: true
+                  #   card_param: cards
 
             - type: conditional
               conditions:
