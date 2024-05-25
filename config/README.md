@@ -9,7 +9,7 @@ Hey there! Welcome to my little corner of the tech world! 👨‍💻
 
 This is where I store all the cool configurations for my Home Assistant system. Well, it's a mix of awesome codes and setups I discovered from the Home Assistant community. Seriously, those folks are wizards! 🧙‍♂️ As a bit of an internet newbie turned tech enthusiast, I stumbled upon the magic of IT, and this repository is my way of sharing the joy and knowledge I've gained along the way. Dive in, explore, and let the tech magic begin! ✨
 
-I frequently refresh my configuration files. My current Home Assistant version is <b>2024.5.3</b>. If you find something you like, don't forget to give my repository a ⭐️!
+I frequently refresh my configuration files. My current Home Assistant version is <b>2024.5.5</b>. If you find something you like, don't forget to give my repository a ⭐️!
 
 <video width="100%" controls loop muted>
   <source src="https://github-production-user-asset-6210df.s3.amazonaws.com/96962827/297112091-acc1a4db-b92e-4ab1-ac9d-df067d4ba4d1.mp4" type="video/mp4">
@@ -36,14 +36,14 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>34,291 </td>
+              <td>34,200 </td>
               <td>27</td>
-              <td>197</td>
-              <td>17</td>
+              <td>195</td>
+              <td>38</td>
               <td>52</td>
-              <td>32</td>
-              <td>1055</td>
-              <td>192</td>
+              <td>30</td>
+              <td>1034</td>
+              <td>164</td>
               <td>37</td>
           </tr>
       </tbody>
@@ -126,6 +126,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Bubble Card](https://github.com/Clooos/Bubble-Card)
 - [Button Card](https://github.com/custom-cards/button-card)
 - [Card Mod](https://github.com/thomasloven/lovelace-card-mod)
+- [Circle Menu Card](https://github.com/bhuebschen/circle-menu-card)
 - [Clock Weather Card](https://github.com/pkissling/clock-weather-card)
 - [Custom Brand Icons](https://github.com/elax46/custom-brand-icons)
 - [Custom Icons](https://github.com/Mariusthvdb/custom-icons)
@@ -149,7 +150,6 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Navbar Position](https://github.com/javawizard/ha-navbar-position)
 - [Paper Buttons Row](https://github.com/jcwillox/lovelace-paper-buttons-row)
 - [Platinum Weather Card](https://github.com/Makin-Things/platinum-weather-card)
-- [Plotly Graph Card](https://github.com/dbuezas/lovelace-plotly-graph-card)
 - [Purifier Card](https://github.com/denysdovhan/purifier-card)
 - [Restriction Card](https://github.com/iantrich/restriction-card)
 - [Roku Card](https://github.com/iantrich/roku-card)

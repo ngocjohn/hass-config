@@ -21,23 +21,25 @@
     - atv-entity-picture
   entities:
     - media_player.living_room_tv
-    - media_player.kodi_atv
+    # - media_player.kodi_atv
   state_action:
     - service: floorplan.image_set
       service_data:
         image: |
           >
-          let picture = states['sensor.youtube_thumbnail'].state;
-            if (states['media_player.kodi_atv'].state !== "off") {
-              picture = states['sensor.kodi_picture'].attributes.fanart;
-            }
-          return picture;
+          if (states['media_player.living_room_tv'].state === "off") {
+            return "/local/hafloor/transparent_idle.png";
+          } else if (states['media_player.living_room_tv'].state !== "off") {
+            let picture = states['sensor.youtube_thumbnail'].state;
+              if (states['media_player.kodi_atv'].state !== "off") {
+                picture = states['sensor.kodi_picture'].attributes.fanart;
+              }
+            return picture;
+          }
 
 - entities:
     - light.sony_tv_backlight
-    - sensor.dark_vibrant_color
-    - media_player.atv
-    - media_player.kodi_atv
+    # - media_player.kodi_atv
   state_action:
     - service: floorplan.style_set
       service_data:
@@ -87,10 +89,10 @@
               `;
           }
 
-- entity:
-    - media_player.bedroom_tv
-  double_tap_action: more-info
-  tap_action: !include ../shared/honeycomb/shield.yaml
-  state_action:
-    - service: floorplan.class_set
-      service_data: 'media-player-tv media-player-${entity.state}'
+# - entity:
+#     - media_player.bedroom_tv
+#   double_tap_action: more-info
+#   tap_action: !include ../shared/honeycomb/shield.yaml
+#   state_action:
+#     - service: floorplan.class_set
+#       service_data: 'media-player-tv media-player-${entity.state}'

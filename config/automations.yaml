@@ -613,13 +613,30 @@
     entity_id:
     - sensor.hass_config_stars
     id: public_stars
+  - platform: state
+    entity_id:
+    - sensor.current_version
+    id: ha_version
   condition: []
   action:
-  - service: notify.notify
-    data:
-      message: Congrats! U got another star! {{ states.sensor.hass_config_stars.state
-        }}⭐
-      title: Github Stars
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - ha_version
+      sequence:
+      - service: readme.generate
+        data: {}
+    - conditions:
+      - condition: trigger
+        id:
+        - public_stars
+      sequence:
+      - service: notify.notify
+        data:
+          message: Congrats! U got another star! {{ states.sensor.hass_config_stars.state
+            }}⭐
+          title: Github Stars
   initial_state: true
   mode: single
 - id: '1701556784590'
@@ -721,4 +738,298 @@
       properties:
       - title
       - art
+  mode: single
+- id: '1716484682108'
+  alias: Vacum Set Property
+  description: Set Roidmi Vacuum sensors value
+  trigger:
+  - platform: state
+    entity_id: vacuum.roidmi_eve
+  - platform: state
+    entity_id: input_boolean.vacuum_led_switch
+    id: led_switch
+  - platform: state
+    entity_id: input_boolean.vacuum_lidar_collision
+    id: lidar_collision
+  - platform: state
+    entity_id: input_boolean.vacuum_auto_boost
+    id: auto_boost
+  - platform: state
+    entity_id: input_number.vacuum_volume
+    id: volume
+  - platform: state
+    entity_id: input_boolean.vacuum_double_clean
+    id: double_clean
+  - platform: state
+    entity_id: input_boolean.vacuum_edge_sweep
+    id: edge_sweep
+  - platform: state
+    entity_id: input_select.vacuum_water_level
+    id: water_level
+  - platform: state
+    entity_id: input_boolean.vacuum_station_key
+    id: station_key
+  - platform: state
+    entity_id: input_boolean.vacuum_station_led
+    id: station_led
+  - platform: state
+    entity_id: input_boolean.vacuum_mute
+    id: mute
+  - platform: state
+    entity_id: input_select.vacuum_work_station_freq
+    id: work_station_freq
+  - platform: state
+    entity_id: input_select.vacuum_mode
+    id: vacuum_mode
+  - platform: state
+    entity_id: input_select.vacuum_sweep_type
+    id: vacuum_sweep_type
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: led_switch
+      sequence:
+      - service: xiaomi_miot.set_miot_property
+        data:
+          entity_id: vacuum.roidmi_eve
+          did: 558429891
+          siid: 8
+          piid: 22
+          value: '{{ 0 if is_state(''input_boolean.vacuum_led_switch'', ''off'') else
+            1 }}'
+    - conditions:
+      - condition: trigger
+        id: lidar_collision
+      sequence:
+      - service: xiaomi_miot.set_miot_property
+        data:
+          entity_id: vacuum.roidmi_eve
+          did: 558429891
+          siid: 8
+          piid: 23
+          value: '{{ 0 if is_state(''input_boolean.vacuum_lidar_collision'', ''off'')
+            else 1 }}'
+    - conditions:
+      - condition: trigger
+        id: auto_boost
+      sequence:
+      - service: xiaomi_miot.set_miot_property
+        data:
+          entity_id: vacuum.roidmi_eve
+          did: 558429891
+          siid: 8
+          piid: 9
+          value: '{{ 0 if is_state(''input_boolean.vacuum_auto_boost'', ''off'') else
+            1 }}'
+    - conditions:
+      - condition: trigger
+        id: volume
+      sequence:
+      - service: xiaomi_miot.set_miot_property
+        data:
+          entity_id: vacuum.roidmi_eve
+          did: 558429891
+          siid: 9
+          piid: 1
+          value: '{{states(''input_number.vacuum_volume'')|round(0)}}'
+    - conditions:
+      - condition: trigger
+        id: double_clean
+      sequence:
+      - service: xiaomi_miot.set_miot_property
+        data:
+          entity_id: vacuum.roidmi_eve
+          did: 558429891
+          siid: 8
+          piid: 20
+          value: '{{ 0 if is_state(''input_boolean.vacuum_double_clean'', ''off'')
+            else 1 }}'
+    - conditions:
+      - condition: trigger
+        id: edge_sweep
+      sequence:
+      - service: xiaomi_miot.set_miot_property
+        data:
+          entity_id: vacuum.roidmi_eve
+          did: 558429891
+          siid: 13
+          piid: 8
+          value: '{{ 0 if is_state(''input_boolean.vacuum_edge_sweep'', ''off'') else
+            1 }}'
+    - conditions:
+      - condition: trigger
+        id: water_level
+      sequence:
+      - service: xiaomi_miot.set_miot_property
+        data:
+          entity_id: vacuum.roidmi_eve
+          did: 558429891
+          siid: 8
+          piid: 11
+          value: "{%- if is_state(\"input_select.vacuum_water_level\", \"No water\")
+            -%}\n  0\n{%- elif is_state(\"input_select.vacuum_water_level\", \"Small\")
+            -%}\n  1\n{%- elif is_state(\"input_select.vacuum_water_level\", \"Middle\")
+            -%}\n  2\n{%- elif is_state(\"input_select.vacuum_water_level\", \"MAX\")
+            -%}\n  3\n{% else %} {% endif %}\n"
+    - conditions:
+      - condition: trigger
+        id: station_key
+      sequence:
+      - service: xiaomi_miot.set_miot_property
+        data:
+          entity_id: vacuum.roidmi_eve
+          did: 558429891
+          siid: 8
+          piid: 24
+          value: '{{ 0 if is_state(''input_boolean.vacuum_station_key'', ''off'')
+            else 1 }}'
+    - conditions:
+      - condition: trigger
+        id: station_led
+      sequence:
+      - service: xiaomi_miot.set_miot_property
+        data:
+          entity_id: vacuum.roidmi_eve
+          did: 558429891
+          siid: 8
+          piid: 25
+          value: '{{ 0 if is_state(''input_boolean.vacuum_station_led'', ''off'')
+            else 1 }}'
+    - conditions:
+      - condition: trigger
+        id: mute
+      sequence:
+      - service: xiaomi_miot.set_miot_property
+        data:
+          entity_id: vacuum.roidmi_eve
+          did: 558429891
+          siid: 9
+          piid: 2
+          value: '{{ 0 if is_state(''input_boolean.vacuum_mute'', ''off'') else 1
+            }}'
+    - conditions:
+      - condition: trigger
+        id: work_station_freq
+      sequence:
+      - service: xiaomi_miot.set_miot_property
+        data:
+          entity_id: vacuum.roidmi_eve
+          did: 558429891
+          siid: 8
+          piid: 2
+          value: "{%- if is_state(\"input_select.vacuum_work_station_freq\", \"Not
+            to throw away\") -%}\n  0\n{%- elif is_state(\"input_select.vacuum_work_station_freq\",
+            \"Every time\") -%}\n  1\n{%- elif is_state(\"input_select.vacuum_work_station_freq\",
+            \"Every second\") -%}\n  2\n{%- elif is_state(\"input_select.vacuum_work_station_freq\",
+            \"Every third\") -%}\n  3\n{% else %} {% endif %}\n"
+    - conditions:
+      - condition: trigger
+        id: vacuum_mode
+      sequence:
+      - service: xiaomi_miot.set_miot_property
+        data:
+          entity_id: vacuum.roidmi_eve
+          did: 558429891
+          siid: 2
+          piid: 4
+          value: "{%- if is_state(\"input_select.vacuum_mode\", \"Sweep\") -%}\n  0\n{%-
+            elif is_state(\"input_select.vacuum_mode\", \"Silent\") -%}\n  1\n{%-
+            elif is_state(\"input_select.vacuum_mode\", \"Basic\") -%}\n  2\n{%- elif
+            is_state(\"input_select.vacuum_mode\", \"Strong\") -%}\n  3\n{%- elif
+            is_state(\"input_select.vacuum_mode\", \"Full Speed\") -%}\n  4\n{% else
+            %} {% endif %}\n"
+    - conditions:
+      - condition: trigger
+        id: vacuum_sweep_type
+      sequence:
+      - service: xiaomi_miot.set_miot_property
+        data:
+          entity_id: vacuum.roidmi_eve
+          did: 558429891
+          siid: 2
+          piid: 8
+          value: "{%- if is_state(\"input_select.vacuum_sweep_type\", \"Sweep\") -%}\n
+            \ 0\n{%- elif is_state(\"input_select.vacuum_sweep_type\", \"Mop\") -%}\n
+            \ 1\n{%- elif is_state(\"input_select.vacuum_sweep_type\", \"Mop And Sweep\")
+            -%}\n  2\n{% else %} {% endif %}\n"
+  mode: single
+- id: '1716484803294'
+  alias: Vacuum Get Property
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: vacuum.roidmi_eve
+  condition: []
+  action:
+  - service: "{% if is_state_attr('vacuum.roidmi_eve', 'custom.led_switch', 1) %}\n
+      \ input_boolean.turn_on\n{% else %}\n  input_boolean.turn_off\n{% endif %}\n"
+    data:
+      entity_id: input_boolean.vacuum_led_switch
+  - service: "{% if is_state_attr('vacuum.roidmi_eve', 'custom.lidar_collision', 1)
+      %}\n  input_boolean.turn_on\n{% else %}\n  input_boolean.turn_off\n{% endif
+      %}\n"
+    data:
+      entity_id: input_boolean.vacuum_lidar_collision
+  - service: "{% if is_state_attr('vacuum.roidmi_eve', 'custom.auto_boost', 1) %}\n
+      \ input_boolean.turn_on\n{% else %}\n  input_boolean.turn_off\n{% endif %}\n"
+    data:
+      entity_id: input_boolean.vacuum_auto_boost
+  - service: input_number.set_value
+    entity_id: input_number.vacuum_volume
+    data_template:
+      value: '{{ state_attr("vacuum.roidmi_eve","speaker.volume") }}'
+  - service: "{% if is_state_attr('vacuum.roidmi_eve', 'custom.double_clean', 1) %}\n
+      \ input_boolean.turn_on\n{% else %}\n  input_boolean.turn_off\n{% endif %}\n"
+    data:
+      entity_id: input_boolean.vacuum_double_clean
+  - service: "{% if is_state_attr('vacuum.roidmi_eve', 'map.path_type', 1) %}\n  input_boolean.turn_on\n{%
+      else %}\n  input_boolean.turn_off\n{% endif %}\n"
+    data:
+      entity_id: input_boolean.vacuum_edge_sweep
+  - service: input_select.select_option
+    entity_id: input_select.vacuum_water_level
+    data_template:
+      option: "{%- if is_state_attr('vacuum.roidmi_eve','custom.water_level',0) -%}\n
+        \ No water\n{%- elif is_state_attr('vacuum.roidmi_eve','custom.water_level',1)
+        -%}\n  Small\n{%- elif is_state_attr('vacuum.roidmi_eve','custom.water_level',2)
+        -%}\n  Middle\n{%- elif is_state_attr('vacuum.roidmi_eve','custom.water_level',3)
+        -%}\n  MAX\n{%- else -%} {%- endif -%}\n"
+  - service: "{% if is_state_attr('vacuum.roidmi_eve', 'custom.station_key', 1) %}\n
+      \ input_boolean.turn_on\n{% else %}\n  input_boolean.turn_off\n{% endif %}\n"
+    data:
+      entity_id: input_boolean.vacuum_station_key
+  - service: "{% if is_state_attr('vacuum.roidmi_eve', 'custom.station_led', 1) %}\n
+      \ input_boolean.turn_on\n{% else %}\n  input_boolean.turn_off\n{% endif %}\n"
+    data:
+      entity_id: input_boolean.vacuum_station_led
+  - service: "{% if is_state_attr('vacuum.roidmi_eve', 'speaker.mute', 1) %}\n  input_boolean.turn_on\n{%
+      else %}\n  input_boolean.turn_off\n{% endif %}\n"
+    data:
+      entity_id: input_boolean.vacuum_mute
+  - service: input_select.select_option
+    entity_id: input_select.vacuum_work_station_freq
+    data_template:
+      option: "{%- if is_state_attr('vacuum.roidmi_eve','custom.work_station_freq',0)
+        -%}\n  Not to throw away\n{%- elif is_state_attr('vacuum.roidmi_eve','custom.work_station_freq',1)
+        -%}\n  Every time\n{%- elif is_state_attr('vacuum.roidmi_eve','custom.work_station_freq',2)
+        -%}\n  Every second\n{%- elif is_state_attr('vacuum.roidmi_eve','custom.work_station_freq',3)
+        -%}\n  Every third\n{%- else -%} {%- endif -%}\n"
+  - service: input_select.select_option
+    entity_id: input_select.vacuum_mode
+    data_template:
+      option: "{%- if is_state_attr('vacuum.roidmi_eve','vacuum.mode',0) -%}\n  Sweep\n{%-
+        elif is_state_attr('vacuum.roidmi_eve','vacuum.mode',1) -%}\n  Silent\n{%-
+        elif is_state_attr('vacuum.roidmi_eve','vacuum.mode',2) -%}\n  Basic\n{%-
+        elif is_state_attr('vacuum.roidmi_eve','vacuum.mode',3) -%}\n  Strong\n{%-
+        elif is_state_attr('vacuum.roidmi_eve','vacuum.mode',4) -%}\n  Full Speed\n{%-
+        else -%} {%- endif -%}\n"
+  - service: input_select.select_option
+    entity_id: input_select.vacuum_sweep_type
+    data_template:
+      option: "{%- if is_state_attr('vacuum.roidmi_eve','vacuum.sweep_type',0) -%}\n
+        \ Sweep\n{%- elif is_state_attr('vacuum.roidmi_eve','vacuum.sweep_type',1)
+        -%}\n  Mop\n{%- elif is_state_attr('vacuum.roidmi_eve','vacuum.sweep_type',2)
+        -%}\n  Mop And Sweep\n{%- else -%} {%- endif -%}\n"
   mode: single
