@@ -220,8 +220,7 @@ g#entities path#media_player\.bedroom_tv {
 	cursor: url(/local/img/svg/atv-remote.svg), wait !important;
 }
 
-g#icons path#icon-front-door,
-g#icons g#icon-phone-rotate {
+g#icons path#icon-front-door {
 	cursor: pointer !important;
 }
 

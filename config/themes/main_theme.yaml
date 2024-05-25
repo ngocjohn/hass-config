@@ -40,17 +40,17 @@ Main Theme:
       text-medium-color: '#80828A'
 
       # Text Fields an Dropdown
-      # mdc-text-field-fill-color: 'var(--background-color)'
+      # mdc-text-field-fill-color: 'var(--background-color-1)'
       # mdc-text-field-ink-color: 'var(--text-color)'
-      # mdc-select-fill-color: 'var(--background-color)'
+      # mdc-select-fill-color: 'var(--background-color-1)'
       # mdc-text-field-label-ink-color: 'var(--secondary-text-color)'
-      # input-fill-color: 'var(--background-color)'
+      # input-fill-color: 'var(--background-color-1)'
       # input-ink-color: 'var(--text-color)'
       # input-label-ink-color: 'var(--text-color)'
-      # input-disabled-fill-color: 'var(--background-color)'
+      # input-disabled-fill-color: 'var(--background-color-1)'
       # input-disabled-ink-color: 'var(--disabled-text-color)'
       # input-disabled-label-ink-color: 'var(--disabled-text-color)'
-      # input-idle-line-color: 'var(--background-color)'
+      # input-idle-line-color: 'var(--background-color-1)'
       # input-dropdown-icon-color: 'var(--secondary-text-color)'
       # input-hover-line-color: 'var(--primary-color)'
       # code-editor-background-color: '#222c40'
@@ -67,8 +67,9 @@ Main Theme:
       # Card
 
       # Background
-      background-color: '#000000'
-      primary-background-color: 'var(--background-color)'
+      background-color-1: '#000000'
+      # primary-background-color: 'var(--background-color-1)'
+      primary-background-color: '#000000'
       background-color-2: '#FF9800'
       rgb-header-background: '255, 255, 255'
       app-header-background-color: rgba(0,0,0,1)
@@ -91,14 +92,14 @@ Main Theme:
       paper-item-icon-active-color: 'var(--accent-color)'
 
       # Sidebar
-      sidebar-background-color: 'var(--background-color)'
+      sidebar-background-color: 'var(--background-color-1)'
       sidebar-icon-color: '#9e9e9e80'
       scrollbar-thumb-color: '#303030'
       sidebar-selected-icon-color: 'var(--accent-color)'
       sidebar-selected-text-color: 'var(--text-color)'
       paper-listbox-background-color: 'var(--sidebar-background-color)'
 
-      divider-color: 'var(--background-color)'
+      divider-color: 'var(--background-color-1)'
       # light-primary-color: 'var(--ha-card-background)'
 
       # # Sliders
@@ -121,10 +122,10 @@ Main Theme:
       # mdc-radio-unchecked-color: var(--primary-text-color)
 
       # Tables
-      table-row-background-color: 'var(--background-color)'
+      table-row-background-color: 'var(--background-color-1)'
       table-row-alternative-background-color: 'var(--ha-card-background)'
       # Badges
-      label-badge-background-color: 'var(--background-color)'
+      label-badge-background-color: 'var(--background-color-1)'
       label-badge-text-color: 'var(--text-primary-color)'
       label-badge-red: 'rgba(255,88,88,1)'
       label-badge-blue: 'rgba(26,137,245,1)'

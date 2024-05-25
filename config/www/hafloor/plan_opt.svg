@@ -249,7 +249,7 @@
 			<circle id="path2781" cx="894.19" cy="399.55" r="1" />
 			<circle id="circle2816" cx="894.19" cy="399.55" r="1" />
 		</g>
-		<g id="binary_sensor.motion_sensor_bathroom" transform="rotate(10 1099.7 852.68)">
+		<g id="binary_sensor.motion_sensor_bathroom_occupancy" transform="rotate(10 1099.7 852.68)">
 			<circle id="circle3192" cx="992.16" cy="582.92" r="1" />
 			<circle id="circle3194" cx="992.16" cy="582.92" r="1" />
 		</g>
