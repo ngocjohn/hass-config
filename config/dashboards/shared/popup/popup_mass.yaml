@@ -32,4 +32,8 @@ browser_mod:
           #       return '195%';
           #     else return '16:9';
           #   ]]]
-          url: /api/hassio_ingress/DxjwvCHHhrKMJQKVZKPsf-69nPQW-hrXk4iJ09PqKgQ/
+          url: >
+            [[[
+             let hassurl = hass.hassUrl();
+             return `${hassurl}api/hassio_ingress/DxjwvCHHhrKMJQKVZKPsf-69nPQW-hrXk4iJ09PqKgQ/`
+            ]]]

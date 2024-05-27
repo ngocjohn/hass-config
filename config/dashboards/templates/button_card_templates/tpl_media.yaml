@@ -154,6 +154,8 @@ conditional_media:
             return data === undefined || Math.floor(Math.random() * (data.length - 1)) + 1;
         }
       ]]]
+    tilt_enable: >
+      [[[ return false; ]]]
   state_display: >
     [[[
       let horizontalStack = this.getRootNode().host,
@@ -182,7 +184,7 @@ conditional_media:
               : title === undefined && artist !== undefined
                   ? artist
                   : title !== undefined && artist !== undefined
-                      ? `<div id="title" style="font-weight: 800; text-transform: uppercase; font-family: Raleway; letter-spacing: 0.07vw;">${title}</div><span style="font-size: 0.90em; color: #efefefd1; font-family: Raleway; text-transform: capitalize; letter-spacing: 0.03vw;">${artist}</span>`
+                      ? `<div class="title-wrapper"><div id="title" style="font-weight: 800; text-transform: uppercase; font-family: Raleway; letter-spacing: 0.07vw;">${title}</div></div><span style="font-size: 0.90em; color: #efefefd1; font-family: Raleway; text-transform: capitalize; letter-spacing: 0.03vw;">${artist}</span>`
                       : variables.translate_idle;
           function marquee() {
               let state = elt.getElementById("title"),
@@ -201,7 +203,7 @@ conditional_media:
                           state.classList.remove("marquee");
                       }
                       else if (r && s.contentRect.width >= c.contentRect.width) {
-                          state.innerHTML = `${title} ${spacer} ${title} &nbsp;`;
+                          state.innerHTML = ` ${title} ${spacer} ${title}`;
                           state.classList.add("marquee");
                       }
                   });
@@ -212,18 +214,7 @@ conditional_media:
           return output;
       }
     ]]]
-  # tap_action:
-  #   action: call-service
-  #   service: media_player.media_play_pause
-  #   service_data:
-  #     entity_id: >
-  #       [[[ return variables.entity_id; ]]]
-  # double_tap_action:
-  #   action: call-service
-  #   service: media_player.media_next_track
-  #   service_data:
-  #     entity_id: >
-  #       [[[ return variables.entity_id; ]]]
+
   styles:
     grid:
       - gap: 0.65%
@@ -269,6 +260,28 @@ conditional_media:
               }
             }
           ]]]
+      - --speed: >
+          [[[
+            setTimeout(() => {
+              let elt = this.shadowRoot.querySelector('#title'),
+                  parrentEl = elt.parentElement;
+              if (elt && parrentEl) {
+                  let parentWidth = parrentEl.offsetWidth,
+                      titleWidth = elt.scrollWidth;
+                  // let speed = Math.round((titleLength / containerWidth) * 6);
+                  if (titleWidth > parentWidth) {
+                    let speed = Math.round((titleWidth / parentWidth) * 5);
+                    parrentEl.classList.add('mask');
+                    elt.style.setProperty('--speed', `${speed}s`);
+                  } else {
+                    elt.style.setProperty('--speed', '0s');
+                    parrentEl.classList.remove('mask');
+                  }
+                };
+              }, 300);
+            return '0s';
+          ]]]
+
       - background-image: &media_background_image >
           [[[
             if (entity) {
@@ -317,21 +330,25 @@ conditional_media:
       blur_overlay:
         - display: block
         - position: absolute
-        - width: 122%
-        - height: 101%
-        - filter: var(--blur-intensity)
-        - clip-path: >
-            [[[
-              if (entity) {
-                if (variables.is_youtube) {
-                    return `inset(74% 7% 3.45% 9% round 0 0 calc(var(--button-card-border-radius) / 2) calc(var(--button-card-border-radius) / 2))`;
-                } else {
-                  return `inset(80% 3.45% 3.45% 5.45% round 0 0 calc(var(--button-card-border-radius) / 2) calc(var(--button-card-border-radius) / 2))`;
-                }
-              }
-            ]]]
-        - background: *media_background
-        - background-image: *media_background_image
+        - width: 100%
+        - bottom: 0
+        - backdrop-filter: blur(0.3em) brightness(0.7)
+        - border-radius: 0% 0% calc(var(--button-card-border-radius) / 2) calc(var(--button-card-border-radius) / 2)
+        # - width: 122%
+        # - height: 101%
+        # - filter: var(--blur-intensity)
+        # - clip-path: >
+        #     [[[
+        #       if (entity) {
+        #         if (variables.is_youtube) {
+        #             return `inset(74% 7% 3.45% 9% round 0 0 calc(var(--button-card-border-radius) / 2) calc(var(--button-card-border-radius) / 2))`;
+        #         } else {
+        #           return `inset(80% 3.45% 3.45% 5.45% round 0 0 calc(var(--button-card-border-radius) / 2) calc(var(--button-card-border-radius) / 2))`;
+        #         }
+        #       }
+        #     ]]]
+        # - background: *media_background
+        # - background-image: *media_background_image
         # - left: -10%
         # - bottom: -5%
   custom_fields:
@@ -341,11 +358,14 @@ conditional_media:
             let elt = this.shadowRoot,
                 card = elt.getElementById('card'),
                 container = elt.getElementById('container'),
+                state = elt.getElementById('state'),
                 blur_overlay = elt.getElementById('blur_overlay');
             if (elt && card && container && blur_overlay) {
                 card.insertBefore(blur_overlay, container);
+                let height = state.offsetHeight + 5;
+                blur_overlay.style.height = `${height}px`;
             }
-          }, 0);
+          }, 100);
         return ' ';
       ]]]
     #################################################
@@ -467,6 +487,7 @@ conditional_media_shows:
                 ? 'none'
                 : '1px 1px 5px rgba(18, 22, 23, 0.9)';
           ]]]
+
     custom_fields:
       icon:
         - width: 30%
@@ -841,9 +862,8 @@ progress_bar:
       progress:
         - background-color: var(--progress-bar-background-color)
         - position: absolute
-        - left: 0%
         - top: unset
-        - bottom: 0px
+
         # - top: >
         #     [[[
         #       if (entity) {
@@ -856,12 +876,12 @@ progress_bar:
         #     ]]]
         - height: var(--progress-bar-height)
         - width: 100%
+
       bar:
         - background-color: var(--progress-bar-color)
         - position: absolute
         - left: 0%
         - top: unset
-        - bottom: 0px
         # - top: >
         #     [[[
         #       if (entity) {
@@ -911,11 +931,16 @@ progress_bar:
             let elt = this.shadowRoot,
                 card = elt.getElementById('card'),
                 container = elt.getElementById('container'),
+                state = elt.getElementById('state'),
+                bar = elt.getElementById('bar'),
                 progress = elt.getElementById('progress');
             if (elt && card && container && progress) {
                 card.insertBefore(progress, container);
+                let height = state.offsetHeight + 5;
+                bar.style.bottom = `${height}px`;
+                progress.style.bottom = `${height}px`;
             }
-          }, 0);
+          }, 100);
         return ' ';}
       ]]]
   #################################################
@@ -1767,6 +1792,8 @@ tpl_spotify:
   template:
     - base
   variables:
+    hover_enable: >
+      [[[ return false ]]]
     country_code: ''
     playlist_type: ''
   show_state: false
