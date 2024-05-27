@@ -32,6 +32,8 @@ chips:
       ]]]
     gle: >
       [[[ return states['sensor.gle'].state; ]]]
+    hover_enable: >
+      [[[ return true ]]]
   # size: 2vw
   show_icon: true
   show_state: true

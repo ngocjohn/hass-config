@@ -29,7 +29,7 @@ template:
       - name: conditional_media
         state: >-
           {% set recently_added = 'Recently added' %}
-          {% set paused_timeout_minutes = 0.5 %}
+          {% set paused_timeout_minutes = 2 %}
           {% set media_players = [
             states.media_player.spotify,
             states.sensor.ps5_activity,

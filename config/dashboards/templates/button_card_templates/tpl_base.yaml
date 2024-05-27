@@ -21,6 +21,8 @@ base:
       [[[ return !entity || entity.attributes.entity_picture; ]]]
     timeout: >
       [[[ return !entity || Date.now() - Date.parse(entity.last_changed); ]]]
+    hover_enable: >
+      [[[ return true ]]]
   triggers_update: all
   aspect_ratio: 1/1
   show_state: true
@@ -232,7 +234,7 @@ extra_styles:
           --card-portrait: 1.8;
           --card-phone: 3.8;
         }
-        ${(this._config.template.includes('light') || this._config.template.includes('mediaplayer') || this._config.template.includes('cover')) ? `
+        ${/(light|mediaplayer|cover)/.test(this._config.template) ? `
          /* * * * * * * * * * * * * * * * * *
           *                                 *
           *          CIRCLE SLIDER          *
@@ -300,6 +302,9 @@ extra_styles:
         *              BASE               *
         *                                 *
         * * * * * * * * * * * * * * * * * */
+        :host {
+          --tablet-primary-color: #00acc1;
+        }
         #container {
           text-align: left !important;
           z-index: 1;
@@ -308,6 +313,16 @@ extra_styles:
           padding: 10.9% 9.9% 8.9% 10.9%;
           cursor: url("data:image/svg+xml,%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='24px' height='24px' viewBox='0 0 512 512' style='enable-background:new 0 0 512.011 512.011;' xml:space='preserve'%3E %3Cpath fill='SteelBlue' stroke='white' stroke-width='10' d='M434.215,344.467L92.881,3.134c-4.16-4.171-10.914-4.179-15.085-0.019  c-2.011,2.006-3.139,4.731-3.134,7.571v490.667c0.003,4.382,2.685,8.316,6.763,9.92c4.081,1.603,8.727,0.545,11.712-2.667  l135.509-145.92h198.016c5.891,0.011,10.675-4.757,10.686-10.648C437.353,349.198,436.226,346.473,434.215,344.467z'/%3E %3C/svg%3E"), pointer;
         }
+        ${ variables.hover_enable
+          ?
+            `#card:hover {
+              box-shadow: inset 0 0 30px var(--tablet-primary-color) !important;
+              border: 1px solid var(--tablet-primary-color) !important;
+              ${!variables.state_on ? 'color: unset !important;' :''}
+            }`
+          : ''
+        }
+
         #state::first-letter {
           text-transform: uppercase;
         }
@@ -403,7 +418,7 @@ extra_styles:
               background-color: rgba(0,0,0,0.9);
             }
         `:''}
-        ${(this._config.template.includes('conditional_media') || this._config.template.includes('conditional_media_shows') || this._config.template.includes('kodi_lib_base') || this._config.template.includes('added_movies')) ? `
+        ${/(conditional_media|conditional_media_shows|kodi_lib_base|added_movies)/.test(this._config.template) ? `
          /* * * * * * * * * * * * * * * * * *
           *                                 *
           *              MEDIA              *
@@ -441,15 +456,23 @@ extra_styles:
               display: none;
             }
           }
+          .title-wrapper {
+            display: block;
+            width: 100%;
+          }
+          .mask {
+            mask-image: linear-gradient(to right, transparent 0%, black 1rem, black 90%, transparent 100%);
+          }
           .marquee {
             animation: marquee var(--speed) linear infinite;
+            animation-delay: 2.5s;
           }
           @keyframes marquee {
             from {
               transform: translateX(0%);
             }
             to {
-              transform: translateX(-80%);
+              transform: translateX(-180%);
             }
           }
           /* phone */
@@ -842,7 +865,7 @@ extra_styles:
             }
           }
         `:''}
-        ${(this._config.template.includes('icon_name') || this._config.template.includes('icon_only')) ? `
+        ${/(icon_name|icon_only)/.test(this._config.template) ? `
           #card {
             background: rgba(255, 255, 255, 0.06);
           }

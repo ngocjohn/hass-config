@@ -268,6 +268,7 @@ tablet_orig:
               top: 95%;
             }
             .swiper-container {
+              overflow-x: clip !important;
               margin: -1.5vw !important;
               padding: 1.5vw !important;
               margin-bottom: -2.5vw !important;
@@ -294,6 +295,7 @@ tablet_orig:
                 height: 100%;
               }
               .swiper-container {
+                overflow-x: clip !important;
                 margin: -1.5vw !important;
                 padding: 1.5vw !important;
                 margin-bottom: -1vw !important;

@@ -613,9 +613,15 @@
     entity_id:
     - sensor.hass_config_stars
     id: public_stars
-  - platform: state
-    entity_id:
-    - sensor.current_version
+    enabled: false
+  - platform: template
+    value_template: '{% set haVersion = states.sensor.home_assistant_versions.state
+      %}
+
+      {% set currentVerson = states.sensor.current_version.state %}
+
+
+      {{ haVersion == currentVerson }}'
     id: ha_version
   condition: []
   action:
@@ -624,6 +630,7 @@
       - condition: trigger
         id:
         - ha_version
+        enabled: true
       sequence:
       - service: readme.generate
         data: {}

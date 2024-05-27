@@ -25,6 +25,8 @@ footer:
           parallax: '10px'
         };
       ]]]
+    hover_enable: >
+      [[[ return true ]]]
   size: 2vw
   show_icon: false
   color: '#9da0a2'

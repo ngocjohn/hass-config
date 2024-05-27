@@ -193,6 +193,7 @@ ________________________________________Common Base 3 (Do Not Use): &common-card
               bottom: 0px !important;
             }
             .swiper-container {
+              overflow-x: clip !important;
               margin: -1.5vw !important;
               padding: 1.5vw !important;
               margin-bottom: -2.5vw !important;
@@ -216,6 +217,7 @@ ________________________________________Common Base 3 (Do Not Use): &common-card
           hui-horizontal-stack-card$hui-grid-card$swipe-card$:
             .: |
               .swiper-container {
+                overflow-x: clip !important;
                 margin: -1.5vw !important;
                 padding: 1.5vw !important;
                 margin-bottom: -1vw !important;
