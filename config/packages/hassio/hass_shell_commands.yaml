@@ -10,4 +10,3 @@ shell_command:
   sleep_mbpro: !secret sleep_mbpro
   lock_mbpro: !secret lock_mbpro
   refresh_lovelace: !secret refresh_lovelace
-  gitpush: !secret gitpush

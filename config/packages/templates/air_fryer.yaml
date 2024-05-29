@@ -1,0 +1,28 @@
+homeassistant:
+  customize:
+    sensor.fryer_left_time:
+      friendly_name: 'Left time'
+      icon: 'mdi:av-timer'
+    sensor.fryer_target_time:
+      friendly_name: 'Target time'
+      icon: 'mdi:timer'
+    sensor.fryer_target_temp:
+      friendly_name: 'Target temperature'
+      icon: 'mdi:thermometer-plus'
+    sensor.fryer_status:
+      friendly_name: 'Status'
+      icon: 'mdi:chef-hat'
+template:
+  - sensor:
+      - name: 'fryer_status'
+        state: >
+          {{ state_attr('sensor.careli_maf02_a94f_air_fryer','air_fryer.status_desc') }}
+      - name: 'fryer_target_time'
+        state: >
+          {{ state_attr('sensor.careli_maf02_a94f_air_fryer','air_fryer.target_time') }}
+      - name: 'fryer_target_temp'
+        state: >
+          {{ state_attr('sensor.careli_maf02_a94f_air_fryer','air_fryer.target_temperature') }}
+      - name: 'fryer_left_time'
+        state: >
+          {{ state_attr('sensor.careli_maf02_a94f_air_fryer','air_fryer.left_time') }}
