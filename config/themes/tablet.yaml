@@ -132,7 +132,7 @@ tablet:
             font-family: Raleway !important;
             letter-spacing: 0.05em !important;
             color: rgba(255, 255, 255, 0.7) !important;
-            padding: 1vw 0 1.2vw 0.5vw !important;
+            padding: 1vw 0 1.2vw 0.2vw !important;
             width: 100%;
           }
           /* secondmonitor */

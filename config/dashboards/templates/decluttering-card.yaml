@@ -56,6 +56,7 @@ grid_office:
       - macbook
       - server
       - icon_office
+      - change_grid_title
       # - light
     variables:
       state_on: >
@@ -68,6 +69,8 @@ grid_office:
       server: binary_sensor.mbproserver_active
       macbook: switch.macbook
       active: sensor.office_active
+      tempsensor: sensor.office_temp_humid_temperature
+      humidsensor: sensor.office_temp_humid_humidity
   # LIVING ROOM GRID
 grid_living_room:
   card:
@@ -223,6 +226,7 @@ grid_alarm:
     template:
       - alarm
       - icon_alarm
+
   # FRONT DOOR
 grid_front_door:
   card:
