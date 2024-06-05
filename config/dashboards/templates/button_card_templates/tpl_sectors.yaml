@@ -1108,28 +1108,93 @@ circle_state:
   custom_fields:
     circle: >
       [[[
-        if (entity.state === 'open' || entity.state === 'on') {
-          let time = c => {
-              let s = (c/1e3),
-                  m = (c/6e4),
-                  h = (c/36e5),
-                  d = (c/864e5);
-              return s < 60
-                  ? parseInt(s) + 's'
-                  : m < 60 ? parseInt(m) + 'm'
-                  : h < 24 ? parseInt(h) + 'h'
-                  : parseInt(d) + 'd';
-          };
-          let last_changed = states[variables.retain] == null || states[variables.retain].state == 'unavailable'
-                ? time(Date.now() - Date.parse(states[entity.entity_id].last_changed))
-                : time(Date.now() - Date.parse(states[variables.retain].state)),
-              stroke = variables.state === 'open' || variables.state === 'on' ? '#b2b2b2' : 'none',
-              fill = variables.state === 'closed' || variables.state === 'off' ? 'rgba(255,255,255,0.04)' : 'none';
-        return `
-          <svg viewBox="0 0 50 50">
-            <circle cx="25" cy="25" r="20.5" stroke="${stroke}" stroke-width="2.5" fill="${fill}" />
-            <text x="50%" y="54%" fill="#8d8e90" font-size="14" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle">${last_changed}</text>
-          </svg>
-        `;
+        if (entity) {
+          if (entity.state === 'open' || entity.state === 'on') {
+            let time = c => {
+                let s = (c/1e3),
+                    m = (c/6e4),
+                    h = (c/36e5),
+                    d = (c/864e5);
+                return s < 60
+                    ? parseInt(s) + 's'
+                    : m < 60 ? parseInt(m) + 'm'
+                    : h < 24 ? parseInt(h) + 'h'
+                    : parseInt(d) + 'd';
+            };
+            let last_changed = states[variables.retain] == null || states[variables.retain].state == 'unavailable'
+                  ? time(Date.now() - Date.parse(states[entity.entity_id].last_changed))
+                  : time(Date.now() - Date.parse(states[variables.retain].state)),
+                stroke = variables.state === 'open' || variables.state === 'on' ? '#b2b2b2' : 'none',
+                fill = variables.state === 'closed' || variables.state === 'off' ? 'rgba(255,255,255,0.04)' : 'none';
+          return `
+            <svg viewBox="0 0 50 50">
+              <circle cx="25" cy="25" r="20.5" stroke="${stroke}" stroke-width="2.5" fill="${fill}" />
+              <text x="50%" y="54%" fill="#8d8e90" font-size="14" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle">${last_changed}</text>
+            </svg>
+          `;
+          }
         }
       ]]]
+
+change_grid_title:
+  state_display: >
+    [[[
+      // Add event listener to reset flag when dashboard changes
+      window.addEventListener("location-changed", () => {
+        // Reset the flag when the dashboard changes
+        window.gridTitleProcessed = false;
+      });
+
+      if (!window.gridTitleProcessed) {
+        let sensorState = parseFloat(states[variables.tempsensor].state),
+            humidityState = parseFloat(states[variables.humidsensor].state);
+        if (entity) {
+          let parentElement = this.getRootNode().host;
+          let headerTitle = findFirstH1Above(parentElement);
+          let currentTitle = headerTitle.innerText;
+          function findFirstH1Above(element) {
+            let currentElement = element;
+
+            while (currentElement) {
+              // Check for <h1> in the current element's shadow root, if it exists
+              if (currentElement.shadowRoot) {
+                const shadowH1 = currentElement.shadowRoot.querySelector('h1');
+                if (shadowH1) {
+                  return shadowH1;
+                }
+              }
+
+              // Check for <h1> in the current element's light DOM
+              const lightH1 = currentElement.querySelector('h1');
+              if (lightH1) {
+                return lightH1;
+              }
+
+              // Move to the parent node
+              currentElement = currentElement.getRootNode().host;
+
+              // If the current element has no parent (we're at the document level), break the loop
+              if (!currentElement) {
+                break;
+              }
+            }
+
+            console.log('No <h1> element found above the given element');
+            return null;
+          }
+          headerTitle.style.display = 'flex';
+          headerTitle.style.width = '100%';
+          headerTitle.style.justifyContent = 'space-between';
+          headerTitle.style.alignItems = 'center';
+          headerTitle.style.paddingInline = 'inherit';
+          headerTitle.innerHTML = `
+          <div>${currentTitle}</div>
+          <div style="font-size: 14px;">
+            ${sensorState.toFixed(0)}°
+            ${humidityState.toFixed(0)}%
+          </div>
+          `;
+        }
+        window.gridTitleProcessed = true;
+      }
+    ]]]
