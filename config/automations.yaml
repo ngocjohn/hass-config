@@ -608,20 +608,11 @@
   alias: Notify_Github
   description: ''
   trigger:
-  - alias: Public repo stars
-    platform: state
+  - platform: state
     entity_id:
-    - sensor.hass_config_stars
-    id: public_stars
-    enabled: false
-  - platform: template
-    value_template: '{% set haVersion = states.sensor.home_assistant_versions.state
-      %}
-
-      {% set currentVerson = states.sensor.current_version.state %}
-
-
-      {{ haVersion == currentVerson }}'
+    - update.home_assistant_core_update
+    from: 'on'
+    to: 'off'
     id: ha_version
   condition: []
   action:
@@ -634,16 +625,6 @@
       sequence:
       - service: readme.generate
         data: {}
-    - conditions:
-      - condition: trigger
-        id:
-        - public_stars
-      sequence:
-      - service: notify.notify
-        data:
-          message: Congrats! U got another star! {{ states.sensor.hass_config_stars.state
-            }}⭐
-          title: Github Stars
   initial_state: true
   mode: single
 - id: '1701556784590'

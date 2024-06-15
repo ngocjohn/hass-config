@@ -20,6 +20,10 @@ secrets.yaml
 .uuid
 .mercedesme-token-cache
 .youtube_new.txt
+ssl/
+.ssl
+
+*.pem
 
 icloud/
 custom_sentences/

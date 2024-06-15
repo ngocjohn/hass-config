@@ -1,0 +1,24 @@
+title: BENZ
+path: benz-card
+subview: false
+cards:
+  - type: custom:vehicle-info-card
+    entity: sensor.amg_43_car
+    name: Mercedes-AMG E 43 4MATIC
+    device_tracker: device_tracker.iphone7
+    google_api_key: !secret google_api
+    show_slides: true
+    show_map: true
+    show_buttons: true
+    show_background: true
+    enable_map_popup: false
+    images:
+      - /local/benz/benz-1.png
+      - /local/benz/benz-2.png
+      - /local/benz/benz-3.png
+      - /local/benz/benz-4.png
+      - /local/benz/benz-5.png
+    vehicle_card: []
+    trip_card: []
+    eco_card: []
+    tyre_card: []

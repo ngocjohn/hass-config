@@ -2,7 +2,9 @@ title: Dashboard
 
 views:
   - !include subviews/test-view.yaml
-  - !include subviews/system-monitoring.yaml
+  - !include subviews/test-benz-card.yaml
+
+  # - !include subviews/system-monitoring.yaml
 
 button_card_templates: !include_dir_merge_named ./templates/button_card_templates
 decluttering_templates: !include ./templates/decluttering-card.yaml
