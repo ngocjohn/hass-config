@@ -1,6 +1,7 @@
 <div align="left">
     <a href="https://github.com/ngocjohn/hass-config/commits/main"><img alt="GitHub last commit (branch)" src="https://img.shields.io/github/last-commit/ngocjohn/hass-config/main"></a>
     <a href="https://github.com/ngocjohn/hass-config/stargazers"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/ngocjohn/hass-config"></a>
+				<a href="https://www.buymeacoffee.com/ngocjohn" target="_blank"><img src="https://img.shields.io/badge/-buy_me_a%C2%A0coffee-gray?logo=buy-me-a-coffee" alt="Buy Me A Coffee"></a>
 </div>
 
 # Home Assistant Configuration
@@ -9,7 +10,7 @@ Hey there! Welcome to my little corner of the tech world! 👨‍💻
 
 This is where I store all the cool configurations for my Home Assistant system. Well, it's a mix of awesome codes and setups I discovered from the Home Assistant community. Seriously, those folks are wizards! 🧙‍♂️ As a bit of an internet newbie turned tech enthusiast, I stumbled upon the magic of IT, and this repository is my way of sharing the joy and knowledge I've gained along the way. Dive in, explore, and let the tech magic begin! ✨
 
-I frequently refresh my configuration files. My current Home Assistant version is <b>2024.5.3</b>. If you find something you like, don't forget to give my repository a ⭐️!
+I frequently refresh my configuration files. My current Home Assistant version is <b>2024.6.3</b>. If you find something you like, don't forget to give my repository a ⭐️!
 
 <video width="100%" controls loop muted>
   <source src="https://github-production-user-asset-6210df.s3.amazonaws.com/96962827/297112091-acc1a4db-b92e-4ab1-ac9d-df067d4ba4d1.mp4" type="video/mp4">
@@ -36,14 +37,14 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>34,291 </td>
+              <td>33,878 </td>
               <td>27</td>
-              <td>197</td>
-              <td>17</td>
+              <td>202</td>
+              <td>38</td>
               <td>52</td>
-              <td>32</td>
-              <td>1055</td>
-              <td>192</td>
+              <td>31</td>
+              <td>1092</td>
+              <td>166</td>
               <td>37</td>
           </tr>
       </tbody>
@@ -63,6 +64,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - Cloudflared
 - eufy-security-ws
 - File editor
+- Fusion
 - Glances
 - Home Assistant Google Drive Backup
 - InfluxDB
@@ -126,6 +128,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Bubble Card](https://github.com/Clooos/Bubble-Card)
 - [Button Card](https://github.com/custom-cards/button-card)
 - [Card Mod](https://github.com/thomasloven/lovelace-card-mod)
+- [Circle Menu Card](https://github.com/bhuebschen/circle-menu-card)
 - [Clock Weather Card](https://github.com/pkissling/clock-weather-card)
 - [Custom Brand Icons](https://github.com/elax46/custom-brand-icons)
 - [Custom Icons](https://github.com/Mariusthvdb/custom-icons)
@@ -145,11 +148,9 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Mini Media Player](https://github.com/kalkih/mini-media-player)
 - [Multiple Entity Row](https://github.com/benct/lovelace-multiple-entity-row)
 - [Mushroom](https://github.com/piitaya/lovelace-mushroom)
-- [My Custom Media Player Card](https://github.com/ngocjohn/custom-media-player-card)
 - [Navbar Position](https://github.com/javawizard/ha-navbar-position)
 - [Paper Buttons Row](https://github.com/jcwillox/lovelace-paper-buttons-row)
 - [Platinum Weather Card](https://github.com/Makin-Things/platinum-weather-card)
-- [Plotly Graph Card](https://github.com/dbuezas/lovelace-plotly-graph-card)
 - [Purifier Card](https://github.com/denysdovhan/purifier-card)
 - [Restriction Card](https://github.com/iantrich/restriction-card)
 - [Roku Card](https://github.com/iantrich/roku-card)
@@ -169,6 +170,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Tv Remote Card (With Touchpad And Haptic Feedback)](https://github.com/usernein/tv-card)
 - [Upcoming Media Card](https://github.com/xZetsubou/upcoming-media-card)
 - [Uptime Card](https://github.com/dylandoamaral/uptime-card)
+- [Vehicle Info Card](https://github.com/ngocjohn/vehicle-info-card)
 - [Vertical Stack In Card](https://github.com/ofekashery/vertical-stack-in-card)
 - [Weather Card](https://github.com/bramkragten/weather-card)
 - [Weather Chart Card](https://github.com/mlamberts78/weather-chart-card)
