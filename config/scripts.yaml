@@ -681,3 +681,15 @@ run_plugin:
     target:
       entity_id: media_player.kodi_atv
   mode: single
+update_entitites:
+  alias: update entitites
+  sequence:
+  - service: homeassistant.update_entity
+    data: {}
+    target:
+      entity_id: '{%- for state in states if state.domain == "update" and state.state
+        != "unavailable" -%} - {{ state.entity_id }} {%- endfor -%}
+
+        '
+  description: ''
+  icon: mdi:update

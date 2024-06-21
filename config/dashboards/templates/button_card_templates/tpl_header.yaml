@@ -28,6 +28,8 @@ header_weather:
             below_horizon: 'partly-cloudy-night.png',
           },
           rainy: 'rain.png',
+          pouring: 'sleet.png',
+          lightning: 'sleet.png',
           sleet: 'sleet.png',
           snowy: 'snow.png',
           cloudy: 'cloudy.png',

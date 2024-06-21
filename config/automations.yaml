@@ -1021,3 +1021,18 @@
         -%}\n  Mop\n{%- elif is_state_attr('vacuum.roidmi_eve','vacuum.sweep_type',2)
         -%}\n  Mop And Sweep\n{%- else -%} {%- endif -%}\n"
   mode: single
+- id: '1719003861113'
+  alias: HA updated
+  description: 'Ha updated generate readme '
+  trigger:
+  - platform: state
+    entity_id:
+    - update.home_assistant_core_update
+    from: 'on'
+    to: 'off'
+  condition: []
+  action:
+  - service: readme.generate
+    metadata: {}
+    data: {}
+  mode: single

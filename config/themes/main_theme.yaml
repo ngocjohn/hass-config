@@ -165,10 +165,7 @@ Main Theme:
         background-color: var(--popup-background-color);
         box-shadow: 0 0px 16px 4px rgba(var(--dialog-box-shadow), .15), 0 16px 64px 32px rgba(var(--dialog-box-shadow), .5);
       }
-      .mdc-dialog .mdc-dialog__container .mdc-dialog__surface,
-      .mdc-dialog .mdc-dialog__content {
-        overflow: visible;
-      }
+
       .mdc-dialog__surface {
         background-color: var(--popup-background-color) !important;
         box-shadow: 0 0px 16px 4px rgba(var(--dialog-box-shadow), .15), 0 16px 64px 32px rgba(var(--dialog-box-shadow), .5) !important;
