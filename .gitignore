@@ -11,7 +11,9 @@ config/node-red-backup/
 config/README.md
 config/scripts.yaml
 config/templates
+config/utils/
 !config/www/hafloor
+
 
 
 .DS_Store
