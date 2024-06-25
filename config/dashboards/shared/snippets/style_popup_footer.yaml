@@ -1,4 +1,17 @@
 style:
+  ha-dialog$: |
+    :host {
+        --ha-card-border-width: 0 !important;
+        --ha-card-border-radius: 0px !important;
+        --ha-card-border-color: none !important;
+        --bar-card-border-radius: 12px !important;
+        --ha-card-box-shadow: none !important;
+        --ha-card-background: none !important;
+        --mdc-theme-surface: rgba(34,38,39,1) !important;
+    }
+    .mdc-dialog__surface {
+      background-color: var(--popup-background-color) !important;
+    }
   layout-card:
     $grid-layout$:
       # card divider border

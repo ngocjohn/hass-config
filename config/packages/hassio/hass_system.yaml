@@ -84,16 +84,6 @@ influxdb:
   max_retries: 3
   default_measurement: state
 
-logger:
-  default: error
-  logs:
-    homeassistant.core: error
-    homeassistant.components.mqtt: warning
-    homeassistant.components.http: error
-    homeassistant.components.websocket_api: error
-    homeassistant.components.spotify: fatal
-    custom_components.spotcast: error
-    frontend.js.latest: fatal
 # TTS
 tts:
   - platform: google_translate

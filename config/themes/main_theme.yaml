@@ -100,6 +100,7 @@ Main Theme:
       paper-listbox-background-color: 'var(--sidebar-background-color)'
 
       divider-color: 'var(--background-color-1)'
+      md-divider-color: var(--divider-color)
       # light-primary-color: 'var(--ha-card-background)'
 
       # # Sliders
@@ -157,54 +158,21 @@ Main Theme:
       # paper-toast-color: var(--primary-text-color)
       # paper-toast-background-color: '#1b1b1bf2'
       st-spacing: 0
+
   card-mod-theme: Main Theme
 
   card-mod-more-info-yaml: |
-    $: |
-      .mdc-dialog__surface {
-        background-color: var(--popup-background-color);
-        box-shadow: 0 0px 16px 4px rgba(var(--dialog-box-shadow), .15), 0 16px 64px 32px rgba(var(--dialog-box-shadow), .5);
-      }
-
-      .mdc-dialog__surface {
-        background-color: var(--popup-background-color) !important;
-        box-shadow: 0 0px 16px 4px rgba(var(--dialog-box-shadow), .15), 0 16px 64px 32px rgba(var(--dialog-box-shadow), .5) !important;
-      }
-      .mdc-deprecated-list {
-        background-color: rgb(47, 55, 76) !important;
-      }
-    ha-header-bar$: |
-      .mdc-top-app-bar {
-        background: none !important;
-      }
-    ha-dialog-header$header: |
-      div.header-bar {
-        padding: 10px 17px 8px 17px;
-      }
-    ha-dialog$: |
-      .mdc-dialog__surface {
-        background-color: var(--popup-background-color) !important;
-        box-shadow: 0 0px 16px 4px rgba(var(--dialog-box-shadow), .15), 0 16px 64px 32px rgba(var(--dialog-box-shadow), .5) !important;
-      }
 
 
     .: |
-      :host {
-        --ha-card-border-width: 0 !important;
-        --ha-card-border-radius: 0px !important;
-        --ha-card-border-color: none !important;
-        --bar-card-border-radius: 12px !important;
-        --ha-card-box-shadow: none !important;
-        --ha-card-background: none !important;
-        --mdc-theme-surface: transparent;
+      ha-dialog {
+        --vertical-align-dialog: var(--tablet-popup-align-dialog) !important;
+        --dialog-surface-margin-top: var(--tablet-popup-margin-top) !important;
+        --dialog-box-shadow: 0 0px 16px 4px rgba(101,115,134, .15), 0 16px 64px 32px rgba(101,115,134, .5) !important;
       }
 
       ha-dialog > div.content > div.container {
         padding: 0 !important;
-      }
-      ha-dialog {
-        --vertical-align-dialog: var(--tablet-popup-align-dialog) !important;
-        --dialog-surface-margin-top: var(--tablet-popup-margin-top) !important;
       }
       @media (max-width: 800px), (max-height: 500px) {
         ha-dialog {
@@ -213,6 +181,13 @@ Main Theme:
           --popup-border-radius: 0 !important;
         }
       }
+
       ha-dialog > div:focus {
         outline: none;
+      }
+
+    $: |
+      .mdc-dialog__surface {
+        background-color: var(--popup-background-color) !important;
+        box-shadow: var(--dialog-box-shadow) !important;
       }

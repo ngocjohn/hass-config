@@ -979,11 +979,13 @@ extra_styles:
           #img-cell {
             display: grid;
             place-self: center;
-            animation: marquee 20s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
-            animation-direction: alternate-reverse;
+            max-height: 120px !important;
+            / animation: marquee 20s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+            / animation-direction: alternate-reverse;
           }
           #icon {
-            width: auto !important;
+            object-fit: none !important;
+            width: 100% !important;
           }
           #state {
             display: flex;
@@ -1048,7 +1050,7 @@ extra_styles:
             display: inline-block;
           }
           li {
-            font-size: 1rem;
+            font-size: 14px;
             padding-left: 2rem;
             text-align: left;
           }
