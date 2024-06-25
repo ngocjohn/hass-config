@@ -147,13 +147,6 @@ conditional_media:
     - icon_play_pause
     # - icon_playing_bars
   variables:
-    i: >
-      [[[
-        if (entity) {
-            let data = entity.attributes.data;
-            return data === undefined || Math.floor(Math.random() * (data.length - 1)) + 1;
-        }
-      ]]]
     tilt_enable: >
       [[[ return false; ]]]
   state_display: >

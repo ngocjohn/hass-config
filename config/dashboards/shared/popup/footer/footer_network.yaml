@@ -3,7 +3,7 @@ browser_mod:
   service: browser_mod.popup
   data:
     title: Network
-    style: !include ../../snippets/style_footer_transparent.yaml
+
     card_mod: !include ../../snippets/style_popup_footer.yaml
     content:
       type: custom:layout-card

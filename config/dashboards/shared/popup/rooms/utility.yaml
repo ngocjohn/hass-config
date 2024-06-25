@@ -3,7 +3,7 @@ browser_mod:
   service: browser_mod.popup
   data:
     title: Utility Room
-    style: !include ../../snippets/style_popup_transparent.yaml
+
     card_mod: !include ../../snippets/style_popup_cardmod.yaml
 
     content:
