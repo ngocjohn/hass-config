@@ -1,3 +1,12 @@
+#-
+#
+#  ___  ___ _ __  ___  ___  _ __ ___
+# / __|/ _ \ '_ \/ __|/ _ \| '__/ __|
+# \__ \  __/ | | \__ \ (_) | |  \__ \
+# |___/\___|_| |_|___/\___/|_|  |___/
+#
+#- from github.com/ngocjohn/hass-config
+#
 ########################################
 #   HOME ASSISTANT CORE                #
 ########################################
@@ -75,6 +84,26 @@ template:
           other: >
             {% set exclude = this.attributes | list %}
             {{ states | rejectattr('domain', 'in', exclude) | list | count }}
+
+      - name: Hassio addons use
+        unique_id: 'c9d0b358-302b-4845-b3b7-606a54c0e1bd'
+        state: >-
+          {%- set memory = states.sensor.system_monitor_memory_usage.state | float -%}
+          {%- set cpu = states.sensor.system_monitor_processor_use.state | float -%}
+            MEMORY: {{memory}}% | CPU: {{cpu}}%
+        icon: mdi:home-assistant
+        attributes:
+          addons_memory: >-
+            {
+              {%- for ent in expand(integration_entities('hassio')) -%}
+                {%- if ent.entity_id.endswith('_memory_percent') -%}
+                  {%- set name = ent.name | lower | replace(' memory percent', '') | title -%}
+                  {%- set state = ent.state ~ '%' -%}
+                  "{{ name }}": "{{ state }}",
+                {%- endif -%}
+              {%- endfor -%}
+            }
+
 command_line:
   - sensor:
       unique_id: hacs_installed
