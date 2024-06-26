@@ -1,3 +1,12 @@
+#-
+#  _
+# (_) ___ ___  _ __  ___
+# | |/ __/ _ \| '_ \/ __|
+# | | (_| (_) | | | \__ \
+# |_|\___\___/|_| |_|___/
+#
+#- from github.com/ngocjohn/hass-config
+#
 icon_playstation:
   custom_fields:
     icon: >
