@@ -161,6 +161,25 @@ Main Theme:
 
   card-mod-theme: Main Theme
 
+  card-mod-sidebar: |
+    .menu .title {
+      font-weight: 600;
+    }
+    :host([expanded]) paper-icon-item {
+      width: 100%;
+    }
+    .iron-selected paper-icon-item {
+      border-left: 3px solid var(--accent-color) !important;
+      border-radius: var(--ha-card-border-radius) !important;
+      padding-left: 9px !important;
+    }
+    .profile.iron-selected paper-icon-item {
+      padding-left: 1px !important;
+    }
+    paper-icon-item span {
+      font-weight: normal !important;
+    }
+
   card-mod-more-info-yaml: |
 
 
