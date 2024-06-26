@@ -1,3 +1,13 @@
+#-
+#  _     _
+# | |__ (_)_ __   __ _ _ __ _   _
+# | '_ \| | '_ \ / _` | '__| | | |
+# | |_) | | | | | (_| | |  | |_| |
+# |_.__/|_|_| |_|\__,_|_|   \__, |
+#                           |___/
+#- from github.com/ngocjohn/hass-config
+#
+#
 #################################################
 #                                               #
 #                BINARY SENSORS                 #
@@ -54,3 +64,9 @@ template:
           offline: >
             {%- set offline = (expand(states.group.contact_sensors) + expand(states.group.motion_sensors)) | selectattr( 'state', 'in', ['unknown', 'unavailable']) | map(attribute='name') | list -%}
             {{- offline }}
+
+      - name: 'MacbookPro'
+        unique_id: '1bd2146a-71b3-4b5b-b86a-14c732042731'
+        device_class: running
+        icon: ios:desktopcomputer
+        state: "{{ is_state_attr('binary_sensor.mbproserver_active', 'Sleeping', false ) }}"

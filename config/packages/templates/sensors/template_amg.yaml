@@ -1,3 +1,13 @@
+#-
+#
+#   __ _ _ __ ___   __ _
+#  / _` | '_ ` _ \ / _` |
+# | (_| | | | | | | (_| |
+#  \__,_|_| |_| |_|\__, |
+#                  |___/
+#- from github.com/ngocjohn/hass-config
+#
+#
 # Codes for open/unlocked/venting of doors and sunroof (sensor.amg_43_lock):
 # doorlockstatus*: true: unlocked, false: locked
 # doorstatus*: true: open, false: closed
