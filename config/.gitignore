@@ -119,4 +119,4 @@ www/*
 zigbee2mqtt/
 known_devices.yaml
 
-custom_components/spook_inverse
+
