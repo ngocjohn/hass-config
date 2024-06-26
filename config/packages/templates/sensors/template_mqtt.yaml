@@ -1,3 +1,13 @@
+#-
+#                  _   _
+#  _ __ ___   __ _| |_| |_
+# | '_ ` _ \ / _` | __| __|
+# | | | | | | (_| | |_| |_
+# |_| |_| |_|\__, |\__|\__|
+#               |_|
+#- from github.com/ngocjohn/hass-config
+#
+#
 mqtt:
   sensor:
     - name: 'Ngoc Weight Static'

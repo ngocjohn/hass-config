@@ -1,3 +1,13 @@
+#-
+#
+#  ___  ___ _ __  ___  ___  _ __ ___
+# / __|/ _ \ '_ \/ __|/ _ \| '__/ __|
+# \__ \  __/ | | \__ \ (_) | |  \__ \
+# |___/\___|_| |_|___/\___/|_|  |___/
+#
+#- from github.com/ngocjohn/hass-config
+#
+#
 homeassistant:
   customize:
     sensor.trakt_upcoming_shows:
