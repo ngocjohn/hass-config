@@ -365,6 +365,7 @@ template:
             {{ motions | selectattr('state', 'in', ['detected', 'on']) | map(attribute='name') | list | replace('Motion Sensor ', '') }}
 
       # SENSOR - GITHUB VEHICLE-INFO-CARD
+
       - unique_id: repo_vehicle_info_card
         name: 'Vehicle Info Card'
         state: >-

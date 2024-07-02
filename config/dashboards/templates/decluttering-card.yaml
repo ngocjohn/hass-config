@@ -443,7 +443,18 @@ grid_utility_vacuum:
     card:
       type: custom:button-card
       entity: sensor.appliance_active
-      name: Vacuum
+      name: >
+        [[[
+          if (entity) {
+            let vacumState = states['sensor.vacuum_status_fix'].state,
+                position = states['sensor.vacuum_position'].state;
+            if (vacumState === 'Cleaning') {
+              return 'Cleaning';
+            } else {
+              return vacumState;
+            }
+          }
+        ]]]
       double_tap_action:
         action: fire-dom-event
         browser_mod:
@@ -452,7 +463,17 @@ grid_utility_vacuum:
             entity: camera.roidmi_eve
       hold_action: !include ../shared/honeycomb/utitlity.yaml
       state_display: >
-        [[[ return states['sensor.vacuum_status_fix'].state; ]]]
+        [[[
+          if (entity) {
+          let vacumState = states['sensor.vacuum_status_fix'].state,
+              position = states['sensor.vacuum_position'].state;
+            if (vacumState === 'Cleaning') {
+              return position;
+            } else {
+              return vacumState;
+            }
+          }
+        ]]]
       template:
         - rooms_base
         - icon_roborock
