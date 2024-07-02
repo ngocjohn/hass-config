@@ -1,98 +1,99 @@
 tablet:
-  modes:
-    dark:
-      tablet-primary-color: '#00acc1'
-      primary-font-family: Poppins, Raleway, SF Pro Text, SF Pro Display, SF Mono, sans-serif, system-ui
-      paper-font-common-base_-_font-family: var(--primary-font-family)
-      paper-font-common-code_-_font-family: var(--primary-font-family)
-      paper-font-body1_-_font-family: var(--primary-font-family)
-      paper-font-subhead_-_font-family: var(--primary-font-family)
-      paper-font-headline_-_font-family: var(--primary-font-family)
-      paper-font-caption_-_font-family: var(--primary-font-family)
-      paper-font-title_-_font-family: var(--primary-font-family)
-      ha-card-header-font-family: Futura
-      mdc-typography-body1-font-family: var(--primary-font-family)
-      mdc-typography-font-family: var(--primary-font-family)
+  modes: { dark: { .: . } }
 
-      ha-card-background: none
-      ha-card-box-shadow: none
+  tablet-primary-color: '#00acc1'
+  primary-font-family: Poppins, Raleway, SF Pro Text, SF Pro Display, SF Mono, sans-serif, system-ui
+  paper-font-common-base_-_font-family: var(--primary-font-family)
+  paper-font-common-code_-_font-family: var(--primary-font-family)
+  paper-font-body1_-_font-family: var(--primary-font-family)
+  paper-font-subhead_-_font-family: var(--primary-font-family)
+  paper-font-headline_-_font-family: var(--primary-font-family)
+  paper-font-caption_-_font-family: var(--primary-font-family)
+  paper-font-title_-_font-family: var(--primary-font-family)
+  ha-card-header-font-family: Futura
+  mdc-typography-body1-font-family: var(--primary-font-family)
+  mdc-typography-font-family: var(--primary-font-family)
 
-      masonry-view-card-margin: 0
-      # custom-layout-card-padding: 2.2w #3.3vw or #3vw...#1.9...sidebar OK
-      custom-layout-card-padding: 3vw
-      grid-card-gap: 5%
+  ha-card-background: none
+  ha-card-box-shadow: none
 
-      state-icon-color: '#9da0a2'
-      state-icon-active-color: '#3182b7'
-      state-active-color: '#b68349'
-      state-light-color: '#9da0a2'
-      state-light-active-color: '#b68349'
+  masonry-view-card-margin: 0
+  # custom-layout-card-padding: 2.2w #3.3vw or #3vw...#1.9...sidebar OK
+  custom-layout-card-padding: 3vw
+  grid-card-gap: 5%
 
-      #button_card_templates
-      button-card-border-radius: 10%
-      button-card-font-size: 0.9vw
-      button-card-font-weight: 500
-      button-card-letter-spacing: 0
-      button-card-light-color-temp: hsl(204, 58%, 38%)
-      button-card-movie-state-size: 0.8vw
-      button-card-state-size: 0.8vw
-      chips-card-border-radius: 0.9vw
-      chips-card-font-size: 0.8vw
-      chips-card-padding-h: 0.2vw
-      chips-card-padding-v: 0.3vw
-      chips-card-state-size: 0.7vw
-      footer-card-border-radius: 0.65vw
-      footer-card-font-size: 1vw
-      footer-card-icon-size: 1.2vw
-      footer-card-padding-h: 1vw
-      footer-card-padding-v: 0.5vw
-      footer-notify-box-size: 1.8vw
-      footer-notify-font-size: 0.9vw
-      footer-notify-right: -1vw
-      footer-notify-top: -0.9vw
-      sidebar-time-font-size: 4.2vw
-      sidebar-time-line-height: 4.3vw
-      sidebar-font-size: 1vw
-      sidebar-line-height: 2vw
-      bar-card-color: '#303435'
-      z-axis-adjustment: 0.05vw #tilt compensation
+  state-icon-color: '#9da0a2'
+  state-icon-active-color: '#3182b7'
+  state-active-color: '#b68349'
+  state-light-color: '#9da0a2'
+  state-light-active-color: '#b68349'
 
-      # Progress bar conditional card
-      progress-bar-color: 'var(--tablet-primary-color)'
-      progress-bar-background-color: rgba(0,0,0,0.33)
-      progress-bar-height: 0.5rem
+  #button_card_templates
+  button-card-border-radius: 10%
+  button-card-font-size: 0.9vw
+  button-card-font-weight: 500
+  button-card-letter-spacing: 0
+  button-card-light-color-temp: hsl(204, 58%, 38%)
+  button-card-movie-state-size: 0.8vw
+  button-card-state-size: 0.8vw
+  chips-card-border-radius: 0.9vw
+  chips-card-font-size: 0.8vw
+  chips-card-padding-h: 0.2vw
+  chips-card-padding-v: 0.3vw
+  chips-card-state-size: 0.7vw
+  footer-card-border-radius: 0.65vw
+  footer-card-font-size: 1vw
+  footer-card-icon-size: 1.2vw
+  footer-card-padding-h: 1vw
+  footer-card-padding-v: 0.5vw
+  footer-notify-box-size: 1.8vw
+  footer-notify-font-size: 0.9vw
+  footer-notify-right: -1vw
+  footer-notify-top: -0.9vw
+  sidebar-time-font-size: 4.2vw
+  sidebar-time-line-height: 4.3vw
+  sidebar-font-size: 1vw
+  sidebar-line-height: 2vw
+  bar-card-color: '#303435'
+  z-axis-adjustment: 0.05vw #tilt compensation
 
-      # Honeycomb buttons
-      honeycomb-menu-active-background-color: 'linear-gradient(45deg, #eee, #2d6ca0)'
-      honeycomb-menu-background-color: 'linear-gradient(0deg, rgba(60,66,80,1) 0%, rgba(23,26,37,0.7) 42%, rgba(21,25,35,0.6) 100%)'
-      honeycomb-menu-disabled: '#00000033'
-      honeycomb-menu-icon-active-color: '#ffffffbd'
-      honeycomb-menu-icon-color: '#FFFFFF80'
+  # Progress bar conditional card
+  progress-bar-color: 'var(--tablet-primary-color)'
+  progress-bar-background-color: rgba(0,0,0,0.33)
+  progress-bar-height: 0.5rem
 
-      # Swiper
-      swiper-pagination-bottom: 8px
-      swiper-pagination-bullet-height: 8px
-      swiper-pagination-bullet-horizontal-gap: 4px
-      swiper-pagination-bullet-inactive-color: '#000'
-      swiper-pagination-bullet-inactive-opacity: 0.2
-      swiper-pagination-bullet-opacity: 1
-      swiper-pagination-bullet-size: 8px
-      swiper-pagination-bullet-vertical-gap: 6px
-      swiper-pagination-bullet-width: 8px
-      swiper-pagination-color: var(--swiper-theme-color)
-      swiper-pagination-fraction-color: inherit
-      swiper-pagination-left: auto
-      swiper-pagination-progressbar-bg-color: rgba(0, 0, 0, 0.25)
-      swiper-pagination-progressbar-size: 4px
-      swiper-pagination-right: 8px
-      swiper-pagination-top: auto
-      swiper-theme-color: rgb(179, 179, 179)
-      tablet-popup-content-padding: 1.4em 2.2em 1.6em 1.5em
+  # Honeycomb buttons
+  honeycomb-menu-active-background-color: 'linear-gradient(45deg, #eee, #2d6ca0)'
+  honeycomb-menu-background-color: 'linear-gradient(0deg, rgba(60,66,80,1) 0%, rgba(23,26,37,0.7) 42%, rgba(21,25,35,0.6) 100%)'
+  honeycomb-menu-disabled: '#00000033'
+  honeycomb-menu-icon-active-color: '#ffffffbd'
+  honeycomb-menu-icon-color: '#FFFFFF80'
+
+  # Swiper
+  swiper-pagination-bottom: 8px
+  swiper-pagination-bullet-height: 8px
+  swiper-pagination-bullet-horizontal-gap: 4px
+  swiper-pagination-bullet-inactive-color: '#000'
+  swiper-pagination-bullet-inactive-opacity: 0.2
+  swiper-pagination-bullet-opacity: 1
+  swiper-pagination-bullet-size: 8px
+  swiper-pagination-bullet-vertical-gap: 6px
+  swiper-pagination-bullet-width: 8px
+  swiper-pagination-color: var(--swiper-theme-color)
+  swiper-pagination-fraction-color: inherit
+  swiper-pagination-left: auto
+  swiper-pagination-progressbar-bg-color: rgba(0, 0, 0, 0.25)
+  swiper-pagination-progressbar-size: 4px
+  swiper-pagination-right: 8px
+  swiper-pagination-top: auto
+  swiper-theme-color: rgb(179, 179, 179)
+  tablet-popup-content-padding: 1.4em 2.2em 1.6em 1.5em
 
   card-mod-theme: 'tablet'
 
   card-mod-view-yaml: |
     .: |
+
       hui-view {
         background: linear-gradient(180deg, rgb(0 0 0) 0%, rgba(23, 26, 37, 1) 42%, rgba(21, 25, 35, 1) 100%) !important;
       }

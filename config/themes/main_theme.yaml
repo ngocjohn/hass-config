@@ -181,8 +181,6 @@ Main Theme:
     }
 
   card-mod-more-info-yaml: |
-
-
     .: |
       ha-dialog {
         --vertical-align-dialog: var(--tablet-popup-align-dialog) !important;
@@ -207,6 +205,5 @@ Main Theme:
 
     $: |
       .mdc-dialog__surface {
-        background-color: var(--popup-background-color) !important;
-        box-shadow: var(--dialog-box-shadow) !important;
+        background-color: rgba(34,38,39,0.6) !important;
       }
