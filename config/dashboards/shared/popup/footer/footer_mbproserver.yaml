@@ -3,140 +3,97 @@ browser_mod:
   service: browser_mod.popup
   data:
     title: MBPro Server
+    card_mod: !include ../../snippets/style_popup_footer.yaml
     content:
-      type: custom:mod-card
-      card_mod:
-        style:
-          layout-card:
-            $grid-layout$:
-              # card divider border
-              .: |
-                #root > * {
-                  margin: 0px !important;
-                }
-                @media (max-width: 450px), (max-height: 500px) {
-                  #root {
-                    display: block !important;
-                  }
-                }
+      type: custom:layout-card
+      layout_type: custom:grid-layout
+      layout: !include ../../snippets/popup_footer_layout.yaml
 
-              hui-entities-card:
-                $: |
-                  ha-card {
-                    border-right: 0.1vw solid rgba(58, 69, 73, 0.2);
-                    border-radius: 0;
-                    transition: none;
-                    background-color: inherit;
-                  }
-                  /* portrait */
-                  @media screen and (max-width: 800px) {
-                    ha-card {
-                      border-right: none;
-                      border-bottom: 0.1vw solid rgba(58, 69, 73, 0.2);
-                    }
-                  }
-                $hui-horizontal-stack-card:
-                  $: |
-                    #root {
-                      justify-content: space-evenly;
-                      margin-top: 1.7em;
-                    }
-              hui-entities-card:last-child:
-                $: |
-                  ha-card {
-                    border: none;
-                  }
-
-      card:
-        type: custom:layout-card
-        layout_type: custom:grid-layout
-        layout: !include ../../snippets/popup_footer_layout.yaml
-
-        cards:
-          #################################################
-          #                                               #
-          #                HOME ASSISTANT                 #
-          #                                               #
-          #################################################
-          - type: entities
-            title: ' '
-            show_header_toggle: false
-            entities:
-              - entity: binary_sensor.macbookpro
-                name: Active
-                state_color: true
-              - entity: sensor.mbproserver_connection_type
-                name: Connection
-              - entity: sensor.mbpro_uptime_usage
-                name: Uptime
-              - type: custom:bar-card
-                width: 55%
-                height: 2em
-                decimal: 0
-                unit_of_measurement: '%'
-                positions: &bar_card_positions
-                  icon: outside
-                  indicator: 'off'
-                  name: outside
-                severity: &bar_card_severity
-                  - color: '#9da0a2'
-                    from: 0
-                    to: 59
-                  - color: '#9da0a2'
-                    from: 60
-                    to: 100
-                entity_row: true
-                entities:
-                  - entity: sensor.mbpro_cpu_usage
-                    name: Processor
-                  - entity: sensor.mbpro_memory_usage
-                    name: Memory
-              - type: custom:hui-horizontal-stack-card
-                cards:
-                  - type: custom:button-card
-                    name: Lock
-                    icon: mdi:lock
-                    tap_action:
-                      action: call-service
-                      service: shell_command.lock_mbpro
-                    template: icon_name
-                  - type: custom:button-card
-                    name: Sleep
-                    icon: mdi:power-sleep
-                    tap_action:
-                      action: call-service
-                      service: shell_command.sleep_mbpro
-                    template: icon_name
-            footer:
-              type: custom:mini-graph-card
-              # name: Speedtest
-              tap_action:
-                action: call-service
-                service: homeassistant.update_entity
-                service_data:
-                  entity_id: sensor.mbpro_cpu_usage
+      cards:
+        #################################################
+        #                                               #
+        #                HOME ASSISTANT                 #
+        #                                               #
+        #################################################
+        - type: entities
+          title: ' '
+          show_header_toggle: false
+          entities:
+            - entity: binary_sensor.macbookpro
+              name: Active
+              state_color: true
+            - entity: sensor.mbproserver_connection_type
+              name: Connection
+            - entity: sensor.mbpro_uptime_usage
+              name: Uptime
+            - type: custom:bar-card
+              width: 55%
+              height: 2em
+              decimal: 0
+              unit_of_measurement: '%'
+              positions: &bar_card_positions
+                icon: outside
+                indicator: 'off'
+                name: outside
+              severity: &bar_card_severity
+                - color: '#9da0a2'
+                  from: 0
+                  to: 59
+                - color: '#9da0a2'
+                  from: 60
+                  to: 100
+              entity_row: true
               entities:
                 - entity: sensor.mbpro_cpu_usage
                   name: Processor
-                  color: '#00bb33'
                 - entity: sensor.mbpro_memory_usage
                   name: Memory
-                  show_state: false
-                  color: '#2196f3'
-                  y_axis: secondary
-              hours_to_show: 48
-              hour24: true
-              line_width: 3
-              animate: true
-              # upper_bound_secondary: 100
-              show:
-                name: false
-                icon: false
-                state: false
-                legend: false
-                fill: fade
-                labels: true
-                labels_secondary: false
-                average: false
-                extrema: false
-                points: hover
+            - type: custom:hui-horizontal-stack-card
+              cards:
+                - type: custom:button-card
+                  name: Lock
+                  icon: mdi:lock
+                  tap_action:
+                    action: call-service
+                    service: shell_command.lock_mbpro
+                  template: icon_name
+                - type: custom:button-card
+                  name: Sleep
+                  icon: mdi:power-sleep
+                  tap_action:
+                    action: call-service
+                    service: shell_command.sleep_mbpro
+                  template: icon_name
+          footer:
+            type: custom:mini-graph-card
+            # name: Speedtest
+            tap_action:
+              action: call-service
+              service: homeassistant.update_entity
+              service_data:
+                entity_id: sensor.mbpro_cpu_usage
+            entities:
+              - entity: sensor.mbpro_cpu_usage
+                name: Processor
+                color: '#00bb33'
+              - entity: sensor.mbpro_memory_usage
+                name: Memory
+                show_state: false
+                color: '#2196f3'
+                y_axis: secondary
+            hours_to_show: 48
+            hour24: true
+            line_width: 3
+            animate: true
+            # upper_bound_secondary: 100
+            show:
+              name: false
+              icon: false
+              state: false
+              legend: false
+              fill: fade
+              labels: true
+              labels_secondary: false
+              average: false
+              extrema: false
+              points: hover
