@@ -15,15 +15,33 @@
     # BATHROOM
     - type: custom:decluttering-card
       template: grid_bathroom
-    # UTILITY NORMAL
-    - type: custom:decluttering-card
-      template: grid_utility_normal
-    # UTILITY VACUUM
-    - type: custom:decluttering-card
-      template: grid_utility_vacuum
-    # UTILITY VACUUM
-    - type: custom:decluttering-card
-      template: grid_utility_washing
     # HALLWAY
     - type: custom:decluttering-card
       template: grid_hallway
+    # UTILITY NORMAL
+    - type: conditional
+      conditions:
+        - entity: sensor.appliance_active
+          state_not: 'cleaning'
+        - entity: sensor.appliance_active
+          state_not: 'washing'
+      card:
+        type: custom:decluttering-card
+        template: grid_utility_normal
+
+    # UTILITY VACUUM
+    - type: conditional
+      conditions:
+        - entity: sensor.appliance_active
+          state: cleaning
+      card:
+        type: custom:decluttering-card
+        template: grid_utility_vacuum
+    # WASHING
+    - type: conditional
+      conditions:
+        - entity: sensor.appliance_active
+          state: washing
+      card:
+        type: custom:decluttering-card
+        template: grid_utility_washing

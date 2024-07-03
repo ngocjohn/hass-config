@@ -85,15 +85,6 @@ recorder:
     entities:
       - device_tracker.findmy_d098350b38e241d3972ad394a27f38b6
 
-influxdb:
-  host: a0d7b954-influxdb
-  port: 8086
-  database: homeassistant
-  username: !secret mariadb_username
-  password: !secret mariadb_pass
-  max_retries: 3
-  default_measurement: state
-
 # TTS
 tts:
   - platform: google_translate

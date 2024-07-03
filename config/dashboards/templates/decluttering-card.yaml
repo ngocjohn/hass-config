@@ -105,99 +105,90 @@ grid_living_room:
   # KITCHEN NORMAL
 grid_kitchen_normal:
   card:
-    type: conditional
-    conditions:
-      - entity: sensor.kitchen_active
-        state_not: 'dishwashing'
-    card:
-      type: custom:button-card
-      entity: light.kitchen_group
-      name: Kitchen
-      template:
-        - rooms_base
-        - icon_noodles
-        - fan_circle
-        - motion
-      double_tap_action: !include ../shared/popup/rooms/kitchen.yaml
-      hold_action: !include ../shared/honeycomb/kitchen.yaml
-      variables:
-        fan_circle: fan.hood_power
-        light_entity: light.kitchen_table_light
-        motion: binary_sensor.motion_sensor_kitchen_occupancy
-        active: sensor.kitchen_active
+    type: custom:button-card
+    entity: light.kitchen_group
+    name: Kitchen
+    template:
+      - rooms_base
+      - icon_noodles
+      - fan_circle
+      - motion
+    double_tap_action: !include ../shared/popup/rooms/kitchen.yaml
+    hold_action: !include ../shared/honeycomb/kitchen.yaml
+    variables:
+      fan_circle: fan.hood_power
+      light_entity: light.kitchen_table_light
+      motion: binary_sensor.motion_sensor_kitchen_occupancy
+      active: sensor.kitchen_active
   # KITCHEN DISHWASING
 grid_kitchen_dishwasing:
   card:
-    type: conditional
-    conditions:
-      - entity: sensor.kitchen_active
-        state: 'dishwashing'
-    card:
-      type: custom:button-card
-      entity: timer.dishwasher_remaining
-      name: Dishwasher
-      template:
-        - base
-        - appliance_circle
-        - icon_dish
-      double_tap_action:
-        action: fire-dom-event
-        browser_mod:
-          service: browser_mod.popup
-          data:
-            title: 'Dishwasher'
-            # card_mod:
-            #   style:
-            #     #popup header
-            #     .:
-            content:
-              type: vertical-stack
-              cards:
-                - type: entities
-                  entities:
-                    - entity: switch.mycka_nadobi_power
-                      name: Power
-                      icon: mdi:power
-                      secondary_info: last-changed
-                    - entity: binary_sensor.mycka_nadobi_door
-                      name: Door
-                    - entity: sensor.mycka_nadobi_operation_state
-                      name: Operation State
-                    - entity: sensor.mycka_nadobi_program_progress
-                      name: Program Progress
-                    - entity: sensor.mycka_nadobi_remaining_program_time
-                      name: Remaining Program Time
-      tap_action: !include ../shared/popup/rooms/kitchen.yaml
-      hold_action: !include ../shared/honeycomb/kitchen.yaml
-      variables:
-        light_entity: light.kitchen_table_light
-        appliance: sensor.mycka_nadobi_program_progress
+    type: custom:button-card
+    entity: timer.dishwasher_remaining
+    name: Dishwasher
+    template:
+      - base
+      - appliance_circle
+      - icon_dish
+    double_tap_action:
+      action: fire-dom-event
+      browser_mod:
+        service: browser_mod.popup
+        data:
+          title: 'Dishwasher'
+          # card_mod:
+          #   style:
+          #     #popup header
+          #     .:
+          content:
+            type: vertical-stack
+            cards:
+              - type: entities
+                entities:
+                  - entity: switch.mycka_nadobi_power
+                    name: Power
+                    icon: mdi:power
+                    secondary_info: last-changed
+                  - entity: binary_sensor.mycka_nadobi_door
+                    name: Door
+                  - entity: sensor.mycka_nadobi_operation_state
+                    name: Operation State
+                  - entity: sensor.mycka_nadobi_program_progress
+                    name: Program Progress
+                  - entity: sensor.mycka_nadobi_remaining_program_time
+                    name: Remaining Program Time
+    tap_action: !include ../shared/popup/rooms/kitchen.yaml
+    hold_action: !include ../shared/honeycomb/kitchen.yaml
+    variables:
+      light_entity: light.kitchen_table_light
+      appliance: sensor.mycka_nadobi_program_progress
+    custom_fields:
+      timer:
+        card:
+          type: custom:timer-bar-card
+          layout: full_row
+          text_width: 0px
+          entity: timer.dishwasher_remaining
+          bar_direction: rt
+          invert: true
+          bar_background: '#ffffff4d'
+          bar_foreground: '#e5a00d9e'
+    styles:
+      card:
+        - overflow: hidden
       custom_fields:
         timer:
-          card:
-            type: custom:timer-bar-card
-            layout: full_row
-            text_width: 0px
-            entity: timer.dishwasher_remaining
-            bar_direction: rt
-            invert: true
-            bar_background: '#ffffff4d'
-            bar_foreground: '#e5a00d9e'
-      styles:
-        card:
-          - overflow: hidden
-        custom_fields:
-          timer:
-            - display: block
-            - position: absolute
-            - top: >
-                [[[
-                  return window.matchMedia('(max-width: 800px)').matches
-                    ? '77%'
-                    : '97%';
-                ]]]
-            - left: -15%
-            - width: 127%
+          - display: block
+          - position: absolute
+          - top: >
+              [[[
+                return window.matchMedia('(max-width: 800px)').matches
+                  ? '77%'
+                  : '97%';
+              ]]]
+          - left: -15%
+          - width: 127%
+
   # BEDROOM
 grid_bedroom:
   card:
@@ -415,118 +406,102 @@ grid_bathroom:
   # UTILITY NORMAL
 grid_utility_normal:
   card:
-    type: conditional
-    conditions:
-      - entity: sensor.appliance_active
-        state_not: 'cleaning'
-      - entity: sensor.appliance_active
-        state_not: 'washing'
-    card:
-      type: custom:button-card
-      entity: light.utility_room_light
-      name: Utility
-      double_tap_action: !include ../shared/popup/rooms/utility.yaml
-      hold_action: !include ../shared/honeycomb/utitlity.yaml
-      template:
-        - rooms_base
-        - icon_broom
-      variables:
-        light_entity: light.utility_room_light
-        active: sensor.appliance_active
+    type: custom:button-card
+    entity: light.utility_room_light
+    name: Utility
+    double_tap_action: !include ../shared/popup/rooms/utility.yaml
+    hold_action: !include ../shared/honeycomb/utitlity.yaml
+    template:
+      - rooms_base
+      - icon_broom
+    variables:
+      light_entity: light.utility_room_light
+      active: sensor.appliance_active
   # UTILITY VACUUM
 grid_utility_vacuum:
   card:
-    type: conditional
-    conditions:
-      - entity: sensor.appliance_active
-        state: cleaning
-    card:
-      type: custom:button-card
-      entity: sensor.appliance_active
-      name: >
-        [[[
-          if (entity) {
-            let vacumState = states['sensor.vacuum_status_fix'].state,
-                position = states['sensor.vacuum_position'].state;
-            if (vacumState === 'Cleaning') {
-              return 'Cleaning';
-            } else {
-              return vacumState;
-            }
-          }
-        ]]]
-      double_tap_action:
-        action: fire-dom-event
-        browser_mod:
-          service: browser_mod.more_info
-          data:
-            entity: camera.roidmi_eve
-      hold_action: !include ../shared/honeycomb/utitlity.yaml
-      state_display: >
-        [[[
-          if (entity) {
+    type: custom:button-card
+    entity: sensor.appliance_active
+    name: >
+      [[[
+        if (entity) {
           let vacumState = states['sensor.vacuum_status_fix'].state,
               position = states['sensor.vacuum_position'].state;
-            if (vacumState === 'Cleaning') {
-              return position;
-            } else {
-              return vacumState;
-            }
+          if (vacumState === 'Cleaning') {
+            return 'Cleaning';
+          } else {
+            return vacumState;
           }
-        ]]]
-      template:
-        - rooms_base
-        - icon_roborock
-      variables:
-        light_entity: light.utility_room_light
-        active: sensor.appliance_active
+        }
+      ]]]
+    double_tap_action:
+      action: fire-dom-event
+      browser_mod:
+        service: browser_mod.more_info
+        data:
+          entity: camera.roidmi_eve
+    hold_action: !include ../shared/honeycomb/utitlity.yaml
+    state_display: >
+      [[[
+        if (entity) {
+        let vacumState = states['sensor.vacuum_status_fix'].state,
+            position = states['sensor.vacuum_position'].state;
+          if (vacumState === 'Cleaning') {
+            return position;
+          } else {
+            return vacumState;
+          }
+        }
+      ]]]
+    template:
+      - rooms_base
+      - icon_roborock
+    variables:
+      light_entity: light.utility_room_light
+      active: sensor.appliance_active
   # UTILITY WASHING
 grid_utility_washing:
   card:
-    type: conditional
-    conditions:
-      - entity: sensor.appliance_active
-        state: washing
-    card:
-      type: custom:button-card
-      entity: sensor.appliance_active
-      name: Washdryer
-      hold_action: !include ../shared/honeycomb/utitlity.yaml
-      template:
-        - rooms_base
-        - appliance_circle
-        - icon_washer
-      variables:
-        light_entity: light.utility_room_light
-        active: sensor.appliance_active
-        appliance: sensor.washer_dryer_program_progress
-      double_tap_action:
-        action: fire-dom-event
-        browser_mod:
-          service: browser_mod.popup
-          data:
-            title: 'Washer-Dryer'
-            card_mod:
-              style:
-                #popup header
-                .:
-            content:
-              type: vertical-stack
-              cards:
-                - type: entities
-                  entities:
-                    - entity: switch.washer_dryer_power
-                      name: Power
-                      icon: mdi:power
-                      secondary_info: last-changed
-                    - entity: binary_sensor.washer_dryer_door
-                      name: Door
-                    - entity: sensor.washer_dryer_operation_state
-                      name: Operation State
-                    - entity: sensor.washer_dryer_program_progress
-                      name: Program Progress
-                    - entity: sensor.washer_dryer_remaining_program_time
-                      name: Remaining Program Time
+    type: custom:button-card
+    entity: sensor.appliance_active
+    name: Washdryer
+    hold_action: !include ../shared/honeycomb/utitlity.yaml
+    template:
+      - rooms_base
+      - appliance_circle
+      - icon_washer
+    variables:
+      light_entity: light.utility_room_light
+      active: sensor.appliance_active
+      appliance: sensor.washer_dryer_program_progress
+    double_tap_action:
+      action: fire-dom-event
+      browser_mod:
+        service: browser_mod.popup
+        data:
+          title: 'Washer-Dryer'
+          card_mod:
+            style:
+              #popup header
+              .:
+          content:
+            type: vertical-stack
+            cards:
+              - type: entities
+                entities:
+                  - entity: switch.washer_dryer_power
+                    name: Power
+                    icon: mdi:power
+                    secondary_info: last-changed
+                  - entity: binary_sensor.washer_dryer_door
+                    name: Door
+                  - entity: sensor.washer_dryer_operation_state
+                    name: Operation State
+                  - entity: sensor.washer_dryer_program_progress
+                    name: Program Progress
+                  - entity: sensor.washer_dryer_remaining_program_time
+                    name: Remaining Program Time
+
   # HALLWAY
 grid_hallway:
   card:

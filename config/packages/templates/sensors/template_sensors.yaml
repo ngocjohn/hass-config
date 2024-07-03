@@ -10,9 +10,6 @@
 #
 homeassistant:
   customize:
-    sensor.trakt_upcoming_shows:
-      icon: mdi:television-box
-      friendly_name: 'Upcoming shows'
     sensor.code_line_count:
       friendly_name: 'Code Line Count'
       state_class: measurement

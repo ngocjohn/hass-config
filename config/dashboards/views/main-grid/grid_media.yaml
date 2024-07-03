@@ -318,28 +318,3 @@
             #     - entity: select.conditional_media
             #       state: Youtube Music Player
             #   card: *YOUTUBEPLAYER
-        - type: conditional
-          conditions:
-            - condition: state
-              entity: sensor.trakt_upcoming_shows
-              state_not: '0'
-          card:
-            type: grid
-            columns: 1
-            cards:
-              - type: custom:button-card
-                entity: sensor.trakt_upcoming_shows
-                template:
-                  - conditional_media_shows
-        #Media Players
-        - type: conditional
-          conditions:
-            - condition: state
-              entity: sensor.trakt_upcoming_shows
-              state: '0'
-          card:
-            type: grid
-            columns: 2
-            cards:
-              - *grid-atv-kodi
-              - *grid-spotify-media
