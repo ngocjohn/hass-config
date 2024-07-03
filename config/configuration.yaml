@@ -28,8 +28,6 @@ frontend:
     - /local/hacsfiles/lovelace-card-mod/card-mod.js
 # HTTP
 http:
-  ssl_certificate: /ssl/homeassistant_local.crt
-  ssl_key: /ssl/homeassistant_local.key
   use_x_forwarded_for: true
   trusted_proxies:
     - 172.30.33.0/24

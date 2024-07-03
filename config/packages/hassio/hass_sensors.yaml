@@ -154,10 +154,6 @@ command_line:
         - repositories
       scan_interval: 86400
 sensor:
-  - platform: time_date
-    display_options:
-      - 'time'
-      - 'date'
   - platform: folder
     folder: /config/www/tmp/snapshots
   - platform: websocket_api
