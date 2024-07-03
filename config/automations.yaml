@@ -1030,6 +1030,10 @@
     - update.home_assistant_core_update
     from: 'on'
     to: 'off'
+  - platform: state
+    entity_id:
+    - sensor.current_version
+    from:
   condition: []
   action:
   - service: readme.generate
