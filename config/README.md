@@ -10,7 +10,7 @@ Hey there! Welcome to my little corner of the tech world! 👨‍💻
 
 This is where I store all the cool configurations for my Home Assistant system. Well, it's a mix of awesome codes and setups I discovered from the Home Assistant community. Seriously, those folks are wizards! 🧙‍♂️ As a bit of an internet newbie turned tech enthusiast, I stumbled upon the magic of IT, and this repository is my way of sharing the joy and knowledge I've gained along the way. Dive in, explore, and let the tech magic begin! ✨
 
-I frequently refresh my configuration files. My current Home Assistant version is <b>2024.6.4</b>. If you find something you like, don't forget to give my repository a ⭐️!
+I frequently refresh my configuration files. My current Home Assistant version is <b>2024.7.0</b>. If you find something you like, don't forget to give my repository a ⭐️!
 
 <video width="100%" controls loop muted>
   <source src="https://github-production-user-asset-6210df.s3.amazonaws.com/96962827/297112091-acc1a4db-b92e-4ab1-ac9d-df067d4ba4d1.mp4" type="video/mp4">
@@ -37,14 +37,14 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>33,887 </td>
-              <td>28</td>
-              <td>202</td>
-              <td>38</td>
+              <td>34,324 </td>
+              <td>31</td>
+              <td>203</td>
+              <td>36</td>
               <td>52</td>
               <td>30</td>
-              <td>1094</td>
-              <td>166</td>
+              <td>1139</td>
+              <td>169</td>
               <td>38</td>
           </tr>
       </tbody>
@@ -64,10 +64,8 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - Cloudflared
 - eufy-security-ws
 - File editor
-- Fusion
 - Glances
 - Home Assistant Google Drive Backup
-- InfluxDB
 - MariaDB
 - Mosquitto broker
 - Music Assistant
@@ -135,6 +133,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Decluttering Card](https://github.com/custom-cards/decluttering-card)
 - [Fold Entity Row](https://github.com/thomasloven/lovelace-fold-entity-row)
 - [Ha Floorplan 🖌🎨   Your Imagination Just Become The New Limit](https://github.com/ExperienceLovelace/ha-floorplan)
+- [History Explorer Card](https://github.com/SpangleLabs/history-explorer-card)
 - [Honeycomb Menu](https://github.com/Sian-Lee-SA/honeycomb-menu)
 - [Horizon Card](https://github.com/rejuvenate/lovelace-horizon-card)
 - [Hourly Weather Card](https://github.com/decompil3d/lovelace-hourly-weather)
