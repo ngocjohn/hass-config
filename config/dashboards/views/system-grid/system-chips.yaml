@@ -35,7 +35,7 @@
             - chip_system
         - type: custom:button-card
           name: Memory MiB
-          entity: sensor.memory_use
+          entity: sensor.system_monitor_memory_use
           show_icon: true
           template:
             - chip_system
