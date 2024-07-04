@@ -17,5 +17,5 @@ title: Example
 views:
   - !include views/main.yaml
   - !include subviews/movie-panel.yaml
+  - !include views/system.yaml
   # - !include subviews/kodi-library.yaml
-  - !include subviews/system-monitoring.yaml
