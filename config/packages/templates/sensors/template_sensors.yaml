@@ -361,23 +361,6 @@ template:
             {% set motions =  expand(states.group.motion_sensors) %}
             {{ motions | selectattr('state', 'in', ['detected', 'on']) | map(attribute='name') | list | replace('Motion Sensor ', '') }}
 
-      # SENSOR - GITHUB VEHICLE-INFO-CARD
-
-      - unique_id: repo_vehicle_info_card
-        name: 'Vehicle Info Card'
-        state: >-
-          {{ states('sensor.vehicle_info_card') }}
-        icon: mdi:github
-        state_class: total_increasing
-        unit_of_measurement: downloads
-
-      - unique_id: vehicle_latest_release
-        name: 'Vehicle Latest Release'
-        state: >-
-          {{ states('sensor.vehicle_latest_release') }}
-        icon: mdi:tag
-        state_class: total_increasing
-        unit_of_measurement: downloads
 sensor:
   - platform: template
     sensors:
