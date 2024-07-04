@@ -10,7 +10,6 @@
 chips:
   template:
     - settings
-    - tilt
     - extra_styles
   variables:
     state_on: >
@@ -27,18 +26,7 @@ chips:
       [[[ return !entity || entity.attributes.entity_picture; ]]]
     timeout: >
       [[[ return !entity || Date.now() - Date.parse(entity.last_changed); ]]]
-    tilt_options: >
-      [[[
-        return {
-          max: 5,
-          scale: 1.02,
-          glare: true,
-          'max-glare': 0.05,
-          perspective: 1000,
-          speed: 800,
-          parallax: '5px'
-        };
-      ]]]
+
     gle: >
       [[[ return states['sensor.gle'].state; ]]]
     hover_enable: >
