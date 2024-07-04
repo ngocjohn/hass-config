@@ -5,9 +5,9 @@ path: system
 layout:
   default:
   margin: 0
-  grid-gap: 0% 1.3%
+  grid-gap: 3% 1%
   grid-template-columns: 0 1fr 1fr 1fr 1fr 1fr 1fr 0
-  grid-template-rows: 8px min-content fit-content(100%) fit-content(100%) fit-content(100%) 0fr
+  grid-template-rows: 0 min-content fit-content(100%) fit-content(100%) fit-content(100%) 0
   grid-template-areas: |
     ". .         .          .         .        .          .          ."
     ". chips     chips      chips     chips    .          .          ."
