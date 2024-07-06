@@ -67,9 +67,10 @@ Main Theme:
       # Card
 
       # Background
-      background-color-1: '#000000'
+      # background-color-1: '#000000'
+      background-color-1: '#16181D'
       # primary-background-color: 'var(--background-color-1)'
-      primary-background-color: '#000000'
+      primary-background-color: 'var(--background-color-1)'
       background-color-2: '#FF9800'
       rgb-header-background: '255, 255, 255'
       app-header-background-color: rgba(0,0,0,1)
@@ -79,7 +80,7 @@ Main Theme:
       # masonry-view-card-margin: 0
       rgb-primary-background-color: '0,0,0'
       card-background-color: 'var(--ha-card-background)'
-      ha-card-background: '#21252b'
+      ha-card-background: '#25262D'
       ha-card-box-shadow: 'none'
       # ha-card-border-radius: '28px'
       ha-card-border-style: 'none !important'
@@ -186,6 +187,7 @@ Main Theme:
         --vertical-align-dialog: var(--tablet-popup-align-dialog) !important;
         --dialog-surface-margin-top: var(--tablet-popup-margin-top) !important;
         --dialog-box-shadow: 0 0px 16px 4px rgba(101,115,134, .15), 0 16px 64px 32px rgba(101,115,134, .5) !important;
+        --mdc-theme-surface: transparent !important;
       }
 
       ha-dialog > div.content > div.container {
