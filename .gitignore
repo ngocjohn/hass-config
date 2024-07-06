@@ -25,3 +25,4 @@ secrets.yaml
 config/.gitignore
 config/automations.yaml
 commit-updates.py
+logs/
