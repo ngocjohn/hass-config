@@ -43,7 +43,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
               <td>36</td>
               <td>52</td>
               <td>30</td>
-              <td>1134</td>
+              <td>1135</td>
               <td>169</td>
               <td>38</td>
           </tr>
