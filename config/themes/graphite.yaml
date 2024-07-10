@@ -1,4 +1,44 @@
 graphite:
+  # POPUP MORE INFO
+  dialog-box-shadow: var(--rgb-accent-color)
+  dialog-backdrop-filter: blur(12px) brightness(0.3)
+  popup-background-color: rgba(34,38,39,0.6)
+  # popup-background-color: rgba(30,30,45, 0.8)
+  popup-border-width: 1px
+  popup-border-radius: 1em
+  popup-padding-x: 0px
+  popup-padding-y: 0px
+  popup-min-width: 20vw
+  popup-max-width: 100vw
+  tablet-popup-header-color: rgba(200, 218, 222, 0.05)
+  tablet-popup-content-padding: 1.4em 2.2em 1.6em 1.5em
+  tablet-popup-button-padding: 0.1em 2em 1.8em 2em
+  tablet-popup-border-style: 1.5px solid rgba(0,0,0,0.2)
+  tablet-popup-align-dialog: center
+  tablet-popup-margin-top: 0px
+
+  # Text
+  primary-font-family: Poppins, Raleway, SF Pro Text, sans-serif, system-ui
+  font-stack: Poppins, Raleway, SF Pro Text, sans-serif, system-ui
+  display-font-stack: Poppins, Raleway, SF Pro Text, sans-serif, system-ui
+  paper-font-common-base_-_font-family: var(--primary-font-family)
+  paper-font-common-code_-_font-family: var(--primary-font-family)
+  paper-font-body1_-_font-family: var(--primary-font-family)
+  paper-font-subhead_-_font-family: var(--primary-font-family)
+  paper-font-headline_-_font-family: var(--primary-font-family)
+  paper-font-caption_-_font-family: var(--primary-font-family)
+  paper-font-title_-_font-family: var(--primary-font-family)
+  ha-card-header-font-family: var(--primary-font-family)
+  mdc-typography-body1-font-family: var(--primary-font-family)
+  mdc-typography-font-family: var(--primary-font-family)
+  mdc-typography-button-font-family: var(--primary-font-family)
+  paper-font-display1_-_font-family: var(--primary-font-family)
+  paper-font-display2_-_font-family: var(--primary-font-family)
+  paper-font-display3_-_font-family: var(--primary-font-family)
+  paper-font-display4_-_font-family: var(--primary-font-family)
+
+  st-spacing: 0
+
   modes:
     light:
       ##############################################################################
@@ -271,7 +311,7 @@ graphite:
       mush-rgb-disabled: var(--rgb-disabled-color)
     dark:
       # Color tokens
-      token-rgb-primary: 229, 145, 9
+      token-rgb-primary: 45, 156, 219
       token-color-primary: rgb(var(--token-rgb-primary))
       token-color-accent: var(--token-color-primary)
       token-color-feedback-info: rgb(138, 208, 248)
@@ -281,8 +321,10 @@ graphite:
       token-color-icon-primary: rgba(228, 228, 231, 1)
       token-color-icon-secondary: rgb(138, 140, 153)
       token-color-icon-sidebar: rgba(147, 149, 159, 1)
-      token-color-icon-sidebar-selected: rgba(174, 176, 183, 1)
-      token-color-text-primary: rgba(228, 228, 231, 1)
+      token-color-icon-sidebar-selected: var(--token-color-primary)
+      # token-color-icon-sidebar-selected: rgba(174, 176, 183, 1)
+      # token-color-text-primary: rgba(228, 228, 231, 1)
+      token-color-text-primary: rgba(255, 255, 255, .7)
       token-color-text-secondary: rgb(138, 140, 153)
       token-color-text-disabled: rgba(255, 255, 255, 0.5)
       token-color-text-sidebar-selected: rgba(214, 215, 219, 1)
@@ -315,7 +357,7 @@ graphite:
       # Size tokens
       token-size-radius-small: 9px
       token-size-radius-medium: 16px
-      token-size-radius-large: 18px
+      token-size-radius-large: 12px;
       token-size-radius-card: var(--token-size-radius-large)
       token-size-width-border-card: 0
       token-size-height-slider: 4px
@@ -328,10 +370,10 @@ graphite:
       ##############################################################################
       # Definitions
 
-      # Shapes
-      mdc-shape-small: var(--token-size-radius-small)
-      mdc-shape-medium: var(--token-size-radius-medium)
-      mdc-shape-large: var(--token-size-radius-large)
+      # # Shapes
+      # mdc-shape-small: var(--token-size-radius-small)
+      # mdc-shape-medium: var(--token-size-radius-medium)
+      # mdc-shape-large: var(--token-size-radius-large)
 
       # Sizes
       header-height: var(--token-size-height-navbar)
@@ -368,6 +410,7 @@ graphite:
       light-primary-color: var(--primary-color)
       accent-color: var(--token-color-accent)
       divider-color: var(--token-color-background-divider)
+      md-divider-color: var(--divider-color)
       scrollbar-thumb-color: var(--token-color-background-scrollbar-thumb)
 
       # Feedback colors
@@ -383,7 +426,9 @@ graphite:
       secondary-background-color: var(--token-color-background-secondary)
 
       # Navbar
-      app-header-background-color: var(--primary-background-color)
+      # app-header-background-color: var(--primary-background-color)
+      app-header-background-color: '#0000'
+      app-header-backdrop-filter: 'blur(10px)'
       app-header-text-color: var(--token-color-icon-primary)
       app-header-edit-background-color: var(--token-color-background-card)
 
@@ -421,8 +466,8 @@ graphite:
       # Chip
       ha-chip-text-color: rgb(255, 255, 255)
 
-      # Dialog
-      mdc-dialog-scrim-color: var(--token-color-background-popup-scrim)
+      # # Dialog
+      # mdc-dialog-scrim-color: var(--token-color-background-popup-scrim)
 
       # Slider
       paper-slider-knob-color: var(--token-color-primary)
@@ -434,7 +479,7 @@ graphite:
       # Switch
       switch-checked-button-color: var(--primary-color)
       switch-checked-track-color: var(--switch-checked-button-color)
-      switch-unchecked-button-color: rgba(255, 255, 255, 0.7)
+      switch-unchecked-button-color: rgba(125, 128, 132, 0.7)
       switch-unchecked-track-color: rgba(125, 128, 132, 0.4)
 
       # Toggles
@@ -463,14 +508,34 @@ graphite:
       mdc-select-idle-line-color: var(--color-background-base)
       mdc-text-field-idle-line-color: var(--mdc-select-idle-line-color)
 
-      # Editor
-      code-editor-background-color: var(--token-color-background-base)
-      codemirror-meta: var(--token-color-text-primary)
-      codemirror-property: var(--accent-color)
-      codemirror-atom: var(--codemirror-property)
-      codemirror-string: rgb(119, 196, 229)
-      codemirror-keyword: rgb(140, 169, 255)
-      codemirror-number: rgb(255, 91, 29)
+      # # Editor
+      # code-editor-background-color: var(--token-color-background-secondary)
+      # codemirror-meta: var(--token-color-text-primary)
+      # codemirror-property: var(--accent-color)
+      # codemirror-atom: var(--codemirror-property)
+      # codemirror-string: rgb(119, 196, 229)
+      # codemirror-keyword: rgb(140, 169, 255)
+      # codemirror-number: rgb(255, 91, 29)
+
+      codemirror-keyword: '#C792EA'
+      codemirror-operator: '#89DDFF'
+      codemirror-variable: '#f07178'
+      codemirror-variable-2: '#EEFFFF'
+      codemirror-variable-3: '#DECB6B'
+      codemirror-builtin: '#FFCB6B'
+      codemirror-atom: '#F78C6C'
+      codemirror-number: '#FF5370'
+      codemirror-def: '#82AAFF'
+      codemirror-string: '#C3E88D'
+      codemirror-string-2: '#f07178'
+      codemirror-comment: '#545454'
+      codemirror-tag: '#FF5370'
+      codemirror-meta: '#FFCB6B'
+      codemirror-attribute: '#C792EA'
+      codemirror-property: '#C792EA'
+      codemirror-qualifier: '#DECB6B'
+      codemirror-type: '#DECB6B'
+      energy-grid-return-color: '#a280db'
 
       # RGB colors
       rgb-primary-color: var(--token-rgb-primary)
@@ -534,3 +599,53 @@ graphite:
       mush-rgb-blue-grey: var(--rgb-blue-grey-color)
       mush-rgb-black: var(--rgb-black-color)
       mush-rgb-disabled: var(--rgb-disabled-color)
+
+  card-mod-theme: graphite
+
+  card-mod-sidebar: |
+    .menu .title {
+      font-weight: 600;
+    }
+    :host([expanded]) paper-icon-item {
+      width: 100%;
+    }
+    .iron-selected paper-icon-item {
+      border-left: 3px solid var(--accent-color) !important;
+      border-radius: var(--ha-card-border-radius) !important;
+      padding-left: 9px !important;
+    }
+    .profile.iron-selected paper-icon-item {
+      padding-left: 1px !important;
+    }
+    paper-icon-item span {
+      font-weight: normal !important;
+    }
+
+  card-mod-more-info-yaml: |
+    .: |
+      ha-dialog {
+        --vertical-align-dialog: var(--tablet-popup-align-dialog) !important;
+        --dialog-surface-margin-top: var(--tablet-popup-margin-top) !important;
+        --dialog-box-shadow: 0 0px 16px 4px rgba(101,115,134, .15), 0 16px 64px 32px rgba(101,115,134, .5) !important;
+        --mdc-theme-surface: transparent !important;
+      }
+
+      ha-dialog > div.content > div.container {
+        padding: 0 !important;
+      }
+      @media (max-width: 800px), (max-height: 500px) {
+        ha-dialog {
+          --mdc-dialog-min-width: 100vw !important;
+          --mdc-dialog-min-height: 100vh !important;
+          --popup-border-radius: 0 !important;
+        }
+      }
+
+      ha-dialog > div:focus {
+        outline: none;
+      }
+
+    $: |
+      .mdc-dialog__surface {
+        background-color: rgba(34,38,39,0.6) !important;
+      }
