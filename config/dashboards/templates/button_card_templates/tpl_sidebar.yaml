@@ -215,7 +215,7 @@ timeclock:
   show_icon: false
   tap_action: !include ../../shared/popup/calendar.yaml
   double_tap_action:
-    action: block
+    action: none
   hold_action:
     action: block
   name: >
