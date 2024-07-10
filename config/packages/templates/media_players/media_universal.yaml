@@ -34,9 +34,8 @@ template:
             states.media_player.spotify,
             states.sensor.ps5_activity,
             states.media_player.living_room_tv,
-            states.media_player.kodi_atv,
-            states.media_player.ytube_music_player,
-            states.media_player.bedroom_tv ] %}
+            states.media_player.kodi_atv
+            ] %}
           {% macro media(state) %}
           {% set state = media_players | selectattr('state','eq',state) | list %}
           {% set last_changed = recently_added if state | length == 0 else state | map(attribute='last_changed') | list | max %}
@@ -60,9 +59,8 @@ template:
             states.media_player.spotify,
             states.sensor.ps5_activity,
             states.media_player.living_room_tv,
-            states.media_player.kodi_atv,
-            states.media_player.ytube_music_player,
-            states.media_player.bedroom_tv ] %}
+            states.media_player.kodi_atv
+            ] %}
           {{ recently_added + upcoming_shows + media_players | map(attribute='name') | list }}
         select_option:
           service: select.select_option
