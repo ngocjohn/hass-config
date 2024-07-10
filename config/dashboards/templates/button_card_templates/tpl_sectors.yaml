@@ -1150,11 +1150,21 @@ change_grid_title:
     [[[
       // Add event listener to reset flag when dashboard changes
       window.addEventListener("location-changed", () => {
-        // Reset the flag when the dashboard changes
-        window.gridTitleProcessed = false;
+        const pathname = window.location.pathname;
+        const isLovelace = pathname.split('/')[1] === 'lovelace-yaml';
+        const isProcessed = window.gridTitleProcessed === true;
+        // Reset only if the grid title was processed and the current view is not Lovelace
+        if (isProcessed && !isLovelace) {
+          window.gridTitleProcessed = false;
+        } else if (isProcessed && isLovelace) {
+          window.gridTitleProcessed = true;
+        } else {
+          window.gridTitleProcessed = false;
+        }
       });
 
       if (!window.gridTitleProcessed) {
+
         let sensorState = parseFloat(states[variables.tempsensor].state),
             humidityState = parseFloat(states[variables.humidsensor].state);
         if (entity) {
@@ -1190,7 +1200,7 @@ change_grid_title:
 
             console.log('No <h1> element found above the given element');
             return null;
-          }
+          };
           headerTitle.style.display = 'flex';
           headerTitle.style.width = '100%';
           headerTitle.style.justifyContent = 'space-between';
@@ -1203,7 +1213,7 @@ change_grid_title:
             ${humidityState.toFixed(0)}%
           </div>
           `;
+          window.gridTitleProcessed = true;
         }
-        window.gridTitleProcessed = true;
       }
     ]]]
