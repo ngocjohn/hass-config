@@ -29,6 +29,8 @@
                   - tpl_spotify
                 variables:
                   playlist_type: default
+                  country_code: vn
+
                 # type: media-control
                 # entity: media_player.spotify
                 # card_mod:
@@ -171,16 +173,16 @@
         #       template:
         #         - tpl_ytube_music
         # VN FEATURED Playlist
-        - type: grid
-          columns: 1
-          cards: &SPOTIFYPLAYLIST
-            - type: custom:button-card
-              entity: media_player.spotify
-              template:
-                - tpl_spotify
-              variables:
-                playlist_type: default
-                country_code: vn
+        # - type: grid
+        #   columns: 1
+        #   cards: &SPOTIFYPLAYLIST
+        #     - type: custom:button-card
+        #       entity: media_player.spotify
+        #       template:
+        #         - tpl_spotify
+        #       variables:
+        #         playlist_type: default
+        #         country_code: vn
 
         #Media Players
         - type: grid

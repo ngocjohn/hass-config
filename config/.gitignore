@@ -5,7 +5,6 @@
 ._*
 .cloud
 .DS_Store
-
 secrets.yaml
 
 ### HomeAssistant ###
@@ -120,3 +119,4 @@ zigbee2mqtt/
 known_devices.yaml
 
 
+.HA_BEFORE
