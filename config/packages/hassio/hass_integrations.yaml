@@ -17,11 +17,6 @@ xiaomi_miot:
     roidmi.vacuum.v60:
       exclude_miot_services: null
 
-# Integrations
-spotcast:
-  sp_dc: !secret sp_dc
-  sp_key: !secret sp_key
-
 sensor:
   - platform: google_geocode
     origin: device_tracker.findmy_d098350b38e241d3972ad394a27f38b6
