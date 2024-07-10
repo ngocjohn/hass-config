@@ -73,7 +73,10 @@ Main Theme:
       primary-background-color: 'var(--background-color-1)'
       background-color-2: '#FF9800'
       rgb-header-background: '255, 255, 255'
-      app-header-background-color: rgba(0,0,0,1)
+      # app-header-background-color: rgba(0,0,0,1)
+      app-header-background-color: '#0000'
+      app-header-backdrop-filter: 'blur(10px)'
+      app-theme-color: '#2D9CDB'
       secondary-background-color: 'rgb(24,24,24)'
 
       # Card
