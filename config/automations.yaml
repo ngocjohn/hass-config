@@ -1040,22 +1040,6 @@
     metadata: {}
     data: {}
   mode: single
-- id: '1719512601829'
-  alias: Vehicle card download
-  description: ''
-  trigger:
-  - platform: state
-    entity_id:
-    - sensor.vehicle_latest_release
-    attribute: download_count
-  condition: []
-  action:
-  - service: notify.persistent_notification
-    data:
-      message: download count change {{ states.sensor.vehicle_latest_release.state
-        }}
-      title: Vehicle card
-  mode: single
 - id: '1719583633037'
   alias: Vanny skolka
   description: ''
