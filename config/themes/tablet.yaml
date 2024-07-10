@@ -13,7 +13,7 @@ tablet:
   ha-card-header-font-family: Futura
   mdc-typography-body1-font-family: var(--primary-font-family)
   mdc-typography-font-family: var(--primary-font-family)
-
+  app-header-background-color: rgba(0,0,0,1)
   ha-card-background: none
   ha-card-box-shadow: none
 
@@ -89,11 +89,13 @@ tablet:
   swiper-theme-color: rgb(179, 179, 179)
   tablet-popup-content-padding: 1.4em 2.2em 1.6em 1.5em
 
-  card-mod-theme: 'tablet'
+  card-mod-theme: tablet
 
   card-mod-view-yaml: |
     .: |
-
+      :host {
+        --app-header-background-color: rgba(0,0,0,1);
+      }
       hui-view {
         background: linear-gradient(180deg, rgb(0 0 0) 0%, rgba(23, 26, 37, 1) 42%, rgba(21, 25, 35, 1) 100%) !important;
       }
