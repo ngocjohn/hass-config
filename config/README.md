@@ -37,13 +37,13 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>34,301 </td>
-              <td>31</td>
-              <td>203</td>
+              <td>34,292 </td>
+              <td>30</td>
+              <td>188</td>
               <td>36</td>
               <td>52</td>
-              <td>30</td>
-              <td>1135</td>
+              <td>29</td>
+              <td>1057</td>
               <td>169</td>
               <td>38</td>
           </tr>
@@ -104,8 +104,6 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Remote Home Assistant](https://github.com/custom-components/remote_homeassistant)
 - [Simpleicons](https://github.com/vigonotion/hass-simpleicons)
 - [Spook 👻 Your Homie](https://github.com/frenck/spook)
-- [Spotcast](https://github.com/fondberg/spotcast)
-- [Trakt](https://github.com/dylandoamaral/trakt-integration)
 - [Xiaomi Cloud Map Extractor](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor)
 - [Xiaomi Miot Auto](https://github.com/al-one/hass-xiaomi-miot)
 - [Ytube Music Player](https://github.com/KoljaWindeler/ytube_music_player)
