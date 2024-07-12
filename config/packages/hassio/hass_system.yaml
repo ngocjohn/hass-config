@@ -85,7 +85,7 @@ recorder:
     entities:
       - device_tracker.findmy_d098350b38e241d3972ad394a27f38b6
 logger:
-  default: warning
+  default: error
   logs:
     aiohttp: critical
 

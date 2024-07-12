@@ -1095,3 +1095,21 @@
       - sensor.waze_ngoc_jahoda
       - sensor.waze_ngoc_smichov_oc
   mode: single
+- id: '1720724029932'
+  alias: Test action ios
+  description: ''
+  trigger:
+  - event_type: ios.action_fired
+    platform: event
+    event_data:
+      actionID: B2DBF2A8-5C31-43BF-9AD3-874EC0F024DC
+  condition: []
+  action:
+  - service: browser_mod.notification
+    metadata: {}
+    data:
+      message: Test ios action
+      duration: 10000
+    target:
+      device_id: 44ebbefcd0dad5b66b4d90ff566c1030
+  mode: single

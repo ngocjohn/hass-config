@@ -2,8 +2,8 @@ graphite:
   # POPUP MORE INFO
   dialog-box-shadow: var(--rgb-accent-color)
   dialog-backdrop-filter: blur(12px) brightness(0.3)
-  popup-background-color: rgba(34,38,39,0.6)
-  # popup-background-color: rgba(30,30,45, 0.8)
+  popup-background-color: rgba(34,38,39,0.7)
+  # popup-background-color: rgba(30,30,45, 0.6)
   popup-border-width: 1px
   popup-border-radius: 1em
   popup-padding-x: 0px
@@ -36,7 +36,6 @@ graphite:
   paper-font-display2_-_font-family: var(--primary-font-family)
   paper-font-display3_-_font-family: var(--primary-font-family)
   paper-font-display4_-_font-family: var(--primary-font-family)
-
   st-spacing: 0
 
   modes:
@@ -197,7 +196,7 @@ graphite:
       ha-chip-text-color: rgb(0, 0, 0)
 
       # Dialog
-      mdc-dialog-scrim-color: var(--token-color-background-popup-scrim)
+      # mdc-dialog-scrim-color: var(--token-color-background-popup-scrim)
 
       # Slider
       paper-slider-knob-color: var(--token-color-primary)
@@ -601,7 +600,11 @@ graphite:
       mush-rgb-disabled: var(--rgb-disabled-color)
 
   card-mod-theme: graphite
-
+  card-mod-root-yaml: |
+    .: |
+      * {
+        font-family: Poppins, Raleway, SF Pro Text, sans-serif, system-ui !important;
+      }
   card-mod-sidebar: |
     .menu .title {
       font-weight: 600;
@@ -623,11 +626,14 @@ graphite:
 
   card-mod-more-info-yaml: |
     .: |
+      :host {
+        --ha-card-background: none !important;
+      }
       ha-dialog {
+
         --vertical-align-dialog: var(--tablet-popup-align-dialog) !important;
         --dialog-surface-margin-top: var(--tablet-popup-margin-top) !important;
         --dialog-box-shadow: 0 0px 16px 4px rgba(101,115,134, .15), 0 16px 64px 32px rgba(101,115,134, .5) !important;
-        --mdc-theme-surface: transparent !important;
       }
 
       ha-dialog > div.content > div.container {
