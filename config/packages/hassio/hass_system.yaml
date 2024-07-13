@@ -88,6 +88,7 @@ logger:
   default: error
   logs:
     aiohttp: critical
+    custom_components.spotcast: error
 
 # TTS
 tts:
