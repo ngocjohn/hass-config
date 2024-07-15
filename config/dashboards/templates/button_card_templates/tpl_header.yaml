@@ -182,7 +182,7 @@ header_weather:
         let next_dusk = states['sun.sun'].attributes.next_dusk,
             sunset_time = new Date(Date.parse(next_dusk)),
             sunset = sunset_time.getHours() + ":" + sunset_time.getMinutes();
-        let precipitation = states['sensor.prague_forecast_precipitation'].state;
+        let precipitation = states['sensor.prague_rain'].state;
         return `
             <ul>
               <li class="precipitation">Precipitation - ${precipitation} mm</li>
