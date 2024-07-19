@@ -37,13 +37,13 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>34,752 </td>
-              <td>30</td>
-              <td>201</td>
+              <td>34,220 </td>
+              <td>31</td>
+              <td>186</td>
               <td>36</td>
               <td>52</td>
-              <td>30</td>
-              <td>1125</td>
+              <td>31</td>
+              <td>1057</td>
               <td>168</td>
               <td>38</td>
           </tr>
@@ -95,6 +95,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Govee](https://github.com/LaggAt/hacs-govee)
 - [HACS](https://github.com/hacs/integration)
 - [Hass Favicon](https://github.com/thomasloven/hass-favicon)
+- [Lunar Phase](https://github.com/ngocjohn/lunar-phase)
 - [Mercedesme 2020](https://github.com/ReneNulschDE/mbapi2020)
 - [Music Assistant](https://github.com/music-assistant/hass-music-assistant)
 - [Node Red Companion](https://github.com/zachowj/hass-node-red)
@@ -104,6 +105,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Simpleicons](https://github.com/vigonotion/hass-simpleicons)
 - [Spook 👻 Your Homie](https://github.com/frenck/spook)
 - [Spotcast](https://github.com/fondberg/spotcast)
+- [Spotifyplus](https://github.com/thlucas1/homeassistantcomponent_spotifyplus)
 - [Xiaomi Cloud Map Extractor](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor)
 - [Xiaomi Miot Auto](https://github.com/al-one/hass-xiaomi-miot)
 - [Ytube Music Player](https://github.com/KoljaWindeler/ytube_music_player)
