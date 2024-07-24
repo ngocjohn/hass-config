@@ -42,8 +42,8 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
               <td>186</td>
               <td>36</td>
               <td>52</td>
-              <td>31</td>
-              <td>1065</td>
+              <td>35</td>
+              <td>1061</td>
               <td>168</td>
               <td>38</td>
           </tr>
@@ -67,7 +67,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - Home Assistant Google Drive Backup
 - MariaDB
 - Mosquitto broker
-- Music Assistant
+- Music Assistant Server
 - Node-RED
 - phpMyAdmin
 - PS5 MQTT
@@ -143,6 +143,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Local Conditional Card](https://github.com/PiotrMachowski/Home-Assistant-Lovelace-Local-Conditional-card)
 - [Logbook Card](https://github.com/royto/logbook-card)
 - [Lovelace Custom Movie Panel](https://github.com/ngocjohn/lovelace-movie-panel)
+- [Lunar Phase Card](https://github.com/ngocjohn/lunar-phase-card)
 - [Mini Graph Card](https://github.com/kalkih/mini-graph-card)
 - [Mini Media Player](https://github.com/kalkih/mini-media-player)
 - [Multiple Entity Row](https://github.com/benct/lovelace-multiple-entity-row)
