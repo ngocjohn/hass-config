@@ -12,6 +12,7 @@ config/README.md
 config/scripts.yaml
 config/templates
 config/utils/
+config/README.md
 !config/www/hafloor
 
 
