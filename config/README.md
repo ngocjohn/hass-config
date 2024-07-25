@@ -37,13 +37,13 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>34,220 </td>
+              <td>34,035 </td>
               <td>31</td>
               <td>186</td>
               <td>36</td>
               <td>52</td>
               <td>35</td>
-              <td>1061</td>
+              <td>1097</td>
               <td>168</td>
               <td>38</td>
           </tr>
@@ -63,6 +63,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - ArgonOne Active Linear Cooling
 - Cloudflared
 - eufy-security-ws
+- Get HACS
 - Glances
 - Home Assistant Google Drive Backup
 - MariaDB
@@ -115,7 +116,6 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
   <summary>Lovelace plugins</summary>
 
 ### Lovelace plugins
-- [Analog Clock](https://github.com/tomasrudh/analogclock)
 - [Apexcharts Card](https://github.com/RomRider/apexcharts-card)
 - [Apple Tv Remote Control](https://github.com/madmicio/Apple-Tv-Card)
 - [Atomic Calendar Revive](https://github.com/totaldebug/atomic-calendar-revive)
@@ -156,7 +156,6 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Roku Card](https://github.com/iantrich/roku-card)
 - [Rpi Monitor Card](https://github.com/ironsheep/lovelace-rpi-monitor-card)
 - [Search Card](https://github.com/postlund/search-card)
-- [Shutter Card](https://github.com/Deejayfool/hass-shutter-card)
 - [Simple Thermostat](https://github.com/nervetattoo/simple-thermostat)
 - [Simple Weather Card](https://github.com/kalkih/simple-weather-card)
 - [Slider Button Card](https://github.com/custom-cards/slider-button-card)
