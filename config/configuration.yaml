@@ -24,8 +24,7 @@ default_config:
 # FRONT - END
 frontend:
   themes: !include_dir_merge_named themes
-  extra_module_url:
-    - /local/hacsfiles/lovelace-card-mod/card-mod.js
+
 # HTTP
 http:
   use_x_forwarded_for: true
