@@ -39,11 +39,11 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
           <tr>
               <td>34,035 </td>
               <td>31</td>
-              <td>187</td>
+              <td>186</td>
               <td>37</td>
               <td>52</td>
               <td>35</td>
-              <td>1122</td>
+              <td>1098</td>
               <td>168</td>
               <td>38</td>
           </tr>
