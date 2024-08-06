@@ -89,6 +89,7 @@ logger:
   logs:
     aiohttp: critical
     custom_components.spotcast: error
+    custom_components.lunar_phase: debug
 
 # TTS
 tts:
