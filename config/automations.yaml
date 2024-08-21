@@ -470,21 +470,23 @@
     event: start
   condition: []
   action:
-  - service: notify.mobile_app_viet_ngoc
-    data:
+  - data:
       message: Home assistant started
       data:
         tag: hastarted
+    action: notify.mobile_app_viet_ngoc
   - delay:
       hours: 0
       minutes: 0
       seconds: 10
       milliseconds: 0
-  - service: notify.mobile_app_viet_ngoc
-    data:
+  - data:
       message: clear_notification
       data:
         tag: hastarted
+    action: notify.mobile_app_viet_ngoc
+  - action: readme.generate
+    data: {}
   mode: single
 - id: '1695935011647'
   alias: dismiss_lovelace_updated
