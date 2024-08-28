@@ -1,0 +1,11 @@
+{
+  "codeowners": ["petrleocompel"],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/petrleocompel/hass-rohlikcz",
+  "domain": "rohlikcz",
+  "iot_class": "cloud_polling",
+  "name": "Rohlík",
+  "requirements": [],
+  "version": "1.0.0"
+}
