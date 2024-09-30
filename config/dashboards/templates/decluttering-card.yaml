@@ -102,7 +102,19 @@ grid_living_room:
           display:none !important;
         {% endif %}
         }
-  # KITCHEN NORMAL
+
+# grid_living_room:
+#   card:
+#     type: custom:button-card
+#     entity: person.viet_ngoc
+#     name: Viet Ngoc
+#     template:
+#       - battery_circle
+#     variables:
+#       battery: sensor.viet_ngoc_battery_level
+#       circle_unit: ' %'
+
+# KITCHEN NORMAL
 grid_kitchen_normal:
   card:
     type: custom:button-card

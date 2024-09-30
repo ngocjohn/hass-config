@@ -1145,6 +1145,79 @@ circle_state:
         }
       ]]]
 
+battery_circle:
+  template:
+    - base
+    - circle
+  variables:
+    battery: ' '
+    circle_unit: ' '
+  state_display: >
+    [[[
+      if (entity) {
+          return variables.state === 'home'
+              ? variables.translate_home
+              : variables.state === 'not_home'
+                  ? variables.translate_not_home
+                  : variables.state;
+      }
+      return variables.translate_unknown;
+    ]]]
+  triggers_update: sensor.time
+  custom_fields:
+    icon: >
+      [[[
+        return entity && variables.entity_picture
+            ? `<img src="${variables.entity_picture}" width="100%">`
+            : null;
+      ]]]
+    circle: >
+      [[[
+          let input = states[variables.battery].state,
+            radius = 20.5,
+            circumference = radius * 2 * Math.PI;
+          let unit = variables.circle_unit;
+          var color = "rgba(48, 128, 181, 0.8)";
+          if (input <= 20) {
+            color = "#FDD60F";
+          } else if (input <= 40) {
+            color = "rgba(48, 128, 181, 0.8)";
+          }
+          else {
+            color = "#27C950";
+          }
+          return `
+            <svg viewBox="0 0 50 50">
+              <style>
+                circle {
+                  transform: rotate(-90deg);
+                  transform-origin: 50% 50%;
+                  stroke-dasharray: ${circumference};
+                  stroke-dashoffset: ${circumference - input / 100 * circumference};
+                }
+                tspan {
+                  font-size: 10px;
+                }
+              </style>
+              <circle cx="25" cy="25" r="${radius}" stroke="${color}" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <text x="50%" y="54%" fill="#8d8e90" font-size="14" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle">${input}<tspan font-size="10">${unit}</tspan></text>
+            </svg>
+          `;
+      ]]]
+  styles:
+    custom_fields:
+      icon:
+        - clip-path: circle()
+        - width: 82%
+        - pointer-events: none
+        - display: grid
+        - filter: >
+            [[[
+                return variables.state === 'not_home'
+                  ? `grayscale(1)`
+                  : null;
+            ]]]
+
 change_grid_title:
   state_display: >
     [[[
