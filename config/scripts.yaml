@@ -614,59 +614,62 @@ vacuum_reset_filter_life_level:
 homepod_alarm:
   alias: Homepod alarm
   sequence:
-  - service: media_player.turn_on
-    data: {}
+  - data: {}
     target:
-      entity_id: media_player.mass_bedroom
+      entity_id: media_player.bedroom
+    action: media_player.turn_on
   - delay:
       hours: 0
       minutes: 0
       seconds: 3
       milliseconds: 0
-  - service: media_player.volume_set
-    data:
+  - data:
       volume_level: 0.2
     target:
-      entity_id: media_player.mass_bedroom
+      entity_id: media_player.bedroom
+    action: media_player.volume_set
   - delay:
       hours: 0
       minutes: 0
       seconds: 3
       milliseconds: 0
-  - service: media_player.play_media
-    data:
-      media_content_id: library://playlist/29
+  - data:
+      media_content_id: ytmusic://track/uFeUKcAAn4c
       media_content_type: music
     metadata:
-      title: Deep remix
-      thumbnail: https://i.ytimg.com/vi/_u66_SqrqqA/hq720.jpg?sqp=-oaymwEXCKAGEMIDIAQqCwjVARCqCBh4INgESFo&rs=AMzJL3n3YKk4fP_Wn--WLgVQLKgX09YHtg
-      media_class: playlist
+      title: "Orinn DEEP - NHẠC NGHE TRÊN XE\U0001F3A7NHẠC TRẺ REMIX 2024\U0001F3A7MIXSET
+        HOUSE LAK & DEEP HOUSE 2024 #11"
+      thumbnail:
+      media_class: track
       children_media_class:
       navigateIds:
       - {}
       - media_content_type: mass
         media_content_id: playlists
+      - media_content_type: music
+        media_content_id: library://playlist/7
     target:
-      entity_id: media_player.mass_bedroom
+      entity_id: media_player.bedroom
+    action: media_player.play_media
   - delay:
       hours: 0
       minutes: 0
       seconds: 3
       milliseconds: 0
   - parallel:
-    - service: script.fade_music
-      data:
+    - data:
         target_volume: 0.7
         duration: 30
         curve: logarithmic
-        target_player: media_player.mass_bedroom
-    - service: script.fade_music
-      data:
+        target_player: media_player.bedroom
+      action: script.fade_music
+    - data:
         target_volume: 0.7
         duration: 30
         curve: logarithmic
         target_player: media_player.mass_office
       enabled: false
+      action: script.fade_music
   mode: single
   icon: phu:homepod-mini
 run_plugin:

@@ -369,7 +369,6 @@
       seconds: 3
       milliseconds: 0
   - alias: Ask to close or open the blinds
-    service: notify.mobile_app_viet_ngoc
     data:
       message: Do you want to stop this?
       data:
@@ -382,6 +381,7 @@
         - action: '{{ action_stop }}'
           title: Stop alarm
       title: Alarm Clock
+    action: notify.mobile_app_viet_ngoc
   - alias: Wait for a response
     wait_for_trigger:
     - platform: event
@@ -394,12 +394,12 @@
       - condition: template
         value_template: '{{ wait.trigger.event.data.action == action_stop }}'
       sequence:
-      - service: media_player.media_pause
-        data: {}
+      - data: {}
         target:
           entity_id:
-          - media_player.mass_office
-          - media_player.mass_bedroom
+          - media_player.office_homepod
+          - media_player.bedroom
+        action: media_player.media_pause
   mode: single
 - id: '1693488019712'
   alias: Nuki Vchod Open

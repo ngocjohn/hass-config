@@ -87,7 +87,7 @@ recorder:
 logger:
   default: error
   logs:
-    aiohttp: critical
+    aiohttp: debug
     custom_components.spotcast: error
     custom_components.lunar_phase: debug
 
