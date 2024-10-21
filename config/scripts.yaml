@@ -614,10 +614,11 @@ vacuum_reset_filter_life_level:
 homepod_alarm:
   alias: Homepod alarm
   sequence:
-  - data: {}
+  - action: media_player.select_source
     target:
-      entity_id: media_player.bedroom
-    action: media_player.turn_on
+      entity_id: media_player.ytube_music_player
+    data:
+      source: media_player.bedroom
   - delay:
       hours: 0
       minutes: 0
@@ -625,31 +626,28 @@ homepod_alarm:
       milliseconds: 0
   - data:
       volume_level: 0.2
-    target:
-      entity_id: media_player.bedroom
     action: media_player.volume_set
+    target:
+      device_id: 3fab6f02c76326f188adf406272a7303
   - delay:
       hours: 0
       minutes: 0
       seconds: 3
       milliseconds: 0
   - data:
-      media_content_id: ytmusic://track/uFeUKcAAn4c
-      media_content_type: music
+      media_content_id: PLtKqYY37ykx0YVi5RtHZdBQuOEaLmdsE4
+      media_content_type: playlist
     metadata:
-      title: "Orinn DEEP - NHẠC NGHE TRÊN XE\U0001F3A7NHẠC TRẺ REMIX 2024\U0001F3A7MIXSET
-        HOUSE LAK & DEEP HOUSE 2024 #11"
-      thumbnail:
-      media_class: track
+      title: Remix
+      thumbnail: https://i.ytimg.com/vi/uFeUKcAAn4c/hq720.jpg?sqp=-oaymwEXCKAGEMIDIAQqCwjVARCqCBh4INgESFo&rs=AMzJL3mQt2LNcPH4MFWT3UTGuPTA5CgbzQ
+      media_class: playlist
       children_media_class:
       navigateIds:
       - {}
-      - media_content_type: mass
-        media_content_id: playlists
-      - media_content_type: music
-        media_content_id: library://playlist/7
+      - media_content_type: library_playlists
+        media_content_id: ''
     target:
-      entity_id: media_player.bedroom
+      entity_id: media_player.ytube_music_player
     action: media_player.play_media
   - delay:
       hours: 0
@@ -661,14 +659,7 @@ homepod_alarm:
         target_volume: 0.7
         duration: 30
         curve: logarithmic
-        target_player: media_player.bedroom
-      action: script.fade_music
-    - data:
-        target_volume: 0.7
-        duration: 30
-        curve: logarithmic
-        target_player: media_player.mass_office
-      enabled: false
+        target_player: media_player.ytube_music_player
       action: script.fade_music
   mode: single
   icon: phu:homepod-mini

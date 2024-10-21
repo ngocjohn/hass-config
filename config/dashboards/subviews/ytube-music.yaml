@@ -1,0 +1,8 @@
+title: Ytube
+path: ytube
+type: panel
+icon: mdi:youtube
+cards:
+  - type: custom:ytube-music-card
+    entity: media_player.ytube_music_player
+    extra: sensor.youtube_music_player_extra

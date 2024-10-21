@@ -12,14 +12,14 @@
   columns: 2
   cards:
     # PERSON NGOC
-    - type: custom:decluttering-card
+    - type: custom:streamline-card
       template: grid_ngoc
     # PERSON ZUZU
-    - type: custom:decluttering-card
+    - type: custom:streamline-card
       template: grid_zuzu
     # WEATHER
-    - type: custom:decluttering-card
+    - type: custom:streamline-card
       template: grid_weather
     # HOME MODE
-    - type: custom:decluttering-card
+    - type: custom:streamline-card
       template: grid_home_mode

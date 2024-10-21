@@ -348,9 +348,8 @@
 - id: '1688940697804'
   alias: Alarm
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - script.homepod_alarm
     for:
       hours: 0
@@ -358,8 +357,9 @@
       seconds: 5
     enabled: true
     to: 'on'
-  condition: []
-  action:
+    trigger: state
+  conditions: []
+  actions:
   - alias: Set up variables for the actions
     variables:
       action_stop: '{{ ''STOP_'' ~ context.id }}'
@@ -384,10 +384,10 @@
     action: notify.mobile_app_viet_ngoc
   - alias: Wait for a response
     wait_for_trigger:
-    - platform: event
-      event_type: mobile_app_notification_action
+    - event_type: mobile_app_notification_action
       event_data:
         action: '{{ action_stop }}'
+      trigger: event
   - alias: Perform the action
     choose:
     - conditions:
@@ -395,11 +395,9 @@
         value_template: '{{ wait.trigger.event.data.action == action_stop }}'
       sequence:
       - data: {}
-        target:
-          entity_id:
-          - media_player.office_homepod
-          - media_player.bedroom
         action: media_player.media_pause
+        target:
+          entity_id: media_player.ytube_music_player
   mode: single
 - id: '1693488019712'
   alias: Nuki Vchod Open
@@ -1114,4 +1112,41 @@
       duration: 10000
     target:
       device_id: 44ebbefcd0dad5b66b4d90ff566c1030
+  mode: single
+- id: '1727802647185'
+  alias: person_home_change
+  description: ''
+  trigger:
+    platform: state
+    entity_id:
+    - person.viet_ngoc
+    from:
+    - home
+    - not_home
+    to:
+    - home
+    - not_home
+  action:
+    data:
+      topic: 'homeassistant/persistence/{{ trigger.to_state.name | lower }}
+
+        '
+      payload: '{{ now() }}
+
+        '
+      retain: true
+    action: mqtt.publish
+  mode: parallel
+- id: '1729456188721'
+  alias: Reload Moon
+  description: ''
+  triggers:
+  - trigger: time
+    at: 00:03:00
+  conditions: []
+  actions:
+  - action: homeassistant.reload_config_entry
+    data: {}
+    target:
+      device_id: d64f95437572d8e12d2e92ea32b8dafc
   mode: single

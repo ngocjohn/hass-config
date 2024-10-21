@@ -16,43 +16,43 @@
   entity: sensor.motion_sensor_kitchen_illuminance_lux
   name: Light Level
 
-- type: 'custom:decluttering-card'
+- type: 'custom:streamline-card'
   template: light_card
   variables:
     - entity: light.shelly_dimmer
     - name: Ceiling
 
-- type: 'custom:decluttering-card'
+- type: 'custom:streamline-card'
   template: light_card
   variables:
     - entity: light.sony_tv_backlight
     - name: TV Backlight
 
-- type: 'custom:decluttering-card'
+- type: 'custom:streamline-card'
   template: light_card
   variables:
     - entity: light.shelly_rgbw_kitchen_led_strip
     - name: Led strip
 
-- type: 'custom:decluttering-card'
+- type: 'custom:streamline-card'
   template: light_card
   variables:
     - entity: light.living_room_floor_lamp
     - name: Floor Lamp
 
-- type: 'custom:decluttering-card'
+- type: 'custom:streamline-card'
   template: light_card
   variables:
     - entity: light.kitchen_main_light
     - name: Kitchen main
 
-- type: 'custom:decluttering-card'
+- type: 'custom:streamline-card'
   template: light_card
   variables:
     - entity: light.kitchen_table_light
     - name: Kitchen table
 
-- type: 'custom:decluttering-card'
+- type: 'custom:streamline-card'
   template: light_card
   variables:
     - entity: light.hood_lighting

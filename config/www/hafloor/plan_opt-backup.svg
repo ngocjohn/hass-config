@@ -15,7 +15,7 @@
 			<image id="above_horizon" transform="rotate(10)" x="131.36" y="-203.92" width="2199" height="1705"
 				href="/local/hafloor/bg_above_horizon.webp" preserveAspectRatio="none" xlink:href="bg_above_horizon.png" />
 		</g>
-		<g id="light-overlays" transform="rotate(10)">
+		<g id="light-overlays">
 			<image id="light_overlay.living_room_floor_lamp" transform="rotate(10)" x="131.36" y="-203.92" width="2199"
 				height="1705" href="/local/hafloor/bg_living_lamp.webp" preserveAspectRatio="none"
 				xlink:href="bg_living_lamp.png" />

@@ -20,10 +20,10 @@ media_player:
     name: Mass Universal Airplay
     unique_id: mass_universal_airplay
     children:
-      - media_player.mass_office
-      - media_player.mass_bathroom
-      - media_player.mass_bedroom
-      - media_player.mass_living_room_hp
+      - media_player.office_homepod
+      - media_player.bathroom
+      - media_player.bedroom
+      - media_player.living_room_2
 template:
   - select:
       - name: conditional_media

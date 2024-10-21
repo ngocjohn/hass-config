@@ -1128,6 +1128,37 @@ extra_styles:
             }
           }
         `:''}
+        ${this._config.template.includes('battery_circle') ? `
+          #icon {
+            pointer-events: none;
+            grid-area: icon;
+            width: 100%;
+            height: 100%;
+            max-width: 50px;
+            max-height: 50px;
+            position: absolute;
+            overflow: visible;
+            display: grid;
+            top: -4px;
+            left: 0;
+          }
+          #icon .circular-border {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: conic-gradient(#27C950 0% 60%, #FFFFFF00 60% 100%);
+            border-radius: 50%;
+            padding: 4px;
+          }
+          #icon .circular-image {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            clip-path: circle(50%);
+          }`
+          : ''}
       `;
     ]]]
 #################################################
