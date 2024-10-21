@@ -10,13 +10,13 @@
   columns: 2
   cards:
     # SHOWER ROOM
-    - type: custom:decluttering-card
+    - type: custom:streamline-card
       template: grid_shower
     # BATHROOM
-    - type: custom:decluttering-card
+    - type: custom:streamline-card
       template: grid_bathroom
     # HALLWAY
-    - type: custom:decluttering-card
+    - type: custom:streamline-card
       template: grid_hallway
     # UTILITY NORMAL
     - type: conditional
@@ -26,7 +26,7 @@
         - entity: sensor.appliance_active
           state_not: 'washing'
       card:
-        type: custom:decluttering-card
+        type: custom:streamline-card
         template: grid_utility_normal
 
     # UTILITY VACUUM
@@ -35,7 +35,7 @@
         - entity: sensor.appliance_active
           state: cleaning
       card:
-        type: custom:decluttering-card
+        type: custom:streamline-card
         template: grid_utility_vacuum
     # WASHING
     - type: conditional
@@ -43,5 +43,5 @@
         - entity: sensor.appliance_active
           state: washing
       card:
-        type: custom:decluttering-card
+        type: custom:streamline-card
         template: grid_utility_washing

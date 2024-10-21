@@ -10,16 +10,16 @@
   columns: 2
   cards:
     # APPLE TV
-    - type: custom:decluttering-card
+    - type: custom:streamline-card
       template: grid_atv
     # Samsung TV
-    - type: custom:decluttering-card
+    - type: custom:streamline-card
       template: grid_samsung
     # PLAYSTATION
-    - type: custom:decluttering-card
+    - type: custom:streamline-card
       template: grid_playstation
     # HOMEPODS
-    - type: custom:decluttering-card
+    - type: custom:streamline-card
       template: grid_homepods
 # - type: 'custom:layout-card'
 #   layout_type: 'custom:grid-layout'
@@ -42,14 +42,14 @@
 #         grid-gap: 5%
 #       cards:
 #         # APPLE TV
-#         - type: custom:decluttering-card
+#         - type: custom:streamline-card
 #           template: grid_atv
 #         # Samsung TV
-#         - type: custom:decluttering-card
+#         - type: custom:streamline-card
 #           template: grid_samsung
 #         # PLAYSTATION
-#         - type: custom:decluttering-card
+#         - type: custom:streamline-card
 #           template: grid_playstation
 #         # HOMEPODS
-#         - type: custom:decluttering-card
+#         - type: custom:streamline-card
 #           template: grid_homepods

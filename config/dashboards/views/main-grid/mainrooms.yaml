@@ -10,10 +10,10 @@
   columns: 2
   cards:
     # Living Room
-    - type: custom:decluttering-card
+    - type: custom:streamline-card
       template: grid_living_room
     # OFFICE
-    - type: custom:decluttering-card
+    - type: custom:streamline-card
       template: grid_office
     # Kitchen
     - type: conditional
@@ -21,7 +21,7 @@
         - entity: sensor.kitchen_active
           state_not: 'dishwashing'
       card:
-        type: custom:decluttering-card
+        type: custom:streamline-card
         template: grid_kitchen_normal
 
     - type: conditional
@@ -29,8 +29,8 @@
         - entity: sensor.kitchen_active
           state: 'dishwashing'
       card:
-        type: custom:decluttering-card
+        type: custom:streamline-card
         template: grid_kitchen_dishwasing
     # Bedroom
-    - type: custom:decluttering-card
+    - type: custom:streamline-card
       template: grid_bedroom

@@ -9,31 +9,31 @@
   variables:
     aspect_ratio: 2/1
 
-- type: 'custom:decluttering-card'
+- type: 'custom:streamline-card'
   template: light_card
   variables:
     - entity: light.office_main_light
     - name: Ceiling
 
-- type: 'custom:decluttering-card'
+- type: 'custom:streamline-card'
   template: light_card
   variables:
     - entity: light.office_shelf_led
     - name: Shelf
 
-- type: 'custom:decluttering-card'
+- type: 'custom:streamline-card'
   template: light_card
   variables:
     - entity: light.office_led_light_strip
     - name: Led strip
 
-- type: 'custom:decluttering-card'
+- type: 'custom:streamline-card'
   template: light_card
   variables:
     - entity: light.office_lamp_bulb
     - name: Floor Lamp
 
-- type: 'custom:decluttering-card'
+- type: 'custom:streamline-card'
   template: light_card
   variables:
     - entity: light.office_ripple_mood_light

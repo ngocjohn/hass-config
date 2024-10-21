@@ -22,6 +22,11 @@ homeassistant:
 template:
   # SENSORS
   - sensor:
+      - unique_id: person_last_changed
+        name: 'Test person last changed'
+        state: >-
+          {{ states.person.viet_ngoc.last_changed | replace(" ", "T") }}
+
       # SENSOR CLIMATE
       - unique_id: climate_index
         name: Home Climate
@@ -258,7 +263,8 @@ template:
           device: >-
             {% set p2 = expand(states.group.homepod_airplay) | selectattr( 'state', 'in', ['on', 'playing']) | map(attribute='name') | list %}
             {% set p1 = expand(states.group.media_players) | rejectattr('entity_id', 'in', ['media_player.spotify']) | selectattr( 'state', 'in', ['on', 'playing', 'idle', 'paused']) | map(attribute='name') | list %}
-            {{ p1 + p2 }}
+            {% set p3 = expand(states.group.homepod_mass_airplay) | selectattr( 'state', 'in', ['on', 'playing']) | map(attribute='name') | list %}
+            {{ p1 + p2 + p3 }}
           device_playing: >-
             {{ this.attributes.device | list | count }} Playing
           mass_homepods: >-

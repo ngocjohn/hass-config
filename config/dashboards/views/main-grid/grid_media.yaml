@@ -23,6 +23,15 @@
                 - entity: select.conditional_media
                   state: Recently added
               card: &spotify
+                # type: custom:ytube-music-card
+                # name: Ytube Music Card
+                # entity: media_player.ytube_music_player
+                # card_mod:
+                #   style: |
+                #     ha-card {
+                #       padding: 0px !important;
+                #     }
+
                 type: custom:button-card
                 entity: media_player.spotify
                 template:

@@ -13,9 +13,12 @@ swipe_nav:
 
 button_card_templates: !include_dir_merge_named ./templates/button_card_templates
 decluttering_templates: !include ./templates/decluttering-card.yaml
+streamline_templates: !include ./templates/streamline-card.yaml
+
 title: Example
 views:
   - !include views/main.yaml
   - !include subviews/movie-panel.yaml
+  - !include subviews/ytube-music.yaml
   - !include views/system.yaml
   # - !include subviews/kodi-library.yaml

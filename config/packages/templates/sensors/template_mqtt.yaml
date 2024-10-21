@@ -27,3 +27,7 @@ mqtt:
       unit_of_measurement: 'kg/m2'
       # Below lines only needed if long term statistics are required
       state_class: 'measurement'
+    - name: viet_ngoc_last_changed
+      state_topic: homeassistant/persistence/ngoc
+      value_template: >
+        {{ value | replace(' ', 'T') }}

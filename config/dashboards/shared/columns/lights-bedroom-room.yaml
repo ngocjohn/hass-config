@@ -16,37 +16,37 @@
   entity: sensor.motion_sensor_entrance_illuminance_lux
   name: Hallway Light Level
 
-- type: 'custom:decluttering-card'
+- type: 'custom:streamline-card'
   template: light_card
   variables:
     - entity: light.bedroom_main_light
     - name: Ceiling
 
-- type: 'custom:decluttering-card'
+- type: 'custom:streamline-card'
   template: light_card
   variables:
     - entity: light.bedroom_bed_light
     - name: Bed light
 
-- type: 'custom:decluttering-card'
+- type: 'custom:streamline-card'
   template: light_card
   variables:
     - entity: light.bedroom_closet_light
     - name: Closet light
 
-- type: 'custom:decluttering-card'
+- type: 'custom:streamline-card'
   template: light_card
   variables:
     - entity: light.bedroom_ripple_mood_light
     - name: Mood light
 
-- type: 'custom:decluttering-card'
+- type: 'custom:streamline-card'
   template: light_card
   variables:
     - entity: light.shower_room_main_light
     - name: Shower main
 
-- type: 'custom:decluttering-card'
+- type: 'custom:streamline-card'
   template: light_card
   variables:
     - entity: light.shower_room_mirror_light

@@ -1149,9 +1149,12 @@ battery_circle:
   template:
     - base
     - circle
+    - extra_styles
   variables:
     battery: ' '
     circle_unit: ' '
+    person_retain: ' '
+    battery_status: ' '
   state_display: >
     [[[
       if (entity) {
@@ -1168,7 +1171,9 @@ battery_circle:
     icon: >
       [[[
         return entity && variables.entity_picture
-            ? `<img src="${variables.entity_picture}" width="100%">`
+            ? `<div class="circular-border">
+                <img src="${variables.entity_picture}" width="100%" class="circular-image" />
+              </div>`
             : null;
       ]]]
     circle: >
@@ -1177,6 +1182,20 @@ battery_circle:
             radius = 20.5,
             circumference = radius * 2 * Math.PI;
           let unit = variables.circle_unit;
+          let time = c => {
+              let s = (c/1e3),
+                  m = (c/6e4),
+                  h = (c/36e5),
+                  d = (c/864e5);
+              return s < 60
+                  ? parseInt(s) + 's'
+                  : m < 60 ? parseInt(m) + 'm'
+                  : h < 24 ? parseInt(h) + 'h'
+                  : parseInt(d) + 'd';
+          };
+          let person_retain = states[variables.person_retain] !== undefined || states[variables.person_retain].state !== 'unavailable'
+                        ? time(Date.now() - Date.parse(states[variables.person_retain].state))
+                        : time(Date.now() - Date.parse(entity.last_changed));
           var color = "rgba(48, 128, 181, 0.8)";
           if (input <= 20) {
             color = "#FDD60F";
@@ -1198,16 +1217,26 @@ battery_circle:
                 tspan {
                   font-size: 10px;
                 }
+                .flash-icon {
+                  font-size: 14px;
+                  display: ${states[variables.battery_status].state === 'charging' ? 'block' : 'none'};
+                  animation: blink 1s linear infinite;
+                }
+                @keyframes blink {
+                  50% {
+                    opacity: 0;
+                  }
+                }
               </style>
               <circle cx="25" cy="25" r="${radius}" stroke="${color}" stroke-width="3" fill="none" stroke-linecap="round"/>
-              <text x="50%" y="54%" fill="#8d8e90" font-size="14" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle">${input}<tspan font-size="10">${unit}</tspan></text>
+              <text x="50%" y="15%" class="flash-icon" text-anchor="middle" alignment-baseline="middle">⚡</text>
+              <text x="50%" y="54%" fill="#8d8e90" font-size="14" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle">${person_retain}<tspan font-size="10">${unit}</tspan></text>
             </svg>
           `;
       ]]]
   styles:
     custom_fields:
       icon:
-        - clip-path: circle()
         - width: 82%
         - pointer-events: none
         - display: grid
