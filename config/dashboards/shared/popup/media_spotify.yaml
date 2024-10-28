@@ -28,7 +28,7 @@ browser_mod:
             grid-area: player
           cards:
             - type: custom:mushroom-media-player-card
-              entity: media_player.spotify
+              entity: media_player.spotifyplus_ngoc_nguyen
               icon: mdi:play
               use_media_info: true
               use_media_artwork: false
@@ -106,12 +106,12 @@ browser_mod:
                   }
             - type: conditional
               conditions:
-                - entity: media_player.spotify
+                - entity: media_player.spotifyplus_ngoc_nguyen
                   state_not: 'off'
-                - entity: media_player.spotify
+                - entity: media_player.spotifyplus_ngoc_nguyen
                   state_not: idle
               card:
-                entity: media_player.spotify
+                entity: media_player.spotifyplus_ngoc_nguyen
                 hide:
                   icon: true
                   name: true
@@ -166,7 +166,7 @@ browser_mod:
               }
               :host {
                 --album-art-color:
-                {% if not is_state('media_player.spotify', 'idle') and not is_state('media_player.spotify', 'off') %}
+                {% if not is_state('media_player.spotifyplus_ngoc_nguyen', 'idle') and not is_state('media_player.spotifyplus_ngoc_nguyen', 'off') %}
                   {{ states('sensor.vibrant_color') }}
                 {% else %}
                   var(--rgb-indigo-color)
@@ -177,7 +177,7 @@ browser_mod:
           view_layout:
             grid-area: list
           limit: 13
-          spotify_entity: media_player.spotify
+          spotify_entity: media_player.spotifyplus_ngoc_nguyen
           default_device: Home Assistant
           default: Home Assistant
           playlist_type: featured

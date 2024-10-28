@@ -142,9 +142,10 @@ group:
     name: Media Players
     icon: mdi:play-circle
     entities:
-      - media_player.spotify
+      # - media_player.spotify
       - media_player.living_room_tv
       - media_player.bedroom_tv
+      - media_player.spotifyplus_ngoc_nguyen
   homepod_airplay:
     name: 'Homepod Airplay'
     icon: mdi:speaker
