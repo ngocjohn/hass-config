@@ -91,6 +91,8 @@ logger:
     custom_components.spotcast: error
     custom_components.lunar_phase: debug
 
+logbook:
+
 # TTS
 tts:
   - platform: google_translate

@@ -1017,7 +1017,7 @@ currently_playing:
                 {% if is_state('media_player.mass_universal_airplay', 'playing') %}
                   url( '{{ state_attr('media_player.mass_universal_airplay', "entity_picture") }}')
                 {% else %}
-                  url( '{{ state_attr('media_player.spotify', "entity_picture") }}')
+                  url( '{{ state_attr('media_player.spotifyplus_ngoc_nguyen', "entity_picture") }}')
                 {% endif %} center no-repeat;
               background-size: contain;
               filter: drop-shadow(4px 4px 6px rgba(0, 0, 0, 0.5));

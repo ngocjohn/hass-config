@@ -4,7 +4,7 @@ media_player:
     unique_id: currently_playing
     children:
       - media_player.mass_homepod_airplay
-      - media_player.spotify
+      - media_player.spotifyplus_ngoc_nguyen
       - media_player.living_room_tv
       - media_player.bedroom_tv
   - platform: universal ### CURRENTLY PLAYING ###
@@ -31,7 +31,7 @@ template:
           {% set recently_added = 'Recently added' %}
           {% set paused_timeout_minutes = 2 %}
           {% set media_players = [
-            states.media_player.spotify,
+            states.media_player.spotifyplus_ngoc_nguyen,
             states.sensor.ps5_activity,
             states.media_player.living_room_tv,
             states.media_player.kodi_atv
@@ -56,7 +56,7 @@ template:
           {% set recently_added = ['Recently added'] %}
           {% set upcoming_shows = ['Trakt Upcoming Shows'] %}
           {% set media_players = [
-            states.media_player.spotify,
+            states.media_player.spotifyplus_ngoc_nguyen,
             states.sensor.ps5_activity,
             states.media_player.living_room_tv,
             states.media_player.kodi_atv

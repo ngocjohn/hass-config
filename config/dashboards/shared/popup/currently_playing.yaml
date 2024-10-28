@@ -98,7 +98,7 @@ browser_mod:
                 filter: drop-shadow(4px 4px 6px rgba(0, 0, 0, 0.5));
                 border-radius: var(--control-border-radius);
                 {% set active_child = state_attr(config.entity, 'active_child') %}
-                {% if active_child == 'media_player.spotify' %}
+                {% if active_child == 'media_player.spotifyplus_ngoc_nguyen' %}
                   aspect-ratio: 1 / 1;
                 {% elif active_child == 'media_player.living_room_tv' %}
                   aspect-ratio: 16 / 9;

@@ -33,7 +33,7 @@
                 #     }
 
                 type: custom:button-card
-                entity: media_player.spotify
+                entity: media_player.spotifyplus_ngoc_nguyen
                 template:
                   - tpl_spotify
                 variables:
@@ -206,7 +206,7 @@
                 - icon_apple_tv
             - &grid-spotify-media
               type: custom:button-card
-              entity: media_player.spotify
+              entity: media_player.spotifyplus_ngoc_nguyen
               name: Spotify
               double_tap_action: !include ../../shared/popup/spotify_playlist.yaml
               template:
@@ -308,7 +308,7 @@
                   state: Spotify
               card:
                 type: custom:button-card
-                entity: media_player.spotify
+                entity: media_player.spotifyplus_ngoc_nguyen
                 name: ' '
                 double_tap_action: !include ../../shared/popup/spotify_playlist.yaml
                 template:
