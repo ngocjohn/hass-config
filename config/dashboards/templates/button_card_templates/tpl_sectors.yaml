@@ -881,7 +881,7 @@ alarm:
 front_door:
   template:
     - base
-    - battery_alert
+    # - battery_alert
   styles:
     state:
       - color: >

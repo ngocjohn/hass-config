@@ -252,8 +252,8 @@ grid_front_door:
       - front_door
       - icon_lock
       - loader
-    variables:
-      battery_alert: binary_sensor.nuki_vchod_battery_critical
+    # variables:
+    #   battery_alert: binary_sensor.nuki_vchod_battery_critical
   #  MOTION SENSORS
 grid_motion_sensors:
   card:
