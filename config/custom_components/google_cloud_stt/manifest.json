@@ -1,9 +1,13 @@
 {
   "domain": "google_cloud_stt",
   "name": "Google Cloud Speech-To-Text",
-  "codeowners": ["@chatziko"],
+  "codeowners": ["@chatziko", "@Antoni-Czaplicki"],
   "documentation": "https://github.com/chatziko/ha-google-cloud-stt",
+  "issue_tracker": "https://github.com/chatziko/ha-google-cloud-stt/issues",
   "iot_class": "cloud_push",
-  "version": "0.2.0",
-  "requirements": ["google-cloud-speech==2.19.0"]
+  "version": "0.3.1",
+  "requirements": ["google-cloud-speech"],
+  "config_flow": true,
+  "single_config_entry": true,
+  "integration_type": "service"
 }
