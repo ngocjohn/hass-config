@@ -366,6 +366,45 @@ template:
           motion_detected: >-
             {% set motions =  expand(states.group.motion_sensors) %}
             {{ motions | selectattr('state', 'in', ['detected', 'on']) | map(attribute='name') | list | replace('Motion Sensor ', '') }}
+      # SENSOR - REPO VEHICLE INFO CHART
+      - unique_id: vehicle_info_chart
+        name: 'Vehicle Info Chart'
+        state: >-
+          {{ states.sensor.vehicle_info_card.state }}
+        icon: 'mdi:github'
+        attributes:
+          'v1.5.0': >-
+            {{states.sensor.vehicle_info_card.attributes.releases["v1.5.0"].download_count}}
+          'v1.4.0': >-
+            {{states.sensor.vehicle_info_card.attributes.releases["v1.4.0"].download_count}}
+          'v1.3.1': >-
+            {{states.sensor.vehicle_info_card.attributes.releases["v1.3.1"].download_count}}
+          'v1.3.0': >-
+            {{states.sensor.vehicle_info_card.attributes.releases["v1.3.0"].download_count}}
+          'v1.2.0': >-
+            {{states.sensor.vehicle_info_card.attributes.releases["v1.2.0"].download_count}}
+          'v1.1.2': >-
+            {{states.sensor.vehicle_info_card.attributes.releases["v1.1.2"].download_count}}
+          'v1.1.1': >-
+            {{states.sensor.vehicle_info_card.attributes.releases["v1.1.1"].download_count}}
+          'v1.1.0': >-
+            {{states.sensor.vehicle_info_card.attributes.releases["v1.1.0"].download_count}}
+          'v1.0.7': >-
+            {{states.sensor.vehicle_info_card.attributes.releases["v1.0.7"].download_count}}
+          'v1.0.6': >-
+            {{states.sensor.vehicle_info_card.attributes.releases["v1.0.6"].download_count}}
+          'v1.0.5': >-
+            {{states.sensor.vehicle_info_card.attributes.releases["v1.0.5"].download_count}}
+          'v1.0.4': >-
+            {{states.sensor.vehicle_info_card.attributes.releases["v1.0.4"].download_count}}
+          'v1.0.3': >-
+            {{states.sensor.vehicle_info_card.attributes.releases["v1.0.3"].download_count}}
+          'v1.0.2': >-
+            {{states.sensor.vehicle_info_card.attributes.releases["v1.0.2"].download_count}}
+          'v1.0.1': >-
+            {{states.sensor.vehicle_info_card.attributes.releases["v1.0.1"].download_count}}
+          'v1.0.0': >-
+            {{states.sensor.vehicle_info_card.attributes.releases["v1.0.0"].download_count}}
 
 sensor:
   - platform: template
