@@ -1,8 +1,3 @@
-kiosk_mode:
-  hide_header: false
-  mobile_settings:
-    hide_header: true
-    custom_width: 424
 swipe_nav:
   wrap: false
   animate_duration: 250
@@ -21,4 +16,4 @@ views:
   - !include subviews/movie-panel.yaml
   - !include subviews/ytube-music.yaml
   - !include views/system.yaml
-  # - !include subviews/kodi-library.yaml
+  # - !include subviews/test-lovelace.yaml

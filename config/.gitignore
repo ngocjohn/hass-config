@@ -21,7 +21,7 @@ secrets.yaml
 .youtube_new.txt
 ssl/
 .ssl
-
+.*
 *.pem
 
 icloud/
