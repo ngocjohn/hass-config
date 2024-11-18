@@ -12,7 +12,6 @@
 recorder:
   db_url: !secret mariadb_url
   auto_purge: true
-  purge_keep_days: 7
   commit_interval: 10
   exclude:
     domains:
@@ -59,6 +58,9 @@ recorder:
       - sensor.template_*
       - sensor.trakt_*
       - sensor.unifi_*_activity
+      - sensor.system_monitor_*
+      - sensor.hassio_addons_*
+      - sensor.arris_*
     event_types:
       - call_service
       - component_loaded
@@ -88,8 +90,6 @@ logger:
   default: error
   logs:
     aiohttp: debug
-    custom_components.spotcast: error
-    custom_components.lunar_phase: debug
 
 logbook:
 
