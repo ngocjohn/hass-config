@@ -44,7 +44,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
               <td>52</td>
               <td>31</td>
               <td>1122</td>
-              <td>172</td>
+              <td>171</td>
               <td>38</td>
           </tr>
       </tbody>
@@ -62,6 +62,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - Advanced SSH & Web Terminal
 - ArgonOne Active Linear Cooling
 - Cloudflared
+- DbStats
 - eufy-security-ws
 - Get HACS
 - Glances
@@ -102,10 +103,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Node Red Companion](https://github.com/zachowj/hass-node-red)
 - [Nuki Lock](https://github.com/kvj/hass_nuki_ng)
 - [Portainer](https://github.com/tomaae/homeassistant-portainer)
-- [Pyscript](https://github.com/custom-components/pyscript)
-- [Python Scripts Pro](https://github.com/AlexxIT/PythonScriptsPro)
 - [Remote Home Assistant](https://github.com/custom-components/remote_homeassistant)
-- [Rohlík.Cz Upcoming Order](https://github.com/petrleocompel/hass-rohlikcz)
 - [Simpleicons](https://github.com/vigonotion/hass-simpleicons)
 - [Spook 👻 Your Homie](https://github.com/frenck/spook)
 - [Spotcast](https://github.com/fondberg/spotcast)
@@ -124,13 +122,9 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Atomic Calendar Revive](https://github.com/totaldebug/atomic-calendar-revive)
 - [Auto Entities](https://github.com/thomasloven/lovelace-auto-entities)
 - [Bar Card](https://github.com/custom-cards/bar-card)
-- [Battery State Card / Entity Row](https://github.com/maxwroc/battery-state-card)
 - [Better Thermostat Ui](https://github.com/KartoffelToby/better-thermostat-ui-card)
-- [Bubble Card](https://github.com/Clooos/Bubble-Card)
 - [Button Card](https://github.com/custom-cards/button-card)
 - [Card Mod](https://github.com/thomasloven/lovelace-card-mod)
-- [Circle Menu Card](https://github.com/bhuebschen/circle-menu-card)
-- [Clock Weather Card](https://github.com/pkissling/clock-weather-card)
 - [Custom Brand Icons](https://github.com/elax46/custom-brand-icons)
 - [Custom Icons](https://github.com/Mariusthvdb/custom-icons)
 - [Decluttering Card](https://github.com/custom-cards/decluttering-card)
@@ -141,19 +135,15 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Horizon Card](https://github.com/rejuvenate/lovelace-horizon-card)
 - [Hourly Weather Card](https://github.com/decompil3d/lovelace-hourly-weather)
 - [Hui Element](https://github.com/thomasloven/lovelace-hui-element)
-- [Kiosk Mode](https://github.com/NemesisRE/kiosk-mode)
 - [Layout Card](https://github.com/thomasloven/lovelace-layout-card)
 - [Local Conditional Card](https://github.com/PiotrMachowski/Home-Assistant-Lovelace-Local-Conditional-card)
 - [Logbook Card](https://github.com/royto/logbook-card)
-- [Lovelace Custom Movie Panel](https://github.com/ngocjohn/lovelace-movie-panel)
 - [Lunar Phase Card](https://github.com/ngocjohn/lunar-phase-card)
 - [Mini Graph Card](https://github.com/kalkih/mini-graph-card)
 - [Mini Media Player](https://github.com/kalkih/mini-media-player)
 - [Multiple Entity Row](https://github.com/benct/lovelace-multiple-entity-row)
 - [Mushroom](https://github.com/piitaya/lovelace-mushroom)
-- [Navbar Position](https://github.com/javawizard/ha-navbar-position)
 - [Paper Buttons Row](https://github.com/jcwillox/lovelace-paper-buttons-row)
-- [Platinum Weather Card](https://github.com/Makin-Things/platinum-weather-card)
 - [Polr Ytube Media Card](https://github.com/pathofleastresistor/polr-ytube-media-card)
 - [Purifier Card](https://github.com/denysdovhan/purifier-card)
 - [Restriction Card](https://github.com/iantrich/restriction-card)
@@ -161,18 +151,14 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Rpi Monitor Card](https://github.com/ironsheep/lovelace-rpi-monitor-card)
 - [Search Card](https://github.com/postlund/search-card)
 - [Simple Thermostat](https://github.com/nervetattoo/simple-thermostat)
-- [Simple Weather Card](https://github.com/kalkih/simple-weather-card)
 - [Slider Button Card](https://github.com/custom-cards/slider-button-card)
 - [Spotify Lovelace Card](https://github.com/custom-cards/spotify-card)
 - [Stack In Card](https://github.com/custom-cards/stack-in-card)
 - [State Switch](https://github.com/thomasloven/lovelace-state-switch)
 - [Streamline Card](https://github.com/brunosabot/streamline-card)
-- [Sun Card](https://github.com/edwardtfn/home-assistant-sun-card)
 - [Tabbed Card](https://github.com/kinghat/tabbed-card)
-- [Tailwindcss Template Card](https://github.com/usernein/tailwindcss-template-card)
 - [Timer Bar Card](https://github.com/rianadon/timer-bar-card)
 - [Tv Remote Card (With Touchpad And Haptic Feedback)](https://github.com/usernein/tv-card)
-- [Ultra Vehicle Card](https://github.com/WJDDesigns/Ultra-Vehicle-Card)
 - [Upcoming Media Card](https://github.com/xZetsubou/upcoming-media-card)
 - [Uptime Card](https://github.com/dylandoamaral/uptime-card)
 - [Vehicle Info Card](https://github.com/ngocjohn/vehicle-info-card)
