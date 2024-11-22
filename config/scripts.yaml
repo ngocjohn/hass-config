@@ -614,11 +614,10 @@ vacuum_reset_filter_life_level:
 homepod_alarm:
   alias: Homepod alarm
   sequence:
-  - action: media_player.select_source
+  - action: media_player.turn_on
     target:
-      entity_id: media_player.ytube_music_player
-    data:
-      source: media_player.bedroom
+      entity_id: media_player.bedroom
+    data: {}
   - delay:
       hours: 0
       minutes: 0
@@ -628,26 +627,26 @@ homepod_alarm:
       volume_level: 0.2
     action: media_player.volume_set
     target:
-      device_id: 3fab6f02c76326f188adf406272a7303
+      entity_id: media_player.bedroom
   - delay:
       hours: 0
       minutes: 0
       seconds: 3
       milliseconds: 0
   - data:
-      media_content_id: PLtKqYY37ykx0YVi5RtHZdBQuOEaLmdsE4
-      media_content_type: playlist
+      media_content_id: library://playlist/33
+      media_content_type: music
     metadata:
-      title: Remix
-      thumbnail: https://i.ytimg.com/vi/uFeUKcAAn4c/hq720.jpg?sqp=-oaymwEXCKAGEMIDIAQqCwjVARCqCBh4INgESFo&rs=AMzJL3mQt2LNcPH4MFWT3UTGuPTA5CgbzQ
+      title: My recommendation playlist
+      thumbnail: https://mosaic.scdn.co/640/ab67616d00001e0253334ad518b8ba38211c320bab67616d00001e025675e83f707f1d7271e5cf8aab67616d00001e02c1b211b5fcdef31be5f806dfab67616d00001e02fc915b69600dce2991a61f13
       media_class: playlist
       children_media_class:
       navigateIds:
       - {}
-      - media_content_type: library_playlists
-        media_content_id: ''
+      - media_content_type: mass
+        media_content_id: playlists
     target:
-      entity_id: media_player.ytube_music_player
+      entity_id: media_player.bedroom
     action: media_player.play_media
   - delay:
       hours: 0
@@ -659,7 +658,7 @@ homepod_alarm:
         target_volume: 0.7
         duration: 30
         curve: logarithmic
-        target_player: media_player.ytube_music_player
+        target_player: media_player.bedroom
       action: script.fade_music
   mode: single
   icon: phu:homepod-mini

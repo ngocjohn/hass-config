@@ -397,7 +397,7 @@
       - data: {}
         action: media_player.media_pause
         target:
-          entity_id: media_player.ytube_music_player
+          entity_id: media_player.bedroom
   mode: single
 - id: '1693488019712'
   alias: Nuki Vchod Open
