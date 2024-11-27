@@ -16,5 +16,5 @@
   "requirements": [
     "protobuf>=3.19.1"
   ],
-  "version": "v0.19.1"
+  "version": "v0.20.1"
 }
