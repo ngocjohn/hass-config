@@ -39,11 +39,11 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
           <tr>
               <td>35,482 </td>
               <td>33</td>
-              <td>180</td>
+              <td>181</td>
               <td>38</td>
               <td>52</td>
               <td>31</td>
-              <td>1122</td>
+              <td>1177</td>
               <td>174</td>
               <td>38</td>
           </tr>
@@ -156,6 +156,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Stack In Card](https://github.com/custom-cards/stack-in-card)
 - [State Switch](https://github.com/thomasloven/lovelace-state-switch)
 - [Streamline Card](https://github.com/brunosabot/streamline-card)
+- [Swipe Card](https://github.com/bramkragten/swipe-card)
 - [Tabbed Card](https://github.com/kinghat/tabbed-card)
 - [Timer Bar Card](https://github.com/rianadon/timer-bar-card)
 - [Tv Remote Card (With Touchpad And Haptic Feedback)](https://github.com/usernein/tv-card)
