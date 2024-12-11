@@ -1150,3 +1150,11 @@
     target:
       device_id: d64f95437572d8e12d2e92ea32b8dafc
   mode: single
+- id: '1733711039643'
+  alias: Disable Vacuum Camera
+  description: ''
+  use_blueprint:
+    path: PiotrMachowski/disable_vacuum_camera_update_when_docked.yaml
+    input:
+      vacuum: vacuum.roidmi_eve
+      camera: camera.roidmi_eve
