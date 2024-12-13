@@ -37,14 +37,14 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>36,194 </td>
+              <td>36,202 </td>
               <td>34</td>
-              <td>180</td>
+              <td>155</td>
               <td>38</td>
               <td>52</td>
               <td>31</td>
-              <td>1078</td>
-              <td>174</td>
+              <td>1011</td>
+              <td>133</td>
               <td>38</td>
           </tr>
       </tbody>
@@ -66,6 +66,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - eufy-security-ws
 - Get HACS
 - Glances
+- go2rtc
 - Home Assistant Google Drive Backup
 - MariaDB
 - Mosquitto broker
@@ -73,7 +74,6 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - Node-RED
 - phpMyAdmin
 - PS5 MQTT
-- RTSP Simple Server Add-on
 - Samba share
 - Studio Code Server
 - Xiaomi Mi Scale
@@ -107,6 +107,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Spook 👻 Your Homie](https://github.com/frenck/spook)
 - [Spotcast](https://github.com/fondberg/spotcast)
 - [Spotifyplus](https://github.com/thlucas1/homeassistantcomponent_spotifyplus)
+- [Webrtc Camera](https://github.com/AlexxIT/WebRTC)
 - [Xiaomi Cloud Map Extractor](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor)
 - [Xiaomi Miot Auto](https://github.com/al-one/hass-xiaomi-miot)
 - [Ytube Music Player](https://github.com/KoljaWindeler/ytube_music_player)

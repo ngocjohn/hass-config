@@ -1,0 +1,5 @@
+title: Test
+path: test
+cards:
+  - type: 'custom:webrtc-camera'
+    entity: camera.kids_room
