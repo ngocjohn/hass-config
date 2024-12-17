@@ -40,11 +40,11 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
               <td>36,202 </td>
               <td>34</td>
               <td>178</td>
-              <td>38</td>
+              <td>63</td>
               <td>52</td>
-              <td>31</td>
-              <td>1071</td>
-              <td>174</td>
+              <td>30</td>
+              <td>1083</td>
+              <td>202</td>
               <td>38</td>
           </tr>
       </tbody>
@@ -149,7 +149,6 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Restriction Card](https://github.com/iantrich/restriction-card)
 - [Roku Card](https://github.com/iantrich/roku-card)
 - [Rpi Monitor Card](https://github.com/ironsheep/lovelace-rpi-monitor-card)
-- [Search Card](https://github.com/postlund/search-card)
 - [Simple Thermostat](https://github.com/nervetattoo/simple-thermostat)
 - [Slider Button Card](https://github.com/custom-cards/slider-button-card)
 - [Spotify Lovelace Card](https://github.com/custom-cards/spotify-card)

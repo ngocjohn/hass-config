@@ -32,13 +32,9 @@
                 #       padding: 0px !important;
                 #     }
 
-                type: custom:button-card
-                entity: media_player.spotifyplus_ngoc_nguyen
-                template:
-                  - tpl_spotify
-                variables:
-                  playlist_type: default
-                  country_code: vn
+                type: custom:ytube-playlist-card
+                entity: media_player.ytube_music_player
+                extra: sensor.ytube_music_player_extra
 
                 # type: media-control
                 # entity: media_player.spotify
