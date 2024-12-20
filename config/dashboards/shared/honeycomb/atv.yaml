@@ -1,6 +1,5 @@
-action: call-service
-service: honeycomb
-service_data:
+action: fire-dom-event
+honeycomb_menu:
   entity: media_player.living_room_tv
   audio: /local/sound/popup.m4a
   autoclose: false

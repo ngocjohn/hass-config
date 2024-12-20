@@ -1,6 +1,5 @@
-action: call-service
-service: honeycomb
-service_data:
+action: fire-dom-event
+honeycomb_menu:
   audio: /local/sound/popup.m4a
   autoclose: true
   size: 250

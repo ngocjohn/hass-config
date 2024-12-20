@@ -35,6 +35,12 @@
                 type: custom:ytube-playlist-card
                 entity: media_player.ytube_music_player
                 extra: sensor.ytube_music_player_extra
+                layout:
+                  type: grid
+                  max_columns: 3
+                  max_rows: 3
+                default_page:
+                  type: library_playlists
 
                 # type: media-control
                 # entity: media_player.spotify
