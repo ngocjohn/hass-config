@@ -55,39 +55,115 @@ browser_mod:
               marker_latitude: 50.075763
               marker_longitude: 14.42036
               zoom_level: 5
-              square_map: true
+              square_map: false
               show_recenter: true
               show_playback: false
         - type: entities
-          title: Sunrise & Sunset
+          title: Lunar Phase
           card_mod:
             class: header
-            style: |
-              ha-card {
-                border: none !important;
-              }
           entities:
-            # - type: custom:horizon-card
-            #   moon: true
-            #   refresh_period: 60
-            #   fields:
-            #     sunrise: true
-            #     sunset: true
-            #     dawn: true
-            #     noon: true
-            #     dusk: true
-            #     azimuth: false
-            #     elevation: false
-            #     moonrise: true
-            #     moonset: true
-            #     moon_phase: true
-            #   southern_flip: false
-            #   moon_phase_rotation: -10
-            #   language: en
-            #   time_format: 24
-            #   latitude: 50.55
-            #   longitude: 14.25
-            #   elevation: 300
-            #   time_zone: Europe/Prague
-            #   debug_level: 0
-            - type: custom:sun-card
+            - type: custom:lunar-phase-card
+              card_mod:
+                style:
+                  .: |
+                    ha-card {
+                      background-color: transparent !important;
+                    }
+                  lunar-base-data $: |
+                    .swiper-container {
+                      backdrop-filter: none !important;
+                    }
+              entity: ''
+              12hr_format: false
+              calendar_modal: false
+              compact_view: false
+              default_card: base
+              hide_buttons: false
+              mile_unit: false
+              moon_position: left
+              number_decimals: 2
+              selected_language: en
+              show_background: false
+              southern_hemisphere: false
+              use_custom: false
+              use_default: true
+              use_entity: false
+              graph_config:
+                graph_type: default
+                y_ticks: false
+                x_ticks: true
+                show_time: true
+                show_current: true
+                show_highest: true
+                y_ticks_position: left
+                y_ticks_step_size: 30
+                time_step_size: 30
+                show_legend: true
+                legend_position: top
+                legend_align: center
+              font_customize:
+                header_font_size: x-large
+                header_font_style: capitalize
+                header_font_color: ''
+                label_font_size: auto
+                label_font_style: none
+                label_font_color: ''
+                hide_label: false
+              hide_header: true
+              latitude: 50.060362328075634
+              longitude: 14.399342536926271
+              location:
+                city: Capital City of Prague
+                country: Czechia
+              custom_background: >-
+                https://cdn.jsdelivr.net/gh/ngocjohn/lunar-phase-card@1.7.3/background/moon_bg_1.png
+          footer:
+            type: custom:lunar-phase-card
+            entity: ''
+            12hr_format: false
+            calendar_modal: false
+            compact_view: true
+            default_card: horizon
+            hide_buttons: true
+            mile_unit: false
+            moon_position: left
+            number_decimals: 2
+            selected_language: en
+            show_background: false
+            southern_hemisphere: false
+            use_custom: false
+            use_default: true
+            use_entity: false
+            graph_config:
+              graph_type: dynamic
+              y_ticks: false
+              x_ticks: true
+              show_time: true
+              show_current: true
+              show_highest: true
+              y_ticks_position: left
+              y_ticks_step_size: 30
+              time_step_size: 30
+              show_legend: true
+              legend_position: top
+              legend_align: center
+            font_customize:
+              header_font_size: x-large
+              header_font_style: capitalize
+              header_font_color: ''
+              label_font_size: auto
+              label_font_style: none
+              label_font_color: ''
+              hide_label: false
+            hide_header: true
+            latitude: 50.060362328075634
+            longitude: 14.399342536926271
+            location:
+              city: Capital City of Prague
+              country: Czechia
+            card_mod:
+              style: |
+                ha-card {
+                  background-color: transparent !important;
+                }

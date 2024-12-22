@@ -37,8 +37,11 @@
                 extra: sensor.ytube_music_player_extra
                 layout:
                   type: grid
-                  max_columns: 3
-                  max_rows: 3
+                  max_grid_columns: 3
+                  max_grid_rows: 3
+                  max_list_items: 6
+                  show_header: false
+                  show_footer: false
                 default_page:
                   type: library_playlists
 

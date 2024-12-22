@@ -10,7 +10,7 @@ Hey there! Welcome to my little corner of the tech world! 👨‍💻
 
 This is where I store all the cool configurations for my Home Assistant system. Well, it's a mix of awesome codes and setups I discovered from the Home Assistant community. Seriously, those folks are wizards! 🧙‍♂️ As a bit of an internet newbie turned tech enthusiast, I stumbled upon the magic of IT, and this repository is my way of sharing the joy and knowledge I've gained along the way. Dive in, explore, and let the tech magic begin! ✨
 
-I frequently refresh my configuration files. My current Home Assistant version is <b>2024.12.4</b>. If you find something you like, don't forget to give my repository a ⭐️!
+I frequently refresh my configuration files. My current Home Assistant version is <b>2024.12.5</b>. If you find something you like, don't forget to give my repository a ⭐️!
 
 <video width="100%" controls loop muted>
   <source src="https://github-production-user-asset-6210df.s3.amazonaws.com/96962827/297112091-acc1a4db-b92e-4ab1-ac9d-df067d4ba4d1.mp4" type="video/mp4">
@@ -37,7 +37,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>36,198 </td>
+              <td>36,280 </td>
               <td>34</td>
               <td>178</td>
               <td>63</td>
@@ -102,10 +102,8 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Node Red Companion](https://github.com/zachowj/hass-node-red)
 - [Nuki Lock](https://github.com/kvj/hass_nuki_ng)
 - [Portainer](https://github.com/tomaae/homeassistant-portainer)
-- [Remote Home Assistant](https://github.com/custom-components/remote_homeassistant)
 - [Simpleicons](https://github.com/vigonotion/hass-simpleicons)
 - [Spook 👻 Your Homie](https://github.com/frenck/spook)
-- [Spotcast](https://github.com/fondberg/spotcast)
 - [Spotifyplus](https://github.com/thlucas1/homeassistantcomponent_spotifyplus)
 - [Webrtc Camera](https://github.com/AlexxIT/WebRTC)
 - [Xiaomi Cloud Map Extractor](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor)
@@ -143,11 +141,9 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Mini Media Player](https://github.com/kalkih/mini-media-player)
 - [Multiple Entity Row](https://github.com/benct/lovelace-multiple-entity-row)
 - [Mushroom](https://github.com/piitaya/lovelace-mushroom)
-- [Paper Buttons Row](https://github.com/jcwillox/lovelace-paper-buttons-row)
 - [Polr Ytube Media Card](https://github.com/pathofleastresistor/polr-ytube-media-card)
 - [Purifier Card](https://github.com/denysdovhan/purifier-card)
 - [Restriction Card](https://github.com/iantrich/restriction-card)
-- [Roku Card](https://github.com/iantrich/roku-card)
 - [Rpi Monitor Card](https://github.com/ironsheep/lovelace-rpi-monitor-card)
 - [Simple Thermostat](https://github.com/nervetattoo/simple-thermostat)
 - [Slider Button Card](https://github.com/custom-cards/slider-button-card)
@@ -160,10 +156,8 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Timer Bar Card](https://github.com/rianadon/timer-bar-card)
 - [Tv Remote Card (With Touchpad And Haptic Feedback)](https://github.com/usernein/tv-card)
 - [Upcoming Media Card](https://github.com/xZetsubou/upcoming-media-card)
-- [Uptime Card](https://github.com/dylandoamaral/uptime-card)
 - [Vehicle Info Card](https://github.com/ngocjohn/vehicle-info-card)
 - [Vehicle Status Card](https://github.com/ngocjohn/vehicle-status-card)
-- [Vertical Stack In Card](https://github.com/ofekashery/vertical-stack-in-card)
 - [Weather Card](https://github.com/bramkragten/weather-card)
 - [Weather Chart Card](https://github.com/mlamberts78/weather-chart-card)
 - [Weather Radar Card](https://github.com/Makin-Things/weather-radar-card)

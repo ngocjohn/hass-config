@@ -15,6 +15,9 @@ homeassistant:
     media: /media
 # FRONT - END
 frontend:
+  extra_module_url:
+    - /local/dashboard-resources/sidebar-divider.js
+    - /local/dashboard-resources/template-editor-change.js
   themes: !include_dir_merge_named themes
 
 # HTTP
@@ -31,4 +34,3 @@ stt:
 # INCLUDES
 automation ui: !include automations.yaml
 script: !include scripts.yaml
-
