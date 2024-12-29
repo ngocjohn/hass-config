@@ -339,36 +339,6 @@ fade_music:
       entity_id: '{{ target_player }}'
       volume_level: '{{ target_volume }}'
   icon: mdi:tune-vertical
-kodi_shield:
-  alias: 'KODI Shield '
-  sequence:
-  - if:
-    - condition: state
-      entity_id: media_player.shield_android_tv
-      state: 'off'
-    then:
-    - service: media_player.turn_on
-      data: {}
-      target:
-        entity_id: media_player.shield_android_tv
-    - delay:
-        hours: 0
-        minutes: 0
-        seconds: 2
-        milliseconds: 0
-    - service: media_player.select_source
-      data:
-        source: Kodi
-      target:
-        entity_id: media_player.shield_android_tv
-    else:
-    - service: media_player.select_source
-      data:
-        source: Kodi
-      target:
-        entity_id: media_player.shield_android_tv
-  mode: single
-  icon: mdi:kodi
 morning_cover:
   alias: morning cover
   sequence:
