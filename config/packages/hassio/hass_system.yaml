@@ -59,7 +59,6 @@ recorder:
       - sensor.trakt_*
       - sensor.unifi_*_activity
       - sensor.system_monitor_*
-      - sensor.hassio_addons_*
       - sensor.arris_*
     event_types:
       - call_service
@@ -86,6 +85,11 @@ recorder:
   include:
     entities:
       - device_tracker.findmy_d098350b38e241d3972ad394a27f38b6
+      - sensor.system_monitor_memory_usage
+      - sensor.system_monitor_processor_use
+    entity_globs:
+      - sensor.*_memory_percent
+
 logger:
   default: error
   logs:

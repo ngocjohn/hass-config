@@ -183,4 +183,4 @@ notify:
     name: ngoc_devices
     services:
       - service: mobile_app_viet_ngoc
-      - service: mobile_app_macbook_air
+      # - service: mobile_app_macbook_air
