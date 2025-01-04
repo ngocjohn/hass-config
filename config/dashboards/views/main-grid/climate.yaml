@@ -3,21 +3,53 @@
 #                  CLIMATE                      #
 #                                               #
 #################################################
-- type: grid
-  title: Climate
+# - type: grid
+#   title: Climate
+#   view_layout:
+#     grid-area: climate
+#   columns: 2
+#   cards:
+#     # AIR PURIFIER
+#     - type: custom:decluttering-card
+#       template: grid_air_purifier
+#     # THERMOSTAT
+#     - type: custom:decluttering-card
+#       template: grid_thermostat
+#     # LIVING ROOM COVERS
+#     - type: custom:decluttering-card
+#       template: grid_covers_living
+#     # BEDOOM COVERS
+#     - type: custom:decluttering-card
+#       template: grid_covers_bedroom
+
+- type: vertical-stack
   view_layout:
     grid-area: climate
-  columns: 2
   cards:
-    # AIR PURIFIER
-    - type: custom:decluttering-card
-      template: grid_air_purifier
-    # THERMOSTAT
-    - type: custom:decluttering-card
-      template: grid_thermostat
-    # LIVING ROOM COVERS
-    - type: custom:decluttering-card
-      template: grid_covers_living
-    # BEDOOM COVERS
-    - type: custom:decluttering-card
-      template: grid_covers_bedroom
+    - type: heading
+      heading: Climate
+      heading_style: title
+      tap_action:
+        action: url
+        url_path: https://github.com/ngocjohn/vehicle-status-card
+      badges:
+        - type: entity
+          show_state: true
+          show_icon: true
+          entity: sensor.home_climate
+
+    - type: grid
+      columns: 2
+      cards:
+        # AIR PURIFIER
+        - type: custom:decluttering-card
+          template: grid_air_purifier
+        # THERMOSTAT
+        - type: custom:decluttering-card
+          template: grid_thermostat
+        # LIVING ROOM COVERS
+        - type: custom:decluttering-card
+          template: grid_covers_living
+        # BEDOOM COVERS
+        - type: custom:decluttering-card
+          template: grid_covers_bedroom

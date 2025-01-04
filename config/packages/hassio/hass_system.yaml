@@ -8,92 +8,10 @@
 #
 #- from github.com/ngocjohn/hass-config
 #
-# RECORDER
-recorder:
-  db_url: !secret mariadb_url
-  auto_purge: true
-  commit_interval: 10
-  exclude:
-    domains:
-      - alarm_control_panel
-      - button
-      - camera
-      - fan
-      - input_boolean
-      - input_datetime
-      - input_text
-      - media_player
-      - number
-      - scene
-      - select
-      - sun
-      - switch
-      - update
-      - weather
-      - zone
-    entity_globs:
-      - binary_sensor.browser_*
-      - image.*_qr_code
-      - light.*_group
-      - light.browser_*
-      - sensor.*_color
-      - sensor.*_device_temperature
-      - sensor.*_last_seen
-      - sensor.*_linkquality
-      - sensor.*_motor_speed
-      - sensor.*_power
-      - sensor.*_power_on_behavior
-      - sensor.*_rssi
-      - sensor.*_uptime
-      - sensor.*_voltage
-      - sensor.added_*
-      - sensor.browser_*
-      - sensor.curtain_*
-      - sensor.esp_*
-      - sensor.espresense_*
-      - sensor.kuchyn_*
-      - sensor.macbook_*
-      - sensor.office_lamp_*
-      - sensor.sun_*
-      - sensor.template_*
-      - sensor.trakt_*
-      - sensor.unifi_*_activity
-      - sensor.system_monitor_*
-      - sensor.arris_*
-    event_types:
-      - call_service
-      - component_loaded
-    entities:
-      - cover.curtain_4d3d
-      - light.office_lamp_bulb
-      - light.sony_tv_backlight
-      - script.fade_music
-      - script.fade_volume
-      - sensor.arris_tg3442de_download_speed
-      - sensor.arris_tg3442de_upload_speed
-      - sensor.chromecast_devices
-      - sensor.date
-      - sensor.home_climate
-      - sensor.kitchen_main_light_energy
-      - sensor.lights_count
-      - sensor.memory_free
-      - sensor.motion_detected
-      - sensor.playlists_sensor
-      - sensor.template_sidebar
-      - sensor.time
-      - sensor.zhimi_mb4_b008_moto_speed_rpm
-  include:
-    entities:
-      - device_tracker.findmy_d098350b38e241d3972ad394a27f38b6
-      - sensor.system_monitor_memory_usage
-      - sensor.system_monitor_processor_use
-    entity_globs:
-      - sensor.*_memory_percent
+# # RECORDER
 
 logger:
   default: error
-  logs:
-    aiohttp: debug
 
 logbook:
 

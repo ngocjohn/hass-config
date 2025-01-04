@@ -31,7 +31,7 @@
   variables:
     e1_entity: sensor.current_version
     e1_name: Installed
-    e2_entity: sensor.hass_db
+    e2_entity: sensor.home_assistant_v2_db_size
     e2_name: Database
   view_layout:
     grid-row: span 2

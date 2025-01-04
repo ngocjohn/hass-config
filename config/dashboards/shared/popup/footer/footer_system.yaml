@@ -26,18 +26,18 @@ browser_mod:
             # - entity: sensor.home_assistant_versions
             #   name: Latest
             # - entity: sensor.template_hass_next_release
-            - entity: sensor.hass_db
+            - entity: sensor.home_assistant_v2_db_size
               name: Database
               icon: mdi:database
             # - entity: sensor.home_assistant_log_size
             #   name: Logfile
             #   icon: mdi:file-document
-            - type: attribute
-              entity: sensor.backup_state
-              attribute: last_backup
-              name: Last backup
-              icon: mdi:cloud-upload
-              format: relative
+            # - type: attribute
+            #   entity: sensor.backup_state
+            #   attribute: last_backup
+            #   name: Last backup
+            #   icon: mdi:cloud-upload
+            #   format: relative
             - type: custom:bar-card
               width: 55%
               height: 2em

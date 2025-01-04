@@ -93,43 +93,6 @@ template:
           {%- set cpu = states.sensor.system_monitor_processor_use.state | float -%}
             MEMORY: {{memory}}% | CPU: {{cpu}}%
         icon: mdi:home-assistant
-        attributes:
-          addons_memory: >-
-            {
-              {%- for ent in expand(integration_entities('hassio')) -%}
-                {%- if ent.entity_id.endswith('_memory_percent') -%}
-                  {%- set name = ent.name | lower | replace(' memory percent', '') | title -%}
-                  {%- set state = ent.state ~ '%' -%}
-                  "{{ name }}": "{{ state }}",
-                {%- endif -%}
-              {%- endfor -%}
-            }
-          addons_data: >-
-            {
-            {%- set memory_entities = states.sensor | selectattr('entity_id', 'search', '_memory_percent$') | list -%}
-            {%- set cpu_entities = states.sensor | selectattr('entity_id', 'search', '_cpu_percent$') | list -%}
-            {%- set running_entities = states.binary_sensor | selectattr('entity_id', 'search', '_running$') | list -%}
-
-            {%- for memory_ent in memory_entities -%}
-                {%- set memory_device_id = device_id(memory_ent.entity_id) -%}
-                {%- set manufacturer = device_attr(memory_device_id, 'name') -%}
-                {%- set memory_state = memory_ent.state -%}
-
-                {%- for cpu_ent in cpu_entities if device_id(cpu_ent.entity_id) == memory_device_id -%}
-                    {%- set cpu_state = cpu_ent.state -%}
-
-                    {%- for running_ent in running_entities if device_id(running_ent.entity_id) == memory_device_id -%}
-                        {%- set running_state = running_ent.state -%}
-                        {%- if not loop.first %},{% endif -%}
-                        "{{ manufacturer }}": {
-                            "memory": {{ memory_state }},
-                            "cpu": {{ cpu_state }},
-                            "running": "{{ running_state }}"
-                        },
-                    {%- endfor -%}
-                {%- endfor -%}
-            {%- endfor -%}
-            }
 
 command_line:
   - sensor:

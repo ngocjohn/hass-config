@@ -53,7 +53,7 @@
             - chip_system
         - type: custom:button-card
           name: Database
-          entity: sensor.hass_db
+          entity: sensor.home_assistant_v2_db_size
           show_icon: true
           template:
             - chip_system

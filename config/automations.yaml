@@ -585,24 +585,24 @@
 - id: '1700514428812'
   alias: Notify HA System usage
   description: Memory or CPU leak
-  trigger:
-  - platform: numeric_state
-    entity_id:
+  triggers:
+  - entity_id:
     - sensor.system_monitor_memory_usage
     - sensor.system_monitor_processor_use
     for:
       hours: 0
-      minutes: 5
+      minutes: 7
       seconds: 0
     above: 70
-  condition: []
-  action:
+    trigger: numeric_state
+  conditions: []
+  actions:
   - parallel:
-    - service: notify.notify
-      data:
+    - data:
         message: Memory {{ states.sensor.system_monitor_memory_usage.state }}% - CPU
           {{ states.sensor.system_monitor_processor_use.state }}%
         title: System
+      action: notify.notify
   mode: single
 - id: '1701118898607'
   alias: Notify_Github
