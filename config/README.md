@@ -37,13 +37,13 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>36,122 </td>
+              <td>36,161 </td>
               <td>32</td>
-              <td>184</td>
+              <td>170</td>
               <td>62</td>
               <td>52</td>
               <td>32</td>
-              <td>1116</td>
+              <td>1072</td>
               <td>212</td>
               <td>37</td>
           </tr>
@@ -118,14 +118,12 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Bar Card](https://github.com/custom-cards/bar-card)
 - [Better Thermostat Ui](https://github.com/KartoffelToby/better-thermostat-ui-card)
 - [Button Card](https://github.com/custom-cards/button-card)
-- [Card Mod](https://github.com/thomasloven/lovelace-card-mod)
 - [Custom Brand Icons](https://github.com/elax46/custom-brand-icons)
 - [Custom Icons](https://github.com/Mariusthvdb/custom-icons)
 - [Decluttering Card](https://github.com/custom-cards/decluttering-card)
 - [Fold Entity Row](https://github.com/thomasloven/lovelace-fold-entity-row)
 - [Ha Floorplan 🖌🎨 | Your Imagination Just Became The New Limit](https://github.com/ExperienceLovelace/ha-floorplan)
 - [History Explorer Card](https://github.com/SpangleLabs/history-explorer-card)
-- [Honeycomb Menu](https://github.com/Sian-Lee-SA/honeycomb-menu)
 - [Horizon Card](https://github.com/rejuvenate/lovelace-horizon-card)
 - [Hourly Weather Card](https://github.com/decompil3d/lovelace-hourly-weather)
 - [Hui Element](https://github.com/thomasloven/lovelace-hui-element)

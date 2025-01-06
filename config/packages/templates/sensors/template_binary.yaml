@@ -68,5 +68,5 @@ template:
       - name: 'MacbookPro'
         unique_id: '1bd2146a-71b3-4b5b-b86a-14c732042731'
         device_class: running
-        icon: ios:desktopcomputer
+        icon: custom:ios-desktop-computer
         state: "{{ is_state_attr('binary_sensor.mbproserver_active', 'Sleeping', false ) }}"

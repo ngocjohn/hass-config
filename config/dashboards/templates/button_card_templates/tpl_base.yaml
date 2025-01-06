@@ -369,7 +369,7 @@ extra_styles:
             font-family: Futura;
           }
         }
-        ${variables.tilt_enable === true ? `
+        ${variables.tilt_enable ? `
          /* * * * * * * * * * * * * * * * * *
           *                                 *
           *              TILT               *

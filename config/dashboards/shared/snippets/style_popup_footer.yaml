@@ -17,6 +17,7 @@ style:
             border-right: 0.1vw solid rgba(58, 69, 73, 0.2);
             border-radius: 0;
             transition: none;
+            margin-bottom: 0 !important;
           }
           /* portrait */
           @media screen and (max-width: 800px) {

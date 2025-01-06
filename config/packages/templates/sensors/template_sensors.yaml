@@ -47,9 +47,9 @@ template:
           {% if states('sensor.home_climate') in ['Excellent', 'Good'] %}
             mdi:leaf
           {% elif states('sensor.home_climate') in ['Fair', 'Interior'] %}
-            ios:aqi-medium
+            custom:ios-aqi-medium
           {% else %}
-            ios:aqi-high
+            custom:ios-aqi-high
           {%- endif %}
         attributes:
           average_temperature: >-
@@ -341,11 +341,11 @@ template:
           {% if 'Guest' in this.state %}
           fas:person-circle-question
           {% elif 'Away' in this.state %}
-          ios:car
+          custom:ios-car
           {% elif 'Night' in this.state %}
-          ios:moon-stars-fill
+          custom:ios-moon-stars-fill
           {% else %}
-          ios:house-fill
+          custom:ios-house-fill
           {% endif %}
       # SENSOR - SECURITY - MOTION STATE
       - unique_id: motion_state

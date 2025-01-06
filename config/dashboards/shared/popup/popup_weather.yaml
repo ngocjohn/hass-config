@@ -69,6 +69,8 @@ browser_mod:
                   .: |
                     ha-card {
                       background-color: transparent !important;
+                      justify-content: flex-start !important;
+                      box-shadow: none !important;
                     }
                   lunar-base-data $: |
                     .swiper-container {
@@ -79,7 +81,7 @@ browser_mod:
               calendar_modal: false
               compact_view: false
               default_card: base
-              hide_buttons: false
+              hide_buttons: true
               mile_unit: false
               moon_position: left
               number_decimals: 2
@@ -166,4 +168,5 @@ browser_mod:
               style: |
                 ha-card {
                   background-color: transparent !important;
+                  box-shadow: none !important;
                 }

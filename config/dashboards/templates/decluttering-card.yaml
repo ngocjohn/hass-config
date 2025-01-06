@@ -766,7 +766,7 @@ footer:
           - footer
       - type: custom:button-card
         name: >
-          <ha-icon icon="ios:pc"></ha-icon> Server
+          <ha-icon icon="custom:ios-desktop-computer"></ha-icon> Server
         tap_action: !include ../shared/popup/footer/footer_mbproserver.yaml
         template:
           - footer

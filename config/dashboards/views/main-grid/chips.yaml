@@ -44,7 +44,7 @@
           type: custom:button-card
           name: Media
           entity: sensor.currently_playing
-          icon: ios:tv-and-hifispeaker-fill
+          icon: custom:ios-hifi-stereo
           template:
             - chips
           state_display: >
@@ -86,20 +86,14 @@
         icon:
           - color: >
               [[[
-                let state;
-                if (variables.state === 'Guest') {
-                  state = '#337acc';
+                const stateColor = {
+                  'Normal': '#607D8B',
+                  'Guest': '#337acc',
+                  'Away': '#f77f00',
+                  'Night': '#003049'
                 }
-                if (variables.state === 'Normal') {
-                  state = '#607D8B';
-                }
-                if (variables.state === 'Away') {
-                  state = '#f77f00';
-                }
-                if (variables.state === 'Night') {
-                  state = '#003049';
-                }
-                return `${state}`
+                return stateColor[variables.state] ;
+
               ]]]
     - *lights
     - *media

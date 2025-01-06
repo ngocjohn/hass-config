@@ -7,16 +7,17 @@ type: custom:grid-layout
 layout:
   # default:
   margin: 0
-  grid-gap: 3% 1%
+  grid-gap: 1.8vw 1vw
+  height: 100%
   grid-template-columns: 0 1fr 1fr 1fr 1fr 1fr 1fr 0
-  grid-template-rows: 0 min-content fit-content(100%) fit-content(100%) fit-content(100%) 0
+  grid-template-rows: min-content 1fr 1fr fit-content(100%) 0
   grid-template-areas: |
-    ". .         .          .         .        .          .          ."
     ". chips     chips      chips     chips    header     header     ."
     ". security  mainrooms  devices   other    floorplan  floorplan  ."
     ". cameras   climate    media     movies   floorplan  floorplan  ."
     ". footer    footer     footer    footer   nowplaying nowplaying ."
     ". .         .          .         .        .          .          ."
+
   mediaquery:
     #laptop
     '(min-width: 1441px) and (max-width: 1770px)':

@@ -25,7 +25,7 @@ browser_mod:
               icon: mdi:home-assistant
             # - entity: sensor.home_assistant_versions
             #   name: Latest
-            # - entity: sensor.template_hass_next_release
+            - entity: sensor.template_hass_next_release
             - entity: sensor.home_assistant_v2_db_size
               name: Database
               icon: mdi:database
@@ -80,6 +80,7 @@ browser_mod:
                     service: homeassistant.update_entity
                     service_data:
                       entity_id: sensor.system_monitor_disk_use
+
             - type: custom:hui-horizontal-stack-card
               cards:
                 - type: custom:button-card

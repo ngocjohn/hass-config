@@ -13,12 +13,11 @@
       uimode: dark
       defaultTimeOffset: 1h
       refresh:
-        automatic: true
-        interval: 30
+        automatic: false
       combineSameUnits: true
-      defaultTimeRange: 12h
+      defaultTimeRange: 24h
       decimation: fast
-      lineGraphHeight: 300
+      lineGraphHeight: 450
       labelsVisible: true
       legendVisible: false
       uiLayout:
