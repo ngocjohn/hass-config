@@ -3,55 +3,64 @@
 #      FLOORPLAN MAX RESOLUTION                 #
 #                                               #
 #################################################
-- type: custom:floorplan-card
+- type: 'custom:layout-card'
+  layout_type: 'custom:grid-layout'
   view_layout:
     grid-area: floorplan
-    show:
-      mediaquery: '(min-width: 1441px)'
-  card_mod:
-    style: |
-      ha-card {
-        margin: 0;
-        background: radial-gradient(circle, rgb(255 255 255 / 14%) 27%, rgba(57,14,14,0) 61%);
-        box-shadow: none;
-        position: relative;
-        opacity: 0;
-        animation-name: fade-in;
-        animation-duration: 2s;
-        animation-fill-mode: forwards;
-        animation-iteration-count: 1;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden !important;
-      }
-      @keyframes slide-opacity {
-        0% {
-          transform: translateX(100%);
-          opacity: 0;
-        }
-        100% {
-          transform: translateX(0%);
-          opacity: 1;
-        }
-      }
-      @keyframes fade-in2 {
-        0%   {opacity: 0; left: 100%;}
-        100% {opacity: 1; left: 0;}
-      }
+    mediaquery: '(min-width: 1441px)'
+  layout:
+    grid-template-columns: 1fr
+    grid-template-rows: 1fr fit-content(100%)
+    grid-gap: 0
+    margin: 0
+    height: 100%
 
-      @keyframes fade-in {
-        0%   {opacity: 0;}
-        100% {opacity: 1;}
-      }
-  config:
-    image: /local/hafloor/plan_opt.svg
-    stylesheet: /local/hafloor/style.css
-    # log_level: info
-    # console_log_level: debug
-    rules: !include_dir_merge_list /config/dashboards/floorplan/
+  cards:
+    - type: custom:floorplan-card
+      card_mod:
+        style: |
+          ha-card {
+            margin: 0;
+            background: radial-gradient(circle, rgb(255 255 255 / 14%) 27%, rgba(57,14,14,0) 61%);
+            box-shadow: none;
+            position: relative;
+            opacity: 0;
+            animation-name: fade-in;
+            animation-duration: 2s;
+            animation-fill-mode: forwards;
+            animation-iteration-count: 1;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden !important;
+          }
+          @keyframes slide-opacity {
+            0% {
+              transform: translateX(100%);
+              opacity: 0;
+            }
+            100% {
+              transform: translateX(0%);
+              opacity: 1;
+            }
+          }
+          @keyframes fade-in2 {
+            0%   {opacity: 0; left: 100%;}
+            100% {opacity: 1; left: 0;}
+          }
 
+          @keyframes fade-in {
+            0%   {opacity: 0;}
+            100% {opacity: 1;}
+          }
+      config:
+        image: /local/hafloor/plan_opt.svg
+        stylesheet: /local/hafloor/style.css
+        # log_level: info
+        # console_log_level: debug
+        rules: !include_dir_merge_list /config/dashboards/floorplan/
+    - !include ../../shared/columns/nowplaying.yaml
 #################################################
 #                                               #
 #           FLOORPLAN PORTRAIT                  #

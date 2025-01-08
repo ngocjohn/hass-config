@@ -11,13 +11,13 @@
       cardName: historycard-sys
       header: 'Monitoring'
       uimode: dark
-      defaultTimeOffset: 1h
+      defaultTimeOffset: 0
       refresh:
         automatic: false
       combineSameUnits: true
-      defaultTimeRange: 24h
+      defaultTimeRange: 12h
       decimation: fast
-      lineGraphHeight: 450
+      lineGraphHeight: 300
       labelsVisible: true
       legendVisible: false
       uiLayout:
@@ -29,6 +29,10 @@
         - type: line
           entities:
             - entity: sensor.*_cpu_percent
+              lineMode: lines
+        - type: line
+          entities:
+            - entity: sensor.*_memory_percent
               lineMode: lines
         - type: line
           entities:

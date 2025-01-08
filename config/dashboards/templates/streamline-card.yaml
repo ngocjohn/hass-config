@@ -562,10 +562,10 @@ grid_cam_kids:
     styles:
       card:
         - background-position: center
-    #     - background-image: >
-    #         [[[
-    #             return `linear-gradient(0deg, rgba(0,0,0,.3) 0%, rgba(0,0,0,0) 100%), url(/local/tmp/${variables.entity_id}-latest.jpg)`;
-    #         ]]]
+        - background-image: >
+            [[[
+                return `linear-gradient(0deg, rgba(0,0,0,.3) 0%, rgba(0,0,0,0) 100%), url(/local/tmp/${variables.entity_id}-latest.jpg)`;
+            ]]]
   # CAM TERRACE
 grid_cam_terrace:
   card:
