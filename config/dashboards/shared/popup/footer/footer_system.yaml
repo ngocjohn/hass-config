@@ -26,7 +26,7 @@ browser_mod:
             # - entity: sensor.home_assistant_versions
             #   name: Latest
             - entity: sensor.template_hass_next_release
-            - entity: sensor.home_assistant_v2_db_size
+            - entity: sensor.ha_db
               name: Database
               icon: mdi:database
             # - entity: sensor.home_assistant_log_size
@@ -56,30 +56,17 @@ browser_mod:
                   to: 100
               entity_row: true
               entities:
-                - entity: sensor.system_monitor_processor_use
+                - entity: sensor.ha_system_cpu_usage
                   name: Processor
-                  tap_action:
-                    action: call-service
-                    service: homeassistant.update_entity
-                    service_data:
-                      entity_id: sensor.system_monitor_processor_use
-                - entity: sensor.system_monitor_processor_temperature
+                - entity: sensor.ha_system_cpu_thermal_0_temperature
                   name: Temperature
                   icon: mdi:thermostat
-                - entity: sensor.system_monitor_memory_usage
+                - entity: sensor.ha_system_memory_usage
                   name: Memory
-                  tap_action:
-                    action: call-service
-                    service: homeassistant.update_entity
-                    service_data:
-                      entity_id: sensor.system_monitor_memory_usage
-                - entity: sensor.system_monitor_disk_usage
+                  icon: mdi:memory
+                - entity: sensor.ha_system_data_disk_usage
                   name: Disk used
-                  tap_action:
-                    action: call-service
-                    service: homeassistant.update_entity
-                    service_data:
-                      entity_id: sensor.system_monitor_disk_use
+                  icon: mdi:harddisk
 
             - type: custom:hui-horizontal-stack-card
               cards:

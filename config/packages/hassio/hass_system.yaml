@@ -8,7 +8,9 @@
 #
 #- from github.com/ngocjohn/hass-config
 #
-# # RECORDER
+# RECORDER
+recorder:
+  db_url: !secret mariadb_url
 
 logger:
   default: error

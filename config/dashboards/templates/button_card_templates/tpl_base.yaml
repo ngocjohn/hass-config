@@ -96,7 +96,6 @@ base:
       - border-radius: var(--button-card-border-radius)
       - border-width: 0
       - --webkit-tap-highlight-color: rgba(250,250,250,1)
-      - transition: none
       - box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.15)
       - text-rendering: auto
       - -webkit-font-smoothing: antialiased
@@ -321,11 +320,12 @@ extra_styles:
         #card {
           padding: 10.9% 9.9% 8.9% 10.9%;
           cursor: url("data:image/svg+xml,%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='24px' height='24px' viewBox='0 0 512 512' style='enable-background:new 0 0 512.011 512.011;' xml:space='preserve'%3E %3Cpath fill='SteelBlue' stroke='white' stroke-width='10' d='M434.215,344.467L92.881,3.134c-4.16-4.171-10.914-4.179-15.085-0.019  c-2.011,2.006-3.139,4.731-3.134,7.571v490.667c0.003,4.382,2.685,8.316,6.763,9.92c4.081,1.603,8.727,0.545,11.712-2.667  l135.509-145.92h198.016c5.891,0.011,10.675-4.757,10.686-10.648C437.353,349.198,436.226,346.473,434.215,344.467z'/%3E %3C/svg%3E"), pointer;
+          transition: border 300s ease-in-out box-shadow 400ms ease-in-out ;
         }
         ${ variables.hover_enable
           ?
             `#card:hover {
-              box-shadow: inset 0 0 30px var(--tablet-primary-color) !important;
+              box-shadow: inset 0 0 2rem var(--tablet-primary-color) !important;
               border: 1px solid var(--tablet-primary-color) !important;
               ${!variables.state_on ? 'color: unset !important;' :''}
             }`
@@ -929,7 +929,7 @@ extra_styles:
           /* phone */
           @media screen and (max-width: 800px) {
             #card {
-              border-radius: 0.5rem;
+              border-radius: 0.9rem;
             }
             #name {
               font-size: calc(var(--chips-card-font-size) * var(--chips-phone));
@@ -973,13 +973,13 @@ extra_styles:
           @keyframes marquee {
             0%,
             70% {
-              transform: translateX(-25%);
+              transform: translateX(-35%);
               scale: 0.9;
             }
             40%,
             100% {
               transform: translateX(15%);
-              scale: 1.1;
+              scale: 1;
             }
           }
           #container {
@@ -988,14 +988,11 @@ extra_styles:
           #img-cell {
             display: grid;
             place-self: center;
-            max-height: 120px !important;
-            / animation: marquee 20s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
-            / animation-direction: alternate-reverse;
+            max-height: 100px !important;
+            animation: marquee 20s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+            animation-direction: alternate-reverse;
           }
-          #icon {
-            object-fit: none !important;
-            width: 100% !important;
-          }
+
           #state {
             display: flex;
             flex-direction: column;
@@ -1008,13 +1005,13 @@ extra_styles:
           }
 
           .feels_like {
-            font-size: 1.2rem;
+            font-size: 1em;
             font-weight: 400;
-            font-family: 'Roboto';
+            //font-family: 'Roboto';
             text-align: -webkit-match-parent;
           }
           .realtemp {
-            font-size: 5rem;
+            font-size: 4em;
             font-weight: 500;
             font-family: 'Raleway';
             position: relative;
@@ -1031,17 +1028,16 @@ extra_styles:
             display: flex;
             place-self: end;
           }
-          @media screen and (max-width: 800px) {
+          @media screen and (max-width: 1710px) {
             #container {
-              grid-template-columns: 1fr 1fr auto !important;
+              grid-template-columns: 1fr auto !important;
+              grid-auto-rows: fit-content(100%) fit-content(100%);
             }
             #label {
-              display: none !important;
-
+              display: none;
             }
-            #icon {
-              width: 50% !important;
-            }
+          }
+          @media screen and (max-width: 800px) {
             .realtemp {
               font-size: 2.3rem;
             }
@@ -1050,6 +1046,13 @@ extra_styles:
             }
             .degree-symbol {
               right: auto;
+            }
+            #icon {
+              width: 100%;
+              position: relative;
+              max-width: calc(100vw / 3) !important;
+              object-fit: scale-down !important;
+              height: fit-content !important;
             }
           }
           ul {
@@ -1096,10 +1099,15 @@ extra_styles:
             display: flex;
             flex-direction: column;
           }
+          #card {
+            padding: inherit;
+            width: 100%;
+            overflow: visible;
+          }
           #name {
             place-self: center;
-            line-height: 100%;
-            font-size: 3.5vw;
+            line-height: normal;
+            font-size: 4em;
             font-weight: 800;
             color: #97989c;
             font-family: auto;

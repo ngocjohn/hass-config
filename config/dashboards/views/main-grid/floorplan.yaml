@@ -7,7 +7,8 @@
   layout_type: 'custom:grid-layout'
   view_layout:
     grid-area: floorplan
-    mediaquery: '(min-width: 1441px)'
+    show:
+      mediaquery: '(min-width: 1441px)'
   layout:
     grid-template-columns: 1fr
     grid-template-rows: 1fr fit-content(100%)
@@ -21,7 +22,7 @@
         style: |
           ha-card {
             margin: 0;
-            background: radial-gradient(circle, rgb(255 255 255 / 14%) 27%, rgba(57,14,14,0) 61%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.13) 0%, transparent 50%);
             box-shadow: none;
             position: relative;
             opacity: 0;
@@ -66,57 +67,35 @@
 #           FLOORPLAN PORTRAIT                  #
 #                                               #
 #################################################
-- type: horizontal-stack
+- type: custom:floorplan-card
   view_layout:
     grid-area: floorplan
     show:
       mediaquery: '(max-width: 1440px)'
-  cards:
-    - type: custom:local-conditional-card
-      default: show
-      id: landscape
-      card:
-        type: custom:floorplan-card
-        card_mod:
-          style: |
-            ha-card {
-              margin: 1% 13%;
-              background: radial-gradient(circle, rgb(255 255 255 / 14%) 27%, rgba(57,14,14,0) 61%);
-              box-shadow: none;
-            }
-            @media screen and (max-width: 1440px) {
-              ha-card  {
-                margin: 0 13% !important;
-              }
-            }
-            @media screen and (max-width: 800px) {
-              ha-card  {
-                margin: 0 !important;
-                padding-top: 3vh;
-              }
-            }
-        config:
-          image: /local/hafloor/plan_opt.svg
-          stylesheet: /local/hafloor/style.css
-          defaults:
-            hover_action: false
-            tap_action: false
-          # log_level: info
-          # console_log_level: info
-          rules: !include_dir_merge_list /config/dashboards/floorplan/
-    - type: custom:local-conditional-card
-      default: hide
-      id: portrait
-      card:
-        type: custom:floorplan-card
-        # full_height: true
-        # card_mod:
-        #   style: *style_portrait
-        # # config: !include floorplan/floor_plan.yaml
-        config:
-          image: /local/hafloor/ip_floorplan/iphone_opt.svg
-          stylesheet: /local/hafloor/style.css
-          defaults:
-            hover_action: false
-            tap_action: false
-          rules: !include_dir_merge_list /config/dashboards/floorplan
+  card_mod:
+    style: |
+      ha-card {
+        margin: 1% 13%;
+        background: radial-gradient(circle, rgb(255 255 255 / 14%) 27%, rgba(57,14,14,0) 61%);
+        box-shadow: none;
+      }
+      @media screen and (max-width: 1440px) {
+        ha-card  {
+          margin: 0 13% !important;
+        }
+      }
+      @media screen and (max-width: 800px) {
+        ha-card  {
+          margin: 0 !important;
+          padding-top: 3vh;
+        }
+      }
+  config:
+    image: /local/hafloor/plan_opt.svg
+    stylesheet: /local/hafloor/style.css
+    defaults:
+      hover_action: false
+      tap_action: false
+    # log_level: info
+    # console_log_level: info
+    rules: !include_dir_merge_list /config/dashboards/floorplan/

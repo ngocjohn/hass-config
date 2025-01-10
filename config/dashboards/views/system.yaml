@@ -3,20 +3,32 @@ icon: mdi:chart-box
 theme: tablet
 path: system
 layout:
-  default:
+  # default:
   margin: 0
-  grid-gap: 3% 1%
   height: 100%
+  grid-gap: 3% 1%
+  overflow: hidden
   grid-template-columns: 0 1fr 1fr 1fr 1fr 1fr 1fr 0
-  grid-template-rows: 0 min-content 1fr 1fr fit-content(100%) 0
+  grid-template-rows: 0 min-content 1fr fit-content(100%) 0
   grid-template-areas: |
     ". .         .          .         .        .          .          ."
-    ". chips     chips      chips     chips    .          .          ."
+    ". chips     chips      chips     chips    .         .         ."
     ". cc        cc         cc        cc       c2         c2         ."
-    ". cc        cc         cc        cc       c2         c2         ."
-    ". footer    footer     footer    footer   nowplaying nowplaying ."
+    ". footer    footer     footer    footer   .         .         ."
     ". .         .          .         .        .          .          ."
   mediaquery:
+    #portrait
+    '(min-width: 801px) and (max-width: 1440px)':
+      grid-gap: 1% 1.5%
+      grid-template-columns: 0 1fr 1fr 1fr 0
+      grid-template-rows: 0 min-content 1fr 1fr fit-content 0
+      grid-template-areas: |
+        ".  .         .          .      ."
+        ".  chips     chips      chips  ."
+        ".  cc        cc         cc     ."
+        ".  c2        c2         c2     ."
+        ".  footer    footer     footer ."
+        ".  .         .          .      ."
     # phone
     '(max-width: 800px)':
       # grid-gap: calc(var(--custom-layout-card-padding) * 1.7)

@@ -4,10 +4,6 @@
 #                                               #
 #################################################
 type: custom:stack-in-card
-visibility:
-  - condition: state
-    entity: media_player.spotifyplus_ngoc_nguyen
-    state_not: 'off'
 card_mod:
   style: |
     :host {
@@ -39,7 +35,7 @@ card_mod:
       background-position: right;
       background-repeat: no-repeat;
       background-blend-mode: saturation;
-      # opacity: 0;
+      display: {{ iif (is_state('media_player.spotifyplus_ngoc_nguyen', 'off'), 'none', 'block') }};
     }
 
 cards:

@@ -89,34 +89,34 @@ group:
     icon: mdi:motion-sensor
     entities:
       - binary_sensor.motion_sensor_bathroom_occupancy
-      - binary_sensor.motion_sensor_shower_room_occupancy
       - binary_sensor.motion_sensor_bedroom_occupancy
-      - binary_sensor.motion_sensor_utility_room_occupancy
-      - binary_sensor.motion_sensor_kitchen_occupancy
       - binary_sensor.motion_sensor_entrance_occupancy
       - binary_sensor.motion_sensor_hallway_occupancy
+      - binary_sensor.motion_sensor_kitchen_occupancy
+      - binary_sensor.motion_sensor_shower_room_occupancy
+      - binary_sensor.motion_sensor_utility_room_occupancy
   contact_sensors:
     name: Contact sensors
     icon: mdi:window-open-variant
     entities:
-      - binary_sensor.contact_sensor_bathroom_contact
-      - binary_sensor.contact_sensor_shower_room_contact
+      - binary_sensor.contact_sensor_bathroom
       - binary_sensor.contact_sensor_bedroom_balcony_contact
-      - binary_sensor.contact_sensor_kid_balcony_contact
-      - binary_sensor.contact_sensor_terrace_door
-      - binary_sensor.contact_sensor_garden_door
       - binary_sensor.contact_sensor_entrance_door
+      - binary_sensor.contact_sensor_garden_door
+      - binary_sensor.contact_sensor_kid_balcony_contact
       - binary_sensor.contact_sensor_office_balcony_contact
+      - binary_sensor.contact_sensor_shower_room_contact
+      - binary_sensor.contact_sensor_terrace_door
   security_doors:
     name: Security Doors sensors
     icon: mdi:door
     entities:
       - binary_sensor.contact_sensor_bedroom_balcony_contact
-      - binary_sensor.contact_sensor_kid_balcony_contact
-      - binary_sensor.contact_sensor_terrace_door
-      - binary_sensor.contact_sensor_garden_door
       - binary_sensor.contact_sensor_entrance_door
+      - binary_sensor.contact_sensor_garden_door
+      - binary_sensor.contact_sensor_kid_balcony_contact
       - binary_sensor.contact_sensor_office_balcony_contact
+      - binary_sensor.contact_sensor_terrace_door
   cameras:
     name: Camera Group
     icon: mdi:cctv

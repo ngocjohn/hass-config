@@ -98,9 +98,7 @@ tablet:
         --app-header-background-color: rgba(22, 24, 29, 1);
       }
       hui-view {
-        # background: linear-gradient(180deg, rgb(0 0 0) 0%, rgba(23, 26, 37, 1) 42%, rgba(21, 25, 35, 1) 100%) !important;
         background: linear-gradient(180deg, rgba(22, 24, 29, 1) 0%, rgba(23, 26, 37, 1) 42%, rgba(22, 24, 29, 1) 100%) !important;
-        overflow: hidden !important;
       }
       #view {
         background-image: linear-gradient(180deg, rgba(22, 24, 29, 1) 0%, rgba(23, 26, 37, 1) 42%, rgba(22, 24, 29, 1) 100%) !important;
@@ -123,13 +121,13 @@ tablet:
           /* default */
           h1 {
             font-size: 1.4vw !important;
-            line-height: 0 !important;
             font-weight: 700 !important;
             font-family: Raleway !important;
             letter-spacing: 0.05em !important;
             color: rgba(255, 255, 255, 0.7) !important;
-            padding: 1vw 0 1.2vw 0.2vw !important;
+            padding: 0 0 1rem 0.2vw !important;
             width: 100%;
+            line-height: 100% !important;
           }
           /* secondmonitor */
           @media screen and (max-width: 1440px) {
@@ -143,7 +141,7 @@ tablet:
             h1 {
               font-size: 4vw !important;
               line-height: 100% !important;
-              margin-inline: 1vw;
+              padding-top: 1rem !important
             }
           }
 
@@ -211,36 +209,6 @@ tablet:
                 }
               }
 
-    #################################################
-    #                                               #
-    #       GRID VERTICAL WITH HEADING              #
-    #                                               #
-    #################################################
-      hui-vertical-stack-card:
-        $hui-heading-card$:
-          .: |
-            :host {
-              font-family: Raleway !important;
-              --mdc-icon-size: 24px !important;
-              --ha-heading-card-title-font-size: 1.4vw;
-              --ha-heading-card-title-font-weight: 700;
-              --ha-heading-card-title-line-height: 100%;
-              --ha-heading-card-title-color: rgba(255, 255, 255, 0.7);
-              --ha-heading-badge-font-size: 1.5rem;
-              --ha-heading-badge-font-weight: 700;
-              --ha-heading-badge-line-height: 100%;
-              @media screen and (max-width: 1440px) {
-                --ha-heading-card-title-font-size: 2vw;
-              }
-              @media screen and (max-width: 800px) {
-                --ha-heading-card-title-font-size: 1rem;
-                --ha-heading-badge-font-size: 1rem;
-              }
-            }
-            .container {
-              margin-block: 0.2vw;
-              letter-spacing: 0.05em !important;
-            }
 
     #################################################
     #                                               #
@@ -252,7 +220,6 @@ tablet:
         #root {
           flex-wrap: wrap;
           justify-content: space-between;
-          overflow: visible;
           //margin-top: 0.5em;
         }
         @media only screen and (max-width: 1440px) {
@@ -260,31 +227,23 @@ tablet:
             justify-content: space-evenly;
           }
         }
-        /* phone */
-        @media screen and (max-width: 800px) {
-          #root {
-            margin-top: 1em;
-            padding-bottom: 1em;
-            justify-content: center;
-          }
-        }
     #################################################
     #                                               #
     #                   CHIPS                       #
     #                                               #
     #################################################
-    grid-layout$hui-horizontal-stack-card:
+    grid-layout$hui-horizontal-stack-card:last-child:
       $: |
         #root {
           justify-content: space-between;
           align-items: center;
           height: 100%;
+          flex-wrap: wrap;
         }
-    grid-layout$hui-horizontal-stack-card:nth-child(3):
-      $: |
-        #root {
-          justify-content: space-between;
-          align-items: center;
+        @media only screen and (max-width: 800px) {
+          #root {
+            justify-content: center;
+          }
         }
 
   card-mod-card: |

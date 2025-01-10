@@ -118,37 +118,48 @@
 - id: '1681905795903'
   alias: camera snapshot
   description: ''
-  trigger:
-  - platform: time
-    at: 05:00:00
+  triggers:
+  - at: 05:00:00
     id: delete
-  - platform: time_pattern
-    hours: /1
-  condition:
+    trigger: time
+  - hours: /1
+    trigger: time_pattern
+  conditions:
   - condition: time
     after: 05:00:00
     before: 00:00:00
-  action:
+  actions:
   - if:
     - condition: trigger
       id: delete
     then:
-    - service: delete.files_in_folder
-      data:
+    - data:
         folder: /config/www/tmp/snapshots/
         time: 0
         only_extensions:
         - .png
         - .jpg
+      action: delete.files_in_folder
+    - data:
+        folder: /config/www/tmp/kids/
+        time: 0
+        only_extensions:
+        - .png
+        - .jpg
+      action: delete.files_in_folder
   - parallel:
-    - service: camera.turn_on
+    - action: button.press
+      metadata: {}
       data: {}
+      target:
+        entity_id: button.kids_room_start_rtsp_stream
+    - data: {}
       target:
         entity_id:
         - camera.doorway
         - camera.terasa
-        - camera.kids_room
         - camera.zahrada
+      action: camera.turn_on
     - condition: state
       entity_id: camera.doorway
       state: streaming
@@ -183,69 +194,79 @@
       seconds: 2
       milliseconds: 0
   - parallel:
-    - service: camera.snapshot
-      data:
+    - data:
         filename: /config/www/tmp/snapshots/camera.doorway{{ now().strftime("%Y%m%d-%H%M%S")
           }}.jpg
       target:
         entity_id: camera.doorway
-    - service: camera.snapshot
-      data:
+      action: camera.snapshot
+    - data:
         filename: /config/www/tmp/snapshots/camera.kids_room{{ now().strftime("%Y%m%d-%H%M%S")
           }}.jpg
       target:
         entity_id: camera.kids_room
-    - service: camera.snapshot
-      data:
+      action: camera.snapshot
+    - data:
         filename: /config/www/tmp/snapshots/camera.terasa{{ now().strftime("%Y%m%d-%H%M%S")
           }}.jpg
       target:
         entity_id: camera.terasa
-    - service: camera.snapshot
-      data:
+      action: camera.snapshot
+    - data:
         filename: /config/www/tmp/snapshots/camera.zahrada{{ now().strftime("%Y%m%d-%H%M%S")
           }}.jpg
       target:
         entity_id: camera.zahrada
+      action: camera.snapshot
   - delay:
       hours: 0
       minutes: 0
       seconds: 2
       milliseconds: 0
   - parallel:
-    - service: camera.snapshot
-      data:
+    - data:
         filename: /config/www/tmp/camera.doorway-latest.jpg
       target:
         entity_id: camera.doorway
-    - service: camera.snapshot
-      data:
-        filename: /config/www/tmp/camera.kids_room-latest.jpg
+      action: camera.snapshot
+    - data:
+        filename: /config/www/tmp/kids/camera.kids_room-latest{{now().strftime("%Y%m%d%H%M%S")}}.jpg
       target:
         entity_id: camera.kids_room
-    - service: camera.snapshot
+      action: camera.snapshot
+    - action: input_text.set_value
+      metadata: {}
       data:
+        value: kids_room-latest{{now().strftime("%Y%m%d%H%M%S")}}.jpg
+      target:
+        entity_id: input_text.kids_camera_snapshot
+    - data:
         filename: /config/www/tmp/camera.terasa-latest.jpg
       target:
         entity_id: camera.terasa
-    - service: camera.snapshot
-      data:
+      action: camera.snapshot
+    - data:
         filename: /config/www/tmp/camera.zahrada-latest.jpg
       target:
         entity_id: camera.zahrada
+      action: camera.snapshot
   - delay:
       hours: 0
       minutes: 0
       seconds: 5
       milliseconds: 0
-  - service: camera.turn_off
-    data: {}
+  - data: {}
     target:
       entity_id:
       - camera.doorway
-      - camera.kids_room
       - camera.terasa
       - camera.zahrada
+    action: camera.turn_off
+  - action: button.press
+    metadata: {}
+    data: {}
+    target:
+      entity_id: button.kids_room_stop_rtsp_stream
   mode: single
 - id: '1683903230879'
   alias: Bedroom Cover Night
@@ -396,6 +417,11 @@
       sequence:
       - data: {}
         action: media_player.media_pause
+        target:
+          entity_id: media_player.bedroom
+      - action: media_player.turn_off
+        metadata: {}
+        data: {}
         target:
           entity_id: media_player.bedroom
   mode: single
@@ -587,8 +613,8 @@
   description: Memory or CPU leak
   triggers:
   - entity_id:
-    - sensor.system_monitor_memory_usage
-    - sensor.system_monitor_processor_use
+    - sensor.ha_system_memory_usage
+    - sensor.ha_system_cpu_usage
     for:
       hours: 0
       minutes: 7

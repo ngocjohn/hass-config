@@ -3,7 +3,7 @@
 #                    FOOTER                     #
 #                                               #
 #################################################
-# AHOJ!!!
+# AHOJ!!! Hello
 - type: horizontal-stack
   view_layout:
     grid-area: footer

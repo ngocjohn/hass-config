@@ -412,7 +412,7 @@ grid_bathroom:
     variables:
       light_entity: light.bathroom_group
       motion: binary_sensor.motion_sensor_bathroom_occupancy
-      door: binary_sensor.contact_sensor_bathroom_contact
+      door: binary_sensor.contact_sensor_bathroom
       active: sensor.bathroom_active
       air_diffuser_circle: switch.bathroom_air_diffuser
   # UTILITY NORMAL

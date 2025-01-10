@@ -6,9 +6,9 @@ theme: tablet
 type: custom:grid-layout
 layout:
   # default:
+  height: 100%
   margin: 0
   grid-gap: 1.8vw 1vw
-  height: 100%
   grid-template-columns: 0 1fr 1fr 1fr 1fr 1fr 1fr 0
   grid-template-rows: min-content 1fr 1fr auto 0
   grid-template-areas: |
@@ -20,11 +20,12 @@ layout:
 
   mediaquery:
     #laptop
-    '(min-width: 1441px) and (max-width: 1770px)':
-      grid-gap: 16px
+    # '(min-width: 1441px) and (max-width: 1770px)':
+    #   grid-gap: 16px
     #portrait
     '(min-width: 801px) and (max-width: 1440px)':
       grid-gap: 1% 1.5%
+      height: 100%
       grid-template-columns: 0 1fr 1fr 1fr 0
       grid-template-rows: fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) 0
       grid-template-areas: |
@@ -38,8 +39,9 @@ layout:
     '(max-width: 800px)':
       # grid-gap: calc(var(--custom-layout-card-padding) * 1.7)
       grid-gap: 8px
+      margin: 0
       grid-template-columns: 0px 1fr 1fr 0px
-      grid-template-rows: min-content min-content fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) 80px
+      grid-template-rows: min-content min-content repeat(6, fit-content(100%)) 80px
       grid-template-areas: |
         ". header      header    ."
         ". chips       chips     ."

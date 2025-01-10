@@ -3,40 +3,38 @@
 #            GRAPH HISTORY                      #
 #                                               #
 #################################################
-- type: vertical-stack
+
+- type: custom:history-explorer-card
   view_layout:
     grid-area: cc
-  cards:
-    - type: custom:history-explorer-card
-      cardName: historycard-sys
-      header: 'Monitoring'
-      uimode: dark
-      defaultTimeOffset: 0
-      refresh:
-        automatic: false
-      combineSameUnits: true
-      defaultTimeRange: 12h
-      decimation: fast
-      lineGraphHeight: 300
-      labelsVisible: true
-      legendVisible: false
-      uiLayout:
-        toolbar: top
-        selector: hide
-      tooltip:
-        size: full
-      graphs:
-        - type: line
-          entities:
-            - entity: sensor.*_cpu_percent
-              lineMode: lines
-        - type: line
-          entities:
-            - entity: sensor.*_memory_percent
-              lineMode: lines
-        - type: line
-          entities:
-            - entity: sensor.system_monitor_processor_temperature
-              lineMode: curves
-            - entity: sensor.system_monitor_processor_use
-            - entity: sensor.system_monitor_memory_usage
+
+  cardName: historycard-sys
+  header: 'Monitoring'
+  uimode: dark
+  defaultTimeOffset: 0
+  refresh:
+    automatic: false
+  combineSameUnits: true
+  defaultTimeRange: 5h
+  decimation: fast
+  lineGraphHeight: 300
+  labelsVisible: true
+  legendVisible: false
+  uiLayout:
+    toolbar: top
+    selector: hide
+  tooltip:
+    size: full
+  graphs:
+    - type: line
+      entities:
+        - entity: sensor.*_cpu_percent
+          lineMode: lines
+    - type: line
+      entities:
+        - entity: sensor.*_memory_percent
+          lineMode: lines
+    - type: line
+      entities:
+        - entity: sensor.ha_system_cpu_usage
+        - entity: sensor.ha_system_memory_usage

@@ -1,0 +1,339 @@
+addons_card:
+  template:
+    - settings
+    - extra_styles
+  variables:
+    state_on: >
+      [[[ return ['on'].indexOf(!entity || entity.state) !== -1; ]]]
+    state: >
+      [[[ return !entity || entity.state; ]]]
+    hex_color: >
+      [[[
+        // Generate only light colors
+        const randomLightColor = () => {
+          const r = Math.floor(127 + Math.random() * 128); // Red: 127-255
+          const g = Math.floor(127 + Math.random() * 128); // Green: 127-255
+          const b = Math.floor(127 + Math.random() * 128); // Blue: 127-255
+          return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+        };
+        return randomLightColor();
+      ]]]
+  tap_action:
+    card_bounce: |
+      [[[
+        // add animation
+        if (this.getElementsByTagName("style").length === 0) {
+            // phone condition
+            let mq = window.matchMedia('(max-width: 800px)').matches;
+            let style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes card_bounce {
+                    0%   { transform: scale(1); }
+                    10%  { transform: scale(${ mq ? '0.92' : '0.94' }); }
+                    25%  { transform: scale(1); }
+                    30%  { transform: scale(${ mq ? '0.96' : '0.98' }); }
+                    100% { transform: scale(1); }
+                }
+            `;
+            this.appendChild(style);
+        }
+        // duration
+        let duration = 800;
+        // animate
+        this.style.animation = `card_bounce ${duration}ms cubic-bezier(0.22, 1, 0.36, 1)`;
+        // reset
+        window.setTimeout(() => { this.style.animation = "none"; }, duration + 100)
+      ]]]
+    haptic: medium
+  double_tap_action:
+    haptic: success
+  hold_action:
+    haptic: medium
+  styles:
+    card:
+      - box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.15)
+      - --mdc-ripple-color: rgba(0, 0, 0, 0.8)
+      - color: >
+          [[[
+            return variables.state_on
+                ? '#4b5254'
+                : '#97989c';
+          ]]]
+      - background-color: >
+          [[[
+            if (variables.state_error) {
+              return variables.state_error
+                ? 'rgba(139, 51, 51, 0.9)'
+                : 'rgba(115, 115, 115, 0.2)';
+            }
+            else {
+              return variables.state_on
+                ? 'rgba(250, 250, 250, 0.75)'
+                : 'rgba(115, 115, 115, 0.2)';
+            }
+          ]]]
+    grid:
+      - grid-template-areas: '"i temp" "n n" "cpu cpu" "ram ram" "sd sd"'
+      - grid-template-columns: 1fr 1fr
+      - grid-template-rows: 1fr min-content min-content min-content min-content
+    name:
+      - font-weight: bold
+      - font-size: 13px
+      - color: white
+      - align-self: middle
+      - justify-self: start
+      - padding-bottom: 4px
+      - color: '[[[ return variables.hex_color ]]]'
+    custom_fields:
+      temp:
+        - align-self: start
+        - justify-self: end
+      cpu:
+        - padding-bottom: 2px
+        - align-self: middle
+        - justify-self: start
+        - --text-color-sensor: "[[[ if (states[variables.cpu_ent].state > 80) return 'red'; ]]]"
+      ram:
+        - padding-bottom: 2px
+        - align-self: middle
+        - justify-self: start
+        - --text-color-sensor: "[[[ if (states[variables.memory_ent].state > 80) return 'red'; ]]]"
+      sd:
+        - align-self: middle
+        - justify-self: start
+        - --text-color-sensor: "[[[ if (states[variables.cpu_ent].state > 0) return 'red'; ]]]"
+  custom_fields:
+    temp: |
+      [[[
+        return `<ha-icon
+          icon="mdi:thermometer"
+          style="width: 12px; height: 12px; color: yellow;">
+          </ha-icon><span>${entity.state}°C</span>`
+      ]]]
+    cpu: |
+      [[[
+        return `<ha-icon
+          icon="mdi:server"
+          style="width: 12px; height: 12px; color: deepskyblue;">
+          </ha-icon><span>CPU: <span style="color: var(--text-color-sensor);">${states[variables.cpu_ent].state}%</span></span>`
+      ]]]
+    ram: |
+      [[[
+        return `<ha-icon
+          icon="mdi:memory"
+          style="width: 12px; height: 12px; color: deepskyblue;">
+          </ha-icon><span>RAM: <span style="color: var(--text-color-sensor);">${states[variables.memory_ent].state}%</span></span>`
+      ]]]
+    sd: |
+      [[[
+        return `<ha-icon
+          icon="mdi:harddisk"
+          style="width: 12px; height: 12px; color: deepskyblue;">
+          </ha-icon><span>SD: <span style="color: var(--text-color-sensor);">${states[variables.memory_ent].state}%</span></span>`
+      ]]]
+
+addons_base:
+  template:
+    - settings
+    - extra_styles
+  show_label: true
+  show_icon: false
+  show_state: false
+  aspect_ratio: 2/1
+  variables:
+    state_on: >
+      [[[ return ['on'].indexOf(!entity || entity.state) !== -1; ]]]
+    state: >
+      [[[ return !entity || entity.state; ]]]
+    hex_memmory: >
+      [[[
+        // Generate only light colors
+        const randomLightColor = () => {
+          const r = Math.floor(127 + Math.random() * 128); // Red: 127-255
+          const g = Math.floor(127 + Math.random() * 128); // Green: 127-255
+          const b = Math.floor(127 + Math.random() * 128); // Blue: 127-255
+          return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+        };
+        return randomLightColor();
+      ]]]
+    hex_cpu: >
+      [[[
+        // Generate only light colors
+        const randomLightColor = () => {
+          const r = Math.floor(127 + Math.random() * 128); // Red: 127-255
+          const g = Math.floor(127 + Math.random() * 128); // Green: 127-255
+          const b = Math.floor(127 + Math.random() * 128); // Blue: 127-255
+          return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+        };
+        return randomLightColor();
+      ]]]
+  tap_action:
+    card_bounce: |
+      [[[
+        // add animation
+        if (this.getElementsByTagName("style").length === 0) {
+            // phone condition
+            let mq = window.matchMedia('(max-width: 800px)').matches;
+            let style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes card_bounce {
+                    0%   { transform: scale(1); }
+                    10%  { transform: scale(${ mq ? '0.92' : '0.94' }); }
+                    25%  { transform: scale(1); }
+                    30%  { transform: scale(${ mq ? '0.96' : '0.98' }); }
+                    100% { transform: scale(1); }
+                }
+            `;
+            this.appendChild(style);
+        }
+        // duration
+        let duration = 800;
+        // animate
+        this.style.animation = `card_bounce ${duration}ms cubic-bezier(0.22, 1, 0.36, 1)`;
+        // reset
+        window.setTimeout(() => { this.style.animation = "none"; }, duration + 100)
+      ]]]
+    haptic: medium
+  double_tap_action:
+    haptic: success
+  hold_action:
+    haptic: medium
+  label: >
+    [[[
+      return states[variables.ver_ent].state;
+    ]]]
+  custom_fields:
+    running: |
+      [[[
+        let icon = variables.state_on ? 'mdi:play-circle' : 'mdi:stop-circle-outline';
+        let color = variables.state_on ? '#00f17d' : 'var(--error-color)';
+        return `<ha-icon icon="${icon}" style="width: 24px; height: 24px; color: ${color};"></ha-icon>`;
+      ]]]
+    cpu: |
+      [[[
+        return `<ha-icon
+          icon="mdi:cpu-64-bit"
+          style="width: 24px; height: 24px; color: deepskyblue; margin-right: 4px;">
+          </ha-icon><span>CPU: ${states[variables.cpu_ent].state} %</span>`
+      ]]]
+    memory: |
+      [[[
+        return `<ha-icon
+          icon="mdi:memory"
+          style="width: 24px; height: 24px; color: deepskyblue; margin-right: 4px;">
+          </ha-icon><span>RAM: ${states[variables.memory_ent].state} %</span>`
+      ]]]
+    graph:
+      card:
+        type: 'custom:mini-graph-card'
+        entities:
+          - entity: |
+              [[[ return variables.memory_ent ]]]
+            color: |
+              [[[ return variables.hex_memmory ]]]
+        hours_to_show: 12
+        points_per_hour: 1
+        line_width: 2
+        animate: true
+        show:
+          name: false
+          icon: false
+          state: false
+          label: false
+          legend: false
+          fill: fade
+          extrema: true
+          average: true
+        card_mod:
+          style: |
+            ha-card {
+              font-size: 12px !important;
+              overflow: visible !important;
+              padding: 0 !important;
+            }
+            ha-card[fill] .info {
+              padding-bottom: 0;
+            }
+            .info {
+              justify-content: space-evenly;
+              top: 0;
+              position: absolute;
+              width: 100%;
+              padding: 0;
+              color: var(--primary-text-color);
+            }
+            .info__item__time {
+              display: none !important;
+            }
+            .graph__container {
+              opacity: 0.5;
+            }
+
+  styles:
+    grid:
+      - grid-template-areas: |
+          "n running"
+          "l l"
+          "cpu memory"
+          "graph graph"
+      - grid-template-columns: 1fr min-content
+      - grid-template-rows: min-content min-content fit-content(100%) 1fr
+      - grid-row-gap: 0
+    card:
+      - overflow: hidden
+      - padding: 12px
+      - border-radius: 12px
+      - border-width: 0
+      - --webkit-tap-highlight-color: rgba(250,250,250,1)
+      - box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.15)
+      - text-rendering: auto
+      - -webkit-font-smoothing: antialiased
+      - -moz-osx-font-smoothing: grayscale
+      - color: rgb(151, 152, 156)
+      - background-color: rgba(115, 115, 115, 0.2)
+      - text-align: left
+      - position: relative
+
+    name:
+      - justify-self: start
+      - font-size: inherit
+      - width: 100%
+      - color: var(--primary-text-color)
+      - letter-spacing: 0.05em
+    label:
+      - font-size: 12px
+      - align-self: middle
+      - justify-self: start
+      - margin-bottom: 4px
+    custom_fields:
+      running:
+        - align-self: center
+        - justify-self: end
+        - width: fit-content
+      cpu_memory: &cpu_memory
+        - color: var(--text-primary-color)
+        - align-self: center
+        - justify-self: start
+        - font-size: 14px
+        - letter-spacing: 0.05em
+        - padding: 0
+        - display: >
+            [[[
+              return variables.state_on ? 'block' : 'none';
+            ]]]
+      cpu: *cpu_memory
+      memory:
+        - <<: *cpu_memory
+        - justify-self: end
+      graph:
+        - position: absolute
+        - bottom: 0
+        - left: 0
+        - right: 0
+        - width: 100%
+        - --ha-card-border-radius: 0
+        - --ha-card-border-width: 0
+        - display: >
+            [[[
+              return variables.state_on ? 'block' : 'none';
+            ]]]

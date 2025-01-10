@@ -37,13 +37,13 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>36,174 </td>
+              <td>35,941 </td>
               <td>32</td>
-              <td>163</td>
+              <td>168</td>
               <td>62</td>
               <td>54</td>
               <td>32</td>
-              <td>1072</td>
+              <td>1105</td>
               <td>215</td>
               <td>37</td>
           </tr>
@@ -65,9 +65,11 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - eufy-security-ws
 - Glances
 - go2rtc
+- MariaDB
 - Mosquitto broker
 - Music Assistant Server
 - Node-RED
+- phpMyAdmin
 - PS5 MQTT
 - Samba share
 - Studio Code Server

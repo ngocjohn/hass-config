@@ -105,9 +105,9 @@ chips:
                 ? 'rgba(250, 250, 250, 0.75)'
                 : 'rgba(115, 115, 115, 0.2)';
           ]]]
-      - padding: 0.7rem;
-      - box-sizing: border-box;
-      - border: 1px solid transparent;
+      - padding: 0.3vw
+      - box-sizing: border-box
+      - border: 1px solid transparent
     state:
       - font-weight: 600
       - padding: 0 0.4vw 0 0
@@ -223,8 +223,9 @@ chip_air:
       - column-gap: 8px
     card:
       - color: '#97989c'
-      - background: linear-gradient(to bottom, rgba(53, 59, 83, 0.8) 0%, rgba(10, 14, 34, 0.8) 100%)
-      - border-bottom: inherit;
+      - background: linear-gradient(to bottom, rgba(53, 59, 83, 0.8) 0%, rgba(10, 14, 34, 0.8) 50%, rgba(53, 59, 83, 0.8) 100%)
+      - border-bottom: inherit
+      - border-bottom-color: rgba(10, 14, 34, 1)
     state:
       - color: &color >
           [[[
@@ -263,10 +264,11 @@ chip_system:
     action: more-info
   styles:
     card:
-      - padding: 0.7rem;
+      - padding: 0.3vw
       - box-sizing: border-box;
       - border: 1px solid transparent;
       - border-bottom: inherit;
+      - border-bottom-color: rgba(10, 14, 34, 1);
       - color: rgba(255, 255, 255, 0.6)
       - background: linear-gradient(to bottom, rgba(96, 125, 139, 0.43) 0%, rgba(10, 14, 34, 0.8) 100%)
     state:

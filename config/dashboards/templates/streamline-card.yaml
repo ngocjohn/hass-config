@@ -413,7 +413,7 @@ grid_bathroom:
     variables:
       light_entity: light.bathroom_group
       motion: binary_sensor.motion_sensor_bathroom_occupancy
-      door: binary_sensor.contact_sensor_bathroom_contact
+      door: binary_sensor.contact_sensor_bathroom
       active: sensor.bathroom_active
       air_diffuser_circle: switch.bathroom_air_diffuser
   # UTILITY NORMAL
@@ -559,12 +559,59 @@ grid_cam_kids:
       - loader
     variables:
       battery: 'sensor.doorway_battery_percentage'
+    double_tap_action:
+      action: fire-dom-event
+      browser_mod:
+        service: browser_mod.sequence
+        data:
+          sequence:
+            - service: >
+                [[[
+                  if (entity) {
+                    let streamStatus = states['sensor.kids_room_stream_status'].state;
+                    if (streamStatus === 'StreamStatus.IDLE') {
+                      return 'button.press';
+                    } else {
+                      return null;
+                    }
+                  }
+                ]]]
+              data:
+                entity_id: 'button.kids_room_start_rtsp_stream'
+            - service: browser_mod.more_info
+              data:
+                entity: >
+                  [[[
+                    return variables.entity_id;
+                  ]]]
+    tap_action:
+      action: >
+        [[[
+          if (entity) {
+            if (entity.state === 'streaming') {
+              return 'call-service';
+            } else {
+              return 'none';
+            }
+          }
+        ]]]
+      service: button.press
+      service_data:
+        entity_id: button.kids_room_stop_rtsp_stream
+
     styles:
       card:
         - background-position: center
         - background-image: >
             [[[
-                return `linear-gradient(0deg, rgba(0,0,0,.3) 0%, rgba(0,0,0,0) 100%), url(/local/tmp/${variables.entity_id}-latest.jpg)`;
+                if (entity) {
+                  if (entity.state === 'streaming') {
+                    return `linear-gradient(0deg, rgba(0,0,0,.3) 0%, rgba(0,0,0,0) 100%), url(${variables.entity_picture})`;
+                  } else {
+                    const latest = states['input_text.kids_camera_snapshot'].state;
+                    return `linear-gradient(0deg, rgba(0,0,0,.3) 0%, rgba(0,0,0,0) 100%), url(/local/tmp/kids/camera.${latest})`;
+                  }
+                }
             ]]]
   # CAM TERRACE
 grid_cam_terrace:

@@ -261,15 +261,16 @@ template:
           {% if this.attributes.device | list | count > 0 %} on {% else %} off {% endif %}
         attributes:
           device: >-
-            {% set p2 = expand(states.group.homepod_airplay) | selectattr( 'state', 'in', ['on', 'playing']) | map(attribute='name') | list %}
-            {% set p1 = expand(states.group.media_players) | rejectattr('entity_id', 'in', ['media_player.spotify']) | selectattr( 'state', 'in', ['on', 'playing', 'idle', 'paused']) | map(attribute='name') | list %}
-            {% set p3 = expand(states.group.homepod_mass_airplay) | selectattr( 'state', 'in', ['on', 'playing']) | map(attribute='name') | list %}
+            {% set p2 = expand(states.group.homepod_airplay) | selectattr( 'state', 'in', ['on', 'playing']) | map(attribute='entity_id') | list %}
+            {% set p1 = expand(states.group.device_players) | rejectattr('entity_id', 'in', ['media_player.spotifyplus_ngoc_nguyen']) | selectattr( 'state', 'in', ['on', 'playing', 'idle', 'paused']) | map(attribute='entity_id') | list %}
+            {% set p3 = expand(states.group.homepod_mass_airplay) | selectattr( 'state', 'in', ['on', 'playing']) | map(attribute='entity_id') | list %}
             {{ p1 + p2 + p3 }}
           device_playing: >-
             {{ this.attributes.device | list | count }} Playing
           mass_homepods: >-
             {% set mass = expand('group.homepod_mass_airplay') | rejectattr('state', 'eq', 'off') | list | count %}
             {{ mass }}
+
       # SENSOR - COVER SHUTTERS COUNT
       - name: Covers open count
         unique_id: covers_on_count

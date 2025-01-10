@@ -119,11 +119,12 @@ header_clock:
           "n"
           "l"
       - grid-template-columns: 1fr
-      - grid-template-rows: auto auto
+      - grid-template-rows: 1fr min-content
       - gap: 4px
     card:
-      - padding: 0
-
+      - padding: inherit
+      - width: 100%
+      - overflow: visible
 header_weather:
   template:
     - extra_styles
@@ -208,3 +209,6 @@ header_weather:
       - padding: 0
       - color: rgba(255, 255, 255, 0.6)
       - overflow: visible;
+    icon:
+      - max-width: 200px
+      - width: 100%

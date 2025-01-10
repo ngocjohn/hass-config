@@ -3,7 +3,7 @@
 #                    FOOTER                     #
 #                                               #
 #################################################
-# AHOJ!!!
+# AHOJ!!! Hello
 - type: horizontal-stack
   view_layout:
     grid-area: footer
@@ -67,14 +67,14 @@
       tap_action: !include ../../shared/popup/footer/footer_network.yaml
       triggers_update:
         - binary_sensor.unifi_controller_alert
-        - update.unifi_status_update
+        - sensor.time
       variables:
         notify: >
           [[[
             let id = this._config.triggers_update;
             if (id.every(e => states[e]))
                 return states[id[0]].state === 'on'
-                    ? `error`
+                    ? 'error'
                     : states[id[1]].state === 'on'
                       ? 1
                       : null;

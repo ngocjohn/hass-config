@@ -52,6 +52,13 @@
                 if (variables.playing == '0 Playing') return 'None';
                 else return variables.playing;
             ]]]
+          tap_action:
+            action: fire-dom-event
+            browser_mod:
+              service: browser_mod.more_info
+              data:
+                entity: media_player.currently_playing
+
         # - &homemode
         #   type: custom:button-card
         #   name: Home Mode
