@@ -13,7 +13,7 @@ streamline_templates: !include ./templates/streamline-card.yaml
 title: Example
 views:
   - !include views/main.yaml
+  - !include views/system.yaml
   - !include subviews/movie-panel.yaml
   - !include subviews/ytube-music.yaml
-  - !include views/system.yaml
   # - !include subviews/test-lovelace.yaml

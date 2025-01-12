@@ -3,75 +3,72 @@
 #             CHIPS MAX 800px                   #
 #                                               #
 #################################################
-- type: horizontal-stack
+- type: custom:layout-card
   view_layout:
     grid-area: chips
     show:
       mediaquery: '(max-width: 800px)'
+  layout_type: custom:grid-layout
+  layout:
+    grid-template-columns: repeat(3, 1fr)
+    margin: 0
+    grid-gap: 8px
+    padding: 0
   cards:
-    - type: custom:swipe-card
-      start_card: 1
-      parameters:
-        centeredSlides: false
-        slidesPerView: 3
-        spaceBetween: 5
-        slideToClickedSlide: true
-        speed: 420
-      cards:
-        - &lights
-          type: custom:button-card
-          name: Lights
-          entity: group.light_all
-          # tap_action: !include ../../shared/popup/all_light_mushroom.yaml
-          tap_action: !include ../../shared/popup/popup_lights.yaml
-          icon: phu:bulb-group-classic-3-alt
-          template:
-            - chips
-          state_display: >
-            [[[
-                if (variables.state == 'off') return 'All Off';
-                else return variables.light_on;
-            ]]]
-          styles:
-            icon:
-              - color: >
-                  [[[
-                    return variables.state_on
-                      ? '#b68752'
-                      : null;
-                  ]]]
-        - &media
-          type: custom:button-card
-          name: Media
-          entity: sensor.currently_playing
-          icon: custom:ios-hifi-stereo
-          template:
-            - chips
-          state_display: >
-            [[[
-                if (variables.playing == '0 Playing') return 'None';
-                else return variables.playing;
-            ]]]
-          tap_action:
-            action: fire-dom-event
-            browser_mod:
-              service: browser_mod.more_info
-              data:
-                entity: media_player.currently_playing
+    - &lights
+      type: custom:button-card
+      name: Lights
+      entity: group.light_all
+      # tap_action: !include ../../shared/popup/all_light_mushroom.yaml
+      tap_action: !include ../../shared/popup/popup_lights.yaml
+      icon: phu:bulb-group-classic-3-alt
+      template:
+        - chips
+      state_display: >
+        [[[
+            if (variables.state == 'off') return 'All Off';
+            else return variables.light_on;
+        ]]]
+      styles:
+        icon:
+          - color: >
+              [[[
+                return variables.state_on
+                  ? '#b68752'
+                  : null;
+              ]]]
+    - &media
+      type: custom:button-card
+      name: Media
+      entity: sensor.currently_playing
+      icon: custom:ios-hifi-stereo
+      template:
+        - chips
+      state_display: >
+        [[[
+            if (variables.playing == '0 Playing') return 'None';
+            else return variables.playing;
+        ]]]
+      tap_action:
+        action: fire-dom-event
+        browser_mod:
+          service: browser_mod.more_info
+          data:
+            entity: media_player.currently_playing
 
-        # - &homemode
-        #   type: custom:button-card
-        #   name: Home Mode
-        #   entity: sensor.lights_count
-        #   icon: mdi:account-multiple-plus
-        #   template:
-        #     - chips
-        - &air
-          type: custom:button-card
-          name: Air Quality
-          entity: sensor.home_climate
-          template:
-            - chip_air
+    # - &homemode
+    #   type: custom:button-card
+    #   name: Home Mode
+    #   entity: sensor.lights_count
+    #   icon: mdi:account-multiple-plus
+    #   template:
+    #     - chips
+    - &air
+      type: custom:button-card
+      name: Air Quality
+      entity: sensor.home_climate
+      template:
+        - chip_air
 #################################################
 #                                               #
 #             CHIPS MIN 1700px                  #

@@ -3,122 +3,143 @@
 #            SIDE COLUMNS                       #
 #                                               #
 #################################################
-- type: vertical-stack
+
+- type: entities
+  title: Addons
+  show_header_toggle: false
+  card_mod:
+    class: addon
   view_layout:
     grid-area: c2
-  cards:
-    - type: entities
-      title: Addons state
-      show_header_toggle: false
-      card_mod:
-        class: header
-      entities:
-        - type: custom:auto-entities
-          filter:
-            template: |
-              {%- set devices = label_devices('addons') -%}
-              {% for dev in devices -%}
-                {%- set devname = device_attr(dev, 'name')-%}
-                {%- set entities = device_entities(dev) | list-%}
-                {%- set running_ent = entities | select('search', '_running$') | join(', ')-%}
-                {%- set cpu_ent = entities | select('search', '_cpu_percent$') | join(', ') -%}
-                {%- set memory_ent = entities | select('search', '_memory_percent$') | join(', ')-%}
-                {%- set update_ent = entities | select('search', '_update$') | join(', ')-%}
-                {%- set ver_ent = entities | select('search', '_version$') | reject('search', '_newest_version$') | join(', ')-%}
-                  {{
-                    {
-                      'type': 'custom:button-card',
-                      'name': devname,
-                      'entity': running_ent,
-                      'template': 'addons_base',
-                      'variables':
-                        {
-                          'cpu_ent': cpu_ent,
-                          'memory_ent': memory_ent,
-                          'update_ent': update_ent,
-                          'ver_ent': ver_ent,
-                        },
-                    }
-                  }},
-              {%- endfor-%}
-          card:
-            type: custom:layout-card
-            layout_type: custom:grid-layout
-            layout:
-              grid-template-columns: repeat(auto-fill, minmax(250px, 1fr))
-              grid-template-rows: auto
-              grid-gap: 1rem
-              margin: 0
-              padding: 0
-            style: >
-              :host {
-                --layout-overflow: hidden;
+  entities:
+    - type: custom:auto-entities
+      filter:
+        template: |
+          {% set active_dev = states.sensor.hassio_addons_use.attributes.addons_active %}
+          {%- for dev in active_dev -%}
+            {{
+              {
+                'type': 'custom:button-card',
+                'name': dev.name,
+                'entity': dev.running_ent,
+                'template': ['addon_active'],
+                'variables':
+                  {
+                    'slug_name': dev.slug_name,
+                    'dev_id': dev.dev_id,
+                    'conf_url': dev.conf_url,
+                    'cpu_ent': dev.cpu_ent,
+                    'memory_ent': dev.memory_ent,
+                    'update_ent': dev.update_ent,
+                    'ver_ent': dev.version_ent,
+                  },
               }
-
-            cards: []
-    # - type: entities
-    #   title: Devices state
-    #   show_header_toggle: false
-    #   card_mod:
-    #     class: header
-    #   entities:
-    #     - type: custom:auto-entities
-    #       filter:
-    #         include:
-    #           - attributes:
-    #               device_class: battery
-    #             state: < 30
-    #             options:
-    #               type: custom:mushroom-template-card
-    #               primary: '{{ states(entity) }}%'
-    #               secondary: "{{ state_attr(entity, 'friendly_name') | title }}"
-    #               icon: >
-    #                 {% set battery_level = (states(entity) | int / 10) |
-    #                 round(0) | int * 10 %} {% if battery_level == 100 %}
-    #                   mdi:battery
-    #                 {% elif battery_level > 0 %}
-    #                   mdi:battery-{{ battery_level }}
-    #                 {% else %}
-    #                   mdi:battery-outline
-    #                 {% endif %}
-    #               icon_color: |-
-    #                 {% set battery_level = states(entity) | int %}
-    #                 {% if battery_level > 90 %}
-    #                   green
-    #                 {% elif battery_level > 60 %}
-    #                   light-green
-    #                 {% elif battery_level > 50 %}
-    #                   lime
-    #                 {% elif battery_level > 40 %}
-    #                   yellow
-    #                 {% elif battery_level > 30 %}
-    #                   amber
-    #                 {% elif battery_level > 20 %}
-    #                   orange
-    #                 {% elif battery_level > 10 %}
-    #                   deep-orange
-    #                 {% else %}
-    #                   red
-    #                 {% endif %}
-    #               layout: horizontal
-    #               tap_action:
-    #                 action: none
-    #               badge_icon: |-
-    #                 {% set battery_level = states(entity) | int %}
-    #                 {% if battery_level < 10 %}
-    #                   mdi:exclamation-thick
-    #                 {% endif %}
-    #               badge_color: red
-    #               card_mod:
-    #                 style: |
-    #                   ha-card {
-    #                     padding: 4px 12px !important;
-    #                   }
-    #         exclude: null
-    #       show_empty: false
-    #       card:
-    #         type: custom:layout-card
-    #         cards: []
-    #         layout_type: masonry
-    #       sort:
-    #         method: friendly_name
+            }},
+          {%- endfor %}
+      card: &addon_card
+        type: custom:layout-card
+        layout_type: custom:grid-layout
+        layout:
+          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr))
+          grid-template-rows: auto
+          grid-gap: 0.5rem 0.8rem
+          margin: 0
+          padding: 0
+          mediaquery:
+            '(max-width: 800px)':
+              grid-template-columns: repeat(auto-fill, minmax(35%, 1fr))
+              grid-gap: 4px 8px
+        cards: []
+    - type: section
+      label: Offline
+    - type: custom:auto-entities
+      filter:
+        template: |
+          {% set active_dev = states.sensor.hassio_addons_use.attributes.addons_off %}
+          {%- for dev in active_dev -%}
+            {{
+              {
+                'type': 'custom:button-card',
+                'name': dev.name,
+                'entity': dev.running_ent,
+                'template': ['addons_base'],
+                'variables':
+                  {
+                    'slug_name': dev.slug_name,
+                    'dev_id': dev.dev_id,
+                    'conf_url': dev.conf_url,
+                    'cpu_ent': dev.cpu_ent,
+                    'memory_ent': dev.memory_ent,
+                    'update_ent': dev.update_ent,
+                    'ver_ent': dev.version_ent,
+                  },
+              }
+            }},
+          {%- endfor %}
+      card: *addon_card
+# - type: entities
+#   title: Devices state
+#   show_header_toggle: false
+#   card_mod:
+#     class: header
+#   entities:
+#     - type: custom:auto-entities
+#       filter:
+#         include:
+#           - attributes:
+#               device_class: battery
+#             state: < 30
+#             options:
+#               type: custom:mushroom-template-card
+#               primary: '{{ states(entity) }}%'
+#               secondary: "{{ state_attr(entity, 'friendly_name') | title }}"
+#               icon: >
+#                 {% set battery_level = (states(entity) | int / 10) |
+#                 round(0) | int * 10 %} {% if battery_level == 100 %}
+#                   mdi:battery
+#                 {% elif battery_level > 0 %}
+#                   mdi:battery-{{ battery_level }}
+#                 {% else %}
+#                   mdi:battery-outline
+#                 {% endif %}
+#               icon_color: |-
+#                 {% set battery_level = states(entity) | int %}
+#                 {% if battery_level > 90 %}
+#                   green
+#                 {% elif battery_level > 60 %}
+#                   light-green
+#                 {% elif battery_level > 50 %}
+#                   lime
+#                 {% elif battery_level > 40 %}
+#                   yellow
+#                 {% elif battery_level > 30 %}
+#                   amber
+#                 {% elif battery_level > 20 %}
+#                   orange
+#                 {% elif battery_level > 10 %}
+#                   deep-orange
+#                 {% else %}
+#                   red
+#                 {% endif %}
+#               layout: horizontal
+#               tap_action:
+#                 action: none
+#               badge_icon: |-
+#                 {% set battery_level = states(entity) | int %}
+#                 {% if battery_level < 10 %}
+#                   mdi:exclamation-thick
+#                 {% endif %}
+#               badge_color: red
+#               card_mod:
+#                 style: |
+#                   ha-card {
+#                     padding: 4px 12px !important;
+#                   }
+#         exclude: null
+#       show_empty: false
+#       card:
+#         type: custom:layout-card
+#         cards: []
+#         layout_type: masonry
+#       sort:
+#         method: friendly_name

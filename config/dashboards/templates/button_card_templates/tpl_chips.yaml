@@ -29,10 +29,7 @@ chips:
 
     gle: >
       [[[ return states['sensor.gle'].state; ]]]
-    hover_enable: >
-      [[[ return true ]]]
-    tilt_enable: >
-      [[[ return false; ]]]
+    hover_enable: true
   # size: 2vw
   show_icon: true
   show_state: true
@@ -91,7 +88,7 @@ chips:
       - grid-template-columns: 1fr 2fr
       - column-gap: 8px
     card:
-      - box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.15)
+      # - box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.15)
       - --mdc-ripple-color: rgba(0, 0, 0, 0.8)
       - color: >
           [[[
@@ -106,12 +103,12 @@ chips:
                 : 'rgba(115, 115, 115, 0.2)';
           ]]]
       - padding: 0.3vw
-      - box-sizing: border-box
-      - border: 1px solid transparent
+      - box-sizing: border-box;
+      - border: 1px solid transparent;
     state:
-      - font-weight: 600
+      - font-weight: 400
       - padding: 0 0.4vw 0 0
-      - line-height: 125%
+      - line-height: 100%
       - align-self: center
       - justify-self: start
       - color: >
@@ -208,7 +205,7 @@ chip_air:
                     <animateMotion dur="1.5s" path="M 20,80 A 40 40 0 1 1 80,80" keyPoints="${keyPoints}" fill="freeze" keyTimes="0;1"
                         calcMode="paced" />
                 </circle>
-                  <text font-size="2.5rem" fill="#97989c" font-weight="400" x="50%" y="52%">${value}</text>
+                  <text font-size="2rem" fill="#97989c" font-weight="400" x="50%" y="52%">${value}</text>
                   <text font-size="1rem" fill="#ffffff80" x="50%" y="80%">µg/m³</text>
             </svg>
             `
@@ -218,14 +215,14 @@ chip_air:
       - grid-template-areas: |
           "icon n"
           "icon s"
-      - grid-template-rows: auto
+      - grid-template-rows: min-content min-content
       - grid-template-columns: 1fr 2fr
       - column-gap: 8px
     card:
       - color: '#97989c'
       - background: linear-gradient(to bottom, rgba(53, 59, 83, 0.8) 0%, rgba(10, 14, 34, 0.8) 50%, rgba(53, 59, 83, 0.8) 100%)
-      - border-bottom: inherit
-      - border-bottom-color: rgba(10, 14, 34, 1)
+      # - border-bottom-color: rgba(10, 14, 34, 1)
+      - padding: 0.2vw
     state:
       - color: &color >
           [[[
@@ -243,16 +240,8 @@ chip_air:
     custom_fields:
       icon:
         - display: flex
-        - height: 100%
-        - width: 100%
-        - max-width: 100%
-        - max-height: 100%
-        - align-self: center
-        - justify-self: center
-        - overflow: hidden
         - justify-content: center
         - align-items: center
-        - position: relative
 chip_system:
   template:
     - chips
@@ -270,7 +259,7 @@ chip_system:
       - border-bottom: inherit;
       - border-bottom-color: rgba(10, 14, 34, 1);
       - color: rgba(255, 255, 255, 0.6)
-      - background: linear-gradient(to bottom, rgba(96, 125, 139, 0.43) 0%, rgba(10, 14, 34, 0.8) 100%)
+      - background: linear-gradient(to bottom, rgba(115, 115, 115, 0.2) 0%, rgba(49, 49, 49, 0.2) 100%)
     state:
       - color: &systemcolor >
           [[[

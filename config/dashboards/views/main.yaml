@@ -6,11 +6,10 @@ theme: tablet
 type: custom:grid-layout
 layout:
   # default:
-  height: 100%
   margin: 0
   grid-gap: 1.8vw 1vw
   grid-template-columns: 0 1fr 1fr 1fr 1fr 1fr 1fr 0
-  grid-template-rows: min-content 1fr 1fr auto 0
+  grid-template-rows: min-content 1fr 1fr fit-content(100%) 0
   grid-template-areas: |
     ". chips     chips      chips     chips    header     header     ."
     ". security  mainrooms  devices   other    floorplan  floorplan  ."
@@ -20,8 +19,8 @@ layout:
 
   mediaquery:
     #laptop
-    # '(min-width: 1441px) and (max-width: 1770px)':
-    #   grid-gap: 16px
+    '(min-width: 1441px) and (max-width: 1770px)':
+      grid-gap: 2.5rem 1rem
     #portrait
     '(min-width: 801px) and (max-width: 1440px)':
       grid-gap: 1% 1.5%
@@ -29,7 +28,7 @@ layout:
       grid-template-columns: 0 1fr 1fr 1fr 0
       grid-template-rows: fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) 0
       grid-template-areas: |
-        ".  sidebar    home        security  ."
+        ".  header     home        security  ."
         ".  cameras    media       climate   ."
         ".  mainrooms  devices     other     ."
         ".  floorplan  floorplan   floorplan ."
@@ -41,8 +40,9 @@ layout:
       grid-gap: 8px
       margin: 0
       grid-template-columns: 0px 1fr 1fr 0px
-      grid-template-rows: min-content min-content repeat(6, fit-content(100%)) 80px
+      grid-template-rows: 0 min-content fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) min-content 0
       grid-template-areas: |
+        ". .           .         ."
         ". header      header    ."
         ". chips       chips     ."
         ". home        security  ."

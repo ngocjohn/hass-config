@@ -4,10 +4,12 @@
 #                                               #
 #################################################
 
-- type: custom:history-explorer-card
+- &graphs
+  type: custom:history-explorer-card
   view_layout:
     grid-area: cc
-
+    show:
+      mediaquery: '(min-width: 801px)'
   cardName: historycard-sys
   header: 'Monitoring'
   uimode: dark
@@ -17,9 +19,9 @@
   combineSameUnits: true
   defaultTimeRange: 5h
   decimation: fast
-  lineGraphHeight: 300
   labelsVisible: true
   legendVisible: false
+  lineGraphHeight: 300
   uiLayout:
     toolbar: top
     selector: hide
@@ -29,12 +31,23 @@
     - type: line
       entities:
         - entity: sensor.*_cpu_percent
+          exclude:
+            - entity: sensor.home_assistant_*
           lineMode: lines
     - type: line
       entities:
         - entity: sensor.*_memory_percent
+          exclude:
+            - entity: sensor.home_assistant_*
           lineMode: lines
     - type: line
       entities:
         - entity: sensor.ha_system_cpu_usage
         - entity: sensor.ha_system_memory_usage
+
+- <<: *graphs
+  view_layout:
+    grid-area: cc
+    show:
+      mediaquery: '(max-width: 800px)'
+  lineGraphHeight: 250

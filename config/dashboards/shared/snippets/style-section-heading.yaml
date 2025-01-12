@@ -24,7 +24,6 @@ style:
     }
     @media screen and (max-width: 800px) {
       .container {
-        margin-top: 1rem !important;
-        padding: 4px !important;
+        padding: 1rem 4px 0.6rem !important;
       }
     }

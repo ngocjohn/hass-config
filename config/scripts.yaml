@@ -664,3 +664,15 @@ update_entitites:
         '
   description: ''
   icon: mdi:update
+backup_addon:
+  sequence:
+  - action: hassio.backup_partial
+    metadata: {}
+    data:
+      compressed: true
+      homeassistant_exclude_database: true
+      addons:
+      - '{{ addon_slug }}'
+      name: '{{ addon_slug }}_{{ version }}_{{ now().strftime(''%d_%m_%H_%M'') }}'
+  alias: backup addon
+  description: ''

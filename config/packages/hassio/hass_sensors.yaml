@@ -63,37 +63,99 @@ template:
             {% set ignore_entities = device_entities("7353b70cac886bd0995d71776dfa49fb") | list %}
             {{ states.update | selectattr('state','eq','on') | rejectattr('entity_id', 'in', ignore_entities) | list | count }}
       # SENSOR - DOMAIN COUNTER
-      - unique_id: domain_counter
-        name: 'Domain Counter'
-        state: >
-          {{ states | count }}
-        attributes:
-          automation: >
-            {{ states.automation | count }}
-          binary_sensor: >
-            {{ states.binary_sensor | count }}
-          device_tracker: >
-            {{ states.device_tracker | count }}
-          light: >
-            {{ states.light | count }}
-          media_player: >
-            {{ states.media_player | count }}
-          sensor: >
-            {{ states.sensor | count }}
-          switch: >
-            {{ states.switch | count }}
-          other: >
-            {% set exclude = this.attributes | list %}
-            {{ states | rejectattr('domain', 'in', exclude) | list | count }}
+      # - unique_id: domain_counter
+      #   name: 'Domain Counter'
+      #   state: >
+      #     {{ states | count }}
+      #   attributes:
+      #     automation: >
+      #       {{ states.automation | count }}
+      #     binary_sensor: >
+      #       {{ states.binary_sensor | count }}
+      #     device_tracker: >
+      #       {{ states.device_tracker | count }}
+      #     light: >
+      #       {{ states.light | count }}
+      #     media_player: >
+      #       {{ states.media_player | count }}
+      #     sensor: >
+      #       {{ states.sensor | count }}
+      #     switch: >
+      #       {{ states.switch | count }}
+      #     other: >
+      #       {% set exclude = this.attributes | list %}
+      #       {{ states | rejectattr('domain', 'in', exclude) | list | count }}
 
       - name: Hassio addons use
         unique_id: 'c9d0b358-302b-4845-b3b7-606a54c0e1bd'
         state: >-
-          {%- set memory = states.sensor.system_monitor_memory_usage.state | float -%}
-          {%- set cpu = states.sensor.system_monitor_processor_use.state | float -%}
+          {%- set memory = states.sensor.ha_system_memory_usage.state | float -%}
+          {%- set cpu = states.sensor.ha_system_cpu_usage.state | float -%}
             MEMORY: {{memory}}% | CPU: {{cpu}}%
         icon: mdi:home-assistant
+        attributes:
+          addons_active: |
+            {%- set devices = label_devices('addons') -%}
+            {% for dev in devices -%}
+              {%- set devname = device_attr(dev, 'name')-%}
+              {%- set identifiers = device_attr(dev, 'identifiers') | list -%}
+              {%- set slug_name = identifiers[0][1]-%}
+              {%- set conf_url = device_attr(dev, 'configuration_url') | replace('homeassistant://', '') -%}
 
+              {%- set entities = device_entities(dev) | list-%}
+              {%- set running_ent = entities | select('search', '_running$') | join(', ')-%}
+              {%- set cpu_ent = entities | select('search', '_cpu_percent$') | join(', ') -%}
+              {%- set memory_ent = entities | select('search', '_memory_percent$') | join(', ')-%}
+              {%- set update_ent = entities | select('search', '_update$') | join(', ')-%}
+              {%- set version_ent = entities | select('search', '_version$') | reject('search', '_newest_version$') | join(', ')-%}
+
+              {%- if is_state(running_ent, 'on')-%}
+                {{
+                  {
+                    'name': devname,
+                    'dev_id': dev,
+                    'conf_url': conf_url,
+                    'slug_name': slug_name,
+                    'running_ent': running_ent,
+                    'cpu_ent': cpu_ent,
+                    'memory_ent': memory_ent,
+                    'update_ent': update_ent,
+                    'version_ent': version_ent,
+                  }
+                }},
+              {%- endif -%}
+            {%- endfor-%}
+          addons_off: |
+            {%- set devices = label_devices('addons') -%}
+            {% for dev in devices -%}
+              {%- set devname = device_attr(dev, 'name')-%}
+              {%- set identifiers = device_attr(dev, 'identifiers') | list -%}
+              {%- set slug_name = identifiers[0][1]-%}
+              {%- set conf_url = device_attr(dev, 'configuration_url') | replace('homeassistant://', '') -%}
+
+              {%- set entities = device_entities(dev) | list-%}
+              {%- set running_ent = entities | select('search', '_running$') | join(', ')-%}
+              {%- set cpu_ent = entities | select('search', '_cpu_percent$') | join(', ') -%}
+              {%- set memory_ent = entities | select('search', '_memory_percent$') | join(', ')-%}
+              {%- set update_ent = entities | select('search', '_update$') | join(', ')-%}
+              {%- set version_ent = entities | select('search', '_version$') | reject('search', '_newest_version$') | join(', ')-%}
+
+              {%- if is_state(running_ent, 'off')-%}
+                {{
+                  {
+                    'name': devname,
+                    'dev_id': dev,
+                    'conf_url': conf_url,
+                    'slug_name': slug_name,
+                    'running_ent': running_ent,
+                    'cpu_ent': cpu_ent,
+                    'memory_ent': memory_ent,
+                    'update_ent': update_ent,
+                    'version_ent': version_ent,
+                  }
+                }},
+              {%- endif -%}
+            {%- endfor-%}
 command_line:
   - sensor:
       unique_id: hacs_installed
@@ -116,6 +178,7 @@ command_line:
       json_attributes:
         - repositories
       scan_interval: 86400
+
 sensor:
   - platform: folder
     folder: /config/www/tmp/snapshots

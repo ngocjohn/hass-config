@@ -855,13 +855,15 @@ widget_weather:
         - text-shadow: 5px 3px 9px black
   label: >
     [[[
+      let temp_min = states[variables.daily_forecast].attributes.forecast[0].templow;
+      let temp_max = states[variables.daily_forecast].attributes.forecast[0].temperature;
       return `
         <ha-icon icon="mdi:water-percent" style="width: 1em; height: 1em; margin-right: -0.3em;"></ha-icon>
         <span>${states[variables.humidity].state}%</span>
         <ha-icon icon="mdi:chevron-up" style="width: 1.5em; height: 1.5em; margin-right: -0.3em;"></ha-icon>
-        <span>${states[variables.temp_max].state}°</span>
+        <span>${temp_max}°</span>
         <ha-icon icon="mdi:chevron-down" style="width: 1.5em; height: 1.5em; margin-right: -0.3em;"></ha-icon>
-        <span>${states[variables.temp_min].state}°</span>
+        <span>${temp_min}°</span>
       `
     ]]]
   custom_fields:

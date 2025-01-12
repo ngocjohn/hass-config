@@ -3,48 +3,14 @@ browser_mod:
   service: browser_mod.popup
   data:
     title: Calendar
-    style: >
-      --popup-max-width: calc(500px + 500px);
-    card_mod:
-      style:
-        .: |
-        # card divider border
-        layout-card$grid-layout$:
-          .: |
-            #root > * {
-              margin: 0px !important;
-            }
-          hui-entities-card:
-            $: |
-              ha-card {
-                border-right: 0.1vw solid rgba(58, 69, 73, 0.2);
-                border-radius: 0;
-                transition: none;
-              }
-              /* portrait */
-              @media screen and (max-width: 1440px) {
-                ha-card {
-                  border-right: none;
-                  border-bottom: 0.1vw solid rgba(58, 69, 73, 0.2);
-                }
-              }
+    card_mod: !include ../snippets/style_popup_footer.yaml
     content:
       type: custom:layout-card
       layout_type: custom:grid-layout
-      layout:
-        margin: 0
-        grid-template-columns: 1fr 1fr
-        grid-template-rows: auto
-        mediaquery:
-          #portrait
-          '(max-width: 1440px)':
-            grid-template-columns: 1fr
-            grid-template-rows: fit-content(100%)
+      layout: !include ../snippets/popup_footer_layout.yaml
       cards:
         - type: entities
           title: "[[[ return states['sensor.date_en'].state;]]]"
-          card_mod:
-            class: header
           entities:
             - type: custom:atomic-calendar-revive
               enableModeChange: true
@@ -53,10 +19,6 @@ browser_mod:
                   name: České státní svátky
                 - entity: calendar.home_assistant_devs
                   name: Home assistant devs
-                - entity: calendar.personal
-                  name: Personal
-                - entity: calendar.ram_va_mung_mot_2020_2040_hass_konnected
-                  name: Lunar
               showDate: false
               showDeclined: false
               showLastCalendarWeek: true
@@ -100,17 +62,3 @@ browser_mod:
                   ha-card {
                     padding: 4px !important;
                   }
-        - type: entities
-          title: Moon phases
-          card_mod:
-            class: header
-            style: |
-              ha-card {
-                border: none !important;
-              }
-          entities:
-            - type: custom:mod-card
-              card:
-                type: iframe
-                url: https://moon.nasa.gov/__webgl/moon_lunar/
-                aspect_ratio: '135%'

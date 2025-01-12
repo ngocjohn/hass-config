@@ -7,13 +7,17 @@
   layout_type: 'custom:grid-layout'
   view_layout:
     grid-area: header
-    show:
-      mediaquery: '(max-width: 800px), (min-width: 1441px)'
+
   layout:
+    margin: 0
+    height: 100%
+    place-items: center center
     grid-template-columns: 0.5fr 1fr
     grid-gap: 0
-    margin: 0
-    place-items: 'center'
+    mediaquery:
+      '(min-width: 801px) and (max-width: 1440px)':
+        grid-template-columns: 1fr
+        grid-template-rows: auto
   cards:
     - type: custom:button-card
       entity: sensor.time

@@ -65,7 +65,7 @@ grid_office:
       - macbook
       - server
       - icon_office
-      - change_grid_title
+      # - change_grid_title
       # - light
     variables:
       state_on: >
@@ -748,8 +748,7 @@ grid_weather:
     entity: weather.prague
     name: Prague
     variables:
-      temp_min: sensor.weather_min_temp
-      temp_max: sensor.weather_max_temp
+      daily_forecast: sensor.daily_forecast
       humidity: sensor.weather_humidity
       current_weather: weather.prague
     template:
