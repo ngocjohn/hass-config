@@ -1,0 +1,57 @@
+#################################################
+#                                               #
+#             CHIPS MAX 800px                   #
+#                                               #
+#################################################
+- type: custom:swipe-card
+  view_layout:
+    grid-area: chips
+  start_card: 1
+  parameters:
+    centeredSlides: false
+    breakpoints:
+      640:
+        slidesPerView: 6
+        spaceBetween: 10
+      320:
+        slidesPerView: 3
+        spaceBetween: 5
+    slideToClickedSlide: true
+    speed: 420
+  cards:
+    - type: custom:button-card
+      name: Processor
+      entity: sensor.ha_system_cpu_usage
+      show_icon: true
+      template:
+        - chip_system
+    - type: custom:button-card
+      name: Memory %
+      entity: sensor.ha_system_memory_usage
+      show_icon: true
+      template:
+        - chip_system
+    - type: custom:button-card
+      name: Memory MiB
+      entity: sensor.ha_system_memory_use
+      show_icon: true
+      template:
+        - chip_system
+    - type: custom:button-card
+      name: Temperature
+      entity: sensor.ha_system_cpu_thermal_0_temperature
+      show_icon: true
+      template:
+        - chip_system
+    - type: custom:button-card
+      name: Disk used
+      entity: sensor.ha_system_data_disk_usage
+      show_icon: true
+      template:
+        - chip_system
+    - type: custom:button-card
+      name: Database
+      entity: sensor.ha_db
+      show_icon: true
+      template:
+        - chip_system

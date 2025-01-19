@@ -11,6 +11,7 @@ browser_mod:
     card_mod:
       style:
         .: |
+
     content:
       type: custom:auto-entities
       filter:

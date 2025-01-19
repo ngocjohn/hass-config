@@ -1,0 +1,247 @@
+icon: mdi:github
+title: GITHUB STATS
+path: github-stats
+subview: false
+theme: tablet
+xbackground: >-
+  linear-gradient(170deg, rgba(22, 24, 29, 0.6) 80%, rgba(156, 156, 210, 0.6) 160%)
+type: sections
+max_columns: 9
+dense_section_placement: true
+sections:
+  - type: grid
+    column_span: 3
+    cards:
+      - &github_heading_card
+        type: custom:streamline-card
+        template: github_heading_card
+        variables:
+          - heading_title: 🚘 Vehicle status card
+          - total_entity: sensor.vehicle_status_card_total_2
+          - latest_entity: sensor.vehicle_status_latest
+          - stars_entity: sensor.vehicle_status_card_stars
+          - repo_link: https://github.com/ngocjohn/vehicle-status-card
+      - type: custom:mod-card
+        grid_options:
+          columns: full
+        card_mod: &swipe_style
+          style:
+            swipe-card:
+              $: |
+                #host {
+                  --swiper-navigation-size: 24px !important;
+                  --swiper-theme-color: rgb(179, 179, 179, .5);
+                }
+                .swiper-button-prev, .swiper-button-next {
+                  top: 95% !important;
+                  --swiper-navigation-size: 24px !important;
+                  --swiper-theme-color: rgb(179, 179, 179, .5);
+                }
+        card:
+          type: custom:swipe-card
+          parameters: &swipe_parameters
+            navigation:
+            followFinger: false
+            grabCursor: false
+            roundLengths: true
+            centeredSlides: true
+            centeredSlidesBounds: true
+            enabled: true
+            createElements: false
+            allowTouchMove: false
+          cards:
+            - &github_graph_card
+              type: custom:streamline-card
+              template: github_graph_card
+              variables:
+                - total_entity: sensor.vehicle_status_card_total
+                - latest_entity: sensor.vehicle_status_latest
+            - &github_logbook_card
+              type: custom:streamline-card
+              template: github_logbook_card
+              variables:
+                - latest_entity: sensor.vehicle_status_latest
+            - &github_diagnostic_card
+              type: custom:streamline-card
+              template: github_diagnostic_card
+              variables:
+                - device_id: ngocjohn/vehicle-status-card
+  - type: grid
+    column_span: 3
+    cards:
+      - <<: *github_heading_card
+        variables:
+          heading_title: 🚙 Vehicle info card
+          total_entity: sensor.vehicle_info_card
+          latest_entity: sensor.vehicle_latest_release_download
+          stars_entity: sensor.repo_vehicle_stars
+          repo_link: https://github.com/ngocjohn/vehicle-info-card
+      - type: custom:mod-card
+        card_mod: *swipe_style
+        grid_options:
+          columns: full
+        card:
+          type: custom:swipe-card
+          parameters: *swipe_parameters
+          cards:
+            - <<: *github_graph_card
+              variables:
+                total_entity: sensor.vehicle_info_card
+                latest_entity: sensor.vehicle_latest_release_download
+                bar_color: rgb(196, 74, 34)
+                fill_color: 'rgba(196, 74, 34, 0.2)'
+            - <<: *github_logbook_card
+              variables:
+                latest_entity: sensor.vehicle_latest_release_download
+                bar_color: rgb(196, 74, 34)
+                fill_color: 'rgba(196, 74, 34, 0.2)'
+            - <<: *github_diagnostic_card
+              variables:
+                device_id: ngocjohn/vehicle-info-card
+                bar_color: rgb(196, 74, 34)
+                fill_color: 'rgba(196, 74, 34, 0.2)'
+
+  - type: grid
+    column_span: 3
+    cards:
+      - <<: *github_heading_card
+        variables:
+          heading_title: 🌘 Lunar Phase Card
+          total_entity: sensor.lunar_phase_card_total
+          latest_entity: sensor.lunar_phase_card_latest
+          stars_entity: sensor.lunar_phase_card_stars
+          repo_link: https://github.com/ngocjohn/lunar-phase-card
+      - type: custom:mod-card
+        card_mod: *swipe_style
+        grid_options:
+          columns: full
+        card:
+          type: custom:swipe-card
+          parameters: *swipe_parameters
+          cards:
+            - <<: *github_graph_card
+              variables:
+                total_entity: sensor.lunar_phase_card_total
+                latest_entity: sensor.lunar_phase_card_latest
+                bar_color: 'rgba(0, 255, 208, 0.7)'
+                fill_color: 'rgba(0, 255, 208, 0.2)'
+            - <<: *github_logbook_card
+              variables:
+                latest_entity: sensor.lunar_phase_card_latest
+                bar_color: 'rgba(0, 255, 208, 0.7)'
+                fill_color: 'rgba(0, 255, 208, 0.2)'
+            - <<: *github_diagnostic_card
+              variables:
+                device_id: ngocjohn/lunar-phase-card
+                bar_color: 'rgba(0, 255, 208, 0.7)'
+                fill_color: 'rgba(0, 255, 208, 0.2)'
+  - type: grid
+    column_span: 3
+    cards:
+      - <<: *github_heading_card
+        variables:
+          heading_title: 🌘 Lunar Phase Integration
+          total_entity: sensor.lunar_phase_integration_total
+          latest_entity: sensor.lunar_phase_integration_latest
+          stars_entity: sensor.lunar_phase_integration_stars
+          repo_link: https://github.com/ngocjohn/lunar-phase
+      - type: custom:mod-card
+        card_mod: *swipe_style
+        grid_options:
+          columns: full
+        card:
+          type: custom:swipe-card
+          parameters: *swipe_parameters
+          cards:
+            - <<: *github_graph_card
+              variables:
+                total_entity: sensor.lunar_phase_integration_total
+                latest_entity: sensor.lunar_phase_integration_latest
+                bar_color: 'rgba(236, 79, 241, 0.7)'
+                fill_color: 'rgba(236, 79, 241, 0.2)'
+            - <<: *github_logbook_card
+              variables:
+                latest_entity: sensor.lunar_phase_integration_latest
+                bar_color: 'rgba(236, 79, 241, 0.7)'
+                fill_color: 'rgba(236, 79, 241, 0.2)'
+            - <<: *github_diagnostic_card
+              variables:
+                device_id: ngocjohn/lunar-phase
+                bar_color: 'rgba(236, 79, 241, 0.7)'
+                fill_color: 'rgba(236, 79, 241, 0.2)'
+  - type: grid
+    column_span: 2
+    cards:
+      - <<: *github_heading_card
+        variables:
+          heading_title: 🛖 Hass Config
+          total_entity: 'sensor.hass_config_forks'
+          latest_entity: sensor.hass_config_latest_tag
+          stars_entity: 'sensor.hass_config_stars'
+          repo_link: https://github.com/ngocjohn/hass-config
+      - type: entities
+        grid_options:
+          columns: full
+        card_mod:
+          class: header nopadding
+          style: |
+            ha-card {
+              background: linear-gradient(to top, #2024349e 0%, transparent 100%);
+            }
+        show_header_toggle: false
+        state_color: false
+        entities:
+          - entity: sensor.hass_config_stars
+            name: Stars
+          - entity: sensor.hass_config_forks
+            name: Forks
+          - entity: sensor.hass_config_watchers
+            name: Watchers
+          - type: divider
+          - type: custom:multiple-logbook-card
+            card_mod:
+              style: |
+                ha-card .card-content-scroll {
+                  padding: 0 !important;
+                  max-height: 325px;
+                  height: 100%;
+                }
+            max_items: 7
+            show:
+              separator: true
+              duration: false
+            title: ''
+            date_format: relative
+            entities:
+              - entity: sensor.vehicle_latest_release_download
+                label: Vehicle Info
+              - entity: sensor.lunar_phase_integration_latest
+                label: Lunar Phase Integration
+              - entity: sensor.lunar_phase_card_latest
+                label: Lunar Phase Card
+              - entity: sensor.vehicle_status_latest
+                label: Vehicle Status
+            grid_options:
+              columns: full
+  - type: grid
+    column_span: 2
+    cards:
+      - type: heading
+        heading: 🚀  Github stats
+        tap_action:
+          action: url
+          url_path: https://github.com/ngocjohn
+        grid_options:
+          columns: full
+      - type: markdown
+        grid_options:
+          columns: full
+        card_mod:
+          style: |
+            ha-markdown {
+              padding: 0 !important;
+            }
+        content: >-
+          [![GitHub Streak](https://github-readme-streak-stats.herokuapp.com?user=ngocjohn&theme=transparent&hide_border=true&short_numbers=true&date_format=j%2Fn%5B%2FY%5D&card_width=600&stroke=634EEB7A)](https://git.io/streak-stats)
+          ![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=ngocjohn&layout=compact&theme=catppuccin_mocha&hide_border=true&count_private=true&card_width=600&hide=html,shell)
+          ![GitHub Stats](https://github-readme-stats.vercel.app/api?username=ngocjohn&theme=one_dark_pro&show_icons=true&hide_border=true&count_private=true&hide_title=true&card_width=600&rank_icon=default&text_bold=false)

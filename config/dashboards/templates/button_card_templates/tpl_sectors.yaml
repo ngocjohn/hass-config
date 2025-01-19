@@ -114,12 +114,13 @@ rooms_base:
     card:
       - background: >
           [[[
+            if (entity && entity.state !== undefined)
+
             if (variables.washing_on) {
               return variables.washing_on
                 ? `linear-gradient(to top, rgba(250, 250, 250, 0.75) 0%, rgba(10,14,34,0.8) 100%)`
                 : 'rgba(115, 115, 115, 0.2)';
-            }
-            else {
+            } else {
               return variables.state_on
                 ? 'rgba(250, 250, 250, 0.75)'
                 : 'rgba(115, 115, 115, 0.2)';
@@ -701,6 +702,8 @@ light_slider:
 tpl_popup_base:
   template:
     - base
+  variables:
+    tilt_enable: false
   name: >
     [[[
       if (entity)
@@ -712,9 +715,9 @@ tpl_popup_base:
         return `<ha-icon icon="${entity.attributes.icon}"></ha-icon>`;
       ]]]
   styles:
-    custom_fields:
-      icon:
-        - width: 85%
+    card:
+      - border-radius: 10%
+
 tpl_popup_device:
   template:
     - tpl_popup_base
@@ -735,11 +738,6 @@ tpl_popup_device:
             return entity.attributes.friendly_name.split(' ')[0];
           ]]]
         style: !include ../../shared/snippets/style_popup_transparent.yaml
-        card_mod:
-          style:
-            #popup header
-            .: |
-
         content:
           type: custom:auto-entities
           card:
@@ -762,39 +760,46 @@ tpl_popup_device:
 tpl_popup_light:
   template:
     - tpl_popup_base
+  tap_action:
+    action: toggle
+    haptic: success
   double_tap_action:
-    action: fire-dom-event
-    browser_mod:
-      service: browser_mod.popup
-      data:
-        title: >
-          [[[
-            return !entity || entity.attributes.friendly_name;
-          ]]]
-        style: !include ../../shared/snippets/style_popup_transparent.yaml
-        card_mod:
-          style:
-            #popup header
-            .: |
-              @media (max-width: 450px), (max-height: 500px) {
-                ha-dialog>ha-dialog-header {
-                  display: block;
-                  background-color: var(--tablet-popup-header-color) !important;
-                }
-              }
-        content:
-          type: custom:more-info-card
-          entity: >
-            [[[ return entity.entity_id; ]]]
-          title: ' '
-          card_mod:
-            style: |
-              state-card-content {
-                display: none !important;
-              }
-              ha-card {
-                border: none !important;
-              }
+    action: more-info
+    haptic: medium
+
+  # double_tap_action:
+  #   action: fire-dom-event
+  #   browser_mod:
+  #     service: browser_mod.popup
+  #     data:
+  #       title: >
+  #         [[[
+  #           return !entity || entity.attributes.friendly_name;
+  #         ]]]
+  #       style: !include ../../shared/snippets/style_popup_transparent.yaml
+  #       card_mod:
+  #         style:
+  #           #popup header
+  #           .: |
+  #             @media (max-width: 450px), (max-height: 500px) {
+  #               ha-dialog>ha-dialog-header {
+  #                 display: block;
+  #                 background-color: var(--tablet-popup-header-color) !important;
+  #               }
+  #             }
+  #       content:
+  #         type: custom:more-info-card
+  #         entity: >
+  #           [[[ return entity.entity_id; ]]]
+  #         title: ' '
+  #         card_mod:
+  #           style: |
+  #             state-card-content {
+  #               display: none !important;
+  #             }
+  #             ha-card {
+  #               border: none !important;
+  #             }
 
   #################################################
   #                                               #
@@ -999,71 +1004,83 @@ camera:
         }
       ]]]
     battery: ''
-  tap_action:
-    action: call-service
-    service: automation.trigger
-    service_data:
-      entity_id: automation.camera_snapshot
+  show_name: false
+  # tap_action:
+  #   action: call-service
+  #   service: automation.trigger
+  #   service_data:
+  #     entity_id: automation.camera_snapshot
   tooltip: >
     [[[
       return states[variables.battery].state+' %';
     ]]]
+  # double_tap_action:
+  #   action: fire-dom-event
+  #   browser_mod:
+  #     service: browser_mod.popup
+  #     data:
+  #       title: ' '
+  #       style: |
+  #         --popup-border-width: 0;
+  #         --tablet-popup-header-color: rgba(0, 0, 0, 0);
+  #         --popup-background-color: rgba(0, 0, 0, 0);
+  #         --popup-max-width: 600px;
+  #       card_mod:
+  #         style:
+  #           .: |
+  #             @media screen and (min-width: 800px) {
+  #               ha-dialog>ha-dialog-header {
+  #                 display: none !important;
+  #               }
+  #             }
+  #             @media (max-width: 450px), (max-height: 500px) {
+  #               ha-dialog {
+  #                 --mdc-dialog-min-width: 100vw !important;
+  #                 --mdc-dialog-min-height: 100vh !important;
+  #                 --popup-border-radius: 0 !important;
+  #               }
+  #             }
+  #       content:
+  #         type: picture-entity
+  #         entity: >
+  #           [[[ return variables.entity_id;]]]
+  #         image: >
+  #           [[[
+  #               return `/local/tmp/${variables.entity_id}-latest.jpg`;
+  #           ]]]
+  #         show_info: true
+  #         show_state: true
+  #         show_name: false
+  #         camera_view: auto
+  #         tap_action:
+  #           action: call-service
+  #           service: >
+  #             [[[
+  #               return variables.state == 'idle'
+  #                 ? 'camera.turn_on'
+  #                 : 'camera.turn_off';
+  #             ]]]
+  #           service_data:
+  #             entity_id: >
+  #               [[[
+  #                 return entity.entity_id;
+  #               ]]]
+  #         card_mod:
+  #           style: |
+  #             ha-card {
+  #               border-radius: 16px !important;
+  #             }
+
   double_tap_action:
     action: fire-dom-event
     browser_mod:
-      service: browser_mod.popup
+      service: browser_mod.more_info
       data:
-        title: ' '
-        style: |
-          --popup-border-width: 0;
-          --tablet-popup-header-color: rgba(0, 0, 0, 0);
-          --popup-background-color: rgba(0, 0, 0, 0);
-          --popup-max-width: 600px;
-        card_mod:
-          style:
-            .: |
-              @media screen and (min-width: 800px) {
-                ha-dialog>ha-dialog-header {
-                  display: none !important;
-                }
-              }
-              @media (max-width: 450px), (max-height: 500px) {
-                ha-dialog {
-                  --mdc-dialog-min-width: 100vw !important;
-                  --mdc-dialog-min-height: 100vh !important;
-                  --popup-border-radius: 0 !important;
-                }
-              }
-        content:
-          type: picture-entity
-          entity: >
-            [[[ return variables.entity_id;]]]
-          image: >
-            [[[
-                return `/local/tmp/${variables.entity_id}-latest.jpg`;
-            ]]]
-          show_info: true
-          show_state: true
-          show_name: false
-          camera_view: auto
-          tap_action:
-            action: call-service
-            service: >
-              [[[
-                return variables.state == 'idle'
-                  ? 'camera.turn_on'
-                  : 'camera.turn_off';
-              ]]]
-            service_data:
-              entity_id: >
-                [[[
-                  return entity.entity_id;
-                ]]]
-          card_mod:
-            style: |
-              ha-card {
-                border-radius: 16px !important;
-              }
+        entity: >
+          [[[
+            return variables.entity_id;
+          ]]]
+
   styles:
     card:
       - padding: 8%

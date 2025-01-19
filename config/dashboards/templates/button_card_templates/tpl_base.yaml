@@ -16,6 +16,7 @@ base:
   template:
     - settings
     - tilt
+    - card_bounce
     - extra_styles
   variables:
     state_on: >
@@ -36,34 +37,6 @@ base:
   aspect_ratio: 1/1
   show_state: true
   show_icon: false
-  tap_action:
-    card_bounce: |
-      [[[
-        // add animation
-        if (this.getElementsByTagName("style").length === 0) {
-            // phone condition
-            let mq = window.matchMedia('(max-width: 800px)').matches;
-            let style = document.createElement('style');
-            style.innerHTML = `
-                @keyframes card_bounce {
-                    0%   { transform: scale(1); }
-                    10%  { transform: scale(${ mq ? '0.92' : '0.94' }); }
-                    25%  { transform: scale(1); }
-                    30%  { transform: scale(${ mq ? '0.96' : '0.98' }); }
-                    100% { transform: scale(1); }
-                }
-            `;
-            this.appendChild(style);
-        }
-        // duration
-        let duration = 800;
-        // animate
-        this.style.animation = `card_bounce ${duration}ms cubic-bezier(0.22, 1, 0.36, 1)`;
-        // reset
-        window.setTimeout(() => { this.style.animation = "none"; }, duration + 100)
-      ]]]
-    action: toggle
-    haptic: medium
   double_tap_action:
     haptic: success
   hold_action:
@@ -96,7 +69,6 @@ base:
       - border-radius: var(--button-card-border-radius)
       - border-width: 0
       - --webkit-tap-highlight-color: rgba(250,250,250,1)
-      - transition: none
       - box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.15)
       - text-rendering: auto
       - -webkit-font-smoothing: antialiased
@@ -313,6 +285,7 @@ extra_styles:
         * * * * * * * * * * * * * * * * * */
         :host {
           --tablet-primary-color: #00acc1;
+          --cursor: url("data:image/svg+xml,%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='24px' height='24px' viewBox='0 0 512 512' style='enable-background:new 0 0 512.011 512.011;' xml:space='preserve'%3E %3Cpath fill='SteelBlue' stroke='white' stroke-width='10' d='M434.215,344.467L92.881,3.134c-4.16-4.171-10.914-4.179-15.085-0.019  c-2.011,2.006-3.139,4.731-3.134,7.571v490.667c0.003,4.382,2.685,8.316,6.763,9.92c4.081,1.603,8.727,0.545,11.712-2.667  l135.509-145.92h198.016c5.891,0.011,10.675-4.757,10.686-10.648C437.353,349.198,436.226,346.473,434.215,344.467z'/%3E %3C/svg%3E"), pointer;
         }
         #container {
           text-align: left !important;
@@ -320,17 +293,18 @@ extra_styles:
         }
         #card {
           padding: 10.9% 9.9% 8.9% 10.9%;
-          cursor: url("data:image/svg+xml,%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='24px' height='24px' viewBox='0 0 512 512' style='enable-background:new 0 0 512.011 512.011;' xml:space='preserve'%3E %3Cpath fill='SteelBlue' stroke='white' stroke-width='10' d='M434.215,344.467L92.881,3.134c-4.16-4.171-10.914-4.179-15.085-0.019  c-2.011,2.006-3.139,4.731-3.134,7.571v490.667c0.003,4.382,2.685,8.316,6.763,9.92c4.081,1.603,8.727,0.545,11.712-2.667  l135.509-145.92h198.016c5.891,0.011,10.675-4.757,10.686-10.648C437.353,349.198,436.226,346.473,434.215,344.467z'/%3E %3C/svg%3E"), pointer;
+          cursor: var(--cursor);
+          transition: all 0.4s ease-in-out;
         }
         ${ variables.hover_enable
           ?
             `#card:hover {
-              box-shadow: inset 0 0 30px var(--tablet-primary-color) !important;
+              box-shadow: inset 0 0 2rem var(--tablet-primary-color) !important;
               border: 1px solid var(--tablet-primary-color) !important;
-              ${!variables.state_on ? 'color: unset !important;' :''}
             }`
           : ''
         }
+
 
         #state::first-letter {
           text-transform: uppercase;
@@ -369,7 +343,7 @@ extra_styles:
             font-family: Futura;
           }
         }
-        ${variables.tilt_enable === true ? `
+        ${variables.tilt_enable ? `
          /* * * * * * * * * * * * * * * * * *
           *                                 *
           *              TILT               *
@@ -901,18 +875,16 @@ extra_styles:
             --chips-portrait: 1.4;
             --chips-phone: 4.1;
           }
-          #ripple, .js-tilt-glare {
-            border-radius: calc(var(--chips-card-border-radius) - 0.1vw);
-            clip-path: inset(0 round calc( var(--button-card-border-radius) - 0.1vw ));
-          }
+
           #name {
             font-size: var(--chips-card-font-size);
-            padding: var(--chips-card-padding-v) var(--chips-card-padding-h);
+            //padding: var(--chips-card-padding-v) var(--chips-card-padding-h);
           }
           #state {
+            font-weight: var(--button-card-font-weight);
             font-size: var(--chips-card-state-size);
-            padding: var(--chips-card-padding-v) var(--chips-card-padding-h);
-            letter-spacing: 0.06vw;
+            //padding: var(--chips-card-padding-v) var(--chips-card-padding-h);
+            //letter-spacing: 0.06vw;
           }
           #card {
             border-radius: var(--chips-card-border-radius);
@@ -929,27 +901,28 @@ extra_styles:
           /* phone */
           @media screen and (max-width: 800px) {
             #card {
-              border-radius: 0.5rem;
+              border-radius: 0.9rem;
             }
             #name {
-              font-size: calc(var(--chips-card-font-size) * var(--chips-phone));
-              letter-spacing: 0.2vw;
+              font-size: 0.8rem;
             }
             #state {
-              font-size: calc(var(--chips-card-state-size) * var(--chips-phone));
-              font-weight: 400 !important;
-              letter-spacing: 0.2vw;
+              font-size: 0.7rem;
             }
-            ha-icon {
-              width: calc(var(--chips-card-icon-size) * var(--chips-phone));
+
+            #img-cell > ha-state-icon {
+              color: var(--primary-text-color);
+              width: 24px;
+              position: inherit;
+              height: auto;
+              background: none !important;
+              border-radius: 0 important;
+              padding: 0 !important;
+              place-self: center baseline;
+              opacity: 0.4;
             }
             .svgicon {
-              width: 80%;
-            }
-            ha-state-icon#icon {
-              background: none !important;
-              width: 70% !important;
-              padding: 0px 0px !important;
+              width: 24px !important;
             }
           }
           .marquee {
@@ -973,13 +946,13 @@ extra_styles:
           @keyframes marquee {
             0%,
             70% {
-              transform: translateX(-25%);
+              transform: translateX(-35%);
               scale: 0.9;
             }
             40%,
             100% {
               transform: translateX(15%);
-              scale: 1.1;
+              scale: 1;
             }
           }
           #container {
@@ -988,14 +961,11 @@ extra_styles:
           #img-cell {
             display: grid;
             place-self: center;
-            max-height: 120px !important;
-            / animation: marquee 20s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
-            / animation-direction: alternate-reverse;
+            max-height: 100px !important;
+            animation: marquee 20s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+            animation-direction: alternate-reverse;
           }
-          #icon {
-            object-fit: none !important;
-            width: 100% !important;
-          }
+
           #state {
             display: flex;
             flex-direction: column;
@@ -1008,13 +978,13 @@ extra_styles:
           }
 
           .feels_like {
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 400;
-            font-family: 'Roboto';
+            //font-family: 'Roboto';
             text-align: -webkit-match-parent;
           }
           .realtemp {
-            font-size: 5rem;
+            font-size: 3em;
             font-weight: 500;
             font-family: 'Raleway';
             position: relative;
@@ -1031,16 +1001,26 @@ extra_styles:
             display: flex;
             place-self: end;
           }
+          @media screen and (min-width: 801px) and (max-width: 1700px) {
+            #container {
+              grid-template-columns: 1fr fit-content(100%) !important;
+              grid-auto-rows: fit-content(100%) fit-content(100%) !important;
+              grid-template-areas: "i s" "l l" !important;
+              height: 100%;
+              place-items: center center;
+              grid-row-gap: 1rem !important;
+            }
+          }
           @media screen and (max-width: 800px) {
             #container {
-              grid-template-columns: 1fr 1fr auto !important;
+              grid-template-columns: 1fr auto !important;
+              grid-auto-rows: fit-content(100%) fit-content(100%);
             }
             #label {
-              display: none !important;
-
+              display: none;
             }
             #icon {
-              width: 50% !important;
+              max-width: 150px !important;
             }
             .realtemp {
               font-size: 2.3rem;
@@ -1051,6 +1031,13 @@ extra_styles:
             .degree-symbol {
               right: auto;
             }
+            #icon {
+              width: 100%;
+              position: relative;
+              max-width: calc(100vw / 3) !important;
+              object-fit: scale-down !important;
+              height: fit-content !important;
+            }
           }
           ul {
             list-style: none;
@@ -1058,12 +1045,18 @@ extra_styles:
             margin-block: 0;
             display: inline-block;
           }
+
           li {
-            font-size: 14px;
+            font-size: 1rem;
             padding-left: 2rem;
             text-align: left;
           }
-
+          @media screen and (max-width: 1710px) {
+            li {
+              font-size: 0.65rem;
+              padding-left: 1rem;
+            }
+          }
           li.precipitation {
             background: url('https://api.iconify.design/meteocons/umbrella-fill.svg') no-repeat left center / contain;
           }
@@ -1096,10 +1089,15 @@ extra_styles:
             display: flex;
             flex-direction: column;
           }
+          #card {
+            padding: inherit;
+            width: 100%;
+            overflow: visible;
+          }
           #name {
             place-self: center;
-            line-height: 100%;
-            font-size: 3.5vw;
+            line-height: normal;
+            font-size: 4em;
             font-weight: 800;
             color: #97989c;
             font-family: auto;
@@ -1113,6 +1111,14 @@ extra_styles:
             font-family: 'Raleway';
             letter-spacing: 0.5px;
             color: #97989c;
+          }
+          @media screen and (max-width: 1700px) {
+            #name {
+              font-size: 6em;
+            }
+            #label {
+              font-size: 1vw;
+            }
           }
           @media screen and (max-width: 800px) {
             #card {
@@ -1157,8 +1163,37 @@ extra_styles:
             height: 100%;
             border-radius: 50%;
             clip-path: circle(50%);
-          }`
-          : ''}
+          }
+        `: ''}
+        ${/(chip_system|tpl_popup_base|addons_base)/.test(this._config.template) ? `
+          :host {
+            --cpu-mem-font-size: 12px;
+            --cpu-mem-icon-size: 24px;
+          }
+          #card {
+            cursor: var(--cursor);
+            transition: border 300s ease-in-out, box-shadow 300ms ease ;
+          }
+          ${variables.hover_enable
+            ?
+              `#card:hover {
+                box-shadow: inset 0 0 1rem var(--tablet-primary-color) !important;
+                border: 0.5px solid var(--tablet-primary-color) !important;
+              }`
+            : ''
+          }
+          ha-icon.cpu-mem-icon {
+            width: var(--cpu-mem-icon-size);
+            height: var(--cpu-mem-icon-size);
+            color: deepskyblue;
+            margin-right: 4px;
+          }
+          @media screen and (max-width: 800px) {
+            :host {
+              --cpu-mem-font-size: 10px;
+              --cpu-mem-icon-size: 18px;
+            }
+          `:''}
       `;
     ]]]
 #################################################

@@ -3,83 +3,99 @@
 #      FLOORPLAN MAX RESOLUTION                 #
 #                                               #
 #################################################
-- type: grid
-  title: ' '
+- type: 'custom:layout-card'
+  layout_type: 'custom:grid-layout'
   view_layout:
     grid-area: floorplan
     show:
       mediaquery: '(min-width: 1441px)'
-  columns: 1
+  layout:
+    grid-template-columns: 1fr
+    grid-template-rows: 1fr fit-content(100%)
+    grid-gap: 0
+    margin: 0
+    height: 100%
+
   cards:
-    - type: 'custom:layout-card'
-      layout_type: 'custom:grid-layout'
-      layout:
-        grid-template-columns: 1fr
-        grid-template-rows: fit-content(100%)
-        margin: 0
-      cards:
-        - type: vertical-stack
-          cards:
-            - !include ../../shared/hidden/movie_slide.yaml
-            - !include ../../shared/hidden/floorplan_landscape.yaml
-            - !include ../../shared/hidden/floorplan_portrait.yaml
-            - !include ../../shared/hidden/ymovie.yaml
+    - type: custom:floorplan-card
+      card_mod:
+        style: |
+          ha-card {
+            margin: 0;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.13) 0%, transparent 50%);
+            box-shadow: none;
+            position: relative;
+            opacity: 0;
+            animation-name: fade-in;
+            animation-duration: 2s;
+            animation-fill-mode: forwards;
+            animation-iteration-count: 1;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden !important;
+          }
+          @keyframes slide-opacity {
+            0% {
+              transform: translateX(100%);
+              opacity: 0;
+            }
+            100% {
+              transform: translateX(0%);
+              opacity: 1;
+            }
+          }
+          @keyframes fade-in2 {
+            0%   {opacity: 0; left: 100%;}
+            100% {opacity: 1; left: 0;}
+          }
+
+          @keyframes fade-in {
+            0%   {opacity: 0;}
+            100% {opacity: 1;}
+          }
+      config:
+        image: /local/hafloor/plan_opt.svg
+        stylesheet: /local/hafloor/style.css
+        # log_level: info
+        # console_log_level: debug
+        rules: !include_dir_merge_list /config/dashboards/floorplan/
+    - !include ../../shared/columns/nowplaying.yaml
 #################################################
 #                                               #
 #           FLOORPLAN PORTRAIT                  #
 #                                               #
 #################################################
-- type: horizontal-stack
+- type: custom:floorplan-card
   view_layout:
     grid-area: floorplan
     show:
       mediaquery: '(max-width: 1440px)'
-  cards:
-    - type: custom:local-conditional-card
-      default: show
-      id: landscape
-      card:
-        type: custom:floorplan-card
-        card_mod:
-          style: |
-            ha-card {
-              margin: 1% 13%;
-              background: radial-gradient(circle, rgb(255 255 255 / 14%) 27%, rgba(57,14,14,0) 61%);
-              box-shadow: none;
-            }
-            @media screen and (max-width: 1440px) {
-              ha-card  {
-                margin: 0 13% !important;
-              }
-            }
-            @media screen and (max-width: 800px) {
-              ha-card  {
-                margin: 0 !important;
-                padding-top: 3vh;
-              }
-            }
-        config:
-          image: /local/hafloor/plan_opt.svg
-          stylesheet: /local/hafloor/style.css
-          defaults:
-            hover_action: false
-            tap_action: false
-          # log_level: info
-          # console_log_level: info
-          rules: !include_dir_merge_list /config/dashboards/floorplan/
-    - type: custom:local-conditional-card
-      default: hide
-      id: portrait
-      card:
-        type: custom:floorplan-card
-        # full_height: true
-        # card_mod:
-        #   style: *style_portrait
-        # # config: !include floorplan/floor_plan.yaml
-        config:
-          image: /local/hafloor/ip_floorplan/iphone_opt.svg
-          stylesheet: /local/hafloor/style.css
-          defaults:
-            hover_action: false
-            tap_action: false
-          rules: !include_dir_merge_list /config/dashboards/floorplan
+  card_mod:
+    style: |
+      ha-card {
+        margin: 1% 13%;
+        background: radial-gradient(circle, rgb(255 255 255 / 14%) 27%, rgba(57,14,14,0) 61%);
+        box-shadow: none;
+      }
+      @media screen and (max-width: 1440px) {
+        ha-card  {
+          margin: 0 13% !important;
+        }
+      }
+      @media screen and (max-width: 800px) {
+        ha-card  {
+          margin: 0 !important;
+          padding-top: 3vh;
+        }
+      }
+  config:
+    image: /local/hafloor/plan_opt.svg
+    stylesheet: /local/hafloor/style.css
+    defaults:
+      hover_action: false
+      tap_action: false
+    # log_level: info
+    # console_log_level: info
+    rules: !include_dir_merge_list /config/dashboards/floorplan/

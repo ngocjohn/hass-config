@@ -59,11 +59,13 @@ switch:
   # Humidifier
 generic_hygrostat:
   - name: Office Humidifier
+    unique_id: 826cc024-01a3-43b1-8b78-6c652a7776ab
     humidifier: switch.office_humidifier
     target_sensor: sensor.office_temp_humid_humidity
     target_humidity: 100
     device_class: 'humidifier'
   - name: Bedroom Humidifier
+    unique_id: 10fc5132-12f5-45fa-94e1-4f2f9acedd1a
     humidifier: switch.bedroom_humidifier
     target_sensor: sensor.bedroom_tem_humid_humidity
     target_humidity: 100

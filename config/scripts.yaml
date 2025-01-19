@@ -339,36 +339,6 @@ fade_music:
       entity_id: '{{ target_player }}'
       volume_level: '{{ target_volume }}'
   icon: mdi:tune-vertical
-kodi_shield:
-  alias: 'KODI Shield '
-  sequence:
-  - if:
-    - condition: state
-      entity_id: media_player.shield_android_tv
-      state: 'off'
-    then:
-    - service: media_player.turn_on
-      data: {}
-      target:
-        entity_id: media_player.shield_android_tv
-    - delay:
-        hours: 0
-        minutes: 0
-        seconds: 2
-        milliseconds: 0
-    - service: media_player.select_source
-      data:
-        source: Kodi
-      target:
-        entity_id: media_player.shield_android_tv
-    else:
-    - service: media_player.select_source
-      data:
-        source: Kodi
-      target:
-        entity_id: media_player.shield_android_tv
-  mode: single
-  icon: mdi:kodi
 morning_cover:
   alias: morning cover
   sequence:
@@ -633,18 +603,26 @@ homepod_alarm:
       minutes: 0
       seconds: 3
       milliseconds: 0
+  - action: media_player.shuffle_set
+    metadata: {}
+    data:
+      shuffle: true
+    target:
+      entity_id: media_player.bedroom
   - data:
-      media_content_id: library://playlist/33
-      media_content_type: music
+      media_content_id: library://playlist/4
+      media_content_type: playlist
     metadata:
-      title: My recommendation playlist
-      thumbnail: https://mosaic.scdn.co/640/ab67616d00001e0253334ad518b8ba38211c320bab67616d00001e025675e83f707f1d7271e5cf8aab67616d00001e02c1b211b5fcdef31be5f806dfab67616d00001e02fc915b69600dce2991a61f13
+      title: 500 Random tracks (from library)
+      thumbnail:
       media_class: playlist
-      children_media_class:
+      children_media_class: track
       navigateIds:
       - {}
       - media_content_type: mass
         media_content_id: playlists
+      - media_content_type: music
+        media_content_id: library://playlist/4
     target:
       entity_id: media_player.bedroom
     action: media_player.play_media
@@ -686,3 +664,15 @@ update_entitites:
         '
   description: ''
   icon: mdi:update
+backup_addon:
+  sequence:
+  - action: hassio.backup_partial
+    metadata: {}
+    data:
+      compressed: true
+      homeassistant_exclude_database: true
+      addons:
+      - '{{ addon_slug }}'
+      name: '{{ addon_slug }}_{{ version }}_{{ now().strftime(''%d_%m_%H_%M'') }}'
+  alias: backup addon
+  description: ''

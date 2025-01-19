@@ -3,61 +3,63 @@ browser_mod:
   service: browser_mod.popup
   data:
     title: Sensors
-    style: !include ../snippets/style_footer_transparent.yaml
-    card_mod: !include ../snippets/style_popup_footer.yaml
+    style: >
+      --max-popup-column: 2;
     content:
-      type: custom:layout-card
-      layout_type: custom:grid-layout
-      layout: !include ../snippets/popup_footer_layout.yaml
-      cards:
-        #################################################
-        #                                               #
-        #                SECURITY SENSORS               #
-        #                                               #
-        #################################################
-        - type: custom:auto-entities
-
-          card:
-            type: entities
-            title: Motion Sensors
-            show_header_toggle: false
-          card_mod:
-            class: header
-          filter:
-            template: |
-              {% for sensor in expand('group.motion_sensors') -%}
-                {%- set name = state_attr(sensor.entity_id, "friendly_name") | regex_replace(find='Motion Sensor ', replace='') -%}
-                {{
-                  { 'entity': sensor.entity_id,
-                    'name': name,
-                    'state_color': true,
-                    'secondary_info': 'last-changed'
-                  }
-                }},
-              {%- endfor %}
-          sort:
-            method: last_changed
-            reverse: true
-
-        - type: custom:auto-entities
-          card:
-            type: entities
-            title: Contact Sensors
-            show_header_toggle: false
+      type: custom:mod-card
+      card_mod: !include ../snippets/style_popup_footer.yaml
+      card:
+        type: custom:layout-card
+        layout_type: custom:grid-layout
+        layout: !include ../snippets/popup_footer_layout.yaml
+        cards:
+          #################################################
+          #                                               #
+          #                SECURITY SENSORS               #
+          #                                               #
+          #################################################
+          - type: custom:auto-entities
+            card:
+              type: entities
+              title: Motion Sensors
+              show_header_toggle: false
             card_mod:
               class: header
-          filter:
-            template: |
-              {% for sensor in expand('group.contact_sensors') -%}
-                {%- set name = state_attr(sensor.entity_id, "friendly_name") | regex_replace(find='Contact Sensor ', replace='') -%}
-                {{
-                  { 'entity': sensor.entity_id,
-                    'name': name,
-                    'state_color': true,
-                    'secondary_info': 'last-changed'
-                  }
-                }},
-              {%- endfor %}
-          sort:
-            method: last_changed
-            reverse: true
+            filter:
+              template: |
+                {% for sensor in expand('group.motion_sensors') -%}
+                  {%- set name = state_attr(sensor.entity_id, "friendly_name") | regex_replace('Motion Sensor| ?Occupancy','') | trim -%}
+                  {{
+                    { 'entity': sensor.entity_id,
+                      'name': name,
+                      'state_color': true,
+                      'secondary_info': 'last-changed'
+                    }
+                  }},
+                {%- endfor %}
+            sort:
+              method: last_changed
+              reverse: true
+
+          - type: custom:auto-entities
+            card:
+              type: entities
+              title: Contact Sensors
+              show_header_toggle: false
+              card_mod:
+                class: header
+            filter:
+              template: |
+                {% for sensor in expand('group.contact_sensors') -%}
+                  {%- set name = state_attr(sensor.entity_id, "friendly_name") | regex_replace('Contact Sensor| ?Occupancy','') | trim -%}
+                  {{
+                    { 'entity': sensor.entity_id,
+                      'name': name,
+                      'state_color': true,
+                      'secondary_info': 'last-changed'
+                    }
+                  }},
+                {%- endfor %}
+            sort:
+              method: last_changed
+              reverse: true

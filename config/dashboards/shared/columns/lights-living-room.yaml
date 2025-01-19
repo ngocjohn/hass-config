@@ -9,12 +9,12 @@
   variables:
     aspect_ratio: 2/1
 
-- type: 'custom:button-card'
-  template:
-    - live_tile_with_graph
-    - live_tile_with_state_unit
-  entity: sensor.motion_sensor_kitchen_illuminance_lux
-  name: Light Level
+# - type: 'custom:button-card'
+#   template:
+#     - live_tile_with_graph
+#     - live_tile_with_state_unit
+#   entity: sensor.motion_sensor_kitchen_illuminance_lux
+#   name: Light Level
 
 - type: 'custom:streamline-card'
   template: light_card

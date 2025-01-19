@@ -3,20 +3,10 @@ browser_mod:
   service: browser_mod.popup
   data:
     title: Office
-
-    card_mod: !include ../../snippets/style_popup_cardmod.yaml
-
     content:
       type: custom:layout-card
       layout_type: custom:grid-layout
-      layout:
-        margin: 1.5% 0
-        gap: 5%
-        grid-template-columns: 20vw
-        grid-template-rows: fit-content(100%)
-        mediaquery:
-          '(max-width: 800px)':
-            grid-template-columns: 100%
+      layout: !include ../../snippets/layout_room_popup.yaml
       cards:
         - type: custom:auto-entities
           filter:

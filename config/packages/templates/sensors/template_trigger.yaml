@@ -1,0 +1,42 @@
+template:
+  - trigger:
+      - platform: time_pattern
+        hours: /1
+      - platform: homeassistant
+        event: start
+
+    action:
+      - service: weather.get_forecasts
+        data:
+          type: daily
+        target:
+          entity_id:
+            - weather.prague
+        response_variable: daily
+
+    sensor:
+      - name: Daily Forecast
+        unique_id: weather_forecast_daily
+        state: '{{ now().isoformat() }}'
+        attributes:
+          forecast: "{{ daily['weather.prague'].forecast }}"
+
+  # - trigger:
+  #     - platform: time_pattern
+  #       hours: /1
+  #     - platform: homeassistant
+  #       event: start
+  #   action:
+  #     - service: weather.get_forecasts
+  #       data:
+  #         type: hourly
+  #       target:
+  #         entity_id:
+  #           - weather.prague
+  #       response_variable: hourly
+  #   sensor:
+  #     - name: Hourly Forecast
+  #       unique_id: weather_forecast_hourly
+  #       state: '{{ now().isoformat() }}'
+  #       attributes:
+  #         forecast: "{{ hourly['weather.prague'].forecast }}"

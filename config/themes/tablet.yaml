@@ -69,6 +69,8 @@ tablet:
   honeycomb-menu-icon-active-color: '#ffffffbd'
   honeycomb-menu-icon-color: '#FFFFFF80'
 
+  tablet-popup-content-padding: 1.4em 2.2em 1.6em 1.5em
+
   # Swiper
   swiper-pagination-bottom: 8px
   swiper-pagination-bullet-height: 8px
@@ -87,21 +89,29 @@ tablet:
   swiper-pagination-right: 8px
   swiper-pagination-top: auto
   swiper-theme-color: rgb(179, 179, 179)
-  tablet-popup-content-padding: 1.4em 2.2em 1.6em 1.5em
+
+  swiper-scrollbar-border-radius: 10px
+  swiper-scrollbar-top: auto
+  swiper-scrollbar-bottom: 4px
+  swiper-scrollbar-left: auto
+  swiper-scrollbar-right: 4px
+  swiper-scrollbar-sides-offset: 1%
+  swiper-scrollbar-bg-color: rgba(0, 0, 0, 0.25)
+  swiper-scrollbar-drag-bg-color: rgb(179, 179, 179)
+  swiper-scrollbar-size: 4px
 
   card-mod-theme: tablet
 
   card-mod-view-yaml: |
     .: |
       :host {
-        --app-header-background-color: rgba(0,0,0,1);
+        # --app-header-background-color: rgba(0,0,0,1);
+        --app-header-background-color: rgba(22, 24, 29, 1);
       }
-      hui-view {
-        background: linear-gradient(180deg, rgb(0 0 0) 0%, rgba(23, 26, 37, 1) 42%, rgba(21, 25, 35, 1) 100%) !important;
-      }
+
       #view {
-        background-image: linear-gradient(180deg, rgb(0 0 0) 0%, rgba(23,26,37,1) 42%, rgba(21,25,35,1) 100%);
-        overflow: hidden;
+        background-image: linear-gradient(180deg, rgba(22, 24, 29, 1) 0%, rgba(23, 26, 37, 1) 42%, rgba(22, 24, 29, 1) 100%) !important;
+        overflow: hidden !important;
       }
       /* phone */
       @media screen and (max-width: 800px) {
@@ -114,29 +124,23 @@ tablet:
     #              GRID CARD HEADINGS               #
     #                                               #
     #################################################
-    grid-layout$:
-      hui-grid-card:
-        .: |
-          hui-grid-card {
-            padding-bottom: 1.5vw;
-          }
-          /* phone */
-          @media screen and (max-width: 800px) {
-            hui-grid-card {
-              padding-bottom: 3vw;
-            }
-          }
+    grid-layout:
+      $: |
+        #root {
+          min-height: 100%;
+        }
+      $hui-grid-card:
         $: |
           /* default */
           h1 {
             font-size: 1.4vw !important;
-            line-height: 0 !important;
             font-weight: 700 !important;
             font-family: Raleway !important;
             letter-spacing: 0.05em !important;
             color: rgba(255, 255, 255, 0.7) !important;
-            padding: 1vw 0 1.2vw 0.2vw !important;
+            padding: 0 0 1rem 0.2vw !important;
             width: 100%;
+            line-height: 100% !important;
           }
           /* secondmonitor */
           @media screen and (max-width: 1440px) {
@@ -148,11 +152,12 @@ tablet:
           /* phone */
           @media screen and (max-width: 800px) {
             h1 {
+              padding-top: 1rem !important;
               font-size: 4vw !important;
               line-height: 100% !important;
-              margin-inline: 1vw;
             }
           }
+
     #################################################
     #                                               #
     #               SWIPE CARD MARGIN               #
@@ -168,9 +173,9 @@ tablet:
             }
             .swiper-container {
               overflow-x: clip !important;
-              margin: -1.5vw !important;
-              padding: 1.5vw !important;
-              margin-bottom: -2.5vw !important;
+              margin: -1rem !important;
+              padding: 1rem !important;
+              //margin-bottom: -2.5vw !important;
               overflow-y: visible !important;
             }
             .swiper-pagination-bullet {
@@ -216,9 +221,11 @@ tablet:
                   height: 0.5em !important;
                 }
               }
+
+
     #################################################
     #                                               #
-    #                    FOOTER                     #
+    #                    CHIPS                      #
     #                                               #
     #################################################
     grid-layout$hui-horizontal-stack-card:
@@ -226,38 +233,43 @@ tablet:
         #root {
           flex-wrap: wrap;
           justify-content: space-between;
-          overflow: visible;
-          margin-top: 0.5em;
+          place-items: center;
+          //margin-top: 0.5em;
+        }
+
+    #################################################
+    #                                               #
+    #                   FOOTER                      #
+    #                                               #
+    #################################################
+    grid-layout$hui-horizontal-stack-card:last-child:
+      $: |
+        #root {
+          justify-content: space-between;
+          align-items: center;
+          height: 100%;
+          flex-wrap: wrap;
         }
         @media only screen and (max-width: 1440px) {
           #root {
             justify-content: space-evenly;
           }
         }
-        /* phone */
-        @media screen and (max-width: 800px) {
+        @media only screen and (max-width: 800px) {
           #root {
-            margin-top: 1em;
-            padding-bottom: 1em;
             justify-content: center;
+            gap: 1.5rem !important
           }
         }
     #################################################
     #                                               #
-    #                   CHIPS                       #
+    #            HISTORY GRAPH                      #
     #                                               #
     #################################################
-    grid-layout$hui-horizontal-stack-card:nth-child(2):
+    grid-layout$history-explorer-card>ha-card:
       $: |
-        #root {
-          justify-content: space-between;
-          align-items: center;
-        }
-    grid-layout$hui-horizontal-stack-card:nth-child(3):
-      $: |
-        #root {
-          justify-content: space-between;
-          align-items: center;
+        h1 {
+          line-height: unset !important;
         }
 
   card-mod-card: |
@@ -267,10 +279,36 @@ tablet:
       font-weight: 500;
       line-height: initial;
       cursor: default;
+      padding: 0 !important;
     }
     .content .card-content {
       padding: var(--tablet-popup-content-padding) !important;
     }
+
+    ha-card.addon.type-entities {
+      justify-content: flex-start !important;
+    }
+
+    .addon .card-content {
+      padding: 0 !important;
+      align-content: flex-start;
+    }
+
+    @media screen and (max-width: 1710px) {
+      .addon .card-header {
+        padding: 0 !important;
+        line-height: unset !important;
+      }
+
+      .addon .card-content {
+        max-height: calc(calc(128px + 7px) * 5);
+        overflow-y: auto;
+        overflow-x: hidden;
+        margin-top: 1rem !important;
+      }
+
+    }
+
 
     /* * * * * * * * * * * * * * * * * *
     *                                 *
@@ -300,4 +338,22 @@ tablet:
       box-shadow: inset 0 0 25px #00000045;
       border-radius: 0.3em;
       overflow: hidden;
+    }
+
+    .type-custom-history-explorer-card div#graphlist {
+      padding: 0 !important;
+    }
+
+    @media screen and (min-width: 1720px) {
+      .type-custom-history-explorer-card div#graphlist {
+        padding: 0 !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+        gap: 1rem !important;
+      }
+      .type-custom-history-explorer-card div#graphlist > br {
+        display: none !important;
+      }
     }

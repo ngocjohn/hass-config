@@ -516,23 +516,13 @@ cover:
           --popup-background-color: rgba(0, 0, 0, 0.4);
           --popup-border-width: 0;
           --popup-max-width: calc(405px + 515px);
-        card_mod:
-          style:
-            .: |
-              @media (max-width: 450px), (max-height: 500px) {
-                ha-dialog {
-                  --mdc-dialog-min-width: 100vw !important;
-                  --mdc-dialog-min-height: 100vh !important;
-                  --popup-border-radius: 0 !important;
-                }
-              }
-            # card divider border
+
         content:
           type: custom:layout-card
           layout_type: custom:grid-layout
           layout:
             margin: 0
-            grid-template-columns: 0 385px 495px 0
+            grid-template-columns: 0 400px 400px 0
             grid-template-rows: fit-content(100%)
             grid-template-areas: |
               ". main entity ."
@@ -563,9 +553,6 @@ cover:
                     div.action {
                       display: none !important;
                     }
-                    ha-card {
-                      margin: 1vw !important;
-                    }
                   ha-card>div>more-info-content>more-info-cover$ha-more-info-state-header$: |
                     p.name {
                       display: none !important;
@@ -585,15 +572,6 @@ cover:
                 grid-area: entity
               state_color: true
               show_header_toggle: false
-              card_mod:
-                style: |
-                  #states {
-                    padding: 0;
-                  }
-                .: |
-                  mushroom-cover-card {
-                    padding: 1vw !imporant;
-                  }
               entities: >
                 [[[
                   if (entity) {
@@ -855,13 +833,15 @@ widget_weather:
         - text-shadow: 5px 3px 9px black
   label: >
     [[[
+      let temp_min = states[variables.daily_forecast].attributes.forecast[0].templow;
+      let temp_max = states[variables.daily_forecast].attributes.forecast[0].temperature;
       return `
         <ha-icon icon="mdi:water-percent" style="width: 1em; height: 1em; margin-right: -0.3em;"></ha-icon>
         <span>${states[variables.humidity].state}%</span>
         <ha-icon icon="mdi:chevron-up" style="width: 1.5em; height: 1.5em; margin-right: -0.3em;"></ha-icon>
-        <span>${states[variables.temp_max].state}°</span>
+        <span>${temp_max}°</span>
         <ha-icon icon="mdi:chevron-down" style="width: 1.5em; height: 1.5em; margin-right: -0.3em;"></ha-icon>
-        <span>${states[variables.temp_min].state}°</span>
+        <span>${temp_min}°</span>
       `
     ]]]
   custom_fields:

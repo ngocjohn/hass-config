@@ -1,0 +1,9 @@
+margin: 0
+gap: 1rem
+grid-template-columns: 560px
+grid-template-rows: fit-content(100%)
+padding: 1rem
+mediaquery:
+  '(max-width: 800px)':
+    grid-template-columns: 100%
+    padding: 0

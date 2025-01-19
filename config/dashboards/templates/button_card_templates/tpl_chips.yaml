@@ -11,6 +11,7 @@ chips:
   template:
     - settings
     - extra_styles
+    - card_bounce
   variables:
     state_on: >
       [[[ return ['on', 'home', 'Normal', 'Away', 'Night', 'Guest', 'cool', 'fan_only', 'unlocked', 'open', 'streaming', 'yes', 'Blažičkova', 'Plzeňská'].indexOf(!entity || entity.state) !== -1; ]]]
@@ -26,11 +27,9 @@ chips:
       [[[ return !entity || entity.attributes.entity_picture; ]]]
     timeout: >
       [[[ return !entity || Date.now() - Date.parse(entity.last_changed); ]]]
-
     gle: >
       [[[ return states['sensor.gle'].state; ]]]
-    hover_enable: >
-      [[[ return true ]]]
+    hover_enable: true
   # size: 2vw
   show_icon: true
   show_state: true
@@ -49,33 +48,7 @@ chips:
       }
       return variables.translate_unknown;
     ]]]
-  tap_action:
-    card_bounce: |
-      [[[
-        // add animation
-        if (this.getElementsByTagName("style").length === 0) {
-            // phone condition
-            let mq = window.matchMedia('(max-width: 800px)').matches;
-            let style = document.createElement('style');
-            style.innerHTML = `
-                @keyframes card_bounce {
-                    0%   { transform: scale(1); }
-                    10%  { transform: scale(${ mq ? '0.92' : '0.94' }); }
-                    25%  { transform: scale(1); }
-                    30%  { transform: scale(${ mq ? '0.96' : '0.98' }); }
-                    100% { transform: scale(1); }
-                }
-            `;
-            this.appendChild(style);
-        }
-        // duration
-        let duration = 800;
-        // animate
-        this.style.animation = `card_bounce ${duration}ms cubic-bezier(0.22, 1, 0.36, 1)`;
-        // reset
-        window.setTimeout(() => { this.style.animation = "none"; }, duration + 100)
-      ]]]
-    haptic: medium
+
   double_tap_action:
     haptic: success
   hold_action:
@@ -86,11 +59,10 @@ chips:
           "i n"
           "i s"
       - grid-template-rows: min-content min-content
-      - grid-template-columns: 1fr 2fr
-      - column-gap: 8px
+      - grid-template-columns: 0.5fr 1fr
+      # - column-gap: 8px
     card:
-      - padding: 0.3vw
-      - box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.15)
+      # - box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.15)
       - --mdc-ripple-color: rgba(0, 0, 0, 0.8)
       - color: >
           [[[
@@ -104,10 +76,12 @@ chips:
                 ? 'rgba(250, 250, 250, 0.75)'
                 : 'rgba(115, 115, 115, 0.2)';
           ]]]
+      - padding: 0.3vw
+      - box-sizing: border-box;
+      - border: 1px solid transparent;
     state:
-      - font-weight: 600
-      - padding: 0 0.4vw 0 0
-      - line-height: 125%
+      # - padding: 0 0.4vw 0 0
+      # - line-height: 100%
       - align-self: center
       - justify-self: start
       - color: >
@@ -118,8 +92,8 @@ chips:
           ]]]
     name:
       - justify-self: start
-      - padding: 0 0.4vw 0 0
-      - line-height: 160%
+      # - padding: 0 0.4vw 0 0
+      - line-height: calc(100% + 5px)
       - letter-spacing: 0.06em
     img-cell:
       - display: inline-flex
@@ -127,11 +101,13 @@ chips:
       - position: relative
     icon:
       - width: 40%
+      - position: inherit
       - height: auto
       - background: rgb(150 150 150 / 30%)
-      - border-radius: 1vw
-      - padding: 10%
-      - position: inherit
+      - border-radius: 9999px
+      - padding: 10px
+      - margin: 0
+      - display: inline-block
       - place-self: center baseline
       - opacity: >
           [[[
@@ -155,64 +131,58 @@ chip_air:
           if (value > 100) {
             keyPoints = "0" + ";" + "1";
           }
-        let state;
-          if (variables.state === 'Excellent') {
-            state = '#4CAF50';
-          }
-          if (variables.state === 'Good') {
-            state = '#8BC34A';
-          }
-          if (variables.state === 'Fair') {
-            state = '#FFEB3B';
-          }
-          if (variables.state === 'Interior') {
-            state = '#FF5722';
-          }
-          if (variables.state === 'Poor') {
-            state = '#607D8B';
-          }
-          return `
-              <svg class="svgicon" viewbox="0 0 100 100">
-                  <style>
-                    .bg {
-                      stroke: #ffffff40;
-                      stroke-width: 10;
-                      fill: #00000030;
-                      stroke-linecap: round;
-                    }
-                    .value {
-                      stroke: url(#gradient);
-                      fill: none;
-                      stroke-width: 10;
-                      stroke-dasharray: ${dash};
-                      stroke-linecap: round;
-                    }
-                    .circle {
-                      stroke: #ffffff80;
-                      fill: ${state};
-                      stroke-width: 9;
-                    }
-                    text {
-                      font-family: 'poppins';
-                      text-anchor: middle;
-                      alignment-baseline: middle;
-                      opacity: 0.9;
-                    }
+        const colorMap = {
+          'Excellent': '#4CAF50',
+          'Good': '#8BC34A',
+          'Fair': '#FFEB3B',
+          'Interior': '#FF5722',
+          'Poor': '#607D8B'
+        };
+        let state = colorMap[variables.state];
 
-                  </style>
-                  <linearGradient id="gradient" x="0%" y="100%">
-                    <stop offset="0%" stop-color="#4CAF50" />
-                    <stop offset="100%" stop-color="#FF5722" />
-                  </linearGradient>
-                  <path class="bg" d="M 20,80 A 40 40 0 1 1 80,80" />
-                  <path id="value" class="value" d="M 20,80 A 40 40 0 1 1 80,80" pathLength="99" />
-                  <circle class="circle" cx="0" cy="0" r="3">
-                      <animateMotion dur="1.5s" path="M 20,80 A 40 40 0 1 1 80,80" keyPoints="${keyPoints}" fill="freeze" keyTimes="0;1"
-                          calcMode="paced" />
-                  </circle>
-                    <text font-size="2.5rem" fill="#97989c" font-weight="400" x="50%" y="52%">${value}</text>
-                    <text font-size="1rem" fill="#ffffff80" x="50%" y="80%">µg/m³</text>
-              </svg>
+
+        return `
+            <svg class="svgicon" viewbox="0 0 100 100">
+                <style>
+                  .bg {
+                    stroke: #ffffff40;
+                    stroke-width: 10;
+                    fill: #00000030;
+                    stroke-linecap: round;
+                  }
+                  .value {
+                    stroke: url(#gradient);
+                    fill: none;
+                    stroke-width: 10;
+                    stroke-dasharray: ${dash};
+                    stroke-linecap: round;
+                  }
+                  .circle {
+                    stroke: #ffffff80;
+                    fill: ${state};
+                    stroke-width: 9;
+                  }
+                  text {
+                    font-family: 'poppins';
+                    text-anchor: middle;
+                    alignment-baseline: middle;
+                    opacity: 0.9;
+                  }
+
+                </style>
+                <linearGradient id="gradient" x="0%" y="100%">
+                  <stop offset="0%" stop-color="#4CAF50" />
+                  <stop offset="100%" stop-color="#FF5722" />
+                </linearGradient>
+                <path class="bg" d="M 20,80 A 40 40 0 1 1 80,80" />
+                <path id="value" class="value" d="M 20,80 A 40 40 0 1 1 80,80" pathLength="99" />
+                <circle class="circle" cx="0" cy="0" r="3">
+                    <animateMotion dur="1.5s" path="M 20,80 A 40 40 0 1 1 80,80" keyPoints="${keyPoints}" fill="freeze" keyTimes="0;1"
+                        calcMode="paced" />
+                </circle>
+                  <text font-size="2rem" fill="#97989c" font-weight="400" x="50%" y="52%">${value}</text>
+                  <text font-size="1rem" fill="#ffffff80" x="50%" y="80%">µg/m³</text>
+            </svg>
             `
       ]]]
   styles:
@@ -220,46 +190,34 @@ chip_air:
       - grid-template-areas: |
           "icon n"
           "icon s"
-      - grid-template-rows: auto
-      - grid-template-columns: 1fr 2fr
-      - column-gap: 8px
+      - grid-template-rows: min-content min-content
+      - grid-template-columns: 0.5fr 1fr
+      # - column-gap: 8px
     card:
       - color: '#97989c'
-      - background: linear-gradient(to top, rgba(53, 59, 83, 0.8) 0%, rgba(10, 14, 34, 0.8) 100%)
+      - background: linear-gradient(to bottom, rgba(53, 59, 83, 0.8) 0%, rgba(10, 14, 34, 0.8) 50%, rgba(53, 59, 83, 0.8) 100%)
+      # - border-bottom-color: rgba(10, 14, 34, 1)
+      - padding: 0.2vw
+      - max-height: 76px
     state:
       - color: &color >
           [[[
-            let state;
-            if (variables.state === 'Excellent') {
-              state = '#4CAF50';
-            }
-            if (variables.state === 'Good') {
-              state = '#8BC34A';
-            }
-            if (variables.state === 'Fair') {
-              state = '#FFEB3B';
-            }
-            if (variables.state === 'Interior') {
-              state = '#FF5722';
-            }
-            if (variables.state === 'Poor') {
-              state = '#607D8B';
-            }
+            const colorMap = {
+              'Excellent': '#4CAF50',
+              'Good': '#8BC34A',
+              'Fair': '#FFEB3B',
+              'Interior': '#FF5722',
+              'Poor': '#607D8B'
+            };
+
+            let state = colorMap[variables.state];
             return `${state}`
           ]]]
     custom_fields:
       icon:
         - display: flex
-        - height: 100%
-        - width: 100%
-        - max-width: 100%
-        - max-height: 100%
-        - align-self: center
-        - justify-self: center
-        - overflow: hidden
         - justify-content: center
         - align-items: center
-        - position: relative
 chip_system:
   template:
     - chips
@@ -271,25 +229,32 @@ chip_system:
     action: more-info
   styles:
     card:
+      - box-shadow: none
+      - padding: 0.3vw
+      - box-sizing: border-box;
+      # - border: 1px solid transparent;
+      - border-bottom: 0.5px solid
+      - border-bottom-color: rgba(10, 14, 34, 1)
       - color: rgba(255, 255, 255, 0.6)
-      - background: 'linear-gradient(to top, #607d8b6e 0%, rgba(10, 14, 34, 0.8) 100%)'
+      - background: linear-gradient(to bottom, rgba(115, 115, 115, 0.2) 0%, rgba(49, 49, 49, 0.2) 100%)
     state:
       - color: &systemcolor >
           [[[
-            let state;
-            if (variables.state >=1) {
-              state = '#4CAF50';
-            }
-            if (variables.state >=35) {
-              state = '#8BC34A';
-            }
-            if (variables.state >= 45) {
-              state = '#FFEB3B';
-            }
+            let stateColor;
             if (variables.state >= 75) {
-              state = '#FF5722';
+              stateColor = '#FF5722'; // Highest priority
+            } else if (variables.state >= 45) {
+              stateColor = '#FFEB3B';
+            } else if (variables.state >= 35) {
+              stateColor = '#8BC34A';
+            } else if (variables.state >= 1) {
+              stateColor = '#4CAF50';
+            } else {
+              stateColor = '#000000'; // Default color if no condition is met
             }
-            return `${state}`
+
+            return stateColor;
+
           ]]]
     icon:
       - color: *systemcolor

@@ -54,25 +54,27 @@
     - atv-entity-picture
   entities:
     - media_player.living_room_tv
+    # - sensor.youtube_thumbnail
     # - media_player.kodi_atv
   state_action:
     - service: floorplan.image_set
       service_data:
         image: |
           >
-          if (states['media_player.living_room_tv'].state === "off") {
+          const mediaState = states['media_player.living_room_tv'].state;
+          const appState = states['media_player.living_room_tv'].attributes.app_name;
+          if (mediaState !== "off") {
+            if (appState === "YouTube") {
+              return states['sensor.youtube_thumbnail'].state;
+            } else if (appState === "Kodi") {
+              return states['sensor.kodi_picture'].attributes.fanart;
+            }
+          } else {
             return "/local/hafloor/transparent_idle.png";
-          } else if (states['media_player.living_room_tv'].state !== "off") {
-            let picture = states['sensor.youtube_thumbnail'].state;
-              if (states['media_player.kodi_atv'].state !== "off") {
-                picture = states['sensor.kodi_picture'].attributes.fanart;
-              }
-            return picture;
           }
 
 - entities:
     - light.sony_tv_backlight
-    # - media_player.kodi_atv
   state_action:
     - service: floorplan.style_set
       service_data:
@@ -102,9 +104,9 @@
                   stroke-dashoffset: 400;
                   animation: 5s ease-in-out 0s infinite strokeAnimation; */
                   `;
-                } else {
-                  return "display: none;";
-                }
+              } else {
+                return "display: none;";
+              }
 
     - service: floorplan.style_set
       service_data:

@@ -1,0 +1,29 @@
+style:
+  .: |
+    :host {
+      font-family: Raleway !important;
+      --mdc-icon-size: 24px !important;
+      --ha-heading-card-title-font-size: 1.4vw;
+      --ha-heading-card-title-font-weight: 700;
+      --ha-heading-card-title-line-height: 100%;
+      --ha-heading-card-title-color: rgba(255, 255, 255, 0.7);
+      --ha-heading-badge-font-size: 1.5rem;
+      --ha-heading-badge-font-weight: 700;
+      --ha-heading-badge-line-height: 100%;
+      @media screen and (max-width: 1440px) {
+        --ha-heading-card-title-font-size: 2vw;
+      }
+      @media screen and (max-width: 800px) {
+        --ha-heading-card-title-font-size: 4vw;
+        --ha-heading-badge-font-size: 2vw;
+      }
+    }
+    .container {
+      letter-spacing: 0.05em !important;
+      align-items: baseline;
+    }
+    @media screen and (max-width: 800px) {
+      .container {
+        padding: 1rem 4px 0.6rem !important;
+      }
+    }

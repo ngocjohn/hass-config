@@ -7,6 +7,9 @@
 #                                                   |___/
 #- from github.com/ngocjohn/hass-config
 #
+
+# https://github.com/custom-cards/decluttering-card - Decluttering Card
+
 light_auto_entitites:
   card:
     type: custom:auto-entities
@@ -65,7 +68,7 @@ grid_office:
       - macbook
       - server
       - icon_office
-      - change_grid_title
+      # - change_grid_title
       # - light
     variables:
       state_on: >
@@ -112,7 +115,8 @@ grid_living_room:
 #       - battery_circle
 #     variables:
 #       battery: sensor.viet_ngoc_battery_level
-#       circle_unit: ' %'
+#       person_retain: sensor.test_person_last_changed
+#       battery_status: sensor.roidmi_v60_029d_charging_state
 
 # KITCHEN NORMAL
 grid_kitchen_normal:
@@ -251,8 +255,8 @@ grid_front_door:
       - front_door
       - icon_lock
       - loader
-    variables:
-      battery_alert: binary_sensor.nuki_vchod_battery_critical
+    # variables:
+    #   battery_alert: binary_sensor.nuki_vchod_battery_critical
   #  MOTION SENSORS
 grid_motion_sensors:
   card:
@@ -285,6 +289,12 @@ grid_atv:
     # double_tap_action: !include ../shared/popup/rooms/atv_remote.yaml
     double_tap_action: !include ../shared/popup/rooms/apple_tv_card.yaml
     hold_action: !include ../shared/honeycomb/atv.yaml
+    tap_action:
+      action: call-service
+      service: script.turn_on
+      service_data:
+        entity_id: script.atv_turn_on_off
+
     template:
       - mediaplayer
   # SAMSUNG TV
@@ -401,7 +411,6 @@ grid_bathroom:
   card:
     type: custom:button-card
     entity: sensor.bathroom_active
-    double_tap_action: !include /config/dashboards/shared/popup/test_pop.yaml
     name: Bathroom
     template:
       - rooms_base
@@ -412,7 +421,7 @@ grid_bathroom:
     variables:
       light_entity: light.bathroom_group
       motion: binary_sensor.motion_sensor_bathroom_occupancy
-      door: binary_sensor.contact_sensor_bathroom_contact
+      door: binary_sensor.contact_sensor_bathroom
       active: sensor.bathroom_active
       air_diffuser_circle: switch.bathroom_air_diffuser
   # UTILITY NORMAL
@@ -550,7 +559,7 @@ grid_cam_door:
 grid_cam_kids:
   card:
     type: custom:button-card
-    entity: camera.kids_room
+    entity: camera.kids_room_cam
     name: ' '
     hold_action: !include ../shared/popup/cameras.yaml
     template:
@@ -558,14 +567,92 @@ grid_cam_kids:
       - loader
     variables:
       battery: 'sensor.doorway_battery_percentage'
+    double_tap_action:
+      action: fire-dom-event
+      browser_mod:
+        service: browser_mod.popup
+        data:
+          title: 'Kids Room'
+          card_mod:
+            style:
+              #popup header
+              .:
+          content:
+            type: custom:webrtc-camera
+            entity: camera.kids_room_cam
+
     styles:
       card:
         - background-position: center
-    #     - background-image: >
-    #         [[[
-    #             return `linear-gradient(0deg, rgba(0,0,0,.3) 0%, rgba(0,0,0,0) 100%), url(/local/tmp/${variables.entity_id}-latest.jpg)`;
-    #         ]]]
-  # CAM TERRACE
+
+# grid_cam_kids:
+#   card:
+#     type: custom:button-card
+#     entity: camera.kids_room_cam
+#     name: ' '
+#     hold_action: !include ../shared/popup/cameras.yaml
+#     template:
+#       - camera
+#       - loader
+#     variables:
+#       battery: 'sensor.doorway_battery_percentage'
+#     double_tap_action:
+#       action: fire-dom-event
+#       browser_mod:
+#         service: browser_mod.sequence
+#         data:
+#           sequence:
+#             - service: >
+#                 [[[
+#                   if (entity) {
+#                     let streamStatus = states['sensor.kids_room_stream_status'].state;
+#                     if (streamStatus === 'StreamStatus.IDLE') {
+#                       return 'button.press';
+#                     } else {
+#                       return null;
+#                     }
+#                   }
+#                 ]]]
+#               data:
+#                 entity_id: 'button.kids_room_start_rtsp_stream'
+#             - service: browser_mod.more_info
+#               data:
+#                 entity: >
+#                   [[[
+#                     return variables.entity_id;
+#                   ]]]
+#     tap_action:
+#       action: >
+#         [[[
+#           if (entity) {
+#             if (entity.state === 'streaming') {
+#               return 'call-service';
+#             } else {
+#               return 'none';
+#             }
+#           }
+#         ]]]
+#       service: button.press
+#       service_data:
+#         entity_id: button.kids_room_stop_rtsp_stream
+
+#     styles:
+#       card:
+#         - background-position: center
+#         - background-image: >
+#             [[[
+#                 if (entity) {
+#                   if (entity.state === 'streaming') {
+#                     return `linear-gradient(0deg, rgba(0,0,0,.3) 0%, rgba(0,0,0,0) 100%), url(${variables.entity_picture})`;
+#                   } else {
+#                     const latest = states['input_text.kids_camera_snapshot'].state;
+#                     return `linear-gradient(0deg, rgba(0,0,0,.3) 0%, rgba(0,0,0,0) 100%), url(/local/tmp/kids/camera.${latest})`;
+#                   }
+#                 }
+#             ]]]
+#   # CAM TERRACE
+
+# CAM TERRACE
 grid_cam_terrace:
   card:
     type: custom:button-card
@@ -700,8 +787,7 @@ grid_weather:
     entity: weather.prague
     name: Prague
     variables:
-      temp_min: sensor.weather_min_temp
-      temp_max: sensor.weather_max_temp
+      daily_forecast: sensor.daily_forecast
       humidity: sensor.weather_humidity
       current_weather: weather.prague
     template:

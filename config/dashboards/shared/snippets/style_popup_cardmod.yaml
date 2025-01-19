@@ -1,15 +1,8 @@
 style:
-  ha-dialog$: |
-    :host {
-      --button-card-border-radius: 10%;
-    }
-    .mdc-dialog__surface {
-      background-color: var(--popup-background-color) !important;
-    }
   layout-card$grid-layout$:
     .: |
       @media screen and (min-width: 800px) {
         #root {
-          padding: 14px !important;
+          padding: 1rem !important;
         }
       }

@@ -34,6 +34,8 @@ browser_mod:
           #   ]]]
           url: >
             [[[
-             let hassurl = hass.hassUrl();
-             return `${hassurl}api/hassio_ingress/DxjwvCHHhrKMJQKVZKPsf-69nPQW-hrXk4iJ09PqKgQ/`
+              const hassPanels = hass.panels;
+              const musicSlug = Object.keys(hassPanels).find(key => key.includes('_music_assistant'));
+              const musicPanel = hassPanels[musicSlug].url_path;
+              return `${hass.hassUrl()}${musicPanel}/ingress`;
             ]]]

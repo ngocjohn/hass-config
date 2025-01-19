@@ -4,75 +4,52 @@ browser_mod:
   data:
     title: Thermostat
     style: >
-      --popup-min-width: calc(450px + 450px);
-    card_mod:
-      style:
-        layout-card:
-          $grid-layout$:
-            # card divider border
-            .: |
-              #root > * {
-                margin: 0px !important;
-              }
-            hui-entities-card:
-              $: |
-                ha-card {
-                  border-right: 0.1vw solid rgba(58, 69, 73, 0.2);
-                  border-radius: 0;
-                  transition: none;
-                }
-                /* portrait */
-                @media screen and (max-width: 1400px) {
-                  ha-card {
-                    border-right: none;
-                    border-bottom: 0.1vw solid rgba(58, 69, 73, 0.2);
-                  }
-                }
-              $better-thermostat-ui-card$:
-                .: |
-                  .name {
-                    overflow: visible !important;
-                  }
+      --max-popup-column: 2;
     content:
-      type: custom:layout-card
-      layout_type: custom:grid-layout
-      layout:
-        margin: 0
-        grid-template-columns: 1fr 1fr
-        grid-template-rows: fit-content(100%)
-        grid-template-areas: auto
-        mediaquery:
-          #portrait
-          '(max-width: 800px)':
-            grid-template-columns: 1fr
-            grid-template-rows: fit-content(100%)
-            grid-template-areas: auto
-      cards:
-        - type: entities
-          entities:
-            - type: custom:better-thermostat-ui-card
-              entity: climate.living_room_thermostat
-              eco_temperature: 20
-              name: Living room
-            - type: custom:better-thermostat-ui-card
-              entity: climate.kids_room_thermostat
-              eco_temperature: 20
-              name: Kids Room
-        - type: entities
-          card_mod:
-            style: |
-              ha-card {
-                border: none !important;
-              }
-          entities:
-            - type: custom:better-thermostat-ui-card
-              entity: climate.bedroom_thermostat
-              disable_summer: true
-              eco_temperature: 20
-              name: Bedroom
-            - type: custom:better-thermostat-ui-card
-              entity: climate.office_thermostat
-              disable_window: false
-              disable_summer: true
-              eco_temperature: 20
-              name: Office
+      type: custom:mod-card
+      card_mod: !include ../snippets/style_popup_footer.yaml
+      card:
+        type: custom:layout-card
+        layout_type: custom:grid-layout
+        layout: !include ../snippets/popup_footer_layout.yaml
+        cards:
+          #################################################
+          #                                               #
+          #                THERMOSTATS                    #
+          #                                               #
+          #################################################
+          - type: entities
+            entities:
+              - type: custom:better-thermostat-ui-card
+                entity: climate.living_room_thermostat
+                eco_temperature: 20
+                name: Living room
+                card_mod: &style
+                  style: |
+                    .name {
+                      line-height: normal;
+                    }
+          - type: entities
+            entities:
+              - type: custom:better-thermostat-ui-card
+                entity: climate.kids_room_thermostat
+                eco_temperature: 20
+                name: Kids Room
+                card_mod: *style
+          - type: entities
+            entities:
+              - type: custom:better-thermostat-ui-card
+                entity: climate.bedroom_thermostat
+                disable_summer: true
+                eco_temperature: 20
+                name: Bedroom
+                card_mod: *style
+          - type: entities
+            entities:
+              - type: custom:better-thermostat-ui-card
+                entity: climate.office_thermostat
+                disable_window: false
+                disable_summer: true
+                eco_temperature: 20
+                name: Office
+                card_mod: *style

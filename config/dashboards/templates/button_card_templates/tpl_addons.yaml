@@ -1,0 +1,269 @@
+addons_base:
+  template:
+    - extra_styles
+    - settings
+  show_label: true
+  show_icon: false
+  show_state: false
+  aspect_ratio: 2/1
+  variables:
+    hover_enable: true
+    tilt_enable: false
+    state_on: >
+      [[[ return ['on'].indexOf(!entity || entity.state) !== -1; ]]]
+    state: >
+      [[[ return !entity || entity.state; ]]]
+    hex_memmory: >
+      [[[
+        // Generate only light colors
+        const randomLightColor = () => {
+          const r = Math.floor(127 + Math.random() * 128); // Red: 127-255
+          const g = Math.floor(127 + Math.random() * 128); // Green: 127-255
+          const b = Math.floor(127 + Math.random() * 128); // Blue: 127-255
+          return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+        };
+        return randomLightColor();
+      ]]]
+  tap_action:
+    action: block
+  double_tap_action:
+    action: call-service
+    service: script.backup_addon
+    service_data:
+      addon_slug: >
+        [[[
+          return variables.slug_name;
+        ]]]
+      version: >
+        [[[
+          return states[variables.ver_ent].state;
+        ]]]
+    haptic: success
+  hold_action:
+    action: fire-dom-event
+    browser_mod:
+      service: >
+        [[[
+          return window.navigator.userAgent.match(/iPhone/i) ? 'browser_mod.javascript' : 'browser_mod.popup';
+        ]]]
+      data: >
+        [[[
+          return window.navigator.userAgent.match(/iPhone/i)
+            ? { code: `window.location.href = '${hass.hassUrl()}${variables.conf_url}/config'` }
+            : {
+                title: 'Addons Configuration',
+                style: '--popup-max-width: calc(100vw); --popup-background-color: rgba(0, 0, 0, 0);',
+                card_mod: { style: { '.': 'ha-dialog>ha-dialog-header { display: none; }' } }, content: {
+                  type: 'custom:layout-card', layout_type: 'custom:grid-layout', layout: { margin: 0, 'grid-template-columns': '80vw' }, cards: [
+                    { type: 'iframe', url: `${hass.hassUrl()}${variables.conf_url}` }
+                  ]
+                }
+              };
+        ]]]
+    haptic: medium
+  label: >
+    [[[
+      return states[variables.ver_ent].state;
+    ]]]
+  custom_fields:
+    running: |
+      [[[
+        let icon = variables.state_on ? 'mdi:play-circle' : 'mdi:stop-circle-outline';
+        let color = variables.state_on ? '#00f17d' : 'var(--error-color)';
+        return `<ha-icon icon="${icon}" style="width: 24px; height: 24px; color: ${color};"></ha-icon>`;
+      ]]]
+  styles:
+    grid:
+      - grid-template-areas: |
+          "n n"
+          "l ."
+          "cpu memory"
+          "graph graph"
+      - grid-template-columns: 1fr min-content
+      - grid-template-rows: min-content min-content fit-content(100%) 1fr
+      - grid-row-gap: 0
+    card:
+      - overflow: hidden
+      - padding: 12px
+      - border-radius: 12px
+      - border-width: 0
+      - --webkit-tap-highlight-color: rgba(250,250,250,1)
+      - box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.15)
+      - text-rendering: auto
+      - -webkit-font-smoothing: antialiased
+      - -moz-osx-font-smoothing: grayscale
+      - color: rgb(151, 152, 156)
+      - background: linear-gradient(to bottom, rgba(115, 115, 115, 0.2) 0%, rgba(49, 49, 49, 0.2) 100%)
+      - text-align: left
+      - position: relative
+      - opacity: >
+          [[[
+            return variables.state_on ? 1 : 0.5;
+          ]]]
+      - transition: none
+    name:
+      - justify-self: start
+      - font-size: 1rem
+      - width: calc(100% - 16px)
+      - margin-right: 16px
+      - color: '#c3c3c3'
+      - letter-spacing: 0.5px
+    label:
+      - font-size: 12px
+      - align-self: middle
+      - justify-self: start
+      - margin-bottom: 4px
+    custom_fields:
+      running:
+        - position: absolute
+        - top: 12px
+        - right: 12px
+addon_active:
+  template:
+    - addons_base
+  custom_fields:
+    cpu: |
+      [[[
+        return `<ha-icon
+          class="cpu-mem-icon"
+          icon="mdi:cpu-64-bit"
+          >
+          </ha-icon><span>CPU: ${states[variables.cpu_ent].state} %</span>`
+      ]]]
+    memory: |
+      [[[
+        return `<ha-icon
+          class="cpu-mem-icon"
+          icon="mdi:memory"
+          >
+          </ha-icon><span>RAM: ${states[variables.memory_ent].state} %</span>`
+      ]]]
+    graph:
+      card:
+        type: 'custom:mini-graph-card'
+        entities:
+          - entity: |
+              [[[ return variables.memory_ent ]]]
+            color: |
+              [[[ return variables.hex_memmory ]]]
+        hours_to_show: 5
+        points_per_hour: 12
+        line_width: 2
+        animate: false
+        # height: 100
+        # update_interval: 15
+        show:
+          name: false
+          icon: false
+          state: false
+          label: false
+          legend: false
+          fill: fade
+          extrema: true
+          average: true
+        card_mod:
+          style: |
+            ha-card {
+              font-size: 10px !important;
+              overflow: visible !important;
+              padding: 0 !important;
+            }
+            ha-card[fill] .info {
+              padding-bottom: 0;
+            }
+            .graph__container {
+              opacity: 0.5;
+            }
+
+            .info.flex {
+              justify-content: space-around;
+              top: 0;
+              position: absolute;
+              width: 100%;
+              padding: 0;
+              color: var(--primary-text-color);
+            }
+            .info__item__time {
+              display: none !important;
+            }
+            @media (max-width: 800px) {
+              .info.flex {
+                display: none !important;
+              }
+            }
+  styles:
+    custom_fields:
+      cpu_memory: &cpu_memory
+        - color: var(--text-primary-color)
+        - align-self: center
+        - justify-self: start
+        - font-size: 12px
+        - letter-spacing: 0.05em
+        - padding: 0
+        - display: >
+            [[[
+              return variables.state_on ? 'block' : 'none';
+            ]]]
+      cpu: *cpu_memory
+      memory:
+        - <<: *cpu_memory
+        - justify-self: end
+      graph:
+        - position: absolute
+        - bottom: 0
+        - left: 0
+        - right: 0
+        - width: 100%
+        - --ha-card-border-radius: 0
+        - --ha-card-border-width: 0
+        - display: >
+            [[[
+              return variables.state_on ? 'block' : 'none';
+            ]]]
+
+addon_conf_url:
+  hold_action:
+    action: fire-dom-event
+    browser_mod:
+      service: browser_mod.popup
+      data:
+        style: |
+          --popup-max-width: calc(100vw);
+          --popup-background-color: rgba(0, 0, 0, 0);
+        title: 'Addons Configuration'
+        card_mod:
+          style:
+            #popup header
+            .: |
+              ha-dialog>ha-dialog-header {
+                display: none;
+              }
+              @media (max-width: 450px), (max-height: 500px) {
+                ha-dialog>ha-dialog-header {
+                  display: block;
+                }
+              }
+        content:
+          type: custom:layout-card
+          layout_type: custom:grid-layout
+          layout:
+            margin: 0
+            grid-template-columns: 80vw
+          cards:
+            - type: iframe
+              url: >
+                [[[
+                  const hassUrl = hass.hassUrl();
+                  const confUrl = variables.conf_url;
+                  console.log(hassUrl + confUrl);
+                  return `${hassUrl}${confUrl}`;
+                ]]]
+
+addon_ios_conf_url:
+  hold_action:
+    action: fire-dom-event
+    browser_mod:
+      service: browser_mod.javascript
+      data:
+        code: >
+          window.location.href = `/${variables.conf_url}`;

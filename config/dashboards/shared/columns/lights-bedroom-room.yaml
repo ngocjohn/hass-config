@@ -13,7 +13,7 @@
   template:
     - live_tile_with_graph
     - live_tile_with_state_unit
-  entity: sensor.motion_sensor_entrance_illuminance_lux
+  entity: sensor.motion_sensor_entrance_illuminance
   name: Hallway Light Level
 
 - type: 'custom:streamline-card'

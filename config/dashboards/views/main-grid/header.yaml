@@ -7,13 +7,17 @@
   layout_type: 'custom:grid-layout'
   view_layout:
     grid-area: header
-    show:
-      mediaquery: '(max-width: 800px), (min-width: 1441px)'
+
   layout:
-    grid-template-columns: fit-content(100%) 1fr
-    grid-gap: 0
     margin: 0
-    place-items: 'center flex-end'
+    height: 100%
+    place-items: center center
+    grid-template-columns: 0.5fr 1fr
+    grid-gap: 0
+    mediaquery:
+      '(min-width: 801px) and (max-width: 1440px)':
+        grid-template-columns: 1fr
+        grid-template-rows: auto
   cards:
     - type: custom:button-card
       entity: sensor.time
@@ -21,6 +25,7 @@
         - header_clock
     - type: custom:button-card
       entity: weather.prague
+      tap_action: !include ../../shared/popup/popup_weather.yaml
       template:
         - header_weather
 #################################################

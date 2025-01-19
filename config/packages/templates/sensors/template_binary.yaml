@@ -18,20 +18,18 @@ template:
       #BINARY SENSOR - ROOM OCCUPANCY
       - name: 'Shower Room Occupancy'
         unique_id: shower_room_occupancy
-        icon: mdi:motion-sensor
         device_class: occupancy
         state: >-
           {{
-            is_state('binary_sensor.contact_sensor_shower_room', 'off')
-            or is_state('binary_sensor.motion_sensor_shower_room', 'on')
+            is_state('binary_sensor.contact_sensor_shower_room_contact', 'off')
+            or is_state('binary_sensor.motion_sensor_shower_room_occupancy', 'on')
           }}
       - name: 'Bathroom Occupancy'
         unique_id: bathroom_occupancy
-        icon: mdi:motion-sensor
         device_class: occupancy
         state: >-
           {{
-            is_state('binary_sensor.contact_sensor_bathroom_contact', 'off')
+            is_state('binary_sensor.contact_sensor_bathroom', 'off')
             or is_state('binary_sensor.motion_sensor_bathroom_occupancy', 'on')
           }}
       - name: 'People Home'
@@ -68,5 +66,5 @@ template:
       - name: 'MacbookPro'
         unique_id: '1bd2146a-71b3-4b5b-b86a-14c732042731'
         device_class: running
-        icon: ios:desktopcomputer
+        icon: custom:ios-desktop-computer
         state: "{{ is_state_attr('binary_sensor.mbproserver_active', 'Sleeping', false ) }}"

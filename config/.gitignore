@@ -43,7 +43,7 @@ pyozw.sqlite
 
 tradfri.conf
 webostv.conf
-
+go2rtc.yaml
 
 /templates
 packages/integrations.yaml
