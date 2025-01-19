@@ -1,19 +1,12 @@
-swipe_nav:
-  wrap: false
-  animate_duration: 250
-  enable_mouse_swipe: true
-  animate: swipe
-  prevent_default: false
-  swipe_amount: 30
-
 button_card_templates: !include_dir_merge_named ./templates/button_card_templates
 decluttering_templates: !include ./templates/decluttering-card.yaml
 streamline_templates: !include ./templates/streamline-card.yaml
 
-title: Example
+title: Neklanka Home
 views:
   - !include views/main.yaml
-  - !include subviews/movie-panel.yaml
-  - !include subviews/ytube-music.yaml
   - !include views/system.yaml
+  - !include subviews/github-stats.yaml
+  - !include subviews/movie-panel.yaml
+  # - !include subviews/ytube-music.yaml
   # - !include subviews/test-lovelace.yaml

@@ -16,6 +16,7 @@ light:
     entities:
       - light.living_room_floor_lamp
       - light.shelly_rgbw_kitchen_led_strip
+      - light.sony_tv_backlight
   - platform: group
     name: 'Kitchen Group'
     unique_id: group_light_kitchen
@@ -96,6 +97,7 @@ light:
       - light.office_ripple_mood_light
       - light.office_led_light_strip
       - light.bedroom_ripple_mood_light
+      - light.sony_tv_backlight
       # - light.yeelink_bslamp2_409e_light
 homeassistant:
   customize:

@@ -3,40 +3,58 @@
 #            GRAPH HISTORY                      #
 #                                               #
 #################################################
-- type: vertical-stack
+
+- &graphs
+  type: custom:history-explorer-card
   view_layout:
     grid-area: cc
-  cards:
-    - type: custom:history-explorer-card
-      cardName: historycard-sys
-      header: 'Monitoring'
-      uimode: dark
-      defaultTimeOffset: 1h
-      refresh:
-        automatic: true
-        interval: 30
-      combineSameUnits: true
-      defaultTimeRange: 12h
-      decimation: fast
-      lineGraphHeight: 300
-      labelsVisible: true
-      legendVisible: false
-      uiLayout:
-        toolbar: top
-        selector: hide
-      tooltip:
-        size: full
-      graphs:
-        - type: line
-          entities:
-            - entity: sensor.*_cpu_percent
-              lineMode: lines
-        - type: line
-          entities:
-            - entity: sensor.*_memory_percent
-        - type: line
-          entities:
-            - entity: sensor.system_monitor_processor_temperature
-              lineMode: curves
-            - entity: sensor.system_monitor_processor_use
-            - entity: sensor.system_monitor_memory_usage
+    show:
+      mediaquery: '(min-width: 1720px)'
+  card_mod:
+    class: historycard
+  cardName: historycard-sys
+  header: 'Monitoring'
+  uimode: dark
+  refresh:
+    automatic: false
+  combineSameUnits: true
+  defaultTimeRange: 5h
+  defaultTimeOffset: 0
+  decimation: fast
+  labelsVisible: true
+  legendVisible: false
+  lineMode: lines
+  lineGraphHeight: 320
+  axisAddMarginMin: false
+  axisAddMarginMax: false
+  uiLayout:
+    toolbar: top
+    selector: hide
+  tooltip:
+    size: full
+  graphs:
+    - type: line
+      entities:
+        - entity: sensor.*_cpu_percent
+          exclude:
+            - entity: sensor.home_assistant_*
+          lineMode: lines
+    - type: line
+      entities:
+        - entity: sensor.*_memory_percent
+          exclude:
+            - entity: sensor.home_assistant_*
+          lineMode: lines
+
+    - type: line
+      entities:
+        - entity: sensor.ha_system_cpu_usage
+        - entity: sensor.ha_system_memory_usage
+
+- <<: *graphs
+  view_layout:
+    grid-area: cc
+    show:
+      mediaquery: '(max-width: 1719px)'
+  lineGraphHeight: 220
+  header: hide

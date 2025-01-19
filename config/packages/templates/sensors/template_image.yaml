@@ -1,0 +1,6 @@
+template:
+  - image:
+      name: Kids Room Cam Snapshot
+      unique_id: kids_room_cam_snapshot
+      url: >
+        {{ state_attr('camera.kids_room_cam', 'entity_picture') }}

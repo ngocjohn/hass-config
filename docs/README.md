@@ -10,7 +10,7 @@ Hey there! Welcome to my little corner of the tech world! 👨‍💻
 
 This is where I store all the cool configurations for my Home Assistant system. Well, it's a mix of awesome codes and setups I discovered from the Home Assistant community. Seriously, those folks are wizards! 🧙‍♂️ As a bit of an internet newbie turned tech enthusiast, I stumbled upon the magic of IT, and this repository is my way of sharing the joy and knowledge I've gained along the way. Dive in, explore, and let the tech magic begin! ✨
 
-I frequently refresh my configuration files. My current Home Assistant version is <b>2024.12.2</b>. If you find something you like, don't forget to give my repository a ⭐️!
+I frequently refresh my configuration files. My current Home Assistant version is <b>2025.1.2</b>. If you find something you like, don't forget to give my repository a ⭐️!
 
 <video width="100%" controls loop muted>
   <source src="https://github-production-user-asset-6210df.s3.amazonaws.com/96962827/297112091-acc1a4db-b92e-4ab1-ac9d-df067d4ba4d1.mp4" type="video/mp4">
@@ -37,14 +37,14 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>36,202 </td>
+              <td>35,226 </td>
               <td>34</td>
-              <td>155</td>
-              <td>38</td>
-              <td>52</td>
-              <td>31</td>
-              <td>1011</td>
-              <td>133</td>
+              <td>179</td>
+              <td>63</td>
+              <td>54</td>
+              <td>32</td>
+              <td>1148</td>
+              <td>215</td>
               <td>38</td>
           </tr>
       </tbody>
@@ -64,10 +64,8 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - Cloudflared
 - DbStats
 - eufy-security-ws
-- Get HACS
 - Glances
 - go2rtc
-- Home Assistant Google Drive Backup
 - MariaDB
 - Mosquitto broker
 - Music Assistant Server
@@ -102,10 +100,8 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Node Red Companion](https://github.com/zachowj/hass-node-red)
 - [Nuki Lock](https://github.com/kvj/hass_nuki_ng)
 - [Portainer](https://github.com/tomaae/homeassistant-portainer)
-- [Remote Home Assistant](https://github.com/custom-components/remote_homeassistant)
 - [Simpleicons](https://github.com/vigonotion/hass-simpleicons)
 - [Spook 👻 Your Homie](https://github.com/frenck/spook)
-- [Spotcast](https://github.com/fondberg/spotcast)
 - [Spotifyplus](https://github.com/thlucas1/homeassistantcomponent_spotifyplus)
 - [Webrtc Camera](https://github.com/AlexxIT/WebRTC)
 - [Xiaomi Cloud Map Extractor](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor)
@@ -124,14 +120,12 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Bar Card](https://github.com/custom-cards/bar-card)
 - [Better Thermostat Ui](https://github.com/KartoffelToby/better-thermostat-ui-card)
 - [Button Card](https://github.com/custom-cards/button-card)
-- [Card Mod](https://github.com/thomasloven/lovelace-card-mod)
 - [Custom Brand Icons](https://github.com/elax46/custom-brand-icons)
 - [Custom Icons](https://github.com/Mariusthvdb/custom-icons)
 - [Decluttering Card](https://github.com/custom-cards/decluttering-card)
 - [Fold Entity Row](https://github.com/thomasloven/lovelace-fold-entity-row)
 - [Ha Floorplan 🖌🎨 | Your Imagination Just Became The New Limit](https://github.com/ExperienceLovelace/ha-floorplan)
 - [History Explorer Card](https://github.com/SpangleLabs/history-explorer-card)
-- [Honeycomb Menu](https://github.com/Sian-Lee-SA/honeycomb-menu)
 - [Horizon Card](https://github.com/rejuvenate/lovelace-horizon-card)
 - [Hourly Weather Card](https://github.com/decompil3d/lovelace-hourly-weather)
 - [Hui Element](https://github.com/thomasloven/lovelace-hui-element)
@@ -143,13 +137,9 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Mini Media Player](https://github.com/kalkih/mini-media-player)
 - [Multiple Entity Row](https://github.com/benct/lovelace-multiple-entity-row)
 - [Mushroom](https://github.com/piitaya/lovelace-mushroom)
-- [Paper Buttons Row](https://github.com/jcwillox/lovelace-paper-buttons-row)
 - [Polr Ytube Media Card](https://github.com/pathofleastresistor/polr-ytube-media-card)
 - [Purifier Card](https://github.com/denysdovhan/purifier-card)
-- [Restriction Card](https://github.com/iantrich/restriction-card)
-- [Roku Card](https://github.com/iantrich/roku-card)
 - [Rpi Monitor Card](https://github.com/ironsheep/lovelace-rpi-monitor-card)
-- [Search Card](https://github.com/postlund/search-card)
 - [Simple Thermostat](https://github.com/nervetattoo/simple-thermostat)
 - [Slider Button Card](https://github.com/custom-cards/slider-button-card)
 - [Spotify Lovelace Card](https://github.com/custom-cards/spotify-card)
@@ -161,10 +151,8 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Timer Bar Card](https://github.com/rianadon/timer-bar-card)
 - [Tv Remote Card (With Touchpad And Haptic Feedback)](https://github.com/usernein/tv-card)
 - [Upcoming Media Card](https://github.com/xZetsubou/upcoming-media-card)
-- [Uptime Card](https://github.com/dylandoamaral/uptime-card)
 - [Vehicle Info Card](https://github.com/ngocjohn/vehicle-info-card)
 - [Vehicle Status Card](https://github.com/ngocjohn/vehicle-status-card)
-- [Vertical Stack In Card](https://github.com/ofekashery/vertical-stack-in-card)
 - [Weather Card](https://github.com/bramkragten/weather-card)
 - [Weather Chart Card](https://github.com/mlamberts78/weather-chart-card)
 - [Weather Radar Card](https://github.com/Makin-Things/weather-radar-card)
@@ -176,9 +164,10 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 
 My dashboard is basically a cool fusion of ideas, mainly inspired by the awesome [Matt8707](https://github.com/matt8707/hass-config) 🌟. I threw in some extra goodies to make it perfect for my needs! 🚀
 
-<a href="#" onclick="openPopup('screenshots/wide.png', 'Wide Image'); return false;"><img src="screenshots/wide.png" alt="Wide Image"></a>
-<a href="#" onclick="openPopup('screenshots/movies.gif', 'Movies Image'); return false;"><img src="screenshots/movies.gif" alt="Movies Image"></a>
-<a href="#" onclick="openPopup('screenshots/systeminfo.gif', 'System Info Image'); return false;"><img src="screenshots/systeminfo.gif" alt="System Info Image"></a>
+<img src="screenshots/wide.png" alt="Wide Image">
+<img src="screenshots/movies-new.gif" alt="Movies Image">
+<img src="screenshots/system-monitoring.gif" alt="System Info Image">
+<img src="screenshots/github-stats.gif" alt="Github stats Image">
 
 The floorplan is crafted using the [Ha Floorplan](https://github.com/ExperienceLovelace/ha-floorplan) Lovelace plugin, and it features interactive controls thanks to the [Honeycomb Menu](https://github.com/Sian-Lee-SA/honeycomb-menu).
 
@@ -193,8 +182,8 @@ The floorplan is crafted using the [Ha Floorplan](https://github.com/ExperienceL
 
 <table>
   <tr>
-    <td><a href="#" onclick="openPopup('screenshots/mobile.png', 'Mobile Image'); return false;"><img src="screenshots/mobile.png" alt="Mobile Image"></a></td>
-    <td><a href="#" onclick="openPopup('screenshots/portrait.png', 'Portrait Image'); return false;"><img src="screenshots/portrait.png" alt="Portrait Image"></a></td>
+    <td><img src="screenshots/mobile.png" alt="Mobile Image"></td>
+    <td><img src="screenshots/portrait.png" alt="Portrait Image"></td>
   </tr>
 </table>
 
@@ -202,12 +191,12 @@ The floorplan is crafted using the [Ha Floorplan](https://github.com/ExperienceL
 
 <table>
   <tr>
-    <td><a href="#" onclick="openPopup('screenshots/vacuum.png', 'Vacuum Image'); return false;"><img src="screenshots/vacuum.png" alt="Vacuum Image"></a></td>
-    <td><a href="#" onclick="openPopup('screenshots/system.png', 'System Image'); return false;"><img src="screenshots/system.png" alt="System Image"></a></td>
+    <td><img src="screenshots/vacuum.png" alt="Vacuum Image"></td>
+    <td><img src="screenshots/system.png" alt="System Image"></td>
   </tr>
   <tr>
-    <td><a href="#" onclick="openPopup('screenshots/network.png', 'Network Image'); return false;"><img src="screenshots/network.png" alt="Network Image"></a></td>
-    <td><a href="#" onclick="openPopup('screenshots/server.png', 'Server Image'); return false;"><img src="screenshots/server.png" alt="Server Image"></a></td>
+    <td><img src="screenshots/network.png" alt="Network Image"></td>
+    <td><img src="screenshots/server.png" alt="Server Image"></td>
   </tr>
 </table>
 

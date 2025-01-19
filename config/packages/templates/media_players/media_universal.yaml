@@ -3,7 +3,7 @@ media_player:
     name: Currently Playing
     unique_id: currently_playing
     children:
-      - media_player.mass_homepod_airplay
+      - media_player.mass_universal_airplay
       - media_player.spotifyplus_ngoc_nguyen
       - media_player.living_room_tv
       - media_player.bedroom_tv

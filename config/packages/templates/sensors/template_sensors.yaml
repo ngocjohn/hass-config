@@ -47,9 +47,9 @@ template:
           {% if states('sensor.home_climate') in ['Excellent', 'Good'] %}
             mdi:leaf
           {% elif states('sensor.home_climate') in ['Fair', 'Interior'] %}
-            ios:aqi-medium
+            custom:ios-aqi-medium
           {% else %}
-            ios:aqi-high
+            custom:ios-aqi-high
           {%- endif %}
         attributes:
           average_temperature: >-
@@ -57,19 +57,26 @@ template:
           average_humidity: >-
             {{ states.sensor.average_humidity.state }}
           living_room_pm25: >-
-            {{ states.sensor.dyson_ph04_pm_2_5.state }} µg/m³
+            {% if has_value('sensor.dyson_ph04_pm_2_5') %}
+              {{ states.sensor.dyson_ph04_pm_2_5.state }} µg/m³
+            {% endif %}
           bedroom_pm25: >-
-            {{ states.sensor.zhimi_mb3_8b86_pm25.state }} µg/m³
+            {% if has_value('sensor.zhimi_mb3_8b86_pm25') %}
+              {{ states.sensor.zhimi_mb3_8b86_pm25.state }} µg/m³
+            {% endif %}
           office_pm25: >-
-            {{ states.sensor.zhimi_mb4_b008_pm25_density.state }} µg/m³
+            {% if has_value('sensor.zhimi_mb4_b008_pm25_density') %}
+              {{ states.sensor.zhimi_mb4_b008_pm25_density.state }} µg/m³
+            {% endif %}
           heating: >-
             {% set heaters = [
               states.climate.bedroom_thermostat,
               states.climate.office_thermostat,
               states.climate.kids_room_thermostat,
-              states.climate.living_room_thermostat ] %}
-            {% set heateron = heaters | selectattr('attributes.hvac_action','eq','heating') | list | count %}
-            {%- if (heateron != 0) -%}
+              states.climate.living_room_thermostat
+            ] | reject('equalto', none) | list  %}
+            {% set heateron = heaters | selectattr('attributes.hvac_action', 'eq', 'heating') | list | count %}
+            {%- if heateron != 0 -%}
               yes
             {% else %}
               no
@@ -90,16 +97,12 @@ template:
               states.climate.bedroom_thermostat,
               states.climate.office_thermostat,
               states.climate.kids_room_thermostat,
-              states.climate.living_room_thermostat ] %}
+              states.climate.living_room_thermostat ] | reject('equalto', none) | list  %}
             {{ heateron | selectattr('attributes.hvac_action','eq','heating') | map(attribute='name') | list | replace('Thermostat', '') }}
       # SENSOR - ROOM ACTIVITY
       - unique_id: living_room_active
         name: 'Living-room Active'
-        state: >-
-          {% if not is_state('light.living_room_group', 'off') %} yes
-          {% elif not is_state('media_player.sony_bravia_tv', 'off') %} yes
-          {% else %} no
-          {% endif %}
+        state: "{{ iif ((not is_state('light.living_room_group', 'off') or (not is_state('media_player.sony_bravia_tv', 'off'))), 'yes', 'no') }}"
         icon: >-
           {% set state = states('sensor.living_room_active') %}
           {% if state == 'no' %} mdi:thumb-down
@@ -113,15 +116,9 @@ template:
       - unique_id: bedroom_active
         name: 'Bedroom Active'
         state: >-
-          {% if not is_state('light.bedroom_group', 'off') %} yes
-          {% elif is_state('media_player.bedroom_homepod', 'playing') %} yes
-          {% else %} no
-          {% endif %}
+          {{ iif ((not is_state('light.bedroom_group', 'off') or is_state('media_player.bedroom_homepod', 'playing')), 'yes', 'no') }}
         icon: >-
-          {% set state = states('sensor.bedroom_active') %}
-          {% if state == 'no' %} mdi:thumb-down
-          {% else %} mdi:thumb-up
-          {%- endif %}
+          {{ iif (is_state('sensor.bedroom_active', 'no'), 'mdi:thumb-down', 'mdi:thumb-up')  }}
         attributes:
           lights_on: >-
             {%- set light = expand(states.light.bedroom_group) | selectattr( 'state', 'eq', 'on') | map(attribute='name') | list | replace('Bedroom ', '') %}
@@ -130,16 +127,11 @@ template:
       - unique_id: hallway_active
         name: 'Hallway Active'
         state: >-
-          {% if not is_state('light.hallway_group', 'off') %} yes
-          {% elif not is_state('binary_sensor.motion_sensor_entrance', 'off') %} yes
-          {% elif not is_state('binary_sensor.motion_sensor_hallway_occupancy', 'off') %} yes
-          {% else %} no
-          {% endif %}
+          {% set halway_devices = [states.light.hallway_group, states.binary_sensor.motion_sensor_entrance_occupancy, states.binary_sensor.motion_sensor_hallway_occupancy] | reject('equalto', none) | list  %}
+          {% set active = halway_devices | selectattr('state', 'eq', 'on') | list %}
+          {{ iif (active != 0, 'yes', 'no') }}
         icon: >-
-          {% set state = states('sensor.hallway_active') %}
-          {% if state == 'no' %} mdi:thumb-down
-          {% else %} mdi:thumb-up
-          {%- endif %}
+          {{ iif (is_state('sensor.hallway_active', 'no'), 'mdi:thumb-down', 'mdi:thumb-up')  }}
         attributes:
           lights_on: >-
             {%- set light = expand(states.light.hallway_group) | selectattr( 'state', 'eq', 'on') | map(attribute='name') | list | replace('Hallway ', '') %}
@@ -154,10 +146,7 @@ template:
           {% else %} no
           {% endif %}
         icon: >-
-          {% set state = states('sensor.kitchen_active') %}
-          {% if state == 'no' %} mdi:thumb-down
-          {% else %} mdi:thumb-up
-          {%- endif %}
+          {{ iif (is_state('sensor.kitchen_active', 'no'), 'mdi:thumb-down', 'mdi:thumb-up')  }}
         attributes:
           dishwasher_remain: >-
             {% if has_value('sensor.mycka_nadobi_remaining_program_time') %}
@@ -176,9 +165,7 @@ template:
           {% else %} no
           {% endif %}
         icon: >-
-          {% if states('sensor.office_active') == 'no' %} mdi:thumb-down
-          {% else %} mdi:thumb-up
-          {%- endif %}
+          {{ iif (is_state('sensor.office_active', 'no'), 'mdi:thumb-down', 'mdi:thumb-up')  }}
         attributes:
           lights_on: >-
             {%- set light = expand(states.light.office_group) | selectattr( 'state', 'eq', 'on') | map(attribute='name') | list | replace('Office ', '') %}
@@ -193,9 +180,7 @@ template:
           {% else %} no
           {% endif %}
         icon: >-
-          {% if states('sensor.bathroom_active') == 'no' %} mdi:thumb-down
-          {% else %} mdi:thumb-up
-          {%- endif %}
+          {{ iif (is_state('sensor.bathroom_active', 'no'), 'mdi:thumb-down', 'mdi:thumb-up')  }}
         attributes:
           lights_on: >-
             {%- set light = expand(states.light.bathroom_group) | selectattr( 'state', 'eq', 'on') | map(attribute='name') | list | replace('Bathroom ', '') %}
@@ -226,9 +211,7 @@ template:
           {% else %} no
           {% endif %}
         icon: >-
-          {% if states('sensor.appliance_active') == 'no' %} mdi:thumb-down
-          {% else %} mdi:thumb-up
-          {%- endif %}
+          {{ iif (is_state('sensor.appliance_active', 'no'), 'mdi:thumb-down', 'mdi:thumb-up')  }}
         attributes:
           washdryer_remain: >-
             {% if has_value('sensor.washer_dryer_remaining_program_time') %}
@@ -244,11 +227,9 @@ template:
         unique_id: lights_on_count
         state: >-
           {%- set light = expand(states.light.all_light_group) | selectattr( 'state', 'eq', 'on') | list | count %}
-          {%- if light == 0 %} Off {% else %} {{ light }} On {% endif %}
+          {{ iif (light == 0, 'Off', light ~ ' On') }}
         attributes:
-          living_room: >-
-            {%- set light = expand(states.light.living_room_group) | selectattr( 'state', 'eq', 'on') | list | count | float %}
-            {{- light }}
+          living_room: "{{ expand(states.light.living_room_group) | selectattr( 'state', 'eq', 'on') | list | count }}"
           kitchen: "{{ expand(states.light.kitchen_group) | selectattr( 'state', 'eq', 'on') | list | count }}"
           bathroom: "{{ expand(states.light.bathroom_group) | selectattr( 'state', 'eq', 'on') | list | count }}"
           bedroom: "{{ expand(states.light.bedroom_group) | selectattr( 'state', 'eq', 'on') | list | count }}"
@@ -261,15 +242,14 @@ template:
           {% if this.attributes.device | list | count > 0 %} on {% else %} off {% endif %}
         attributes:
           device: >-
-            {% set p2 = expand(states.group.homepod_airplay) | selectattr( 'state', 'in', ['on', 'playing']) | map(attribute='name') | list %}
-            {% set p1 = expand(states.group.media_players) | rejectattr('entity_id', 'in', ['media_player.spotify']) | selectattr( 'state', 'in', ['on', 'playing', 'idle', 'paused']) | map(attribute='name') | list %}
-            {% set p3 = expand(states.group.homepod_mass_airplay) | selectattr( 'state', 'in', ['on', 'playing']) | map(attribute='name') | list %}
+            {% set p2 = expand(states.group.homepod_airplay) | selectattr( 'state', 'in', ['on', 'playing']) | map(attribute='entity_id') | list %}
+            {% set p1 = expand(states.group.device_players) | rejectattr('entity_id', 'in', ['media_player.spotifyplus_ngoc_nguyen']) | selectattr( 'state', 'in', ['on', 'playing', 'idle', 'paused']) | map(attribute='entity_id') | list %}
+            {% set p3 = expand(states.group.homepod_mass_airplay) | selectattr( 'state', 'in', ['on', 'playing']) | map(attribute='entity_id') | list %}
             {{ p1 + p2 + p3 }}
           device_playing: >-
             {{ this.attributes.device | list | count }} Playing
-          mass_homepods: >-
-            {% set mass = expand('group.homepod_mass_airplay') | rejectattr('state', 'eq', 'off') | list | count %}
-            {{ mass }}
+          mass_homepods: "{{expand('group.homepod_mass_airplay') | rejectattr('state', 'eq', 'off') | list | count }}"
+
       # SENSOR - COVER SHUTTERS COUNT
       - name: Covers open count
         unique_id: covers_on_count
@@ -281,23 +261,65 @@ template:
         unique_id: low_baterry_device
         unit_of_measurement: devices
         state: >-
-          {%- set ignore_entities =  integration_entities('mobile_app') -%}
-          {{ states.sensor
-          | rejectattr('attributes.device_class', 'undefined')
-          | selectattr('attributes.device_class', 'eq', 'battery')
-          | rejectattr('entity_id', 'in', ignore_entities)
-          | map(attribute='state')
-          | reject('in', ['unknown', 'unavailable'])
-          | map('int', -1) | select('le', 50)
-          | select('ge', 0)
-          | list | count
-          }}
+          {{ this.attributes.low_devices | list | count }}
+        icon: "{{ iif (this.state == '0', 'mdi:battery-check', 'mdi:battery-alert') }}"
+        attributes:
+          low_devices: >-
+            [
+              {%- set ignore_entities = integration_entities('mobile_app') -%}
+              {%- for state in states.sensor
+                | rejectattr('attributes.device_class', 'undefined')
+                | selectattr('attributes.device_class', 'eq', 'battery')
+                | selectattr('attributes.state_class', 'eq', 'measurement')
+                | rejectattr('entity_id', 'in', ignore_entities)
+                | rejectattr('state', 'in', ['unknown', 'unavailable'])
+                | selectattr('state', 'is_number')
+              -%}
+              {% if state.state | int <= 10 %}
+                "{{ state.entity_id }}",
+              {%- endif %}
+              {%- endfor -%}
+            ]
+
+      # SENSOR - SECURITY - DOORS STATE
+      - unique_id: doors_state
+        name: 'Doors state'
+        state: "{{ iif (is_state('group.security_doors', 'on'), 'open', 'closed') }}"
+        icon: "{{ iif (this.state == 'open', 'mdi:lock-open', 'mdi:lock') }}"
+        attributes:
+          doors_open: >-
+            {{ expand(states.group.security_doors)
+              | selectattr('state', 'in', ['open', 'on', 'unlocked'])
+              | map(attribute='name') | list
+              | replace('Contact Sensor ', '')
+              | replace('Balcony Door ', '')
+            }}
+      # SENSOR - HOME MODE
+      - unique_id: home_mode
+        name: 'Home mode'
+        state: >-
+          {% set mode =
+            'Guest' if is_state('input_boolean.guest_mode', 'on') else
+            'Away' if is_state('input_boolean.leaving_home', 'on') else
+            'Night' if is_state('input_boolean.night_mode', 'on') else
+            'Normal' %}
+          {{ mode }}
         icon: >-
-          {% if is_state('sensor.low_baterry_device', '0') %}
-            mdi:battery-check
-          {% else %}
-            mdi:battery-alert
-          {% endif %}
+          {% set icon = {
+            'Guest': 'fas:person-circle-question',
+            'Away': 'custom:ios-car',
+            'Night': 'custom:ios-moon-stars-fill',
+            'Normal': 'custom:ios-house-fill'
+          } %}
+          {{ icon[this.state] }}
+
+      # SENSOR - SECURITY - MOTION STATE
+      - unique_id: motion_state
+        name: 'Motion state'
+        state: "{{ iif (is_state('group.motion_sensors', 'on'), 'Detected', 'Clear') }}"
+        icon: "{{ iif (this.state == 'Detected', 'mdi:motion-sensor', 'mdi:motion-sensor-off') }}"
+        attributes:
+          motion_detected: "{{ expand(states.group.motion_sensors) | selectattr('state', 'in', ['detected', 'on']) | map(attribute='name') | list | replace('Motion Sensor ', '') | replace(' Occupancy', '')}}"
       # SENSOR - WEATHER
       - unique_id: weather_humidity
         name: 'Weather Humidity'
@@ -309,102 +331,6 @@ template:
         state: >-
           {{ states.weather.prague.attributes.temperature }}
         unit_of_measurement: '°C'
-      # SENSOR - SECURITY - DOORS STATE
-      - unique_id: doors_state
-        name: 'Doors state'
-        state: >-
-          {% if states('group.security_doors') == 'on' %}
-            open
-          {% else %}
-            closed
-          {% endif %}
-        icon: >-
-          {% if 'open' in this.state or 'unlocked' in this.state %}
-          mdi:lock-open
-          {% else %}
-          mdi:lock
-          {% endif %}
-        attributes:
-          doors_open: >-
-            {% set doors = expand(states.group.security_doors) %}
-            {{ doors | selectattr('state', 'in', ['open', 'on', 'unlocked']) | map(attribute='name') | list | replace('Contact Sensor ', '') | replace('Balcony Door ', '') }}
-      # SENSOR - HOME MODE
-      - unique_id: home_mode
-        name: 'Home mode'
-        state: >-
-          {% if is_state('input_boolean.guest_mode', 'on') %} Guest
-          {% elif is_state('input_boolean.leaving_home', 'on') %} Away
-          {% elif is_state('input_boolean.night_mode', 'on') %} Night
-          {% else %} Normal
-          {% endif %}
-        icon: >
-          {% if 'Guest' in this.state %}
-          fas:person-circle-question
-          {% elif 'Away' in this.state %}
-          ios:car
-          {% elif 'Night' in this.state %}
-          ios:moon-stars-fill
-          {% else %}
-          ios:house-fill
-          {% endif %}
-      # SENSOR - SECURITY - MOTION STATE
-      - unique_id: motion_state
-        name: 'Motion state'
-        state: >-
-          {% if states('group.motion_sensors') == 'on' %}
-            Detected
-          {% else %}
-            Clear
-          {% endif %}
-        icon: >-
-          {% if 'Detected' in this.state %}
-          mdi:motion-sensor
-          {% else %}
-          mdi:motion-sensor-off
-          {% endif %}
-        attributes:
-          motion_detected: >-
-            {% set motions =  expand(states.group.motion_sensors) %}
-            {{ motions | selectattr('state', 'in', ['detected', 'on']) | map(attribute='name') | list | replace('Motion Sensor ', '') }}
-      # SENSOR - REPO VEHICLE INFO CHART
-      - unique_id: vehicle_info_chart
-        name: 'Vehicle Info Chart'
-        state: >-
-          {{ states.sensor.vehicle_info_card.state }}
-        icon: 'mdi:github'
-        attributes:
-          'v1.5.0': >-
-            {{states.sensor.vehicle_info_card.attributes.releases["v1.5.0"].download_count}}
-          'v1.4.0': >-
-            {{states.sensor.vehicle_info_card.attributes.releases["v1.4.0"].download_count}}
-          'v1.3.1': >-
-            {{states.sensor.vehicle_info_card.attributes.releases["v1.3.1"].download_count}}
-          'v1.3.0': >-
-            {{states.sensor.vehicle_info_card.attributes.releases["v1.3.0"].download_count}}
-          'v1.2.0': >-
-            {{states.sensor.vehicle_info_card.attributes.releases["v1.2.0"].download_count}}
-          'v1.1.2': >-
-            {{states.sensor.vehicle_info_card.attributes.releases["v1.1.2"].download_count}}
-          'v1.1.1': >-
-            {{states.sensor.vehicle_info_card.attributes.releases["v1.1.1"].download_count}}
-          'v1.1.0': >-
-            {{states.sensor.vehicle_info_card.attributes.releases["v1.1.0"].download_count}}
-          'v1.0.7': >-
-            {{states.sensor.vehicle_info_card.attributes.releases["v1.0.7"].download_count}}
-          'v1.0.6': >-
-            {{states.sensor.vehicle_info_card.attributes.releases["v1.0.6"].download_count}}
-          'v1.0.5': >-
-            {{states.sensor.vehicle_info_card.attributes.releases["v1.0.5"].download_count}}
-          'v1.0.4': >-
-            {{states.sensor.vehicle_info_card.attributes.releases["v1.0.4"].download_count}}
-          'v1.0.3': >-
-            {{states.sensor.vehicle_info_card.attributes.releases["v1.0.3"].download_count}}
-          'v1.0.2': >-
-            {{states.sensor.vehicle_info_card.attributes.releases["v1.0.2"].download_count}}
-          'v1.0.1': >-
-            {{states.sensor.vehicle_info_card.attributes.releases["v1.0.1"].download_count}}
-          'v1.0.0': >-
-            {{states.sensor.vehicle_info_card.attributes.releases["v1.0.0"].download_count}}
 
 sensor:
   - platform: template

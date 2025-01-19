@@ -1,8 +1,12 @@
-margin: 0
-grid-template-columns: repeat(auto-fit, minmax(400px, 20vw) minmax(400px, 20vw) minmax(400px, 20vw))
+grid-template-columns: repeat(var(--max-popup-column, auto-fit), minmax(560px, 1fr))
 grid-template-rows: auto
+grid-gap: 2px 1px
+margin: 0
+padding: 0
 mediaquery:
-  #portrait
-  '(max-width: 1200px)':
+  '(max-width: 800px)':
     grid-template-columns: 1fr
-    grid-template-rows: fit-content(100%)
+    grid-template-rows: auto
+    grid-gap: 2px 1px
+    margin: 0
+    padding: 0

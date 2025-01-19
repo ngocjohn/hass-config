@@ -224,6 +224,9 @@ updates:
               ? `${a.release_url.split('/')[3]}/${a.release_url.split('/')[4]}`
               : a?.friendly_name;
       };
+
+
+
       // update entities
       Object.keys(states).forEach(key => {
         let s = states[key], e = s.entity_id, a = s.attributes;
@@ -234,6 +237,9 @@ updates:
             </li>`;
         }
       });
+      function test(e) {
+        console.log(e);
+      }
       // subtitle
       let count = updates?.attributes.update_entities,
           subtitle = count === 0

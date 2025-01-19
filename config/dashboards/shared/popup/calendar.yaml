@@ -3,114 +3,160 @@ browser_mod:
   service: browser_mod.popup
   data:
     title: Calendar
-    style: >
-      --popup-max-width: calc(500px + 500px);
-    card_mod:
-      style:
-        .: |
-        # card divider border
-        layout-card$grid-layout$:
-          .: |
-            #root > * {
-              margin: 0px !important;
-            }
-          hui-entities-card:
-            $: |
-              ha-card {
-                border-right: 0.1vw solid rgba(58, 69, 73, 0.2);
-                border-radius: 0;
-                transition: none;
-              }
-              /* portrait */
-              @media screen and (max-width: 1440px) {
-                ha-card {
-                  border-right: none;
-                  border-bottom: 0.1vw solid rgba(58, 69, 73, 0.2);
-                }
-              }
     content:
-      type: custom:layout-card
-      layout_type: custom:grid-layout
-      layout:
-        margin: 0
-        grid-template-columns: 1fr 1fr
-        grid-template-rows: auto
-        mediaquery:
-          #portrait
-          '(max-width: 1440px)':
-            grid-template-columns: 1fr
-            grid-template-rows: fit-content(100%)
-      cards:
-        - type: entities
-          title: "[[[ return states['sensor.date_en'].state;]]]"
-          card_mod:
-            class: header
-          entities:
-            - type: custom:atomic-calendar-revive
-              enableModeChange: true
-              entities:
-                - entity: calendar.ceske_statni_svatky
-                  name: České státní svátky
-                - entity: calendar.home_assistant_devs
-                  name: Home assistant devs
-                - entity: calendar.personal
-                  name: Personal
-                - entity: calendar.ram_va_mung_mot_2020_2040_hass_konnected
-                  name: Lunar
-              showDate: false
-              showDeclined: false
-              showLastCalendarWeek: true
-              calShowDescription: true
-              disableCalLocationLink: false
-              dimFinishedEvents: false
-              defaultMode: Calendar
-              showLoader: true
-              showRelativeTime: false
-              hideDuplicates: false
-              showLocation: false
-              offsetHeaderDate: true
-              showAllDayEvents: true
-              allDayBottom: false
-              compactMode: false
-              showMultiDayEventParts: true
-              showCurrentEventLine: true
-              card_mod:
-                style: |
-                  .cal-card {
-                    padding: 0px !important;
-                  }
-            - type: custom:atomic-calendar-revive
-              enableModeChange: true
-              entities:
-                - entity: calendar.ceske_statni_svatky
-                  name: České státní svátky
-                - entity: calendar.home_assistant_devs
-                  name: Home assistant devs
-                - entity: calendar.personal
-                  name: Personal
-                - entity: calendar.ram_va_mung_mot_2020_2040_hass_konnected
-                  name: Lunar
-              defaultMode: Event
-              europeanDate: true
-              showFullDayProgress: true
-              showDatePerEvent: true
-              showWeekNumber: true
+      type: custom:mod-card
+      card_mod: !include ../snippets/style_popup_footer.yaml
+      card:
+        type: custom:layout-card
+        layout_type: custom:grid-layout
+        layout:
+          grid-template-columns: 550px 550px
+          grid-gap: 2px 1px
+          margin: 0
+          padding: 0
+          mediaquery:
+            '(max-width: 800px)':
+              grid-template-columns: 100%
+              grid-gap: 2px 1px
+              margin: 0
+              padding: 0
+        cards:
+          - type: entities
+            title: "[[[ return states['sensor.date_en'].state;]]]"
+            entities:
+              - type: custom:atomic-calendar-revive
+                enableModeChange: true
+                entities:
+                  - entity: calendar.ceske_statni_svatky
+                    name: České státní svátky
+                  - entity: calendar.home_assistant_devs
+                    name: Home assistant devs
+                showDate: false
+                showDeclined: false
+                showLastCalendarWeek: true
+                calShowDescription: true
+                disableCalLocationLink: false
+                dimFinishedEvents: false
+                defaultMode: Calendar
+                showLoader: true
+                showRelativeTime: false
+                hideDuplicates: false
+                showLocation: false
+                offsetHeaderDate: true
+                showAllDayEvents: true
+                allDayBottom: false
+                compactMode: false
+                showMultiDayEventParts: true
+                showCurrentEventLine: true
+          - type: entities
+            title: Lunar Phase
+            card_mod:
+              class: header nopadding
+            entities:
+              - type: custom:lunar-phase-card
+                card_mod:
+                  style:
+                    .: |
+                      ha-card {
+                        background-color: transparent !important;
+                        justify-content: flex-start !important;
+                        box-shadow: none !important;
+                      }
+                    lunar-base-data $: |
+                      .swiper-container {
+                        backdrop-filter: none !important;
+                      }
+                entity: ''
+                12hr_format: false
+                calendar_modal: false
+                compact_view: false
+                default_card: base
+                hide_buttons: true
+                mile_unit: false
+                moon_position: left
+                number_decimals: 2
+                selected_language: en
+                show_background: false
+                southern_hemisphere: false
+                use_custom: false
+                use_default: true
+                use_entity: false
+                graph_config:
+                  graph_type: default
+                  y_ticks: false
+                  x_ticks: true
+                  show_time: true
+                  show_current: true
+                  show_highest: true
+                  y_ticks_position: left
+                  y_ticks_step_size: 30
+                  time_step_size: 30
+                  show_legend: true
+                  legend_position: top
+                  legend_align: center
+                font_customize:
+                  header_font_size: x-large
+                  header_font_style: capitalize
+                  header_font_color: ''
+                  label_font_size: auto
+                  label_font_style: none
+                  label_font_color: ''
+                  hide_label: false
+                hide_header: true
+                latitude: 50.060362328075634
+                longitude: 14.399342536926271
+                location:
+                  city: Capital City of Prague
+                  country: Czechia
+                custom_background: >-
+                  https://cdn.jsdelivr.net/gh/ngocjohn/lunar-phase-card@1.7.3/background/moon_bg_1.png
+            footer:
+              type: custom:lunar-phase-card
+              entity: ''
+              12hr_format: false
+              calendar_modal: false
+              compact_view: true
+              default_card: horizon
+              hide_buttons: true
+              mile_unit: false
+              moon_position: left
+              number_decimals: 2
+              selected_language: en
+              show_background: false
+              southern_hemisphere: false
+              use_custom: false
+              use_default: true
+              use_entity: false
+              graph_config:
+                graph_type: dynamic
+                y_ticks: false
+                x_ticks: true
+                show_time: true
+                show_current: true
+                show_highest: true
+                y_ticks_position: left
+                y_ticks_step_size: 30
+                time_step_size: 30
+                show_legend: true
+                legend_position: top
+                legend_align: center
+              font_customize:
+                header_font_size: x-large
+                header_font_style: capitalize
+                header_font_color: ''
+                label_font_size: auto
+                label_font_style: none
+                label_font_color: ''
+                hide_label: false
+              hide_header: true
+              latitude: 50.060362328075634
+              longitude: 14.399342536926271
+              location:
+                city: Capital City of Prague
+                country: Czechia
               card_mod:
                 style: |
                   ha-card {
-                    padding: 4px !important;
+                    background-color: transparent !important;
+                    box-shadow: none !important;
                   }
-        - type: entities
-          title: Moon phases
-          card_mod:
-            class: header
-            style: |
-              ha-card {
-                border: none !important;
-              }
-          entities:
-            - type: custom:mod-card
-              card:
-                type: iframe
-                url: https://moon.nasa.gov/__webgl/moon_lunar/
-                aspect_ratio: '135%'

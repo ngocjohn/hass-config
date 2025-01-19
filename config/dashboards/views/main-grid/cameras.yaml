@@ -3,6 +3,7 @@
 #                  CAMERAS                      #
 #                                               #
 #################################################
+
 - type: grid
   title: Cameras
   view_layout:
