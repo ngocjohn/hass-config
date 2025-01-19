@@ -12,6 +12,14 @@ This is where I store all the cool configurations for my Home Assistant system. 
 
 I frequently refresh my configuration files. My current Home Assistant version is <b>2025.1.2</b>. If you find something you like, don't forget to give my repository a ⭐️!
 
+## Some of my projects for Home Assistant
+
+[![Vehicle Info Card](https://github-readme-stats.vercel.app/api/pin/?username=ngocjohn&repo=vehicle-info-card&theme=transparent)](https://github.com/ngocjohn/vehicle-info-card)
+[![Vehicle Status Card](https://github-readme-stats.vercel.app/api/pin/?username=ngocjohn&repo=vehicle-status-card&theme=transparent)](https://github.com/ngocjohn/vehicle-status-card)
+[![Lunar Phase Integration](https://github-readme-stats.vercel.app/api/pin/?username=ngocjohn&repo=lunar-phase&theme=transparent)](https://github.com/ngocjohn/lunar-phase)
+[![Lunar Phase Card](https://github-readme-stats.vercel.app/api/pin/?username=ngocjohn&repo=lunar-phase-card&theme=transparent)](https://github.com/ngocjohn/lunar-phase-card)
+
+
 <video width="100%" controls loop muted>
   <source src="https://github-production-user-asset-6210df.s3.amazonaws.com/96962827/297112091-acc1a4db-b92e-4ab1-ac9d-df067d4ba4d1.mp4" type="video/mp4">
 </video>
