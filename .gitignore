@@ -13,6 +13,7 @@ config/scripts.yaml
 config/templates
 config/utils/
 config/README.md
+config/go2rtc.yaml
 !config/www/hafloor
 
 
