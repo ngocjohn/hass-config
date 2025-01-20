@@ -40,7 +40,7 @@ layout:
       grid-gap: 8px
       margin: 0
       grid-template-columns: 0px 1fr 1fr 0px
-      grid-template-rows: 0 min-content fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) min-content 0
+      grid-template-rows: 0 min-content fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) min-content 1rem
       grid-template-areas: |
         ". .           .         ."
         ". header      header    ."

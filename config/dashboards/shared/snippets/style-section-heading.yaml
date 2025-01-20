@@ -24,6 +24,9 @@ style:
     }
     @media screen and (max-width: 800px) {
       .container {
-        padding: 1rem 4px 0.6rem !important;
+        padding: 1rem 4px 1.7vw 0 !important;
+      }
+      .container .content {
+        --mdc-icon-size: 14px !important;
       }
     }

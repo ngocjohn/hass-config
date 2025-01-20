@@ -192,11 +192,16 @@ sections:
         state_color: false
         entities:
           - entity: sensor.hass_config_stars
+            secondary_info: last-changed
             name: Stars
           - entity: sensor.hass_config_forks
             name: Forks
           - entity: sensor.hass_config_watchers
             name: Watchers
+          - entity: sensor.hass_config_latest_commit_formatted
+            secondary_info: last-changed
+            icon: mdi:source-commit
+            name: Latest Commit
           - type: divider
           - type: custom:multiple-logbook-card
             card_mod:

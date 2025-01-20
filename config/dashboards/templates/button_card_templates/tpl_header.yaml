@@ -40,6 +40,10 @@ header_clock:
       - padding: inherit
       - width: 100%
       - overflow: visible
+      - background: none
+      - --mdc-ripple-color: none
+      - box-shadow: none
+
 header_weather:
   template:
     - extra_styles
@@ -124,6 +128,10 @@ header_weather:
       - padding: 0
       - color: rgba(255, 255, 255, 0.6)
       - overflow: visible;
+    img-cell:
+      - max-height: 170px
+      - top: -10%
     icon:
-      - max-width: 200px
+      - max-width: 150px
       - width: 100%
+      - height: auto

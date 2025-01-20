@@ -11,17 +11,55 @@
 # RECORDER
 recorder:
   db_url: !secret mariadb_url
+  purge_keep_days: 30
+  auto_purge: true
+  auto_repack: true
   exclude:
     domains:
       - alarm_control_panel
       - button
       - camera
+      - media_player
+      - switch
+      - light
+      - sun
+      - weather
+      - timer
+      - update
+      - device_tracker
+      - image
+    entities:
+      - sensor.time
+      - sensor.date
+      - sensor.hassio_addons_use
+      - sensor.zhimi_mb4_b008_moto_speed_rpm
     entity_globs:
       - sensor.*_motor_speed
       - sensor.browser_*
-      - light.browser_*
       - sensor.prague_moon_*
       - sensor.*_color
+      - sensor.*_energy
+      - sensor.*_power
+      - sensor.*_linkquality
+      - sensor.*_last_seen
+      - sensor.home_*
+      - sensor.kodi_*
+      - sensor.amg_43_*
+      - sensor.*_write
+      - sensor.prague_*
+      - sensor.*_utilization
+      - sensor.*_clients
+      - sensor.*_voltage
+      - sensor.*_current
+      - sensor.*_rx
+      - sensor.*_tx
+      - sensor.sun_*
+      - sensor.*_active
+      - sensor.hacs_*
+      - sensor.motion_sensor_*
+      - sensor.*_outage_count
+      - sensor.*_speed_rpm
+
 logger:
   default: error
 

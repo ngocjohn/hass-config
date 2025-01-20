@@ -1,36 +1,60 @@
 action: fire-dom-event
 honeycomb_menu:
-  entity: input_boolean.office_mode
-  active: true
-  autoclose: true
+  autoclose: false
+  size: 250
   buttons:
     - icon: mdi:keyboard
+      entity: input_boolean.office_mode
+      active: '[[[ return entity.state != "off" ]]]'
+      position: 0
+      show: true
       tap_action:
-        action: toggle
+        action: call-service
+        service: homeassistant.toggle
+        service_data:
+          entity_id: entity
     - icon: mdi:desk-lamp
+      show: true
+      position: 1
       entity: light.office_led_light_strip
-      autoclose: false
       hold_action: more-info
       tap_action:
-        action: toggle
+        action: call-service
+        service: light.toggle
+        service_data:
     - icon: mdi:floor-lamp
+      show: true
+      position: 2
       entity: light.office_lamp_bulb
-      autoclose: false
+      tap_action:
+        action: call-service
+        service: light.toggle
+        service_data:
+          entity_id: entity
       hold_action: more-info
-      tap_action:
-        action: toggle
     - icon: mdi:led-strip
+      show: true
+      position: 3
       entity: light.office_shelf_led
-      hold_action: false
       tap_action:
-        action: toggle
+        action: call-service
+        service: light.toggle
+        service_data:
+          entity_id: entity
+      hold_action: more-info
     - icon: mdi:alarm-light
+      show: true
+      position: 4
       entity: input_boolean.brma
-      hold_action: false
       tap_action:
         action: toggle
-    - icon: cil:laptop-mac
+        service_data:
+          entity_id: entity
+    - icon: custom:ios-desktop-computer
+      show: true
+      position: 5
       entity: switch.macbook
-      hold_action: false
       tap_action:
         action: toggle
+        service_data:
+          entity_id: entity

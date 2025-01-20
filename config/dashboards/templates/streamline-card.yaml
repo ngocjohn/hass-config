@@ -300,7 +300,8 @@ grid_samsung:
     hold_action: !include ../shared/honeycomb/shield.yaml
     template:
       - mediaplayer
-  # PLAYSTATION
+
+# PLAYSTATION
 grid_playstation:
   card:
     type: custom:button-card
@@ -1246,7 +1247,10 @@ github_graph_card:
     header: hide
     showCurrentValues: false
     legendVisible: false
+    labelsVisible: false
     defaultTimeRange: 3d
+    axisAddMarginMin: false
+    axisAddMarginMax: false
     tooltip:
       size: full
     uiLayout:

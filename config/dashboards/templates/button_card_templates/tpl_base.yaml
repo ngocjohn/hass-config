@@ -961,9 +961,9 @@ extra_styles:
           #img-cell {
             display: grid;
             place-self: center;
-            max-height: 100px !important;
-            animation: marquee 20s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+            animation: marquee 20s ease-in-out infinite;
             animation-direction: alternate-reverse;
+            max-height: 170px;
           }
 
           #state {
@@ -1010,6 +1010,15 @@ extra_styles:
               place-items: center center;
               grid-row-gap: 1rem !important;
             }
+            #label {
+              justify-content: center !important;
+            }
+            li {
+              letter-spacing: 2px !important;
+              font-size: 1.1rem !important;
+              line-height: normal !important;
+              padding-left: 2rem !important;
+            }
           }
           @media screen and (max-width: 800px) {
             #container {
@@ -1019,9 +1028,6 @@ extra_styles:
             #label {
               display: none;
             }
-            #icon {
-              max-width: 150px !important;
-            }
             .realtemp {
               font-size: 2.3rem;
             }
@@ -1030,6 +1036,11 @@ extra_styles:
             }
             .degree-symbol {
               right: auto;
+            }
+            #img-cell {
+              animation: none;
+              max-height: 100px !important;
+              top: -15%;
             }
             #icon {
               width: 100%;

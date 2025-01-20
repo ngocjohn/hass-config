@@ -257,8 +257,8 @@ tablet:
         }
         @media only screen and (max-width: 800px) {
           #root {
-            justify-content: center;
-            gap: 1.5rem !important
+            justify-content: space-evenly;
+            //gap: 1.5rem !important
           }
         }
     #################################################
