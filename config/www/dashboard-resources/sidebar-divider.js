@@ -13,6 +13,11 @@ customElements.whenDefined('ha-sidebar').then(() => {
 		const spacer = sidebar.querySelector('.spacer');
 		const logs = sidebar.querySelector('a[data-panel="config/logs"]');
 		const supervisor = sidebar.querySelector('a[data-panel="hassio/system/info"]');
+		const isReordered = spacer.nextSibling === logs || spacer.nextSibling === supervisor;
+		if (isReordered) {
+			console.log('Sidebar items already reordered');
+			return;
+		}
 
 		if (spacer && logs && supervisor) {
 			// Insert logs after spacer
@@ -28,8 +33,13 @@ customElements.whenDefined('ha-sidebar').then(() => {
 			} else {
 				sidebar.appendChild(supervisor); // If no nextSibling, append it to the end
 			}
+			console.log('Sidebar items reordered successfully');
 		}
-
+		const isDividerAdded = sidebar.querySelectorAll('div.divider').length > 0;
+		if (isDividerAdded) {
+			console.log('Sidebar divider already added');
+			return;
+		}
 		const divider = this.shadowRoot.querySelector('div.divider');
 		const media = sidebar.querySelector('a[data-panel="media-browser"]');
 		const addons = sidebar.querySelector('a[data-panel="hassio/dashboard"]');
@@ -44,8 +54,7 @@ customElements.whenDefined('ha-sidebar').then(() => {
 			dividerCopy.appendChild(style);
 			sidebar.insertBefore(dividerCopy.cloneNode(true), addons);
 			sidebar.insertBefore(dividerCopy.cloneNode(true), media);
+			console.info('Sidebar divider added successfully');
 		}
-
-		console.info('Sidebar divider added successfully');
 	};
 });

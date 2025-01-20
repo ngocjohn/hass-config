@@ -21,7 +21,7 @@
   defaultTimeRange: 5h
   defaultTimeOffset: 0
   decimation: fast
-  labelsVisible: true
+  labelsVisible: false
   legendVisible: false
   lineMode: lines
   lineGraphHeight: 320
@@ -30,6 +30,8 @@
   uiLayout:
     toolbar: top
     selector: hide
+    # sticky: top
+    invertZoom: true
   tooltip:
     size: full
   graphs:
@@ -40,12 +42,13 @@
             - entity: sensor.home_assistant_*
           lineMode: lines
     - type: line
+      options:
+        showTimeLabels: false
       entities:
         - entity: sensor.*_memory_percent
           exclude:
             - entity: sensor.home_assistant_*
           lineMode: lines
-
     - type: line
       entities:
         - entity: sensor.ha_system_cpu_usage

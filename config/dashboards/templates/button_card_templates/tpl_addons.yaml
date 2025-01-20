@@ -26,19 +26,19 @@ addons_base:
       ]]]
   tap_action:
     action: block
-  double_tap_action:
-    action: call-service
-    service: script.backup_addon
-    service_data:
-      addon_slug: >
-        [[[
-          return variables.slug_name;
-        ]]]
-      version: >
-        [[[
-          return states[variables.ver_ent].state;
-        ]]]
-    haptic: success
+  # double_tap_action:
+  #   action: call-service
+  #   service: script.backup_addon
+  #   service_data:
+  #     addon_slug: >
+  #       [[[
+  #         return variables.slug_name;
+  #       ]]]
+  #     version: >
+  #       [[[
+  #         return states[variables.ver_ent].state;
+  #       ]]]
+  #   haptic: success
   hold_action:
     action: fire-dom-event
     browser_mod:

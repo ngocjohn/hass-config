@@ -4,8 +4,8 @@ grid-gap: 2px 1px
 margin: 0
 padding: 0
 mediaquery:
-  '(max-width: 800px)':
-    grid-template-columns: 1fr
+  '(max-width: 1441px)':
+    grid-template-columns: 560px
     grid-template-rows: auto
     grid-gap: 2px 1px
     margin: 0
