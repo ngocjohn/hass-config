@@ -1,0 +1,8 @@
+action: fire-dom-event
+extra_menu:
+  custom_position: bottom-right
+  card_container:
+    padding: 1vw
+  cards:
+    - type: custom:webrtc-camera
+      entity: camera.kids_room_cam

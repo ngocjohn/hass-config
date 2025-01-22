@@ -6,7 +6,7 @@ theme: tablet
 xbackground: >-
   linear-gradient(170deg, rgba(22, 24, 29, 0.6) 80%, rgba(156, 156, 210, 0.6) 160%)
 type: sections
-max_columns: 9
+max_columns: 8
 dense_section_placement: true
 sections:
   - type: grid
@@ -202,16 +202,23 @@ sections:
             secondary_info: last-changed
             icon: mdi:source-commit
             name: Latest Commit
+            tap_action:
+              action: fire-dom-event
+              browser_mod:
+                service: browser_mod.javascript
+                data:
+                  code: >
+                    window.open(`${hass.states['sensor.hass_config_latest_commit'].attributes.url}`, '_blank');
           - type: divider
           - type: custom:multiple-logbook-card
             card_mod:
               style: |
                 ha-card .card-content-scroll {
                   padding: 0 !important;
-                  max-height: 325px;
+                  max-height: 270px;
                   height: 100%;
                 }
-            max_items: 7
+            max_items: 6
             show:
               separator: true
               duration: false

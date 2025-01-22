@@ -131,3 +131,6 @@
     - light.shelly_rgbw_kitchen_led_strip
     - light.living_room_floor_lamp
   hold_action: !include ../shared/honeycomb/living.yaml
+- entities:
+    - light.vanesska_ceiling_light
+  hold_action: !include ../shared/extra-popup/vanessa.yaml

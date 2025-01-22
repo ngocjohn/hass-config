@@ -63,6 +63,7 @@
           service: browser_mod.more_info
           data:
             entity: media_player.currently_playing
+      hold_action: !include ../../shared/extra-popup/mass-homepods.yaml
 
     # - &homemode
     #   type: custom:button-card
