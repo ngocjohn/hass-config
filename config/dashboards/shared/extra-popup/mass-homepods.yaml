@@ -1,0 +1,11 @@
+action: fire-dom-event
+extra_menu:
+  cards:
+    - type: custom:auto-entities
+      card:
+        type: entities
+        theme: Graphite Auto
+      filter:
+        include:
+          - label: Mass Homepod
+        exclude: []
