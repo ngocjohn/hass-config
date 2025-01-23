@@ -1,0 +1,9 @@
+navigation:
+followFinger: false
+grabCursor: false
+roundLengths: true
+centeredSlides: true
+centeredSlidesBounds: true
+enabled: true
+createElements: false
+allowTouchMove: false

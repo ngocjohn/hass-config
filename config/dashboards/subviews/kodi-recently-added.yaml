@@ -1,8 +1,0 @@
-type: custom:local-conditional-card
-default: show
-id: addedmovie
-card:
-  type: custom:decluttering-card
-  template: kodi_movie_cards
-  variables:
-    - padding: 0

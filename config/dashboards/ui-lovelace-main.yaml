@@ -6,7 +6,6 @@ title: Neklanka Home
 views:
   - !include views/main.yaml
   - !include views/system.yaml
-  - !include subviews/github-stats.yaml
+  - !include views/github-view.yaml
   - !include subviews/movie-panel.yaml
   # - !include subviews/ytube-music.yaml
-  # - !include subviews/test-lovelace.yaml

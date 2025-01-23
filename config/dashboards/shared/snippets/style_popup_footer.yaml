@@ -5,7 +5,11 @@ style:
         #root > * {
           margin: 0px !important;
         }
-
+        @media (max-width: 800px) {
+          #root {
+            display: block;
+          }
+        }
       hui-entities-card:
         $: |
           ha-card {

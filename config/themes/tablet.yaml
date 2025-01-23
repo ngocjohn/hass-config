@@ -292,6 +292,7 @@ tablet:
     .addon .card-content {
       padding: 0 !important;
       align-content: flex-start;
+      --total-rows: 5;
     }
 
     @media screen and (max-width: 1710px) {
@@ -299,16 +300,34 @@ tablet:
         padding: 0 !important;
         line-height: unset !important;
       }
-
       .addon .card-content {
-        max-height: calc(calc(128px + 7px) * 5);
+        max-height: calc(calc(128px + 7px) * var(--total-rows, 5));
         overflow-y: auto;
         overflow-x: hidden;
         margin-top: 1rem !important;
       }
-
+    }
+    @media screen and (max-width: 800px) {
+      .addon .card-content {
+        --total-rows: 3;
+      }
+    }
+    .stargazer .card-header {
+      padding: 0 1rem !important;
+      line-height: normal !important;
     }
 
+    .stargazer .card-content {
+      max-height: 435px;
+      overflow-y: auto;
+      margin-top: 1rem;
+    }
+
+    @media screen and (max-width: 800px) {
+      .stargazer .card-content {
+        padding: 0 !important;
+      }
+    }
 
     /* * * * * * * * * * * * * * * * * *
     *                                 *
@@ -340,13 +359,8 @@ tablet:
       overflow: hidden;
     }
 
-    .type-custom-history-explorer-card div#graphlist {
-      padding: 0 !important;
-    }
-
     @media screen and (min-width: 1720px) {
       .type-custom-history-explorer-card div#graphlist {
-        padding: 0 !important;
         display: flex;
         flex-direction: column;
         justify-content: space-between;

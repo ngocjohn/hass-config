@@ -1,0 +1,100 @@
+- type: custom:layout-card
+  layout_type: custom:grid-layout
+  layout: !include ../../shared/snippets/layout-git-heading-content.yaml
+  view_layout:
+    grid-area: hass-config
+  cards:
+    - type: custom:streamline-card
+      template: github_heading_card
+      variables:
+        heading_title: 🛖 Hass Config
+        total_entity: 'sensor.hass_config_forks'
+        latest_entity: sensor.hass_config_latest_tag
+        stars_entity: 'sensor.hass_config_stargazers'
+        repo_link: https://github.com/ngocjohn/hass-config
+    - type: entities
+      card_mod:
+        class: header nopadding
+        style: |
+          ha-card {
+            background: linear-gradient(to top, #2024349e 0%, transparent 100%);
+          }
+      show_header_toggle: false
+      state_color: false
+      entities:
+        - entity: sensor.hass_config_stargazers
+          secondary_info: last-changed
+          name: Stars
+        - entity: sensor.hass_config_forks
+          name: Forks
+        - entity: sensor.hass_config_watchers
+          name: Watchers
+        - entity: sensor.hass_config_latest_commit_formatted
+          secondary_info: last-changed
+          icon: mdi:source-commit
+          name: Latest Commit
+          tap_action:
+            action: fire-dom-event
+            browser_mod:
+              service: browser_mod.javascript
+              data:
+                code: >
+                  window.open(`${hass.states['sensor.hass_config_latest_commit'].attributes.url}`, '_blank');
+        - type: divider
+        - type: custom:multiple-logbook-card
+          card_mod:
+            style: |
+              ha-card .card-content-scroll {
+                padding: 0 !important;
+                max-height: 275px;
+                height: 100%;
+              }
+          max_items: 6
+          show:
+            separator: true
+            duration: false
+          title: ''
+          date_format: relative
+          entities:
+            - entity: sensor.vehicle_latest_release_download
+              label: Vehicle Info
+            - entity: sensor.lunar_phase_integration_latest
+              label: Lunar Phase Integration
+            - entity: sensor.lunar_phase_card_latest
+              label: Lunar Phase Card
+            - entity: sensor.vehicle_status_latest
+              label: Vehicle Status
+- type: custom:layout-card
+  layout_type: custom:grid-layout
+  layout: !include ../../shared/snippets/layout-git-heading-content.yaml
+  view_layout:
+    grid-area: github-stats
+  cards:
+    - type: heading
+      heading: 🚀  Github stats
+      tap_action:
+        action: url
+        url_path: https://github.com/ngocjohn
+      grid_options:
+        columns: full
+    - type: markdown
+      card_mod:
+        style:
+          .: |
+            ha-card {
+              background: linear-gradient(to top, #2024349e 0%, transparent 100%);
+              padding: 0 8px;
+            }
+            ha-markdown {
+              padding: 0 !important;
+            }
+          ha-markdown$: |
+            ha-markdown-element>p {
+              display: flex;
+              flex-direction: column;
+              gap: 0.5rem;
+            }
+      content: >-
+        ![GitHub Stats](https://github-readme-stats.vercel.app/api?username=ngocjohn&theme=transparent&show_icons=true&hide_border=true&count_private=true&hide_title=true&card_width=500&rank_icon=default&text_bold=false)
+        ![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=ngocjohn&layout=compact&theme=transparent&hide_border=true&count_private=true&card_width=500&hide=html,shell)
+        ![GitHub Streak](https://github-readme-streak-stats.herokuapp.com?user=ngocjohn&theme=transparent&hide_border=true&short_numbers=true&date_format=j%2Fn%5B%2FY%5D&stroke=634EEB7A)

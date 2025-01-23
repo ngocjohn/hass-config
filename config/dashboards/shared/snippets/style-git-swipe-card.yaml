@@ -1,0 +1,10 @@
+$: |
+  #host {
+    --swiper-navigation-size: 24px !important;
+    --swiper-theme-color: rgb(179, 179, 179, .5);
+  }
+  .swiper-button-prev, .swiper-button-next {
+    top: 95% !important;
+    --swiper-navigation-size: 24px !important;
+    --swiper-theme-color: rgb(179, 179, 179, .5);
+  }

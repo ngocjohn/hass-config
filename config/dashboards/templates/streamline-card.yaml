@@ -322,6 +322,12 @@ grid_homepods:
       - circle
     name: Homepods
     double_tap_action: !include ../shared/popup/popup_mass.yaml
+    tap_action:
+      action: call-service
+      service: media_player.turn_off
+      service_data:
+        entity_id: media_player.mass_universal_airplay
+
     variables:
       media_on: >
         [[[ return !entity || ['on', 'paused', 'idle'].indexOf(entity.state) !== -1; ]]]
@@ -1213,8 +1219,17 @@ github_heading_card:
     card_mod:
       style:
         .: |
-          .container {
-            flex-wrap: wrap !important;
+          ha-card {
+            padding: 0px 8px;
+          }
+          @media (max-width: 500px) {
+            ha-card {
+              padding: 0;
+            }
+            .container {
+              flex-wrap: wrap !important;
+              width: min-content !important;
+            }
           }
     heading: '[[heading_title]]'
     heading_style: title
@@ -1243,6 +1258,7 @@ github_graph_card:
       style: |
         ha-card {
           background: linear-gradient(to top, rgb(from {{'[[bar_color]]'}} r g b / 0.1) 0%, transparent 100%);
+          width: min-content !important;
         }
     header: hide
     showCurrentValues: false
@@ -1276,16 +1292,17 @@ github_logbook_card:
     - fill_color: 'rgba(62, 150, 205, 0.2)'
   card:
     type: custom:multiple-logbook-card
+    title: 'Latest'
     card_mod:
       style: |
         ha-card .card-content-scroll {
           height: 100%;
-          max-height: 500px;
-          background: linear-gradient(to top, rgb(from {{'[[bar_color]]'}} r g b / 0.1) 0%, transparent 100%);
-          margin-top: 1rem !important;
+          max-height: 435px;
+          margin-top: 1rem;
         }
         ha-card .card-header {
-          display: none !important;
+          padding: 0 1rem !important;
+          line-height: normal !important;
         }
     scroll: true
     show:
@@ -1309,3 +1326,95 @@ github_diagnostic_card:
       exclude: []
     card:
       type: entities
+
+github_new_graph:
+  default:
+    - history_name: ''
+    - total_entity: ''
+    - latest_entity: ''
+    - bar_color: 'rgba(62, 149, 205, 1)'
+    - fill_color: 'rgba(62, 150, 205, 0.2)'
+  card:
+    type: custom:history-explorer-card
+    cardName: '[[history_name]]'
+    header: hide
+    showCurrentValues: false
+    legendVisible: false
+    labelsVisible: false
+    defaultTimeRange: 3d
+    tooltip:
+      size: full
+    uiLayout:
+      toolbar: top
+      selector: hide
+    lineMode: curves
+    graphs:
+      - type: line
+        title: Total
+        entities:
+          - entity: '[[total_entity]]'
+            color: '[[bar_color]]'
+            fill: '[[fill_color]]'
+      - type: bar
+        title: Latest
+        entities:
+          - entity: '[[latest_entity]]'
+            color: '[[bar_color]]'
+stargazer_list:
+  default:
+    - star_entity: ''
+  card:
+    type: custom:mod-card
+    card_mod:
+      style: |
+        ha-card::before {
+          content: '{{ states['[[star_entity]]'].attributes.stargazers | count }}\2605';
+          position: absolute;
+          top: 5%;
+          right: 1%;
+          font-size: 2em;
+          color: #ffffff1a;
+          font-weight: 500;
+        }
+    card:
+      type: entities
+      title: Stargazers
+      card_mod:
+        class: 'stargazer'
+
+      entities:
+        - type: custom:auto-entities
+          filter:
+            template: |
+              {%- set followers = state_attr('[[star_entity]]', 'stargazers') %}
+              [
+              {%- for user in followers -%}
+                {
+                  'type': 'custom:button-card',
+                  'name': '{{ user.login }}',
+                  'template': ['stargazer_base'],
+                  'variables': {
+                    'avatar_url': '{{ user.avatar_url }}',
+                    'html_url': '{{ user.html_url }}',
+                    'follow_me': '{{ user.follow_me }}'
+                  }
+                }{%- if not loop.last %},{% endif %}
+              {%- endfor %}
+              ]
+          card:
+            type: custom:layout-card
+            layout_type: custom:grid-layout
+            layout:
+              grid-template-columns: repeat(auto-fill, minmax(19%, 1fr))
+              grid-template-rows: auto
+              grid-gap: 4px 8px
+              margin: 0
+              padding: 0
+              mediaquery:
+                '(min-width: 801px) and (max-width: 1710px)':
+                  grid-template-columns: repeat(auto-fill, minmax(24%, 1fr))
+                  grid-gap: 4px
+                '(max-width: 800px)':
+                  grid-template-columns: repeat(auto-fill, minmax(26%, 1fr))
+                  grid-gap: 4px
+            cards: []

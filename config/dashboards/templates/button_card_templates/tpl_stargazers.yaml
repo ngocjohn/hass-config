@@ -1,0 +1,45 @@
+stargazer_base:
+  variables:
+    avatar_url: ''
+    html_url: ''
+    follow_me: ''
+  layout: icon_name
+  show_state: false
+  show_label: false
+  show_icon: false
+  show_entity_picture: true
+  show_name: true
+  entity_picture: >
+    [[[
+      return variables.avatar_url;
+    ]]]
+  tap_action:
+    action: url
+    url_path: >
+      [[[
+        return variables.html_url;
+      ]]]
+  styles:
+    name:
+      - font-size: 1rem
+      - align-self: center
+      - justify-self: start
+    img-cell:
+      - display: inline-flex
+      - place-items: center
+      - position: relative
+    icon:
+      - width: 40%
+      - position: inherit
+      - height: auto
+      - background: >
+          [[[
+            return variables.follow_me === 'True'
+              ? 'var(--primary-color)'
+              : 'rgb(150, 150, 150, 0.3)';
+          ]]]
+      - border-radius: 9999px
+      - padding: 4px
+      - margin: 0
+      - display: inline-block
+      - place-self: center baseline

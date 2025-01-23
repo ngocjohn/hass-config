@@ -104,11 +104,9 @@ chips:
       - position: inherit
       - height: auto
       - background: rgb(150 150 150 / 30%)
-      - border-radius: 9999px
-      - padding: 10px
+      - border-radius: 50%
+      - padding: 8px
       - margin: 0
-      - display: inline-block
-      - place-self: center baseline
       - opacity: >
           [[[
               return variables.state_on
