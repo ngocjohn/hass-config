@@ -14,6 +14,8 @@ config/templates
 config/utils/
 config/README.md
 config/go2rtc.yaml
+config/scripts.yaml
+config/automations.yaml
 !config/www/hafloor
 
 
