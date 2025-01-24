@@ -13,9 +13,9 @@ tablet:
   ha-card-header-font-family: Futura
   mdc-typography-body1-font-family: var(--primary-font-family)
   mdc-typography-font-family: var(--primary-font-family)
-  app-header-background-color: rgba(0,0,0,1)
   ha-card-background: none
   ha-card-box-shadow: none
+  app-header-background-color: '#0000'
 
   masonry-view-card-margin: 0
   # custom-layout-card-padding: 2.2w #3.3vw or #3vw...#1.9...sidebar OK
@@ -106,12 +106,11 @@ tablet:
     .: |
       :host {
         # --app-header-background-color: rgba(0,0,0,1);
-        --app-header-background-color: rgba(22, 24, 29, 1);
+        # --app-header-background-color: rgba(22, 24, 29, 1);
       }
 
       #view {
         background-image: linear-gradient(180deg, rgba(22, 24, 29, 1) 0%, rgba(23, 26, 37, 1) 42%, rgba(22, 24, 29, 1) 100%) !important;
-        overflow: hidden !important;
       }
       /* phone */
       @media screen and (max-width: 800px) {

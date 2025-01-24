@@ -18,16 +18,13 @@ layout:
     ". .         .          .         .        .          .          ."
 
   mediaquery:
-    #laptop
-    '(min-width: 1441px) and (max-width: 1770px)':
-      grid-gap: 1.5vw 1vw
     #portrait
     '(min-width: 801px) and (max-width: 1440px)':
       grid-gap: 1% 1.5%
-      height: 100%
       grid-template-columns: 0 1fr 1fr 1fr 0
-      grid-template-rows: fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) 0
+      grid-template-rows: 0 fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) min-content 0
       grid-template-areas: |
+        ".  .          .           .         ."
         ".  header     home        security  ."
         ".  cameras    media       climate   ."
         ".  mainrooms  devices     other     ."
@@ -37,9 +34,8 @@ layout:
     # phone
     '(max-width: 800px)':
       # grid-gap: calc(var(--custom-layout-card-padding) * 1.7)
-      grid-gap: 8px
-      margin: 0
-      grid-template-columns: 0px 1fr 1fr 0px
+      grid-gap: 1rem 1rem
+      grid-template-columns: 0 1fr 1fr 0
       grid-template-rows: 0 min-content fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) min-content 1rem
       grid-template-areas: |
         ". .           .         ."
