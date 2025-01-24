@@ -89,9 +89,11 @@ template:
       - name: Hassio addons use
         unique_id: 'c9d0b358-302b-4845-b3b7-606a54c0e1bd'
         state: >-
+          {% if has_value('sensor.ha_system_cpu_usage') and has_value('sensor.ha_system_memory_usage') %}
           {%- set memory = states.sensor.ha_system_memory_usage.state | float -%}
           {%- set cpu = states.sensor.ha_system_cpu_usage.state | float -%}
             MEMORY: {{memory}}% | CPU: {{cpu}}%
+          {%- endif %}
         icon: mdi:home-assistant
         attributes:
           addons: >
