@@ -1,0 +1,52 @@
+## Lunar Phase Integration
+- type: custom:layout-card
+  layout_type: custom:grid-layout
+  layout: !include ../../shared/snippets/layout-git-heading-content.yaml
+  view_layout:
+    grid-area: lunar-integration
+  cards:
+    - type: custom:streamline-card
+      template: github_heading_card
+      variables:
+        heading_title: 🌘 Lunar Phase Integration
+        total_entity: sensor.lunar_phase_integration_total
+        latest_entity: sensor.lunar_phase_integration_latest
+        stars_entity: sensor.lunar_phase_stargazers
+        repo_link: https://github.com/ngocjohn/lunar-phase
+    - type: custom:mod-card
+      card_mod:
+        style:
+          .: |
+            ha-card {
+              background: linear-gradient(to top, rgba(236, 79, 241, 0.1) 0%, transparent 100%);
+            }
+          swipe-card: !include ../../shared/snippets/style-git-swipe-card.yaml
+      card:
+        type: custom:swipe-card
+        parameters: !include ../../shared/snippets/swiper-git-parameters.yaml
+
+        cards:
+          - type: custom:streamline-card
+            template: github_new_graph
+            variables:
+              history_name: 'lunar_integration'
+              total_entity: sensor.lunar_phase_integration_total
+              latest_entity: sensor.lunar_phase_integration_latest
+              bar_color: 'rgba(236, 79, 241, 0.7)'
+              fill_color: 'rgba(236, 79, 241, 0.2)'
+          - type: custom:streamline-card
+            template: stargazer_list
+            variables:
+              - star_entity: sensor.lunar_phase_stargazers
+          - type: custom:streamline-card
+            template: github_logbook_card
+            variables:
+              latest_entity: sensor.lunar_phase_integration_latest
+              bar_color: 'rgba(236, 79, 241, 0.7)'
+              fill_color: 'rgba(236, 79, 241, 0.2)'
+          - type: custom:streamline-card
+            template: github_diagnostic_card
+            variables:
+              device_id: ngocjohn/lunar-phase
+              bar_color: 'rgba(236, 79, 241, 0.7)'
+              fill_color: 'rgba(236, 79, 241, 0.2)'

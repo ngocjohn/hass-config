@@ -1,0 +1,53 @@
+## Lunar Phase Card
+- type: custom:layout-card
+  layout_type: custom:grid-layout
+  layout: !include ../../shared/snippets/layout-git-heading-content.yaml
+  view_layout:
+    grid-area: lunar-card
+  cards:
+    - type: custom:streamline-card
+      template: github_heading_card
+      variables:
+        heading_title: 🌘 Lunar Phase Card
+        total_entity: sensor.lunar_phase_card_total
+        latest_entity: sensor.lunar_phase_card_latest
+        stars_entity: sensor.lunar_phase_card_stargazers
+        repo_link: https://github.com/ngocjohn/lunar-phase-card
+    - type: custom:mod-card
+      card_mod:
+        style:
+          .: |
+            ha-card {
+              background: linear-gradient(to top, rgba(0, 255, 208, 0.1) 0%, transparent 100%);
+            }
+          swipe-card: !include ../../shared/snippets/style-git-swipe-card.yaml
+      card:
+        type: custom:swipe-card
+        parameters: !include ../../shared/snippets/swiper-git-parameters.yaml
+
+        cards:
+          - type: custom:streamline-card
+            template: github_new_graph
+            variables:
+              - history_name: 'lunar_card'
+              - total_entity: sensor.lunar_phase_card_total
+              - latest_entity: sensor.lunar_phase_card_latest
+              - bar_color: 'rgba(0, 255, 208, 0.7)'
+              - fill_color: 'rgba(0, 255, 208, 0.2)'
+          - type: custom:streamline-card
+            template: stargazer_list
+            variables:
+              - star_entity: sensor.lunar_phase_card_stargazers
+          - type: custom:streamline-card
+            template: github_logbook_card
+            variables:
+              latest_entity: sensor.lunar_phase_card_latest
+              bar_color: rgb(196, 74, 34)
+              fill_color: 'rgba(196, 74, 34, 0.2)'
+
+          - type: custom:streamline-card
+            template: github_diagnostic_card
+            variables:
+              device_id: ngocjohn/lunar-phase-card
+              bar_color: rgb(196, 74, 34)
+              fill_color: 'rgba(196, 74, 34, 0.2)'

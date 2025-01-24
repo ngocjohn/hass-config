@@ -1,0 +1,52 @@
+## Vehicle info card
+- type: custom:layout-card
+  layout_type: custom:grid-layout
+  layout: !include ../../shared/snippets/layout-git-heading-content.yaml
+  view_layout:
+    grid-area: vehicle-info
+  cards:
+    - type: custom:streamline-card
+      template: github_heading_card
+      variables:
+        heading_title: 🚙 Vehicle info card
+        total_entity: sensor.vehicle_info_card
+        latest_entity: sensor.vehicle_latest_release_download
+        stars_entity: sensor.vehicle_info_card_stargazers
+        repo_link: https://github.com/ngocjohn/vehicle-info-card
+    - type: custom:mod-card
+      card_mod:
+        style:
+          .: |
+            ha-card {
+              background: linear-gradient(to top, rgba(196, 74, 34, 0.1) 0%, transparent 100%);
+            }
+          swipe-card: !include ../../shared/snippets/style-git-swipe-card.yaml
+      card:
+        type: custom:swipe-card
+        parameters: !include ../../shared/snippets/swiper-git-parameters.yaml
+
+        cards:
+          - type: custom:streamline-card
+            template: github_new_graph
+            variables:
+              - history_name: 'vehicle_info'
+              - total_entity: sensor.vehicle_info_card
+              - latest_entity: sensor.vehicle_latest_release_download
+              - bar_color: rgb(196, 74, 34)
+              - fill_color: 'rgba(196, 74, 34, 0.2)'
+          - type: custom:streamline-card
+            template: stargazer_list
+            variables:
+              - star_entity: sensor.vehicle_info_card_stargazers
+          - type: custom:streamline-card
+            template: github_logbook_card
+            variables:
+              latest_entity: sensor.vehicle_latest_release_download
+              bar_color: 'rgba(0, 255, 208, 0.7)'
+              fill_color: 'rgba(0, 255, 208, 0.2)'
+          - type: custom:streamline-card
+            template: github_diagnostic_card
+            variables:
+              device_id: ngocjohn/vehicle-info-card
+              bar_color: 'rgba(0, 255, 208, 0.7)'
+              fill_color: 'rgba(0, 255, 208, 0.2)'

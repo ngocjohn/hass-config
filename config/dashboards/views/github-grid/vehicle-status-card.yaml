@@ -1,0 +1,44 @@
+- type: custom:layout-card
+  layout_type: custom:grid-layout
+  layout: !include ../../shared/snippets/layout-git-heading-content.yaml
+  view_layout:
+    grid-area: vehicle-status
+  cards:
+    - type: custom:streamline-card
+      template: github_heading_card
+      variables:
+        - heading_title: 🚘 Vehicle status card
+        - total_entity: sensor.vehicle_status_card_total_2
+        - latest_entity: sensor.vehicle_status_latest
+        - stars_entity: sensor.vehicle_status_card_stargazers
+        - repo_link: https://github.com/ngocjohn/vehicle-status-card
+    - type: custom:mod-card
+      card_mod:
+        style:
+          .: |
+            ha-card {
+              background: linear-gradient(to top, rgb(from rgba(62, 149, 205, 1) r g b / 0.1) 0%, transparent 100%);
+            }
+          swipe-card: !include ../../shared/snippets/style-git-swipe-card.yaml
+      card:
+        type: custom:swipe-card
+        parameters: !include ../../shared/snippets/swiper-git-parameters.yaml
+        cards:
+          - type: custom:streamline-card
+            template: github_new_graph
+            variables:
+              - history_name: 'vehicle_status'
+              - total_entity: sensor.vehicle_status_card_total_2
+              - latest_entity: sensor.vehicle_status_latest
+          - type: custom:streamline-card
+            template: stargazer_list
+            variables:
+              - star_entity: sensor.vehicle_status_card_stargazers
+          - type: custom:streamline-card
+            template: github_logbook_card
+            variables:
+              - latest_entity: sensor.vehicle_status_latest
+          - type: custom:streamline-card
+            template: github_diagnostic_card
+            variables:
+              - device_id: ngocjohn/vehicle-status-card
