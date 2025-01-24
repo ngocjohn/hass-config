@@ -2,9 +2,9 @@ config/.gitignore
 config/.vscode
 config/addon_configs_symlink
 config/addons_config_backup/
-config/automations.yaml
 config/custom_templates
 config/gitpush.sh
+config/go2rtc.yaml
 config/hassio.code-profile
 config/index.html
 config/node-red-backup/
@@ -12,10 +12,7 @@ config/README.md
 config/scripts.yaml
 config/templates
 config/utils/
-config/README.md
-config/go2rtc.yaml
-config/scripts.yaml
-config/automations.yaml
+
 !config/www/hafloor
 
 
@@ -26,7 +23,5 @@ config/automations.yaml
 config/www/*
 private_repo.sh
 secrets.yaml
-config/.gitignore
-config/automations.yaml
 commit-updates.py
 logs/
