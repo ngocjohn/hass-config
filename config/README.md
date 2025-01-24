@@ -45,13 +45,13 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>35,894 </td>
+              <td>35,928 </td>
               <td>34</td>
-              <td>154</td>
+              <td>156</td>
               <td>63</td>
               <td>54</td>
               <td>32</td>
-              <td>1065</td>
+              <td>1071</td>
               <td>201</td>
               <td>38</td>
           </tr>
@@ -103,6 +103,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Govee](https://github.com/LaggAt/hacs-govee)
 - [HACS](https://github.com/hacs/integration)
 - [Hass Favicon](https://github.com/thomasloven/hass-favicon)
+- [Ingress](https://github.com/lovelylain/hass_ingress)
 - [Lunar Phase](https://github.com/ngocjohn/lunar-phase)
 - [Mercedesme 2020](https://github.com/ReneNulschDE/mbapi2020)
 - [Node Red Companion](https://github.com/zachowj/hass-node-red)

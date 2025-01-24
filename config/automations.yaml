@@ -1,0 +1,1292 @@
+- id: '1668864895588'
+  alias: Main Door Open
+  description: ''
+  trigger:
+  - platform: event
+    event_type: ios.action_fired
+    event_data:
+      actionName: Main Door Open
+  condition: []
+  action:
+  - service: lock.open
+    data: {}
+    target:
+      entity_id: lock.nuki_vchod_lock
+  mode: single
+- id: '1677334681247'
+  alias: Dock lock state
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.nuki_neklanka_byt_locked
+    from:
+    - 'on'
+    - 'off'
+    to:
+    - 'on'
+    - 'off'
+  action:
+  - service: input_boolean.toggle
+    data: {}
+    target:
+      entity_id: input_boolean.door_lock
+  mode: parallel
+- id: '1681806258876'
+  alias: z left
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.gle
+    attribute: Street
+  - platform: state
+    entity_id:
+    - input_boolean.z_occupacy
+    to: 'on'
+    id: home
+  - platform: geo_location
+    source: person.huong_giang
+    zone: zone.smichov
+    event: enter
+    id: smichov
+  - platform: state
+    entity_id:
+    - sensor.ngoc_keys_airtag
+    attribute: Street
+    id: ngockey
+    enabled: false
+  condition: []
+  action:
+  - if:
+    - condition: trigger
+      id:
+      - home
+      - smichov
+    then:
+    - service: notify.mobile_app_viet_ngoc
+      data:
+        title: Location
+        message: '{{ state_attr(''sensor.gle'', ''Formatted Address'') }}'
+        data:
+          push:
+            sound:
+              name: findmy.wav
+              critical: 1
+              volume: 1
+          action_data:
+            latitude: '{{ state_attr(''device_tracker.findmy_d098350b38e241d3972ad394a27f38b6'',
+              ''latitude'') }}'
+            longitude: '{{ state_attr(''device_tracker.findmy_d098350b38e241d3972ad394a27f38b6'',
+              ''longitude'') }}'
+            latitude_delta: '0'
+            longitude_delta: '0.01'
+    else:
+    - service: notify.ngoc_devices
+      data:
+        title: Location
+        message: '{{ state_attr(''sensor.gle'', ''Formatted Address'') }}'
+        data:
+          action_data:
+            latitude: '{{ state_attr(''device_tracker.findmy_d098350b38e241d3972ad394a27f38b6'',
+              ''latitude'') }}'
+            longitude: '{{ state_attr(''device_tracker.findmy_d098350b38e241d3972ad394a27f38b6'',
+              ''longitude'') }}'
+            latitude_delta: '0'
+            longitude_delta: '0.01'
+    enabled: true
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - ngockey
+      sequence:
+      - service: notify.ngoc_devices
+        data:
+          title: Ngoc Key
+          message: '{{ state_attr(''sensor.ngoc_keys_airtag'', ''Formatted Address'')
+            }}'
+          data:
+            action_data:
+              latitude: '{{ state_attr(''device_tracker.findmy_f28d260523a64f37b0595dfcd64d3b73'',
+                ''latitude'') }}'
+              longitude: '{{ state_attr(''device_tracker.findmy_f28d260523a64f37b0595dfcd64d3b73'',
+                ''longitude'') }}'
+              latitude_delta: '0'
+              longitude_delta: '0.01'
+  mode: single
+- id: '1681905795903'
+  alias: camera snapshot
+  description: ''
+  triggers:
+  - at: 05:00:00
+    id: delete
+    trigger: time
+  - hours: /1
+    trigger: time_pattern
+  conditions:
+  - condition: time
+    after: 05:00:00
+    before: 00:00:00
+  actions:
+  - if:
+    - condition: trigger
+      id: delete
+    then:
+    - data:
+        folder: /config/www/tmp/snapshots/
+        time: 0
+        only_extensions:
+        - .png
+        - .jpg
+      action: delete.files_in_folder
+    - data:
+        folder: /config/www/tmp/kids/
+        time: 0
+        only_extensions:
+        - .png
+        - .jpg
+      action: delete.files_in_folder
+  - parallel:
+    - action: button.press
+      metadata: {}
+      data: {}
+      target:
+        entity_id: button.kids_room_start_rtsp_stream
+    - data: {}
+      target:
+        entity_id:
+        - camera.doorway
+        - camera.terasa
+        - camera.zahrada
+      action: camera.turn_on
+    - condition: state
+      entity_id: camera.doorway
+      state: streaming
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 3
+    - condition: state
+      entity_id: camera.terasa
+      state: streaming
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 3
+    - condition: state
+      entity_id: camera.kids_room
+      state: streaming
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 3
+    - condition: state
+      entity_id: camera.zahrada
+      state: streaming
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 3
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
+  - parallel:
+    - data:
+        filename: /config/www/tmp/snapshots/camera.doorway{{ now().strftime("%Y%m%d-%H%M%S")
+          }}.jpg
+      target:
+        entity_id: camera.doorway
+      action: camera.snapshot
+    - data:
+        filename: /config/www/tmp/snapshots/camera.kids_room{{ now().strftime("%Y%m%d-%H%M%S")
+          }}.jpg
+      target:
+        entity_id: camera.kids_room
+      action: camera.snapshot
+    - data:
+        filename: /config/www/tmp/snapshots/camera.terasa{{ now().strftime("%Y%m%d-%H%M%S")
+          }}.jpg
+      target:
+        entity_id: camera.terasa
+      action: camera.snapshot
+    - data:
+        filename: /config/www/tmp/snapshots/camera.zahrada{{ now().strftime("%Y%m%d-%H%M%S")
+          }}.jpg
+      target:
+        entity_id: camera.zahrada
+      action: camera.snapshot
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
+  - parallel:
+    - data:
+        filename: /config/www/tmp/camera.doorway-latest.jpg
+      target:
+        entity_id: camera.doorway
+      action: camera.snapshot
+    - data:
+        filename: /config/www/tmp/kids/camera.kids_room-latest{{now().strftime("%Y%m%d%H%M%S")}}.jpg
+      target:
+        entity_id: camera.kids_room
+      action: camera.snapshot
+    - action: input_text.set_value
+      metadata: {}
+      data:
+        value: kids_room-latest{{now().strftime("%Y%m%d%H%M%S")}}.jpg
+      target:
+        entity_id: input_text.kids_camera_snapshot
+    - data:
+        filename: /config/www/tmp/camera.terasa-latest.jpg
+      target:
+        entity_id: camera.terasa
+      action: camera.snapshot
+    - data:
+        filename: /config/www/tmp/camera.zahrada-latest.jpg
+      target:
+        entity_id: camera.zahrada
+      action: camera.snapshot
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - data: {}
+    target:
+      entity_id:
+      - camera.doorway
+      - camera.terasa
+      - camera.zahrada
+    action: camera.turn_off
+  - action: button.press
+    metadata: {}
+    data: {}
+    target:
+      entity_id: button.kids_room_stop_rtsp_stream
+  mode: single
+- id: '1683903230879'
+  alias: Bedroom Cover Night
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: 00:30:00
+  condition: []
+  action:
+  - service: cover.close_cover
+    data: {}
+    target:
+      area_id: bedroom
+  mode: single
+- id: '1684613417245'
+  alias: Cover Night Mode
+  description: ''
+  trigger: []
+  condition: []
+  action:
+  - service: cover.close_cover
+    data: {}
+    target:
+      entity_id:
+      - cover.bedroom_shutters
+      - cover.living_room_cover
+  mode: single
+- id: '1688809817206'
+  alias: Guest Mode notify
+  description: ''
+  trigger:
+  - platform: zone
+    entity_id: person.viet_ngoc
+    zone: zone.home
+    event: leave
+  condition:
+  - condition: state
+    entity_id: input_boolean.guest_mode
+    state: 'on'
+  action:
+  - alias: Set up variables for the actions
+    variables:
+      action_yes: '{{ ''YES_'' ~ context.id }}'
+      action_no: '{{ ''NO_'' ~ context.id }}'
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - alias: Ask to stop or no guest mode
+    service: notify.mobile_app_viet_ngoc
+    data:
+      message: Do you want to stop this?
+      data:
+        actions:
+        - action: '{{ action_yes }}'
+          title: 'YES'
+        - action: '{{ action_no }}'
+          title: 'NO'
+      title: Guest mode
+  - alias: Wait for a response
+    wait_for_trigger:
+    - platform: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: '{{ action_yes }}'
+    - platform: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: '{{ action_no }}'
+  - alias: Perform the action
+    choose:
+    - conditions: '{{ wait.trigger.event.data.action == action_yes }}'
+      sequence:
+      - service: input_boolean.turn_off
+        data: {}
+        target:
+          entity_id: input_boolean.guest_mode
+      - condition: state
+        entity_id: input_boolean.guest_mode
+        state: 'off'
+        for:
+          hours: 0
+          minutes: 0
+          seconds: 2
+      - service: input_boolean.turn_on
+        data: {}
+        target:
+          entity_id: input_boolean.leaving_home
+    - conditions: '{{ wait.trigger.event.data.action == action_no }}'
+      sequence:
+      - service: input_boolean.turn_on
+        data: {}
+        target:
+          entity_id: input_boolean.guest_mode
+        enabled: false
+      - stop: ''
+  mode: single
+- id: '1688940697804'
+  alias: Alarm
+  description: ''
+  triggers:
+  - entity_id:
+    - script.homepod_alarm
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+    enabled: true
+    to: 'on'
+    trigger: state
+  conditions: []
+  actions:
+  - alias: Set up variables for the actions
+    variables:
+      action_stop: '{{ ''STOP_'' ~ context.id }}'
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  - alias: Ask to close or open the blinds
+    data:
+      message: Do you want to stop this?
+      data:
+        push:
+          sound:
+            name: findmy.wav
+            critical: 1
+            volume: 1
+        actions:
+        - action: '{{ action_stop }}'
+          title: Stop alarm
+      title: Alarm Clock
+    action: notify.mobile_app_viet_ngoc
+  - alias: Wait for a response
+    wait_for_trigger:
+    - event_type: mobile_app_notification_action
+      event_data:
+        action: '{{ action_stop }}'
+      trigger: event
+  - alias: Perform the action
+    choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ wait.trigger.event.data.action == action_stop }}'
+      sequence:
+      - data: {}
+        action: media_player.media_pause
+        target:
+          entity_id: media_player.bedroom
+      - action: media_player.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: media_player.bedroom
+  mode: single
+- id: '1693488019712'
+  alias: Nuki Vchod Open
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_button.nuki_vchod
+  condition: []
+  action:
+  - service: lock.open
+    data: {}
+    target:
+      entity_id: lock.nuki_vchod_lock
+  mode: single
+- id: '1694516012171'
+  alias: Only update vaze information every 20 minutes when I'm home
+  description: ''
+  trigger:
+  - platform: time_pattern
+    minutes: /20
+    id: 20min
+  condition:
+  - condition: state
+    entity_id: device_tracker.viet_ngoc
+    state: not_home
+  action:
+  - service: homeassistant.update_entity
+    data: {}
+    target:
+      entity_id: sensor.waze_ngoc_home
+- id: '1694721012171'
+  alias: Spotify Vibrant Color
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.vibrant_color
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: light.office_led_light_strip
+      state: 'on'
+    - condition: or
+      conditions:
+      - condition: device
+        device_id: d8496daf7e926630a7431da013a83590
+        domain: media_player
+        entity_id: 952057f8ccc2766d1d825168186a225a
+        type: is_playing
+      - condition: state
+        entity_id: media_player.mass_universal_airplay
+        state: playing
+  action:
+  - service: light.turn_on
+    data:
+      transition: 5
+      rgb_color: '{{states(''sensor.vibrant_color'')}}'
+    target:
+      entity_id: light.office_led_light_strip
+  mode: single
+- id: '1695149693530'
+  alias: Notify HA started
+  description: ''
+  trigger:
+  - platform: homeassistant
+    event: start
+  condition: []
+  action:
+  - data:
+      message: Home assistant started
+      data:
+        tag: hastarted
+    action: notify.mobile_app_viet_ngoc
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 10
+      milliseconds: 0
+  - data:
+      message: clear_notification
+      data:
+        tag: hastarted
+    action: notify.mobile_app_viet_ngoc
+  - action: readme.generate
+    data: {}
+  mode: single
+- id: '1695935011647'
+  alias: dismiss_lovelace_updated
+  description: ''
+  trigger:
+  - platform: event
+    event_type: lovelace_updated
+  condition: []
+  action:
+  - service: homeassistant.update_entity
+    target:
+      entity_id: sensor.code_line_count
+    data: {}
+  - repeat:
+      count: 5
+      sequence:
+      - delay: 0.5
+      - service: browser_mod.notification
+        data:
+          duration: 1
+          message: ' '
+        target:
+          device_id:
+          - 4f43e0dc2e03b71c2e137f9696a04a2c
+      - service: browser_mod.notification
+        data:
+          duration: 1
+          message: ' '
+        target:
+          device_id: 0604abf0d6d8e6f72903f0cc77d83b3d
+  mode: restart
+- id: '1696553366478'
+  alias: 'Dishwasher Set Timer '
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.mycka_nadobi_operation_state
+    to: Run
+  condition:
+  - condition: or
+    conditions:
+    - condition: not
+      conditions:
+      - condition: state
+        entity_id: sensor.mycka_nadobi_remaining_program_time
+        state: unknown
+    - condition: not
+      conditions:
+      - condition: state
+        entity_id: sensor.mycka_nadobi_remaining_program_time
+        state: unavailable
+  action:
+  - service: timer.start
+    data:
+      duration: '{{ (as_timestamp(states.sensor.mycka_nadobi_remaining_program_time.state))
+        - (as_timestamp(now())) | round(0)}}'
+    target:
+      entity_id: timer.dishwasher_remaining
+  initial_state: true
+  mode: restart
+- id: 34ba1897-ec7a-4cb3-a12b-fb0a1e9e495e
+  alias: vacuum_start_cleaning
+  mode: queued
+  trigger:
+  - platform: state
+    entity_id: sensor.vacuum_status
+    from: '9'
+    to: '4'
+  - platform: state
+    entity_id: sensor.vacuum_status
+    from: '6'
+    to: '4'
+  action:
+    service: script.vacuum_notify
+    data:
+      title: Little messy there
+      message: The vacuum cleaner started cleaning!
+- id: 2dedd749-b65a-49e0-8747-2dce6dd995a4
+  alias: vacuum_show_error
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.vacuum_fault
+    from: No Faults
+  condition:
+  - condition: template
+    value_template: '{% if is_state_attr(''vacuum.roidmi_eve'',''vacuum.fault'',0)
+      or is_state_attr(''vacuum.roidmi_eve'',''vacuum.fault'',None) %}False{% else
+      %}True{% endif %}'
+    enabled: true
+  action:
+  - service: script.vacuum_notify
+    data:
+      title: Something is wrong with robot
+      message: '{{states(''sensor.vacuum_fault'')}}.'
+  mode: queued
+- id: '1700514428812'
+  alias: Notify HA System usage
+  description: Memory or CPU leak
+  triggers:
+  - entity_id:
+    - sensor.ha_system_memory_usage
+    - sensor.ha_system_cpu_usage
+    for:
+      hours: 0
+      minutes: 7
+      seconds: 0
+    above: 70
+    trigger: numeric_state
+  conditions: []
+  actions:
+  - parallel:
+    - data:
+        message: Memory {{ states.sensor.ha_system_memory_usage.state }}% - CPU {{
+          states.sensor.ha_system_cpu_usage.state }}%
+        title: System
+      action: notify.notify
+  mode: single
+- id: '1701118898607'
+  alias: Notify_Github
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - update.home_assistant_core_update
+    from: 'on'
+    to: 'off'
+    id: ha_version
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - ha_version
+        enabled: true
+      sequence:
+      - service: readme.generate
+        data: {}
+  initial_state: true
+  mode: single
+- id: '1701556784590'
+  alias: Update YouTube Sensor
+  description: ''
+  triggers:
+  - entity_id:
+    - media_player.living_room_tv
+    - media_player.bedroom_tv
+    attribute: media_title
+    trigger: state
+    id: title_change
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 2
+  - entity_id:
+    - media_player.living_room_tv
+    - media_player.bedroom_tv
+    trigger: state
+    id: reset_title
+    attribute: app_id
+    from: com.google.ios.youtube
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: and
+        conditions:
+        - condition: trigger
+          id:
+          - title_change
+        - condition: or
+          conditions:
+          - condition: template
+            value_template: "{% if state_attr('media_player.living_room_tv', 'media_title')
+              != None %} \n{{ is_state_attr('media_player.living_room_tv', 'app_id',
+              'com.google.ios.youtube') and state_attr('media_player.living_room_tv',
+              'media_title') != state_attr('sensor.youtube_thumbnail', 'title') }}\n{%
+              endif%}"
+          - condition: template
+            value_template: '{{ is_state_attr(''media_player.bedroom_tv'', ''source'',
+              ''YouTube'') and state_attr(''media_player.bedroom_tv'', ''media_title'')
+              != state_attr(''sensor.youtube_thumbnail'', ''title'') }}'
+      sequence:
+      - event: youtube_update
+        event_data: {}
+    - conditions:
+      - condition: trigger
+        id:
+        - reset_title
+      sequence:
+      - event: youtube_reset
+        event_data: {}
+  max_exceeded: silent
+  mode: single
+- id: '1702444277863'
+  alias: 'Event_Unifi Archive Alert '
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_button.unifi_archive_alerts
+  condition: []
+  action:
+  - event: archive_alerts
+    event_data: {}
+  mode: single
+- id: '1706827614119'
+  alias: kodi_lib_scan
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_button.kodi_lib_scan
+    to:
+  condition: []
+  action:
+  - event: kodi_library_scan
+    event_data: {}
+  - event: fetch_upcoming_movies
+    event_data: {}
+  - event: kodi_video_scan
+    event_data: {}
+  mode: single
+- id: '1706968812356'
+  alias: Roidmi Camera Update
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - vacuum.roidmi_eve
+  condition: []
+  action:
+  - if:
+    - condition: template
+      value_template: '{{ states.vacuum.roidmi_eve.state in ["unavailable", "unknown",
+        "docked"] }} '
+    then:
+    - service: camera.turn_off
+      target:
+        entity_id:
+        - camera.roidmi_eve
+      data: {}
+    else:
+    - service: camera.turn_on
+      target:
+        entity_id:
+        - camera.roidmi_eve
+      data: {}
+  mode: single
+- id: '1715819993809'
+  alias: Kodi Update Picture Sensor
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - media_player.kodi_atv
+    attribute: media_title
+  condition: []
+  action:
+  - service: kodi.call_method
+    target:
+      entity_id: media_player.kodi_atv
+    data:
+      method: Player.GetItem
+      playerid: 0
+      properties:
+      - title
+      - art
+  mode: single
+- id: '1716484682108'
+  alias: Vacum Set Property
+  description: Set Roidmi Vacuum sensors value
+  trigger:
+  - platform: state
+    entity_id: vacuum.roidmi_eve
+  - platform: state
+    entity_id: input_boolean.vacuum_led_switch
+    id: led_switch
+  - platform: state
+    entity_id: input_boolean.vacuum_lidar_collision
+    id: lidar_collision
+  - platform: state
+    entity_id: input_boolean.vacuum_auto_boost
+    id: auto_boost
+  - platform: state
+    entity_id: input_number.vacuum_volume
+    id: volume
+  - platform: state
+    entity_id: input_boolean.vacuum_double_clean
+    id: double_clean
+  - platform: state
+    entity_id: input_boolean.vacuum_edge_sweep
+    id: edge_sweep
+  - platform: state
+    entity_id: input_select.vacuum_water_level
+    id: water_level
+  - platform: state
+    entity_id: input_boolean.vacuum_station_key
+    id: station_key
+  - platform: state
+    entity_id: input_boolean.vacuum_station_led
+    id: station_led
+  - platform: state
+    entity_id: input_boolean.vacuum_mute
+    id: mute
+  - platform: state
+    entity_id: input_select.vacuum_work_station_freq
+    id: work_station_freq
+  - platform: state
+    entity_id: input_select.vacuum_mode
+    id: vacuum_mode
+  - platform: state
+    entity_id: input_select.vacuum_sweep_type
+    id: vacuum_sweep_type
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: led_switch
+      sequence:
+      - service: xiaomi_miot.set_miot_property
+        data:
+          entity_id: vacuum.roidmi_eve
+          did: 558429891
+          siid: 8
+          piid: 22
+          value: '{{ 0 if is_state(''input_boolean.vacuum_led_switch'', ''off'') else
+            1 }}'
+    - conditions:
+      - condition: trigger
+        id: lidar_collision
+      sequence:
+      - service: xiaomi_miot.set_miot_property
+        data:
+          entity_id: vacuum.roidmi_eve
+          did: 558429891
+          siid: 8
+          piid: 23
+          value: '{{ 0 if is_state(''input_boolean.vacuum_lidar_collision'', ''off'')
+            else 1 }}'
+    - conditions:
+      - condition: trigger
+        id: auto_boost
+      sequence:
+      - service: xiaomi_miot.set_miot_property
+        data:
+          entity_id: vacuum.roidmi_eve
+          did: 558429891
+          siid: 8
+          piid: 9
+          value: '{{ 0 if is_state(''input_boolean.vacuum_auto_boost'', ''off'') else
+            1 }}'
+    - conditions:
+      - condition: trigger
+        id: volume
+      sequence:
+      - service: xiaomi_miot.set_miot_property
+        data:
+          entity_id: vacuum.roidmi_eve
+          did: 558429891
+          siid: 9
+          piid: 1
+          value: '{{states(''input_number.vacuum_volume'')|round(0)}}'
+    - conditions:
+      - condition: trigger
+        id: double_clean
+      sequence:
+      - service: xiaomi_miot.set_miot_property
+        data:
+          entity_id: vacuum.roidmi_eve
+          did: 558429891
+          siid: 8
+          piid: 20
+          value: '{{ 0 if is_state(''input_boolean.vacuum_double_clean'', ''off'')
+            else 1 }}'
+    - conditions:
+      - condition: trigger
+        id: edge_sweep
+      sequence:
+      - service: xiaomi_miot.set_miot_property
+        data:
+          entity_id: vacuum.roidmi_eve
+          did: 558429891
+          siid: 13
+          piid: 8
+          value: '{{ 0 if is_state(''input_boolean.vacuum_edge_sweep'', ''off'') else
+            1 }}'
+    - conditions:
+      - condition: trigger
+        id: water_level
+      sequence:
+      - service: xiaomi_miot.set_miot_property
+        data:
+          entity_id: vacuum.roidmi_eve
+          did: 558429891
+          siid: 8
+          piid: 11
+          value: "{%- if is_state(\"input_select.vacuum_water_level\", \"No water\")
+            -%}\n  0\n{%- elif is_state(\"input_select.vacuum_water_level\", \"Small\")
+            -%}\n  1\n{%- elif is_state(\"input_select.vacuum_water_level\", \"Middle\")
+            -%}\n  2\n{%- elif is_state(\"input_select.vacuum_water_level\", \"MAX\")
+            -%}\n  3\n{% else %} {% endif %}\n"
+    - conditions:
+      - condition: trigger
+        id: station_key
+      sequence:
+      - service: xiaomi_miot.set_miot_property
+        data:
+          entity_id: vacuum.roidmi_eve
+          did: 558429891
+          siid: 8
+          piid: 24
+          value: '{{ 0 if is_state(''input_boolean.vacuum_station_key'', ''off'')
+            else 1 }}'
+    - conditions:
+      - condition: trigger
+        id: station_led
+      sequence:
+      - service: xiaomi_miot.set_miot_property
+        data:
+          entity_id: vacuum.roidmi_eve
+          did: 558429891
+          siid: 8
+          piid: 25
+          value: '{{ 0 if is_state(''input_boolean.vacuum_station_led'', ''off'')
+            else 1 }}'
+    - conditions:
+      - condition: trigger
+        id: mute
+      sequence:
+      - service: xiaomi_miot.set_miot_property
+        data:
+          entity_id: vacuum.roidmi_eve
+          did: 558429891
+          siid: 9
+          piid: 2
+          value: '{{ 0 if is_state(''input_boolean.vacuum_mute'', ''off'') else 1
+            }}'
+    - conditions:
+      - condition: trigger
+        id: work_station_freq
+      sequence:
+      - service: xiaomi_miot.set_miot_property
+        data:
+          entity_id: vacuum.roidmi_eve
+          did: 558429891
+          siid: 8
+          piid: 2
+          value: "{%- if is_state(\"input_select.vacuum_work_station_freq\", \"Not
+            to throw away\") -%}\n  0\n{%- elif is_state(\"input_select.vacuum_work_station_freq\",
+            \"Every time\") -%}\n  1\n{%- elif is_state(\"input_select.vacuum_work_station_freq\",
+            \"Every second\") -%}\n  2\n{%- elif is_state(\"input_select.vacuum_work_station_freq\",
+            \"Every third\") -%}\n  3\n{% else %} {% endif %}\n"
+    - conditions:
+      - condition: trigger
+        id: vacuum_mode
+      sequence:
+      - service: xiaomi_miot.set_miot_property
+        data:
+          entity_id: vacuum.roidmi_eve
+          did: 558429891
+          siid: 2
+          piid: 4
+          value: "{%- if is_state(\"input_select.vacuum_mode\", \"Sweep\") -%}\n  0\n{%-
+            elif is_state(\"input_select.vacuum_mode\", \"Silent\") -%}\n  1\n{%-
+            elif is_state(\"input_select.vacuum_mode\", \"Basic\") -%}\n  2\n{%- elif
+            is_state(\"input_select.vacuum_mode\", \"Strong\") -%}\n  3\n{%- elif
+            is_state(\"input_select.vacuum_mode\", \"Full Speed\") -%}\n  4\n{% else
+            %} {% endif %}\n"
+    - conditions:
+      - condition: trigger
+        id: vacuum_sweep_type
+      sequence:
+      - service: xiaomi_miot.set_miot_property
+        data:
+          entity_id: vacuum.roidmi_eve
+          did: 558429891
+          siid: 2
+          piid: 8
+          value: "{%- if is_state(\"input_select.vacuum_sweep_type\", \"Sweep\") -%}\n
+            \ 0\n{%- elif is_state(\"input_select.vacuum_sweep_type\", \"Mop\") -%}\n
+            \ 1\n{%- elif is_state(\"input_select.vacuum_sweep_type\", \"Mop And Sweep\")
+            -%}\n  2\n{% else %} {% endif %}\n"
+  mode: single
+- id: '1716484803294'
+  alias: Vacuum Get Property
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: vacuum.roidmi_eve
+  condition: []
+  action:
+  - service: "{% if is_state_attr('vacuum.roidmi_eve', 'custom.led_switch', 1) %}\n
+      \ input_boolean.turn_on\n{% else %}\n  input_boolean.turn_off\n{% endif %}\n"
+    data:
+      entity_id: input_boolean.vacuum_led_switch
+  - service: "{% if is_state_attr('vacuum.roidmi_eve', 'custom.lidar_collision', 1)
+      %}\n  input_boolean.turn_on\n{% else %}\n  input_boolean.turn_off\n{% endif
+      %}\n"
+    data:
+      entity_id: input_boolean.vacuum_lidar_collision
+  - service: "{% if is_state_attr('vacuum.roidmi_eve', 'custom.auto_boost', 1) %}\n
+      \ input_boolean.turn_on\n{% else %}\n  input_boolean.turn_off\n{% endif %}\n"
+    data:
+      entity_id: input_boolean.vacuum_auto_boost
+  - service: input_number.set_value
+    entity_id: input_number.vacuum_volume
+    data_template:
+      value: '{{ state_attr("vacuum.roidmi_eve","speaker.volume") }}'
+  - service: "{% if is_state_attr('vacuum.roidmi_eve', 'custom.double_clean', 1) %}\n
+      \ input_boolean.turn_on\n{% else %}\n  input_boolean.turn_off\n{% endif %}\n"
+    data:
+      entity_id: input_boolean.vacuum_double_clean
+  - service: "{% if is_state_attr('vacuum.roidmi_eve', 'map.path_type', 1) %}\n  input_boolean.turn_on\n{%
+      else %}\n  input_boolean.turn_off\n{% endif %}\n"
+    data:
+      entity_id: input_boolean.vacuum_edge_sweep
+  - service: input_select.select_option
+    entity_id: input_select.vacuum_water_level
+    data_template:
+      option: "{%- if is_state_attr('vacuum.roidmi_eve','custom.water_level',0) -%}\n
+        \ No water\n{%- elif is_state_attr('vacuum.roidmi_eve','custom.water_level',1)
+        -%}\n  Small\n{%- elif is_state_attr('vacuum.roidmi_eve','custom.water_level',2)
+        -%}\n  Middle\n{%- elif is_state_attr('vacuum.roidmi_eve','custom.water_level',3)
+        -%}\n  MAX\n{%- else -%} {%- endif -%}\n"
+  - service: "{% if is_state_attr('vacuum.roidmi_eve', 'custom.station_key', 1) %}\n
+      \ input_boolean.turn_on\n{% else %}\n  input_boolean.turn_off\n{% endif %}\n"
+    data:
+      entity_id: input_boolean.vacuum_station_key
+  - service: "{% if is_state_attr('vacuum.roidmi_eve', 'custom.station_led', 1) %}\n
+      \ input_boolean.turn_on\n{% else %}\n  input_boolean.turn_off\n{% endif %}\n"
+    data:
+      entity_id: input_boolean.vacuum_station_led
+  - service: "{% if is_state_attr('vacuum.roidmi_eve', 'speaker.mute', 1) %}\n  input_boolean.turn_on\n{%
+      else %}\n  input_boolean.turn_off\n{% endif %}\n"
+    data:
+      entity_id: input_boolean.vacuum_mute
+  - service: input_select.select_option
+    entity_id: input_select.vacuum_work_station_freq
+    data_template:
+      option: "{%- if is_state_attr('vacuum.roidmi_eve','custom.work_station_freq',0)
+        -%}\n  Not to throw away\n{%- elif is_state_attr('vacuum.roidmi_eve','custom.work_station_freq',1)
+        -%}\n  Every time\n{%- elif is_state_attr('vacuum.roidmi_eve','custom.work_station_freq',2)
+        -%}\n  Every second\n{%- elif is_state_attr('vacuum.roidmi_eve','custom.work_station_freq',3)
+        -%}\n  Every third\n{%- else -%} {%- endif -%}\n"
+  - service: input_select.select_option
+    entity_id: input_select.vacuum_mode
+    data_template:
+      option: "{%- if is_state_attr('vacuum.roidmi_eve','vacuum.mode',0) -%}\n  Sweep\n{%-
+        elif is_state_attr('vacuum.roidmi_eve','vacuum.mode',1) -%}\n  Silent\n{%-
+        elif is_state_attr('vacuum.roidmi_eve','vacuum.mode',2) -%}\n  Basic\n{%-
+        elif is_state_attr('vacuum.roidmi_eve','vacuum.mode',3) -%}\n  Strong\n{%-
+        elif is_state_attr('vacuum.roidmi_eve','vacuum.mode',4) -%}\n  Full Speed\n{%-
+        else -%} {%- endif -%}\n"
+  - service: input_select.select_option
+    entity_id: input_select.vacuum_sweep_type
+    data_template:
+      option: "{%- if is_state_attr('vacuum.roidmi_eve','vacuum.sweep_type',0) -%}\n
+        \ Sweep\n{%- elif is_state_attr('vacuum.roidmi_eve','vacuum.sweep_type',1)
+        -%}\n  Mop\n{%- elif is_state_attr('vacuum.roidmi_eve','vacuum.sweep_type',2)
+        -%}\n  Mop And Sweep\n{%- else -%} {%- endif -%}\n"
+  mode: single
+- id: '1719003861113'
+  alias: HA updated
+  description: 'Ha updated generate readme '
+  trigger:
+  - platform: state
+    entity_id:
+    - update.home_assistant_core_update
+    from: 'on'
+    to: 'off'
+  - platform: state
+    entity_id:
+    - sensor.current_version
+    from:
+  condition: []
+  action:
+  - service: readme.generate
+    metadata: {}
+    data: {}
+  mode: single
+- id: '1719583633037'
+  alias: Vanny skolka
+  description: ''
+  trigger:
+  - platform: template
+    value_template: '{% set lag_in_minute = 10 %} {% set travel_time_in_minute = states("sensor.waze_ngoc_jahoda")|int
+      %} {% set target_time = now().replace(hour=16).replace(minute=45).replace(second=0)
+      %} {{ as_timestamp(target_time) - (travel_time_in_minute+lag_in_minute)*60 <=
+      as_timestamp(now())}}'
+  condition:
+  - condition: not
+    conditions:
+    - condition: zone
+      entity_id: device_tracker.viet_ngoc
+      zone: zone.smichov
+  action:
+  - service: notify.mobile_app_viet_ngoc
+    data:
+      message: '{{ states(''sensor.waze_ngoc_jahoda'')}}min {{ state_attr(''sensor.waze_ngoc_jahoda'',''route'')}}'
+      title: Vanesska Jesle
+      data:
+        shortcut:
+          name: Jahoda Direction
+          ignore_result: ignore
+        push:
+          sound:
+            name: findmy.wav
+            critical: 1
+            volume: 1
+  mode: single
+- id: '1719583833596'
+  alias: Vanny skolka waze
+  description: ''
+  trigger:
+  - platform: time_pattern
+    minutes: /2
+    id: 20min
+  condition:
+  - condition: time
+    after: '14:00:00'
+    before: '17:00:00'
+    weekday:
+    - fri
+    - thu
+    - wed
+    - tue
+    - mon
+  action:
+  - service: homeassistant.update_entity
+    data: {}
+    target:
+      entity_id:
+      - sensor.waze_ngoc_jahoda
+      - sensor.waze_ngoc_smichov_oc
+  mode: single
+- id: '1727802647185'
+  alias: person_home_change
+  description: ''
+  trigger:
+    platform: state
+    entity_id:
+    - person.viet_ngoc
+    from:
+    - home
+    - not_home
+    to:
+    - home
+    - not_home
+  action:
+    data:
+      topic: 'homeassistant/persistence/{{ trigger.to_state.name | lower }}
+
+        '
+      payload: '{{ now() }}
+
+        '
+      retain: true
+    action: mqtt.publish
+  mode: parallel
+- id: '1733711039643'
+  alias: Disable Vacuum Camera
+  description: ''
+  use_blueprint:
+    path: PiotrMachowski/disable_vacuum_camera_update_when_docked.yaml
+    input:
+      vacuum: vacuum.roidmi_eve
+      camera: camera.roidmi_eve
+- id: '1737054227949'
+  alias: Kids room camera snapshot
+  description: ''
+  triggers:
+  - at: 05:00:00
+    id: delete
+    trigger: time
+  - hours: /1
+    trigger: time_pattern
+  conditions:
+  - condition: time
+    after: 05:00:00
+    before: 00:00:00
+  actions:
+  - if:
+    - condition: trigger
+      id: delete
+    then:
+    - data:
+        folder: /config/www/tmp/snapshots/
+        time: 0
+        only_extensions:
+        - .png
+        - .jpg
+      action: delete.files_in_folder
+    - data:
+        folder: /config/www/tmp/kids/
+        time: 0
+        only_extensions:
+        - .png
+        - .jpg
+      action: delete.files_in_folder
+  - parallel:
+    - action: button.press
+      metadata: {}
+      data: {}
+      target:
+        entity_id: button.kids_room_start_rtsp_stream
+    - condition: state
+      entity_id: camera.kids_room
+      state: streaming
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 3
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
+  - parallel:
+    - data:
+        filename: /config/www/tmp/snapshots/camera.kids_room{{ now().strftime("%Y%m%d-%H%M%S")
+          }}.jpg
+      target:
+        entity_id: camera.kids_room
+      action: camera.snapshot
+    - action: input_text.set_value
+      metadata: {}
+      data:
+        value: camera.kids_room{{now().strftime("%Y%m%d-%H%M%S")}}.jpg
+      target:
+        entity_id: input_text.kids_camera_snapshot
+    - data:
+        filename: /config/tmp/camera.kids_room{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg
+      target:
+        entity_id: camera.kids_room
+      action: camera.snapshot
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - action: button.press
+    metadata: {}
+    data: {}
+    target:
+      entity_id: button.kids_room_stop_rtsp_stream
+  mode: single
+- id: '1737074902973'
+  alias: test video notify
+  description: ''
+  triggers: []
+  conditions: []
+  actions:
+  - action: notify.mobile_app_viet_ngoc
+    data:
+      message: Test video
+      data:
+        video: /media/local/test_video.mp4
+    enabled: false
+  - action: notify.mobile_app_viet_ngoc
+    data:
+      message: browse
+      data:
+        actions:
+        - action: URI
+          title: Browse media
+          uri: /media-browser/browser
+    enabled: false
+  - action: notify.mobile_app_viet_ngoc
+    data:
+      message: Motion Detected in the Living Room
+      data:
+        entity_id: camera.kids_room_cam
+        push:
+          category: camera
+  mode: single

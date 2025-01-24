@@ -45,3 +45,14 @@ panel_custom:
     url_path: 'config/automation/dashboard'
     config:
       ingress: core_configurator
+
+ingress:
+  local_homebridge:
+    work_mode: iframe
+    ui_mode: normal
+    title: Homebridge
+    icon: si:homebridge
+    url:
+      match: !secret external_url
+      replace: !secret homebridge_url
+      default: http://192.168.0.146:8581/
