@@ -33,6 +33,7 @@ recorder:
       - sensor.date
       - sensor.hassio_addons_use
       - sensor.zhimi_mb4_b008_moto_speed_rpm
+      - script.fade_music
     entity_globs:
       - sensor.*_motor_speed
       - sensor.browser_*
@@ -46,7 +47,7 @@ recorder:
       - sensor.kodi_*
       - sensor.amg_43_*
       - sensor.*_write
-      - sensor.prague_*
+      - sensor.prague_next_*
       - sensor.*_utilization
       - sensor.*_clients
       - sensor.*_voltage
@@ -59,6 +60,8 @@ recorder:
       - sensor.motion_sensor_*
       - sensor.*_outage_count
       - sensor.*_speed_rpm
+      - sensor.*_clients
+      - sensor.*_containers_cpu_usage
 
 logger:
   default: error
