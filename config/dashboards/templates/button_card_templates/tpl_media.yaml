@@ -2089,3 +2089,152 @@ new_media_player:
       width: 24px !important;
       height: 24px !important;
     }
+
+universal_media_player:
+  template:
+    - base
+    - base_media
+  variables:
+    vibrant_light_color: >
+      [[[
+        let color = states['sensor.light_vibrant_color'].state;
+        return `rgb(${color})`;
+      ]]]
+    vibrant_color: >
+      [[[
+        let color = states['sensor.vibrant_color'].state;
+        return `rgb(${color})`;
+      ]]]
+    vibrant_dark_color: >
+      [[[
+        let color = states['sensor.dark_vibrant_color'].state;
+        return `rgb(${color})`;
+      ]]]
+    tilt_enable: >
+      [[[
+        return false;
+      ]]]
+    hover_enable: >
+      [[[
+        return false;
+      ]]]
+  show_state: false
+  show_name: false
+  tap_action:
+    action: call-service
+    service: media_player.media_play_pause
+    service_data:
+      entity_id: >
+        [[[
+          return entity.entity_id;
+        ]]]
+  custom_fields:
+    media_player:
+      card:
+        type: media-control
+        entity: >
+          [[[ return entity.entity_id; ]]]
+        card_mod:
+          style:
+            .: |
+              .player > .top-info > .icon-name {
+                display: none !important;
+              }
+
+    pause_icon:
+      card:
+        type: custom:button-card
+        template: pause_icon_full
+        icon: 'mdi:pause'
+        entity: >
+          [[[
+            return entity.entity_id;
+          ]]]
+
+  styles:
+    card:
+      - padding: 0
+      - margin: 0
+      - border-radius: 1rem
+      - text-shadow: none
+      - z-index: 1
+    custom_fields:
+      media_player:
+        - position: absolute
+        - bottom: 0
+        - right: 0
+        - left: 0
+        - top: 0
+        - width: 100%
+        - height: 100%
+        - z-index: -1
+      pause_icon:
+        - position: absolute
+        - width: 100%
+        - pointer-events: >
+            [[[
+              return ['paused', 'idle'].indexOf(entity.state) !== -1
+                ? 'auto'
+                : 'none';
+            ]]]
+      icon:
+        - width: 40%
+        - padding: 5%
+        - padding-left: 10%
+        - z-index: 0
+
+pause_icon_full:
+  color_type: card
+  show_state: false
+  show_name: false
+  show_icon: true
+  aspect_ratio: 1/1
+  icon: 'mdi:pause'
+  tap_action:
+    action: call-service
+    service: media_player.media_play_pause
+    service_data:
+      entity_id: >
+        [[[
+          return entity.entity_id;
+        ]]]
+  styles:
+    card:
+      - padding: 0
+      - margin: 0
+      - border-radius: 1rem
+      - text-shadow: none
+      - z-index: 1
+      - font-size: 2vw
+      - background: none
+      - backdrop-filter: blur(0.5rem) grayscale(0.5)
+      - color: rgba(255, 255, 255, 0.3)
+      - box-shadow: none
+      - border: none
+      - overflow: hidden
+      - opacity: >
+          [[[
+            return ['paused', 'idle'].indexOf(entity.state) !== -1
+              ? '1'
+              : '0';
+          ]]]
+      - transition: all 0.3s ease-in-out
+
+    img_cell:
+      - position: absolute
+      - width: 50%
+      - height: 50%
+      - top: 50%
+      - left: 50%
+      - transform: translate(-50%, -50%)
+    icon:
+      - width: 100%
+      - height: 100%
+  extra_styles: |
+    #icon:hover {
+      opacity: 1 !important;
+      color: var(--tablet-primary-color) !important;
+    }
+    #icon:active {
+      transform: scale(0.9) !important;
+    }

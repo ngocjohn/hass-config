@@ -320,6 +320,10 @@ grid_homepods:
       - base
       - icon_homepod
       - circle
+    styles:
+      custom_fields:
+        icon:
+          - margin-top: -8%
     name: Homepods
     double_tap_action: !include ../shared/popup/popup_mass.yaml
     tap_action:

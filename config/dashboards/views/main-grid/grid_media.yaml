@@ -141,42 +141,53 @@
             - type: conditional
               conditions:
                 - entity: select.conditional_media
-                  state: Mass Player Group
+                  state: Mass Universal Airplay
               card: &MASSAIRPLAY
                 type: custom:button-card
-                entity: media_player.homepod_airplay_group
+                entity: media_player.mass_universal_airplay
                 template:
-                  # - currently_playing
-                  - conditional_media
-                  - progress_bar
-                  - tpl_minicontrol_mass
-                variables:
-                  tilt_enable: >
-                    [[[ return false; ]]]
-                show_name: false
-                tap_action: block
-                styles:
-                  custom_fields:
-                    blur_overlay:
-                      - bottom: -4%
-                      - left: -7%
-                      - height: 110%
-                      - width: 112%
-                      - clip-path: >
-                          [[[
-                            return `inset(73% 0.0% 0% 0% round 0 0 calc(var(--button-card-border-radius) / 2) calc(var(--button-card-border-radius) / 2))`;
-                          ]]]
-                double_tap_action:
-                  action: fire-dom-event
-                  browser_mod:
-                    service: browser_mod.popup
-                    data:
-                      title: 'MASS'
-                      size: wide
-                      content:
-                        type: iframe
-                        # aspect_ratio: '100%'
-                        url: /api/hassio_ingress/vY3Npsvoa2MxygW4H78Jr2ZEpMXsTJtX8DuZsXbT6mE/#/home
+                  - universal_media_player
+                  - icon_homepod
+
+            # - type: conditional
+            #   conditions:
+            #     - entity: select.conditional_media
+            #       state: Mass Universal Airplay
+            #   card: &MASSAIRPLAY
+            #     type: custom:button-card
+            #     entity: media_player.mass_universal_airplay
+            #     template:
+            #       # - currently_playing
+            #       - conditional_media
+            #       - progress_bar
+            #       - tpl_minicontrol_mass
+            #     variables:
+            #       tilt_enable: >
+            #         [[[ return false; ]]]
+            #     show_name: false
+            #     tap_action: block
+            #     styles:
+            #       custom_fields:
+            #         blur_overlay:
+            #           - bottom: -4%
+            #           - left: -7%
+            #           - height: 110%
+            #           - width: 112%
+            #           - clip-path: >
+            #               [[[
+            #                 return `inset(73% 0.0% 0% 0% round 0 0 calc(var(--button-card-border-radius) / 2) calc(var(--button-card-border-radius) / 2))`;
+            #               ]]]
+            #     double_tap_action:
+            #       action: fire-dom-event
+            #       browser_mod:
+            #         service: browser_mod.popup
+            #         data:
+            #           title: 'MASS'
+            #           size: wide
+            #           content:
+            #             type: iframe
+            #             # aspect_ratio: '100%'
+            #             url: /api/hassio_ingress/vY3Npsvoa2MxygW4H78Jr2ZEpMXsTJtX8DuZsXbT6mE/#/home
 
         # YOUTUBE MUSIC Playlist
         # - type: grid

@@ -37,3 +37,7 @@ stt:
 # INCLUDES
 automation ui: !include automations.yaml
 script: !include scripts.yaml
+google_assistant:
+  project_id: hamyhome
+  service_account: !include SERVICE_ACCOUNT.JSON
+  report_state: true

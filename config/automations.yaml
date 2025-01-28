@@ -448,7 +448,7 @@
     id: 20min
   condition:
   - condition: state
-    entity_id: device_tracker.viet_ngoc
+    entity_id: device_tracker.viet_ngoc_samsung
     state: not_home
   action:
   - service: homeassistant.update_entity
@@ -515,32 +515,26 @@
 - id: '1695935011647'
   alias: dismiss_lovelace_updated
   description: ''
-  trigger:
-  - platform: event
-    event_type: lovelace_updated
-  condition: []
-  action:
-  - service: homeassistant.update_entity
-    target:
+  triggers:
+  - event_type: lovelace_updated
+    trigger: event
+  conditions: []
+  actions:
+  - target:
       entity_id: sensor.code_line_count
     data: {}
+    action: homeassistant.update_entity
   - repeat:
       count: 5
       sequence:
       - delay: 0.5
-      - service: browser_mod.notification
-        data:
+      - data:
           duration: 1
           message: ' '
         target:
           device_id:
           - 4f43e0dc2e03b71c2e137f9696a04a2c
-      - service: browser_mod.notification
-        data:
-          duration: 1
-          message: ' '
-        target:
-          device_id: 0604abf0d6d8e6f72903f0cc77d83b3d
+        action: browser_mod.notification
   mode: restart
 - id: '1696553366478'
   alias: 'Dishwasher Set Timer '
@@ -1108,7 +1102,7 @@
   - condition: not
     conditions:
     - condition: zone
-      entity_id: device_tracker.viet_ngoc
+      entity_id: device_tracker.viet_ngoc_samsung
       zone: zone.smichov
   action:
   - service: notify.mobile_app_viet_ngoc

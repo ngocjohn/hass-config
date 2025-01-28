@@ -47,3 +47,5 @@ homeassistant:
     sensor.gle:
       unique_id: 452501ea-39d6-4b23-9a5b-72c6800db0ef
       entity_picture: /local/img/suv_gle.png
+    device_tracker.viet_ngoc_samsung:
+      entity_picture: /local/img/samsung-z-flip.png

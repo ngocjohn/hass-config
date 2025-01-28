@@ -134,6 +134,6 @@ browser_mod:
           dark_mode: true
           entities:
             - device_tracker.findmy_521d68e4ecef4686a97a2b77ccd20056
-            - entity: device_tracker.viet_ngoc
+            - entity: device_tracker.viet_ngoc_samsung
               focus: false
           hours_to_show: 24

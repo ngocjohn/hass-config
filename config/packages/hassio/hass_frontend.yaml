@@ -56,3 +56,9 @@ ingress:
       match: !secret external_url
       replace: !secret homebridge_url
       default: http://192.168.0.146:8581/
+  link_areas:
+    work_mode: iframe
+    ui_mode: replace
+    title: Areas
+    icon: mdi:floor-plan
+    url: /config/areas/dashboard

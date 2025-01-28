@@ -164,13 +164,23 @@ group:
       - media_player.bathroom
       - media_player.bedroom
       - media_player.living_room_2
-
   television:
     name: Television
     icon: mdi:television
     entities:
       - media_player.living_room_tv
       - media_player.bedroom_tv
+  conditional_media:
+    name: Conditional Media
+    icon: mdi:play-circle
+    entities:
+      - media_player.spotifyplus_ngoc_nguyen
+      - media_player.mass_universal_airplay
+      - media_player.living_room_tv
+      - media_player.kodi_atv
+      - sensor.ps5_activity
+
+  ## CLIMATE GROUP ##
   thermostats:
     name: Thermostats
     icon: mdi:home-thermometer
@@ -185,4 +195,5 @@ notify:
     name: ngoc_devices
     services:
       - service: mobile_app_viet_ngoc
+      - service: mobile_app_viet_ngoc_samsung
       # - service: mobile_app_macbook_air
