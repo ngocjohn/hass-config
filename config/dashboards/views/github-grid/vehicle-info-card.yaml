@@ -13,11 +13,14 @@
         latest_entity: sensor.vehicle_latest_release_download
         stars_entity: sensor.vehicle_info_card_stargazers
         repo_link: https://github.com/ngocjohn/vehicle-info-card
+        bar_color: rgb(196, 74, 34)
     - type: custom:mod-card
       card_mod:
         style:
           .: |
-            ha-card {
+
+          swipe-card$: |
+            .swiper-container {
               background: linear-gradient(to top, rgba(196, 74, 34, 0.1) 0%, transparent 100%);
             }
           swipe-card: !include ../../shared/snippets/style-git-swipe-card.yaml

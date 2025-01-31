@@ -1040,7 +1040,7 @@ extra_styles:
             #img-cell {
               animation: none;
               max-height: 100px !important;
-              top: -15%;
+              top: 0;
             }
             #icon {
               width: 100%;

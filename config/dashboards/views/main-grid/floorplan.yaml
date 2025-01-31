@@ -71,11 +71,11 @@
   view_layout:
     grid-area: floorplan
     show:
-      mediaquery: '(max-width: 1440px)'
+      mediaquery: '(min-height: 376px) and (max-width: 1440px)'
   card_mod:
     style: |
       ha-card {
-        margin: 1% 13%;
+        margin: 0;
         background: radial-gradient(circle, rgb(255 255 255 / 14%) 27%, rgba(57,14,14,0) 61%);
         box-shadow: none;
       }

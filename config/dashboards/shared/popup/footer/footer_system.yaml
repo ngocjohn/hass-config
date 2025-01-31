@@ -111,6 +111,15 @@ browser_mod:
                 icon: si:docker
                 state_color: true
                 name: Raspberry Docker
+                hold_action:
+                  action: call-service
+                  service: homeassistant.update_entity
+                  service_data:
+                    entity_id:
+                      - sensor.rpi_monitor_docker_rpi_cpu_use_pidocker
+                      - sensor.rpi_monitor_docker_rpi_temp_pidocker
+                      - sensor.rpi_monitor_docker_rpi_used_pidocker
+                      - sensor.rpi_monitor_docker
               - entity: switch.watchtower
               - type: attribute
                 entity: sensor.rpi_monitor_docker
@@ -128,33 +137,18 @@ browser_mod:
                   - entity: sensor.rpi_monitor_docker_rpi_cpu_use_pidocker
                     name: Processor
                     icon: mdi:chip
-                    tap_action:
-                      action: call-service
-                      service: homeassistant.update_entity
-                      service_data:
-                        entity_id: sensor.rpi_monitor_docker_rpi_cpu_use_pidocker
                   - entity: sensor.rpi_monitor_docker_rpi_temp_pidocker
                     name: Temperature
                     icon: mdi:thermostat
                   - entity: sensor.rpi_monitor_docker_rpi_used_pidocker
                     name: Memory 4GB
                     icon: mdi:memory
-                    tap_action:
-                      action: call-service
-                      service: homeassistant.update_entity
-                      service_data:
-                        entity_id: sensor.sensor.rpi_monitor_docker_rpi_used_pidocker
                   - entity: sensor.rpi_monitor_docker
                     type: attribute
                     attribute: fs_free_prcnt
                     name: SD used 32GB
                     icon: mdi:content-save
                     unit_of_measurement: '%'
-                    tap_action:
-                      action: call-service
-                      service: homeassistant.update_entity
-                      service_data:
-                        entity_id: sensor.rpi_monitor_docker
               - type: custom:hui-horizontal-stack-card
                 cards:
                   - type: custom:button-card

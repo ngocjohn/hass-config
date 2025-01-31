@@ -1,0 +1,296 @@
+- type: custom:swipe-card
+  view_layout:
+    grid-area: cover
+    show:
+      mediaquery: '(max-height: 375px)'
+  parameters:
+    start_card: 1
+    slidesPerView: 1
+    spaceBetween: 10
+    speed: 420
+    pagination:
+      type: bullets
+      clickable: true
+  cards:
+    - type: horizontal-stack # HOME - SECURITY
+      cards:
+        - type: grid
+          square: true
+          title: Home
+          columns: 2
+          cards:
+            # PERSON NGOC
+            - type: custom:streamline-card
+              template: grid_ngoc
+            # PERSON ZUZU
+            - type: custom:streamline-card
+              template: grid_zuzu
+            # WEATHER
+            - type: custom:streamline-card
+              template: grid_weather
+            # HOME MODE
+            - type: custom:streamline-card
+              template: grid_home_mode
+        - type: grid
+          title: Security
+          square: true
+          columns: 2
+          cards:
+            # ALARM
+            - type: custom:streamline-card
+              template: grid_alarm
+            # FRONT DOOR
+            - type: custom:streamline-card
+              template: grid_front_door
+            # MOTION SENSORS
+            - type: custom:streamline-card
+              template: grid_motion_sensors
+            #  CONTACT SENSORS
+            - type: custom:streamline-card
+              template: grid_contact_sensors
+    - type: horizontal-stack # MASTERS - OTHER ROOMS
+      cards:
+        - type: grid
+          title: Masters
+          columns: 2
+          cards:
+            # Living Room
+            - type: custom:streamline-card
+              template: grid_living_room
+            # OFFICE
+            - type: custom:streamline-card
+              template: grid_office
+            # Kitchen
+            - type: conditional
+              conditions:
+                - entity: sensor.kitchen_active
+                  state_not: 'dishwashing'
+              card:
+                type: custom:streamline-card
+                template: grid_kitchen_normal
+
+            - type: conditional
+              conditions:
+                - entity: sensor.kitchen_active
+                  state: 'dishwashing'
+              card:
+                type: custom:streamline-card
+                template: grid_kitchen_dishwasing
+            # Bedroom
+            - type: custom:streamline-card
+              template: grid_bedroom
+          #################################################
+          #                                               #
+          #                    ROOMS 2                    #
+          #                                               #
+          #################################################
+        - type: grid
+          title: Rooms
+          columns: 2
+          cards:
+            # SHOWER ROOM
+            - type: custom:streamline-card
+              template: grid_shower
+            # BATHROOM
+            - type: custom:streamline-card
+              template: grid_bathroom
+            # HALLWAY
+            - type: custom:streamline-card
+              template: grid_hallway
+            # UTILITY NORMAL
+            - type: conditional
+              conditions:
+                - entity: sensor.appliance_active
+                  state_not: 'cleaning'
+                - entity: sensor.appliance_active
+                  state_not: 'washing'
+              card:
+                type: custom:streamline-card
+                template: grid_utility_normal
+
+            # UTILITY VACUUM
+            - type: conditional
+              conditions:
+                - entity: sensor.appliance_active
+                  state: cleaning
+              card:
+                type: custom:streamline-card
+                template: grid_utility_vacuum
+            # WASHING
+            - type: conditional
+              conditions:
+                - entity: sensor.appliance_active
+                  state: washing
+              card:
+                type: custom:streamline-card
+                template: grid_utility_washing
+    - type: horizontal-stack # CLIMATE - CAMERA
+      cards:
+        # AIR PURIFIER
+        - type: grid
+          title: Climate
+          columns: 2
+          square: true
+          cards:
+            - type: custom:decluttering-card
+              template: grid_air_purifier
+            # THERMOSTAT
+            - type: custom:decluttering-card
+              template: grid_thermostat
+            # LIVING ROOM COVERS
+            - type: custom:decluttering-card
+              template: grid_covers_living
+            # BEDOOM COVERS
+            - type: custom:decluttering-card
+              template: grid_covers_bedroom
+
+        - type: grid
+          title: Devices
+          columns: 2
+          cards:
+            # APPLE TV
+            - type: custom:streamline-card
+              template: grid_atv
+            # Samsung TV
+            - type: custom:streamline-card
+              template: grid_samsung
+            # PLAYSTATION
+            - type: custom:streamline-card
+              template: grid_playstation
+            # HOMEPODS
+            - type: custom:streamline-card
+              template: grid_homepods
+    - type: horizontal-stack # MEDIA - MOVIES
+      cards:
+        - type: grid
+          title: Media
+          columns: 1
+          square: false
+          cards:
+            #Conditional Media
+            - type: conditional
+              conditions:
+                - entity: select.conditional_media
+                  state: Recently added
+              card: &spotify
+                type: custom:ytube-playlist-card
+                card_mod:
+                  style: |
+                    ha-card {
+                      height: fit-content !important;
+                    }
+
+                entity: media_player.ytube_music_player
+                extra: sensor.ytube_music_player_extra
+                layout:
+                  type: grid
+                  max_grid_columns: 4
+                  max_grid_rows: 2
+                  show_header: false
+                  show_footer: false
+                default_page:
+                  type: library_playlists
+
+                # type: media-control
+                # entity: media_player.spotify
+                # card_mod:
+                #   style: |
+                #     ha-card {
+                #       aspect-ratio: 1/1 !important;
+                #     }
+
+            - type: conditional
+              conditions:
+                - entity: select.conditional_media
+                  state: Living Room TV
+              card: &ATV
+                type: custom:button-card
+                entity: media_player.living_room_tv
+                name: ' '
+                triggers_update: sensor.youtube_thumbnail
+                template:
+                  - conditional_media
+                  - progress_bar
+                  - tpl_minicontrol
+                  - icon_apple_tv
+            - type: conditional
+              conditions:
+                - entity: select.conditional_media
+                  state: Kodi ATV
+              card: &KODIATV
+                type: custom:button-card
+                entity: media_player.kodi_atv
+                name: ' '
+                triggers_update: sensor.kodi_picture
+                template:
+                  - conditional_media
+                  - progress_bar
+                  - tpl_minicontrol
+                  - icon_kodi
+            - type: conditional
+              conditions:
+                - entity: select.conditional_media
+                  state: Bedroom TV
+              card: &BEDROOMTV
+                type: custom:button-card
+                entity: media_player.shieldtv_kodi
+                name: 'ShieldTV'
+                triggers_update: sensor.youtube_thumbnail
+                template:
+                  - conditional_media
+                  - icon_shieldtv_text
+                  - progress_bar
+            - type: conditional
+              conditions:
+                - entity: select.conditional_media
+                  state: Spotify
+              card: *spotify
+            - type: conditional
+              conditions:
+                - entity: select.conditional_media
+                  state: PS5 Activity
+              card: &PS5
+                type: custom:button-card
+                entity: sensor.ps5_activity
+                name: 'PlayStation 5'
+                template:
+                  - conditional_media
+                  - icon_playstation
+            - type: conditional
+              conditions:
+                - entity: select.conditional_media
+                  state: Youtube Music Player
+              card: &YOUTUBEPLAYER
+                type: custom:button-card
+                entity: media_player.ytube_music_player
+                template:
+                  # - currently_playing
+                  - conditional_media
+                  - progress_bar
+                  - tpl_minicontrol_mass
+                variables:
+                  tilt_enable: >
+                    [[[ return false; ]]]
+                show_name: false
+                tap_action: block
+                styles:
+                  custom_fields:
+                    blur_overlay:
+                      - bottom: -4%
+                      - left: -7%
+                      - height: 110%
+                      - width: 112%
+                      - clip-path: >
+                          [[[
+                            return `inset(73% 0.0% 0% 0% round 0 0 calc(var(--button-card-border-radius) / 2) calc(var(--button-card-border-radius) / 2))`;
+                          ]]]
+            - type: conditional
+              conditions:
+                - entity: select.conditional_media
+                  state: Mass Universal Airplay
+              card: &MASSAIRPLAY
+                type: custom:button-card
+                entity: media_player.mass_universal_airplay
+                template:
+                  - universal_media_player
+                  - icon_homepod

@@ -7,6 +7,8 @@
   title: Masters
   view_layout:
     grid-area: mainrooms
+    show:
+      mediaquery: '(min-height: 376px)'
   columns: 2
   cards:
     # Living Room

@@ -32,13 +32,13 @@ layout:
         ".  footer     footer      footer    ."
         ".  .          .           .         ."
     # phone
-    '(max-width: 800px)':
+    '(max-width: 800px) and (min-height: 376px)':
       # grid-gap: calc(var(--custom-layout-card-padding) * 1.7)
-      grid-gap: 1rem 1rem
+      margin: 0
+      grid-gap: 1rem
       grid-template-columns: 0 1fr 1fr 0
-      grid-template-rows: 0 min-content fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) min-content 1rem
+      grid-template-rows: min-content fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) min-content 1rem
       grid-template-areas: |
-        ". .           .         ."
         ". header      header    ."
         ". chips       chips     ."
         ". home        security  ."
@@ -48,6 +48,17 @@ layout:
         ". floorplan   floorplan ."
         ". footer      footer    ."
         ". .           .         ."
+    # phone cover screen = place horizontal
+    '(max-height: 375px)':
+      grid-gap: 0.5rem
+      grid-template-columns: 0 1fr 1fr 0
+      grid-template-rows: 0 min-content 1fr 0
+      grid-template-areas: |
+        ". .      .      ."
+        ". chips  chips  ."
+        ". cover  cover  ."
+        ". .      .      ."
+
 #################################################
 #                                               #
 #                    DASHBOARD                  #

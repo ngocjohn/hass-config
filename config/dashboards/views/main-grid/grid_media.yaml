@@ -238,7 +238,7 @@
   view_layout:
     grid-area: media
     show:
-      mediaquery: '(max-width: 1440px)'
+      mediaquery: '(min-height: 376px) and (max-width: 1440px)'
   columns: 1
   cards:
     #Conditional Media

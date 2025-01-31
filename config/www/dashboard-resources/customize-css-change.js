@@ -1,3 +1,6 @@
+// Description: This file is used to modify the template editor page.
+
+// TEMPLATE EDITOR MODIFICATION EXPANDED WIDTH
 customElements.whenDefined('developer-tools-template').then(() => {
 	const TemplatePanel = customElements.get('developer-tools-template');
 	const { html, css } = TemplatePanel.prototype;
@@ -31,6 +34,7 @@ customElements.whenDefined('developer-tools-template').then(() => {
 	});
 });
 
+// DEVICE PAGE MODIFICATION EXPANDED WIDTH
 customElements.whenDefined('ha-config-device-page').then(() => {
 	const DevicePage = customElements.get('ha-config-device-page');
 	const { html, css } = DevicePage.prototype;
@@ -48,6 +52,37 @@ customElements.whenDefined('ha-config-device-page').then(() => {
 		enumerable: false,
 	});
 	Object.defineProperty(DevicePage, 'elementStyles', {
+		value: newStyles,
+		configurable: true,
+		enumerable: false,
+	});
+});
+
+// QUICK BAR MODIFICATION VERTICAL CENTER
+customElements.whenDefined('ha-quick-bar').then(() => {
+	const TemplatePanel = customElements.get('ha-quick-bar');
+	const { html, css } = TemplatePanel.prototype;
+
+	// defined added style
+	const newStyle = css`
+		@media (min-width: 800px) {
+			ha-dialog {
+				--mdc-dialog-max-width: 800px;
+				--mdc-dialog-min-width: 500px;
+				--dialog-surface-position: relative;
+				--dialog-surface-top: 0;
+				--mdc-dialog-max-height: calc(100% - 72px);
+			}
+		}
+	`;
+
+	const newStyles = [].concat(TemplatePanel.styles, newStyle);
+	Object.defineProperty(TemplatePanel, 'styles', {
+		value: newStyles,
+		configurable: true,
+		enumerable: false,
+	});
+	Object.defineProperty(TemplatePanel, 'elementStyles', {
 		value: newStyles,
 		configurable: true,
 		enumerable: false,

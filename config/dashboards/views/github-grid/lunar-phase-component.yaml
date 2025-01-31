@@ -13,13 +13,17 @@
         latest_entity: sensor.lunar_phase_integration_latest
         stars_entity: sensor.lunar_phase_stargazers
         repo_link: https://github.com/ngocjohn/lunar-phase
+        bar_color: 'rgba(236, 79, 241, 0.7)'
     - type: custom:mod-card
       card_mod:
         style:
           .: |
-            ha-card {
+
+          swipe-card$: |
+            .swiper-container {
               background: linear-gradient(to top, rgba(236, 79, 241, 0.1) 0%, transparent 100%);
             }
+
           swipe-card: !include ../../shared/snippets/style-git-swipe-card.yaml
       card:
         type: custom:swipe-card

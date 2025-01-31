@@ -15,10 +15,6 @@
     - type: entities
       card_mod:
         class: header nopadding
-        style: |
-          ha-card {
-            background: linear-gradient(to top, #2024349e 0%, transparent 100%);
-          }
       show_header_toggle: false
       state_color: false
       entities:

@@ -57,6 +57,8 @@
 - type: 'custom:layout-card'
   view_layout:
     grid-area: climate
+    show:
+      mediaquery: '(min-height: 376px)'
   layout_type: 'custom:grid-layout'
   layout: !include ../../shared/snippets/layout-header-content.yaml
   cards:

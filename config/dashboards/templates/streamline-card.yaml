@@ -291,15 +291,28 @@ grid_samsung:
     entity: media_player.bedroom_tv
     name: >
       [[[
-        let source = states['media_player.bedroom_tv'].attributes.source;
-          if ( variables.state_on && source !==  'Android TV Launcher' )
-            return source;
-          else
-            return 'Samsung';
+        let screenWidth = window.innerWidth,
+            screenHeight = window.innerHeight;
+        return `${screenWidth} ${screenHeight}`;
       ]]]
     hold_action: !include ../shared/honeycomb/shield.yaml
     template:
       - mediaplayer
+# grid_samsung:
+#   card:
+#     type: custom:button-card
+#     entity: media_player.bedroom_tv
+#     name: >
+#       [[[
+#         let source = states['media_player.bedroom_tv'].attributes.source;
+#           if ( variables.state_on && source !==  'Android TV Launcher' )
+#             return source;
+#           else
+#             return 'Samsung';
+#       ]]]
+#     hold_action: !include ../shared/honeycomb/shield.yaml
+#     template:
+#       - mediaplayer
 
 # PLAYSTATION
 grid_playstation:
@@ -1218,13 +1231,23 @@ github_heading_card:
     - latest_entity: null
     - stars_entity: null
     - repo_link: null
+    - bar_color: 'var(--primary-text-color)'
   card:
     type: heading
     card_mod:
       style:
         .: |
+          @media screen and (min-width: 768px) {
+            :host {
+              --ha-heading-card-title-font-size: 0.7vw;
+              --ha-heading-card-title-font-weight: 500;
+              --ha-heading-card-title-line-height: normal;
+            }
+          }
+
           ha-card {
             padding: 0px 8px;
+            --ha-heading-card-title-color: {{'[[bar_color]]'}};
           }
           @media (max-width: 500px) {
             ha-card {
@@ -1371,6 +1394,19 @@ stargazer_list:
     type: custom:mod-card
     card_mod:
       style: |
+        ha-card {
+          max-height: 500px;
+          overflow-y: auto;
+          padding: 1rem;
+          position: relative;
+          width: 100%;
+          height: 100%;
+        }
+        @media screen and (max-width: 800px) {
+          ha-card {
+            padding: 0 !important;
+          }
+        }
         ha-card::before {
           content: '{{ states['[[star_entity]]'].attributes.stargazers | count }}\2605';
           position: absolute;
@@ -1379,46 +1415,41 @@ stargazer_list:
           font-size: 2em;
           color: #ffffff1a;
           font-weight: 500;
+          height: 100%;
         }
     card:
-      type: entities
-      title: Stargazers
-      card_mod:
-        class: 'stargazer'
-
-      entities:
-        - type: custom:auto-entities
-          filter:
-            template: |
-              {%- set followers = state_attr('[[star_entity]]', 'stargazers') %}
-              [
-              {%- for user in followers -%}
-                {
-                  'type': 'custom:button-card',
-                  'name': '{{ user.login }}',
-                  'template': ['stargazer_base'],
-                  'variables': {
-                    'avatar_url': '{{ user.avatar_url }}',
-                    'html_url': '{{ user.html_url }}',
-                    'follow_me': '{{ user.follow_me }}'
-                  }
-                }{%- if not loop.last %},{% endif %}
-              {%- endfor %}
-              ]
-          card:
-            type: custom:layout-card
-            layout_type: custom:grid-layout
-            layout:
-              grid-template-columns: repeat(auto-fill, minmax(19%, 1fr))
-              grid-template-rows: auto
-              grid-gap: 4px 8px
-              margin: 0
-              padding: 0
-              mediaquery:
-                '(min-width: 801px) and (max-width: 1710px)':
-                  grid-template-columns: repeat(auto-fill, minmax(24%, 1fr))
-                  grid-gap: 4px
-                '(max-width: 800px)':
-                  grid-template-columns: repeat(auto-fill, minmax(26%, 1fr))
-                  grid-gap: 4px
-            cards: []
+      type: custom:auto-entities
+      filter:
+        template: |
+          {%- set followers = state_attr('[[star_entity]]', 'stargazers') %}
+          [
+          {%- for user in followers -%}
+            {
+              'type': 'custom:button-card',
+              'name': '{{ user.login }}',
+              'template': ['stargazer_base'],
+              'variables': {
+                'avatar_url': '{{ user.avatar_url }}',
+                'html_url': '{{ user.html_url }}',
+                'follow_me': '{{ user.follow_me }}'
+              }
+            }{%- if not loop.last %},{% endif %}
+          {%- endfor %}
+          ]
+      card:
+        type: custom:layout-card
+        layout_type: custom:grid-layout
+        layout:
+          grid-template-columns: repeat(auto-fill, minmax(19%, 1fr))
+          grid-template-rows: auto
+          grid-gap: 4px 8px
+          padding: 8px
+          mediaquery:
+            '(min-width: 768px) and (max-width: 1710px)':
+              grid-template-columns: repeat(auto-fill, minmax(24%, 1fr))
+              grid-gap: 4px
+            '(max-width: 767.99px)':
+              grid-template-columns: repeat(auto-fill, minmax(30%, 1fr))
+              grid-gap: 8px 8px
+              padding: 8px
+        cards: []

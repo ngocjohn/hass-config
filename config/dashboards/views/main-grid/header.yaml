@@ -7,7 +7,8 @@
   layout_type: 'custom:grid-layout'
   view_layout:
     grid-area: header
-
+    show:
+      mediaquery: '(min-height: 376px)'
   layout:
     margin: 0
     height: 100%

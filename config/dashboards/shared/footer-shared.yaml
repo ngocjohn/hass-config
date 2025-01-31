@@ -1,6 +1,8 @@
 type: horizontal-stack
 view_layout:
   grid-area: footer
+  show:
+    mediaquery: '(min-height: 376px)'
 cards:
   - type: custom:button-card
     name: >

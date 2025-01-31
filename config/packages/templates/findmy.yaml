@@ -38,7 +38,7 @@ homeassistant:
       entity_picture: /local/svg/Apple_AirTag.svg
     device_tracker.findmy_9414ea483058416cb41991d034d0638c:
       friendly_name: Macbook Air FINDMY
-      entity_picture: /local/svg/Apple_AirTag.svg
+      entity_picture: /local/img/mbair.png
     device_tracker.findmy_42070f6de4bb45388debeb4742fe8afa:
       friendly_name: Apple Watch FINDMY
       entity_picture: /local/svg/Apple_AirTag.svg

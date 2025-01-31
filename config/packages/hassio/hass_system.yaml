@@ -26,8 +26,8 @@ recorder:
       - weather
       - timer
       - update
-      - device_tracker
       - image
+      - device_tracker
     entities:
       - sensor.time
       - sensor.date
@@ -62,7 +62,12 @@ recorder:
       - sensor.*_speed_rpm
       - sensor.*_clients
       - sensor.*_containers_cpu_usage
-
+  include:
+    entities:
+      - device_tracker.viet_ngoc_samsung
+      - device_tracker.findmy_521d68e4ecef4686a97a2b77ccd20056
+      - device_tracker.findmy_f28d260523a64f37b0595dfcd64d3b73
+      - device_tracker.findmy_9414ea483058416cb41991d034d0638c
 logger:
   default: error
 

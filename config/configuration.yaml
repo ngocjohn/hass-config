@@ -20,7 +20,7 @@ frontend:
     - /local/dashboard-resources/card-mod.js
     - /local/dashboard-resources/canary.js
     - /local/dashboard-resources/sidebar-divider.js
-    - /local/dashboard-resources/template-editor-change.js
+    - /local/dashboard-resources/customize-css-change.js
   themes: !include_dir_merge_named themes
 
 # HTTP
@@ -29,15 +29,12 @@ http:
   trusted_proxies:
     - 172.30.33.0/24
     - 0.0.0.0/0
+
+# INCLUDES
+automation ui: !include automations.yaml
+script: !include scripts.yaml
 # STT
 stt:
   - platform: google_cloud_stt
     key_file: google_stt.json
     model: command_and_search
-# INCLUDES
-automation ui: !include automations.yaml
-script: !include scripts.yaml
-google_assistant:
-  project_id: hamyhome
-  service_account: !include SERVICE_ACCOUNT.JSON
-  report_state: true
