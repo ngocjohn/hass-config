@@ -22,9 +22,8 @@ layout:
     '(min-width: 801px) and (max-width: 1440px)':
       grid-gap: 1% 1.5%
       grid-template-columns: 0 1fr 1fr 1fr 0
-      grid-template-rows: 0 fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) min-content 0
+      grid-template-rows: fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) min-content 0
       grid-template-areas: |
-        ".  .          .           .         ."
         ".  header     home        security  ."
         ".  cameras    media       climate   ."
         ".  mainrooms  devices     other     ."

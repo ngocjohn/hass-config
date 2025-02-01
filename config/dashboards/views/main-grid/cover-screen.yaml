@@ -165,7 +165,7 @@
         - type: grid
           title: Media
           columns: 1
-          square: false
+          square: true
           cards:
             #Conditional Media
             - type: conditional
@@ -173,31 +173,9 @@
                 - entity: select.conditional_media
                   state: Recently added
               card: &spotify
-                type: custom:ytube-playlist-card
-                card_mod:
-                  style: |
-                    ha-card {
-                      height: fit-content !important;
-                    }
-
-                entity: media_player.ytube_music_player
-                extra: sensor.ytube_music_player_extra
-                layout:
-                  type: grid
-                  max_grid_columns: 4
-                  max_grid_rows: 2
-                  show_header: false
-                  show_footer: false
-                default_page:
-                  type: library_playlists
-
-                # type: media-control
-                # entity: media_player.spotify
-                # card_mod:
-                #   style: |
-                #     ha-card {
-                #       aspect-ratio: 1/1 !important;
-                #     }
+                type: custom:added-movie-card
+                entity: sensor.kodi_all_movies
+                show_item_count: 10
 
             - type: conditional
               conditions:
@@ -294,3 +272,23 @@
                 template:
                   - universal_media_player
                   - icon_homepod
+        - type: grid
+          title: Media Devices
+          columns: 2
+          square: true
+          cards:
+            - &grid-atv-kodi
+              type: custom:button-card
+              entity: media_player.kodi_atv
+              name: Kodi ATV
+              template:
+                - media
+                - icon_apple_tv
+            - &grid-spotify-media
+              type: custom:button-card
+              entity: media_player.spotifyplus_ngoc_nguyen
+              name: Spotify
+              double_tap_action: !include ../../shared/popup/spotify_playlist.yaml
+              template:
+                - media
+                - icon_spotify

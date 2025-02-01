@@ -183,12 +183,17 @@ browser_mod:
                 # no border on last card
             filter:
               template: |
-                {% for sensor in states.sensor -%}
-                  {%- if sensor.entity_id | regex_match('sensor.docker_',ignorecase=False) -%}
+                {% for sensor in states.binary_sensor -%}
+                  {%- if sensor.entity_id | regex_match('binary_sensor.docker_',ignorecase=False) -%}
                     {%- set name = state_attr(sensor.entity_id, "friendly_name") | regex_replace(find='Docker ', replace='') | capitalize -%}
                     {{
                       { 'entity': sensor.entity_id,
+                        'type': 'custom:multiple-entity-row',
+                        'show_state': true,
                         'name': name,
+                        'secondary_info': {
+                          'attribute': 'Uptime',
+                        },
                         'state_color': true,
                       } }},
                   {%- endif -%}

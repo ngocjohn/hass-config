@@ -1,4 +1,32 @@
-// Description: This file is used to modify the template editor page.
+// Description: This file is used to modify css of Home Assistant UI.
+
+// CHANGE SCROLLBAR COLOR
+function changeScrollbarColor() {
+	// Define your CSS as a string
+	const css = `
+		html {
+				scrollbar-color: #7080908E #FFFFFF00;
+		}
+		::-webkit-scrollbar-track {
+				background: #FFFFFF00;
+		}
+		::-webkit-scrollbar {
+				width: 10px;
+		}
+		::-webkit-scrollbar-thumb {
+				background: #7080908E;
+				width: 5px;
+		}
+	`;
+
+	// Create a new style element
+	const style = document.createElement('style');
+	style.innerHTML = css;
+	document.head.appendChild(style);
+	console.log('Scrollbar color changed');
+}
+
+changeScrollbarColor();
 
 // TEMPLATE EDITOR MODIFICATION EXPANDED WIDTH
 customElements.whenDefined('developer-tools-template').then(() => {
@@ -72,6 +100,8 @@ customElements.whenDefined('ha-quick-bar').then(() => {
 				--dialog-surface-position: relative;
 				--dialog-surface-top: 0;
 				--mdc-dialog-max-height: calc(100% - 72px);
+				--mdc-text-field-fill-color: rgba(34, 38, 39, 0.6);
+				--mdc-theme-surface: rgba(34, 38, 39, 0.6);
 			}
 		}
 	`;

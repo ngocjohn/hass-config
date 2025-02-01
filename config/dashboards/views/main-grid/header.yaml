@@ -11,7 +11,7 @@
       mediaquery: '(min-height: 376px)'
   layout:
     margin: 0
-    height: 100%
+
     place-items: center center
     grid-template-columns: 0.5fr 1fr
     grid-gap: 0

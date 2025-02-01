@@ -45,17 +45,13 @@ switch:
         unique_id: watchtower_switch
         friendly_name: Watchtower
         value_template: >
-          {{ is_state('sensor.docker_watchtower', 'running') }}
+          {{ is_state('binary_sensor.docker_watchtower', 'on') }}
         turn_on:
           - service: shell_command.unpause_watchtower
-          - service: homeassistant.update_entity
-            target:
-              entity_id: binary_sensor.container_watchtower
+          - event: DOCKER_CONTAINER_UPDATE
         turn_off:
           - service: shell_command.pause_watchtower
-          - service: homeassistant.update_entity
-            target:
-              entity_id: binary_sensor.container_watchtower
+          - event: DOCKER_CONTAINER_UPDATE
   # Humidifier
 generic_hygrostat:
   - name: Office Humidifier
