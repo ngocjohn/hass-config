@@ -31,7 +31,7 @@ layout:
         ".  footer     footer      footer    ."
         ".  .          .           .         ."
     # phone
-    '(max-width: 800px) and (min-height: 376px)':
+    '(max-width: 800px) and (min-height: 463px)':
       # grid-gap: calc(var(--custom-layout-card-padding) * 1.7)
       margin: 0
       grid-gap: 1rem
@@ -48,7 +48,7 @@ layout:
         ". footer      footer    ."
         ". .           .         ."
     # phone cover screen = place horizontal
-    '(max-height: 375px)':
+    '(max-height: 462px)':
       grid-gap: 0.5rem
       grid-template-columns: 0 1fr 1fr 0
       grid-template-rows: 0 min-content 1fr 0

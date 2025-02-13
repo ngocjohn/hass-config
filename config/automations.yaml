@@ -526,9 +526,13 @@
     action: homeassistant.update_entity
   - parallel:
     - repeat:
-        count: 5
+        count: 3
         sequence:
-        - delay: 0.5
+        - delay:
+            hours: 0
+            minutes: 0
+            seconds: 0
+            milliseconds: 500
         - data:
             duration: 1
             message: ' '
@@ -542,6 +546,13 @@
           target:
             device_id:
             - e5211b8956d56a9d80b84665dfb8e957
+          action: browser_mod.notification
+        - data:
+            duration: 1
+            message: ' '
+          target:
+            device_id:
+            - 4f43e0dc2e03b71c2e137f9696a04a2c
           action: browser_mod.notification
   mode: restart
 - id: '1696553366478'
@@ -1184,85 +1195,6 @@
     input:
       vacuum: vacuum.roidmi_eve
       camera: camera.roidmi_eve
-- id: '1737054227949'
-  alias: Kids room camera snapshot
-  description: ''
-  triggers:
-  - at: 05:00:00
-    id: delete
-    trigger: time
-  - hours: /1
-    trigger: time_pattern
-  conditions:
-  - condition: time
-    after: 05:00:00
-    before: 00:00:00
-  actions:
-  - if:
-    - condition: trigger
-      id: delete
-    then:
-    - data:
-        folder: /config/www/tmp/snapshots/
-        time: 0
-        only_extensions:
-        - .png
-        - .jpg
-      action: delete.files_in_folder
-    - data:
-        folder: /config/www/tmp/kids/
-        time: 0
-        only_extensions:
-        - .png
-        - .jpg
-      action: delete.files_in_folder
-  - parallel:
-    - action: button.press
-      metadata: {}
-      data: {}
-      target:
-        entity_id: button.kids_room_start_rtsp_stream
-    - condition: state
-      entity_id: camera.kids_room
-      state: streaming
-      for:
-        hours: 0
-        minutes: 0
-        seconds: 3
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 2
-      milliseconds: 0
-  - parallel:
-    - data:
-        filename: /config/www/tmp/snapshots/camera.kids_room{{ now().strftime("%Y%m%d-%H%M%S")
-          }}.jpg
-      target:
-        entity_id: camera.kids_room
-      action: camera.snapshot
-    - action: input_text.set_value
-      metadata: {}
-      data:
-        value: camera.kids_room{{now().strftime("%Y%m%d-%H%M%S")}}.jpg
-      target:
-        entity_id: input_text.kids_camera_snapshot
-    - data:
-        filename: /config/tmp/camera.kids_room{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg
-      target:
-        entity_id: camera.kids_room
-      action: camera.snapshot
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 5
-      milliseconds: 0
-  - action: button.press
-    metadata: {}
-    data: {}
-    target:
-      entity_id: button.kids_room_stop_rtsp_stream
-  mode: single
 - id: '1737074902973'
   alias: test video notify
   description: ''

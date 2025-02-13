@@ -2,7 +2,7 @@ type: horizontal-stack
 view_layout:
   grid-area: footer
   show:
-    mediaquery: '(min-height: 376px)'
+    mediaquery: '(min-height: 463px)'
 cards:
   - type: custom:button-card
     name: >
@@ -20,18 +20,32 @@ cards:
       - footer
   - type: custom:button-card
     name: >
-      <ha-icon icon="mdi:vacuum"></ha-icon> Vacuum
-    tap_action: !include ./popup/footer/footer_vacuum.yaml
-    triggers_update:
-      - sensor.date
-    variables:
-      notify: >
-        [[[
-          let id = states['sensor.robot_vacuum_last_clean_end'];
-          if (id) return (Date.now() - Date.parse(id.state)) > 6048e5;
-        ]]]
+      <ha-icon icon="mdi:reload"></ha-icon>Cache
+    tap_action:
+      action: call-service
+      service: browser_mod.sequence
+      service_data:
+        sequence:
+          - service: browser_mod.javascript
+            data:
+              code: window.location.replace(window.location.href)
     template:
       - footer
+  - type: custom:button-card
+    name: >
+      <ha-icon icon="mdi:vacuum"></ha-icon> Vacuum
+    tap_action: !include ./popup/footer/footer_vacuum.yaml
+    template:
+      - footer
+    # triggers_update:
+    #   - sensor.date
+    # variables:
+    #   notify: >
+    #     [[[
+    #       let id = states['sensor.robot_vacuum_last_clean_end'];
+    #       if (id) return (Date.now() - Date.parse(id.state)) > 6048e5;
+    #     ]]]
+
   - type: custom:button-card
     name: >
       <ha-icon icon="mdi:home-assistant"></ha-icon> System
@@ -58,22 +72,15 @@ cards:
       - footer
 
   - type: custom:button-card
+    entity: binary_sensor.unifi_controller_alert
     name: >
       <ha-icon icon="mdi:router-wireless"></ha-icon> Network
     tap_action: !include ./popup/footer/footer_network.yaml
-    triggers_update:
-      - binary_sensor.unifi_controller_alert
-      - sensor.time
     variables:
       notify: >
         [[[
-          let id = this._config.triggers_update;
-          if (id.every(e => states[e]))
-              return states[id[0]].state === 'on'
-                  ? 'error'
-                  : states[id[1]].state === 'on'
-                    ? 1
-                    : null;
+          let entityState = entity?.state;
+            return entityState === 'on' ? 'alert' : null;
         ]]]
     template:
       - footer

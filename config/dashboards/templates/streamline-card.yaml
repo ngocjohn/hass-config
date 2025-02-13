@@ -1268,10 +1268,16 @@ github_heading_card:
     badges:
       - type: entity
         entity: '[[total_entity]]'
+        tap_action:
+          action: more-info
       - type: entity
         entity: '[[latest_entity]]'
+        tap_action:
+          action: more-info
       - type: entity
         entity: '[[stars_entity]]'
+        tap_action:
+          action: more-info
 
 github_graph_card:
   default:

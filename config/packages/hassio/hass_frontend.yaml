@@ -9,42 +9,6 @@
 #- from github.com/ngocjohn/hass-config
 #
 # PANEL CUSTOM
-panel_custom:
-  - name: integrations
-    sidebar_title: Integrations
-    sidebar_icon: mdi:devices
-    js_url: /api/hassio/app/entrypoint.js
-    url_path: 'config/integrations'
-    config:
-      ingress: core_configurator
-  - name: addons
-    sidebar_title: Addons
-    sidebar_icon: mdi:puzzle
-    js_url: /api/hassio/app/entrypoint.js
-    url_path: 'hassio/dashboard'
-    config:
-      ingress: core_configurator
-  - name: logs
-    sidebar_title: Logs
-    sidebar_icon: mdi:file-alert
-    js_url: /api/hassio/app/entrypoint.js
-    url_path: 'config/logs'
-    config:
-      ingress: core_configurator
-  - name: ha_system
-    sidebar_title: Supervisor
-    sidebar_icon: mdi:information-variant
-    js_url: /api/hassio/app/entrypoint.js
-    url_path: 'hassio/system/info'
-    config:
-      ingress: core_configurator
-  - name: automations
-    sidebar_title: Automations
-    sidebar_icon: mdi:robot
-    js_url: /api/hassio/app/entrypoint.js
-    url_path: 'config/automation/dashboard'
-    config:
-      ingress: core_configurator
 
 ingress:
   local_homebridge:
@@ -56,9 +20,40 @@ ingress:
       match: !secret external_url
       replace: !secret homebridge_url
       default: http://192.168.0.146:8581/
+  ## HA CONFIG PAGES ##
   link_areas:
     work_mode: iframe
     ui_mode: replace
     title: Areas
     icon: mdi:floor-plan
     url: /config/areas/dashboard
+  link_automation:
+    work_mode: iframe
+    ui_mode: replace
+    title: Automations
+    icon: mdi:robot
+    url: /config/automation/dashboard
+  link_supervisor:
+    work_mode: iframe
+    ui_mode: replace
+    title: Supervisor
+    icon: mdi:information-variant
+    url: /hassio/system/info
+  link_logs:
+    work_mode: iframe
+    ui_mode: replace
+    title: Logs
+    icon: mdi:file-alert
+    url: /config/logs
+  link_addons:
+    work_mode: iframe
+    ui_mode: replace
+    title: Addons
+    icon: mdi:puzzle
+    url: hassio/dashboard
+  link_integrations:
+    work_mode: iframe
+    ui_mode: replace
+    title: Integrations
+    icon: mdi:devices
+    url: config/integrations

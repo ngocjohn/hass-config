@@ -18,7 +18,7 @@ homeassistant:
 frontend:
   extra_module_url:
     - /local/dashboard-resources/card-mod.js
-    - /local/dashboard-resources/sidebar-divider.js
+    - /local/extra-module/sidebar-mod-bundle.js
     - /local/dashboard-resources/customize-css-change.js
   themes: !include_dir_merge_named themes
 

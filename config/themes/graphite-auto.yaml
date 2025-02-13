@@ -502,7 +502,7 @@ Graphite Auto:
       error-color: var(--token-color-feedback-error)
       # Background
       lovelace-background: var(--token-color-background-base)
-      primary-background-color: var(--token-color-background-base)
+      primary-background-color: '#16181d'
       secondary-background-color: var(--token-color-background-secondary)
       clear-background-color: var(--token-color-background-input-base)
       # Navbar

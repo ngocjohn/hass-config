@@ -8,7 +8,7 @@
   view_layout:
     grid-area: mainrooms
     show:
-      mediaquery: '(min-height: 376px)'
+      mediaquery: '(min-height: 463px)'
   columns: 2
   cards:
     # Living Room

@@ -9,7 +9,7 @@
   view_layout:
     grid-area: cameras
     show:
-      mediaquery: '(min-height: 376px)'
+      mediaquery: '(min-height: 463px)'
   columns: 1
   cards:
     #Conditional Media

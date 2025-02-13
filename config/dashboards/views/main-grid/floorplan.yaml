@@ -71,7 +71,7 @@
   view_layout:
     grid-area: floorplan
     show:
-      mediaquery: '(min-height: 376px) and (max-width: 1440px)'
+      mediaquery: '(min-height: 463px) and (max-width: 1440px)'
   card_mod:
     style: |
       ha-card {

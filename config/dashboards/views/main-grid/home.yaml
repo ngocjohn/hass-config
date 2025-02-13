@@ -8,7 +8,7 @@
   view_layout:
     grid-area: home
     show:
-      mediaquery: '(max-width: 1440px) and (min-height: 376px)'
+      mediaquery: '(max-width: 1440px) and (min-height: 463px)'
   columns: 2
   cards:
     # PERSON NGOC

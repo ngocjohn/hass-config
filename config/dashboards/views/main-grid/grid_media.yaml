@@ -23,35 +23,9 @@
                 - entity: select.conditional_media
                   state: Recently added
               card: &spotify
-                # type: custom:ytube-music-card
-                # name: Ytube Music Card
-                # entity: media_player.ytube_music_player
-                # card_mod:
-                #   style: |
-                #     ha-card {
-                #       padding: 0px !important;
-                #     }
-
-                type: custom:ytube-playlist-card
-                entity: media_player.ytube_music_player
-                extra: sensor.ytube_music_player_extra
-                layout:
-                  type: grid
-                  max_grid_columns: 3
-                  max_grid_rows: 3
-                  max_list_items: 6
-                  show_header: false
-                  show_footer: false
-                default_page:
-                  type: library_playlists
-
-                # type: media-control
-                # entity: media_player.spotify
-                # card_mod:
-                #   style: |
-                #     ha-card {
-                #       aspect-ratio: 1/1 !important;
-                #     }
+                type: custom:added-movie-card
+                entity: sensor.kodi_all_movies
+                show_item_count: 10
 
             - type: conditional
               conditions:
@@ -238,7 +212,7 @@
   view_layout:
     grid-area: media
     show:
-      mediaquery: '(min-height: 376px) and (max-width: 1440px)'
+      mediaquery: '(min-height: 463px) and (max-width: 1440px)'
   columns: 1
   cards:
     #Conditional Media

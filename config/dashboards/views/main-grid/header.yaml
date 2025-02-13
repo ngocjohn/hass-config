@@ -8,7 +8,7 @@
   view_layout:
     grid-area: header
     show:
-      mediaquery: '(min-height: 376px)'
+      mediaquery: '(min-height: 463px)'
   layout:
     margin: 0
 
