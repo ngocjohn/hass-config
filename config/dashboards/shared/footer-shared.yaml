@@ -20,19 +20,6 @@ cards:
       - footer
   - type: custom:button-card
     name: >
-      <ha-icon icon="mdi:reload"></ha-icon>Cache
-    tap_action:
-      action: call-service
-      service: browser_mod.sequence
-      service_data:
-        sequence:
-          - service: browser_mod.javascript
-            data:
-              code: window.location.replace(window.location.href)
-    template:
-      - footer
-  - type: custom:button-card
-    name: >
       <ha-icon icon="mdi:vacuum"></ha-icon> Vacuum
     tap_action: !include ./popup/footer/footer_vacuum.yaml
     template:

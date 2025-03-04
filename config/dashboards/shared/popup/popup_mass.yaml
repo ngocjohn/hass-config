@@ -24,6 +24,11 @@ browser_mod:
       layout:
         margin: 0
         grid-template-columns: 80vw
+        mediaquery:
+          '(max-width: 800px)':
+            grid-template-columns: 100vw
+            grid-template-rows: 100vh
+
       cards:
         - type: iframe
           # aspect_ratio: >
@@ -32,10 +37,4 @@ browser_mod:
           #       return '195%';
           #     else return '16:9';
           #   ]]]
-          url: >
-            [[[
-              const hassPanels = hass.panels;
-              const musicSlug = Object.keys(hassPanels).find(key => key.includes('_music_assistant'));
-              const musicPanel = hassPanels[musicSlug].url_path;
-              return `${hass.hassUrl()}${musicPanel}/ingress`;
-            ]]]
+          url: !secret mass_url

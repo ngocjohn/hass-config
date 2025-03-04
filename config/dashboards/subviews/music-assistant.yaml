@@ -1,0 +1,7 @@
+type: panel
+path: mass-media
+title: Music Assistant
+icon: si:applemusic
+cards:
+  - type: iframe
+    url: !secret mass_url

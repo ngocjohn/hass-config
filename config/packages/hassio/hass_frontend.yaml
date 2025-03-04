@@ -57,3 +57,15 @@ ingress:
     title: Integrations
     icon: mdi:devices
     url: config/integrations
+  link_node_red:
+    ui_mode: normal
+    work_mode: hassio
+    title: Node-RED
+    icon: si:nodered
+    url: a0d7b954_nodered
+  link_music_assistant:
+    ui_mode: normal
+    work_mode: hassio
+    title: Music Assistant
+    icon: si:applemusic
+    url: d5369777_music_assistant

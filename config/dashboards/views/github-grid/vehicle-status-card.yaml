@@ -8,7 +8,7 @@
       template: github_heading_card
       variables:
         - heading_title: 🚘 Vehicle status card
-        - total_entity: sensor.vehicle_status_card_total_2
+        - total_entity: sensor.vehicle_status_card_total
         - latest_entity: sensor.vehicle_status_latest
         - stars_entity: sensor.vehicle_status_card_stargazers
         - repo_link: https://github.com/ngocjohn/vehicle-status-card
@@ -31,7 +31,7 @@
             template: github_new_graph
             variables:
               - history_name: 'vehicle_status'
-              - total_entity: sensor.vehicle_status_card_total_2
+              - total_entity: sensor.vehicle_status_card_total
               - latest_entity: sensor.vehicle_status_latest
           - type: custom:streamline-card
             template: stargazer_list

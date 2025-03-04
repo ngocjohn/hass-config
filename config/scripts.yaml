@@ -588,6 +588,7 @@ homepod_alarm:
     target:
       entity_id: media_player.bedroom
     data: {}
+    enabled: false
   - delay:
       hours: 0
       minutes: 0
@@ -675,4 +676,47 @@ backup_addon:
       - '{{ addon_slug }}'
       name: '{{ addon_slug }}_{{ version }}_{{ now().strftime(''%d_%m_%H_%M'') }}'
   alias: backup addon
+  description: ''
+lovelace_reload:
+  sequence:
+  - wait_for_trigger:
+    - trigger: event
+      event_type: lovelace_updated
+    continue_on_timeout: false
+  - target:
+      entity_id: sensor.code_line_count
+    data: {}
+    action: homeassistant.update_entity
+  - parallel:
+    - repeat:
+        count: 3
+        sequence:
+        - delay:
+            hours: 0
+            minutes: 0
+            seconds: 0
+            milliseconds: 500
+        - data:
+            duration: 1
+            message: ' '
+          target:
+            device_id:
+            - 44ebbefcd0dad5b66b4d90ff566c1030
+          action: browser_mod.notification
+        - data:
+            duration: 1
+            message: ' '
+          target:
+            device_id:
+            - e5211b8956d56a9d80b84665dfb8e957
+          action: browser_mod.notification
+        - data:
+            duration: 1
+            message: ' '
+          target:
+            device_id:
+            - 4f43e0dc2e03b71c2e137f9696a04a2c
+          action: browser_mod.notification
+  mode: restart
+  alias: Lovelace Reload
   description: ''

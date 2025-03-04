@@ -25,3 +25,8 @@ template:
         icon: 'mdi:star'
         unit_of_measurement: 'stars'
         unique_id: 'vehicle_status_card_stargazers'
+      - name: 'Sidebar Organizer Stargazers'
+        state: '{{ states.sensor.repo_sidebar_organizer_stars.state }}'
+        icon: 'mdi:star'
+        unit_of_measurement: 'stars'
+        unique_id: 'repo_sidebar_organizer_stargazers'

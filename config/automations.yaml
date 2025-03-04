@@ -1224,3 +1224,15 @@
         push:
           category: camera
   mode: single
+- id: '1739425730318'
+  alias: Samsung Alarm
+  description: ''
+  triggers:
+  - trigger: time
+    at: sensor.viet_ngoc_samsung_next_alarm
+  conditions: []
+  actions:
+  - action: script.homepod_alarm
+    metadata: {}
+    data: {}
+  mode: restart

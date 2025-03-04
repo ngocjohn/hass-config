@@ -10,7 +10,7 @@ Hey there! Welcome to my little corner of the tech world! 👨‍💻
 
 This is where I store all the cool configurations for my Home Assistant system. Well, it's a mix of awesome codes and setups I discovered from the Home Assistant community. Seriously, those folks are wizards! 🧙‍♂️ As a bit of an internet newbie turned tech enthusiast, I stumbled upon the magic of IT, and this repository is my way of sharing the joy and knowledge I've gained along the way. Dive in, explore, and let the tech magic begin! ✨
 
-I frequently refresh my configuration files. My current Home Assistant version is <b>2025.2.2</b>. If you find something you like, don't forget to give my repository a ⭐️!
+I frequently refresh my configuration files. My current Home Assistant version is <b>2025.2.5</b>. If you find something you like, don't forget to give my repository a ⭐️!
 
 ## Some of my projects for Home Assistant
 
@@ -45,15 +45,15 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>36,513 </td>
+              <td>37,193 </td>
               <td>34</td>
-              <td>178</td>
+              <td>182</td>
               <td>63</td>
-              <td>54</td>
-              <td>30</td>
-              <td>1159</td>
+              <td>55</td>
+              <td>33</td>
+              <td>1203</td>
               <td>202</td>
-              <td>38</td>
+              <td>39</td>
           </tr>
       </tbody>
   </table>
@@ -149,6 +149,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Polr Ytube Media Card](https://github.com/pathofleastresistor/polr-ytube-media-card)
 - [Purifier Card](https://github.com/denysdovhan/purifier-card)
 - [Rpi Monitor Card](https://github.com/ironsheep/lovelace-rpi-monitor-card)
+- [Sidebar Organizer](https://github.com/ngocjohn/sidebar-organizer)
 - [Simple Thermostat](https://github.com/nervetattoo/simple-thermostat)
 - [Slider Button Card](https://github.com/custom-cards/slider-button-card)
 - [Spotify Lovelace Card](https://github.com/custom-cards/spotify-card)
