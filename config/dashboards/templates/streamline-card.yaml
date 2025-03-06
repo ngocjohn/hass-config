@@ -285,34 +285,34 @@ grid_atv:
     template:
       - mediaplayer
   # SAMSUNG TV
-grid_samsung:
-  card:
-    type: custom:button-card
-    entity: media_player.bedroom_tv
-    name: >
-      [[[
-        let screenWidth = window.innerWidth,
-            screenHeight = window.innerHeight;
-        return `${screenWidth} ${screenHeight}`;
-      ]]]
-    hold_action: !include ../shared/honeycomb/shield.yaml
-    template:
-      - mediaplayer
 # grid_samsung:
 #   card:
 #     type: custom:button-card
 #     entity: media_player.bedroom_tv
 #     name: >
 #       [[[
-#         let source = states['media_player.bedroom_tv'].attributes.source;
-#           if ( variables.state_on && source !==  'Android TV Launcher' )
-#             return source;
-#           else
-#             return 'Samsung';
+#         let screenWidth = window.innerWidth,
+#             screenHeight = window.innerHeight;
+#         return `${screenWidth} ${screenHeight}`;
 #       ]]]
 #     hold_action: !include ../shared/honeycomb/shield.yaml
 #     template:
 #       - mediaplayer
+grid_samsung:
+  card:
+    type: custom:button-card
+    entity: media_player.shield
+    name: >
+      [[[
+        let source = states['media_player.shield'].attributes.source;
+          if ( variables.state_on && source !==  'Android TV Launcher' )
+            return source;
+          else
+            return 'Samsung';
+      ]]]
+    hold_action: !include ../shared/honeycomb/shield.yaml
+    template:
+      - mediaplayer
 
 # PLAYSTATION
 grid_playstation:

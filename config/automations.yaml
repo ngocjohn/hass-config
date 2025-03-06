@@ -442,19 +442,21 @@
 - id: '1694516012171'
   alias: Only update vaze information every 20 minutes when I'm home
   description: ''
-  trigger:
-  - platform: time_pattern
-    minutes: /20
+  triggers:
+  - minutes: /20
     id: 20min
-  condition:
+    trigger: time_pattern
+  conditions:
   - condition: state
     entity_id: device_tracker.viet_ngoc_samsung
     state: not_home
-  action:
-  - service: homeassistant.update_entity
-    data: {}
+  actions:
+  - data:
+      entity_id:
+      - device_tracker.viet_ngoc_samsung
     target:
       entity_id: sensor.waze_ngoc_home
+    action: homeassistant.update_entity
 - id: '1694721012171'
   alias: Spotify Vibrant Color
   description: ''
@@ -672,7 +674,6 @@
   triggers:
   - entity_id:
     - media_player.living_room_tv
-    - media_player.bedroom_tv
     attribute: media_title
     trigger: state
     id: title_change
@@ -682,7 +683,15 @@
       seconds: 2
   - entity_id:
     - media_player.living_room_tv
-    - media_player.bedroom_tv
+    trigger: state
+    id: state_changed
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 2
+    from:
+  - entity_id:
+    - media_player.living_room_tv
     trigger: state
     id: reset_title
     attribute: app_id
@@ -704,10 +713,6 @@
               'com.google.ios.youtube') and state_attr('media_player.living_room_tv',
               'media_title') != state_attr('sensor.youtube_thumbnail', 'title') }}\n{%
               endif%}"
-          - condition: template
-            value_template: '{{ is_state_attr(''media_player.bedroom_tv'', ''source'',
-              ''YouTube'') and state_attr(''media_player.bedroom_tv'', ''media_title'')
-              != state_attr(''sensor.youtube_thumbnail'', ''title'') }}'
       sequence:
       - event: youtube_update
         event_data: {}
@@ -1111,41 +1116,32 @@
 - id: '1719583633037'
   alias: Vanny skolka
   description: ''
-  trigger:
-  - platform: template
-    value_template: '{% set lag_in_minute = 10 %} {% set travel_time_in_minute = states("sensor.waze_ngoc_jahoda")|int
+  triggers:
+  - value_template: '{% set lag_in_minute = 10 %} {% set travel_time_in_minute = states("sensor.waze_ngoc_skolka")|int
       %} {% set target_time = now().replace(hour=16).replace(minute=45).replace(second=0)
       %} {{ as_timestamp(target_time) - (travel_time_in_minute+lag_in_minute)*60 <=
       as_timestamp(now())}}'
-  condition:
+    trigger: template
+  conditions:
   - condition: not
     conditions:
     - condition: zone
       entity_id: device_tracker.viet_ngoc_samsung
       zone: zone.smichov
-  action:
-  - service: notify.mobile_app_viet_ngoc
-    data:
-      message: '{{ states(''sensor.waze_ngoc_jahoda'')}}min {{ state_attr(''sensor.waze_ngoc_jahoda'',''route'')}}'
-      title: Vanesska Jesle
-      data:
-        shortcut:
-          name: Jahoda Direction
-          ignore_result: ignore
-        push:
-          sound:
-            name: findmy.wav
-            critical: 1
-            volume: 1
+  actions:
+  - data:
+      message: '{{ states(''sensor.waze_ngoc_skolka'')}}min {{ state_attr(''sensor.waze_ngoc_skolka'',''route'')}}'
+      title: Vanesska Skolka
+    action: notify.mobile_app_viet_ngoc_samsung
   mode: single
 - id: '1719583833596'
   alias: Vanny skolka waze
   description: ''
-  trigger:
-  - platform: time_pattern
-    minutes: /2
+  triggers:
+  - minutes: /2
     id: 20min
-  condition:
+    trigger: time_pattern
+  conditions:
   - condition: time
     after: '14:00:00'
     before: '17:00:00'
@@ -1155,13 +1151,12 @@
     - wed
     - tue
     - mon
-  action:
-  - service: homeassistant.update_entity
-    data: {}
-    target:
+  actions:
+  - target:
       entity_id:
-      - sensor.waze_ngoc_jahoda
+      - sensor.waze_ngoc_skolka
       - sensor.waze_ngoc_smichov_oc
+    action: homeassistant.update_entity
   mode: single
 - id: '1727802647185'
   alias: person_home_change

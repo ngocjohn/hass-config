@@ -146,7 +146,7 @@ group:
     entities:
       # - media_player.spotify
       - media_player.living_room_tv
-      - media_player.bedroom_tv
+      # - media_player.bedroom_tv
       - media_player.spotifyplus_ngoc_nguyen
   homepod_airplay:
     name: 'Homepod Airplay'
@@ -169,7 +169,7 @@ group:
     icon: mdi:television
     entities:
       - media_player.living_room_tv
-      - media_player.bedroom_tv
+      # - media_player.bedroom_tv
   conditional_media:
     name: Conditional Media
     icon: mdi:play-circle

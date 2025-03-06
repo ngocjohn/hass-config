@@ -41,6 +41,7 @@
                   - progress_bar
                   - tpl_minicontrol
                   - icon_apple_tv
+
             - type: conditional
               conditions:
                 - entity: select.conditional_media
@@ -61,7 +62,7 @@
                   state: Bedroom TV
               card: &BEDROOMTV
                 type: custom:button-card
-                entity: media_player.shieldtv_kodi
+                entity: media_player.shield
                 name: 'ShieldTV'
                 triggers_update: sensor.youtube_thumbnail
                 template:

@@ -12,25 +12,6 @@ purge_dockerlog:
     data: {}
   mode: single
   icon: mdi:archive-remove
-samsung_turn_on_off:
-  alias: SAMSUNG turn on off
-  sequence:
-  - if:
-    - condition: state
-      entity_id: media_player.bedroom_tv
-      state: 'off'
-    then:
-    - service: media_player.turn_on
-      data: {}
-      target:
-        entity_id: media_player.bedroom_tv
-    else:
-    - service: media_player.turn_off
-      data: {}
-      target:
-        entity_id: media_player.bedroom_tv
-  mode: single
-  icon: mdi:power
 atv_sleep:
   alias: ATV Sleep
   sequence:

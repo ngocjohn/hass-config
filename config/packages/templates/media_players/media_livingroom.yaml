@@ -16,6 +16,8 @@ media_player:
       media_player.atv
       {% elif is_state_attr('media_player.sony_bravia_tv', 'source', 'HDMI 2') %}
       media_player.atv
+      {% elif is_state_attr('media_player.sony_bravia_tv', 'source', 'Apple TV') %}
+      media_player.atv
       {% else %}
       media_player.sony_bravia_tv
       {% endif %}
@@ -24,6 +26,8 @@ media_player:
       and not is_state('media_player.kodi_atv', 'off') %}
       on
       {% elif is_state_attr('media_player.sony_bravia_tv', 'source', 'HDMI 2') %}
+      {{ states.media_player.atv.state }}
+      {% elif is_state_attr('media_player.sony_bravia_tv', 'source', 'Apple TV') %}
       {{ states.media_player.atv.state }}
       {% else %}
       {{ states.media_player.sony_bravia_tv.state  }}

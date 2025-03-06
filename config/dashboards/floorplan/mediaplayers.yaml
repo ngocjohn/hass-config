@@ -54,15 +54,15 @@
     - atv-entity-picture
   entities:
     - media_player.living_room_tv
-    # - sensor.youtube_thumbnail
+    - sensor.youtube_thumbnail
     # - media_player.kodi_atv
   state_action:
     - service: floorplan.image_set
       service_data:
         image: |
           >
-          const mediaState = states['media_player.living_room_tv'].state;
-          const appState = states['media_player.living_room_tv'].attributes.app_name;
+          let mediaState = states['media_player.living_room_tv'].state;
+          let appState = states['media_player.living_room_tv'].attributes.app_name;
           if (mediaState !== "off") {
             if (appState === "YouTube") {
               return states['sensor.youtube_thumbnail'].state;
@@ -73,56 +73,73 @@
             return "/local/hafloor/transparent_idle.png";
           }
 
-- entities:
-    - light.sony_tv_backlight
-  state_action:
-    - service: floorplan.style_set
-      service_data:
-        element: 'light.sony_tv_backlight'
-        style: |
-          >
-          let ligtState = states['light.sony_tv_backlight'].state;
-          if (ligtState !== "on")
-              return "display: none;";
+# - entities:
+#     - media_player.living_room_tv
+#   state_action:
+#     - service: floorplan.style_set
+#       service_data:
+#         element: 'atv-entity-picture'
+#         style: |
+#           >
+#           let mediaState = states['media_player.living_room_tv'].state;
+#           let appState = states['media_player.living_room_tv'].attributes.app_name;
+#           let isInDefault = appState !== "YouTube" && appState !== "Kodi";
+#           if (mediaState !== "off" && isInDefault) {
+#             return "display: none;";
+#           } else {
+#             return "display: block;";
+#           }
 
-          let rgb0 = 0;
-          let rgb1 = 0;
-          let rgb2 = 0;
+# - entities:
+#     - light.sony_tv_backlight
+#   state_action:
+#     - service: floorplan.style_set
+#       service_data:
+#         element: 'light.sony_tv_backlight'
+#         style: |
+#           >
+#           let ligtState = states['light.sony_tv_backlight'].state;
+#           if (ligtState !== "on")
+#               return "display: none;";
 
-          let vibrantState = states['sensor.dark_vibrant_color'].state;
-          let vibrantArray = vibrantState.split(','); // Split the state by commas
-          let rgbValue = `rgb(${vibrantArray[0]}, ${vibrantArray[1]}, ${vibrantArray[2]})`; // Merge it as rgb
+#           let rgb0 = 0;
+#           let rgb1 = 0;
+#           let rgb2 = 0;
 
-          let playing = states['media_player.atv'].state === 'playing' || states['media_player.kodi_atv'].state === 'playing';
-            if ( ligtState === "on" && playing) {
-                return `
-                  stroke: ${rgbValue};
-                  fill: none;
-                  stroke-width: 15;
-                  filter: blur(5px) contrast(0.5);
-                  /* stroke-dasharray: 400;
-                  stroke-dashoffset: 400;
-                  animation: 5s ease-in-out 0s infinite strokeAnimation; */
-                  `;
-              } else {
-                return "display: none;";
-              }
+#           let vibrantState = states['sensor.dark_vibrant_color'].state;
+#           let vibrantArray = vibrantState.split(','); // Split the state by commas
+#           let rgbValue = `rgb(${vibrantArray[0]}, ${vibrantArray[1]}, ${vibrantArray[2]})`; // Merge it as rgb
 
-    - service: floorplan.style_set
-      service_data:
-        element: 'atv_idle_path'
-        style: |
-          >
-          let ligtState = states['light.sony_tv_backlight'].state;
-          if (ligtState !== "on")
-              return "display: none;";
-          if (ligtState === "on" && states['media_player.atv'].state !== "playing") {
-            return `
-              stroke: "rgb(255, 0, 0)" !important;
-              stroke-width: 5 !important;
-              animation: 5s ease-in-out 0s infinite strokeAnimation;
-              `;
-          }
+#           let playing = states['media_player.atv'].state === 'playing' || states['media_player.kodi_atv'].state === 'playing';
+#             if ( ligtState === "on" && playing) {
+#                 return `
+#                   stroke: ${rgbValue};
+#                   fill: none;
+#                   stroke-width: 15;
+#                   filter: blur(5px) contrast(0.5);
+#                   /* stroke-dasharray: 400;
+#                   stroke-dashoffset: 400;
+#                   animation: 5s ease-in-out 0s infinite strokeAnimation; */
+#                   `;
+#               } else {
+#                 return "display: none;";
+#               }
+
+#     - service: floorplan.style_set
+#       service_data:
+#         element: 'atv_idle_path'
+#         style: |
+#           >
+#           let ligtState = states['light.sony_tv_backlight'].state;
+#           if (ligtState !== "on")
+#               return "display: none;";
+#           if (ligtState === "on" && states['media_player.atv'].state !== "playing") {
+#             return `
+#               stroke: "rgb(255, 0, 0)" !important;
+#               stroke-width: 5 !important;
+#               animation: 5s ease-in-out 0s infinite strokeAnimation;
+#               `;
+#           }
 
 # - entity:
 #     - media_player.bedroom_tv
