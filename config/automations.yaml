@@ -690,12 +690,25 @@
       minutes: 0
       seconds: 2
     from:
+    to: playing
+  - entity_id:
+    - media_player.living_room_tv
+    trigger: state
+    id: state_changed
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 2
+    attribute: app_id
+    to: com.google.ios.youtube
   - entity_id:
     - media_player.living_room_tv
     trigger: state
     id: reset_title
     attribute: app_id
     from: com.google.ios.youtube
+    enabled: true
+    to:
   conditions: []
   actions:
   - choose:
@@ -705,6 +718,7 @@
         - condition: trigger
           id:
           - title_change
+          - state_changed
         - condition: or
           conditions:
           - condition: template
@@ -712,7 +726,7 @@
               != None %} \n{{ is_state_attr('media_player.living_room_tv', 'app_id',
               'com.google.ios.youtube') and state_attr('media_player.living_room_tv',
               'media_title') != state_attr('sensor.youtube_thumbnail', 'title') }}\n{%
-              endif%}"
+              endif %}"
       sequence:
       - event: youtube_update
         event_data: {}
@@ -1128,6 +1142,11 @@
     - condition: zone
       entity_id: device_tracker.viet_ngoc_samsung
       zone: zone.smichov
+  - condition: time
+    weekday:
+    - fri
+    - thu
+    - wed
   actions:
   - data:
       message: '{{ states(''sensor.waze_ngoc_skolka'')}}min {{ state_attr(''sensor.waze_ngoc_skolka'',''route'')}}'
@@ -1148,15 +1167,13 @@
     weekday:
     - fri
     - thu
-    - wed
-    - tue
-    - mon
   actions:
   - target:
       entity_id:
       - sensor.waze_ngoc_skolka
       - sensor.waze_ngoc_smichov_oc
     action: homeassistant.update_entity
+    data: {}
   mode: single
 - id: '1727802647185'
   alias: person_home_change
@@ -1190,35 +1207,6 @@
     input:
       vacuum: vacuum.roidmi_eve
       camera: camera.roidmi_eve
-- id: '1737074902973'
-  alias: test video notify
-  description: ''
-  triggers: []
-  conditions: []
-  actions:
-  - action: notify.mobile_app_viet_ngoc
-    data:
-      message: Test video
-      data:
-        video: /media/local/test_video.mp4
-    enabled: false
-  - action: notify.mobile_app_viet_ngoc
-    data:
-      message: browse
-      data:
-        actions:
-        - action: URI
-          title: Browse media
-          uri: /media-browser/browser
-    enabled: false
-  - action: notify.mobile_app_viet_ngoc
-    data:
-      message: Motion Detected in the Living Room
-      data:
-        entity_id: camera.kids_room_cam
-        push:
-          category: camera
-  mode: single
 - id: '1739425730318'
   alias: Samsung Alarm
   description: ''
@@ -1231,3 +1219,24 @@
     metadata: {}
     data: {}
   mode: restart
+- id: '1741648805445'
+  alias: ATV Force quit app
+  description: 'Quit all ATV app with sony off timeout '
+  triggers:
+  - trigger: state
+    entity_id:
+    - media_player.sony_bravia_tv
+    to: 'off'
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 30
+    from:
+  conditions:
+  - condition: template
+    value_template: '{{ state_attr(''media_player.atv'', ''app_name'') != none }} '
+  actions:
+  - action: script.atv_quit
+    metadata: {}
+    data: {}
+  mode: single

@@ -20,10 +20,12 @@
 	0% {
 		stroke-dashoffset: 400;
 	}
+
 	100% {
 		stroke-dashoffset: -400;
 	}
 }
+
 /* ANIMATION CSS styles */
 @keyframes fade-in {
 	from {
@@ -150,6 +152,7 @@ svg path {
 	stroke: inherit;
 	stroke-width: inherit;
 }
+
 g#cover,
 g#doors {
 	fill: none;
@@ -197,7 +200,7 @@ g#temphumid.temphumid-off {
 g path:active,
 g use:active,
 .light-on:active,
-g#entities > g:active path:not(.touch-area) {
+g#entities>g:active path:not(.touch-area) {
 	stroke: #9ed8ff99 !important;
 	stroke-width: 4px;
 	stroke-opacity: 0.7;
@@ -262,13 +265,16 @@ g#entities .media-player-tv.living-paused {
 	stroke-opacity: 0.3;
 	filter: sepia(1);
 }
+
 g#cover path:hover {
 	cursor: move !important;
 }
+
 #cover .cover-closed {
 	fill: #000000;
 	fill-opacity: 0.6;
 }
+
 #cover .cover-closing {
 	animation: coverClosing 10s;
 	transform-origin: 50% 50%;
@@ -276,14 +282,14 @@ g#cover path:hover {
 }
 
 .cover-closed:hover,
-g#cover > g:hover path:not(.touch-area) {
+g#cover>g:hover path:not(.touch-area) {
 	stroke: #a37e79 !important;
 	stroke-width: 4px;
 	stroke-opacity: 0.3;
 }
 
 .light-off:hover,
-g#areas > g:hover path:not(.touch-area) {
+g#areas>g:hover path:not(.touch-area) {
 	stroke: #e1e1e126 !important;
 	stroke-width: 4px !important;
 	stroke-opacity: 1;
@@ -291,25 +297,26 @@ g#areas > g:hover path:not(.touch-area) {
 
 /* Motions Group Styles */
 
-#motions > g.motion-on > circle {
+#motions>g.motion-on>circle {
 	stroke: green;
 	stroke-width: 5px;
 	filter: drop-shadow(0px 0px 6px rgba(75, 216, 63, 1)) opacity(100%);
 	animation: ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
 }
 
-#motions > g.motion-on > circle:nth-child(2) {
+#motions>g.motion-on>circle:nth-child(2) {
 	animation-delay: -0.1s;
 }
-#motions > g.motion-on > circle:nth-child(3) {
+
+#motions>g.motion-on>circle:nth-child(3) {
 	animation-delay: -0.2s;
 }
 
 /* TV MEDIA PLAYER STYLE  */
 
-#tv_overlays path {
+/* #tv_overlays path {
 	fill: none;
-}
+} */
 #tv_overlays image.media-living-off,
 #tv_overlays path.media-living-off,
 #tv_overlays #atv-entity-picture.media-living-idle {

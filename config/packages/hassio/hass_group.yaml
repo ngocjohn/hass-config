@@ -17,7 +17,7 @@ group:
       - light.living_room_floor_lamp
       - light.shelly_dimmer
       - light.shelly_rgbw_kitchen_led_strip
-      - light.sony_tv_backlight
+      # - light.sony_tv_backlight
   light_kitchen:
     name: Lights Kitchen Group
     icon: mdi:lightbulb-group
@@ -83,7 +83,7 @@ group:
       - light.office_ripple_mood_light
       - light.office_led_light_strip
       - light.bedroom_ripple_mood_light
-      - light.sony_tv_backlight
+      # - light.sony_tv_backlight
       # - light.yeelink_bslamp2_409e_light
   ## SECURITY - SENSORS GROUP ##
   motion_sensors:

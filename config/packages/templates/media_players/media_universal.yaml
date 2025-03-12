@@ -41,15 +41,17 @@ template:
 
           {% set playing = media_players | selectattr('state','eq','playing') | list %}
           {% set timeout_playing = False if playing | length == 0 else (as_timestamp(now()) - as_timestamp(playing | map(attribute='last_changed') | list | max)) < paused_timeout_minutes * 60 %}
+
           {% set paused = media_players | selectattr('state','eq','paused') | list %}
           {% set timeout_paused = False if paused | length == 0 else (as_timestamp(now()) - as_timestamp(paused | map(attribute='last_changed') | list | max)) < paused_timeout_minutes * 60 %}
+
           {% set idled = media_players | selectattr('state','eq','idle') | list %}
           {% set timeout_idled = False if idled | length == 0 else (as_timestamp(now()) - as_timestamp(idled | map(attribute='last_changed') | list | max)) < idled_timeout_minutes * 60 %}
 
           {% if playing %}
-            {{ media('playing') if timeout_playing else media('playing')}}
+            {{ media('playing') if timeout_playing else media('paused') if timeout_paused else media('playing') }}
           {% elif paused %}
-            {{ media('paused') if timeout_paused else recently_added }}
+            {{ media('paused') if timeout_paused else media('idle') if timeout_idled else recently_added }}
           {% elif idled %}
             {{ media('idle') if timeout_idled else recently_added }}
           {% else %}

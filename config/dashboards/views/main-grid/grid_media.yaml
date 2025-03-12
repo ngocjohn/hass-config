@@ -32,14 +32,21 @@
                 - entity: select.conditional_media
                   state: Living Room TV
               card: &ATV
+                # type: custom:button-card
+                # entity: media_player.living_room_tv
+                # name: ' '
+                # triggers_update: sensor.youtube_thumbnail
+                # template:
+                #   - conditional_media
+                #   - progress_bar
+                #   - tpl_minicontrol
+                #   - icon_apple_tv
                 type: custom:button-card
                 entity: media_player.living_room_tv
                 name: ' '
                 triggers_update: sensor.youtube_thumbnail
                 template:
-                  - conditional_media
-                  - progress_bar
-                  - tpl_minicontrol
+                  - universal_media_player
                   - icon_apple_tv
 
             - type: conditional

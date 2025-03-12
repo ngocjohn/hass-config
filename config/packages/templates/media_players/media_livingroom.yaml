@@ -11,26 +11,31 @@ media_player:
       - media_player.atv
       - media_player.sony_bravia_tv
     active_child_template: >
-      {% if is_state_attr('media_player.atv', 'app_id', 'org.xbmc.kodi-tvos')
-      and not is_state('media_player.kodi_atv', 'off') %}
-      media_player.atv
-      {% elif is_state_attr('media_player.sony_bravia_tv', 'source', 'HDMI 2') %}
-      media_player.atv
-      {% elif is_state_attr('media_player.sony_bravia_tv', 'source', 'Apple TV') %}
-      media_player.atv
+      {% set is_kodi = atv.attributes.app_id == 'org.xbmc.kodi-tvos' and kodi.state != 'off' %}
+      {% set is_atv = sony.attributes.source in ['HDMI 2', 'Apple TV'] %}
+      {% if is_kodi or is_atv %}
+        media_player.atv
       {% else %}
-      media_player.sony_bravia_tv
+        media_player.sony_bravia_tv
       {% endif %}
     state_template: >
-      {% if is_state_attr('media_player.atv', 'app_id', 'org.xbmc.kodi-tvos')
-      and not is_state('media_player.kodi_atv', 'off') %}
-      on
-      {% elif is_state_attr('media_player.sony_bravia_tv', 'source', 'HDMI 2') %}
-      {{ states.media_player.atv.state }}
-      {% elif is_state_attr('media_player.sony_bravia_tv', 'source', 'Apple TV') %}
-      {{ states.media_player.atv.state }}
+      {% set sony = states.media_player.sony_bravia_tv %}
+      {% set atv = states.media_player.atv %}
+      {% set kodi = states.media_player.kodi_atv %}
+
+      {% set paused_timeout = 1 * 45 %}
+      {% set is_kodi = atv.attributes.app_id == 'org.xbmc.kodi-tvos' and kodi.state != 'off' %}
+      {% set is_atv = sony.attributes.source in ['HDMI 2', 'Apple TV'] %}
+
+      {% if is_kodi %}
+        {{ kodi.state }}
+      {% elif is_atv %}
+        {% set paused = atv.state == 'paused' and atv.attributes.app_name != None %}
+        {% set timeout_paused = paused and (as_timestamp(now()) - as_timestamp(atv.last_changed)) < paused_timeout %}
+
+        {{ 'idle' if paused and not timeout_paused else atv.state }}
       {% else %}
-      {{ states.media_player.sony_bravia_tv.state  }}
+        {{ sony.state }}
       {% endif %}
     commands:
       turn_on:

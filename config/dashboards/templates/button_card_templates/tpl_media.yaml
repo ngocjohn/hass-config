@@ -635,6 +635,7 @@ mediaplayer:
   variables:
     state_on: >
       [[[ return ['on', 'idle', 'playing', 'paused', 'standby'].indexOf(!entity || entity.state) !== -1; ]]]
+
     circle_input: >
       [[[
         if (entity) {
@@ -646,6 +647,22 @@ mediaplayer:
         }
       ]]]
     circle_input_unit: '%'
+  styles:
+    card:
+      - box-shadow: >
+          [[[
+            if (entity && variables.light_entity !== undefined) {
+              let lightState = states[variables.light_entity].state;
+                if (lightState === 'on') {
+                  let lightAttr = states[variables.light_entity].attributes,
+                      rgb = lightAttr.rgb_color,
+                      rgba = `rgba(${rgb.join()},${(lightAttr.brightness/255)})`;
+                  return `inset 0 0 1.5rem ${rgba} !important`;
+                } else {
+                  return 'none';
+                }
+            }
+          ]]]
 currently_playing:
   template:
     - conditional_media
@@ -2158,6 +2175,7 @@ universal_media_player:
       - border-radius: 1rem
       - text-shadow: none
       - z-index: 1
+
     custom_fields:
       media_player:
         - position: absolute
