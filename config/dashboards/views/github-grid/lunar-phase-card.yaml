@@ -19,38 +19,19 @@
         style:
           .: |
 
-          swipe-card$: |
-            .swiper-container {
-              background: linear-gradient(to top, rgba(0, 255, 208, 0.1) 0%, transparent 100%);
-            }
-          swipe-card: !include ../../shared/snippets/style-git-swipe-card.yaml
+          streamline-card$:
+            swipe-card$: |
+              .swiper-container {
+                background: linear-gradient(to top, rgba(0, 255, 208, 0.1) 0%, transparent 100%);
+              }
+            swipe-card: !include ../../shared/snippets/style-git-swipe-card.yaml
       card:
-        type: custom:swipe-card
-        parameters: !include ../../shared/snippets/swiper-git-parameters.yaml
-
-        cards:
-          - type: custom:streamline-card
-            template: github_new_graph
-            variables:
-              - history_name: 'lunar_card'
-              - total_entity: sensor.lunar_phase_card_total
-              - latest_entity: sensor.lunar_phase_card_latest
-              - bar_color: 'rgba(0, 255, 208, 0.7)'
-              - fill_color: 'rgba(0, 255, 208, 0.2)'
-          - type: custom:streamline-card
-            template: stargazer_list
-            variables:
-              - star_entity: sensor.lunar_phase_card_stargazers
-          - type: custom:streamline-card
-            template: github_logbook_card
-            variables:
-              latest_entity: sensor.lunar_phase_card_latest
-              bar_color: rgb(196, 74, 34)
-              fill_color: 'rgba(196, 74, 34, 0.2)'
-
-          - type: custom:streamline-card
-            template: github_diagnostic_card
-            variables:
-              device_id: ngocjohn/lunar-phase-card
-              bar_color: rgb(196, 74, 34)
-              fill_color: 'rgba(196, 74, 34, 0.2)'
+        type: custom:streamline-card
+        template: github_combined_graph
+        variables:
+          - history_name: 'lunar_card'
+          - total_entity: sensor.lunar_phase_card_total
+          - latest_entity: sensor.lunar_phase_card_latest
+          - device_id: ngocjohn/lunar-phase-card
+          - bar_color: 'rgba(0, 255, 208, 0.7)'
+          - fill_color: 'rgba(0, 255, 208, 0.2)'

@@ -18,30 +18,21 @@
         style:
           .: |
 
-          swipe-card$: |
-            .swiper-container {
-              background: linear-gradient(to top, rgb(from rgba(62, 149, 205, 1) r g b / 0.1) 0%, transparent 100%);
-            }
-          swipe-card: !include ../../shared/snippets/style-git-swipe-card.yaml
+          streamline-card$:
+            swipe-card$: |
+              .swiper-container {
+                background: linear-gradient(to top, rgb(from rgba(62, 149, 205, 1) r g b / 0.1) 0%, transparent 100%);
+              }
+
+            swipe-card: !include ../../shared/snippets/style-git-swipe-card.yaml
+
       card:
-        type: custom:swipe-card
-        parameters: !include ../../shared/snippets/swiper-git-parameters.yaml
-        cards:
-          - type: custom:streamline-card
-            template: github_new_graph
-            variables:
-              - history_name: 'vehicle_status'
-              - total_entity: sensor.vehicle_status_card_total
-              - latest_entity: sensor.vehicle_status_latest
-          - type: custom:streamline-card
-            template: stargazer_list
-            variables:
-              - star_entity: sensor.vehicle_status_card_stargazers
-          - type: custom:streamline-card
-            template: github_logbook_card
-            variables:
-              - latest_entity: sensor.vehicle_status_latest
-          - type: custom:streamline-card
-            template: github_diagnostic_card
-            variables:
-              - device_id: ngocjohn/vehicle-status-card
+        type: custom:streamline-card
+        template: github_combined_graph
+        variables:
+          - history_name: 'vehicle_status'
+          - total_entity: sensor.vehicle_status_card_total
+          - latest_entity: sensor.vehicle_status_latest
+          - device_id: ngocjohn/vehicle-status-card
+          - bar_color: 'rgba(62, 149, 205, 1)'
+          - fill_color: 'rgba(62, 149, 205, 0.2)'

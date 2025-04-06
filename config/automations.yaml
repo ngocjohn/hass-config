@@ -32,89 +32,6 @@
     target:
       entity_id: input_boolean.door_lock
   mode: parallel
-- id: '1681806258876'
-  alias: z left
-  description: ''
-  trigger:
-  - platform: state
-    entity_id:
-    - sensor.gle
-    attribute: Street
-  - platform: state
-    entity_id:
-    - input_boolean.z_occupacy
-    to: 'on'
-    id: home
-  - platform: geo_location
-    source: person.huong_giang
-    zone: zone.smichov
-    event: enter
-    id: smichov
-  - platform: state
-    entity_id:
-    - sensor.ngoc_keys_airtag
-    attribute: Street
-    id: ngockey
-    enabled: false
-  condition: []
-  action:
-  - if:
-    - condition: trigger
-      id:
-      - home
-      - smichov
-    then:
-    - service: notify.mobile_app_viet_ngoc
-      data:
-        title: Location
-        message: '{{ state_attr(''sensor.gle'', ''Formatted Address'') }}'
-        data:
-          push:
-            sound:
-              name: findmy.wav
-              critical: 1
-              volume: 1
-          action_data:
-            latitude: '{{ state_attr(''device_tracker.findmy_d098350b38e241d3972ad394a27f38b6'',
-              ''latitude'') }}'
-            longitude: '{{ state_attr(''device_tracker.findmy_d098350b38e241d3972ad394a27f38b6'',
-              ''longitude'') }}'
-            latitude_delta: '0'
-            longitude_delta: '0.01'
-    else:
-    - service: notify.ngoc_devices
-      data:
-        title: Location
-        message: '{{ state_attr(''sensor.gle'', ''Formatted Address'') }}'
-        data:
-          action_data:
-            latitude: '{{ state_attr(''device_tracker.findmy_d098350b38e241d3972ad394a27f38b6'',
-              ''latitude'') }}'
-            longitude: '{{ state_attr(''device_tracker.findmy_d098350b38e241d3972ad394a27f38b6'',
-              ''longitude'') }}'
-            latitude_delta: '0'
-            longitude_delta: '0.01'
-    enabled: true
-  - choose:
-    - conditions:
-      - condition: trigger
-        id:
-        - ngockey
-      sequence:
-      - service: notify.ngoc_devices
-        data:
-          title: Ngoc Key
-          message: '{{ state_attr(''sensor.ngoc_keys_airtag'', ''Formatted Address'')
-            }}'
-          data:
-            action_data:
-              latitude: '{{ state_attr(''device_tracker.findmy_f28d260523a64f37b0595dfcd64d3b73'',
-                ''latitude'') }}'
-              longitude: '{{ state_attr(''device_tracker.findmy_f28d260523a64f37b0595dfcd64d3b73'',
-                ''longitude'') }}'
-              latitude_delta: '0'
-              longitude_delta: '0.01'
-  mode: single
 - id: '1681905795903'
   alias: camera snapshot
   description: ''
@@ -454,8 +371,7 @@
   - data:
       entity_id:
       - device_tracker.viet_ngoc_samsung
-    target:
-      entity_id: sensor.waze_ngoc_home
+      - sensor.waze_ngoc_home
     action: homeassistant.update_entity
 - id: '1694721012171'
   alias: Spotify Vibrant Color
@@ -491,16 +407,17 @@
 - id: '1695149693530'
   alias: Notify HA started
   description: ''
-  trigger:
-  - platform: homeassistant
-    event: start
-  condition: []
-  action:
+  triggers:
+  - event: start
+    trigger: homeassistant
+    enabled: true
+  conditions: []
+  actions:
   - data:
       message: Home assistant started
       data:
         tag: hastarted
-    action: notify.mobile_app_viet_ngoc
+    action: notify.mobile_app_viet_ngoc_samsung
   - delay:
       hours: 0
       minutes: 0
@@ -510,7 +427,7 @@
       message: clear_notification
       data:
         tag: hastarted
-    action: notify.mobile_app_viet_ngoc
+    action: notify.mobile_app_viet_ngoc_samsung
   - action: readme.generate
     data: {}
   mode: single
@@ -643,30 +560,7 @@
         message: Memory {{ states.sensor.ha_system_memory_usage.state }}% - CPU {{
           states.sensor.ha_system_cpu_usage.state }}%
         title: System
-      action: notify.notify
-  mode: single
-- id: '1701118898607'
-  alias: Notify_Github
-  description: ''
-  trigger:
-  - platform: state
-    entity_id:
-    - update.home_assistant_core_update
-    from: 'on'
-    to: 'off'
-    id: ha_version
-  condition: []
-  action:
-  - choose:
-    - conditions:
-      - condition: trigger
-        id:
-        - ha_version
-        enabled: true
-      sequence:
-      - service: readme.generate
-        data: {}
-  initial_state: true
+      action: notify.ngoc_devices
   mode: single
 - id: '1701556784590'
   alias: Update YouTube Sensor
@@ -1108,25 +1002,6 @@
         -%}\n  Mop\n{%- elif is_state_attr('vacuum.roidmi_eve','vacuum.sweep_type',2)
         -%}\n  Mop And Sweep\n{%- else -%} {%- endif -%}\n"
   mode: single
-- id: '1719003861113'
-  alias: HA updated
-  description: 'Ha updated generate readme '
-  trigger:
-  - platform: state
-    entity_id:
-    - update.home_assistant_core_update
-    from: 'on'
-    to: 'off'
-  - platform: state
-    entity_id:
-    - sensor.current_version
-    from:
-  condition: []
-  action:
-  - service: readme.generate
-    metadata: {}
-    data: {}
-  mode: single
 - id: '1719583633037'
   alias: Vanny skolka
   description: ''
@@ -1173,7 +1048,10 @@
       - sensor.waze_ngoc_skolka
       - sensor.waze_ngoc_smichov_oc
     action: homeassistant.update_entity
-    data: {}
+    data:
+      entity_id:
+      - sensor.waze_ngoc_skolka
+      - sensor.waze_ngoc_smichov_oc
   mode: single
 - id: '1727802647185'
   alias: person_home_change
@@ -1239,4 +1117,44 @@
   - action: script.atv_quit
     metadata: {}
     data: {}
+  mode: single
+- id: '1743952304385'
+  alias: Front door open
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.contact_sensor_entrance_door
+    from:
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+    id: door5min
+  - trigger: state
+    entity_id:
+    - binary_sensor.contact_sensor_entrance_door
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - door5min
+      sequence:
+      - action: notify.ngoc_devices
+        data:
+          title: Front Door Open!
+          message: Door is open
+          data:
+            ttl: 0
+            priority: high
+            channel: alarm_stream
+    default:
+    - action: notify.ngoc_devices
+      metadata: {}
+      data:
+        title: Door
+        message: 'Front door is {{ state_translated(trigger.entity_id) }} '
   mode: single

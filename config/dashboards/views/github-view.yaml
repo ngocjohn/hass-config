@@ -5,6 +5,7 @@ theme: tablet
 
 type: custom:grid-layout
 layout:
+  #desktop
   margin: 0
   grid-gap: 1vw 0.5vw
   grid-template-columns: 0 minmax(600px, 1fr) minmax(600px, 1fr) 0.5fr 0

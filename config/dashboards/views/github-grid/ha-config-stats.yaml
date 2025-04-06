@@ -42,10 +42,10 @@
             style: |
               ha-card .card-content-scroll {
                 padding: 0 !important;
-                max-height: 275px;
+                max-height: 300px;
                 height: 100%;
               }
-          max_items: 6
+          max_items: 7
           show:
             separator: true
             duration: false
@@ -60,6 +60,8 @@
               label: Lunar Phase Card
             - entity: sensor.vehicle_status_latest
               label: Vehicle Status
+            - entity: sensor.sidebar_organizer_latest_release
+              label: Sidebar Organizer
 - type: custom:layout-card
   layout_type: custom:grid-layout
   layout: !include ../../shared/snippets/layout-git-heading-content.yaml

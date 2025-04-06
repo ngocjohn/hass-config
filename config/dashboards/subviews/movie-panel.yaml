@@ -2,6 +2,7 @@ title: movie
 path: movie
 type: panel
 icon: mdi:kodi
+subview: false
 cards:
   - type: custom:movie-library-panel
     entity: sensor.kodi_movies_details

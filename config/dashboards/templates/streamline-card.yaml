@@ -1241,7 +1241,7 @@ github_heading_card:
         .: |
           @media screen and (min-width: 768px) {
             :host {
-              --ha-heading-card-title-font-size: 0.7vw;
+              --ha-heading-card-title-font-size: inherit;
               --ha-heading-card-title-font-weight: 500;
               --ha-heading-card-title-line-height: normal;
             }
@@ -1279,7 +1279,17 @@ github_heading_card:
       - type: entity
         entity: '[[stars_entity]]'
         tap_action:
-          action: more-info
+          action: fire-dom-event
+          browser_mod:
+            service: browser_mod.popup
+            data:
+              title: '[[heading_title]]'
+              content:
+                type: custom:streamline-card
+                template: stargazer_list
+                variables:
+                  - star_entity: '[[stars_entity]]'
+                  - bar_color: '[[bar_color]]'
 
 github_graph_card:
   default:
@@ -1395,9 +1405,11 @@ github_new_graph:
         entities:
           - entity: '[[latest_entity]]'
             color: '[[bar_color]]'
+
 stargazer_list:
   default:
     - star_entity: ''
+    - bar_color: 'rgba(62, 149, 205, 0.7)'
   card:
     type: custom:mod-card
     card_mod:
@@ -1405,25 +1417,27 @@ stargazer_list:
         ha-card {
           max-height: 500px;
           overflow-y: auto;
-          padding: 1rem;
           position: relative;
           width: 100%;
           height: 100%;
+          background: linear-gradient(to top, rgb(from {{'[[bar_color]]'}} r g b / 0.1) 0%, transparent 100%);
         }
         @media screen and (max-width: 800px) {
           ha-card {
             padding: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            max-height: unset !important;
           }
         }
         ha-card::before {
           content: '{{ states['[[star_entity]]'].attributes.stargazers | count }}\2605';
           position: absolute;
-          top: 5%;
           right: 1%;
           font-size: 2em;
           color: #ffffff1a;
           font-weight: 500;
-          height: 100%;
+          height: auto;
         }
     card:
       type: custom:auto-entities
@@ -1431,7 +1445,7 @@ stargazer_list:
         template: |
           {%- set followers = state_attr('[[star_entity]]', 'stargazers') %}
           [
-          {%- for user in followers -%}
+          {%- for user in followers | reverse -%}
             {
               'type': 'custom:button-card',
               'name': '{{ user.login }}',
@@ -1448,16 +1462,51 @@ stargazer_list:
         type: custom:layout-card
         layout_type: custom:grid-layout
         layout:
-          grid-template-columns: repeat(auto-fill, minmax(19%, 1fr))
+          grid-template-columns: repeat(auto-fit, minmax(25%, 1fr))
           grid-template-rows: auto
           grid-gap: 4px 8px
-          padding: 8px
+          padding: 0
+          margin: 0
           mediaquery:
             '(min-width: 768px) and (max-width: 1710px)':
-              grid-template-columns: repeat(auto-fill, minmax(24%, 1fr))
+              grid-template-columns: repeat(auto-fill, minmax(30%, 1fr))
               grid-gap: 4px
             '(max-width: 767.99px)':
-              grid-template-columns: repeat(auto-fill, minmax(30%, 1fr))
+              grid-template-columns: repeat(auto-fill, minmax(40%, 1fr))
               grid-gap: 8px 8px
-              padding: 8px
+              padding: 0
+              margin: 0
         cards: []
+
+github_combined_graph:
+  default:
+    - history_name: ''
+    - total_entity: ''
+    - latest_entity: ''
+    - device_id: ''
+    - bar_color: 'rgba(62, 149, 205, 1)'
+    - fill_color: 'rgba(62, 150, 205, 0.2)'
+  card:
+    type: custom:swipe-card
+    parameters: !include ../shared/snippets/swiper-git-parameters.yaml
+    cards:
+      - type: custom:streamline-card
+        template: github_new_graph
+        variables:
+          history_name: '[[history_name]]'
+          total_entity: '[[total_entity]]'
+          latest_entity: '[[latest_entity]]'
+          bar_color: '[[bar_color]]'
+          fill_color: '[[fill_color]]'
+      - type: custom:streamline-card
+        template: github_logbook_card
+        variables:
+          latest_entity: '[[latest_entity]]'
+          bar_color: '[[bar_color]]'
+          fill_color: '[[fill_color]]'
+      - type: custom:streamline-card
+        template: github_diagnostic_card
+        variables:
+          device_id: '[[device_id]]'
+          bar_color: '[[bar_color]]'
+          fill_color: '[[fill_color]]'
