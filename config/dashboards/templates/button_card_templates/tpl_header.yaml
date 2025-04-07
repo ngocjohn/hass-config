@@ -12,14 +12,10 @@ header_clock:
   template:
     - extra_styles
   show_icon: false
-  show_name: true
+  show_name: false
   show_state: false
   show_label: true
   tap_action: !include ../../shared/popup/calendar.yaml
-  name: >
-    [[[
-      return `${states['sensor.time'].state}`;
-    ]]]
   label: >
     [[[
       const event = new Date();
@@ -31,7 +27,7 @@ header_clock:
   styles:
     grid:
       - grid-template-areas: |
-          "n"
+          "clock"
           "l"
       - grid-template-columns: 1fr
       - grid-template-rows: 1fr min-content
@@ -43,6 +39,63 @@ header_clock:
       - background: none
       - --mdc-ripple-color: none
       - box-shadow: none
+  custom_fields:
+    clock:
+      card:
+        type: clock
+        clock_size: large
+        show_seconds: true
+        card_mod:
+          style: |
+            ha-card {
+              font-family: 'Raleway';
+              color: #97989c;
+            }
+            @media screen and (min-width: 800px) {
+              .time-wrapper.size-large .time-parts {
+                font-size: 5rem !important;
+              }
+            }
+
+            .time-part.second {
+              min-width: 30px !important;
+            }
+
+# header_clock:
+#   template:
+#     - extra_styles
+#   show_icon: false
+#   show_name: false
+#   show_state: false
+#   show_label: true
+#   tap_action: !include ../../shared/popup/calendar.yaml
+#   name: >
+#     [[[
+#       return `${states['sensor.time'].state}`;
+#     ]]]
+#   label: >
+#     [[[
+#       const event = new Date();
+#       const options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+#       var locale = variables.ulm_language;
+#       let formatted_date = event.toLocaleDateString('en-GB', options);
+#       return formatted_date;
+#     ]]]
+#   styles:
+#     grid:
+#       - grid-template-areas: |
+#           "n"
+#           "l"
+#       - grid-template-columns: 1fr
+#       - grid-template-rows: 1fr min-content
+#       - gap: 4px
+#     card:
+#       - padding: inherit
+#       - width: 100%
+#       - overflow: visible
+#       - background: none
+#       - --mdc-ripple-color: none
+#       - box-shadow: none
 
 header_weather:
   template:
