@@ -24,6 +24,8 @@
       entity: sensor.time
       template:
         - header_clock
+      tap_action: !include ../../shared/popup/calendar.yaml
+
     - type: custom:button-card
       entity: weather.prague
       tap_action: !include ../../shared/popup/popup_weather.yaml

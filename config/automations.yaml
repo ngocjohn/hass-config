@@ -1157,4 +1157,23 @@
       data:
         title: Door
         message: 'Front door is {{ state_translated(trigger.entity_id) }} '
+        data:
+          group: security-notify
+          tag: front-door
+  mode: single
+- id: '1744393666745'
+  alias: HA Calendar
+  description: ''
+  triggers:
+  - trigger: calendar
+    entity_id: calendar.home_assistant_devs
+    event: start
+    offset: 0:12:0
+  conditions: []
+  actions:
+  - action: persistent_notification.create
+    metadata: {}
+    data:
+      message: '{{ state_attr(''calendar.home_assistant_devs'', ''message'') }}'
+      title: HA Calendar
   mode: single

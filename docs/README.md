@@ -45,13 +45,13 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>37,142 </td>
+              <td>37,228 </td>
               <td>30</td>
-              <td>167</td>
+              <td>150</td>
               <td>63</td>
               <td>51</td>
-              <td>31</td>
-              <td>1150</td>
+              <td>32</td>
+              <td>1106</td>
               <td>221</td>
               <td>28</td>
           </tr>
@@ -132,7 +132,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Custom Icons](https://github.com/Mariusthvdb/custom-icons)
 - [Decluttering Card](https://github.com/custom-cards/decluttering-card)
 - [Fold Entity Row](https://github.com/thomasloven/lovelace-fold-entity-row)
-- [Ha Floorplan 🖌🎨 | Your Imagination Just Became The New Limit](https://github.com/ExperienceLovelace/ha-floorplan)
+- [Ha Floorplan 🖌🎨 | Your Imagination (Almost) Defines The Limits](https://github.com/ExperienceLovelace/ha-floorplan)
 - [History Explorer Card](https://github.com/SpangleLabs/history-explorer-card)
 - [Horizon Card](https://github.com/rejuvenate/lovelace-horizon-card)
 - [Hourly Weather Card](https://github.com/decompil3d/lovelace-hourly-weather)
