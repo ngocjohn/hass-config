@@ -5,7 +5,7 @@ icon: mdi:kodi
 subview: false
 cards:
   - type: custom:movie-library-panel
-    entity: sensor.kodi_movies_details
+    # entity: sensor.kodi_movies_details
+    kodiwebsocket: 'ws://192.168.0.231:9090/jsonrpc'
     players:
-      - media_player.kodi_atv
-      - media_player.kodiair
+      - media_player.kodi_mbpro
