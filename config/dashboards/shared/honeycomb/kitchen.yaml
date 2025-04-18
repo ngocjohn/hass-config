@@ -29,7 +29,7 @@ honeycomb_menu:
     - icon: mdi:light-recessed
       show: true
       position: 2
-      entity: light.digestor_lighting
+      entity: light.hood_lighting
       active: '[[[ return entity.state != "off" ]]]'
       tap_action:
         action: call-service
@@ -40,10 +40,10 @@ honeycomb_menu:
     - icon: phu:smoke-detector
       show: true
       position: 3
-      entity: fan.digestor_power_state
+      entity: fan.hood_power
       active: '[[[ return entity.state != "off" ]]]'
       tap_action:
         action: call-service
         service: homeassistant.toggle
         service_data:
-          entity_id: fan.digestor_power_state
+          entity_id: fan.hood_power

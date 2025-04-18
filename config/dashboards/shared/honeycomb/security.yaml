@@ -1,6 +1,5 @@
-action: call-service
-service: honeycomb
-service_data:
+action: fire-dom-event
+honeycomb_menu:
   active: true
   autoclose: true
   buttons:
