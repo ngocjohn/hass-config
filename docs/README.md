@@ -51,7 +51,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
               <td>63</td>
               <td>51</td>
               <td>33</td>
-              <td>1146</td>
+              <td>1148</td>
               <td>221</td>
               <td>28</td>
           </tr>
@@ -91,7 +91,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 ### Custom integrations
 - [Adaptive Lighting](https://github.com/basnijholt/adaptive-lighting)
 - [Better Thermostat](https://github.com/KartoffelToby/better_thermostat)
-- [Browser Mod](https://github.com/thomasloven/hass-browser_mod)
+- [Browser Mod Phx](https://github.com/dcapslock/hass-browser_mod)
 - [Dyson](https://github.com/libdyson-wg/ha-dyson)
 - [Eufy Security](https://github.com/fuatakgun/eufy_security)
 - [Extended Openai Conversation](https://github.com/jekalmin/extended_openai_conversation)
@@ -135,6 +135,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Ha Floorplan 🖌🎨 | Your Imagination (Almost) Defines The Limits](https://github.com/ExperienceLovelace/ha-floorplan)
 - [History Explorer Card](https://github.com/SpangleLabs/history-explorer-card)
 - [Home Assistant Swipe Navigation](https://github.com/zanna-37/hass-swipe-navigation)
+- [Honeycomb Menu](https://github.com/Sian-Lee-SA/honeycomb-menu)
 - [Horizon Card](https://github.com/rejuvenate/lovelace-horizon-card)
 - [Hourly Weather Card](https://github.com/decompil3d/lovelace-hourly-weather)
 - [Hui Element](https://github.com/thomasloven/lovelace-hui-element)
