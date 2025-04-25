@@ -688,7 +688,7 @@ Graphite Auto:
         --vertical-align-dialog: var(--tablet-popup-align-dialog) !important;
         --dialog-surface-margin-top: var(--tablet-popup-margin-top) !important;
         --dialog-box-shadow: 0 0px 16px 4px rgba(101,115,134, .15), 0 16px 64px 32px rgba(101,115,134, .5) !important;
-        --mdc-theme-surface: rgba(34, 38, 39, 0.6) !important;
+        --mdc-theme-surface: transparent !important;
       }
       ha-dialog *:focus-visible {
         outline: none !important;
