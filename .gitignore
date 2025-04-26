@@ -12,7 +12,8 @@ config/README.md
 config/scripts.yaml
 config/templates
 config/utils/
-
+config/www/dashboard-resources
+config/www/lovelace-media-player-card
 !config/www/hafloor
 
 
