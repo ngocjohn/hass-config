@@ -45,13 +45,13 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>37,253 </td>
+              <td>37,254 </td>
               <td>31</td>
-              <td>151</td>
+              <td>156</td>
               <td>63</td>
               <td>51</td>
               <td>33</td>
-              <td>1148</td>
+              <td>1154</td>
               <td>221</td>
               <td>28</td>
           </tr>
@@ -108,6 +108,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Node Red Companion](https://github.com/zachowj/hass-node-red)
 - [Nuki Lock](https://github.com/kvj/hass_nuki_ng)
 - [Portainer](https://github.com/tomaae/homeassistant-portainer)
+- [Prague Departure Boards](https://github.com/dvejsada/PID_integration)
 - [Simpleicons](https://github.com/vigonotion/hass-simpleicons)
 - [Spook 👻 Your Homie](https://github.com/frenck/spook)
 - [Spotifyplus](https://github.com/thlucas1/homeassistantcomponent_spotifyplus)
