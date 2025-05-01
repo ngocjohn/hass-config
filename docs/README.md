@@ -45,14 +45,14 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>37,254 </td>
+              <td>37,103 </td>
               <td>31</td>
-              <td>156</td>
+              <td>150</td>
               <td>63</td>
               <td>51</td>
               <td>33</td>
-              <td>1154</td>
-              <td>221</td>
+              <td>1190</td>
+              <td>222</td>
               <td>28</td>
           </tr>
       </tbody>
@@ -80,7 +80,6 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - phpMyAdmin
 - PS5 MQTT
 - Samba share
-- Studio Code Server
 - Xiaomi Mi Scale
 - Zigbee2MQTT
 </details>
@@ -108,7 +107,6 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Node Red Companion](https://github.com/zachowj/hass-node-red)
 - [Nuki Lock](https://github.com/kvj/hass_nuki_ng)
 - [Portainer](https://github.com/tomaae/homeassistant-portainer)
-- [Prague Departure Boards](https://github.com/dvejsada/PID_integration)
 - [Simpleicons](https://github.com/vigonotion/hass-simpleicons)
 - [Spook 👻 Your Homie](https://github.com/frenck/spook)
 - [Spotifyplus](https://github.com/thlucas1/homeassistantcomponent_spotifyplus)

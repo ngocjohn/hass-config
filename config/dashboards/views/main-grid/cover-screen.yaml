@@ -134,16 +134,16 @@
           columns: 2
           square: true
           cards:
-            - type: custom:decluttering-card
+            - type: custom:streamline-card
               template: grid_air_purifier
             # THERMOSTAT
-            - type: custom:decluttering-card
+            - type: custom:streamline-card
               template: grid_thermostat
             # LIVING ROOM COVERS
-            - type: custom:decluttering-card
+            - type: custom:streamline-card
               template: grid_covers_living
             # BEDOOM COVERS
-            - type: custom:decluttering-card
+            - type: custom:streamline-card
               template: grid_covers_bedroom
         - type: grid
           title: Devices

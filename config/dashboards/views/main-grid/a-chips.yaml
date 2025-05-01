@@ -19,7 +19,6 @@
       type: custom:button-card
       name: Lights
       entity: group.light_all
-      # tap_action: !include ../../shared/popup/all_light_mushroom.yaml
       tap_action: !include ../../shared/popup/popup_lights.yaml
       icon: phu:bulb-group-classic-3-alt
       template:
