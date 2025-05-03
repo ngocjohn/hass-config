@@ -145,6 +145,8 @@ base_updates:
     }
     a {
       color: var(--primary-color);
+      padding-inline-end: 8px;
+      text-decoration: none;
     }
     ul {
       margin-top: -0.6em;
@@ -173,8 +175,8 @@ updates_hass:
               ? hass_version_latest_beta.state
               : hass_version_latest.state;
           let release_notes = installed.includes('b')
-              ? marked.parse(hass_release_notes.attributes.body)
-              : marked.parse(hass_release_notes_beta.attributes.body);
+              ? marked.parse(hass_release_notes_beta.attributes.body)
+              : marked.parse(hass_release_notes.attributes.body);
           let subtitle = available === 0
               ? `${variables.translate_no_updates} <b>&larr;</b> ${installed}`
               : `${installed} <b>&rarr;</b> ${latest} ${variables.translate_available} ${String.fromCodePoint("0x1f389")}`;
@@ -213,6 +215,8 @@ updates:
     [[[
       // variables
       let output = '',
+          el = this.shadowRoot,
+          await = setTimeout(getHacsUpdate, 1000),
           updates = states[variables.updates],
           hacs_installed = states[variables.hacs_installed]?.attributes.repositories,
           hacs_update = states['update.hacs_update']?.attributes.installed_version,
@@ -227,29 +231,58 @@ updates:
 
 
 
+
       // update entities
       Object.keys(states).forEach(key => {
         let s = states[key], e = s.entity_id, a = s.attributes;
         if (e.includes('update.') && s.state === 'on') {
             output += `
-            <li>
-              <b><a href="#" onclick="window.open('${a.release_url}');">${rename(a)}</a></b> ${a.installed_version} <b>&rarr;</b> ${a.latest_version}
+            <li style="line-height: 36px;">
+              <b>
+                <a href="#" onclick="window.open('${a.release_url}');">
+                ${a.friendly_name.replace('update', '')}
+                </a>
+              </b>
+              ${a.installed_version} <b>&rarr;</b> ${a.latest_version}
+              <ha-button id="buttonUpdate" data-entity="${e}" style="float: right;"> Install </ha-button>
             </li>`;
         }
       });
-      function test(e) {
-        console.log(e);
+
+      function getHacsUpdate() {
+        let buttons = el.querySelectorAll('#buttonUpdate');
+        buttons.forEach(button => {
+
+          button.addEventListener('click', function() {
+            let entity = button.dataset.entity,
+                parrent = button.parentElement;
+                button.innerHTML = 'Installing...';
+                hass.callService('update', 'install', {
+                  entity_id: entity
+                });
+                setTimeout(() => {
+                    parrent.remove();
+                }, 5000);
+            })
+        });
+        clearTimeout(await);
       }
+
       // subtitle
       let count = updates?.attributes.update_entities,
           subtitle = count === 0
               ? `${no_updates} <b>&larr;</b> ${hacs_update || ''}`
               : `${count} ${count === 1 ? update_available : updates_available} ${String.fromCodePoint('0x1f389')}`;
+
+
       return `
         <ha-icon icon="mdi:package-up"></ha-icon> <span class="title">Integrations</span><br>
         <p class="subtitle">${subtitle}</p>
         <ul>${output}</ul>
       `;
+
+
+
     ]]]
 updates_icon_name:
   template: icon_name

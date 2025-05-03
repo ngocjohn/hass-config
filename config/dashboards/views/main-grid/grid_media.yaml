@@ -24,8 +24,7 @@
                   state: Recently added
               card: &spotify
                 type: custom:added-movie-card
-                entity: sensor.kodi_all_movies
-                show_item_count: 10
+                entity: sensor.tmdb_movies_trending
 
             - type: conditional
               conditions:

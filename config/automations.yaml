@@ -1176,4 +1176,20 @@
     data:
       message: '{{ state_attr(''calendar.home_assistant_devs'', ''message'') }}'
       title: HA Calendar
+  mode: restart
+- id: '1746237285708'
+  alias: Test calendar
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - calendar.viet_ngoc
+    attribute: offset_reached
+  conditions: []
+  actions:
+  - action: notify.mobile_app_viet_ngoc_samsung
+    metadata: {}
+    data:
+      message: Teet
+      title: Test calendar
   mode: single

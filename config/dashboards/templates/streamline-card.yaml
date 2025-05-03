@@ -109,7 +109,7 @@ grid_living_room:
 grid_kitchen_normal:
   card:
     type: custom:button-card
-    entity: light.kitchen_group
+    entity: sensor.kitchen_active
     name: Kitchen
     template:
       - rooms_base

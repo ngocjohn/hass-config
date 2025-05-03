@@ -92,8 +92,7 @@ base:
               return variables.state_error
                 ? 'rgba(139, 51, 51, 0.9)'
                 : 'rgba(115, 115, 115, 0.2)';
-            }
-            else {
+            } else {
               return variables.state_on
                 ? 'rgba(250, 250, 250, 0.75)'
                 : 'rgba(115, 115, 115, 0.2)';
@@ -1303,7 +1302,7 @@ circle:
                     // approximate position of thumb relative to circle
                     circle_slider.style.top = `${(circle_slider.value - 50) / 1.66 - 1}%`;
                     // debug position
-                    let debug = false;
+                    let debug = true;
                     if (debug) circle_slider.style.opacity = 0.3;
                     // pass each event to handler
                     ['click', 'input', 'mousedown', 'mouseup', 'touchstart', 'touchend'].forEach((event) => {

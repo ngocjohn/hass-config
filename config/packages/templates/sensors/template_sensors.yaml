@@ -140,9 +140,9 @@ template:
       - unique_id: kitchen_active
         name: 'Kitchen Active'
         state: >-
-          {% if is_state('light.kitchen_group', 'on') %} on
-          {% elif is_state('sensor.mycka_nadobi_operation_state', 'Run') %} dishwashing
-          {% elif is_state('sensor.hob_operation_state', 'Run') %} cooking
+          {% if is_state('sensor.hob_operation_state', 'run') %} cooking
+          {% elif is_state('sensor.mycka_nadobi_operation_state', 'run') %} dishwashing
+          {% elif is_state('light.kitchen_group', 'on') %} on
           {% else %} no
           {% endif %}
         icon: >-
@@ -207,7 +207,7 @@ template:
         state: >-
           {% if not is_state('light.utility_room_light', 'off') %} on
           {% elif not is_state('vacuum.roidmi_eve', 'docked') %} cleaning
-          {% elif is_state('sensor.washer_dryer_operation_state', 'Run') %} washing
+          {% elif is_state('sensor.washer_dryer_operation_state', 'run') %} washing
           {% else %} no
           {% endif %}
         icon: >-

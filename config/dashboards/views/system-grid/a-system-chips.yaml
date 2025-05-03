@@ -10,7 +10,7 @@
   parameters:
     centeredSlides: false
     breakpoints:
-      640:
+      600:
         slidesPerView: 6
         spaceBetween: 10
       320:
