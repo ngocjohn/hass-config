@@ -105,7 +105,7 @@ camera:
     force_api: roidmi
     scan_interval:
       seconds: 10
-    auto_update: true
+    auto_update: false
     colors:
       color_robo: [255, 89, 9]
       color_charger: [27, 117, 27]

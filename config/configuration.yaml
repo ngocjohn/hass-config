@@ -19,6 +19,7 @@ frontend:
   extra_module_url:
     - /local/dashboard-resources/card-mod.js
     - /local/dashboard-resources/customize-css-change.js
+    - /local/dashboard-resources/canary.js
   themes: !include_dir_merge_named themes
 
 # HTTP
@@ -30,8 +31,3 @@ http:
 # INCLUDES
 automation ui: !include automations.yaml
 script: !include scripts.yaml
-# STT
-stt:
-  - platform: google_cloud_stt
-    key_file: google_stt.json
-    model: command_and_search

@@ -27,7 +27,7 @@ browser_mod:
                   entity: sensor.roidmi_v60_029d_battery_level
                   postfix: ' %'
                   prefix: 'Battery: '
-              - entity: sensor.vacuum_fault
+              - entity: sensor.roidmi_v60_029d_device_fault
                 secondary_info:
                   entity: sensor.vacuum_position
                   prefix: 'Position: '

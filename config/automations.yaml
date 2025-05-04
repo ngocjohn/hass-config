@@ -662,32 +662,6 @@
   - event: kodi_video_scan
     event_data: {}
   mode: single
-- id: '1706968812356'
-  alias: Roidmi Camera Update
-  description: ''
-  trigger:
-  - platform: state
-    entity_id:
-    - vacuum.roidmi_eve
-  condition: []
-  action:
-  - if:
-    - condition: template
-      value_template: '{{ states.vacuum.roidmi_eve.state in ["unavailable", "unknown",
-        "docked"] }} '
-    then:
-    - service: camera.turn_off
-      target:
-        entity_id:
-        - camera.roidmi_eve
-      data: {}
-    else:
-    - service: camera.turn_on
-      target:
-        entity_id:
-        - camera.roidmi_eve
-      data: {}
-  mode: single
 - id: '1715819993809'
   alias: Kodi Update Picture Sensor
   description: ''
@@ -1077,14 +1051,6 @@
       retain: true
     action: mqtt.publish
   mode: parallel
-- id: '1733711039643'
-  alias: Disable Vacuum Camera
-  description: ''
-  use_blueprint:
-    path: PiotrMachowski/disable_vacuum_camera_update_when_docked.yaml
-    input:
-      vacuum: vacuum.roidmi_eve
-      camera: camera.roidmi_eve
 - id: '1739425730318'
   alias: Samsung Alarm
   description: ''
@@ -1177,19 +1143,32 @@
       message: '{{ state_attr(''calendar.home_assistant_devs'', ''message'') }}'
       title: HA Calendar
   mode: restart
-- id: '1746237285708'
-  alias: Test calendar
+- id: '1746378396403'
+  alias: Disable vacuum camera
   description: ''
   triggers:
   - trigger: state
     entity_id:
-    - calendar.viet_ngoc
-    attribute: offset_reached
-  conditions: []
+    - vacuum.roidmi_eve
+    id: state_changed
+  conditions:
+  - condition: template
+    value_template: '{{ trigger.to_state.state != trigger.from_state.state }}'
   actions:
-  - action: notify.mobile_app_viet_ngoc_samsung
-    metadata: {}
-    data:
-      message: Teet
-      title: Test calendar
+  - if:
+    - condition: template
+      value_template: '{{ trigger.to_state.state in ["unavailable", "unknown", "docked",
+        "idle", "paused", "charging"] }}'
+    then:
+    - action: camera.turn_off
+      metadata: {}
+      data: {}
+      target:
+        entity_id: camera.roidmi_eve
+    else:
+    - action: camera.turn_on
+      metadata: {}
+      data: {}
+      target:
+        entity_id: camera.roidmi_eve
   mode: single
