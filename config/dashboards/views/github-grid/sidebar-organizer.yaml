@@ -1,0 +1,37 @@
+## Sidebar Organizer
+- type: custom:layout-card
+  layout_type: custom:grid-layout
+  layout: !include ../../shared/snippets/layout-git-heading-content.yaml
+  view_layout:
+    grid-area: sidebar-organizer
+  cards:
+    - type: custom:streamline-card
+      template: github_heading_card
+      variables:
+        heading_title: 🗄️ Sidebar Organizer
+        total_entity: sensor.sidebar_organizer_total
+        latest_entity: sensor.sidebar_organizer_latest_release
+        stars_entity: sensor.sidebar_organizer_stargazers
+        repo_link: https://github.com/ngocjohn/sidebar-organizer
+        bar_color: 'rgba(241, 203, 79, 0.7)'
+    - type: custom:mod-card
+      card_mod:
+        style:
+          .: |
+
+          streamline-card$:
+            swipe-card$: |
+              .swiper-container {
+                background: linear-gradient(to top, rgba(241, 203, 79, 0.1) 0%, transparent 100%);
+              }
+            swipe-card: !include ../../shared/snippets/style-git-swipe-card.yaml
+      card:
+        type: custom:streamline-card
+        template: github_combined_graph
+        variables:
+          history_name: 'lunar_integration'
+          total_entity: ssensor.sidebar_organizer_total
+          latest_entity: sensor.sidebar_organizer_latest_release
+          device_id: ngocjohn/sidebar-organizer
+          bar_color: 'rgba(241, 203, 79, 0.7)'
+          fill_color: 'rgba(241, 203, 79, 0.2)'

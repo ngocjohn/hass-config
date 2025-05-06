@@ -51,7 +51,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
               <td>64</td>
               <td>51</td>
               <td>29</td>
-              <td>1192</td>
+              <td>1194</td>
               <td>217</td>
               <td>28</td>
           </tr>

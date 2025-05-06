@@ -8,37 +8,38 @@ layout:
   #desktop
   margin: 0
   grid-gap: 1vw 0.5vw
-  grid-template-columns: 0 minmax(600px, 1fr) minmax(600px, 1fr) 0.5fr 0
+  grid-template-columns: 0 minmax(400px, 1fr) minmax(400px, 1fr) 0.5fr 0.5fr 0
   grid-template-rows: 0 fit-content(100%) fit-content(100%) 0
   grid-template-areas: |
-    ". .                .                   .             ."
-    ". vehicle-status   vehicle-info        hass-config   ."
-    ". lunar-card       lunar-integration   github-stats  ."
-    ". .                .                   .             ."
+    ". .                .                   .                 .                 ."
+    ". vehicle-status   vehicle-info        sidebar-organizer sidebar-organizer ."
+    ". lunar-card       lunar-integration   hass-config       github-stats      ."
+    ". .                .                   .                 .                 ."
   mediaquery:
     #portrait
     '(min-width: 1025px) and (max-width: 1720px)':
       grid-gap: 2vw 1vw
-      grid-template-columns: 0 minmax(600px, 1fr) minmax(600px, 1fr) 0
-      grid-template-rows: 0 fit-content(100%) fit-content(100%) fit-content(100%) 0
+      grid-template-columns: 0 repeat(auto-fit, minmax(300px, 1fr)) 0
+      grid-template-rows: fit-content(100%) fit-content(100%) fit-content(100%) min-content
       grid-template-areas: |
-        ". .                .                   ."
-        ". vehicle-status   vehicle-info        ."
-        ". lunar-card       lunar-integration   ."
-        ". hass-config      github-stats        ."
-        ". .                .                   ."
+        ". vehicle-status     vehicle-status      vehicle-info        vehicle-info       ."
+        ". lunar-card         lunar-card          lunar-integration   lunar-integration  ."
+        ". sidebar-organizer  sidebar-organizer   sidebar-organizer   sidebar-organizer  ."
+        ". hass-config        hass-config         github-stats        github-stats       ."
+
     # phone
     '(max-width: 1024px)':
       grid-gap: 1rem 0.5rem
       grid-template-columns: 0 minmax(300px, 1fr) 0
       grid-template-rows: 0 repeat(6, fit-content(100%)) 0
       grid-template-areas: |
-        ". .           ."
-        ". vehicle-status ."
-        ". lunar-integration ."
-        ". vehicle-info   ."
-        ". lunar-card     ."
-        ". hass-config    ."
-        ". github-stats   ."
-        ". .             ."
+        ". .                  ."
+        ". vehicle-status     ."
+        ". lunar-integration  ."
+        ". vehicle-info       ."
+        ". lunar-card         ."
+        ". sidebar-organizer  ."
+        ". hass-config        ."
+        ". github-stats       ."
+        ". .                  ."
 cards: !include_dir_merge_list github-grid/
