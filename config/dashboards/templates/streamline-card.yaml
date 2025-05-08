@@ -187,7 +187,7 @@ grid_kitchen_dishwasing:
               [[[
                 return window.matchMedia('(max-width: 800px)').matches
                   ? '77%'
-                  : '97%';
+                  : '98%';
               ]]]
           - left: -15%
           - width: 127%

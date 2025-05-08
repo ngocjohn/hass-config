@@ -24,11 +24,7 @@ browser_mod:
             card_mod:
               class: header nopadding
             entities:
-              - type: custom:tabbed-card
-                styles: # global styles applied to all tabs
-                  --mdc-theme-primary: 'rgba(250, 250, 250, 0.75)'
-                  --mdc-tab-text-label-color-default: '#97989c'
-                  --mdc-typography-button-font-size: 1em
+              - type: custom:nvn-tabs-card
                 tabs:
                   - !include ../../hidden/ap_office.yaml
                   - !include ../../hidden/ap_bedroom.yaml

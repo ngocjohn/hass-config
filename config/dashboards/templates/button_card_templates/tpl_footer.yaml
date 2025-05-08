@@ -245,12 +245,29 @@ updates:
               </b>
               ${a.installed_version} <b>&rarr;</b> ${a.latest_version}
               <ha-button id="buttonUpdate" data-entity="${e}" style="float: right;"> Install </ha-button>
+              <ha-button id="buttonUpdateSkip" data-entity="${e}" style="float: right;"> Skip </ha-button>
             </li>`;
         }
       });
 
       function getHacsUpdate() {
-        let buttons = el.querySelectorAll('#buttonUpdate');
+        let buttons = el.querySelectorAll('#buttonUpdate'),
+            skip_buttons = el.querySelectorAll('#buttonUpdateSkip');
+        // skip button
+        skip_buttons.forEach(button => {
+          button.addEventListener('click', function() {
+            let entity = button.dataset.entity,
+                parrent = button.parentElement;
+                button.innerHTML = 'Skipping...';
+                hass.callService('update', 'skip', {
+                  entity_id: entity
+                });
+                setTimeout(() => {
+                    parrent.remove();
+                }, 2500);
+            })
+        });
+        // update button
         buttons.forEach(button => {
 
           button.addEventListener('click', function() {

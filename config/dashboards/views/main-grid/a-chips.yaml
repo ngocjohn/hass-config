@@ -121,28 +121,28 @@
           - padding: 3px
           - background-color: null
           - width: 50%
-    - type: custom:button-card
-      name: Huong Giang
-      entity: person.huong_giang
-      double_tap_action: !include ../../shared/popup/home_zuzu.yaml
-      template:
-        - chips
-      state_display: >
-        [[[
-          if (entity)
-            return variables.state == 'not_home' || variables.state === 'away' || variables.state == 'unknown'
-              ? `<div class="marquee"> ${states['sensor.gle'].state}&nbsp;&nbsp;&nbsp;${states['sensor.gle'].state}&nbsp;</div>`
-              : variables.state;
-        ]]]
-      triggers_update: sensor.time
-      tap_action:
-        action: call-service
-        service: homeassistant.update_entity
-        service_data:
-          entity_id: >
-            [[[ return variables.entity_id ]]]
-      styles:
-        icon:
-          - padding: 3px
-          - background-color: null
-          - width: 50%
+    # - type: custom:button-card
+    #   name: Huong Giang
+    #   entity: person.huong_giang
+    #   double_tap_action: !include ../../shared/popup/home_zuzu.yaml
+    #   template:
+    #     - chips
+    #   state_display: >
+    #     [[[
+    #       if (entity)
+    #         return variables.state == 'not_home' || variables.state === 'away' || variables.state == 'unknown'
+    #           ? `<div class="marquee"> ${states['sensor.gle'].state}&nbsp;&nbsp;&nbsp;${states['sensor.gle'].state}&nbsp;</div>`
+    #           : variables.state;
+    #     ]]]
+    #   triggers_update: sensor.time
+    #   tap_action:
+    #     action: call-service
+    #     service: homeassistant.update_entity
+    #     service_data:
+    #       entity_id: >
+    #         [[[ return variables.entity_id ]]]
+    #   styles:
+    #     icon:
+    #       - padding: 3px
+    #       - background-color: null
+    #       - width: 50%

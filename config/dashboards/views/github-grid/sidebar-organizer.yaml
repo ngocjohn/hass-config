@@ -30,7 +30,7 @@
         template: github_combined_graph
         variables:
           history_name: 'lunar_integration'
-          total_entity: ssensor.sidebar_organizer_total
+          total_entity: sensor.sidebar_organizer_total
           latest_entity: sensor.sidebar_organizer_latest_release
           device_id: ngocjohn/sidebar-organizer
           bar_color: 'rgba(241, 203, 79, 0.7)'

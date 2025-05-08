@@ -1,86 +1,85 @@
-card:
-  type: entities
-  entities:
-    - type: custom:multiple-entity-row
-      entity: sensor.unifi_office_ap
-      name: Office AP
-      show_entity_picture: true
-      show_state: false
-      secondary_info:
-        attribute: Uptime
-      entities:
-        - entity: sensor.unifi_office_ap_cpu
-          name: CPU
-        - entity: sensor.unifi_office_ap_ram
-          name: RAM
-        - icon: mdi:restart
-          tap_action:
-            action: call-service
-            confirmation:
-              text: Are you sure you want to restart?
-            service: button.press
-            service_data:
-              entity_id: button.ap_office_restart
-    - type: custom:multiple-entity-row
-      entity: sensor.unifi_office_ap
-      icon: mdi:devices
-      name: 'Total Clients'
-      show_state: false
-      secondary_info:
+label: Office
+cards:
+  - type: entities
+    entities:
+      - type: custom:multiple-entity-row
         entity: sensor.unifi_office_ap
-      entities:
-        - entity: sensor.unifi_office_ap_2_4ghz_clients
-          name: 2.4GhZ
-          unit: ' '
-        - entity: sensor.unifi_office_ap_5ghz_clients
-          name: 5GhZ
-          unit: ' '
-        - entity: sensor.unifi_office_ap_guests
-          name: Guests
-          unit: ' '
-    - type: custom:multiple-entity-row
-      entity: sensor.unifi_office_ap
-      name: 'Experience'
-      icon: mdi:percent-outline
-      show_state: false
-      secondary_info:
-        attribute: Score
-      entities:
-        - entity: sensor.unifi_office_ap_2_4ghz_score
-          name: 2gHz
-          unit: '%'
-          tap_action:
-            action: none
-        - entity: sensor.unifi_office_ap_5ghz_score
-          name: 5gHz
-          unit: '%'
-          tap_action:
-            action: none
-    - type: custom:mini-graph-card
-      entities:
-        - entity: sensor.unifi_office_ap
-          name: Office
+        name: Office AP
+        show_entity_picture: true
+        show_state: false
+        secondary_info:
+          attribute: Uptime
+        entities:
+          - entity: sensor.unifi_office_ap_cpu
+            name: CPU
+          - entity: sensor.unifi_office_ap_ram
+            name: RAM
+          - icon: mdi:restart
+            tap_action:
+              action: call-service
+              confirmation:
+                text: Are you sure you want to restart?
+              service: button.press
+              service_data:
+                entity_id: button.ap_office_restart
+      - type: custom:multiple-entity-row
+        entity: sensor.unifi_office_ap
+        icon: mdi:devices
+        name: 'Total Clients'
+        show_state: false
+        secondary_info:
+          entity: sensor.unifi_office_ap
+        entities:
+          - entity: sensor.unifi_office_ap_2_4ghz_clients
+            name: 2.4GhZ
+            unit: ' '
+          - entity: sensor.unifi_office_ap_5ghz_clients
+            name: 5GhZ
+            unit: ' '
+          - entity: sensor.unifi_office_ap_guests
+            name: Guests
+            unit: ' '
+      - type: custom:multiple-entity-row
+        entity: sensor.unifi_office_ap
+        name: 'Experience'
+        icon: mdi:percent-outline
+        show_state: false
+        secondary_info:
           attribute: Score
-          color: '#00bb33'
-          show_state: true
-        - entity: sensor.unifi_bedroom_ap
-          name: Bedroom
-          attribute: Score
-          color: '#2196f3'
-        - entity: sensor.unifi_wall_ap
-          name: Living Room
-          attribute: Score
-          color: '#ff8a00'
-      group: false
-      font_size: 12px
-      hours_to_show: 12
-      show:
-        name: false
-        icon: false
-        graph: bar
-        state: false
-        extrema: false
-        average: false
-        points: true
-attributes:
-  label: Office
+        entities:
+          - entity: sensor.unifi_office_ap_2_4ghz_score
+            name: 2gHz
+            unit: '%'
+            tap_action:
+              action: none
+          - entity: sensor.unifi_office_ap_5ghz_score
+            name: 5gHz
+            unit: '%'
+            tap_action:
+              action: none
+      - type: custom:mini-graph-card
+        entities:
+          - entity: sensor.unifi_office_ap
+            name: Office
+            attribute: Score
+            color: '#00bb33'
+            show_state: true
+          - entity: sensor.unifi_bedroom_ap
+            name: Bedroom
+            attribute: Score
+            color: '#2196f3'
+          - entity: sensor.unifi_wall_ap
+            name: Living Room
+            attribute: Score
+            color: '#ff8a00'
+        group: false
+        font_size: 12px
+        hours_to_show: 12
+        show:
+          name: false
+          icon: false
+          graph: bar
+          state: false
+          extrema: false
+          average: false
+          points: true

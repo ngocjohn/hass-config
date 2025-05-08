@@ -477,12 +477,12 @@
 - id: '1696553366478'
   alias: 'Dishwasher Set Timer '
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - sensor.mycka_nadobi_operation_state
-    to: Run
-  condition:
+    to: run
+    trigger: state
+  conditions:
   - condition: or
     conditions:
     - condition: not
@@ -495,11 +495,14 @@
       - condition: state
         entity_id: sensor.mycka_nadobi_remaining_program_time
         state: unavailable
-  action:
-  - service: timer.start
+  actions:
+  - action: timer.set_duration
+    metadata: {}
     data:
-      duration: '{{ (as_timestamp(states.sensor.mycka_nadobi_remaining_program_time.state))
-        - (as_timestamp(now())) | round(0)}}'
+      duration: '{% set seconds = (as_timestamp(states(''sensor.mycka_nadobi_remaining_program_time''))
+        - as_timestamp(now())) | int %} {% set hours = (seconds // 3600) %} {% set
+        minutes = (seconds % 3600) // 60 %} {% set secs = seconds % 60 %} {{ ''%02d:%02d:%02d''
+        | format(hours, minutes, secs) }}'
     target:
       entity_id: timer.dishwasher_remaining
   initial_state: true
