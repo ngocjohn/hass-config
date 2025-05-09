@@ -20,7 +20,7 @@
       name: Lights
       entity: group.light_all
       tap_action: !include ../../shared/popup/popup_lights.yaml
-      icon: phu:bulb-group-classic-3-alt
+      icon: mdi:lightbulb-group
       template:
         - chips
       state_display: >
@@ -34,7 +34,7 @@
               [[[
                 return variables.state_on
                   ? '#b68752'
-                  : null;
+                  : '';
               ]]]
     - &media
       type: custom:button-card
@@ -64,13 +64,6 @@
             entity: media_player.currently_playing
       hold_action: !include ../../shared/extra-popup/mass-homepods.yaml
 
-    # - &homemode
-    #   type: custom:button-card
-    #   name: Home Mode
-    #   entity: sensor.lights_count
-    #   icon: mdi:account-multiple-plus
-    #   template:
-    #     - chips
     - &air
       type: custom:button-card
       name: Air Quality

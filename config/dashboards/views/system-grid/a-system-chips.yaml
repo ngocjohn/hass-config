@@ -16,7 +16,6 @@
       320:
         slidesPerView: 3
         spaceBetween: 5
-    slideToClickedSlide: true
     speed: 420
   cards:
     - type: custom:button-card
