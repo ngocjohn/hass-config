@@ -21,7 +21,7 @@
     - type: conditional
       conditions:
         - entity: sensor.kitchen_active
-          state_not: 'dishwashing'
+          state: 'on'
       card:
         type: custom:streamline-card
         template: grid_kitchen_normal

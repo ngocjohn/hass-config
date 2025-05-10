@@ -8,14 +8,15 @@
     grid-area: chips
   start_card: 1
   parameters:
+    slideToClickedSlide: true
     centeredSlides: false
     breakpoints:
       600:
         slidesPerView: 6
         spaceBetween: 10
-      320:
+      400:
         slidesPerView: 3
-        spaceBetween: 5
+        spaceBetween: 8
     speed: 420
   cards:
     - type: custom:button-card

@@ -216,6 +216,7 @@ chip_air:
         - display: flex
         - justify-content: center
         - align-items: center
+
 chip_system:
   template:
     - chips
@@ -257,3 +258,111 @@ chip_system:
     icon:
       - color: *systemcolor
       - opacity: 0.8
+
+chip_air_new:
+  template:
+    - chips
+  show_icon: false
+  custom_fields:
+    icon:
+      card:
+        type: custom:modern-circular-gauge
+        card_mod:
+          style: |
+            :host {
+              --gauge-stroke-width: 10px !important;
+            }
+            ha-card {
+              padding: 1px !important;
+            }
+            @media screen and (max-width: 800px) {
+              .header {
+                display: none !important;
+              }
+            }
+
+        entity: sensor.air_quality_index
+        tap_action:
+          action: none
+        secondary:
+          entity: sensor.air_quality_index
+          show_state: false
+          show_gauge: outter
+          needle: true
+          adaptive_state_color: false
+          show_unit: false
+          tap_action:
+            action: none
+        name: 'µg/m³'
+        header_font_size: 8
+        state_font_size: 30
+        gauge_background_style:
+          color: '#ffffff40'
+          opacity: 0.5
+        show_icon: false
+        show_unit: false
+        smooth_segments: true
+        header_position: bottom
+        show_header: true
+        max: 300
+        needle: false
+        show_state: true
+        segments:
+          - from: 0
+            color: '#4CAF50'
+          - from: 12
+            color: '#4CAF50'
+          - from: 35.5
+            color: '#8BC34A'
+          - from: 55.5
+            color: '#FFEB3B'
+          - from: 90
+            color: '#FF5722'
+          - from: 150.5
+            color: '#FF5722'
+          - from: 200
+            color: '#607D8B'
+        tertiary: {}
+
+  styles:
+    grid:
+      - grid-template-areas: |
+          "icon n"
+          "icon s"
+      - grid-template-rows: min-content min-content
+      - grid-template-columns: 0.5fr 1fr
+      # - column-gap: 8px
+    card:
+      - color: '#97989c'
+      - background: linear-gradient(to bottom, rgba(53, 59, 83, 0.8) 0%, rgba(10, 14, 34, 0.8) 50%, rgba(53, 59, 83, 0.8) 100%)
+      # - border-bottom-color: rgba(10, 14, 34, 1)
+      - padding: 0.2vw
+      - max-height: 76px
+    state:
+      - color: >
+          [[[
+            const colorMap = {
+              'Excellent': '#4CAF50',
+              'Good': '#8BC34A',
+              'Fair': '#FFEB3B',
+              'Interior': '#FF5722',
+              'Poor': '#607D8B'
+            };
+
+            let state = colorMap[variables.state];
+            return `${state}`
+          ]]]
+    custom_fields:
+      icon:
+        - justify-content: center
+        - align-items: center
+        - width: >
+            [[[
+              if (window.innerWidth < 800) return '60%';
+              else return '56%';
+            ]]]
+        - margin-inline: >
+            [[[
+              if (window.innerWidth < 800) return '10px';
+              else return '1.5rem';
+            ]]]

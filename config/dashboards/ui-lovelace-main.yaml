@@ -8,4 +8,5 @@ views:
   - !include views/github-view.yaml
   - !include subviews/movie-panel.yaml
   - !include subviews/music-assistant.yaml
+  - !include subviews/floor-plan.yaml
   # - !include subviews/ytube-music.yaml

@@ -69,7 +69,12 @@
       name: Air Quality
       entity: sensor.home_climate
       template:
-        - chip_air
+        - chip_air_new
+      # type: custom:button-card
+      # name: Air Quality
+      # entity: sensor.home_climate
+      # template:
+      #   - chip_air
 #################################################
 #                                               #
 #             CHIPS MIN 1700px                  #

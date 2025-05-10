@@ -49,31 +49,6 @@
             - type: custom:streamline-card
               template: grid_contact_sensors
 
-    - type: horizontal-stack # MEDIA - MOVIES
-      cards:
-        - type: grid
-          title: Cameras
-          columns: 2
-          cards:
-            # CAM DOOR
-            - type: custom:streamline-card
-              template: grid_cam_door
-            # CAM KIDS ROOM
-            - type: custom:streamline-card
-              template: grid_cam_kids
-            # CAM TERRACE
-            - type: custom:streamline-card
-              template: grid_cam_terrace
-            # CAM GARDEN
-            - type: custom:streamline-card
-              template: grid_cam_garden
-        - type: grid
-          title: Media
-          columns: 1
-          cards:
-            - type: custom:added-movie-card
-              entity: sensor.kodi_all_movies
-
     - type: horizontal-stack # MASTERS - OTHER ROOMS
       cards:
         - type: grid
@@ -189,3 +164,28 @@
             # HOMEPODS
             - type: custom:streamline-card
               template: grid_homepods
+
+    - type: horizontal-stack # MEDIA - MOVIES
+      cards:
+        - type: grid
+          title: Cameras
+          columns: 2
+          cards:
+            # CAM DOOR
+            - type: custom:streamline-card
+              template: grid_cam_door
+            # CAM KIDS ROOM
+            - type: custom:streamline-card
+              template: grid_cam_kids
+            # CAM TERRACE
+            - type: custom:streamline-card
+              template: grid_cam_terrace
+            # CAM GARDEN
+            - type: custom:streamline-card
+              template: grid_cam_garden
+        - type: grid
+          title: Media
+          columns: 1
+          cards:
+            - type: custom:added-movie-card
+              entity: sensor.kodi_all_movies

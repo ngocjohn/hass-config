@@ -21,21 +21,11 @@ Graphite Auto:
   primary-font-family: Poppins, Raleway, SF Pro Text, sans-serif, system-ui
   font-stack: Poppins, Raleway, SF Pro Text, sans-serif, system-ui
   display-font-stack: Poppins, Raleway, SF Pro Text, sans-serif, system-ui
-  paper-font-common-base_-_font-family: var(--primary-font-family)
-  paper-font-common-code_-_font-family: var(--primary-font-family)
-  paper-font-body1_-_font-family: var(--primary-font-family)
-  paper-font-subhead_-_font-family: var(--primary-font-family)
-  paper-font-headline_-_font-family: var(--primary-font-family)
-  paper-font-caption_-_font-family: var(--primary-font-family)
-  paper-font-title_-_font-family: var(--primary-font-family)
   ha-card-header-font-family: var(--primary-font-family)
   mdc-typography-body1-font-family: var(--primary-font-family)
   mdc-typography-font-family: var(--primary-font-family)
   mdc-typography-button-font-family: var(--primary-font-family)
-  paper-font-display1_-_font-family: var(--primary-font-family)
-  paper-font-display2_-_font-family: var(--primary-font-family)
-  paper-font-display3_-_font-family: var(--primary-font-family)
-  paper-font-display4_-_font-family: var(--primary-font-family)
+  ha-font-family-body: var(--primary-font-family)
   st-spacing: 0
 
   modes:
