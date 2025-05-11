@@ -157,6 +157,4 @@ command_line:
       scan_interval: 86400
 
 sensor:
-  - platform: folder
-    folder: /config/www/tmp/snapshots
   - platform: websocket_api

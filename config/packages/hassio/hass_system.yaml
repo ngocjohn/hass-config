@@ -37,7 +37,6 @@ recorder:
     entity_globs:
       - sensor.*_motor_speed
       - sensor.browser_*
-      - sensor.prague_moon_*
       - sensor.*_color
       - sensor.*_energy
       - sensor.*_power
