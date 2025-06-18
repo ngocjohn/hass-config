@@ -5,6 +5,7 @@ path: system
 layout:
   # default:
   margin: 0
+  padding: 0
   # height: 100%
   grid-gap: 2rem
   grid-template-columns: 0 1fr 1fr 1fr 1fr 1fr 1fr 0

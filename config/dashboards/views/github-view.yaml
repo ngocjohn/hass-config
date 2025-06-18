@@ -7,6 +7,7 @@ type: custom:grid-layout
 layout:
   #desktop
   margin: 0
+  padding: 0
   grid-gap: 1vw 0.5vw
   grid-template-columns: 0 minmax(400px, 1fr) minmax(400px, 1fr) 0.5fr 0.5fr 0
   grid-template-rows: 0 fit-content(100%) fit-content(100%) 0
