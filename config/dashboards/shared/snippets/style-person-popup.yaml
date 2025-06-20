@@ -1,0 +1,65 @@
+style:
+  .: |
+    @media (max-width: 450px), (max-height: 500px) {
+      ha-dialog {
+        --mdc-dialog-min-width: 100vw !important;
+        --mdc-dialog-min-height: 100vh !important;
+        --popup-border-radius: 0 !important;
+      }
+    }
+  hui-vertical-stack-card:
+    $: |
+      #root {
+        display: block;
+        height: 35rem !important;
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+      }
+      @media (max-width: 450px), (max-height: 500px) {
+        #root {
+          height: calc(100vh - 66px)!important;
+        }
+      }
+    $hui-entities-card:
+      $: |
+        ha-card {
+          z-index: 2 !important;
+        }
+    $hui-map-card:
+      $: |
+        ha-card {
+          border-radius: 12px;
+          transition: none;
+          bottom: 8rem;
+        }
+        @media (max-width: 450px), (max-height: 500px) {
+          ha-card {
+            height: calc(100vh - 66px)!important;
+          }
+        }
+        ha-icon-button {
+          color: #9da0a2 !important;
+        }
+      $ha-map:
+        $: |
+          #map {
+            background-color: transparent !important;
+            mask-image: linear-gradient(to bottom, transparent 10%, black 35%, black 90%, transparent 100%);
+          }
+          .leaflet-control-attribution {
+            display: none;
+          }
+          .leaflet-bar a {
+            background-color: rgba(115, 123, 124, 0.2) !important;
+            color: #9da0a2 !important;
+            backdrop-filter: blur(0.25em);
+            zoom: 140%;
+            display: none !important;
+          }
+          a.leaflet-control-zoom-in {
+            border-bottom: 1px solid #181818 !important;
+          }
+          .leaflet-pane.leaflet-tile-pane {
+            filter: invert(0.95) grayscale(0.95) contrast(95%);
+          }
