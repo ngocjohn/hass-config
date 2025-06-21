@@ -117,10 +117,8 @@ base_updates:
       - white-space: normal
     card:
       - cursor: default
-      - padding: 0.2em 0 0 0.6em
+      - padding: 0 0 1em
       - letter-spacing: var(--mdc-typography-body1-letter-spacing)
-  tap_action:
-    href:
   extra_styles: |
     #ripple {
       display: none;
@@ -152,7 +150,23 @@ base_updates:
       margin-top: -0.6em;
       font-size: 0.88em;
       letter-spacing: 0.5px;
-      line-height: 1.6em;
+      line-height: 100%;
+      padding-inline-start: 1em;
+      width: 100%;
+    }
+    li {
+      line-height: 100%;
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 0.5em;
+      align-items: anchor-center;
+    }
+    li span {
+      font-size: 0.9em;
+      opacity: 0.8;
     }
     code {
       background-color: var(--secondary-background-color);
@@ -237,22 +251,26 @@ updates:
         let s = states[key], e = s.entity_id, a = s.attributes;
         if (e.includes('update.') && s.state === 'on') {
             output += `
-            <li style="line-height: 36px;">
-              <b>
-                <a href="#" onclick="window.open('${a.release_url}');">
-                ${a.friendly_name.replace('update', '')}
-                </a>
-              </b>
-              ${a.installed_version} <b>&rarr;</b> ${a.latest_version}
-              <ha-button id="buttonUpdate" data-entity="${e}" style="float: right;"> Install </ha-button>
-              <ha-button id="buttonUpdateSkip" data-entity="${e}" style="float: right;"> Skip </ha-button>
+            <li>
+              <div id="infoName" data-entity="${e}">
+                <b>
+                  <a href="#" data-entity="${e}">&middot; ${a.friendly_name.replace('update', '')}
+                  </a>
+                </b>
+                <span>${a.installed_version} <b>&rarr;</b> ${a.latest_version}</span>
+              </div>
+              <div>
+                <ha-button id="buttonUpdate" data-entity="${e}">Install</ha-button>
+                <ha-button id="buttonUpdateSkip" data-entity="${e}">Skip</ha-button>
+              </div>
             </li>`;
         }
       });
 
       function getHacsUpdate() {
         let buttons = el.querySelectorAll('#buttonUpdate'),
-            skip_buttons = el.querySelectorAll('#buttonUpdateSkip');
+            skip_buttons = el.querySelectorAll('#buttonUpdateSkip'),
+            info_name = el.querySelectorAll('#infoName');
         // skip button
         skip_buttons.forEach(button => {
           button.addEventListener('click', function() {
@@ -282,6 +300,21 @@ updates:
                 }, 5000);
             })
         });
+
+        // info icon
+        info_name.forEach(info => {
+          info.addEventListener('click', function() {
+            let entity = info.dataset.entity;
+            info.dispatchEvent(new CustomEvent('hass-more-info', {
+              bubbles: true,
+              composed: true,
+              detail: {
+                entityId: entity
+              }
+            }));
+          });
+        });
+
         clearTimeout(await);
       }
 

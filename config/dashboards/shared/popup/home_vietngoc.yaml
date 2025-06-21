@@ -3,8 +3,6 @@ browser_mod:
   service: browser_mod.popup
   data:
     title: Viet Ngoc
-    style: >
-      --popup-max-width: 400px;
     content:
       type: custom:mod-card
       card_mod: !include ../snippets/style-person-popup.yaml
@@ -22,6 +20,7 @@ browser_mod:
               - entity: person.viet_ngoc
 
           - type: map
+            default_zoom: 16
             auto_fit: true
             dark_mode: true
             entities:

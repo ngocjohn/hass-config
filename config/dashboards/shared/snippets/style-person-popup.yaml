@@ -26,12 +26,18 @@ style:
         ha-card {
           z-index: 2 !important;
         }
+    $hui-history-graph-card:
+      $: |
+        ha-card > div {
+          margin-top: -2rem !important;
+        }
     $hui-map-card:
       $: |
         ha-card {
           border-radius: 12px;
           transition: none;
-          bottom: 8rem;
+          bottom: 0;
+          position: absolute;
         }
         @media (max-width: 450px), (max-height: 500px) {
           ha-card {
@@ -40,6 +46,14 @@ style:
         }
         ha-icon-button {
           color: #9da0a2 !important;
+        }
+        #buttons {
+          position: absolute;
+          bottom: 80px;
+          left: 3px;
+          display: flex;
+          flex-direction: row !important;
+          top: unset !important;
         }
       $ha-map:
         $: |
