@@ -3,38 +3,58 @@
 #                  CLIMATE                      #
 #                                               #
 #################################################
-
-- type: 'custom:layout-card'
+- type: grid
   view_layout:
     grid-area: climate
     show:
       mediaquery: '(min-height: 463px)'
-  layout_type: 'custom:grid-layout'
-  layout: !include ../../shared/snippets/layout-header-content.yaml
+  title: Climate
+  columns: 2
+  square: true
   cards:
-    - type: heading
-      heading: Climate
-      heading_style: title
-      card_mod: !include ../../shared/snippets/style-section-heading.yaml
-      badges:
-        - type: entity
-          show_state: true
-          show_icon: true
-          entity: sensor.home_climate
     # AIR PURIFIER
-    - type: grid
-      title: ''
-      columns: 2
-      square: true
-      cards:
-        - type: custom:streamline-card
-          template: grid_air_purifier
-        # THERMOSTAT
-        - type: custom:streamline-card
-          template: grid_thermostat
-        # LIVING ROOM COVERS
-        - type: custom:streamline-card
-          template: grid_covers_living
-        # BEDOOM COVERS
-        - type: custom:streamline-card
-          template: grid_covers_bedroom
+    - type: custom:streamline-card
+      template: grid_air_purifier
+    # THERMOSTAT
+    - type: custom:streamline-card
+      template: grid_thermostat
+    # LIVING ROOM COVERS
+    - type: custom:streamline-card
+      template: grid_covers_living
+    # BEDOOM COVERS
+    - type: custom:streamline-card
+      template: grid_covers_bedroom
+# - type: 'custom:layout-card'
+#   view_layout:
+#     grid-area: climate
+#     show:
+#       mediaquery: '(min-height: 463px)'
+#   layout_type: 'custom:grid-layout'
+#   layout: !include ../../shared/snippets/layout-header-content.yaml
+#   cards:
+#     - type: heading
+#       heading: Climate
+#       heading_style: title
+#       card_mod: !include ../../shared/snippets/style-section-heading.yaml
+#       badges:
+#         - type: entity
+#           show_state: true
+#           show_icon: true
+#           entity: sensor.home_climate
+#     # AIR PURIFIER
+#     - type: grid
+#       title: ''
+#       columns: 2
+#       square: true
+#       cards:
+#         - type: custom:streamline-card
+#           template: grid_air_purifier
+#         # THERMOSTAT
+#         - type: custom:streamline-card
+#           template: grid_thermostat
+#         # LIVING ROOM COVERS
+#         - type: custom:streamline-card
+#           template: grid_covers_living
+#         # BEDOOM COVERS
+#         - type: custom:streamline-card
+#           template: grid_covers_bedroom

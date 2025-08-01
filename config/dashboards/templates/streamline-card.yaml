@@ -527,7 +527,7 @@ grid_utility_washing:
                     name: Power
                     icon: mdi:power
                     secondary_info: last-changed
-                  - entity: binary_sensor.washer_dryer_door
+                  - entity: sensor.washer_dryer_door
                     name: Door
                   - entity: sensor.washer_dryer_operation_state
                     name: Operation State
