@@ -1,3 +1,5 @@
+# background: !include ../shared/snippets/view-background.yaml
+
 type: custom:grid-layout
 icon: mdi:chart-box
 theme: tablet

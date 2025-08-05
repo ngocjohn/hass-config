@@ -13,42 +13,9 @@
     - atv_idle_path
   tap_action: !include ../shared/honeycomb/atv.yaml
   double_tap_action: more-info
-  # hold_action:
-  #   - service: floorplan.execute
-  #     service_data:
-  #       my_custom_exec_calling_browser_mod: |
-  #         >
-  #         try{
-  #           // Remember that ha-floorplan exposes a lot of useful properties
-  #           console.log(
-  #             "this",this, "\nentitiy",entity, "\nelements", elements,
-  #             "\nconfig",config, "\nutil", util, "\nelement", element);
-
-  #           // Call browser_mod service
-  #           browser_mod.service('popup',{title: "My custom function with browser-mod call",
-  #           content:
-  #             {
-  #               // Create vertical stack card
-  #               type: "vertical-stack",
-  #               cards: [
-  #                 {
-  #                   // Entities card
-  #                   type: "entities",
-  #                   entities: [
-  #                     // Define each entity
-  #                     { entity: "sun.sun", name: "Sun" }
-  #                   ]
-  #                 }
-  #               ]
-  #             }
-  #           })
-  #         }catch(e){
-  #           console.log("Well.. That didn't go as planned",e);
-  #         }
   state_action:
     - service: floorplan.class_set
       service_data: 'media-living-${entity.state}'
-
 - element:
     - atv-entity-picture
   entities:
@@ -90,10 +57,22 @@
             return `
               display: none;
             `;
-        let lightState = states['light.sony_tv_backlight'].state;
+
+        let lightState = states['light.sony_tv_backlight'];
+        if (lightState === undefined || lightState.state === "off")
+            return `
+              fill: none;
+              stroke: none;
+              stroke-width: 0;
+              stroke-dasharray: none;
+              stroke-opacity: 0;
+            `;
+
+
+
         let rgbcolor = `rgb(${states['sensor.vibrant_color'].state})`;
         let animation = mediaState === "playing" ? "5s ease-in-out 0s infinite strokeAnimation" : "";
-        if (lightState === "on") {
+        if (lightState.state === "on") {
           return `
             fill: ${rgbcolor};
             stroke: ${rgbcolor};

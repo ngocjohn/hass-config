@@ -55,6 +55,16 @@
 	}
 }
 
+@keyframes fade-out {
+	from {
+		opacity: 1;
+	}
+
+	to {
+		opacity: 0;
+	}
+}
+
 @keyframes flickerAnimation {
 	0% {
 		opacity: 1;
@@ -159,21 +169,37 @@ g#doors {
 	stroke: none;
 }
 
-g#temphumid.temphumid-off {
+g#temphumid.temphumid-on {
+	display: block;
+}
+
+g#temphumid {
 	display: none;
 }
+
+g#Background>g#base-background.below_horizon image#above_horizon {
+	display: none;
+}
+
+/** * Background styles */
 
 #light-overlays image {
 	display: none;
-	/* transform: translate3d(0, 0, 0);
-	mix-blend-mode: lighten; */
-	animation: 0.75s fade-in linear forwards;
+	/* /* transform: translate3d(0, 0, 0) !important; */
+	animation: fade-in 0.75s linear forwards;
+
 }
+
+/*
+#light-overlays image.light-off {
+	transform: translate3d(0, 0, 0) !important;
+	animation: fade-out 0.75s linear forwards;
+} */
 
 #light-overlays image.light-on {
 	display: block;
-	transform: translate3d(0, 0, 0);
-	/* mix-blend-mode: lighten; */
+	transform: translate3d(0, 0, 0) !important;
+	animation: 0.75s fade-in linear forwards;
 }
 
 #areas path {
@@ -317,6 +343,8 @@ g#areas>g:hover path:not(.touch-area) {
 /* #tv_overlays path {
 	fill: none;
 } */
+
+#tv_overlays #media_player_overlay\.living_room_tv.media-living-unknown,
 #tv_overlays image.media-living-off,
 #tv_overlays path.media-living-off,
 #tv_overlays #atv-entity-picture.media-living-idle {

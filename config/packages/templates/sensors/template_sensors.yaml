@@ -248,7 +248,13 @@ template:
             {{ p1 + p2 + p3 }}
           device_playing: >-
             {{ this.attributes.device | list | count }} Playing
-          mass_homepods: "{{expand('group.homepod_mass_airplay') | rejectattr('state', 'eq', 'off') | list | count }}"
+          # filter Mass airplay homepods that are not active
+          mass_homepods: >-
+            {{ expand('group.homepod_mass_airplay')
+                | rejectattr('state', 'in', ['idle', 'off'])
+                | list
+                | count
+            }}
 
       # SENSOR - COVER SHUTTERS COUNT
       - name: Covers open count

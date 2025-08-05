@@ -3,33 +3,60 @@
 #         DOORS                                 #
 #                                               #
 # ################################################
-- entities:
-    - binary_sensor.contact_sensor_bedroom_balcony_contact
-    - binary_sensor.contact_sensor_kid_balcony_contact
-    - binary_sensor.contact_sensor_office_balcony_contact
-    - binary_sensor.contact_sensor_garden_door
-    - binary_sensor.contact_sensor_terrace_door
-    - lock.nuki_neklanka_byt_lock
-  state_action:
-    - service: floorplan.class_set
-      service_data: 'door-${entity.state}'
-- element: icon-front-door
-  entity: lock.nuki_neklanka_byt_lock
+- name: Doors
+  entities:
+    - entity: binary_sensor.contact_sensor_bedroom_balcony_contact
+      element: binary_sensor.contact_sensor_bedroom_balcony_contact
+    - entity: binary_sensor.contact_sensor_kid_balcony_contact
+      element: binary_sensor.contact_sensor_kid_balcony_contact
+    - entity: binary_sensor.contact_sensor_office_balcony_contact
+      element: binary_sensor.contact_sensor_office_balcony_contact
+    - entity: binary_sensor.contact_sensor_garden_door
+      element: binary_sensor.contact_sensor_garden_door
+    - entity: binary_sensor.contact_sensor_terrace_door
+      element: binary_sensor.contact_sensor_terrace_door
   tap_action: false
   state_action:
-    action: call-service
-    service: floorplan.style_set
-    service_data:
-      style: |
-        >
-        if( entity.state !== "locked" )
-            return `
-              display: block;
-              fill: #bababa;
-              fill-opacity: 0.3;
-            `
-        return `
-          display: block;
-          fill: #bababa;
-          fill-opacity: 0.8;
-        `
+    service: floorplan.class_set
+    service_data: '${(entity.state === "on") ? "door-on" : "door-off"}'
+# - entities:
+#     - binary_sensor.contact_sensor_bedroom_balcony_contact
+#     - binary_sensor.contact_sensor_kid_balcony_contact
+#     - binary_sensor.contact_sensor_office_balcony_contact
+#     - binary_sensor.contact_sensor_garden_door
+#     - binary_sensor.contact_sensor_terrace_door
+#     # - lock.nuki_neklanka_byt_lock
+#   state_action:
+#     action: call-service
+#     service: floorplan.class_set
+#     service_data:
+#       element: '${entity.entity_id}'
+#       class: |
+#         >
+#         console.log("Setting for entity", entity.entity_id, "with state", entity.state);
+#         if (entity.state === "on") {
+#           return `door-on`;
+#         } else {
+#           return `door-off`;
+#         }
+
+# - element: icon-front-door
+#   entity: lock.nuki_neklanka_byt_lock
+#   tap_action: false
+#   state_action:
+#     action: call-service
+#     service: floorplan.style_set
+#     service_data:
+#       style: |
+#         >
+#         if( entity.state !== "locked" )
+#             return `
+#               display: block;
+#               fill: #bababa;
+#               fill-opacity: 0.3;
+#             `
+#         return `
+#           display: block;
+#           fill: #bababa;
+#           fill-opacity: 0.8;
+#         `

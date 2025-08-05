@@ -1,19 +1,11 @@
-- element:
-    - above_horizon
-  entity: sun.sun
-  tap_action: false
-  hold_action: false
-  double_tap_action: false
+- entity: 'sun.sun'
+  element: 'base-background'
   state_action:
     action: call-service
-    service: floorplan.style_set
+    service: floorplan.class_set
     service_data:
-      style: |
-        >
-        if( entity.state === "above_horizon" )
-            return "display: block;";
-        return "display: none;"
-
+      element: 'base-background'
+      class: '${entity.state}'
 # - element: icon-phone-rotate
 #   hold_action:
 #     - service: floorplan.execute

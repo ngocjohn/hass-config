@@ -1,0 +1,85 @@
+media_player:
+  - platform: universal ### CURRENTLY PLAYING ###
+    name: Mass Universal Airplay
+    unique_id: mass_universal_airplay
+    device_class: speaker
+    children:
+      - media_player.office_homepod
+      - media_player.bathroom
+      - media_player.bedroom
+      - media_player.living_room_2
+    active_child_template: >
+      {%- set no_player = 'None' %}
+      {% set paused_timeout_minutes = 2-%}
+      {% set idled_timeout_minutes = 1-%}
+      {%- set media_players = expand('group.homepod_mass_airplay') -%}
+
+      {% macro media(state)-%}
+      {% set state = media_players | selectattr('state','eq',state) | list-%}
+      {% set last_changed = no_player if state | length == 0 else state | map(attribute='last_changed') | list | max-%}
+        {{ state | selectattr('last_changed','eq', last_changed) | map(attribute='entity_id') | list | join }}
+      {% endmacro %}
+
+      {%- set group_with_members = media_players
+          | selectattr('attributes.group_members', 'defined')
+          | selectattr('attributes.group_members', '!=', [])
+          | list -%}
+
+
+      {%- set playing = media_players | selectattr('state','eq','playing') | list-%}
+      {% set timeout_playing = False if playing | length == 0 else (as_timestamp(now()) - as_timestamp(playing | map(attribute='last_changed') | list | max)) < paused_timeout_minutes * 60 -%}
+
+      {% set paused = media_players | selectattr('state','eq','paused') | list-%}
+      {% set timeout_paused = False if paused | length == 0 else (as_timestamp(now()) - as_timestamp(paused | map(attribute='last_changed') | list | max)) < paused_timeout_minutes * 60 -%}
+
+      {% set idled = media_players | selectattr('state','eq','idle') | list-%}
+      {% set timeout_idled = False if idled | length == 0 else (as_timestamp(now()) - as_timestamp(idled | map(attribute='last_changed') | list | max)) < idled_timeout_minutes * 60 -%}
+
+
+      {%- if group_with_members -%}
+        {% set leader_id = group_with_members[0].attributes.group_members[0]-%}
+        {% set main_player = states[leader_id]-%}
+        {{ main_player.entity_id }}
+      {% elif playing -%}
+        {{ media('playing') if timeout_playing else media('paused') if timeout_paused else media('playing') }}
+      {% elif paused-%}
+        {{ media('paused') if timeout_paused else media('idle') if timeout_idled else no_player }}
+      {% elif idled-%}
+        {{ media('idle') if timeout_idled else no_player }}
+      {% else %}
+        {{ no_player }}
+      {% endif %}
+    attributes:
+      group_members: sensor.mass_master_player|group_members
+
+template:
+  - sensor:
+      # SENSOR - MASS MASTER ENTITY WITH GROUP MEMBERS
+      - unique_id: mass_master_player
+        name: Mass Master Player
+        state: >-
+          {% set group_with_members = expand('group.homepod_mass_airplay')
+            | selectattr('attributes.group_members', 'defined')
+            | selectattr('attributes.group_members', '!=', [])
+            | list %}
+          {% if group_with_members %}
+            {{ group_with_members[0].attributes.group_members[0] }}
+          {% else %}
+            None
+          {% endif %}
+        attributes:
+          group_members: >-
+            {% if this.state != 'None' %}
+              {% set group_members = states[this.state].attributes.group_members | list %}
+              {{ group_members }}
+            {% else %}
+              []
+            {% endif %}
+          sub_members_length: >-
+            {% set group_members = this.attributes.group_members | list %}
+            {{ group_members | length }}
+          named_master: >-
+            {% if this.state != 'None' %}
+              {% set master = states[this.state] %}
+              {{ master.name.split(' ')[0] }}
+            {% endif %}

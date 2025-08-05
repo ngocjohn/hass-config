@@ -20,9 +20,4 @@ cards:
             config:
               image: /local/hafloor/plan_opt.svg
               stylesheet: /local/hafloor/style.css
-              defaults:
-                hover_action: false
-                tap_action: false
-              # log_level: info
-              # console_log_level: info
               rules: !include_dir_merge_list /config/dashboards/floorplan/

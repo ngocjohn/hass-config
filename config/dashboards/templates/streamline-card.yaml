@@ -339,7 +339,14 @@ grid_homepods:
       custom_fields:
         icon:
           - margin-top: -8%
-    name: Homepods
+    name: >
+      [[[
+        let master = states['sensor.mass_master_player'],
+            attr = master.attributes;
+        return !master.state || master.state != 'unknown'
+          ? `${attr.named_master}+${attr.sub_members_length - 1}`
+          : 'Homepods';
+      ]]]
     double_tap_action: !include ../shared/popup/popup_mass.yaml
     tap_action:
       action: call-service

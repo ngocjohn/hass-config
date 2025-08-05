@@ -16,14 +16,6 @@ media_player:
       - media_player.bedroom_homepod
       - media_player.living_room
 
-  - platform: universal ### CURRENTLY PLAYING ###
-    name: Mass Universal Airplay
-    unique_id: mass_universal_airplay
-    children:
-      - media_player.office_homepod
-      - media_player.bathroom
-      - media_player.bedroom
-      - media_player.living_room_2
 template:
   - select:
       - name: conditional_media

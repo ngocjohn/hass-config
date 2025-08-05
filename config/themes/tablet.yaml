@@ -109,9 +109,9 @@ tablet:
         # --app-header-background-color: rgba(22, 24, 29, 1);
       }
 
-      #view {
-        background-image: linear-gradient(180deg, rgba(22, 24, 29, 1) 0%, rgba(23, 26, 37, 1) 42%, rgba(22, 24, 29, 1) 100%) !important;
-      }
+      # #view {
+      #   background-image: linear-gradient(180deg, rgba(22, 24, 29, 1) 0%, rgba(23, 26, 37, 1) 42%, rgba(22, 24, 29, 1) 100%);
+      # }
       /* phone */
       @media screen and (max-width: 800px) {
         #view {
