@@ -83,7 +83,7 @@ group:
       - light.office_ripple_mood_light
       - light.office_led_light_strip
       - light.bedroom_ripple_mood_light
-      # - light.sony_tv_backlight
+      - light.sony_tv_backlight
       # - light.yeelink_bslamp2_409e_light
   ## SECURITY - SENSORS GROUP ##
   motion_sensors:

@@ -283,8 +283,8 @@ grid_atv:
         entity_id: script.atv_turn_on_off
     template:
       - mediaplayer
-    # variables:
-    #   light_entity: light.sony_tv_backlight
+    variables:
+      light_entity: light.sony_tv_backlight
 
   # SAMSUNG TV
 # grid_samsung:

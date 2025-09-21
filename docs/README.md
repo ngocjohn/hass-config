@@ -10,7 +10,7 @@ Hey there! Welcome to my little corner of the tech world! 👨‍💻
 
 This is where I store all the cool configurations for my Home Assistant system. Well, it's a mix of awesome codes and setups I discovered from the Home Assistant community. Seriously, those folks are wizards! 🧙‍♂️ As a bit of an internet newbie turned tech enthusiast, I stumbled upon the magic of IT, and this repository is my way of sharing the joy and knowledge I've gained along the way. Dive in, explore, and let the tech magic begin! ✨
 
-I frequently refresh my configuration files. My current Home Assistant version is <b>2025.4.4</b>. If you find something you like, don't forget to give my repository a ⭐️!
+I frequently refresh my configuration files. My current Home Assistant version is <b>2025.9.4</b>. If you find something you like, don't forget to give my repository a ⭐️!
 
 ## Some of my projects for Home Assistant
 
@@ -45,15 +45,15 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>37,049 </td>
+              <td>39,252 </td>
               <td>30</td>
-              <td>150</td>
-              <td>64</td>
-              <td>51</td>
+              <td>142</td>
+              <td>62</td>
+              <td>52</td>
               <td>29</td>
-              <td>1195</td>
-              <td>217</td>
-              <td>28</td>
+              <td>1071</td>
+              <td>174</td>
+              <td>30</td>
           </tr>
       </tbody>
   </table>
@@ -90,7 +90,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 ### Custom integrations
 - [Adaptive Lighting](https://github.com/basnijholt/adaptive-lighting)
 - [Better Thermostat](https://github.com/KartoffelToby/better_thermostat)
-- [Browser Mod Phx](https://github.com/dcapslock/hass-browser_mod)
+- [Browser Mod](https://github.com/thomasloven/hass-browser_mod)
 - [Dyson](https://github.com/libdyson-wg/ha-dyson)
 - [Eufy Security](https://github.com/fuatakgun/eufy_security)
 - [Extended Openai Conversation](https://github.com/jekalmin/extended_openai_conversation)
@@ -124,12 +124,15 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Apple Tv Remote Control](https://github.com/madmicio/Apple-Tv-Card)
 - [Atomic Calendar Revive](https://github.com/totaldebug/atomic-calendar-revive)
 - [Auto Entities](https://github.com/thomasloven/lovelace-auto-entities)
-- [Bar Card](https://github.com/custom-cards/bar-card)
+- [Bar Card](https://github.com/spacerokk/bar-card)
 - [Better Thermostat Ui](https://github.com/KartoffelToby/better-thermostat-ui-card)
 - [Button Card](https://github.com/custom-cards/button-card)
+- [Card Mod](https://github.com/thomasloven/lovelace-card-mod)
 - [Custom Brand Icons](https://github.com/elax46/custom-brand-icons)
 - [Custom Icons](https://github.com/Mariusthvdb/custom-icons)
+- [Custom Sidebar](https://github.com/elchininet/custom-sidebar)
 - [Decluttering Card](https://github.com/custom-cards/decluttering-card)
+- [Flex Table   Highly Customizable, Data Visualization](https://github.com/custom-cards/flex-table-card)
 - [Fold Entity Row](https://github.com/thomasloven/lovelace-fold-entity-row)
 - [Ha Floorplan 🖌🎨 | Your Imagination (Almost) Defines The Limits](https://github.com/ExperienceLovelace/ha-floorplan)
 - [History Explorer Card](https://github.com/SpangleLabs/history-explorer-card)
@@ -141,8 +144,11 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Local Conditional Card](https://github.com/PiotrMachowski/Home-Assistant-Lovelace-Local-Conditional-card)
 - [Logbook Card](https://github.com/royto/logbook-card)
 - [Lunar Phase Card](https://github.com/ngocjohn/lunar-phase-card)
+- [Mass Search Card](https://github.com/fastxl2024/mass-search-card)
+- [Mediocre Hass Media Player Cards](https://github.com/antontanderup/mediocre-hass-media-player-cards)
 - [Mini Graph Card](https://github.com/kalkih/mini-graph-card)
 - [Mini Media Player](https://github.com/kalkih/mini-media-player)
+- [Modern Circular Gauge](https://github.com/selvalt7/modern-circular-gauge)
 - [Multiple Entity Row](https://github.com/benct/lovelace-multiple-entity-row)
 - [Mushroom](https://github.com/piitaya/lovelace-mushroom)
 - [Polr Ytube Media Card](https://github.com/pathofleastresistor/polr-ytube-media-card)

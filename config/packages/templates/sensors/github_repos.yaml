@@ -41,3 +41,15 @@ template:
         icon: 'mdi:download'
         unit_of_measurement: 'downloads'
         unique_id: 'sidebar_organizer_latest_release'
+      - name: 'Vehicle Status Card Releases'
+        state: >-
+          {{ this.attributes.releases | list | count }}
+        icon: 'mdi:download'
+        unit_of_measurement: 'releases'
+        unique_id: 'vehicle_status_card_releases'
+        attributes:
+          releases: >-
+            {% set releases = state_attr('sensor.vehicle_status_card_total_app', 'releases').values()
+              | selectattr('published_at', 'ne', none)
+              | list %}
+            {{ releases }}

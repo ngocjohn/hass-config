@@ -116,10 +116,13 @@ base_updates:
       - justify-self: left
       - white-space: normal
     card:
-      - cursor: default
+      - cursor: default !important
       - padding: 0 0 1em
       - letter-spacing: var(--mdc-typography-body1-letter-spacing)
   extra_styles: |
+    #card.disabled {
+      pointer-events: unset !important;
+    }
     #ripple {
       display: none;
     }
@@ -260,8 +263,8 @@ updates:
                 <span>${a.installed_version} <b>&rarr;</b> ${a.latest_version}</span>
               </div>
               <div>
-                <ha-button id="buttonUpdate" data-entity="${e}">Install</ha-button>
-                <ha-button id="buttonUpdateSkip" data-entity="${e}">Skip</ha-button>
+                <ha-button size="small" appearance="plain" id="buttonUpdate" data-entity="${e}">Install</ha-button>
+                <ha-button size="small" appearance="plain" id="buttonUpdateSkip" data-entity="${e}">Skip</ha-button>
               </div>
             </li>`;
         }
@@ -274,6 +277,7 @@ updates:
         // skip button
         skip_buttons.forEach(button => {
           button.addEventListener('click', function() {
+            console.log('Skipping update for', button.dataset.entity);
             let entity = button.dataset.entity,
                 parrent = button.parentElement;
                 button.innerHTML = 'Skipping...';

@@ -28,6 +28,9 @@ browser_mod:
           - type: custom:button-card
             entity: sensor.current_version
             template: updates_hass
+            tap_action:
+              action: 'more-info'
+
             variables:
               available: sensor.template_updates
               latest: sensor.home_assistant_versions
