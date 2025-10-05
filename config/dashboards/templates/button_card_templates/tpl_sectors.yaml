@@ -126,7 +126,7 @@ rooms_base:
                 : 'rgba(115, 115, 115, 0.2)';
             }
           ]]]
-      # - --mdc-ripple-color: blue
+      # - --button-card-ripple-color: blue
       # - --mdc-ripple-press-opacity: 0.5
     state:
       - color: >
@@ -671,7 +671,7 @@ light_slider:
                 ? 'rgba(255, 218, 120, 0.75)'
                 : 'rgba(115, 115, 115, 0.2)';
           ]]]
-      - --mdc-ripple-color: >
+      - --button-card-ripple-color: >
           [[[
             return variables.state_on
                 ? 'rgb(0, 0, 0)'

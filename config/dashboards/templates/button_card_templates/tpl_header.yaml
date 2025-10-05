@@ -36,7 +36,7 @@ header_clock:
       - width: 100%
       - overflow: visible
       - background: none
-      - --mdc-ripple-color: none
+      - --button-card-ripple-color: none
       - box-shadow: none
   custom_fields:
     clock:
@@ -93,7 +93,7 @@ header_clock:
 #       - width: 100%
 #       - overflow: visible
 #       - background: none
-#       - --mdc-ripple-color: none
+#       - --button-card-ripple-color: none
 #       - box-shadow: none
 
 header_weather:
@@ -175,7 +175,7 @@ header_weather:
     card:
       - background: none
       - --webkit-tap-highlight-color: none
-      - --mdc-ripple-color: none
+      - --button-card-ripple-color: none
       - box-shadow: none
       - padding: 0
       - color: rgba(255, 255, 255, 0.6)

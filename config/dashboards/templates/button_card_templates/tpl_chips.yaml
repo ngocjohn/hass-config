@@ -63,7 +63,7 @@ chips:
       # - column-gap: 8px
     card:
       # - box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.15)
-      - --mdc-ripple-color: rgba(0, 0, 0, 0.8)
+      - --button-card-ripple-color: rgba(0, 0, 0, 0.8)
       - color: >
           [[[
             return variables.state_on

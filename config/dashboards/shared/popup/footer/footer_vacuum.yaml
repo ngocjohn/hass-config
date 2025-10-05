@@ -55,18 +55,24 @@ browser_mod:
                     - type: custom:button-card
                       entity: vacuum.roidmi_eve
                       icon: mdi:play-pause
-                      tap_action:
-                        action: call-service
-                        service: >
+                      variables:
+                        vacuum_action: |
                           [[[
-                            return `[[[
-                              return entity.state === 'docked' || entity.state === 'paused'
-                                ? 'vacuum.start'
-                                : 'vacuum.pause';
-                            ]]]`
+                            if (entity) {
+                            const service = entity.state === 'docked' || entity.state === 'paused'
+                              ? 'vacuum.start'
+                              : 'vacuum.pause';
+                            return {
+                              action: "call-service",
+                              service: service,
+                              target: { entity_id: entity.entity_id },
+
+                            };
+                            } else {
+                            return { action: "none" };
+                            }
                           ]]]
-                        service_data:
-                          entity_id: vacuum.roidmi_eve
+                      tap_action: '[[[ return variables.vacuum_action ]]]'
                       template: icon_only
                     - type: custom:button-card
                       entity: vacuum.roidmi_eve

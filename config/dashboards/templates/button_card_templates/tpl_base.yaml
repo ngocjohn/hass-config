@@ -74,10 +74,10 @@ base:
       - -webkit-font-smoothing: antialiased
       - -moz-osx-font-smoothing: grayscale
       # - padding: 11.5% 10.5% 10.5% 11.5%
-      - --mdc-ripple-color: >
+      - --button-card-ripple-color: >
           [[[
             return variables.state_on
-                ? 'rgb(0, 0, 0)'
+                ? 'rgb(0, 0, 0, 0)'
                 : '#97989c';
           ]]]
       - color: >

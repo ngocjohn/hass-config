@@ -1441,7 +1441,7 @@ remote:
       - box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.15)
       - overflow: hidden
       # - padding: 11.5% 10.5% 10.5% 11.5%
-      - --mdc-ripple-color: >
+      - --button-card-ripple-color: >
           [[[
             return variables.state_on
                 ? 'rgb(0, 0, 0)'
@@ -1570,7 +1570,7 @@ tpl_spotify:
     card:
       - padding: 0
       - background: none
-      - --mdc-ripple-color: none
+      - --button-card-ripple-color: none
       - --webkit-tap-highlight-color: none
 tpl_minicontrol:
   custom_fields:
@@ -1691,7 +1691,7 @@ tpl_ytube_music:
       - border-radius: calc(var(--button-card-border-radius) / 2)
       - padding: 0
       - background: none
-      - --mdc-ripple-color: none
+      - --button-card-ripple-color: none
       - --webkit-tap-highlight-color: none
 tpl_minicontrol_mass:
   custom_fields:

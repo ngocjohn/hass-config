@@ -65,7 +65,7 @@ footer:
       - transition: none
       - padding: 0 0 0.05vw 0
       - overflow: visible
-      - --mdc-ripple-color: rgba(0, 0, 0, 0.8)
+      - --button-card-ripple-color: none
       # - background-color: >
       #     [[[
       #       return variables.notify
@@ -119,6 +119,7 @@ base_updates:
       - cursor: default !important
       - padding: 0 0 1em
       - letter-spacing: var(--mdc-typography-body1-letter-spacing)
+      - --button-card-ripple-color: none
   extra_styles: |
     #card.disabled {
       pointer-events: unset !important;
@@ -146,17 +147,22 @@ base_updates:
     }
     a {
       color: var(--primary-color);
-      padding-inline-end: 8px;
       text-decoration: none;
     }
     ul {
+      padding-inline-start: 1em;
+      font-size: 0.88em;
+      line-height: 100%;
+    }
+    /*ul {
       margin-top: -0.6em;
       font-size: 0.88em;
       letter-spacing: 0.5px;
       line-height: 100%;
       padding-inline-start: 1em;
       width: 100%;
-    }
+    }*/
+    /*
     li {
       line-height: 100%;
       width: 100%;
@@ -166,6 +172,9 @@ base_updates:
       justify-content: space-between;
       gap: 0.5em;
       align-items: anchor-center;
+    }*/
+    li {
+      display: block;
     }
     li span {
       font-size: 0.9em;
@@ -465,7 +474,7 @@ icon_sticky_menu:
   styles:
     card:
       - background: none
-      - --mdc-ripple-color: none
+      - --button-card-ripple-color: none
       - --mdc-ripple-press-opacity: 0.5
     icon:
       - color: '#ffffff'

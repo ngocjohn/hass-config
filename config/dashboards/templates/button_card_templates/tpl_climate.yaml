@@ -1005,7 +1005,7 @@ horizontal_widget_weather:
     card:
       - background: none
       - --webkit-tap-highlight-color: none
-      - --mdc-ripple-color: none
+      - --button-card-ripple-color: none
       - box-shadow: none
       - padding: 0
       - color: rgba(255, 255, 255, 0.6)
@@ -1180,7 +1180,7 @@ wide_header:
       - gap: 0
       - margin: 0
     card:
-      - --mdc-ripple-color: none
+      - --button-card-ripple-color: none
       - --webkit-tap-highlight-color: none
     img_cell:
       - overflow: visible
