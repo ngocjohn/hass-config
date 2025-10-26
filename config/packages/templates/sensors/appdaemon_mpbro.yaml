@@ -1,0 +1,24 @@
+# Appdaemon environment on mbpro server
+
+command_line:
+  - binary_sensor:
+      unique_id: appdaemon_state_mbpro
+      name: AppDaemon MBPro
+      icon: mdi:language-python
+      command: !secret appdaemon_state_ssh_mbpro
+      device_class: running
+      scan_interval: 60
+  - switch:
+      unique_id: appdaemon_switch_mbpro
+      name: AppDaemon MBPro
+      icon: mdi:language-python
+      command_on: !secret appdaemon_start_ssh_mbpro
+      command_off: !secret appdaemon_stop_ssh_mbpro
+      command_state: !secret appdaemon_state_ssh_mbpro
+      command_timeout: 5
+      value_template: >
+        {% if value == 'ON' %}
+          true
+        {% else %}
+          false
+        {% endif %}

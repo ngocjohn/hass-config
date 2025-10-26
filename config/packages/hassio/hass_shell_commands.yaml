@@ -21,3 +21,8 @@ shell_command:
   lock_mbpro: !secret lock_mbpro
   refresh_lovelace: !secret refresh_lovelace
   commit_updates: !secret commit_updates
+  appdaemon_state_ssh_mbpro: !secret appdaemon_state_ssh_mbpro
+  appdaemon_start_ssh_mbpro: !secret appdaemon_start_ssh_mbpro
+  appdaemon_stop_ssh_mbpro: !secret appdaemon_stop_ssh_mbpro
+  appdaemon_restart_ssh_mbpro: !secret appdaemon_restart_ssh_mbpro
+  appdaemon_status_mbpro: ssh -F /config/.ssh/config MBProServer 'zsh -i -c "pipAppdaemon state"'

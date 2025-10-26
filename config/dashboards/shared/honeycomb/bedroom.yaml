@@ -1,7 +1,5 @@
-action: call-service
-service: honeycomb
-service_data:
-  audio: /local/sound/popup.m4a
+action: fire-dom-event
+honeycomb_menu:
   autoclose: true
   size: 250
   buttons:
@@ -34,8 +32,7 @@ service_data:
       entity: switch.lidl_3_gang_socket_l3
       active: '[[[ return entity.state != "off" ]]]'
       tap_action:
-        action: call-service
-        service: homeassistant.toggle
+        action: toggle
         service_data:
           entity_id: entity
     #3

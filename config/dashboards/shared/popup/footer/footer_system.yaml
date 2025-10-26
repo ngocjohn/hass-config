@@ -180,7 +180,11 @@ browser_mod:
               show_header_toggle: false
               card_mod:
                 class: header
-                # no border on last card
+            entities:
+              - entity: switch.appdaemon_mbpro
+                name: AppDaemon Server
+                state_color: true
+                secondary_info: last-changed
             filter:
               template: |
                 {% for sensor in states.binary_sensor -%}

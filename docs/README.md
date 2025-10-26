@@ -10,7 +10,7 @@ Hey there! Welcome to my little corner of the tech world! 👨‍💻
 
 This is where I store all the cool configurations for my Home Assistant system. Well, it's a mix of awesome codes and setups I discovered from the Home Assistant community. Seriously, those folks are wizards! 🧙‍♂️ As a bit of an internet newbie turned tech enthusiast, I stumbled upon the magic of IT, and this repository is my way of sharing the joy and knowledge I've gained along the way. Dive in, explore, and let the tech magic begin! ✨
 
-I frequently refresh my configuration files. My current Home Assistant version is <b>2025.10.1</b>. If you find something you like, don't forget to give my repository a ⭐️!
+I frequently refresh my configuration files. My current Home Assistant version is <b>2025.10.4</b>. If you find something you like, don't forget to give my repository a ⭐️!
 
 ## Some of my projects for Home Assistant
 
@@ -45,14 +45,14 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>39,314 </td>
-              <td>30</td>
-              <td>152</td>
+              <td>42,142 </td>
+              <td>31</td>
+              <td>150</td>
               <td>62</td>
               <td>67</td>
-              <td>30</td>
-              <td>1112</td>
-              <td>177</td>
+              <td>32</td>
+              <td>1059</td>
+              <td>181</td>
               <td>30</td>
           </tr>
       </tbody>
@@ -112,6 +112,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Simpleicons](https://github.com/vigonotion/hass-simpleicons)
 - [Spook 👻 Your Homie](https://github.com/frenck/spook)
 - [Spotifyplus](https://github.com/thlucas1/homeassistantcomponent_spotifyplus)
+- [Weather.Com](https://github.com/jaydeethree/Home-Assistant-weatherdotcom)
 - [Webrtc Camera](https://github.com/AlexxIT/WebRTC)
 - [Xiaomi Cloud Map Extractor](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor)
 - [Xiaomi Miot](https://github.com/al-one/hass-xiaomi-miot)
@@ -130,9 +131,9 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Better Thermostat Ui](https://github.com/KartoffelToby/better-thermostat-ui-card)
 - [Button Card](https://github.com/custom-cards/button-card)
 - [Card Mod](https://github.com/thomasloven/lovelace-card-mod)
+- [Clock Weather Card](https://github.com/pkissling/clock-weather-card)
 - [Custom Brand Icons](https://github.com/elax46/custom-brand-icons)
 - [Custom Icons](https://github.com/Mariusthvdb/custom-icons)
-- [Custom Sidebar](https://github.com/elchininet/custom-sidebar)
 - [Decluttering Card](https://github.com/custom-cards/decluttering-card)
 - [Flex Table   Highly Customizable, Data Visualization](https://github.com/custom-cards/flex-table-card)
 - [Fold Entity Row](https://github.com/thomasloven/lovelace-fold-entity-row)

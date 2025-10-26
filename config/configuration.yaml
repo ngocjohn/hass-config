@@ -20,6 +20,8 @@ frontend:
     - /hacsfiles/lovelace-card-mod/card-mod.js
     - /local/dashboard-resources/customize-css-change.js
     - /local/dashboard-resources/canary.js
+    # - /hacsfiles/vehicle-status-card/vehicle-status-card.js?hacstag=85937166311710
+    # - /hacsfiles/vehicle-info-card/vehicle-info-card.js?hacstag=81056335011130
   themes: !include_dir_merge_named themes
 
 # HTTP

@@ -1175,3 +1175,28 @@
       target:
         entity_id: camera.roidmi_eve
   mode: single
+- id: '1760899859441'
+  alias: Appdaemon Mb server
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - switch.appdaemon_mbpro
+    id: Appdaemon switch change
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 0
+  conditions: []
+  actions:
+  - action: homeassistant.update_entity
+    metadata: {}
+    data:
+      entity_id:
+      - binary_sensor.appdaemon_mbpro
+  - action: notify.mobile_app_viet_ngoc_samsung
+    metadata: {}
+    data:
+      title: Appdaemon
+      message: 'server: {{ states(''binary_sensor.appdaemon_mbpro'') | upper }}'
+  mode: single

@@ -156,5 +156,7 @@ command_line:
         - repositories
       scan_interval: 86400
 
+########################################
+
 sensor:
   - platform: websocket_api
