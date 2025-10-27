@@ -287,19 +287,6 @@ grid_atv:
       light_entity: light.sony_tv_backlight
 
   # SAMSUNG TV
-# grid_samsung:
-#   card:
-#     type: custom:button-card
-#     entity: media_player.bedroom_tv
-#     name: >
-#       [[[
-#         let screenWidth = window.innerWidth,
-#             screenHeight = window.innerHeight;
-#         return `${screenWidth} ${screenHeight}`;
-#       ]]]
-#     hold_action: !include ../shared/honeycomb/shield.yaml
-#     template:
-#       - mediaplayer
 grid_samsung:
   card:
     type: custom:button-card
@@ -711,7 +698,7 @@ grid_zuzu:
   card:
     type: custom:button-card
     entity: person.huong_giang
-    name: Zuzu
+    name: Zuz
     double_tap_action: !include ../shared/popup/home_zuzu.yaml
     tap_action:
       action: call-service
