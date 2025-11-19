@@ -130,8 +130,7 @@ template:
           {% set halway_devices = [states.light.hallway_group, states.binary_sensor.motion_sensor_entrance_occupancy, states.binary_sensor.motion_sensor_hallway_occupancy] | reject('equalto', none) | list  %}
           {% set active = halway_devices | selectattr('state', 'eq', 'on') | list %}
           {{ iif (active != 0, 'yes', 'no') }}
-        icon: >-
-          {{ iif (is_state('sensor.hallway_active', 'no'), 'mdi:thumb-down', 'mdi:thumb-up')  }}
+        icon: "{{ iif (this.state == 'no', 'mdi:thumb-down', 'mdi:thumb-up') }}"
         attributes:
           lights_on: >-
             {%- set light = expand(states.light.hallway_group) | selectattr( 'state', 'eq', 'on') | map(attribute='name') | list | replace('Hallway ', '') %}
@@ -145,8 +144,7 @@ template:
           {% elif is_state('light.kitchen_group', 'on') %} on
           {% else %} no
           {% endif %}
-        icon: >-
-          {{ iif (is_state('sensor.kitchen_active', 'no'), 'mdi:thumb-down', 'mdi:thumb-up')  }}
+        icon: "{{ iif (this.state == 'no', 'mdi:thumb-down', 'mdi:thumb-up') }}"
         attributes:
           dishwasher_remain: >-
             {% if has_value('sensor.mycka_nadobi_remaining_program_time') %}
@@ -164,8 +162,7 @@ template:
           {% elif is_state('media_player.office', 'playing') %} playing
           {% else %} no
           {% endif %}
-        icon: >-
-          {{ iif (is_state('sensor.office_active', 'no'), 'mdi:thumb-down', 'mdi:thumb-up')  }}
+        icon: "{{ iif (this.state == 'no', 'mdi:thumb-down', 'mdi:thumb-up') }}"
         attributes:
           lights_on: >-
             {%- set light = expand(states.light.office_group) | selectattr( 'state', 'eq', 'on') | map(attribute='name') | list | replace('Office ', '') %}
@@ -179,8 +176,7 @@ template:
           {% elif is_state('media_player.bathroom_homepod', 'playing') %} playing
           {% else %} no
           {% endif %}
-        icon: >-
-          {{ iif (is_state('sensor.bathroom_active', 'no'), 'mdi:thumb-down', 'mdi:thumb-up')  }}
+        icon: "{{ iif (this.state == 'no', 'mdi:thumb-down', 'mdi:thumb-up') }}"
         attributes:
           lights_on: >-
             {%- set light = expand(states.light.bathroom_group) | selectattr( 'state', 'eq', 'on') | map(attribute='name') | list | replace('Bathroom ', '') %}
@@ -193,10 +189,7 @@ template:
           {% elif is_state('light.shower_group', 'on') %} yes
           {% else %} no
           {% endif %}
-        icon: >-
-          {% if states('sensor.shower_active') == 'no' %} mdi:thumb-down
-          {% else %} mdi:thumb-up
-          {%- endif %}
+        icon: "{{ iif (this.state == 'no', 'mdi:thumb-down', 'mdi:thumb-up') }}"
         attributes:
           lights_on: >-
             {%- set light = expand(states.light.shower_group) | selectattr( 'state', 'eq', 'on') | map(attribute='name') | list | replace('Shower Room ', '') %}
@@ -210,8 +203,7 @@ template:
           {% elif is_state('sensor.washer_dryer_operation_state', 'run') %} washing
           {% else %} no
           {% endif %}
-        icon: >-
-          {{ iif (is_state('sensor.appliance_active', 'no'), 'mdi:thumb-down', 'mdi:thumb-up')  }}
+        icon: "{{ iif (this.state == 'no', 'mdi:thumb-down', 'mdi:thumb-up') }}"
         attributes:
           washdryer_remain: >-
             {% if has_value('sensor.washer_dryer_remaining_program_time') %}
