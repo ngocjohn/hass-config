@@ -11,7 +11,20 @@
     show:
       mediaquery: '(min-width: 1720px)'
   card_mod:
-    class: historycard
+    style:
+      .: |
+        .card-content {
+          padding: 0 !important;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          height: 100%;
+          width: 100%;
+          gap: 1rem !important;
+        }
+        .card-content br {
+          display: none !important;
+        }
   cardName: historycard-sys
   header: 'Monitoring'
   uimode: dark

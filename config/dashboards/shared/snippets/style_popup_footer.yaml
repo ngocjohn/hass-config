@@ -10,8 +10,8 @@ style:
             display: block;
           }
         }
-      hui-entities-card:
-        $: |
+      hui-entities-card$:
+        .: |
           ha-card {
             border-right: 0.1vw solid rgba(58, 69, 73, 0.2);
             border-radius: 0;
@@ -19,9 +19,6 @@ style:
             margin-bottom: 0 !important;
           }
 
-          ha-card.header.nopadding > .card-content {
-            padding: 0 !important;
-          }
 
           /* portrait */
           @media screen and (max-width: 800px) {
@@ -31,11 +28,12 @@ style:
             }
           }
 
-        $hui-horizontal-stack-card:
+        hui-horizontal-stack-card:
           $: |
             #root {
               justify-content: space-evenly;
-              margin-block: 1.5rem;
+              margin-block: 1em;
+              height: unset !important;
             }
       hui-entities-card:last-child:
         $: |

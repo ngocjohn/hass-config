@@ -1,0 +1,157 @@
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#                                               #
+#                    ROOMS 2                    #
+#                                               #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# SHOWER ROOM
+grid_shower:
+  card:
+    type: custom:button-card
+    entity: sensor.shower_active
+    name: Shower
+    template:
+      - rooms_base
+      - door_state
+      - motion
+      - icon_shower_new
+      # - icon_shower
+      # - icon_shower_head
+    variables:
+      light_entity: light.shower_group
+      motion: binary_sensor.motion_sensor_shower_room_occupancy
+      door: binary_sensor.contact_sensor_shower_room_contact
+      active: sensor.shower_active
+  # BATHROOM
+grid_bathroom:
+  card:
+    type: custom:button-card
+    entity: sensor.bathroom_active
+    name: Bathroom
+    template:
+      - rooms_base
+      - icon_bathroom
+      - motion
+      - door_state
+      - air_diffuser_circle
+    variables:
+      light_entity: light.bathroom_group
+      motion: binary_sensor.motion_sensor_bathroom_occupancy
+      door: binary_sensor.contact_sensor_bathroom
+      active: sensor.bathroom_active
+      air_diffuser_circle: switch.bathroom_air_diffuser
+  # UTILITY NORMAL
+grid_utility_normal:
+  card:
+    type: custom:button-card
+    entity: light.utility_room_light
+    name: Utility
+    double_tap_action: !include ../../shared/popup/rooms/utility.yaml
+    hold_action: !include ../../shared/honeycomb/utitlity.yaml
+    template:
+      - rooms_base
+      - icon_broom
+    variables:
+      light_entity: light.utility_room_light
+      active: sensor.appliance_active
+  # UTILITY VACUUM
+grid_utility_vacuum:
+  card:
+    type: custom:button-card
+    entity: sensor.appliance_active
+    name: >
+      [[[
+        if (entity) {
+          let vacumState = states['sensor.vacuum_status_fix'].state,
+              position = states['sensor.vacuum_position'].state;
+          if (vacumState === 'Cleaning') {
+            return 'Cleaning';
+          } else {
+            return vacumState;
+          }
+        }
+      ]]]
+    double_tap_action:
+      action: fire-dom-event
+      browser_mod:
+        service: browser_mod.more_info
+        data:
+          entity: camera.roidmi_eve
+    hold_action: !include ../../shared/honeycomb/utitlity.yaml
+    state_display: >
+      [[[
+        if (entity) {
+        let vacumState = states['sensor.vacuum_status_fix'].state,
+            position = states['sensor.vacuum_position'].state;
+          if (vacumState === 'Cleaning') {
+            return position;
+          } else {
+            return vacumState;
+          }
+        }
+      ]]]
+    template:
+      - rooms_base
+      - icon_roborock
+    variables:
+      light_entity: light.utility_room_light
+      active: sensor.appliance_active
+  # UTILITY WASHING
+grid_utility_washing:
+  card:
+    type: custom:button-card
+    entity: sensor.appliance_active
+    name: Washdryer
+    hold_action: !include ../../shared/honeycomb/utitlity.yaml
+    template:
+      - rooms_base
+      - appliance_circle
+      - icon_washer
+    variables:
+      light_entity: light.utility_room_light
+      active: sensor.appliance_active
+      appliance: sensor.washer_dryer_program_progress
+    double_tap_action:
+      action: fire-dom-event
+      browser_mod:
+        service: browser_mod.popup
+        data:
+          title: 'Washer-Dryer'
+          card_mod:
+            style:
+              #popup header
+              .:
+          content:
+            type: vertical-stack
+            cards:
+              - type: entities
+                entities:
+                  - entity: switch.washer_dryer_power
+                    name: Power
+                    icon: mdi:power
+                    secondary_info: last-changed
+                  - entity: sensor.washer_dryer_door
+                    name: Door
+                  - entity: sensor.washer_dryer_operation_state
+                    name: Operation State
+                  - entity: sensor.washer_dryer_program_progress
+                    name: Program Progress
+                  - entity: sensor.washer_dryer_remaining_program_time
+                    name: Remaining Program Time
+
+  # HALLWAY
+grid_hallway:
+  card:
+    type: custom:button-card
+    entity: light.hallway_group
+    name: Hallway
+    # double_tap_action: !include ../../shared/hallway.yaml
+    state_display: >
+      [[[ if (variables.state == 'off' ) return " "; ]]]
+    template:
+      - rooms_base
+      # - icon_hallway
+      - icon_hanger_mirror
+      - motion
+    variables:
+      light_entity: light.hallway_group
+      motion: binary_sensor.motion_sensor_entrance_occupancy

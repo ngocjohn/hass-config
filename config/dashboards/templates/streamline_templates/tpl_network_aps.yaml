@@ -1,0 +1,96 @@
+unifi_ap_base:
+  card:
+    type: custom:multiple-entity-row
+    entity: sensor.unifi_[[ap_entity]]_ap
+    name: '[[ap_name]]'
+    show_entity_picture: true
+    show_state: false
+    secondary_info:
+      attribute: uptime
+    entities:
+      - attribute: cpu
+        name: CPU
+        unit: '%'
+      - attribute: mem
+        name: MEM
+        unit: '%'
+      - icon: mdi:restart
+        tap_action:
+          action: call-service
+          confirmation: true
+          service: button.press
+          service_data:
+            entity_id: button.ap_[[ap_entity]]_restart
+unifi_ap_clients:
+  card:
+    type: custom:multiple-entity-row
+    entity: sensor.unifi_[[ap_entity]]_ap
+    icon: mdi:devices
+    name: 'Total Clients'
+    show_state: false
+    secondary_info:
+      entity: sensor.unifi_[[ap_entity]]_ap
+    entities:
+      - entity: sensor.unifi_[[ap_entity]]_ap_2_4ghz
+        name: 2.4GhZ
+        unit: ' '
+      - entity: sensor.unifi_[[ap_entity]]_ap_5ghz
+        name: 5GhZ
+        unit: ' '
+unifi_ap_score:
+  card:
+    type: custom:multiple-entity-row
+    entity: sensor.unifi_[[ap_entity]]_ap
+    name: 'Experience'
+    icon: mdi:percent-outline
+    show_state: false
+    secondary_info:
+      attribute: score
+    entities:
+      - entity: sensor.unifi_[[ap_entity]]_ap_2_4ghz
+        name: 2gHz
+        attribute: satisfaction
+        unit: '%'
+      - entity: sensor.unifi_[[ap_entity]]_ap_5ghz
+        name: 5gHz
+        attribute: satisfaction
+        unit: '%'
+
+unifi_ap_graph:
+  default:
+    - ap_entity: ''
+  card:
+    type: custom:mini-graph-card
+    entities:
+      - entity: sensor.unifi_[[ap_entity]]_ap
+        attribute: score
+    font_size: 14px
+    hours_to_show: 24
+    show:
+      icon: false
+      graph: true
+      name: false
+      state: false
+      extrema: true
+      average: true
+
+unifi_ap_combined:
+  default:
+    - ap_entity: ''
+    - ap_name: ''
+  card:
+    type: entities
+    entities:
+      - type: custom:streamline-card
+        template: unifi_ap_base
+        variables:
+          - ap_entity: '[[ap_entity]]'
+          - ap_name: '[[ap_name]]'
+      - type: custom:streamline-card
+        template: unifi_ap_clients
+        variables:
+          - ap_entity: '[[ap_entity]]'
+      - type: custom:streamline-card
+        template: unifi_ap_score
+        variables:
+          - ap_entity: '[[ap_entity]]'

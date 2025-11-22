@@ -1,0 +1,284 @@
+github_heading_card:
+  default:
+    - heading_title: null
+    - total_entity: null
+    - latest_entity: null
+    - stars_entity: null
+    - repo_link: null
+    - bar_color: 'var(--primary-text-color)'
+  card:
+    type: heading
+    card_mod:
+      style:
+        .: |
+          @media screen and (min-width: 768px) {
+            :host {
+              --ha-heading-card-title-font-size: inherit;
+              --ha-heading-card-title-font-weight: 500;
+              --ha-heading-card-title-line-height: normal;
+            }
+          }
+
+          ha-card {
+            padding: 0px 8px;
+            --ha-heading-card-title-color: {{'[[bar_color]]'}};
+          }
+          @media (max-width: 500px) {
+            ha-card {
+              padding: 0;
+            }
+            .container {
+              flex-wrap: wrap !important;
+              width: min-content !important;
+            }
+          }
+    heading: '[[heading_title]]'
+    heading_style: title
+    grid_options:
+      columns: full
+    tap_action:
+      action: url
+      url_path: '[[repo_link]]'
+    badges:
+      - type: entity
+        entity: '[[total_entity]]'
+        tap_action:
+          action: more-info
+      - type: entity
+        entity: '[[latest_entity]]'
+        tap_action:
+          action: more-info
+      - type: entity
+        entity: '[[stars_entity]]'
+        tap_action:
+          action: fire-dom-event
+          browser_mod:
+            service: browser_mod.popup
+            data:
+              title: '[[heading_title]]'
+              content:
+                type: custom:streamline-card
+                template: stargazer_list
+                variables:
+                  - star_entity: '[[stars_entity]]'
+                  - bar_color: '[[bar_color]]'
+
+github_graph_card:
+  default:
+    - total_entity: ''
+    - latest_entity: ''
+    - bar_color: 'rgba(62, 149, 205, 1)'
+    - fill_color: 'rgba(62, 150, 205, 0.2)'
+  card:
+    type: custom:history-explorer-card
+    card_mod:
+      style: |
+        ha-card {
+          background: linear-gradient(to top, rgb(from {{'[[bar_color]]'}} r g b / 0.1) 0%, transparent 100%);
+          width: min-content !important;
+        }
+    header: hide
+    showCurrentValues: false
+    legendVisible: false
+    labelsVisible: false
+    defaultTimeRange: 3d
+    axisAddMarginMin: false
+    axisAddMarginMax: false
+    tooltip:
+      size: full
+    uiLayout:
+      toolbar: top
+      selector: hide
+    lineMode: curves
+    graphs:
+      - type: line
+        title: Total
+        entities:
+          - entity: '[[total_entity]]'
+            color: '[[bar_color]]'
+            fill: '[[fill_color]]'
+      - type: bar
+        title: Latest
+        entities:
+          - entity: '[[latest_entity]]'
+            color: '[[bar_color]]'
+github_logbook_card:
+  default:
+    - latest_entity: ''
+    - bar_color: 'rgba(62, 149, 205, 1)'
+    - fill_color: 'rgba(62, 150, 205, 0.2)'
+  card:
+    type: custom:multiple-logbook-card
+    title: 'Latest'
+    card_mod:
+      style: |
+        ha-card .card-content-scroll {
+          height: 100%;
+          max-height: 435px;
+          margin-top: 1rem;
+        }
+        ha-card .card-header {
+          padding: 0 1rem !important;
+          line-height: normal !important;
+        }
+    scroll: true
+    show:
+      separator: true
+    max_items: 10
+    date_format: relative
+    entities:
+      - entity: '[[latest_entity]]'
+
+github_diagnostic_card:
+  default:
+    - device_id: ''
+    - bar_color: 'rgba(62, 149, 205, 1)'
+    - fill_color: 'rgba(62, 150, 205, 0.2)'
+  card:
+    type: custom:auto-entities
+    filter:
+      include:
+        - entity_category: diagnostic
+          device: '[[device_id]]'
+      exclude: []
+    card:
+      type: entities
+
+github_new_graph:
+  default:
+    - history_name: ''
+    - total_entity: ''
+    - latest_entity: ''
+    - bar_color: 'rgba(62, 149, 205, 1)'
+    - fill_color: 'rgba(62, 150, 205, 0.2)'
+  card:
+    type: custom:history-explorer-card
+    cardName: '[[history_name]]'
+    header: hide
+    showCurrentValues: false
+    legendVisible: false
+    labelsVisible: false
+    defaultTimeRange: 3d
+    tooltip:
+      size: full
+    uiLayout:
+      toolbar: top
+      selector: hide
+    lineMode: curves
+    graphs:
+      - type: line
+        title: Total
+        entities:
+          - entity: '[[total_entity]]'
+            color: '[[bar_color]]'
+            fill: '[[fill_color]]'
+      - type: bar
+        title: Latest
+        entities:
+          - entity: '[[latest_entity]]'
+            color: '[[bar_color]]'
+
+stargazer_list:
+  default:
+    - star_entity: ''
+    - bar_color: 'rgba(62, 149, 205, 0.7)'
+  card:
+    type: custom:mod-card
+    card_mod:
+      style: |
+        ha-card {
+          max-height: 500px;
+          overflow-y: auto;
+          position: relative;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(to top, rgb(from {{'[[bar_color]]'}} r g b / 0.1) 0%, transparent 100%);
+        }
+        @media screen and (max-width: 800px) {
+          ha-card {
+            padding: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            max-height: unset !important;
+          }
+        }
+        ha-card::before {
+          content: '{{ states['[[star_entity]]'].attributes.stargazers | count }}\2605';
+          position: absolute;
+          right: 1%;
+          font-size: 2em;
+          color: #ffffff1a;
+          font-weight: 500;
+          height: auto;
+        }
+    card:
+      type: custom:auto-entities
+      filter:
+        template: |
+          {%- set followers = state_attr('[[star_entity]]', 'stargazers') %}
+          [
+          {%- for user in followers | reverse -%}
+            {
+              'type': 'custom:button-card',
+              'name': '{{ user.login }}',
+              'template': ['stargazer_base'],
+              'variables': {
+                'avatar_url': '{{ user.avatar_url }}',
+                'html_url': '{{ user.html_url }}',
+                'follow_me': '{{ user.follow_me }}'
+              }
+            }{%- if not loop.last %},{% endif %}
+          {%- endfor %}
+          ]
+      card:
+        type: custom:layout-card
+        layout_type: custom:grid-layout
+        layout:
+          grid-template-columns: repeat(auto-fit, minmax(25%, 1fr))
+          grid-template-rows: auto
+          grid-gap: 4px 8px
+          padding: 0
+          margin: 0
+          mediaquery:
+            '(min-width: 768px) and (max-width: 1710px)':
+              grid-template-columns: repeat(auto-fill, minmax(30%, 1fr))
+              grid-gap: 4px
+            '(max-width: 767.99px)':
+              grid-template-columns: repeat(auto-fill, minmax(40%, 1fr))
+              grid-gap: 8px 8px
+              padding: 0
+              margin: 0
+        cards: []
+
+github_combined_graph:
+  default:
+    - history_name: ''
+    - total_entity: ''
+    - latest_entity: ''
+    - device_id: ''
+    - bar_color: 'rgba(62, 149, 205, 1)'
+    - fill_color: 'rgba(62, 150, 205, 0.2)'
+  card:
+    type: custom:swipe-card
+    parameters: !include ../../shared/snippets/swiper-git-parameters.yaml
+    cards:
+      - type: custom:streamline-card
+        template: github_new_graph
+        variables:
+          history_name: '[[history_name]]'
+          total_entity: '[[total_entity]]'
+          latest_entity: '[[latest_entity]]'
+          bar_color: '[[bar_color]]'
+          fill_color: '[[fill_color]]'
+      - type: custom:streamline-card
+        template: github_logbook_card
+        variables:
+          latest_entity: '[[latest_entity]]'
+          bar_color: '[[bar_color]]'
+          fill_color: '[[fill_color]]'
+      - type: custom:streamline-card
+        template: github_diagnostic_card
+        variables:
+          device_id: '[[device_id]]'
+          bar_color: '[[bar_color]]'
+          fill_color: '[[fill_color]]'

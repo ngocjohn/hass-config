@@ -1,0 +1,70 @@
+## DASHBOARD GRID CAMERAS ##
+
+# CAM DOOR
+grid_cam_door:
+  card:
+    type: custom:button-card
+    entity: camera.doorway
+    name: ' '
+    hold_action: !include ../../shared/popup/cameras.yaml
+    variables:
+      battery: sensor.doorway_battery_percentage
+    template:
+      - camera
+      - loader
+    styles:
+      card:
+        - background-position: center
+  # CAM KIDS ROOM
+grid_cam_kids:
+  card:
+    type: custom:button-card
+    entity: camera.kids_room_cam
+    name: ' '
+    hold_action: !include ../../shared/popup/cameras.yaml
+    template:
+      - camera
+      - loader
+    variables:
+      battery: 'sensor.doorway_battery_percentage'
+    double_tap_action:
+      action: fire-dom-event
+      browser_mod:
+        service: browser_mod.popup
+        data:
+          title: 'Kids Room'
+          content:
+            type: custom:webrtc-camera
+            entity: camera.kids_room_cam
+
+    styles:
+      card:
+        - background-position: center
+
+# CAM TERRACE
+grid_cam_terrace:
+  card:
+    type: custom:button-card
+    entity: camera.terasa
+    name: ' '
+    hold_action: !include ../../shared/popup/cameras.yaml
+    template:
+      - camera
+      - loader
+    variables:
+      battery: sensor.terasa_battery_percentage
+    styles:
+      card:
+        - background-position: center
+  # CAM GARDEN
+grid_cam_garden:
+  card:
+    type: custom:button-card
+    entity: camera.zahrada
+    name: ' '
+    hold_action: !include ../../shared/popup/cameras.yaml
+    template:
+      - camera
+      - loader
+    variables:
+      battery: sensor.zahrada_battery_percentage

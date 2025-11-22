@@ -1,0 +1,49 @@
+## # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#                                               #
+#                  CLIMATE                      #
+#                                               #
+## # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+# AIR PURIFIER
+grid_air_purifier:
+  card:
+    type: custom:button-card
+    entity: sensor.home_climate
+    name: Humidity
+    tap_action: block
+    template:
+      - airpurifier
+    double_tap_action: !include ../../shared/popup/airpurifier.yaml
+    # double_tap_action: !include ../../shared/popup/purifier_popup.yaml
+  # THERMOSTAT
+grid_thermostat:
+  card:
+    type: custom:button-card
+    entity: sensor.home_climate
+    name: Temperature
+    template:
+      - thermostat
+    double_tap_action: !include ../../shared/popup/thermostat.yaml
+    tap_action:
+      action: call-service
+      service: input_boolean.toggle
+      service_data:
+        entity_id: input_boolean.svg_temp_humid
+  # LIVING ROOM COVERS
+grid_covers_living:
+  card:
+    type: custom:button-card
+    entity: cover.living_room_cover
+    name: Lounge
+    # hold_action: !include ../../shared/honeycomb/cover_living.yaml
+    template:
+      - cover
+  # LIVING ROOM COVERS
+grid_covers_bedroom:
+  card:
+    type: custom:button-card
+    entity: cover.bedroom_shutters
+    name: Bedroom
+    # hold_action: !include ../../shared/honeycomb/cover_bedroom.yaml
+    template:
+      - cover

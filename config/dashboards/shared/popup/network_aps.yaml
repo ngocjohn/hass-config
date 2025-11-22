@@ -1,0 +1,62 @@
+- label: Office
+  cards:
+    - type: vertical-stack
+      cards:
+        - &ap_combined
+          type: 'custom:streamline-card'
+          template: unifi_ap_combined
+          variables:
+            - ap_entity: office
+            - ap_name: Office AP
+
+        - type: custom:mini-graph-card
+          entities:
+            - entity: sensor.unifi_office_ap
+              name: Office
+              attribute: score
+              color: '#00bb33'
+              show_state: true
+            - entity: sensor.unifi_bedroom_ap
+              name: Bedroom
+              attribute: score
+              color: '#2196f3'
+            - entity: sensor.unifi_wall_ap
+              name: Living Room
+              attribute: score
+              color: '#ff8a00'
+          group: false
+          font_size: 12px
+          hours_to_show: 12
+          show:
+            name: false
+            icon: false
+            graph: bar
+            state: false
+            extrema: false
+            average: false
+            points: true
+
+- label: Living Room
+  cards:
+    - type: vertical-stack
+      cards:
+        - <<: *ap_combined
+          variables:
+            - ap_entity: wall
+            - ap_name: Wall AP
+        - type: 'custom:streamline-card'
+          template: unifi_ap_graph
+          variables:
+            - ap_entity: wall
+- label: Bedroom
+  cards:
+    - type: vertical-stack
+      cards:
+        - <<: *ap_combined
+          variables:
+            - ap_entity: bedroom
+            - ap_name: Bedroom AP
+        - type: 'custom:streamline-card'
+          template: unifi_ap_graph
+          variables:
+            - ap_entity: bedroom

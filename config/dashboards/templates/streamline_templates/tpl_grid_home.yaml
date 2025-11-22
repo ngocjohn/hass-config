@@ -1,0 +1,82 @@
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#                                               #
+#                     HOME                      #
+#                                               #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# PERSON NGOC
+grid_ngoc:
+  card:
+    type: custom:button-card
+    entity: person.viet_ngoc
+    name: Viet Ngoc
+    double_tap_action: !include ../../shared/popup/home_vietngoc.yaml
+    triggers_update:
+      - sensor.waze_ngoc_home
+    template:
+      - person
+    variables:
+      circle_input: >
+        [[[
+          let distance = Math.round(states['sensor.waze_ngoc_home'].attributes.distance);
+          if (distance) return distance;
+        ]]]
+      circle_input_unit: ' Km'
+    card_mod:
+      style: |
+        #circle {
+        {%- if is_state('person.viet_ngoc', 'home') -%}
+          display:none !important;
+        {% endif %}
+        }
+  # PERSON ZUZU
+grid_zuzu:
+  card:
+    type: custom:button-card
+    entity: person.huong_giang
+    name: Zuz
+    double_tap_action: !include ../../shared/popup/home_zuzu.yaml
+    tap_action:
+      action: call-service
+      service: script.turn_on
+      service_data:
+        entity_id: script.zuzu_entities
+    triggers_update:
+      - sensor.waze_zuzu
+    template:
+      - person
+    state_display: >
+      [[[
+        if (entity)
+          return variables.state === 'not_home' || variables.state === 'away'
+            ? states['sensor.gle'].state
+            : variables.state;
+      ]]]
+  # WEATHER
+grid_weather:
+  card:
+    type: custom:button-card
+    entity: weather.prague
+    name: Prague
+    variables:
+      daily_forecast: sensor.daily_forecast
+      humidity: sensor.weather_humidity
+      current_weather: weather.prague
+    template:
+      - widget_weather
+  # HOME MODE
+grid_home_mode:
+  card:
+    type: custom:button-card
+    entity: sensor.home_mode
+    name: Home mode
+    tap_action:
+      action: block
+    template:
+      - base
+      - icon_homemode
+    variables:
+      state_on: >
+        [[[ return true; ]]]
+    styles:
+      name:
+        - overflow: initial

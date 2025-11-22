@@ -8,12 +8,14 @@ cards:
         show_entity_picture: true
         show_state: false
         secondary_info:
-          attribute: Uptime
+          attribute: uptime
         entities:
-          - entity: sensor.unifi_bedroom_ap_cpu
+          - attribute: cpu
             name: CPU
-          - entity: sensor.unifi_bedroom_ap_ram
-            name: RAM
+            unit: '%'
+          - attribute: mem
+            name: MEM
+            unit: '%'
           - icon: mdi:restart
             tap_action:
               action: call-service
@@ -29,10 +31,10 @@ cards:
         secondary_info:
           entity: sensor.unifi_bedroom_ap
         entities:
-          - entity: sensor.unifi_bedroom_ap_2_4ghz_clients
+          - entity: sensor.unifi_bedroom_ap_2_4ghz
             name: 2.4GhZ
             unit: ' '
-          - entity: sensor.unifi_bedroom_ap_5ghz_clients
+          - entity: sensor.unifi_bedroom_ap_5ghz
             name: 5GhZ
             unit: ' '
           - entity: sensor.unifi_bedroom_ap_guests
@@ -44,21 +46,21 @@ cards:
         icon: mdi:percent-outline
         show_state: false
         secondary_info:
-          attribute: Score
+          attribute: score
         entities:
-          - entity: sensor.unifi_bedroom_ap_2_4ghz_score
+          - entity: sensor.unifi_bedroom_ap_2_4ghz
             name: 2gHz
+            attribute: satisfaction
             unit: '%'
-            tap_action:
-              action: none
-          - entity: sensor.unifi_bedroom_ap_5ghz_score
+          - entity: sensor.unifi_bedroom_ap_5ghz
             name: 5gHz
+            attribute: satisfaction
             unit: '%'
-            tap_action:
-              action: none
       - type: custom:mini-graph-card
         entities:
-          - entity: sensor.unifi_bedroom_ap_score
+          - entity: sensor.unifi_bedroom_ap
+            attribute: score
+
         group: true
         font_size: 14px
         hours_to_show: 24

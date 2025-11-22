@@ -17,7 +17,7 @@ homeassistant:
 # FRONT - END
 frontend:
   extra_module_url:
-    - /hacsfiles/lovelace-card-mod/card-mod.js
+    - /hacsfiles/lovelace-card-mod/card-mod.js?hacstag=190927524400
     - /local/dashboard-resources/customize-css-change.js
     - /local/dashboard-resources/canary.js
     # - /hacsfiles/vehicle-status-card/vehicle-status-card.js?hacstag=85937166311710

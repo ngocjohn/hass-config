@@ -1,0 +1,167 @@
+# # # # # # # # # # # # # # # # # # # # # # # # #
+#                                               #
+#                  MAIN ROOMS                   #
+#                                               #
+# # # # # # # # # # # # # # # # # # # # # # # # #
+
+# OFFICE GRID
+grid_office:
+  card:
+    type: custom:button-card
+    entity: light.office_group
+    name: Office
+    double_tap_action: !include ../../shared/popup/rooms/office.yaml
+    hold_action: !include ../../shared/honeycomb/office_mode.yaml
+    template:
+      - rooms_base
+      - motion
+      - macbook
+      - server
+      - icon_office
+      # - change_grid_title
+      # - light
+    variables:
+      state_on: >
+        [[[
+          let state = states['sensor.office_active'].state;
+          if (state == 'yes') return state;
+        ]]]
+      motion: input_boolean.brma
+      light_entity: light.office_group
+      server: binary_sensor.mbproserver_active
+      macbook: switch.macbook
+      active: sensor.office_active
+      tempsensor: sensor.office_temp_humid_temperature
+      humidsensor: sensor.office_temp_humid_humidity
+  # LIVING ROOM GRID
+grid_living_room:
+  card:
+    type: custom:button-card
+    entity: light.living_room_group
+    name: Lounge
+    double_tap_action: !include ../../shared/popup/rooms/livingroom.yaml
+    hold_action: !include ../../shared/honeycomb/living.yaml
+    template:
+      - rooms_base
+      - icon_couch_lamp
+    variables:
+      light_entity: light.living_room_group
+      active: sensor.living_room_active
+    card_mod:
+      style: |
+        #circle {
+        {%- if not is_state('light.shelly_rgbw_kitchen_led_strip', 'on') -%}
+          display:none !important;
+        {% endif %}
+        }
+
+# KITCHEN NORMAL
+grid_kitchen_normal:
+  card:
+    type: custom:button-card
+    entity: sensor.kitchen_active
+    name: Kitchen
+    template:
+      - rooms_base
+      - icon_noodles
+      - fan_circle
+      - motion
+    double_tap_action: !include ../../shared/popup/rooms/kitchen.yaml
+    hold_action: !include ../../shared/honeycomb/kitchen.yaml
+    variables:
+      fan_circle: fan.hood_power
+      light_entity: light.kitchen_table_light
+      motion: binary_sensor.motion_sensor_kitchen_occupancy
+      active: sensor.kitchen_active
+  # KITCHEN DISHWASING
+grid_kitchen_dishwasing:
+  card:
+    type: custom:button-card
+    entity: timer.dishwasher_remaining
+    name: Dishwasher
+    template:
+      - base
+      - appliance_circle
+      - icon_dish
+    double_tap_action:
+      action: fire-dom-event
+      browser_mod:
+        service: browser_mod.popup
+        data:
+          title: 'Dishwasher'
+          # card_mod:
+          #   style:
+          #     #popup header
+          #     .:
+          content:
+            type: vertical-stack
+            cards:
+              - type: entities
+                entities:
+                  - entity: switch.mycka_nadobi_power
+                    name: Power
+                    icon: mdi:power
+                    secondary_info: last-changed
+                  - entity: binary_sensor.mycka_nadobi_door
+                    name: Door
+                  - entity: sensor.mycka_nadobi_operation_state
+                    name: Operation State
+                  - entity: sensor.mycka_nadobi_program_progress
+                    name: Program Progress
+                  - entity: sensor.mycka_nadobi_remaining_program_time
+                    name: Remaining Program Time
+    tap_action: !include ../../shared/popup/rooms/kitchen.yaml
+    hold_action: !include ../../shared/honeycomb/kitchen.yaml
+    variables:
+      light_entity: light.kitchen_table_light
+      appliance: sensor.mycka_nadobi_program_progress
+    custom_fields:
+      timer:
+        card:
+          type: custom:timer-bar-card
+          layout: full_row
+          text_width: 0px
+          entity: timer.dishwasher_remaining
+          bar_direction: rt
+          invert: true
+          bar_background: '#ffffff4d'
+          bar_foreground: '#e5a00d9e'
+    styles:
+      card:
+        - overflow: hidden
+      custom_fields:
+        timer:
+          - display: block
+          - position: absolute
+          - top: >
+              [[[
+                return window.matchMedia('(max-width: 800px)').matches
+                  ? '77%'
+                  : '98%';
+              ]]]
+          - left: -15%
+          - width: 127%
+
+  # BEDROOM
+grid_bedroom:
+  card:
+    type: custom:button-card
+    entity: light.bedroom_group
+    name: Bedroom
+    double_tap_action: !include ../../shared/popup/rooms/bedroom.yaml
+    hold_action: !include ../../shared/honeycomb/bedroom.yaml
+    template:
+      - rooms_base
+      - icon_double_bed
+      - babycam
+      # - icon_bedroom
+      # - icon_bed
+    variables:
+      babycam: switch.lidl_3_gang_socket_l3
+      active: sensor.bedroom_active
+      light_entity: light.bedroom_group
+      state_on: >
+        [[[
+          let state = states['sensor.bedroom_active'].state;
+          if (state == 'yes') return state;
+        ]]]

@@ -103,21 +103,7 @@ tablet:
   card-mod-theme: tablet
 
   card-mod-view-yaml: |
-    .: |
-      :host {
-        # --app-header-background-color: rgba(0,0,0,1);
-        # --app-header-background-color: rgba(22, 24, 29, 1);
-      }
 
-      # #view {
-      #   background-image: linear-gradient(180deg, rgba(22, 24, 29, 1) 0%, rgba(23, 26, 37, 1) 42%, rgba(22, 24, 29, 1) 100%);
-      # }
-      /* phone */
-      @media screen and (max-width: 800px) {
-        #view {
-          background-image: linear-gradient(0deg, rgb(20 25 37) 0%, rgba(21,25,35,1) 72%, rgba(23,26,37,1) , rgb(0 0 0) 100%);
-        }
-      }
     #################################################
     #                                               #
     #              GRID CARD HEADINGS               #
@@ -215,6 +201,7 @@ tablet:
               width: 18px !important;
               border-radius: 1rem !important;
             }
+
             @media screen and (max-width: 800px) {
               .swiper-container {
                 overflow-x: clip !important;
@@ -264,7 +251,6 @@ tablet:
           flex-wrap: wrap;
           justify-content: space-between;
           place-items: center;
-          //margin-top: 0.5em;
         }
 
     #################################################
@@ -303,102 +289,131 @@ tablet:
           line-height: unset !important;
         }
 
-  card-mod-card: |
-    .header .card-header {
-      letter-spacing: 0.005em;
-      font-size: 1.6em;
-      font-weight: 500;
-      line-height: initial;
-      cursor: default;
-      padding: 0 !important;
-    }
-    .content .card-content {
-      padding: var(--tablet-popup-content-padding) !important;
-    }
-
-    ha-card.addon.type-entities {
-      justify-content: flex-start !important;
-    }
-
-    .addon .card-content {
-      padding: 0 !important;
-      align-content: flex-start;
-      --total-rows: 5;
-    }
-
-    @media screen and (max-width: 1710px) {
-      .addon .card-header {
+  card-mod-card-yaml: |
+    .: |
+      :host(.addon) ha-card {
+        justify-content: flex-start !important;
+        height: auto !important;
+      }
+      :host(.addon) .card-content {
         padding: 0 !important;
-        line-height: unset !important;
+        align-content: flex-start;
+        --total-rows: 5;
       }
-      .addon .card-content {
-        max-height: calc(calc(128px + 7px) * var(--total-rows, 5));
-        overflow-y: auto;
-        overflow-x: hidden;
-        margin-top: 1rem !important;
+      @media screen and (max-width: 1710px) {
+        :host(.addon) .card-header {
+          padding: 0 !important;
+          line-height: unset !important;
+        }
+        :host(.addon) .card-content {
+          max-height: calc(calc(128px + 7px) * var(--total-rows, 5));
+          overflow-y: auto;
+          overflow-x: hidden;
+          margin-top: 1rem !important;
+        }
       }
-    }
-    @media screen and (max-width: 800px) {
-      .addon .card-content {
-        --total-rows: 3;
+      @media screen and (max-width: 800px) {
+        :host(.addon) .card-content {
+          --total-rows: 3;
+        }
       }
-    }
-    .stargazer .card-header {
-      padding: 0 1rem !important;
-      line-height: normal !important;
-    }
 
-    .stargazer .card-content {
-      max-height: 435px;
-      overflow-y: auto;
-      margin-top: 1rem;
-    }
+  # card-mod-card-yaml: |
+  #   .header .card-header {
+  #     letter-spacing: 0.005em;
+  #     font-size: 1.6em;
+  #     font-weight: 500;
+  #     line-height: initial;
+  #     cursor: default;
+  #     padding: 0 !important;
+  #   }
+  #   .content .card-content {
+  #     padding: var(--tablet-popup-content-padding) !important;
+  #   }
 
-    @media screen and (max-width: 800px) {
-      .stargazer .card-content {
-        padding: 0 !important;
-      }
-    }
+  #   ha-card.addon.type-entities {
+  #     justify-content: flex-start !important;
+  #   }
 
-    /* * * * * * * * * * * * * * * * * *
-    *                                 *
-    *         CUSTOM BAR CARD         *
-    *                                 *
-    * * * * * * * * * * * * * * * * * */
-    .type-custom-bar-card bar-card-name {
-      padding-left: 0.25em;
-      letter-spacing: normal;
-    }
-    .type-custom-bar-card bar-card-iconbar {
-      padding-left: 0.23em;
-    }
-    .type-custom-bar-card bar-card-value {
-      font-size: 0.9em;
-      font-weight: 400;
-      color: #e0e1e1;
-      letter-spacing: 0.01em;
-      text-shadow: none;
-      margin-right: auto;
-    }
-    .type-custom-bar-card bar-card-backgroundbar {
-      background: none;
-    }
-    .type-custom-bar-card bar-card-background {
-      background: radial-gradient(circle, rgba(52, 57, 58, 0.1) 0%, rgba(17, 18, 18, 0.2) 75%);
-      box-shadow: inset 0 0 25px #00000045;
-      border-radius: 0.3em;
-      overflow: hidden;
-    }
+  #   .addon .card-content {
+  #     padding: 0 !important;
+  #     align-content: flex-start;
+  #     --total-rows: 5;
+  #   }
 
-    @media screen and (min-width: 1720px) {
-      .type-custom-history-explorer-card div#graphlist {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        height: 100%;
-        gap: 1rem !important;
-      }
-      .type-custom-history-explorer-card div#graphlist > br {
-        display: none !important;
-      }
-    }
+  #   @media screen and (max-width: 1710px) {
+  #     .addon .card-header {
+  #       padding: 0 !important;
+  #       line-height: unset !important;
+  #     }
+  #     .addon .card-content {
+  #       max-height: calc(calc(128px + 7px) * var(--total-rows, 5));
+  #       overflow-y: auto;
+  #       overflow-x: hidden;
+  #       margin-top: 1rem !important;
+  #     }
+  #   }
+  #   @media screen and (max-width: 800px) {
+  #     .addon .card-content {
+  #       --total-rows: 3;
+  #     }
+  #   }
+  #   .stargazer .card-header {
+  #     padding: 0 1rem !important;
+  #     line-height: normal !important;
+  #   }
+
+  #   .stargazer .card-content {
+  #     max-height: 435px;
+  #     overflow-y: auto;
+  #     margin-top: 1rem;
+  #   }
+
+  #   @media screen and (max-width: 800px) {
+  #     .stargazer .card-content {
+  #       padding: 0 !important;
+  #     }
+  #   }
+
+  #   /* * * * * * * * * * * * * * * * * *
+  #   *                                 *
+  #   *         CUSTOM BAR CARD         *
+  #   *                                 *
+  #   * * * * * * * * * * * * * * * * * */
+  #   .type-custom-bar-card bar-card-name {
+  #     padding-left: 0.25em;
+  #     letter-spacing: normal;
+  #   }
+  #   .type-custom-bar-card bar-card-iconbar {
+  #     padding-left: 0.23em;
+  #   }
+  #   .type-custom-bar-card bar-card-value {
+  #     font-size: 0.9em;
+  #     font-weight: 400;
+  #     color: #e0e1e1;
+  #     letter-spacing: 0.01em;
+  #     text-shadow: none;
+  #     margin-right: auto;
+  #   }
+  #   .type-custom-bar-card bar-card-backgroundbar {
+  #     background: none;
+  #   }
+  #   .type-custom-bar-card bar-card-background {
+  #     background: radial-gradient(circle, rgba(52, 57, 58, 0.1) 0%, rgba(17, 18, 18, 0.2) 75%);
+  #     box-shadow: inset 0 0 25px #00000045;
+  #     border-radius: 0.3em;
+  #     overflow: hidden;
+  #   }
+
+  #   @media screen and (min-width: 1720px) {
+  #     .type-custom-history-explorer-card div#graphlist {
+  # display: flex;
+  # flex-direction: column;
+  # justify-content: space-between;
+  # height: 100%;
+  # gap: 1rem !important;
+  #     }
+  #     .type-custom-history-explorer-card div#graphlist > br {
+  #       display: none !important;
+  #     }
+  #   }

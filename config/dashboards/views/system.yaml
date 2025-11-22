@@ -9,9 +9,9 @@ layout:
   margin: 0
   padding: 0
   # height: 100%
-  grid-gap: 2rem
+  grid-gap: 1rem
   grid-template-columns: 0 1fr 1fr 1fr 1fr 1fr 1fr 0
-  grid-template-rows: 0 min-content 1fr min-content 0
+  grid-template-rows: 0 min-content fit-content(100%) 1fr 0
   grid-template-areas: |
     ". .         .          .         .        .          .          ."
     ". chips     chips      chips     chips    .         .         ."
@@ -32,7 +32,7 @@ layout:
 
     #portrait
     '(min-width: 801px) and (max-width: 1440px)':
-      grid-gap: 1% 1.5%
+      grid-gap: 8px 0px
       grid-template-columns: 0 1fr 1fr 1fr 0
       grid-template-rows: 0 min-content 1fr 1fr fit-content(100%) 0
       grid-template-areas: |
@@ -49,7 +49,7 @@ layout:
       margin: 0
       # grid-template-columns: 0 repeat(2, 1fr) 0
       grid-template-columns: 0 1fr 1fr 0
-      grid-template-rows: 0 min-content fit-content(100%) fit-content(100%) min-content 1rem
+      grid-template-rows: 0 min-content fit-content(100%) auto min-content 0px
       grid-template-areas: |
         ". .           .         ."
         ". chips       chips     ."

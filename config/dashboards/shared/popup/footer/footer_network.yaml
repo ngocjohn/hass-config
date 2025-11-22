@@ -25,10 +25,7 @@ browser_mod:
               class: header nopadding
             entities:
               - type: custom:nvn-tabs-card
-                tabs:
-                  - !include ../../hidden/ap_office.yaml
-                  - !include ../../hidden/ap_bedroom.yaml
-                  - !include ../../hidden/ap_wall.yaml
+                tabs: !include ../network_aps.yaml
               - type: divider
               - type: custom:hui-horizontal-stack-card
                 cards:

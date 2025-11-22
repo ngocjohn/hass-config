@@ -1,0 +1,51 @@
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#                                               #
+#                     SECURITY                  #
+#                                               #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# ALARM PANEL
+grid_alarm:
+  card:
+    type: custom:button-card
+    entity: alarm_control_panel.aqara_hub
+    hold_action: !include ../../shared/honeycomb/security.yaml
+    template:
+      - alarm
+      - icon_alarm
+
+  # FRONT DOOR
+grid_front_door:
+  card:
+    type: custom:button-card
+    entity: lock.nuki_neklanka_byt_lock
+    name: Front door
+    tap_action:
+      action: block
+    template:
+      - front_door
+      - icon_lock
+      - loader
+    # variables:
+    #   battery_alert: binary_sensor.nuki_vchod_battery_critical
+  #  MOTION SENSORS
+grid_motion_sensors:
+  card:
+    type: custom:button-card
+    entity: sensor.motion_detected
+    tap_action: !include ../../shared/popup/security_sensors.yaml
+    template:
+      - sensors
+      - icon_motion
+      - battery_alert
+    variables:
+      battery_alert: binary_sensor.zigbee_sensors_problem
+  #  CONTACT SENSORS
+grid_contact_sensors:
+  card:
+    type: custom:button-card
+    tap_action: !include ../../shared/popup/security_sensors.yaml
+    entity: sensor.doors_state
+    template:
+      - doors
+      - circle_state
+      - icon_closet

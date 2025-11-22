@@ -1,0 +1,525 @@
+#-
+#      _           _       _   _            _                                     _
+#   __| | ___  ___| |_   _| |_| |_ ___ _ __(_)_ __   __ _        ___ __ _ _ __ __| |
+#  / _` |/ _ \/ __| | | | | __| __/ _ \ '__| | '_ \ / _` |_____ / __/ _` | '__/ _` |
+# | (_| |  __/ (__| | |_| | |_| ||  __/ |  | | | | | (_| |_____| (_| (_| | | | (_| |
+#  \__,_|\___|\___|_|\__,_|\__|\__\___|_|  |_|_| |_|\__, |      \___\__,_|_|  \__,_|
+#                                                   |___/
+#- from github.com/ngocjohn/hass-config
+#
+
+# https://github.com/brunosabot/streamline-card - Streamline Card
+
+light_auto_entitites:
+  card:
+    type: custom:auto-entities
+    filter:
+      include:
+        - group: '[[group]]'
+          options:
+            type: custom:mushroom-light-card
+            fill_container: true
+            layout: vertical
+            primary_info: name
+            secondary_info: state
+            use_light_color: true
+            show_brightness_control: true
+            show_color_control: true
+            show_color_temp_control: true
+            collapsible_controls: true
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            card_mod:
+              style: |
+                ha-card {
+                  background:
+                  {% if is_state(config.entity, 'on') %}
+                    rgba(var(--rgb-state-light), 0.1);
+                  {% endif %}
+                    #cfcfcf1a !important;
+                  border-radius: 12px !important;
+                }
+    card:
+      type: grid
+      square: false
+      columns: 2
+      title: '[[title]]'
+    show_empty: true
+    card_param: cards
+
+  # FOOTER
+footer:
+  card:
+    type: horizontal-stack
+    view_layout:
+      grid-area: footer
+    cards:
+      - type: custom:button-card
+        name: >
+          <ha-icon icon="mdi:reload"></ha-icon> Refresh
+        tap_action:
+          action: call-service
+          service: browser_mod.sequence
+          service_data:
+            sequence:
+              - service: shell_command.refresh_lovelace
+              - service: browser_mod.javascript
+                data:
+                  code: lovelace_reload()
+        template:
+          - footer
+      - type: custom:button-card
+        name: >
+          <ha-icon icon="mdi:vacuum"></ha-icon> Vacuum
+        tap_action: !include ../../shared/popup/footer/footer_vacuum.yaml
+        triggers_update:
+          - sensor.date
+        variables:
+          notify: >
+            [[[
+              let id = states['sensor.robot_vacuum_last_clean_end'];
+              if (id) return (Date.now() - Date.parse(id.state)) > 6048e5;
+            ]]]
+        template:
+          - footer
+      - type: custom:button-card
+        name: >
+          <ha-icon icon="mdi:server"></ha-icon> System
+        tap_action: !include ../../shared/popup/footer/footer_system.yaml
+        template:
+          - footer
+      - type: custom:button-card
+        name: >
+          <ha-icon icon="ios:pc"></ha-icon> Server
+        tap_action: !include ../../shared/popup/footer/footer_mbproserver.yaml
+        template:
+          - footer
+      - type: custom:button-card
+        entity: sensor.template_updates
+        name: >
+          <ha-icon icon="mdi:arrow-up-bold-circle-outline"></ha-icon> Updates
+        tap_action: !include ../../shared/popup/footer/footer_updates.yaml
+        variables:
+          notify: >
+            [[[
+              return parseInt(entity?.state);
+            ]]]
+        template:
+          - footer
+      - type: custom:button-card
+        name: >
+          <ha-icon icon="mdi:chart-box"></ha-icon> Overview
+        tap_action: !include ../../shared/popup/footer/footer_overview.yaml
+        # variables:
+        #   notify: >
+        #     [[[
+        #       let id = states['binary_sensor.galaxy_tab_a_plugged_in'];
+        #       if (id) return id.state === 'off';
+        #     ]]]
+        template:
+          - footer
+      - type: custom:button-card
+        name: >
+          <ha-icon icon="mdi:router-wireless"></ha-icon> Network
+        tap_action: !include ../../shared/popup/footer/footer_network.yaml
+        triggers_update:
+          - binary_sensor.template_unifi_alerts
+          - update.unifi_status_update
+        variables:
+          notify: >
+            [[[
+              let id = this._config.triggers_update;
+              if (id.every(e => states[e]))
+                  return states[id[0]].state === 'on'
+                      ? `error`
+                      : states[id[1]].state === 'on'
+                        ? 1
+                        : null;
+            ]]]
+        template:
+          - footer
+
+  # LIGHT CARD
+
+  # Light Card
+  # Uses the slider-button-card module.
+
+  # Multi Graph Card
+  # Uses the mini-graph-card module.
+multi_graph_card:
+  default:
+    - title: ''
+    - icon: ''
+    - hours_to_show: 48
+    - points_per_hour: 2
+    - height: 200
+    - lower_bound: ~10000
+    - upper_bound: ~0
+    - animate: true
+    - show_extrema: false
+    - show_header: ''
+    - show_state: ''
+    - show_legend: ''
+    - smoothing: true
+  card:
+    type: 'custom:mini-graph-card'
+    entities: '[[entities]]'
+    name: '[[title]]'
+    icon: '[[icon]]'
+    hours_to_show: '[[hours_to_show]]'
+    points_per_hour: '[[points_per_hour]]'
+    hour24: true
+    line_width: 1.5
+    height: '[[height]]'
+    lower_bound: '[[lower_bound]]'
+    upper_bound: '[[upper_bound]]'
+    smoothing: '[[smoothing]]'
+    animate: '[[animate]]'
+    show:
+      labels_secondary: false
+      extrema: '[[show_extrema]]'
+    card_mod:
+      style: |
+        ha-card { padding-top: 0 !important; }
+        .header {
+          padding-bottom: 0;
+          margin-top: -8px;
+          display: [[show_header]];
+        }
+        .name > span {
+          font-size: var(--body-font-size) !important;
+          font-weight: normal !important;
+          max-height: none !important;
+          opacity: 1 !important;
+        }
+        .states {
+          margin-top: -8px;
+          display: [[show_state]];
+        }
+        .state__value {
+          font-size: var(--h1-font-size) !important;
+          font-weight: 100 !important;
+          padding-top: 4px;
+        }
+        .state__uom {
+          font-size: var(--h6-font-size) !important;
+          text-transform: uppercase;
+          margin-bottom: 2px !important;
+        }
+        .state__time {
+          font-size: var(--h6-font-size) !important;
+          font-weight: normal !important;
+          letter-spacing: normal !important;
+        }
+        .graph__legend {
+          font-size: var(--h6-font-size) !important;
+          font-weight: normal !important;
+          justify-content: flex-start !important;
+          padding-left: 8px !important;
+          padding-bottom: 16px !important;
+          letter-spacing: normal !important;
+          display: [[show_legend]];
+        }
+        .graph__legend__item {
+          margin: 0 8px !important;
+        }
+        .icon {
+          margin-top: 6px;
+          flex-basis: 0 !important;
+        }
+        .info.flex {
+          flex-flow: column;
+          position: absolute;
+          top: 32px;
+          right: 0;
+        }
+        .info__item {
+          flex-flow: row !important;
+          align-self: flex-end;
+          align-items: baseline !important;
+        }
+        .info__item span {
+          padding-left: 4px;
+          line-height: 16px;
+        }
+        .info__item__type {
+          font-size: var(--h6-font-size);
+          text-transform: uppercase !important;
+        }
+        .info__item__time {
+          display: none;
+        }
+
+  # History Graph Card
+history_graph_card:
+  default:
+    - name: ''
+    - icon: ''
+    - hours_to_show: 24
+    - refresh_interval: 0
+  card:
+    type: vertical-stack
+    in_card: true
+    cards:
+      - type: entity
+        entity: '[[entity]]'
+        name: '[[name]]'
+        icon: '[[icon]]'
+      - type: history-graph
+        hours_to_show: '[[hours_to_show]]'
+        refresh_interval: '[[refresh_interval]]'
+        show_names: false
+        entities:
+          - entity: '[[entity]]'
+        card_mod:
+          style:
+            .: |
+              ha-card { overflow: hidden; }
+              .content {
+                margin-left: -68px !important;
+                margin-bottom: -40px !important;
+                padding: 0 0 12px 0 !important;
+                overflow: hidden;
+                filter: hue-rotate(115deg) saturate(3) brightness(0.66)
+              }
+            state-history-charts$state-history-chart-line$ha-chart-base$: |
+              .chartLegend { display: none;}
+
+  # LIGHT CARD
+
+  # Light Card
+  # Uses the slider-button-card module.
+light_card:
+  default:
+    - name: ''
+  card:
+    type: 'custom:slider-button-card'
+    entity: '[[entity]]'
+    name: '[[name]]'
+    slider:
+      direction: left-right
+      background: solid
+      use_state_color: true
+      use_percentage_bg_opacity: true
+      show_track: true
+      toggle_on_click: false
+      force_square: true
+    show_name: true
+    show_state: true
+    compact: false
+    icon:
+      show: true
+      use_state_color: true
+      tap_action:
+        action: more-info
+      icon: ''
+    action_button:
+      mode: custom
+      icon: 'mdi:power'
+      show: false
+      show_spinner: false
+      tap_action:
+        action: toggle
+    card_mod:
+      style: |
+        .name {
+          overflow: visible !important;
+          white-space: normal !important;
+          line-height: 1.33 !important;
+          padding: 10px 12px !important;
+          position: absolute;
+          bottom: 0 !important;
+        }
+        .icon {
+          --mdc-icon-size: 20px;
+          bottom: 10px !important;
+          position: absolute !important;
+          right: 8px !important;
+        }
+        .text {
+          bottom: 0 !important;
+          width: 100%;
+          height: 100%;
+          padding: 0 !important;
+          max-width: calc(100% - 24px) !important;
+        }
+        .slider {
+          background: linear-gradient(to right, rgba(var(--rgb-card-background-color),0.8), rgba(var(--rgb-card-background-color),0.8)), linear-gradient(to right, var(--slider-color), var(--slider-color));
+        }
+        .slider-bg {
+          height: 4px !important;
+          top: auto !important;
+          bottom: 0 !important;
+        }
+        .state {
+          font-size: var(--h3-font-size);
+          font-weight: var(--h3-font-weight);
+          line-height: 2 !important;
+          padding: 14px 12px;
+        }
+        .slider-thumb::after {
+          background: var(--slider-thumb-color) !important;
+        }
+tailwind_movies:
+  card:
+    type: custom:stack-in-card
+    card_mod:
+      style: !include ../../shared/snippets/style-tailwind-card.yaml
+    mode: vertical
+    cards:
+      - type: custom:auto-entities
+        card:
+          type: horizontal-stack
+        filter:
+          template: |
+            {%- set movies = state_attr('[[entity]]', 'data') | sort(attribute="release_date", reverse=false) | sort(attribute="date_added", reverse=true) -%}
+            [
+              {%- for movie in movies -%}
+                {%- if movie.title -%}
+                  {
+                    "type": "custom:popup-card",
+                    "title": "{{ movie.title }}",
+                    "entity": "{{ movie.tmdb_id }}",
+                    "style": "--popup-min-width: 80vw;",
+                    "card": {"type": "iframe", "aspect_ratio": "190%", "url": "{{ movie.tmdb_link }}"}
+                  }{{ ',' if not loop.last }}
+                {%- endif %}
+              {%- endfor %}
+            ]
+        card_param: cards
+      - type: custom:tailwindcss-template-card
+        entity: '[[entity]]'
+        content: |
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 min-[1900px]:2xl:grid-cols-5 gap-4 transition-all duration-300">
+
+            {% set movies = state_attr('[[entity]]', 'data') | sort(attribute="release_date", reverse=false) |
+            sort(attribute="date_added", reverse=true) %}
+            {% for movie in movies %}
+
+            <!-- MOVIE CONTAINER -->
+            {%- if movie.title %}
+            <div
+              class="grid grid-cols-[1fr_2fr] bg-gray-800 bg-gradient-to-t from-black hover:bg-none rounded-lg overflow-hidden p-2 transition-all">
+
+              <!-- POSTER CONTAINER -->
+
+              <div class="block p-2" style="justify-self: center;">
+                <div class="flex relative" style="width: 125px; height:calc(125px * 1.5);">
+                  <img class="block absolute drop-shadow-lg object-cover rounded-lg" src="{{movie.poster_url}}">
+
+                  <!-- LINK BLUR BG -->
+
+                  <div
+                    class="flex absolute w-full h-full justify-center items-center rounded-lg backdrop-blur-sm backdrop-brightness-75 opacity-0 hover:opacity-100"
+                    style="background-color: #0000007d;">
+
+                    <!-- The button to open modal -->
+
+                    <div
+                      onClick="hass.callService('browser_mod', 'more_info', { entity: '{{movie.tmdb_id}}', browser_id: window.browser_mod.browserID })"
+                      class="btn">More..</label></div>
+                  </div>
+                </div>
+              </div>
+              <!-- MOVIE INFO CONTAINER -->
+
+              <div class="flex flex-col gap-4 p-2">
+
+                <!-- INFO -->
+
+                <div class="flex flex-col gap-2">
+                  <!-- Title -->
+                  <div class="flex justify-between items-start gap-2">
+                    <span class="text-slate-200 text-lg xl:text-xl font-medium">{{-movie.title-}}</span>
+                    {%- if movie.rating %}
+                    <div class="flex">
+                      <span class="text-slate-300 text-lg font-bold">{{-movie.rating | round(2)-}} </span>
+                      <ha-icon icon="fas:star" class="text-yellow-300 w-4 mx-1"></ha-icon>
+                    </div>
+                    {%endif%}
+                  </div>
+
+                  <!-- Year Genres -->
+                  <div class="flex flex-row flex-wrap items-end justify-between items-center gap-1">
+                    <div class="flex items-end">
+                      <ha-icon icon="mdi:calendar-month" class="w-5" style="margin: 0 4px -1px 0;"></ha-icon>
+                      <span class="text-nowrap text-gray-400 font-medium"> {{-movie.year}}</span>
+                    </div>
+                    {%- if movie.runtime %}
+                    <div class="flex items-end">
+                      <ha-icon icon="mdi:clock" class="w-5" style="margin: 0 4px -1px 0;"></ha-icon>
+                      <span class="text-nowrap text-gray-400 font-medium"> {{-movie.runtime}}</span>
+                    </div>
+                    {%endif%}
+                    <span class="text-gray-400 font-medium ">{{movie.genres}}</span>
+                  </div>
+
+                </div>
+
+                <!-- Overview -->
+                <div class="text-gray-400"
+                  style="text-align: justify; display: -webkit-inline-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; overflow-x: hidden; text-wrap: balance; scrollbar-width: thin; scrollbar-color: #00000040 transparent; overflow-y: scroll; scrollbar-gutter: stable;">
+                  {{-movie.overview}}
+                </div>
+              </div>
+            </div>
+            {%-endif%}
+            {%- endfor %}
+          </div>
+        ignore_line_breaks: true
+        always_update: false
+        parse_jinja: true
+        plugins:
+          daisyui:
+            enabled: true
+            url: https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.css
+            theme: inherit
+            overrideCardBackground: false
+          tailwindElements:
+            enabled: false
+addon_cards:
+  default:
+    - addon_list: ''
+    - button_template: ''
+  card:
+    type: custom:auto-entities
+    filter:
+      template: |
+        {%- set active = state_attr('sensor.hassio_addons_use', 'addons')['[[addon_list]]'] %}
+        {%- for dev in active -%}
+          {{
+            {
+              'type': 'custom:button-card',
+              'name': dev.name,
+              'entity': dev.running_ent,
+              'template': ['[[button_template]]'],
+              'variables':
+                {
+                  'slug_name': dev.slug_name,
+                  'dev_id': dev.dev_id,
+                  'conf_url': dev.conf_url,
+                  'cpu_ent': dev.cpu_ent,
+                  'memory_ent': dev.memory_ent,
+                  'update_ent': dev.update_ent,
+                  'ver_ent': dev.version_ent,
+                },
+            }
+          }},
+        {%- endfor %}
+    card:
+      type: custom:layout-card
+      layout_type: custom:grid-layout
+      layout:
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr))
+        grid-template-rows: auto
+        grid-gap: 0.5rem 0.8rem
+        margin: 0
+        padding: 0
+        mediaquery:
+          '(max-width: 800px)':
+            grid-template-columns: repeat(auto-fill, minmax(35%, 1fr))
+            grid-gap: 4px 8px
+      cards: []

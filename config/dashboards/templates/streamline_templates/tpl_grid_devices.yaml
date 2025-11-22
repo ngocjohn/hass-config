@@ -1,0 +1,123 @@
+# APPLE TV
+grid_atv:
+  card:
+    type: custom:button-card
+    entity: media_player.living_room_tv
+    name: Apple TV
+    # double_tap_action: !include ../../shared/popup/rooms/atv_remote.yaml
+    double_tap_action: !include ../../shared/popup/rooms/apple_tv_card.yaml
+    hold_action: !include ../../shared/honeycomb/atv.yaml
+    tap_action:
+      action: call-service
+      service: script.turn_on
+      service_data:
+        entity_id: script.atv_turn_on_off
+    template:
+      - mediaplayer
+    variables:
+      light_entity: light.sony_tv_backlight
+
+  # SAMSUNG TV
+grid_samsung:
+  card:
+    type: custom:button-card
+    entity: media_player.shield
+    name: >
+      [[[
+        let source = states['media_player.shield'].attributes.source;
+          if ( variables.state_on && source !==  'Android TV Launcher' )
+            return source;
+          else
+            return 'Samsung';
+      ]]]
+    hold_action: !include ../../shared/honeycomb/shield.yaml
+    template:
+      - mediaplayer
+
+# PLAYSTATION
+grid_playstation:
+  card:
+    type: custom:button-card
+    entity: switch.ps5_power
+    name: Playstation
+    template:
+      - base
+      - icon_ps5
+      - loader
+  # HOMEPODS
+grid_homepods:
+  card:
+    type: custom:button-card
+    entity: media_player.mass_universal_airplay
+    template:
+      - base
+      - icon_homepod
+      - circle
+    styles:
+      custom_fields:
+        icon:
+          - margin-top: -8%
+    name: >
+      [[[
+        let master = states['sensor.mass_master_player'],
+            attr = master.attributes;
+        return !master.state || master.state != 'unknown'
+          ? `${attr.named_master}+${attr.sub_members_length - 1}`
+          : 'Homepods';
+      ]]]
+    double_tap_action: !include ../../shared/popup/popup_mass.yaml
+    tap_action:
+      action: call-service
+      service: media_player.turn_off
+      service_data:
+        entity_id: media_player.mass_universal_airplay
+
+    variables:
+      media_on: >
+        [[[ return !entity || ['on', 'paused', 'idle'].indexOf(entity.state) !== -1; ]]]
+      state_on: >
+        [[[ return !entity || ['playing'].indexOf(entity.state) !== -1; ]]]
+      circle_input: >
+        [[[
+          return entity === undefined || Math.round(states['sensor.currently_playing'].attributes.mass_homepods / 4 * 100 );
+        ]]]
+      circle_input_unit: ' /4'
+    custom_fields:
+      circle: >
+        [[[
+            let input = variables.circle_input,
+              radius = 20.5,
+              tspan = '<tspan dx=".2" dy="-.4">',
+              circumference = radius * 2 * Math.PI,
+              state = variables.state_on,
+              unit = variables.circle_input_unit || ' ';
+            let inner_text = Math.round(states['sensor.currently_playing'].attributes.mass_homepods );
+            return `
+              <svg viewBox="0 0 50 50">
+                <style>
+                  circle {
+                    transform: rotate(-90deg);
+                    transform-origin: 50% 50%;
+                    stroke-dasharray: ${circumference};
+                    stroke-dashoffset: ${circumference - input / 100 * circumference};
+                  }
+                  tspan {
+                    font-size: 10px;
+                  }
+                  #circle_value, tspan {
+                    text-anchor: middle;
+                    dominant-baseline: central;
+                  }
+                </style>
+                <circle cx="25" cy="25" r="${radius}" stroke="${state ? 'var(--c-stroke-color-on)' : 'var(--c-stroke-color-off)'}" stroke-width="2.5" fill="none" />
+                <text id="circle_value" x="50%" y="52%" fill="#8d8e90" font-size="14" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle">${inner_text}${tspan}<tspan>${unit}</text>
+              </svg>
+            `;
+        ]]]
+    card_mod:
+      style: |
+        {%- if is_state('media_player.mass_universal_airplay', 'off') %}
+        #circle {
+          display: none !important;
+        }
+        {%- endif %}
