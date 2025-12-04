@@ -25,6 +25,10 @@
         .card-content br {
           display: none !important;
         }
+      $: |
+        h1 {
+          line-height: unset !important;
+        }
   cardName: historycard-sys
   header: 'Monitoring'
   uimode: dark

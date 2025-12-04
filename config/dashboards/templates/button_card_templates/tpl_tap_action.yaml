@@ -25,4 +25,4 @@ card_bounce:
         // reset
         window.setTimeout(() => { this.style.animation = "none"; }, duration + 100)
       ]]]
-    haptic: medium
+    # haptic: medium

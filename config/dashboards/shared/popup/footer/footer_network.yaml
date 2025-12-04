@@ -22,7 +22,7 @@ browser_mod:
             title: Access Points
             show_header_toggle: false
             card_mod:
-              class: header nopadding
+              class: header
             entities:
               - type: custom:nvn-tabs-card
                 tabs: !include ../network_aps.yaml
@@ -71,7 +71,7 @@ browser_mod:
             title: Router
             show_header_toggle: false
             card_mod:
-              class: header nopadding
+              class: header
             entities:
               - entity: binary_sensor.arris_tg3442de_wan_status
                 name: WAN Status

@@ -7,7 +7,7 @@ style:
         }
         @media (max-width: 800px) {
           #root {
-            display: block;
+            display: block !important;
           }
         }
       hui-entities-card$:
@@ -18,7 +18,11 @@ style:
             transition: none;
             margin-bottom: 0 !important;
           }
-
+          ha-card.header .card-header {
+            letter-spacing: 0.005em;
+            font-size: 1.6em;
+            line-height: initial;
+          }
 
           /* portrait */
           @media screen and (max-width: 800px) {

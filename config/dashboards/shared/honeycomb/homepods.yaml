@@ -1,0 +1,50 @@
+- icon: 'mdi:information-variant'
+  entity: 'HCJS: return variables.master_entity;'
+  tap_action:
+    action: more-info
+- icon: 'mdi:disc-player'
+  show: 'HCJS: return states[variables.master_entity].state != "none";'
+  entity: 'HCJS: return states[variables.master_entity].state;'
+  tap_action:
+    action: more-info
+  position: 1
+- icon: 'mdi:laptop'
+  position: 2
+  show: 'HCJS: return states[variables.master_entity].state !== variables.office_entity'
+  entity: 'HCJS: return variables.office_entity;'
+  tap_action:
+    action: more-info
+
+- icon: 'mdi:shower'
+  position: 3
+  entity: 'HCJS: return variables.bathroom_entity;'
+  tap_action:
+    action: call-service
+    service: 'HCJS: return states[variables.master_entity]?.attributes.group_members?.includes(variables.bathroom_entity) ? "media_player.unjoin" : "media_player.join";'
+    service_data: >
+      [[[
+        let isJoined = states[variables.master_entity]?.attributes.group_members?.includes(variables.bathroom_entity),
+            master = states[variables.master_entity]?.state || '',
+            bathroom = states[variables.bathroom_entity]?.entity_id;
+        return isJoined
+          ? { entity_id: 'media_player.bathroom' }
+          : { entity_id: ['media_player.office_homepod'], group_members: [ 'media_player.bathroom' ] };
+      ]]]
+
+# - icon: 'mdi:shower'
+#   position: 3
+#   entity: 'HCJS: return variables.bathroom_entity;'
+#   tap_action:
+#     action: call-service
+#     service: 'HCJS: return states[variables.master_entity]?.attributes.group_members?.includes(variables.bathroom_entity) ? "media_player.unjoin" : "media_player.join";'
+#     service_data:
+#       entity_id: 'HCJS: return states[variables.master_entity]?.attributes.group_members?.includes(variables.bathroom_entity) ? variables.bathroom_entity : states[variables.master_entity].state;'
+
+- icon: 'mdi:sofa'
+  entity: 'HCJS: return variables.living_room_entity;'
+  tap_action:
+    action: more-info
+- icon: 'mdi:bed-king'
+  entity: 'HCJS: return variables.bedroom_entity;'
+  tap_action:
+    action: more-info

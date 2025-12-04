@@ -2,6 +2,7 @@ grid-template-columns: 1fr
 grid-template-rows: auto
 margin: 0
 padding: 0
+height: 100%
 mediaquery:
   '(min-width: 1441.99px)':
     grid-template-columns: repeat(var(--max-popup-column, auto-fit), minmax(560px, 1fr))

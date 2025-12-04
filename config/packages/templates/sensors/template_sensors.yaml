@@ -103,11 +103,7 @@ template:
       - unique_id: living_room_active
         name: 'Living-room Active'
         state: "{{ iif ((not is_state('light.living_room_group', 'off') or (not is_state('media_player.sony_bravia_tv', 'off'))), 'yes', 'no') }}"
-        icon: >-
-          {% set state = states('sensor.living_room_active') %}
-          {% if state == 'no' %} mdi:thumb-down
-          {% else %} mdi:thumb-up
-          {%- endif %}
+        icon: "{{ iif (this.state == 'no', 'mdi:thumb-down', 'mdi:thumb-up') }}"
         attributes:
           lights_on: >-
             {%- set light = expand(states.light.living_room_group) | selectattr( 'state', 'eq', 'on') | map(attribute='name') | list | replace('Living Room ', '') %}
@@ -227,26 +223,6 @@ template:
           bedroom: "{{ expand(states.light.bedroom_group) | selectattr( 'state', 'eq', 'on') | list | count }}"
           hallway_utility: "{{ expand(states.light.hallway_group) | selectattr( 'state', 'eq', 'on') | list | count }}"
           office: "{{ expand(states.light.office_group) | selectattr( 'state', 'eq', 'on') | list | count }}"
-      # SENSOR - MEDIA PLAYER
-      - name: Currently playing
-        unique_id: currently_playing
-        state: >-
-          {% if this.attributes.device | list | count > 0 %} on {% else %} off {% endif %}
-        attributes:
-          device: >-
-            {% set p2 = expand(states.group.homepod_airplay) | selectattr( 'state', 'in', ['on', 'playing']) | map(attribute='entity_id') | list %}
-            {% set p1 = expand(states.group.device_players) | rejectattr('entity_id', 'in', ['media_player.spotifyplus_ngoc_nguyen']) | selectattr( 'state', 'in', ['on', 'playing', 'idle', 'paused']) | map(attribute='entity_id') | list %}
-            {% set p3 = expand(states.group.homepod_mass_airplay) | selectattr( 'state', 'in', ['on', 'playing']) | map(attribute='entity_id') | list %}
-            {{ p1 + p2 + p3 }}
-          device_playing: >-
-            {{ this.attributes.device | list | count }} Playing
-          # filter Mass airplay homepods that are not active
-          mass_homepods: >-
-            {{ expand('group.homepod_mass_airplay')
-                | rejectattr('state', 'in', ['idle', 'off'])
-                | list
-                | count
-            }}
 
       # SENSOR - COVER SHUTTERS COUNT
       - name: Covers open count

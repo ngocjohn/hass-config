@@ -376,11 +376,20 @@
 - id: '1694721012171'
   alias: Spotify Vibrant Color
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - sensor.vibrant_color
-  condition:
+    trigger: state
+  - trigger: state
+    entity_id:
+    - media_player.currently_playing
+    to:
+    - playing
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+  conditions:
   - condition: and
     conditions:
     - condition: state
@@ -396,13 +405,13 @@
       - condition: state
         entity_id: media_player.mass_universal_airplay
         state: playing
-  action:
-  - service: light.turn_on
-    data:
+  actions:
+  - data:
       transition: 5
       rgb_color: '{{states(''sensor.vibrant_color'')}}'
     target:
       entity_id: light.office_led_light_strip
+    action: light.turn_on
   mode: single
 - id: '1695149693530'
   alias: Notify HA started

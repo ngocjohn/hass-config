@@ -53,25 +53,19 @@ grid_homepods:
       - base
       - icon_homepod
       - circle
+      - now_playing_bars
     styles:
       custom_fields:
         icon:
           - margin-top: -8%
-    name: >
-      [[[
-        let master = states['sensor.mass_master_player'],
-            attr = master.attributes;
-        return !master.state || master.state != 'unknown'
-          ? `${attr.named_master}+${attr.sub_members_length - 1}`
-          : 'Homepods';
-      ]]]
-    double_tap_action: !include ../../shared/popup/popup_mass.yaml
-    tap_action:
-      action: call-service
-      service: media_player.turn_off
-      service_data:
-        entity_id: media_player.mass_universal_airplay
-
+      card:
+        - overflow: hidden
+        - --c-stroke-color-on: >
+            [[[ return `rgba(${variables.vibrant_data.Vibrant_RGB}, 1)`; ]]]
+        - --bar-color-top: >
+            [[[ return variables.vibrant_data.LightVibrant_RGB; ]]]
+        - --bar-color-bottom: >
+            [[[ return variables.vibrant_data.DarkVibrant_RGB; ]]]
     variables:
       media_on: >
         [[[ return !entity || ['on', 'paused', 'idle'].indexOf(entity.state) !== -1; ]]]
@@ -81,43 +75,46 @@ grid_homepods:
         [[[
           return entity === undefined || Math.round(states['sensor.currently_playing'].attributes.mass_homepods / 4 * 100 );
         ]]]
-      circle_input_unit: ' /4'
-    custom_fields:
-      circle: >
+      circle_inner_text: >
         [[[
-            let input = variables.circle_input,
-              radius = 20.5,
-              tspan = '<tspan dx=".2" dy="-.4">',
-              circumference = radius * 2 * Math.PI,
-              state = variables.state_on,
-              unit = variables.circle_input_unit || ' ';
-            let inner_text = Math.round(states['sensor.currently_playing'].attributes.mass_homepods );
-            return `
-              <svg viewBox="0 0 50 50">
-                <style>
-                  circle {
-                    transform: rotate(-90deg);
-                    transform-origin: 50% 50%;
-                    stroke-dasharray: ${circumference};
-                    stroke-dashoffset: ${circumference - input / 100 * circumference};
-                  }
-                  tspan {
-                    font-size: 10px;
-                  }
-                  #circle_value, tspan {
-                    text-anchor: middle;
-                    dominant-baseline: central;
-                  }
-                </style>
-                <circle cx="25" cy="25" r="${radius}" stroke="${state ? 'var(--c-stroke-color-on)' : 'var(--c-stroke-color-off)'}" stroke-width="2.5" fill="none" />
-                <text id="circle_value" x="50%" y="52%" fill="#8d8e90" font-size="14" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle">${inner_text}${tspan}<tspan>${unit}</text>
-              </svg>
-            `;
+          return states['sensor.currently_playing'].attributes.mass_homepods ;
         ]]]
-    card_mod:
-      style: |
-        {%- if is_state('media_player.mass_universal_airplay', 'off') %}
-        #circle {
-          display: none !important;
-        }
-        {%- endif %}
+      circle_input_unit: ' /4'
+    name: >
+      [[[
+        let master = states['sensor.mass_master_player'],
+            attr = master.attributes;
+        return !master.state || attr.sub_members_length > 1
+          ? `${attr.named_master}+${attr.sub_members_length - 1}`
+          : variables.state_on
+            ? states[entity.attributes.active_child].attributes.friendly_name.split(' ')[0]
+            : 'HomePods';
+      ]]]
+    double_tap_action: !include ../../shared/popup/popup_mass.yaml
+    hold_action:
+      action: fire-dom-event
+      honeycomb_menu:
+        autoclose: true
+        size: 250
+        variables:
+          master_entity: sensor.mass_master_player
+          office_entity: media_player.office_homepod
+          bathroom_entity: media_player.bathroom
+          bedroom_entity: media_player.bedroom
+          living_room_entity: media_player.living_room_2
+
+        buttons: !include ../../shared/honeycomb/homepods.yaml
+
+    tap_action:
+      action: >
+        [[[
+          return variables.state_on || variables.media_on
+              ? 'call-service'
+              : 'none';
+        ]]]
+      service: media_player.turn_off
+      service_data:
+        entity_id: >
+          [[[
+            return variables.entity_id;
+          ]]]

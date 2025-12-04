@@ -17,8 +17,9 @@ browser_mod:
           #                                               #
           #################################################
           - type: entities
-            title: ' '
             show_header_toggle: false
+            card_mod:
+              class: header nopadding
             entities:
               - entity: binary_sensor.macbookpro
                 name: Active
@@ -98,3 +99,91 @@ browser_mod:
                 average: false
                 extrema: false
                 points: hover
+          #################################################
+          #                                               #
+          #                UNIFI CONTROLLER               #
+          #                                               #
+          #################################################
+          # - type: entities
+          #   title: Router
+          #   show_header_toggle: false
+          #   card_mod:
+          #     class: header nopadding
+          #   entities:
+          #     - entity: binary_sensor.arris_tg3442de_wan_status
+          #       name: WAN Status
+          #     # - entity: sensor.external_ip
+          #     # - entity: binary_sensor.template_unifi_upgradable
+          #     # - entity: sensor.template_ap_adopted
+          #     - type: custom:multiple-entity-row
+          #       entity: sensor.unifi_controller_clients
+          #       icon: mdi:devices
+          #       name: 'Total Clients'
+          #       show_state: false
+          #       secondary_info:
+          #         entity: sensor.unifi_controller_clients
+          #         unit: true
+          #       entities:
+          #         - attribute: wifi0
+          #           name: 2.4GhZ
+          #           unit: ' '
+          #         - attribute: wifi1
+          #           name: 5GhZ
+          #           unit: ' '
+          #         - attribute: wired
+          #           name: Wired
+          #           unit: ' '
+          #     - type: custom:multiple-entity-row
+          #       entity: binary_sensor.unifi_controller_alert
+          #       name: 'Alert'
+          #       state_color: true
+          #       show_state: true
+          #       secondary_info:
+          #         attribute: Message
+          #       entities:
+          #         - icon: mdi:archive-minus
+          #           tap_action:
+          #             action: call-service
+          #             confirmation:
+          #               text: Are you sure you want to archive?
+          #             service: input_button.press
+          #             service_data:
+          #               entity_id: input_button.unifi_archive_alerts
+          #   footer:
+          #     type: custom:mini-graph-card
+          #     name: Speedtest
+          #     tap_action:
+          #       action: call-service
+          #       service: homeassistant.update_entity
+          #       service_data:
+          #         entity_id: sensor.speedtest_download
+          #     entities:
+          #       - entity: sensor.speedtest_download
+          #         name: Download
+          #         color: '#00bb33'
+          #       - entity: sensor.speedtest_upload
+          #         name: Upload
+          #         show_state: false
+          #         color: '#2196f3'
+          #         y_axis: secondary
+          #     hours_to_show: 48
+          #     hour24: true
+          #     line_width: 3
+          #     animate: true
+          #     upper_bound_secondary: 100
+          #     show:
+          #       name: True
+          #       icon: false
+          #       state: true
+          #       legend: true
+          #       fill: fade
+          #       labels: true
+          #       labels_secondary: false
+          #       average: true
+          #       extrema: true
+          #       points: hover
+          #     card_mod:
+          #       style: |
+          #         .info__item__time {
+          #           display: none !important;
+          #         }

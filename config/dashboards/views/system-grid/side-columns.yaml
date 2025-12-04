@@ -9,6 +9,34 @@
   show_header_toggle: false
   card_mod:
     class: addon
+    style:
+      .: |
+        ha-card {
+          justify-content: flex-start !important;
+          height: auto !important;
+        }
+        .card-content {
+          padding: 0 !important;
+          align-content: flex-start;
+          --total-rows: 5;
+        }
+        @media screen and (max-width: 1710px) {
+          .card-header {
+            padding: 0 !important;
+            line-height: unset !important;
+          }
+          .card-content {
+            max-height: calc(calc(128px + 7px) * var(--total-rows, 5));
+            overflow-y: auto;
+            overflow-x: hidden;
+            margin-top: 1rem !important;
+          }
+        }
+        @media screen and (max-width: 800px) {
+          .card-content {
+            --total-rows: 3;
+          }
+        }
   view_layout:
     grid-area: c2
   entities:

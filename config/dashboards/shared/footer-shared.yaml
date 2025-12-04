@@ -46,7 +46,7 @@ cards:
     template:
       - footer
   - type: custom:button-card
-    entity: sensor.template_updates
+    entity: sensor.hassio_updates_available
     name: >
       <ha-icon icon="mdi:arrow-up-bold-circle-outline"></ha-icon> Updates
     tap_action: !include ./popup/footer/footer_updates.yaml

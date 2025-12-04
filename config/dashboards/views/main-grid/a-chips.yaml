@@ -45,8 +45,8 @@
         - chips
       state_display: >
         [[[
-            if (variables.playing == '0 Playing') return 'None';
-            else return variables.playing;
+            if (!variables.state_on) return 'None';
+            else return entity.attributes.device_playing;
         ]]]
       styles:
         icon:

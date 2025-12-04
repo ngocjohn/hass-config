@@ -17,6 +17,7 @@ base:
     - settings
     - tilt
     - card_bounce
+    - vibrant_colors
     - extra_styles
   variables:
     state_on: >
@@ -383,7 +384,7 @@ extra_styles:
               }
             }
             #card {
-              padding: 12% 11% 10.5% 12%;
+              /* padding: 12% 11% 10.5% 12%; */
               transform-style: preserve-3d;
               overflow: visible;
               /* firefox pixelated edges */
@@ -1244,7 +1245,8 @@ circle:
                 domain = entity.entity_id.split('.')[0],
                 state = variables.state_on,
                 input = variables.circle_input || ' ',
-                unit = variables.circle_input_unit || ' ';
+                unit = variables.circle_input_unit || ' ',
+                innerText = variables.circle_inner_text || null;
            /* * * * * * * * * * * * * * * * * *
             *                                 *
             *             CIRCLE              *
@@ -1278,7 +1280,7 @@ circle:
                     <circle id="circle_stroke_bg" cx="25" cy="25" r="${r}" opacity="0.5" stroke-width="var(--c-stroke-width)" stroke="#b8b8b8"/>
                     <circle id="circle_stroke_prev" cx="25" cy="25" r="${r}" opacity="1" stroke-width="2.5" stroke="#ffd945"  stroke-dashoffset="${typeof input === 'number' && c - input / 100 * c}" stroke-dasharray="${c}"/>
                     <circle id="circle_stroke" cx="25" cy="25" r="${r}" opacity="1.0" stroke-width="var(--c-stroke-width)" stroke="${state ? 'var(--c-stroke-color-on)' : 'var(--c-stroke-color-off)'}" stroke-dashoffset="${typeof input === 'number' && c - input / 100 * c}" stroke-dasharray="${c}"/>
-                    <text id="circle_value" x="50%" y="52%" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle">${input}${tspan}<tspan>${unit}</tspan></text>
+                    <text id="circle_value" x="50%" y="52%" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle">${innerText ?? input}${tspan}<tspan>${unit}</tspan></text>
                   </svg>
                   ${(domain === 'light' || domain === 'media_player' || domain === 'cover') && `
                       <input id="circle_slider" type="range" min="0" max="100" value="${input}">
@@ -1592,24 +1594,6 @@ loader:
           }
         }
       ]]]
-  # double_tap_action:
-  #   loader: >
-  #     [[[
-  #       if (entity) {
-  #         var domain = entity.entity_id.split('.')[0];
-  #         if (domain === 'cover') {
-  #           let elt = this.shadowRoot,
-  #             loader = (id, style, timeout) => {
-  #               elt.getElementById(id) && (elt.getElementById(id).style.display = style,
-  #                 window.setTimeout(() => {
-  #                   elt.getElementById('loader').style.display = 'none'
-  #                 }, 20000))
-  #             };
-  #           loader('circle', 'none', 'initial'),
-  #           loader('loader', 'initial', 'none');
-  #         }
-  #       }
-  #     ]]]
   styles:
     custom_fields:
       loader:
@@ -1641,3 +1625,9 @@ settings:
     translate_no_updates: no updates
     translate_update_available: update available
     translate_updates_available: updates available
+vibrant_colors:
+  variables:
+    vibrant_data: >
+      [[[
+        return states['sensor.art_colors'].attributes.data || {};
+      ]]]

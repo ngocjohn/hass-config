@@ -19,6 +19,7 @@ browser_mod:
               #root {
                 grid-gap: 0 !important;
                 padding: var(--tablet-popup-content-padding);
+                padding-top: 0 !important;
               }
       card:
         type: grid
@@ -31,7 +32,7 @@ browser_mod:
             tap_action:
               action: none
             variables:
-              available: sensor.template_updates
+              available: sensor.hassio_updates_available
               latest: sensor.home_assistant_versions
               latest_beta: sensor.home_assistant_versions_beta
               release_notes: sensor.hass_release_notes
@@ -51,11 +52,11 @@ browser_mod:
           ############################################
           - type: custom:button-card
             variables:
-              updates: sensor.template_updates
+              updates: sensor.hassio_updates_available
               hacs_installed: sensor.hacs_installed
             template: updates
           - type: custom:button-card
-            entity: sensor.template_updates
+            entity: sensor.hassio_updates_available
             name: Updates
             template:
               - updates_icon_name

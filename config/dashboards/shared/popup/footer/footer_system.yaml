@@ -43,6 +43,15 @@ browser_mod:
               #   icon: mdi:cloud-upload
               #   format: relative
               - type: custom:bar-card
+                card_mod: &bar_card_mod
+                  class: barcard
+                  style:
+                    .: |
+                      bar-card-name {
+                        padding-left: 0.25em;
+                        letter-spacing: normal;
+                      }
+
                 width: 55%
                 height: 2em
                 decimal: 0
@@ -96,6 +105,14 @@ browser_mod:
                               message: Reload all YAML configuration...
                           - service: homeassistant.reload_all
                     template: icon_name
+                  - type: custom:button-card
+                    name: Frontend
+                    icon: mdi:broom
+                    template: icon_name
+                    tap_action:
+                      action: fire-dom-event
+                      browser_mod:
+                        service: browser_mod.refresh
           #################################################
           #                                               #
           #                Raspberry Docker               #
@@ -127,6 +144,7 @@ browser_mod:
                 name: Uptime
                 icon: mdi:update
               - type: custom:bar-card
+                card_mod: *bar_card_mod
                 width: 55%
                 height: 2em
                 decimal: 0

@@ -2,7 +2,8 @@ Graphite Auto:
   # POPUP MORE INFO
   dialog-box-shadow: var(--rgb-accent-color)
   dialog-backdrop-filter: blur(12px) brightness(0.3)
-  popup-background-color: rgba(34,38,39,0.7)
+  popup-background-color: transparent
+  # popup-background-color: rgba(34,38,39,0.7)
   # popup-background-color: rgba(30,30,45, 0.6)
   popup-border-width: 1px
   popup-border-radius: 1em
@@ -27,6 +28,62 @@ Graphite Auto:
   mdc-typography-button-font-family: var(--primary-font-family)
   ha-font-family-body: var(--primary-font-family)
   st-spacing: 0
+
+  #####################
+  # Catppuccin Colors #
+  #####################
+  catppuccin-rosewater: '#f4dbd6'
+  catppuccin-rosewater-rgb: 244, 219, 214
+  catppuccin-flamingo: '#f0c6c6'
+  catppuccin-flamingo-rgb: 240, 198, 198
+  catppuccin-pink: '#f5bde6'
+  catppuccin-pink-rgb: 245, 189, 230
+  catppuccin-mauve: '#c6a0f6'
+  catppuccin-mauve-rgb: 198, 160, 246
+  catppuccin-red: '#ed8796'
+  catppuccin-red-rgb: 237, 135, 150
+  catppuccin-maroon: '#ee99a0'
+  catppuccin-maroon-rgb: 238, 153, 160
+  catppuccin-peach: '#f5a97f'
+  catppuccin-peach-rgb: 245, 169, 127
+  catppuccin-yellow: '#eed49f'
+  catppuccin-yellow-rgb: 238, 212, 159
+  catppuccin-green: '#a6da95'
+  catppuccin-green-rgb: 166, 218, 149
+  catppuccin-teal: '#8bd5ca'
+  catppuccin-teal-rgb: 139, 213, 202
+  catppuccin-sky: '#91d7e3'
+  catppuccin-sky-rgb: 145, 215, 227
+  catppuccin-sapphire: '#7dc4e4'
+  catppuccin-sapphire-rgb: 125, 196, 228
+  catppuccin-blue: '#8aadf4'
+  catppuccin-blue-rgb: 138, 173, 244
+  catppuccin-lavender: '#b7bdf8'
+  catppuccin-lavender-rgb: 183, 189, 248
+  catppuccin-text: '#cad3f5'
+  catppuccin-text-rgb: 202, 211, 245
+  catppuccin-subtext1: '#b8c0e0'
+  catppuccin-subtext1-rgb: 184, 192, 224
+  catppuccin-subtext0: '#a5adcb'
+  catppuccin-subtext0-rgb: 165, 173, 203
+  catppuccin-overlay2: '#939ab7'
+  catppuccin-overlay2-rgb: 147, 154, 183
+  catppuccin-overlay1: '#8087a2'
+  catppuccin-overlay1-rgb: 128, 135, 162
+  catppuccin-overlay0: '#6e738d'
+  catppuccin-overlay0-rgb: 110, 115, 141
+  catppuccin-surface2: '#5b6078'
+  catppuccin-surface2-rgb: 91, 96, 120
+  catppuccin-surface1: '#494d64'
+  catppuccin-surface1-rgb: 73, 77, 100
+  catppuccin-surface0: '#363a4f'
+  catppuccin-surface0-rgb: 54, 58, 79
+  catppuccin-base: '#24273a'
+  catppuccin-base-rgb: 36, 39, 58
+  catppuccin-mantle: '#1e2030'
+  catppuccin-mantle-rgb: 30, 32, 48
+  catppuccin-crust: '#181926'
+  catppuccin-crust-rgb: 24, 25, 38
 
   modes:
     light:
@@ -577,6 +634,26 @@ Graphite Auto:
       # codemirror-string: var(--token-color-codemirror-string)
       # codemirror-keyword: var(--token-color-codemirror-keyword)
       # codemirror-number: var(--token-color-codemirror-number)
+      #
+      # Codemirror
+      codemirror-keyword: var(--catppuccin-mauve)
+      codemirror-operator: var(--catppuccin-sky)
+      codemirror-variable: var(--catppuccin-blue) # Functions
+      codemirror-variable-2: var(--catppuccin-text) # "Special variable"s
+      codemirror-variable-3: var(--catppuccin-text) # Currently unused
+      codemirror-builtin: var(--catppuccin-red)
+      codemirror-atom: var(--catppuccin-red)
+      codemirror-number: var(--catppuccin-peach)
+      codemirror-def: var(--catppuccin-text)
+      codemirror-string: var(--catppuccin-green)
+      codemirror-string-2: var(--catppuccin-green) # Currently unused
+      codemirror-comment: var(--catppuccin-overlay2)
+      codemirror-tag: var(--catppuccin-blue) # Currently unused
+      codemirror-meta: var(--catppuccin-overlay2)
+      codemirror-attribute: var(--catppuccin-yellow)
+      codemirror-property: var(--catppuccin-blue)
+      codemirror-qualifier: var(--catppuccin-peach)
+      codemirror-type: var(--catppuccin-yellow) # Currently unused
       # RGB colors
       rgb-primary-color: var(--token-rgb-primary)
       rgb-accent-color: var(--token-rgb-primary)
@@ -643,24 +720,6 @@ Graphite Auto:
       * {
         font-family: Poppins, Raleway, SF Pro Text, sans-serif, system-ui !important;
       }
-  card-mod-sidebar: |
-    .menu .title {
-      font-weight: 600;
-    }
-    :host([expanded]) paper-icon-item {
-      width: 100%;
-    }
-    .iron-selected paper-icon-item {
-      border-left: 3px solid var(--accent-color) !important;
-      border-radius: var(--ha-card-border-radius) !important;
-      padding-left: 9px !important;
-    }
-    .profile.iron-selected paper-icon-item {
-      padding-left: 1px !important;
-    }
-    paper-icon-item span {
-      font-weight: normal !important;
-    }
 
   card-mod-more-info: |
     :host([card]) .content .container {
@@ -670,19 +729,19 @@ Graphite Auto:
       --vertical-align-dialog: var(--tablet-popup-align-dialog) !important;
       --dialog-surface-margin-top: var(--tablet-popup-margin-top) !important;
       --dialog-box-shadow: 0 0px 16px 4px rgba(101,115,134, .15), 0 16px 64px 32px rgba(101,115,134, .5) !important;
-      --mdc-theme-surface: transparent !important;
+      --ha-dialog-surface-backdrop-filter: blur(12px) brightness(0.3);
+      --mdc-theme-surface: var(--popup-background-color) !important;
       --bar-card-border-radius: 12px !important;
       --ha-card-border-radius: 0px !important;
       --ha-card-background: none !important;
-      --button-card-border-radius: 10%;
     }
-    ha-dialog *:focus-visible {
-      outline: none !important;
-    }
+
+
     @media (max-width: 800px), (max-height: 500px) {
       ha-dialog {
         --mdc-dialog-min-width: 100vw !important;
         --mdc-dialog-min-height: 100vh !important;
         --popup-border-radius: 0 !important;
+        --dialog-box-shadow: none !important;
       }
     }
