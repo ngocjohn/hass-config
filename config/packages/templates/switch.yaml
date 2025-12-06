@@ -7,51 +7,56 @@
 #
 #- from github.com/ngocjohn/hass-config
 #
-# SWITCHED TEMPLATE
-switch:
-  - platform: template
-    switches:
-      macbook:
-        value_template: "{{ is_state('binary_sensor.macbook_air_active', 'on') }}"
-        unique_id: macbook_switch
+
+template:
+  - switch:
+      - unique_id: macbook_switch
         turn_on:
-          service: script.macbook_air_login
+          - action: script.macbook_air_login
         turn_off:
-          service: shell_command.lock_mac
-      # VOCOLINC DIFFUSER
-      office_humidifier:
-        unique_id: sw_office_humid
-        value_template: "{{ is_state('fan.office_ripple_ripple', 'on') }}"
+          - action: shell_command.lock_mac
+        default_entity_id: switch.macbook
+        state: "{{ is_state('binary_sensor.macbook_air_active', 'on') }}"
+        name: macbook
+      - unique_id: sw_office_humid
         turn_on:
-          service: fan.turn_on
-          target:
-            entity_id: fan.office_ripple_ripple
+          - target:
+              entity_id:
+                - fan.office_ripple_ripple
+            action: fan.turn_on
         turn_off:
-          service: fan.turn_off
-          target:
-            entity_id: fan.office_ripple_ripple
-      bedroom_humidifier:
-        unique_id: sw_bedroom_humid
-        value_template: "{{ is_state('fan.bedroom_ripple_ripple', 'on') }}"
+          - target:
+              entity_id:
+                - fan.office_ripple_ripple
+            action: fan.turn_off
+        default_entity_id: switch.office_humidifier
+        state: "{{ is_state('fan.office_ripple_ripple', 'on') }}"
+        name: office_humidifier
+      - unique_id: sw_bedroom_humid
         turn_on:
-          service: fan.turn_on
-          target:
-            entity_id: fan.bedroom_ripple_ripple
+          - target:
+              entity_id:
+                - fan.bedroom_ripple_ripple
+            action: fan.turn_on
         turn_off:
-          service: fan.turn_off
-          target:
-            entity_id: fan.bedroom_ripple_ripple
-      watchtower:
-        unique_id: watchtower_switch
-        friendly_name: Watchtower
-        value_template: >
-          {{ is_state('binary_sensor.docker_watchtower', 'on') }}
+          - target:
+              entity_id:
+                - fan.bedroom_ripple_ripple
+            action: fan.turn_off
+        default_entity_id: switch.bedroom_humidifier
+        state: "{{ is_state('fan.bedroom_ripple_ripple', 'on') }}"
+        name: bedroom_humidifier
+      - unique_id: watchtower_switch
         turn_on:
-          - service: shell_command.unpause_watchtower
+          - action: shell_command.unpause_watchtower
           - event: DOCKER_CONTAINER_UPDATE
         turn_off:
-          - service: shell_command.pause_watchtower
+          - action: shell_command.pause_watchtower
           - event: DOCKER_CONTAINER_UPDATE
+        default_entity_id: switch.watchtower
+        name: Watchtower
+        state: "{{ is_state('binary_sensor.docker_watchtower', 'on') }}"
+
   # Humidifier
 generic_hygrostat:
   - name: Office Humidifier

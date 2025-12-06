@@ -306,13 +306,13 @@ template:
           {{ states.weather.prague.attributes.temperature }}
         unit_of_measurement: '°C'
 
-sensor:
-  - platform: template
-    sensors:
-      day_en:
-        value_template: "{{ ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'][now().weekday()] }}"
-      date_en:
-        value_template: "{%- set months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] -%} {{ now().day | string + ' ' + months[now().month-1]}}"
+# sensor:
+#   - platform: template
+#     sensors:
+#       day_en:
+#         value_template: "{{ ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'][now().weekday()] }}"
+#       date_en:
+#         value_template: "{%- set months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] -%} {{ now().day | string + ' ' + months[now().month-1]}}"
 command_line:
   - sensor:
       name: code_line_count

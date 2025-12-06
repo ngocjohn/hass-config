@@ -14,229 +14,230 @@
 # sunroofstatus: 0: closed, 1: open, 2: vent, 7: opening, 8: closing, 11: open vent, 12: closing vent
 # Codes for open/venting of windows (binary_sensor.amg_43_windows_closed):
 # windowstatus*: 1: open, 2: closed, 4: vent, 5: moving
-sensor:
-  - platform: template
-    sensors:
-      amg_door_frontleft:
-        friendly_name: 'Front Left Door'
-        icon_template: >
-          {% if not state_attr('sensor.amg_43_lock', 'doorlockstatusfrontleft') %} {# door locked #}
-            mdi:car-door-lock
-          {% else %} {# door unlocked #}
-            mdi:car-door-lock-open
-          {% endif %}
-        value_template: >
-          {% set door = "frontleft" %}
-          {% if not state_attr('sensor.amg_43_lock', 'doorstatus'+door) %} {# door closed #}
-            {% if not state_attr('sensor.amg_43_lock', 'doorlockstatus'+door) %} {# door locked #}
-              Locked
-            {% else %} {# door unlocked #}
-              Unlocked
-            {% endif %}
-          {% else %} {# door open #}
-            Open
-          {% endif %}
+#
+# sensor:
+#   - platform: template
+#     sensors:
+#       amg_door_frontleft:
+#         friendly_name: 'Front Left Door'
+#         icon_template: >
+#           {% if not state_attr('sensor.amg_43_lock', 'doorlockstatusfrontleft') %} {# door locked #}
+#             mdi:car-door-lock
+#           {% else %} {# door unlocked #}
+#             mdi:car-door-lock-open
+#           {% endif %}
+#         value_template: >
+#           {% set door = "frontleft" %}
+#           {% if not state_attr('sensor.amg_43_lock', 'doorstatus'+door) %} {# door closed #}
+#             {% if not state_attr('sensor.amg_43_lock', 'doorlockstatus'+door) %} {# door locked #}
+#               Locked
+#             {% else %} {# door unlocked #}
+#               Unlocked
+#             {% endif %}
+#           {% else %} {# door open #}
+#             Open
+#           {% endif %}
 
-      amg_door_frontright:
-        friendly_name: 'Front Right Door'
-        icon_template: >
-          {% if not state_attr('sensor.amg_43_lock', 'doorlockstatusfrontright') %} {# door locked #}
-            mdi:car-door-lock
-          {% else %} {# door unlocked #}
-            mdi:car-door-lock-open
-          {% endif %}
-        value_template: >
-          {% set door = "frontright" %}
-          {% if not state_attr('sensor.amg_43_lock', 'doorstatus'+door) %} {# door closed #}
-            {% if not state_attr('sensor.amg_43_lock', 'doorlockstatus'+door) %} {# door locked #}
-              Locked
-            {% else %} {# door unlocked #}
-              Unlocked
-            {% endif %}
-          {% else %} {# door open #}
-            Open
-          {% endif %}
+#       amg_door_frontright:
+#         friendly_name: 'Front Right Door'
+#         icon_template: >
+#           {% if not state_attr('sensor.amg_43_lock', 'doorlockstatusfrontright') %} {# door locked #}
+#             mdi:car-door-lock
+#           {% else %} {# door unlocked #}
+#             mdi:car-door-lock-open
+#           {% endif %}
+#         value_template: >
+#           {% set door = "frontright" %}
+#           {% if not state_attr('sensor.amg_43_lock', 'doorstatus'+door) %} {# door closed #}
+#             {% if not state_attr('sensor.amg_43_lock', 'doorlockstatus'+door) %} {# door locked #}
+#               Locked
+#             {% else %} {# door unlocked #}
+#               Unlocked
+#             {% endif %}
+#           {% else %} {# door open #}
+#             Open
+#           {% endif %}
 
-      amg_door_rearleft:
-        friendly_name: 'Rear Left Door'
-        icon_template: >
-          {% if not state_attr('sensor.amg_43_lock', 'doorlockstatusrearleft') %} {# door locked #}
-            mdi:car-door-lock
-          {% else %} {# door unlocked #}
-            mdi:car-door-lock-open
-          {% endif %}
-        value_template: >
-          {% set door = "rearleft" %}
-          {% if not state_attr('sensor.amg_43_lock', 'doorstatus'+door) %} {# door closed #}
-            {% if not state_attr('sensor.amg_43_lock', 'doorlockstatus'+door) %} {# door locked #}
-              Locked
-            {% else %} {# door unlocked #}
-              Unlocked
-            {% endif %}
-          {% else %} {# door open #}
-            Open
-          {% endif %}
+#       amg_door_rearleft:
+#         friendly_name: 'Rear Left Door'
+#         icon_template: >
+#           {% if not state_attr('sensor.amg_43_lock', 'doorlockstatusrearleft') %} {# door locked #}
+#             mdi:car-door-lock
+#           {% else %} {# door unlocked #}
+#             mdi:car-door-lock-open
+#           {% endif %}
+#         value_template: >
+#           {% set door = "rearleft" %}
+#           {% if not state_attr('sensor.amg_43_lock', 'doorstatus'+door) %} {# door closed #}
+#             {% if not state_attr('sensor.amg_43_lock', 'doorlockstatus'+door) %} {# door locked #}
+#               Locked
+#             {% else %} {# door unlocked #}
+#               Unlocked
+#             {% endif %}
+#           {% else %} {# door open #}
+#             Open
+#           {% endif %}
 
-      amg_door_rearright:
-        friendly_name: 'Rear Right Door'
-        icon_template: >
-          {% if not state_attr('sensor.amg_43_lock', 'doorlockstatusrearright') %} {# door locked #}
-            mdi:car-door-lock
-          {% else %} {# door unlocked #}
-            mdi:car-door-lock-open
-          {% endif %}
-        value_template: >
-          {% set door = "rearright" %}
-          {% if not state_attr('sensor.amg_43_lock', 'doorstatus'+door) %} {# door closed #}
-            {% if not state_attr('sensor.amg_43_lock', 'doorlockstatus'+door) %} {# door locked #}
-              Locked
-            {% else %} {# door unlocked #}
-              Unlocked
-            {% endif %}
-          {% else %} {# door open #}
-            Open
-          {% endif %}
+#       amg_door_rearright:
+#         friendly_name: 'Rear Right Door'
+#         icon_template: >
+#           {% if not state_attr('sensor.amg_43_lock', 'doorlockstatusrearright') %} {# door locked #}
+#             mdi:car-door-lock
+#           {% else %} {# door unlocked #}
+#             mdi:car-door-lock-open
+#           {% endif %}
+#         value_template: >
+#           {% set door = "rearright" %}
+#           {% if not state_attr('sensor.amg_43_lock', 'doorstatus'+door) %} {# door closed #}
+#             {% if not state_attr('sensor.amg_43_lock', 'doorlockstatus'+door) %} {# door locked #}
+#               Locked
+#             {% else %} {# door unlocked #}
+#               Unlocked
+#             {% endif %}
+#           {% else %} {# door open #}
+#             Open
+#           {% endif %}
 
-      amg_window_frontleft:
-        friendly_name: 'Front Left Window'
-        icon_template: mdi:car-door
-        value_template: >
-          {% set window = "frontleft" %}
-          {% if is_state_attr('binary_sensor.amg_43_windows_closed', 'windowstatus'+window, "2") %} {# window closed #}
-            Closed
-          {% elif is_state_attr('binary_sensor.amg_43_windows_closed', 'windowstatus'+window, "4") %} {# window vent #}
-            {% if not state_attr('sensor.amg_43_lock', 'doorstatus'+window) %} {# door closed #}
-              VentDC
-            {% else %} {# door open #}
-              VentDO
-            {% endif %}
-          {% elif is_state_attr('binary_sensor.amg_43_windows_closed', 'windowstatus'+window, "1") %} {# window open #}
-            {% if not state_attr('sensor.amg_43_lock', 'doorstatus'+window) %} {# door closed #}
-              OpenDC
-            {% else %} {# door open #}
-              OpenDO
-            {% endif %}
-          {% else %} {# window moving #}
-            Moving
-          {% endif %}
+#       amg_window_frontleft:
+#         friendly_name: 'Front Left Window'
+#         icon_template: mdi:car-door
+#         value_template: >
+#           {% set window = "frontleft" %}
+#           {% if is_state_attr('binary_sensor.amg_43_windows_closed', 'windowstatus'+window, "2") %} {# window closed #}
+#             Closed
+#           {% elif is_state_attr('binary_sensor.amg_43_windows_closed', 'windowstatus'+window, "4") %} {# window vent #}
+#             {% if not state_attr('sensor.amg_43_lock', 'doorstatus'+window) %} {# door closed #}
+#               VentDC
+#             {% else %} {# door open #}
+#               VentDO
+#             {% endif %}
+#           {% elif is_state_attr('binary_sensor.amg_43_windows_closed', 'windowstatus'+window, "1") %} {# window open #}
+#             {% if not state_attr('sensor.amg_43_lock', 'doorstatus'+window) %} {# door closed #}
+#               OpenDC
+#             {% else %} {# door open #}
+#               OpenDO
+#             {% endif %}
+#           {% else %} {# window moving #}
+#             Moving
+#           {% endif %}
 
-      amg_window_frontright:
-        friendly_name: 'Front Right Window'
-        icon_template: mdi:car-door
-        value_template: >
-          {% set window = "frontright" %}
-          {% if is_state_attr('binary_sensor.amg_43_windows_closed', 'windowstatus'+window, "2") %} {# window closed #}
-            Closed
-          {% elif is_state_attr('binary_sensor.amg_43_windows_closed', 'windowstatus'+window, "4") %} {# window vent #}
-            {% if not state_attr('sensor.amg_43_lock', 'doorstatus'+window) %} {# door closed #}
-              VentDC
-            {% else %} {# door open #}
-              VentDO
-            {% endif %}
-          {% elif is_state_attr('binary_sensor.amg_43_windows_closed', 'windowstatus'+window, "1") %} {# window open #}
-            {% if not state_attr('sensor.amg_43_lock', 'doorstatus'+window) %} {# door closed #}
-              OpenDC
-            {% else %} {# door open #}
-              OpenDO
-            {% endif %}
-          {% else %} {# window moving #}
-            Moving
-          {% endif %}
+#       amg_window_frontright:
+#         friendly_name: 'Front Right Window'
+#         icon_template: mdi:car-door
+#         value_template: >
+#           {% set window = "frontright" %}
+#           {% if is_state_attr('binary_sensor.amg_43_windows_closed', 'windowstatus'+window, "2") %} {# window closed #}
+#             Closed
+#           {% elif is_state_attr('binary_sensor.amg_43_windows_closed', 'windowstatus'+window, "4") %} {# window vent #}
+#             {% if not state_attr('sensor.amg_43_lock', 'doorstatus'+window) %} {# door closed #}
+#               VentDC
+#             {% else %} {# door open #}
+#               VentDO
+#             {% endif %}
+#           {% elif is_state_attr('binary_sensor.amg_43_windows_closed', 'windowstatus'+window, "1") %} {# window open #}
+#             {% if not state_attr('sensor.amg_43_lock', 'doorstatus'+window) %} {# door closed #}
+#               OpenDC
+#             {% else %} {# door open #}
+#               OpenDO
+#             {% endif %}
+#           {% else %} {# window moving #}
+#             Moving
+#           {% endif %}
 
-      amg_window_rearleft:
-        friendly_name: 'Rear Left Window'
-        icon_template: mdi:car-door
-        value_template: >
-          {% set window = "rearleft" %}
-          {% if is_state_attr('binary_sensor.amg_43_windows_closed', 'windowstatus'+window, "2") %} {# window closed #}
-            Closed
-          {% elif is_state_attr('binary_sensor.amg_43_windows_closed', 'windowstatus'+window, "4") %} {# window vent #}
-            {% if not state_attr('sensor.amg_43_lock', 'doorstatus'+window) %} {# door closed #}
-              VentDC
-            {% else %} {# door open #}
-              VentDO
-            {% endif %}
-          {% elif is_state_attr('binary_sensor.amg_43_windows_closed', 'windowstatus'+window, "1") %} {# window open #}
-            {% if not state_attr('sensor.amg_43_lock', 'doorstatus'+window) %} {# door closed #}
-              OpenDC
-            {% else %} {# door open #}
-              OpenDO
-            {% endif %}
-          {% else %} {# window moving #}
-            Moving
-          {% endif %}
+#       amg_window_rearleft:
+#         friendly_name: 'Rear Left Window'
+#         icon_template: mdi:car-door
+#         value_template: >
+#           {% set window = "rearleft" %}
+#           {% if is_state_attr('binary_sensor.amg_43_windows_closed', 'windowstatus'+window, "2") %} {# window closed #}
+#             Closed
+#           {% elif is_state_attr('binary_sensor.amg_43_windows_closed', 'windowstatus'+window, "4") %} {# window vent #}
+#             {% if not state_attr('sensor.amg_43_lock', 'doorstatus'+window) %} {# door closed #}
+#               VentDC
+#             {% else %} {# door open #}
+#               VentDO
+#             {% endif %}
+#           {% elif is_state_attr('binary_sensor.amg_43_windows_closed', 'windowstatus'+window, "1") %} {# window open #}
+#             {% if not state_attr('sensor.amg_43_lock', 'doorstatus'+window) %} {# door closed #}
+#               OpenDC
+#             {% else %} {# door open #}
+#               OpenDO
+#             {% endif %}
+#           {% else %} {# window moving #}
+#             Moving
+#           {% endif %}
 
-      amg_window_rearright:
-        friendly_name: 'Rear Right Window'
-        icon_template: mdi:car-door
-        value_template: >
-          {% set window = "rearright" %}
-          {% if is_state_attr('binary_sensor.amg_43_windows_closed', 'windowstatus'+window, "2") %} {# window closed #}
-            Closed
-          {% elif is_state_attr('binary_sensor.amg_43_windows_closed', 'windowstatus'+window, "4") %} {# window vent #}
-            {% if not state_attr('sensor.amg_43_lock', 'doorstatus'+window) %} {# door closed #}
-              VentDC
-            {% else %} {# door open #}
-              VentDO
-            {% endif %}
-          {% elif is_state_attr('binary_sensor.amg_43_windows_closed', 'windowstatus'+window, "1") %} {# window open #}
-            {% if not state_attr('sensor.amg_43_lock', 'doorstatus'+window) %} {# door closed #}
-              OpenDC
-            {% else %} {# door open #}
-              OpenDO
-            {% endif %}
-          {% else %} {# window moving #}
-            Moving
-          {% endif %}
+#       amg_window_rearright:
+#         friendly_name: 'Rear Right Window'
+#         icon_template: mdi:car-door
+#         value_template: >
+#           {% set window = "rearright" %}
+#           {% if is_state_attr('binary_sensor.amg_43_windows_closed', 'windowstatus'+window, "2") %} {# window closed #}
+#             Closed
+#           {% elif is_state_attr('binary_sensor.amg_43_windows_closed', 'windowstatus'+window, "4") %} {# window vent #}
+#             {% if not state_attr('sensor.amg_43_lock', 'doorstatus'+window) %} {# door closed #}
+#               VentDC
+#             {% else %} {# door open #}
+#               VentDO
+#             {% endif %}
+#           {% elif is_state_attr('binary_sensor.amg_43_windows_closed', 'windowstatus'+window, "1") %} {# window open #}
+#             {% if not state_attr('sensor.amg_43_lock', 'doorstatus'+window) %} {# door closed #}
+#               OpenDC
+#             {% else %} {# door open #}
+#               OpenDO
+#             {% endif %}
+#           {% else %} {# window moving #}
+#             Moving
+#           {% endif %}
 
-      amg_trunk:
-        friendly_name: 'Trunk'
-        icon_template: mdi:car-door
-        value_template: >
-          {% if state_attr('sensor.amg_43_lock', 'doorlockstatusdecklid') %}
-            unlocked
-          {% elif state_attr('sensor.amg_43_lock', 'decklidstatus') %}
-            open
-          {% else %}
-            closed
-          {% endif %}
+#       amg_trunk:
+#         friendly_name: 'Trunk'
+#         icon_template: mdi:car-door
+#         value_template: >
+#           {% if state_attr('sensor.amg_43_lock', 'doorlockstatusdecklid') %}
+#             unlocked
+#           {% elif state_attr('sensor.amg_43_lock', 'decklidstatus') %}
+#             open
+#           {% else %}
+#             closed
+#           {% endif %}
 
-      amg_tire_image_frontleft:
-        friendly_name: 'Tire Warning Front Left'
-        icon_template: mdi:car-tire-alert
-        value_template: >
-          {% if is_state_attr('binary_sensor.amg_43_tire_warning', 'tireMarkerFrontLeft', "0") %}
-            OK
-          {% else %}
-            Warning
-          {% endif %}
+#       amg_tire_image_frontleft:
+#         friendly_name: 'Tire Warning Front Left'
+#         icon_template: mdi:car-tire-alert
+#         value_template: >
+#           {% if is_state_attr('binary_sensor.amg_43_tire_warning', 'tireMarkerFrontLeft', "0") %}
+#             OK
+#           {% else %}
+#             Warning
+#           {% endif %}
 
-      amg_tire_image_frontright:
-        friendly_name: 'Tire Warning Front Right'
-        icon_template: mdi:car-tire-alert
-        value_template: >
-          {% if is_state_attr('binary_sensor.amg_43_tire_warning', 'tireMarkerFrontRight', "0") %}
-            OK
-          {% else %}
-            Warning
-          {% endif %}
+#       amg_tire_image_frontright:
+#         friendly_name: 'Tire Warning Front Right'
+#         icon_template: mdi:car-tire-alert
+#         value_template: >
+#           {% if is_state_attr('binary_sensor.amg_43_tire_warning', 'tireMarkerFrontRight', "0") %}
+#             OK
+#           {% else %}
+#             Warning
+#           {% endif %}
 
-      amg_tire_image_rearleft:
-        friendly_name: 'Tire Warning Rear Left'
-        icon_template: mdi:car-tire-alert
-        value_template: >
-          {% if is_state_attr('binary_sensor.amg_43_tire_warning', 'tireMarkerRearLeft', "0") %}
-            OK
-          {% else %}
-            Warning
-          {% endif %}
+#       amg_tire_image_rearleft:
+#         friendly_name: 'Tire Warning Rear Left'
+#         icon_template: mdi:car-tire-alert
+#         value_template: >
+#           {% if is_state_attr('binary_sensor.amg_43_tire_warning', 'tireMarkerRearLeft', "0") %}
+#             OK
+#           {% else %}
+#             Warning
+#           {% endif %}
 
-      amg_tire_image_rearright:
-        friendly_name: 'Tire Warning Rear Right'
-        icon_template: mdi:car-tire-alert
-        value_template: >
-          {% if is_state_attr('binary_sensor.amg_43_tire_warning', 'tireMarkerRearRight', "0") %}
-            OK
-          {% else %}
-            Warning
-          {% endif %}
+#       amg_tire_image_rearright:
+#         friendly_name: 'Tire Warning Rear Right'
+#         icon_template: mdi:car-tire-alert
+#         value_template: >
+#           {% if is_state_attr('binary_sensor.amg_43_tire_warning', 'tireMarkerRearRight', "0") %}
+#             OK
+#           {% else %}
+#             Warning
+#           {% endif %}
