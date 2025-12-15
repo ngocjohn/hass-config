@@ -1042,9 +1042,8 @@
 - id: '1727802647185'
   alias: person_home_change
   description: ''
-  trigger:
-    platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - person.viet_ngoc
     from:
     - home
@@ -1052,8 +1051,9 @@
     to:
     - home
     - not_home
-  action:
-    data:
+    trigger: state
+  actions:
+  - data:
       topic: 'homeassistant/persistence/{{ trigger.to_state.name | lower }}
 
         '
@@ -1062,6 +1062,10 @@
         '
       retain: true
     action: mqtt.publish
+  - action: notify.mobile_app_viet_ngoc_samsung
+    metadata: {}
+    data:
+      message: '{{ trigger.to_state.name | lower }}'
   mode: parallel
 - id: '1739425730318'
   alias: Samsung Alarm
@@ -1069,7 +1073,11 @@
   triggers:
   - trigger: time
     at: sensor.viet_ngoc_samsung_next_alarm
-  conditions: []
+  conditions:
+  - condition: state
+    entity_id: person.viet_ngoc
+    state:
+    - home
   actions:
   - action: script.homepod_alarm
     metadata: {}
