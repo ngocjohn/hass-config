@@ -20,7 +20,7 @@ frontend:
   extra_module_url:
     - /hacsfiles/lovelace-card-mod/card-mod.js?hacstag=190927524400
     - /hacsfiles/lovelace-canary/canary.js?hacstag=245159052050
-    - /hacsfiles/sidebar-organizer/sidebar-organizer.js?hacstag=932534411213
+    - /hacsfiles/sidebar-organizer/sidebar-organizer.js?hacstag=932534411220
     - /local/dashboard-resources/customize-css-change.js?v1.0.0
 
 # HTTP
