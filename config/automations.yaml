@@ -1,18 +1,3 @@
-- id: '1668864895588'
-  alias: Main Door Open
-  description: ''
-  trigger:
-  - platform: event
-    event_type: ios.action_fired
-    event_data:
-      actionName: Main Door Open
-  condition: []
-  action:
-  - service: lock.open
-    data: {}
-    target:
-      entity_id: lock.nuki_vchod_lock
-  mode: single
 - id: '1677334681247'
   alias: Dock lock state
   description: ''
@@ -1216,4 +1201,38 @@
     data:
       title: Appdaemon
       message: 'server: {{ states(''binary_sensor.appdaemon_mbpro'') | upper }}'
+  mode: single
+- id: '1767670564136'
+  alias: Dyson night mode
+  description: ''
+  triggers:
+  - trigger: time
+    at: '22:00:00'
+    id: night_start
+  - trigger: time
+    at: 07:00:00
+    id: night_end
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - night_start
+      sequence:
+      - action: switch.turn_on
+        metadata: {}
+        target:
+          entity_id: switch.dyson_ph04_night_mode
+        data: {}
+    - conditions:
+      - condition: trigger
+        id:
+        - night_end
+      sequence:
+      - action: switch.turn_off
+        metadata: {}
+        target:
+          entity_id: switch.dyson_ph04_night_mode
+        data: {}
   mode: single

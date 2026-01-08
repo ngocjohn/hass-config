@@ -411,7 +411,7 @@ live_tile_with_graph:
     lower_bound: ~10000
     upper_bound: ~0
     bar_spacing: 50
-    aggregate_func: avg
+    aggregate_func: ''
   template: live_tile_card
   custom_fields:
     graph:

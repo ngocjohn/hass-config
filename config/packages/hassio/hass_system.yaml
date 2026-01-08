@@ -67,6 +67,7 @@ recorder:
       - device_tracker.findmy_521d68e4ecef4686a97a2b77ccd20056
       - device_tracker.findmy_f28d260523a64f37b0595dfcd64d3b73
       - device_tracker.findmy_9414ea483058416cb41991d034d0638c
+      - sensor.motion_sensor_entrance_illuminance
 logger:
   default: error
 

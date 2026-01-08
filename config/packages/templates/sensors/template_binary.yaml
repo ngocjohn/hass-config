@@ -32,6 +32,30 @@ template:
             is_state('binary_sensor.contact_sensor_bathroom', 'off')
             or is_state('binary_sensor.motion_sensor_bathroom_occupancy', 'on')
           }}
+      - name: 'Living Room Occupancy'
+        unique_id: living_room_occupancy
+        device_class: occupancy
+        state: >-
+          {{
+            is_state('group.light_living_room', 'on')
+            or is_state('media_player.sony_bravia_tv', 'on')
+          }}
+      - name: 'Kitchen Occupancy'
+        unique_id: kitchen_occupancy
+        device_class: occupancy
+        state: >-
+          {{
+            is_state('light.kitchen_main_light', 'on')
+            or is_state('light.kitchen_table_light', 'on')
+          }}
+      - name: 'Living & Kitchen Occupancy'
+        unique_id: living_kitchen_occupancy
+        device_class: occupancy
+        state: >-
+          {{
+            is_state('binary_sensor.kitchen_occupancy', 'on')
+            or is_state('binary_sensor.living_room_occupancy', 'on')
+          }}
       - name: 'People Home'
         unique_id: home_occupancy
         device_class: occupancy
@@ -40,7 +64,8 @@ template:
           {{
             is_state('input_boolean.z_occupacy', 'on')
             or is_state('person.huong_giang', 'home')
-            or is_state('device_tracker.ph_iphone', 'home')
+            or is_state('person.phuong_chi', 'home')
+            or is_state('device_tracker.phuong_chi_iphone', 'home')
             or is_state('input_boolean.guest_mode','on')
           }}
       - name: 'Zuzu Presence'
