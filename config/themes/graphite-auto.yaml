@@ -730,7 +730,9 @@ Graphite Auto:
       --dialog-surface-margin-top: var(--tablet-popup-margin-top) !important;
       --dialog-box-shadow: 0 0px 16px 4px rgba(101,115,134, .15), 0 16px 64px 32px rgba(101,115,134, .5) !important;
       --ha-dialog-surface-backdrop-filter: blur(12px) brightness(0.3);
+      --ha-dialog-scrim-backdrop-filter: blur(6px) brightness(0.3);
       --mdc-theme-surface: var(--popup-background-color) !important;
+
       --bar-card-border-radius: 12px !important;
       --ha-card-border-radius: 0px !important;
       --ha-card-background: none !important;
