@@ -12,25 +12,39 @@
     action: call-service
     service: floorplan.class_set
     service_data: 'temphumid-${entity.state}'
-- entities:
+
+- name: TempHumid sensors
+  entities:
+    # Temperature sensors
     - sensor.bedroom_tem_humid_temperature
     - sensor.dyson_ph04_temperature
     - sensor.office_temp_humid_temperature
     - sensor.bathroom_temp_humid_temperature
-  tap_action: false
-  double_tap_action: more-info
-  state_action:
-    action: call-service
-    service: floorplan.text_set
-    service_data: '${entity.state ? Math.round(entity.state * 10) / 10 + "°C" : "unknown"}'
-- entities:
+    # Humidity sensors
     - sensor.bedroom_tem_humid_humidity
     - sensor.dyson_ph04_humidity
     - sensor.bathroom_temp_humid_humidity
     - sensor.office_temp_humid_humidity
   tap_action: false
-  double_tap_action: more-info
+  hover_action: hover-info
   state_action:
-    action: call-service
-    service: floorplan.text_set
-    service_data: '${entity.state ? Math.round(entity.state * 10) / 10 + "%" : "unknown"}'
+    - service: floorplan.style_set
+      service_data:
+        element: '${entity.entity_id}'
+        style: |
+          >
+          if (["unavailable", "unknown", "none"].includes(entity.state)) {
+              return "display: none;";
+          } else {
+              return "display: inline;";
+          }
+    - service: floorplan.text_set
+      service_data: |
+        >
+        if (entity.state && !isNaN(entity.state)) {
+            let state = Math.round(entity.state * 10) / 10;
+            let unit = entity.attributes.unit_of_measurement || "";
+            return `${state}${unit}`;
+        } else {
+            return " ";
+        }

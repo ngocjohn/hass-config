@@ -6,6 +6,7 @@
   "config_flow": true,
   "dependencies": [
     "http",
+    "intent",
     "persistent_notification",
     "ffmpeg"
   ],
@@ -17,5 +18,5 @@
     "python-miio>=0.5.12",
     "micloud>=0.5"
   ],
-  "version": "1.1.1"
+  "version": "1.1.2"
 }

@@ -17,33 +17,6 @@ xiaomi_miot:
     roidmi.vacuum.v60:
       exclude_miot_services: null
 
-sensor:
-  - platform: google_geocode
-    origin: device_tracker.findmy_d098350b38e241d3972ad394a27f38b6
-    name: GLE
-    options: street
-    display_zone: hide
-    api_key: !secret google_api
-    language: cs
-    region: CS
-
-  - platform: google_geocode
-    origin: device_tracker.findmy_521d68e4ecef4686a97a2b77ccd20056
-    name: AMG
-    options: street, city
-    display_zone: hide
-    api_key: !secret google_api
-    language: cs
-    region: CS
-
-  - platform: google_geocode
-    origin: device_tracker.findmy_f28d260523a64f37b0595dfcd64d3b73
-    name: Ngoc Keys Airtag
-    options: street, city
-    display_zone: hide
-    api_key: !secret google_api
-    language: cs
-    region: CS
 favicon:
   tile: Neklanka
   icon_path: /local/favicons/

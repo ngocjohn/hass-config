@@ -178,7 +178,8 @@ group:
       - media_player.mass_universal_airplay
       - media_player.living_room_tv
       - media_player.kodi_atv
-      - sensor.ps5_activity
+      - media_player.playstation_5
+      # - sensor.ps5_activity
 
   ## CLIMATE GROUP ##
   thermostats:

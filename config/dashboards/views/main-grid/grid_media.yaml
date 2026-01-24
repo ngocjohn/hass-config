@@ -83,14 +83,25 @@
             - type: conditional
               conditions:
                 - entity: select.conditional_media
-                  state: PS5 Activity
+                  state: 'PlayStation 5'
               card: &PS5
                 type: custom:button-card
-                entity: sensor.ps5_activity
-                name: 'PlayStation 5'
+                entity: media_player.playstation_5
+                name: ''
                 template:
                   - conditional_media
                   - icon_playstation
+            # - type: conditional
+            #   conditions:
+            #     - entity: select.conditional_media
+            #       state: PS5 Activity
+            #   card: &PS5
+            #     type: custom:button-card
+            #     entity: sensor.ps5_activity
+            #     name: 'PlayStation 5'
+            #     template:
+            #       - conditional_media
+            #       - icon_playstation
             - type: conditional
               conditions:
                 - entity: select.conditional_media
@@ -279,7 +290,7 @@
             - type: conditional
               conditions:
                 - entity: select.conditional_media
-                  state: PS5 Activity
+                  state: PlayStation 5
               card: *PS5
             - type: conditional
               conditions:
@@ -291,3 +302,9 @@
             #     - entity: select.conditional_media
             #       state: Youtube Music Player
             #   card: *YOUTUBEPLAYER
+          #Media Players
+        - type: grid
+          columns: 2
+          cards:
+            - *grid-atv-kodi
+            - *grid-spotify-media

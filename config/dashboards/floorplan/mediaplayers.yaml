@@ -30,7 +30,7 @@
           let mediaState = states['media_player.living_room_tv'].state;
           let appState = states['media_player.living_room_tv'].attributes.app_name;
           let haUrlEntity = `${this.hass.hassUrl().replace(/\/$/, '')}${states['media_player.living_room_tv'].attributes.entity_picture}`;
-          if (mediaState !== "off") {
+          if (["playing", "paused"].includes(mediaState)) {
             if (appState === "YouTube") {
               return states['sensor.youtube_thumbnail'].state;
             } else if (appState === "Kodi") {
@@ -53,7 +53,7 @@
       style: |
         >
         let mediaState = states['media_player.living_room_tv'].state;
-        if (mediaState === "off" )
+        if (["off", "idle", "standby"].includes(mediaState))
             return `
               display: none;
             `;
@@ -72,14 +72,15 @@
 
         let rgbcolor = `rgb(${states['sensor.vibrant_color'].state})`;
         let animation = mediaState === "playing" ? "5s ease-in-out 0s infinite strokeAnimation" : "";
+        let fill = mediaState === "playing" ? rgbcolor : undefined;
         if (lightState.state === "on") {
           return `
-            fill: ${rgbcolor};
+            fill: ${fill};
             stroke: ${rgbcolor};
             stroke-width: 15 !important;
             filter: blur(1rem);
-            stroke-dasharray: 400;
-            stroke-dashoffset: 400;
+            stroke-dasharray: ${mediaState === "playing" ? 400 : 0};
+            stroke-dashoffset: ${mediaState === "playing" ? 0 : 400};
             animation: ${animation};
             `;
         }

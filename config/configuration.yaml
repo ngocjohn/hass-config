@@ -21,7 +21,7 @@ frontend:
     - /hacsfiles/lovelace-card-mod/card-mod.js?hacstag=190927524410
     - /hacsfiles/lovelace-canary/canary.js?hacstag=245159052050
     - /hacsfiles/sidebar-organizer/sidebar-organizer.js?hacstag=932534411230
-    - /local/dashboard-resources/customize-css-change.js?v1.0.0
+    - /local/dashboard-resources/customize-css-change.js?v1.0.2
 
 # HTTP
 http:

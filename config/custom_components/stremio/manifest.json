@@ -1,0 +1,21 @@
+{
+  "domain": "stremio",
+  "name": "Stremio Integration",
+  "codeowners": [
+    "@tamaygz"
+  ],
+  "config_flow": true,
+  "dependencies": [
+    "frontend",
+    "http",
+    "media_source"
+  ],
+  "documentation": "https://github.com/tamaygz/hacs-stremio",
+  "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/tamaygz/hacs-stremio/issues",
+  "requirements": [
+    "pyatv>=0.16.0"
+  ],
+  "version": "0.5.25"
+}

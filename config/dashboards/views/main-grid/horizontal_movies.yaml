@@ -14,7 +14,7 @@
   square: true
   cards:
     - type: custom:added-movie-card
-      entity: sensor.kodi_all_movies
+      entity: sensor.tmdb_movies_yts_latest
       show_item_count: 10
 
     # - type: custom:swipe-card

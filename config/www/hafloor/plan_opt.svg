@@ -7,6 +7,24 @@
 		<filter id="filter3420" x="-.043002" y="-.062067" width="1.0855" height="1.1238" color-interpolation-filters="sRGB">
 			<feGaussianBlur id="feGaussianBlur3422" stdDeviation="3.5640773" />
 		</filter>
+		<linearGradient id="Gradient2" x1="0" x2="0" y1="0" y2="1">
+			<stop offset="0%" stop-color="red" />
+			<stop offset="50%" stop-color="black" stop-opacity="0" />
+			<stop offset="100%" stop-color="blue" />
+		</linearGradient>
+		<linearGradient id="Gradient1" x1="0" x2="0" y1="0" y2="1">
+			<stop offset="0%" stop-color="transparent" />
+			<stop offset="25%" stop-color="black" stop-opacity="0.5" />
+			<stop offset="50%" stop-color="black" stop-opacity="1" />
+			<stop offset="75%" stop-color="black" stop-opacity="0.5" />
+			<stop offset="100%" stop-color="transparent" />
+		</linearGradient>
+		<linearGradient id="Gradient3" x1="0" x2="0" y1="0" y2="1">
+			<stop offset="0%" stop-color="transparent" />
+			<stop offset="100%" stop-color="black" stop-opacity="1" />
+		</linearGradient>
+
+
 	</defs>
 	<g id="Background" transform="translate(131.36 178.01)">
 		<g id="base-background">
@@ -271,4 +289,6 @@
 			d="m1430.4 193.31c-3.5678-1.8213-8.0862-3.2426-13.565-4.2086-4.9831-0.87866-9.3928-1.1453-13.159-0.87265 3.7394 1.6529 8.4505 3.1081 13.902 4.0693 4.7354 0.83497 9.0851 1.1194 12.823 1.012zm3.9889 2.4917c-5.1852 0.59018-11.378 0.29307-17.297-0.75063-6.6074-1.165-13.265-3.3325-18.12-6.0622-5.5884 1.4275-9.0146 4.5988-9.8544 9.3616l-5.5923 31.715c-0.8981 5.0932 1.5576 9.3584 7.0332 12.595 1.2442 3.569 11.96 5.7424 15.484 6.3638 3.5515 0.62622 14.53 2.2781 16.796-0.75698 6.2248-1.1733 9.9587-4.3188 10.847-9.3569l5.5923-31.715c0.7767-4.4049-0.9517-8.2864-4.889-11.393z"
 			stroke-width="2.7955" />
 	</g>
+	<foreignObject id="CardTopLeft" x="30" y="30" width="650" height="500"></foreignObject>
+
 </svg>

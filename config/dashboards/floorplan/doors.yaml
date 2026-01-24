@@ -19,6 +19,7 @@
   state_action:
     service: floorplan.class_set
     service_data: '${(entity.state === "on") ? "door-on" : "door-off"}'
+
 # - entities:
 #     - binary_sensor.contact_sensor_bedroom_balcony_contact
 #     - binary_sensor.contact_sensor_kid_balcony_contact
@@ -40,23 +41,9 @@
 #           return `door-off`;
 #         }
 
-# - element: icon-front-door
-#   entity: lock.nuki_neklanka_byt_lock
-#   tap_action: false
-#   state_action:
-#     action: call-service
-#     service: floorplan.style_set
-#     service_data:
-#       style: |
-#         >
-#         if( entity.state !== "locked" )
-#             return `
-#               display: block;
-#               fill: #bababa;
-#               fill-opacity: 0.3;
-#             `
-#         return `
-#           display: block;
-#           fill: #bababa;
-#           fill-opacity: 0.8;
-#         `
+- element: icon-front-door
+  entity: lock.nuki_neklanka_byt_lock
+  tap_action: false
+  state_action:
+    service: floorplan.class_set
+    service_data: '${entity.state}'

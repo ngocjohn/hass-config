@@ -200,16 +200,16 @@
 - id: '1688809817206'
   alias: Guest Mode notify
   description: ''
-  trigger:
-  - platform: zone
-    entity_id: person.viet_ngoc
+  triggers:
+  - entity_id: person.viet_ngoc
     zone: zone.home
     event: leave
-  condition:
+    trigger: zone
+  conditions:
   - condition: state
     entity_id: input_boolean.guest_mode
     state: 'on'
-  action:
+  actions:
   - alias: Set up variables for the actions
     variables:
       action_yes: '{{ ''YES_'' ~ context.id }}'
@@ -220,7 +220,6 @@
       seconds: 5
       milliseconds: 0
   - alias: Ask to stop or no guest mode
-    service: notify.mobile_app_viet_ngoc
     data:
       message: Do you want to stop this?
       data:
@@ -230,24 +229,27 @@
         - action: '{{ action_no }}'
           title: 'NO'
       title: Guest mode
+    action: notify.mobile_app_viet_ngoc_samsung
   - alias: Wait for a response
     wait_for_trigger:
-    - platform: event
-      event_type: mobile_app_notification_action
+    - event_type: mobile_app_notification_action
       event_data:
         action: '{{ action_yes }}'
-    - platform: event
-      event_type: mobile_app_notification_action
+      trigger: event
+    - event_type: mobile_app_notification_action
       event_data:
         action: '{{ action_no }}'
+      trigger: event
   - alias: Perform the action
     choose:
-    - conditions: '{{ wait.trigger.event.data.action == action_yes }}'
+    - conditions:
+      - condition: template
+        value_template: '{{ wait.trigger.event.data.action == action_yes }}'
       sequence:
-      - service: input_boolean.turn_off
-        data: {}
+      - data: {}
         target:
           entity_id: input_boolean.guest_mode
+        action: input_boolean.turn_off
       - condition: state
         entity_id: input_boolean.guest_mode
         state: 'off'
@@ -255,77 +257,19 @@
           hours: 0
           minutes: 0
           seconds: 2
-      - service: input_boolean.turn_on
-        data: {}
+      - data: {}
         target:
           entity_id: input_boolean.leaving_home
-    - conditions: '{{ wait.trigger.event.data.action == action_no }}'
-      sequence:
-      - service: input_boolean.turn_on
-        data: {}
-        target:
-          entity_id: input_boolean.guest_mode
-        enabled: false
-      - stop: ''
-  mode: single
-- id: '1688940697804'
-  alias: Alarm
-  description: ''
-  triggers:
-  - entity_id:
-    - script.homepod_alarm
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 5
-    enabled: true
-    to: 'on'
-    trigger: state
-  conditions: []
-  actions:
-  - alias: Set up variables for the actions
-    variables:
-      action_stop: '{{ ''STOP_'' ~ context.id }}'
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 3
-      milliseconds: 0
-  - alias: Ask to close or open the blinds
-    data:
-      message: Do you want to stop this?
-      data:
-        push:
-          sound:
-            name: findmy.wav
-            critical: 1
-            volume: 1
-        actions:
-        - action: '{{ action_stop }}'
-          title: Stop alarm
-      title: Alarm Clock
-    action: notify.mobile_app_viet_ngoc
-  - alias: Wait for a response
-    wait_for_trigger:
-    - event_type: mobile_app_notification_action
-      event_data:
-        action: '{{ action_stop }}'
-      trigger: event
-  - alias: Perform the action
-    choose:
+        action: input_boolean.turn_on
     - conditions:
       - condition: template
-        value_template: '{{ wait.trigger.event.data.action == action_stop }}'
+        value_template: '{{ wait.trigger.event.data.action == action_no }}'
       sequence:
       - data: {}
-        action: media_player.media_pause
         target:
-          entity_id: media_player.bedroom
-      - action: media_player.turn_off
-        metadata: {}
-        data: {}
-        target:
-          entity_id: media_player.bedroom
+          entity_id: input_boolean.guest_mode
+        action: input_boolean.turn_on
+      - stop: ''
   mode: single
 - id: '1693488019712'
   alias: Nuki Vchod Open
@@ -600,31 +544,40 @@
     from: com.google.ios.youtube
     enabled: true
     to:
+  - trigger: state
+    entity_id:
+    - media_player.living_room_tv
+    to:
+    - idle
+    - standby
+    from:
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+    id: idle_state
   conditions: []
   actions:
   - choose:
     - conditions:
-      - condition: and
-        conditions:
-        - condition: trigger
-          id:
-          - title_change
-          - state_changed
-        - condition: or
-          conditions:
-          - condition: template
-            value_template: "{% if state_attr('media_player.living_room_tv', 'media_title')
-              != None %} \n{{ is_state_attr('media_player.living_room_tv', 'app_id',
-              'com.google.ios.youtube') and state_attr('media_player.living_room_tv',
-              'media_title') != state_attr('sensor.youtube_thumbnail', 'title') }}\n{%
-              endif %}"
+      - condition: trigger
+        id:
+        - title_change
+        - state_changed
       sequence:
+      - wait_template: "{% if state_attr('media_player.living_room_tv', 'media_title')
+          != None %} \n{{ is_state_attr('media_player.living_room_tv', 'app_id', 'com.google.ios.youtube')
+          and state_attr('media_player.living_room_tv', 'media_title') != state_attr('sensor.youtube_thumbnail',
+          'title') }}\n{% endif %}"
+        continue_on_timeout: true
+        timeout: '10'
       - event: youtube_update
         event_data: {}
     - conditions:
       - condition: trigger
         id:
         - reset_title
+        - idle_state
       sequence:
       - event: youtube_reset
         event_data: {}
@@ -973,57 +926,6 @@
         -%}\n  Mop\n{%- elif is_state_attr('vacuum.roidmi_eve','vacuum.sweep_type',2)
         -%}\n  Mop And Sweep\n{%- else -%} {%- endif -%}\n"
   mode: single
-- id: '1719583633037'
-  alias: Vanny skolka
-  description: ''
-  triggers:
-  - value_template: '{% set lag_in_minute = 10 %} {% set travel_time_in_minute = states("sensor.waze_ngoc_skolka")|int
-      %} {% set target_time = now().replace(hour=16).replace(minute=45).replace(second=0)
-      %} {{ as_timestamp(target_time) - (travel_time_in_minute+lag_in_minute)*60 <=
-      as_timestamp(now())}}'
-    trigger: template
-  conditions:
-  - condition: not
-    conditions:
-    - condition: zone
-      entity_id: device_tracker.viet_ngoc_samsung
-      zone: zone.smichov
-  - condition: time
-    weekday:
-    - fri
-    - thu
-    - wed
-  actions:
-  - data:
-      message: '{{ states(''sensor.waze_ngoc_skolka'')}}min {{ state_attr(''sensor.waze_ngoc_skolka'',''route'')}}'
-      title: Vanesska Skolka
-    action: notify.mobile_app_viet_ngoc_samsung
-  mode: single
-- id: '1719583833596'
-  alias: Vanny skolka waze
-  description: ''
-  triggers:
-  - minutes: /2
-    id: 20min
-    trigger: time_pattern
-  conditions:
-  - condition: time
-    after: '14:00:00'
-    before: '17:00:00'
-    weekday:
-    - fri
-    - thu
-  actions:
-  - target:
-      entity_id:
-      - sensor.waze_ngoc_skolka
-      - sensor.waze_ngoc_smichov_oc
-    action: homeassistant.update_entity
-    data:
-      entity_id:
-      - sensor.waze_ngoc_skolka
-      - sensor.waze_ngoc_smichov_oc
-  mode: single
 - id: '1727802647185'
   alias: person_home_change
   description: ''
@@ -1236,3 +1138,57 @@
           entity_id: switch.dyson_ph04_night_mode
         data: {}
   mode: single
+- id: '1768962056590'
+  alias: Youtube App Update
+  description: ''
+  triggers:
+  - entity_id:
+    - media_player.living_room_tv
+    trigger: state
+    id: youtube_opened
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 2
+    attribute: app_id
+    to: com.google.ios.youtube
+  - entity_id:
+    - media_player.living_room_tv
+    trigger: state
+    id: youtube_close
+    attribute: app_id
+    from: com.google.ios.youtube
+    enabled: true
+    to:
+  - trigger: state
+    entity_id:
+    - media_player.living_room_tv
+    to:
+    - idle
+    - standby
+    from:
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+    id: idle_state
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - youtube_opened
+      sequence:
+      - event: youtube_listen
+        event_data: {}
+    - conditions:
+      - condition: trigger
+        id:
+        - idle_state
+        - youtube_close
+      sequence:
+      - event: youtube_reset
+        event_data: {}
+  mode: single
+  max_exceeded: silent

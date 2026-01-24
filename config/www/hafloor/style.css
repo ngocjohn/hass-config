@@ -150,6 +150,8 @@
 	}
 }
 
+
+
 /* Main CSS styles */
 svg,
 svg * {
@@ -296,16 +298,19 @@ g#cover path:hover {
 	cursor: move !important;
 }
 
-#cover .cover-closed {
+g#cover path.cover-closed {
 	fill: #000000;
 	fill-opacity: 0.6;
 }
 
-#cover .cover-closing {
+
+g#cover path.cover-closing {
 	animation: coverClosing 10s;
-	transform-origin: 50% 50%;
+	transform-origin: 50% 49%;
 	animation-fill-mode: forwards;
 }
+
+
 
 .cover-closed:hover,
 g#cover>g:hover path:not(.touch-area) {
@@ -367,4 +372,24 @@ g#areas>g:hover path:not(.touch-area) {
 
 #tv_overlays image.media-player-tv.media-player-playing {
 	cursor: pointer !important;
+}
+
+#icons path:hover {
+	stroke: #9ed8ff99 !important;
+	stroke-width: 4px;
+	stroke-opacity: 1;
+}
+
+#icons path#icon-front-door {
+	fill: #bababa;
+	fill-opacity: 0.3;
+}
+
+#icons path#icon-front-door.locked {
+	fill-opacity: 0.6;
+}
+
+g#temphumid text#sensor\.kids_room_temp_humid_temperature,
+g#temphumid text#sensor\.kids_room_temp_humid_humidity {
+	display: none !important;
 }

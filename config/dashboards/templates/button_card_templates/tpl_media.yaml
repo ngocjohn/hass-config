@@ -158,6 +158,7 @@ conditional_media:
   variables:
     tilt_enable: >
       [[[ return false; ]]]
+  show_name: false
   state_display: >
     [[[
       let horizontalStack = this.getRootNode().host,
@@ -241,8 +242,12 @@ conditional_media:
       - text-transform: uppercase
       - padding-bottom: >
           [[[
-            return variables.is_kodi || variables.media_on ? '9%' : '4%';
+            return variables.is_kodi ? '9%' : '2%';
           ]]]
+      # - padding-bottom: >
+      #     [[[
+      #       return variables.is_kodi || variables.media_on ? '9%' : '4%';
+      #     ]]]
       - overflow: visible
     card:
       - padding: 5.75% 5.75% 0 5.75%
@@ -262,27 +267,28 @@ conditional_media:
               }
             }
           ]]]
-      - --speed: >
-          [[[
-            setTimeout(() => {
-              let elt = this.shadowRoot.querySelector('#title'),
-                  parrentEl = elt.parentElement;
-              if (elt && parrentEl) {
-                  let parentWidth = parrentEl.offsetWidth,
-                      titleWidth = elt.scrollWidth;
-                  // let speed = Math.round((titleLength / containerWidth) * 6);
-                  if (titleWidth > parentWidth) {
-                    let speed = Math.round((titleWidth / parentWidth) * 5);
-                    parrentEl.classList.add('mask');
-                    elt.style.setProperty('--speed', `${speed}s`);
-                  } else {
-                    elt.style.setProperty('--speed', '0s');
-                    parrentEl.classList.remove('mask');
-                  }
-                };
-              }, 300);
-            return '0s';
-          ]]]
+      # - --speed: >
+      #     [[[
+      #       setTimeout(() => {
+      #         let elt = this.shadowRoot,
+      #             titleElt = elt.getElementById('title'),
+      #             parrentEl = titleElt.parentElement;
+      #         if (elt && titleElt && parrentEl) {
+      #             let parentWidth = parrentEl.offsetWidth,
+      #                 titleWidth = titleElt.scrollWidth;
+      #             // let speed = Math.round((titleLength / containerWidth) * 6);
+      #             if (titleWidth > parentWidth) {
+      #               let speed = Math.round((titleWidth / parentWidth) * 5);
+      #               parrentEl.classList.add('mask');
+      #               titleElt.style.setProperty('--speed', `${speed}s`);
+      #             } else {
+      #               titleElt.style.setProperty('--speed', '0s');
+      #               parrentEl.classList.remove('mask');
+      #             }
+      #           };
+      #         }, 300);
+      #       return '0s';
+      #     ]]]
 
       - background-image: &media_background_image >
           [[[
@@ -336,23 +342,7 @@ conditional_media:
         - bottom: 0
         - backdrop-filter: blur(0.3em) brightness(0.7)
         - border-radius: 0% 0% calc(var(--button-card-border-radius) / 2) calc(var(--button-card-border-radius) / 2)
-        # - width: 122%
-        # - height: 101%
-        # - filter: var(--blur-intensity)
-        # - clip-path: >
-        #     [[[
-        #       if (entity) {
-        #         if (variables.is_youtube) {
-        #             return `inset(74% 7% 3.45% 9% round 0 0 calc(var(--button-card-border-radius) / 2) calc(var(--button-card-border-radius) / 2))`;
-        #         } else {
-        #           return `inset(80% 3.45% 3.45% 5.45% round 0 0 calc(var(--button-card-border-radius) / 2) calc(var(--button-card-border-radius) / 2))`;
-        #         }
-        #       }
-        #     ]]]
-        # - background: *media_background
-        # - background-image: *media_background_image
-        # - left: -10%
-        # - bottom: -5%
+
   custom_fields:
     blur_overlay: >
       [[[
