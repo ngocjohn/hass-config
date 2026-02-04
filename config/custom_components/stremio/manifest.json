@@ -8,6 +8,7 @@
   "dependencies": [
     "frontend",
     "http",
+    "lovelace",
     "media_source"
   ],
   "documentation": "https://github.com/tamaygz/hacs-stremio",
@@ -17,5 +18,5 @@
   "requirements": [
     "pyatv>=0.16.0"
   ],
-  "version": "0.5.25"
+  "version": "0.5.32"
 }

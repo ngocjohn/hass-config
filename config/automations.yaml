@@ -285,23 +285,6 @@
     target:
       entity_id: lock.nuki_vchod_lock
   mode: single
-- id: '1694516012171'
-  alias: Only update vaze information every 20 minutes when I'm home
-  description: ''
-  triggers:
-  - minutes: /20
-    id: 20min
-    trigger: time_pattern
-  conditions:
-  - condition: state
-    entity_id: device_tracker.viet_ngoc_samsung
-    state: not_home
-  actions:
-  - data:
-      entity_id:
-      - device_tracker.viet_ngoc_samsung
-      - sensor.waze_ngoc_home
-    action: homeassistant.update_entity
 - id: '1694721012171'
   alias: Spotify Vibrant Color
   description: ''

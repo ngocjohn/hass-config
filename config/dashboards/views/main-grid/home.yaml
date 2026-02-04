@@ -14,9 +14,9 @@
     # PERSON NGOC
     - type: custom:streamline-card
       template: grid_ngoc
-    # PERSON ZUZU
+    # PERSON CHI
     - type: custom:streamline-card
-      template: grid_zuzu
+      template: grid_chi
     # WEATHER
     - type: custom:streamline-card
       template: grid_weather

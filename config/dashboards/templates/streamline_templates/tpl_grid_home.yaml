@@ -10,21 +10,26 @@ grid_ngoc:
     entity: person.viet_ngoc
     name: Viet Ngoc
     double_tap_action: !include ../../shared/popup/home_vietngoc.yaml
-    triggers_update:
-      - sensor.waze_ngoc_home
     template:
       - person
-    variables:
-      circle_input: >
-        [[[
-          let distance = Math.round(states['sensor.waze_ngoc_home'].attributes.distance);
-          if (distance) return distance;
-        ]]]
-      circle_input_unit: ' Km'
     card_mod:
       style: |
         #circle {
         {%- if is_state('person.viet_ngoc', 'home') -%}
+          display:none !important;
+        {% endif %}
+        }
+grid_chi:
+  card:
+    type: custom:button-card
+    entity: person.phuong_chi
+    name: Phuong Chi
+    template:
+      - person
+    card_mod:
+      style: |
+        #circle {
+        {%- if is_state('person.phuong_chi', 'home') -%}
           display:none !important;
         {% endif %}
         }

@@ -1,6 +1,6 @@
 type: custom:xiaomi-vacuum-map-card
 map_source:
-  camera: camera.roidmi_eve
+  camera: camera.roidmi_eve_live_map
 calibration_source:
   camera: true
 entity: vacuum.roidmi_eve

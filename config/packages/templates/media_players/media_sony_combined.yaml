@@ -1,0 +1,51 @@
+media_player:
+  - platform: universal
+    name: Sony TV Combined
+    unique_id: sony_tv_combined
+    device_class: tv
+    children:
+      - media_player.sony_bravia_tv
+      - media_player.sony_google_cast_5
+    active_child_template: >
+      {% if state_attr('media_player.sony_bravia_tv', 'media_content_id') %}
+        media_player.sony_bravia_tv
+      {% endif %}
+    attributes:
+      source: media_player.sony_bravia_tv|source
+      source_list: media_player.sony_bravia_tv|source_list
+      volume_level: media_player.sony_bravia_tv|volume_level
+    browse_media_entity: media_player.sony_bravia_tv
+    commands:
+      turn_off:
+        action: media_player.turn_off
+        data:
+          entity_id: media_player.sony_bravia_tv
+      turn_on:
+        action: media_player.turn_on
+        data:
+          entity_id: media_player.sony_bravia_tv
+      select_source:
+        action: media_player.select_source
+        data:
+          entity_id: media_player.sony_bravia_tv
+          source: '{{ source }}'
+      media_play:
+        action: media_player.media_play
+        target:
+          entity_id: media_player.sony_bravia_tv
+      media_pause:
+        action: media_player.media_pause
+        target:
+          entity_id: media_player.sony_bravia_tv
+      media_play_pause:
+        action: media_player.media_play_pause
+        target:
+          entity_id: media_player.sony_bravia_tv
+      media_previous_track:
+        action: media_player.media_previous_track
+        target:
+          entity_id: media_player.sony_bravia_tv
+      media_next_track:
+        action: media_player.media_next_track
+        target:
+          entity_id: media_player.sony_bravia_tv
