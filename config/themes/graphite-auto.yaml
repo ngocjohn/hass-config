@@ -29,6 +29,9 @@ Graphite Auto:
   ha-font-family-body: var(--primary-font-family)
   st-spacing: 0
 
+  # Ha button
+  ha-button-height: 32px
+
   # Honeycomb buttons
   honeycomb-menu-active-background-color: 'linear-gradient(45deg, #eee, #2d6ca0)'
   honeycomb-menu-background-color: 'linear-gradient(0deg, rgba(60,66,80,1) 0%, rgba(23,26,37,0.7) 42%, rgba(21,25,35,0.6) 100%)'

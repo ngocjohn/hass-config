@@ -10,7 +10,7 @@ Hey there! Welcome to my little corner of the tech world! 👨‍💻
 
 This is where I store all the cool configurations for my Home Assistant system. Well, it's a mix of awesome codes and setups I discovered from the Home Assistant community. Seriously, those folks are wizards! 🧙‍♂️ As a bit of an internet newbie turned tech enthusiast, I stumbled upon the magic of IT, and this repository is my way of sharing the joy and knowledge I've gained along the way. Dive in, explore, and let the tech magic begin! ✨
 
-I frequently refresh my configuration files. My current Home Assistant version is <b>2026.2.0</b>. If you find something you like, don't forget to give my repository a ⭐️!
+I frequently refresh my configuration files. My current Home Assistant version is <b>2026.2.1</b>. If you find something you like, don't forget to give my repository a ⭐️!
 
 ## Some of my projects for Home Assistant
 
@@ -45,14 +45,14 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>44,180 </td>
+              <td>44,225 </td>
               <td>28</td>
-              <td>185</td>
+              <td>192</td>
               <td>59</td>
               <td>72</td>
-              <td>38</td>
-              <td>1198</td>
-              <td>178</td>
+              <td>31</td>
+              <td>1202</td>
+              <td>192</td>
               <td>30</td>
           </tr>
       </tbody>
@@ -129,7 +129,6 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Atomic Calendar Revive](https://github.com/totaldebug/atomic-calendar-revive)
 - [Auto Entities](https://github.com/thomasloven/lovelace-auto-entities)
 - [Bar Card](https://github.com/spacerokk/bar-card)
-- [Better Thermostat Ui](https://github.com/KartoffelToby/better-thermostat-ui-card)
 - [Button Card](https://github.com/custom-cards/button-card)
 - [Canary](https://github.com/jcwillox/lovelace-canary)
 - [Card Mod](https://github.com/thomasloven/lovelace-card-mod)

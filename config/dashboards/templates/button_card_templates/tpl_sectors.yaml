@@ -1004,6 +1004,10 @@ camera:
         }
       ]]]
     battery: ''
+    stream_state: >
+      [[[
+        return !entity || states[variables.stream_status].state;
+      ]]]
   show_name: false
   # tap_action:
   #   action: call-service
@@ -1014,62 +1018,6 @@ camera:
     [[[
       return states[variables.battery].state+' %';
     ]]]
-  # double_tap_action:
-  #   action: fire-dom-event
-  #   browser_mod:
-  #     service: browser_mod.popup
-  #     data:
-  #       title: ' '
-  #       style: |
-  #         --popup-border-width: 0;
-  #         --tablet-popup-header-color: rgba(0, 0, 0, 0);
-  #         --popup-background-color: rgba(0, 0, 0, 0);
-  #         --popup-max-width: 600px;
-  #       card_mod:
-  #         style:
-  #           .: |
-  #             @media screen and (min-width: 800px) {
-  #               ha-dialog>ha-dialog-header {
-  #                 display: none !important;
-  #               }
-  #             }
-  #             @media (max-width: 450px), (max-height: 500px) {
-  #               ha-dialog {
-  #                 --mdc-dialog-min-width: 100vw !important;
-  #                 --mdc-dialog-min-height: 100vh !important;
-  #                 --popup-border-radius: 0 !important;
-  #               }
-  #             }
-  #       content:
-  #         type: picture-entity
-  #         entity: >
-  #           [[[ return variables.entity_id;]]]
-  #         image: >
-  #           [[[
-  #               return `/local/tmp/${variables.entity_id}-latest.jpg`;
-  #           ]]]
-  #         show_info: true
-  #         show_state: true
-  #         show_name: false
-  #         camera_view: auto
-  #         tap_action:
-  #           action: call-service
-  #           service: >
-  #             [[[
-  #               return variables.state == 'idle'
-  #                 ? 'camera.turn_on'
-  #                 : 'camera.turn_off';
-  #             ]]]
-  #           service_data:
-  #             entity_id: >
-  #               [[[
-  #                 return entity.entity_id;
-  #               ]]]
-  #         card_mod:
-  #           style: |
-  #             ha-card {
-  #               border-radius: 16px !important;
-  #             }
 
   double_tap_action:
     action: fire-dom-event
@@ -1080,6 +1028,16 @@ camera:
           [[[
             return variables.entity_id;
           ]]]
+  tap_action:
+    action: call-service
+    service: button.press
+    service_data:
+      entity_id: >
+        [[[
+            let isIdle = states[variables.stream_status].state === 'StreamStatus.IDLE',
+                pressAction = isIdle ? 'start' : 'stop';
+            return `button.${entity.entity_id.split('.')[1]}_${pressAction}_rtsp_stream`;
+        ]]]
 
   styles:
     card:

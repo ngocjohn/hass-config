@@ -18,38 +18,104 @@ browser_mod:
           #                THERMOSTATS                    #
           #                                               #
           #################################################
-          - type: entities
-            entities:
-              - type: custom:better-thermostat-ui-card
-                entity: climate.living_room_thermostat
-                eco_temperature: 20
-                name: Living room
-                card_mod: &style
-                  style: |
-                    .name {
-                      line-height: normal;
-                    }
-          - type: entities
-            entities:
-              - type: custom:better-thermostat-ui-card
-                entity: climate.kids_room_thermostat
-                eco_temperature: 20
-                name: Kids Room
-                card_mod: *style
-          - type: entities
-            entities:
-              - type: custom:better-thermostat-ui-card
-                entity: climate.bedroom_thermostat
-                disable_summer: true
-                eco_temperature: 20
-                name: Bedroom
-                card_mod: *style
-          - type: entities
-            entities:
-              - type: custom:better-thermostat-ui-card
-                entity: climate.office_thermostat
-                disable_window: false
-                disable_summer: true
-                eco_temperature: 20
-                name: Office
-                card_mod: *style
+
+          - type: thermostat
+            entity: climate.office_thermostat
+            show_current_as_primary: true
+            features:
+              - &features
+                style: icons
+                type: climate-preset-modes
+                preset_modes:
+                  - none
+                  - eco
+                  - comfort
+                  - home
+                  - sleep
+          - type: thermostat
+            entity: climate.living_room_thermostat
+            show_current_as_primary: true
+            features:
+              - *features
+          - type: thermostat
+            entity: climate.kids_room_thermostat
+            show_current_as_primary: true
+            features:
+              - *features
+          - type: thermostat
+            entity: climate.bedroom_thermostat
+            show_current_as_primary: true
+            features:
+              - *features
+          # - type: entities
+          #   entities:
+          #     - type: thermostat
+          #       entity: climate.office_thermostat
+          #       show_current_as_primary: true
+          #       features:
+          #         - &features
+          #           style: icons
+          #           type: climate-preset-modes
+          #           preset_modes:
+          #             - none
+          #             - eco
+          #             - comfort
+          #             - home
+          #             - sleep
+          # - type: entities
+          #   entities:
+          #     - type: thermostat
+          #       entity: climate.living_room_thermostat
+          #       show_current_as_primary: true
+          #       features:
+          #         - *features
+          # - type: entities
+          #   entities:
+          #     - type: thermostat
+          #       entity: climate.kids_room_thermostat
+          #       show_current_as_primary: true
+          #       features:
+          #         - *features
+          # - type: entities
+          #   entities:
+          #     - type: thermostat
+          #       entity: climate.bedroom_thermostat
+          #       show_current_as_primary: true
+          #       features:
+          #         - *features
+          #################################################
+          # - type: entities
+          #   entities:
+          #     - type: custom:better-thermostat-ui-card
+          #       entity: climate.living_room_thermostat
+          #       eco_temperature: 20
+          #       name: Living room
+          #       card_mod: &style
+          #         style: |
+          #           .name {
+          #             line-height: normal;
+          #           }
+          # - type: entities
+          #   entities:
+          #     - type: custom:better-thermostat-ui-card
+          #       entity: climate.kids_room_thermostat
+          #       eco_temperature: 20
+          #       name: Kids Room
+          #       card_mod: *style
+          # - type: entities
+          #   entities:
+          #     - type: custom:better-thermostat-ui-card
+          #       entity: climate.bedroom_thermostat
+          #       disable_summer: true
+          #       eco_temperature: 20
+          #       name: Bedroom
+          #       card_mod: *style
+          # - type: entities
+          #   entities:
+          #     - type: custom:better-thermostat-ui-card
+          #       entity: climate.office_thermostat
+          #       disable_window: false
+          #       disable_summer: true
+          #       eco_temperature: 20
+          #       name: Office
+          #       card_mod: *style

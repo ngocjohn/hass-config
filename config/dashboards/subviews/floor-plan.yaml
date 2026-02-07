@@ -24,7 +24,7 @@ cards:
                 }
             full_height: true
             config:
-              console_log_level: debug
+              # console_log_level: debug
               image: /local/hafloor/plan_opt.svg
               stylesheet: /local/hafloor/style.css
               rules: !include_dir_merge_list /config/dashboards/floorplan/

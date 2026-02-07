@@ -19,7 +19,7 @@ grid_cam_door:
 grid_cam_kids:
   card:
     type: custom:button-card
-    entity: camera.kids_room_cam
+    entity: camera.kids_room
     name: ' '
     hold_action: !include ../../shared/popup/cameras.yaml
     template:
@@ -27,6 +27,7 @@ grid_cam_kids:
       - loader
     variables:
       battery: 'sensor.doorway_battery_percentage'
+      stream_status: 'sensor.kids_room_stream_status'
     double_tap_action:
       action: fire-dom-event
       browser_mod:
@@ -35,7 +36,7 @@ grid_cam_kids:
           title: 'Kids Room'
           content:
             type: custom:webrtc-camera
-            entity: camera.kids_room_cam
+            entity: camera.kids_room
 
     styles:
       card:

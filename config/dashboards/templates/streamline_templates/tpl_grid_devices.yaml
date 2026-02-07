@@ -17,13 +17,14 @@ grid_atv:
     variables:
       light_entity: light.sony_tv_backlight
 
-  # SAMSUNG TV
+# SAMSUNG TV
 grid_samsung:
   card:
     type: custom:button-card
     entity: media_player.shield
     name: >
       [[[
+        if ( !entity ) return 'Samsung';
         let source = states['media_player.shield'].attributes.source;
           if ( variables.state_on && source !==  'Android TV Launcher' )
             return source;
