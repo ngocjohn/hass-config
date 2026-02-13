@@ -16,7 +16,7 @@ tablet:
   mdc-typography-font-family: var(--primary-font-family)
   ha-card-background: none
   ha-card-box-shadow: none
-  app-header-background-color: '#0000'
+  app-header-background-color: '#ffffff00'
 
   masonry-view-card-margin: 0
   # custom-layout-card-padding: 2.2w #3.3vw or #3vw...#1.9...sidebar OK
