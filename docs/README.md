@@ -14,10 +14,12 @@ I frequently refresh my configuration files. My current Home Assistant version i
 
 ## Some of my projects for Home Assistant
 
-[![Vehicle Info Card](https://github-readme-stats.vercel.app/api/pin/?username=ngocjohn&repo=vehicle-info-card&theme=transparent)](https://github.com/ngocjohn/vehicle-info-card)
-[![Vehicle Status Card](https://github-readme-stats.vercel.app/api/pin/?username=ngocjohn&repo=vehicle-status-card&theme=transparent)](https://github.com/ngocjohn/vehicle-status-card)
-[![Lunar Phase Integration](https://github-readme-stats.vercel.app/api/pin/?username=ngocjohn&repo=lunar-phase&theme=transparent)](https://github.com/ngocjohn/lunar-phase)
-[![Lunar Phase Card](https://github-readme-stats.vercel.app/api/pin/?username=ngocjohn&repo=lunar-phase-card&theme=transparent)](https://github.com/ngocjohn/lunar-phase-card)
+[![Vehicle Info Card](https://github-readme-stats-chi-dusky-25.vercel.app/api/pin/?username=ngocjohn&repo=vehicle-info-card&theme=transparent)](https://github.com/ngocjohn/vehicle-info-card)
+[![Vehicle Status Card](https://github-readme-stats-chi-dusky-25.vercel.app/api/pin/?username=ngocjohn&repo=vehicle-status-card&theme=transparent)](https://github.com/ngocjohn/vehicle-status-card)
+[![Lunar Phase Integration](https://github-readme-stats-chi-dusky-25.vercel.app/api/pin/?username=ngocjohn&repo=lunar-phase&theme=transparent)](https://github.com/ngocjohn/lunar-phase)
+[![Lunar Phase Card](https://github-readme-stats-chi-dusky-25.vercel.app/api/pin/?username=ngocjohn&repo=lunar-phase-card&theme=transparent)](https://github.com/ngocjohn/lunar-phase-card)
+[![Sidebar Organizer](https://github-readme-stats-chi-dusky-25.vercel.app/api/pin/?username=ngocjohn&repo=sidebar-organizer&theme=transparent)](https://github.com/ngocjohn/sidebar-organizer)
+
 
 
 <video width="100%" controls loop muted>
@@ -47,11 +49,11 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
           <tr>
               <td>44,259 </td>
               <td>28</td>
-              <td>191</td>
+              <td>194</td>
               <td>59</td>
               <td>72</td>
               <td>31</td>
-              <td>1233</td>
+              <td>1267</td>
               <td>191</td>
               <td>30</td>
           </tr>
@@ -215,9 +217,13 @@ The floorplan is crafted using the [Ha Floorplan](https://github.com/ExperienceL
   </tr>
   <tr>
     <td><img src="screenshots/network.png" alt="Network Image"></td>
-    <td><img src="screenshots/server.png" alt="Server Image"></td>
+    <td><img src="screenshots/network-popup.gif" alt="Network Image"></td>
   </tr>
+	<tr>
+    <td><img src="screenshots/server.png" alt="Server Image"></td>
+	</tr>
 </table>
+
 
 
 ***
