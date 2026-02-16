@@ -34,7 +34,7 @@ browser_mod:
             variables:
               available: sensor.hassio_updates_available
               latest: sensor.home_assistant_versions
-              latest_beta: sensor.home_assistant_versions_beta
+              latest_beta: sensor.docker_hub_beta
               release_notes: sensor.hass_release_notes
               release_notes_beta: sensor.hass_release_notes_beta
           - type: custom:button-card

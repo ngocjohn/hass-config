@@ -52,7 +52,7 @@ ingress:
     work_mode: iframe
     ui_mode: replace
     title: Logs
-    icon: mdi:file-alert
+    icon: mdi:math-log
     url: /config/logs
   link_addons:
     work_mode: iframe

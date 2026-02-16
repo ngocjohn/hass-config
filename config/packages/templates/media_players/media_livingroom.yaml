@@ -11,6 +11,9 @@ media_player:
       - media_player.atv
       - media_player.sony_tv_combined
     active_child_template: >
+      {% set sony = states.media_player.sony_tv_combined %}
+      {% set atv = states.media_player.atv %}
+      {% set kodi = states.media_player.kodi_atv %}
       {% set is_kodi = atv.attributes.app_id == 'org.xbmc.kodi-tvos' and kodi.state != 'off' %}
       {% set is_atv = sony.attributes.source in ['HDMI 2', 'Apple TV'] %}
       {% if is_kodi or is_atv %}

@@ -75,34 +75,17 @@ browser_mod:
             entities:
               - entity: binary_sensor.arris_tg3442de_wan_status
                 name: WAN Status
-              # - entity: sensor.external_ip
-              # - entity: binary_sensor.template_unifi_upgradable
-              # - entity: sensor.template_ap_adopted
-              - type: custom:multiple-entity-row
-                entity: sensor.unifi_controller_clients
-                icon: mdi:devices
-                name: 'Total Clients'
-                show_state: false
-                secondary_info:
-                  entity: sensor.unifi_controller_clients
-                  unit: true
-                entities:
-                  - attribute: wifi0
-                    name: 2.4GhZ
-                    unit: ' '
-                  - attribute: wifi1
-                    name: 5GhZ
-                    unit: ' '
-                  - attribute: wired
-                    name: Wired
-                    unit: ' '
+              - type: custom:streamline-card
+                template: unifi_clients_total
+                variables:
+                  controller_entity: 'sensor.unifi_controller_clients'
+                  client_entity: 'sensor.unifi_controller_all_clients'
+                  heading_title: 'Total Clients'
               - type: custom:multiple-entity-row
                 entity: binary_sensor.unifi_controller_alert
                 name: 'Alert'
                 state_color: true
                 show_state: true
-                secondary_info:
-                  attribute: Message
                 entities:
                   - icon: mdi:archive-minus
                     tap_action:

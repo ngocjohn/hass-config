@@ -37,6 +37,9 @@ unifi_ap_clients:
       - entity: sensor.unifi_[[ap_entity]]_ap_5ghz
         name: 5GhZ
         unit: ' '
+      - entity: sensor.unifi_[[ap_entity]]_ap_guests
+        name: Guests
+        unit: ' '
 unifi_ap_score:
   card:
     type: custom:multiple-entity-row
@@ -64,6 +67,7 @@ unifi_ap_graph:
     entities:
       - entity: sensor.unifi_[[ap_entity]]_ap
         attribute: score
+    group: true
     font_size: 14px
     hours_to_show: 24
     show:
@@ -94,3 +98,132 @@ unifi_ap_combined:
         template: unifi_ap_score
         variables:
           - ap_entity: '[[ap_entity]]'
+
+unifi_clients_total:
+  default:
+    - controller_entity: ''
+    - client_entity: ''
+    - heading_title: 'Total Clients'
+  card:
+    type: custom:multiple-entity-row
+    entity: '[[controller_entity]]'
+    icon: mdi:devices
+    name: 'Total Clients'
+    show_state: false
+    tap_action:
+      action: fire-dom-event
+      browser_mod:
+        service: browser_mod.popup
+        data:
+          title: '[[heading_title]]'
+          tag: inner
+          content:
+            type: custom:streamline-card
+            template: unifi_clients_list
+            variables:
+              - client_entity: sensor.unifi_controller_all_clients
+    secondary_info:
+      entity: '[[controller_entity]]'
+      unit: true
+    entities:
+      - attribute: wired
+        name: Wired
+        unit: ' '
+        tap_action:
+          action: fire-dom-event
+          browser_mod:
+            service: browser_mod.popup
+            data:
+              title: Wired Clients
+              tag: inner
+              content:
+                type: custom:streamline-card
+                template: unifi_clients_list
+                variables:
+                  - client_entity: sensor.unifi_controller_wired_clients
+
+      - attribute: wifi0
+        name: 2.4GhZ
+        unit: ' '
+        tap_action: &wifi_popup
+          action: fire-dom-event
+          browser_mod:
+            service: browser_mod.popup
+            data:
+              title: 'Wifi clients'
+              tag: inner
+              content:
+                type: custom:streamline-card
+                template: unifi_clients_list
+                variables:
+                  - client_entity: sensor.unifi_controller_wifi_clients
+      - attribute: wifi1
+        name: 5GhZ
+        unit: ' '
+        tap_action:
+          <<: *wifi_popup
+
+unifi_clients_list:
+  default:
+    - client_entity: ''
+  card:
+    type: custom:mod-card
+    card_mod:
+      style: |
+        ha-card {
+          max-height: 600px;
+          overflow-y: auto;
+          position: relative;
+          width: 100%;
+          height: 100%;
+        }
+        @media screen and (max-width: 800px) {
+          ha-card {
+            padding: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            max-height: unset !important;
+          }
+        }
+    card:
+      type: custom:auto-entities
+      filter:
+        template: |
+          {%- set devices = state_attr('[[client_entity]]', 'devices') -%}
+          [
+            {%- for dev in devices -%}
+              {
+                'type': 'custom:button-card',
+                'name': '{{ dev.name }}',
+                'template': ['unifi_client_base'],
+                'variables': {
+                  'picture': '{{ dev.entity_picture | default('') }}',
+                  'ip_address': '{{ dev.ip | default(dev.mac) }}',
+                  'mac': '{{ dev.mac }}',
+                  'satisfaction_real': '{{ dev.satisfaction_real | default(0)}}',
+                  'tx_bytes': '{{ dev.tx_bytes }}',
+                  'rx_bytes': '{{ dev.rx_bytes }}',
+                  'uptime': '{{ dev.uptime }}'
+                }
+              }{%- if not loop.last %},{% endif %}
+            {%- endfor %}
+          ]
+      card:
+        type: custom:layout-card
+        layout_type: custom:grid-layout
+        layout:
+          grid-template-columns: repeat(auto-fill, minmax(25%, 1fr))
+          grid-template-rows: auto
+          grid-gap: 4px 8px
+          padding: 0
+          margin: 0
+          mediaquery:
+            '(min-width: 768px) and (max-width: 1710px)':
+              grid-template-columns: repeat(auto-fill, minmax(30%, 1fr))
+              grid-gap: 4px
+            '(max-width: 767.99px)':
+              grid-template-columns: repeat(auto-fill, minmax(40%, 1fr))
+              grid-gap: 8px 8px
+              padding: 0
+              margin: 0
+        cards: []

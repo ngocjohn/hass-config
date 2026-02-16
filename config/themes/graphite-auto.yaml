@@ -1,8 +1,11 @@
 Graphite Auto:
   # POPUP MORE INFO
-  dialog-box-shadow: var(--rgb-accent-color)
+  # dialog-box-shadow: var(--rgb-accent-color)
+  dialog-box-shadow: 0 0px 16px 4px rgba(101,115,134, .15), 0 16px 64px 32px rgba(101,115,134, .5) !important;
   dialog-backdrop-filter: blur(12px) brightness(0.3)
+  dialog-scrim-color: rgba(0, 0, 0, 0.32)
   popup-background-color: transparent
+  ha-dialog-scrim-backdrop-filter: var(--dialog-backdrop-filter)
   # popup-background-color: rgba(34,38,39,0.7)
   # popup-background-color: rgba(30,30,45, 0.6)
   popup-border-width: 1px
@@ -32,6 +35,8 @@ Graphite Auto:
 
   # Ha button
   ha-button-height: 32px
+
+  mdc-theme-surface: var(--app-header-background-color, '#ffffff00')
 
   # Honeycomb buttons
   honeycomb-menu-active-background-color: 'linear-gradient(45deg, #eee, #2d6ca0)'
@@ -739,7 +744,12 @@ Graphite Auto:
       --app-header-backdrop-filter: blur(2em);
     }
 
-  card-mod-more-info: |
+  card-mod-dialog: |
+    :host {
+      --dialog-box-shadow: 0 0px 16px 4px rgba(101,115,134, .15), 0 16px 64px 32px rgba(101,115,134, .5) !important;
+      --mdc-theme-surface: var(--card-background-color) !important;
+    }
+  card-mod-more-info: &popup_card_mod |
     :host([card]) .content .container {
       padding: 0px !important;
     }
@@ -750,7 +760,7 @@ Graphite Auto:
       --ha-dialog-surface-backdrop-filter: blur(12px) brightness(0.3);
       --ha-dialog-scrim-backdrop-filter: blur(6px) brightness(0.3);
       --mdc-theme-surface: var(--popup-background-color) !important;
-
+      --mdc-dialog-scrim-color: var(--dialog-scrim-color, rgba(0, 0, 0, 0.32)) !important;
       --bar-card-border-radius: 12px !important;
       --ha-card-border-radius: 0px !important;
       --ha-card-background: none !important;
@@ -768,3 +778,4 @@ Graphite Auto:
         --dialog-box-shadow: none !important;
       }
     }
+  card-mod-browser-mod-popup-inner: *popup_card_mod

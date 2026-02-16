@@ -1,0 +1,130 @@
+unifi_client_base:
+  variables:
+    picture: ''
+    ip_address: ''
+    mac: ''
+    satisfaction_real: ''
+    tx_bytes: ''
+    rx_bytes: ''
+    uptime: ''
+  aspect_ratio: 1
+  show_state: true
+  show_label: true
+  show_icon: false
+  show_entity_picture: true
+  show_name: true
+  state_display: |
+    [[[
+      return variables.ip_address;
+    ]]]
+  entity_picture: |
+    [[[
+      return variables.picture;
+    ]]]
+  label: |
+    [[[
+      return `
+        <div class="label-item" id="uptime" style="display: none;">
+          <ha-icon icon="mdi:clock"></ha-icon>${variables.uptime}
+        </div>
+        <div class="label-item" id="txrxbytes">
+          <ha-icon icon="mdi:arrow-up"></ha-icon>${variables.tx_bytes}
+          <ha-icon icon="mdi:arrow-down"></ha-icon>${variables.rx_bytes}
+        </div>
+      `
+    ]]]
+  custom_fields:
+    bar: ''
+  tap_action:
+    action: more-icon
+  styles:
+    grid:
+      - grid-template-areas: |
+          "i i"
+          "n n"
+          "s s"
+          "bar bar"
+          "l l"
+      - gap: 4px
+    card:
+      - background-color: transparent
+      - '--bar-width': |
+          [[[
+            return `${variables.satisfaction_real}%`
+          ]]]
+      - padding: 4px
+    name:
+      - align-self: center
+      - justify-self: center
+      - font-weight: 500
+      - font-size: 13px
+    state:
+      - font-size: 11px
+      - color: '#525461'
+    label:
+      - font-size: 11px
+      - color: '#525461'
+    img-cell:
+      - display: inline-flex
+      - place-items: center
+      - position: relative
+    icon:
+      - width: 100%
+      - position: inherit
+      - height: 100%
+      - padding: 4px
+      - margin: 0
+      - display: inline-block
+      - place-self: center baseline
+      - object-fit: contain
+    custom_fields:
+      bar:
+        - display: flex
+        - width: 100%
+        - height: 4px
+        - background-color: '#333543'
+        - position: relative
+  extra_styles: |
+    [[[
+      return `
+        #card {
+          border-radius: 4px;
+          border: 1px solid transparent;
+        }
+        #card:hover {
+          background-color: rgba(0,111,255,0.2) !important;
+          border: 1px solid #006fff;
+          transition: border;
+        }
+        ha-icon {
+          --mdc-icon-size: 14px !important;
+          padding: 2px;
+        }
+        #bar:after {
+          content: '';
+          width: var(--bar-width);
+          height: 3px;
+          outset: 0;
+          background: #39cc64;
+        }
+        #label {
+          display: flex;
+          height: fit-content;
+          width: 100%;
+          flex-wrap: wrap;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+        }
+        #label .label-item {
+          display: flex;
+          align-items: flex-end;
+        }
+        #card:hover #label > #uptime {
+          display: flex !important;
+        }
+        #card:hover #label > #txrxbytes {
+          display: none !important;
+        }
+      `
+    ]]]
