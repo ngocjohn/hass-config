@@ -35,6 +35,7 @@ Graphite Auto:
 
   # Ha button
   ha-button-height: 32px
+  ha-border-radius-pill: 1em
 
   mdc-theme-surface: var(--app-header-background-color, '#ffffff00')
 
