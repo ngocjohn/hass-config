@@ -53,7 +53,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
               <td>59</td>
               <td>72</td>
               <td>31</td>
-              <td>1253</td>
+              <td>1260</td>
               <td>191</td>
               <td>30</td>
           </tr>
@@ -77,6 +77,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - File editor
 - Glances
 - Govee to MQTT Bridge
+- Log Viewer
 - MariaDB
 - Mosquitto broker
 - Music Assistant
