@@ -10,6 +10,7 @@ homeassistant:
   packages: !include_dir_named packages
   allowlist_external_dirs:
     - /config
+    - /config/www
   media_dirs:
     movies: /media/movies
     local: /media

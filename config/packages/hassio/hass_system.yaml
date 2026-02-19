@@ -66,8 +66,6 @@ recorder:
       - device_tracker.viet_ngoc_samsung
       - sensor.motion_sensor_entrance_illuminance
 logger:
-  default: info
-
 logbook:
 
 # TTS
