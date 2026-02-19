@@ -271,20 +271,6 @@
         action: input_boolean.turn_on
       - stop: ''
   mode: single
-- id: '1693488019712'
-  alias: Nuki Vchod Open
-  description: ''
-  trigger:
-  - platform: state
-    entity_id:
-    - input_button.nuki_vchod
-  condition: []
-  action:
-  - service: lock.open
-    data: {}
-    target:
-      entity_id: lock.nuki_vchod_lock
-  mode: single
 - id: '1694721012171'
   alias: Spotify Vibrant Color
   description: ''
@@ -1033,35 +1019,6 @@
       message: '{{ state_attr(''calendar.home_assistant_devs'', ''message'') }}'
       title: HA Calendar
   mode: restart
-- id: '1746378396403'
-  alias: Disable vacuum camera
-  description: ''
-  triggers:
-  - trigger: state
-    entity_id:
-    - vacuum.roidmi_eve
-    id: state_changed
-  conditions:
-  - condition: template
-    value_template: '{{ trigger.to_state.state != trigger.from_state.state }}'
-  actions:
-  - if:
-    - condition: template
-      value_template: '{{ trigger.to_state.state in ["unavailable", "unknown", "docked",
-        "idle", "paused", "charging"] }}'
-    then:
-    - action: camera.turn_off
-      metadata: {}
-      data: {}
-      target:
-        entity_id: camera.roidmi_eve
-    else:
-    - action: camera.turn_on
-      metadata: {}
-      data: {}
-      target:
-        entity_id: camera.roidmi_eve
-  mode: single
 - id: '1760899859441'
   alias: Appdaemon Mb server
   description: ''

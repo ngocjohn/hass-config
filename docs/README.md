@@ -47,13 +47,13 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>44,322 </td>
-              <td>28</td>
-              <td>188</td>
+              <td>44,197 </td>
+              <td>26</td>
+              <td>190</td>
               <td>59</td>
               <td>72</td>
               <td>31</td>
-              <td>1249</td>
+              <td>1252</td>
               <td>191</td>
               <td>30</td>
           </tr>
@@ -162,9 +162,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Purifier Card](https://github.com/denysdovhan/purifier-card)
 - [Rpi Monitor Card](https://github.com/ironsheep/lovelace-rpi-monitor-card)
 - [Sidebar Organizer](https://github.com/ngocjohn/sidebar-organizer)
-- [Simple Thermostat](https://github.com/nervetattoo/simple-thermostat)
 - [Slider Button Card](https://github.com/custom-cards/slider-button-card)
-- [Spotify Lovelace Card](https://github.com/custom-cards/spotify-card)
 - [Stack In Card](https://github.com/custom-cards/stack-in-card)
 - [State Switch](https://github.com/thomasloven/lovelace-state-switch)
 - [Streamline Card](https://github.com/brunosabot/streamline-card)

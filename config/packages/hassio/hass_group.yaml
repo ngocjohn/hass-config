@@ -198,7 +198,6 @@ group:
     icon: mdi:docker
     entities:
       - sensor.pidocker_cloudflare
-      - sensor.pidocker_ha_dockermon
       - sensor.pidocker_homebridge
       - sensor.pidocker_portainer
       - sensor.pidocker_unifi_controller
