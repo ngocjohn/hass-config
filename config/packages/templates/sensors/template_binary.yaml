@@ -62,19 +62,10 @@ template:
         icon: mdi:home-import-outline
         state: >-
           {{
-            is_state('input_boolean.z_occupacy', 'on')
-            or is_state('person.huong_giang', 'home')
+            is_state('person.huong_giang', 'home')
             or is_state('person.phuong_chi', 'home')
             or is_state('device_tracker.phuong_chi_iphone', 'home')
             or is_state('input_boolean.guest_mode','on')
-          }}
-      - name: 'Zuzu Presence'
-        unique_id: zuzu_occupancy
-        device_class: occupancy
-        icon: mdi:account
-        state: >-
-          {{
-            is_state('input_boolean.z_occupacy', 'on')
           }}
 
       - name: 'Zigbee Sensors Problem'
@@ -87,6 +78,23 @@ template:
           offline: >
             {%- set offline = (expand(states.group.contact_sensors) + expand(states.group.motion_sensors)) | selectattr( 'state', 'in', ['unknown', 'unavailable']) | map(attribute='name') | list -%}
             {{- offline }}
+
+      # Docker containers problem
+      - name: 'Pi Docker Containers Problem'
+        unique_id: containers_problem
+        device_class: problem
+        icon: mdi:docker
+        state: >-
+          {{this.attributes.containers_problem | count > 0}}
+        attributes:
+          containers_problem: >
+            {%- set containers_problem =
+              expand('group.docker_containers')
+              | selectattr('state', 'in', ['off', 'unavailable', 'unknown'])
+              | map(attribute='name')
+              | list
+            -%}
+            {{ containers_problem }}
 
       - name: 'MacbookPro'
         unique_id: '1bd2146a-71b3-4b5b-b86a-14c732042731'

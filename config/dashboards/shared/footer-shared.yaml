@@ -39,6 +39,12 @@ cards:
     tap_action: !include ./popup/footer/footer_system.yaml
     template:
       - footer
+    variables:
+      notify: >
+        [[[
+          let containerProblem = states['binary_sensor.pi_docker_containers_problem']?.state === 'on';
+          return containerProblem ? 'alert' : null;
+        ]]]
   - type: custom:button-card
     name: >
       <ha-icon icon="mdi:server"></ha-icon> Server

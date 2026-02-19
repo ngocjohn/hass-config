@@ -35,7 +35,7 @@ Graphite Auto:
 
   # Ha button
   ha-button-height: 32px
-  #mdc-theme-surface: var(--app-header-background-color)
+  mdc-theme-surface: var(--app-header-background-color)
   # Code mirror
   indent-marker-active-bg-color: var(--catppuccin-overlay0, '#6e738d')
   # Honeycomb buttons

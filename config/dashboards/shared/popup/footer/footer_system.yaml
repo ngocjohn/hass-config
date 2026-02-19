@@ -205,18 +205,30 @@ browser_mod:
                 secondary_info: last-changed
             filter:
               template: |
-                {% for sensor in states.binary_sensor -%}
-                  {%- if sensor.entity_id | regex_match('binary_sensor.docker_',ignorecase=False) -%}
-                    {%- set name = state_attr(sensor.entity_id, "friendly_name") | regex_replace(find='Docker ', replace='') | capitalize -%}
-                    {{
-                      { 'entity': sensor.entity_id,
-                        'type': 'custom:multiple-entity-row',
-                        'show_state': true,
-                        'name': name,
-                        'secondary_info': {
-                          'attribute': 'Uptime',
-                        },
-                        'state_color': true,
-                      } }},
-                  {%- endif -%}
+                {% set iconMap = {
+                "Watchtower": "cil:docker-watchtower",
+                "Homebridge": "si:homebridge",
+                "Unifi-controller": "si:ubiquiti",
+                "Cloudflare": "si:cloudflare",
+                "Portainer": "si:portainer",
+                "Ha-dockermon": "si:docker",
+                }
+                %}
+
+                {% for sensor in expand('group.docker_containers')-%}
+                {%- set name = sensor.name | regex_replace(find='Pidocker ', replace='') | capitalize -%}
+                {%- set iconEn = iconMap.get(name) -%}
+                {%- set color = 'var(--disabled-color)' if sensor.state == 'on' else 'var(--amber-color)' -%}
+                {{
+                  { 'entity': sensor.entity_id,
+                    'name': name,
+                    'icon': iconEn,
+                    'card_mod': {
+                      'style': {
+                        'hui-generic-entity-row': {
+                          '$': "state-badge { color: " + color + " !important; }"
+                        }
+                      }
+                    }
+                  } }},
                 {%- endfor %}
