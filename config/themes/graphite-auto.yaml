@@ -35,10 +35,8 @@ Graphite Auto:
 
   # Ha button
   ha-button-height: 32px
-  ha-border-radius-pill: 1em
-
-  mdc-theme-surface: var(--app-header-background-color, '#ffffff00')
-
+  # Code mirror
+  indent-marker-active-bg-color: var(--catppuccin-overlay0, '#6e738d')
   # Honeycomb buttons
   honeycomb-menu-active-background-color: 'linear-gradient(45deg, #eee, #2d6ca0)'
   honeycomb-menu-background-color: 'linear-gradient(0deg, rgba(60,66,80,1) 0%, rgba(23,26,37,0.7) 42%, rgba(21,25,35,0.6) 100%)'
@@ -672,6 +670,8 @@ Graphite Auto:
       codemirror-property: var(--catppuccin-blue)
       codemirror-qualifier: var(--catppuccin-peach)
       codemirror-type: var(--catppuccin-yellow) # Currently unused
+      indent-marker-active-bg-color: var(--catppuccin-overlay0)
+
       # RGB colors
       rgb-primary-color: var(--token-rgb-primary)
       rgb-accent-color: var(--token-rgb-primary)
@@ -738,34 +738,54 @@ Graphite Auto:
       * {
         font-family: Poppins, Raleway, SF Pro Text, sans-serif, system-ui !important;
       }
-  card-mod-config: |
+      .header {
+        z-index: 4 !important;
+      }
+  card-mod-top-app-bar-fixed: &config_header |
     :host {
-      --sidebar-background-color: #0000;
-      --app-header-background-color: #0000;
+      --mdc-top-app-bar-fixed-box-shadow: none;
+      --sidebar-background-color: #ffffff00;
+      --app-header-background-color: #ffffff00;
       --app-header-backdrop-filter: blur(2em);
+      --app-header-border-bottom: none;
+    }
+    header {
+      backdrop-filter: blur(1em);
     }
 
+  card-mod-developer-tools: *config_header
   card-mod-dialog: |
     :host {
       --dialog-box-shadow: 0 0px 16px 4px rgba(101,115,134, .15), 0 16px 64px 32px rgba(101,115,134, .5) !important;
-      --mdc-theme-surface: var(--card-background-color) !important;
+      --wa-shadow-l: var(--dialog-box-shadow);
+      --ha-dialog-surface-background: rgba(22, 24, 29, 0.7) !important;
+      --wa-color-overlay-modal: rgba(0, 0, 0, 0.7) !important;
+      --mdc-dialog-scrim-color: var(--dialog-scrim-color, rgba(0, 0, 0, 0.32)) !important;
+      --mdc-text-field-fill-color: rgb(50 50 50 / 22%) !important;
+      --mdc-select-fill-color: rgb(50 50 50 / 22%) !important;
+      --mdc-theme-surface: rgba(22, 24, 29, 1) !important;
+      --card-background-color: var(--mdc-theme-surface);
     }
+
   card-mod-more-info: &popup_card_mod |
     :host([card]) .content .container {
       padding: 0px !important;
     }
     ha-dialog {
-      --vertical-align-dialog: var(--tablet-popup-align-dialog) !important;
-      --dialog-surface-margin-top: var(--tablet-popup-margin-top) !important;
-      --dialog-box-shadow: 0 0px 16px 4px rgba(101,115,134, .15), 0 16px 64px 32px rgba(101,115,134, .5) !important;
-      --ha-dialog-surface-backdrop-filter: blur(12px) brightness(0.3);
-      --ha-dialog-scrim-backdrop-filter: blur(6px) brightness(0.3);
-      --mdc-theme-surface: var(--popup-background-color) !important;
-      --mdc-dialog-scrim-color: var(--dialog-scrim-color, rgba(0, 0, 0, 0.32)) !important;
+
       --bar-card-border-radius: 12px !important;
       --ha-card-border-radius: 0px !important;
       --ha-card-background: none !important;
+      --vertical-align-dialog: var(--tablet-popup-align-dialog, center) !important;
+      --dialog-surface-margin-top: var(--tablet-popup-margin-top, 0) !important;
+      --dialog-box-shadow: 0 0px 16px 4px rgba(101,115,134, .15), 0 16px 64px 32px rgba(101,115,134, .5) !important;
+      --mdc-dialog-scrim-color: var(--dialog-scrim-color, rgba(0, 0, 0, 0.32)) !important;
+      --ha-dialog-surface-background: rgba(22, 24, 29, 0.3);
+      --mdc-text-field-fill-color: rgb(50 50 50 / 22%) !important;
+      --mdc-select-fill-color: rgb(50 50 50 / 22%) !important;
+      --mdc-theme-surface: rgba(22, 24, 29, 1) !important;
     }
+
     wa-dialog {
       --wa-color-overlay-modal: rgba(0, 0, 0, 0.5) !important;
     }

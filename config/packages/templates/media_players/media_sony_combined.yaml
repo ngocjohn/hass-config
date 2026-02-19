@@ -7,9 +7,10 @@ media_player:
       - media_player.sony_bravia_tv
       - media_player.sony_google_cast_5
     active_child_template: >
-      {% if state_attr('media_player.sony_bravia_tv', 'media_content_id') %}
+      {% if is_state('media_player.sony_bravia_tv', 'on') and state_attr('media_player.sony_bravia_tv', 'media_content_id') %}
         media_player.sony_google_cast_5
       {% endif %}
+        media_player.sony_bravia_tv
     attributes:
       source: media_player.sony_bravia_tv|source
       source_list: media_player.sony_bravia_tv|source_list
