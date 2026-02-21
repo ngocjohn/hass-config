@@ -1048,7 +1048,8 @@ camera:
       - background-repeat: no-repeat
       - background-image: >
           [[[
-              return `linear-gradient(0deg, rgba(0,0,0,.3) 0%, rgba(0,0,0,0) 100%), url(${variables.entity_picture})`;
+              let picUrl = ((variables.entity_picture === undefined || variables.entity_picture === null && variables.image_entity !== undefined) ? variables.image_entity : variables.entity_picture);
+              return `linear-gradient(0deg, rgba(0,0,0,.3) 0%, rgba(0,0,0,0) 100%), url(${picUrl})`;
           ]]]
     # [[[
     #   return `linear-gradient(0deg, rgba(0,0,0,.5) 0%, rgba(0,0,0,0) 100%), url(/local/tmp/${variables.entity_id}-latest.jpg)`;
