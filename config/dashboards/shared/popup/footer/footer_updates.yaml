@@ -10,16 +10,15 @@ browser_mod:
         style:
           hui-grid-card:
             $: |
-              button-card:nth-child(2) {
-                margin: 0.6em 0 2.1em 0.8em;
-              }
-              button-card:nth-child(4) {
-                margin: 0.6em 0 0.5em 0.8em;
-              }
               #root {
                 grid-gap: 0 !important;
                 padding: var(--tablet-popup-content-padding);
                 padding-top: 0 !important;
+                max-width: 700px;
+              }
+
+              #root hui-card:nth-child(2) {
+                margin-bottom: 1.5em !important;
               }
       card:
         type: grid

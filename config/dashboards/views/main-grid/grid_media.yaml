@@ -10,6 +10,7 @@
     show:
       mediaquery: '(min-width: 1441px)'
   columns: 1
+  square: true
   cards:
     #Conditional Media
     - type: custom:swipe-card
@@ -22,7 +23,7 @@
               conditions:
                 - entity: select.conditional_media
                   state: Recently added
-              card: &spotify
+              card:
                 type: custom:added-movie-card
                 entity: sensor.tmdb_movies_trending
 
@@ -78,11 +79,6 @@
             - type: conditional
               conditions:
                 - entity: select.conditional_media
-                  state: Spotify
-              card: *spotify
-            - type: conditional
-              conditions:
-                - entity: select.conditional_media
                   state: 'PlayStation 5'
               card: &PS5
                 type: custom:button-card
@@ -91,45 +87,7 @@
                 template:
                   - conditional_media
                   - icon_playstation
-            # - type: conditional
-            #   conditions:
-            #     - entity: select.conditional_media
-            #       state: PS5 Activity
-            #   card: &PS5
-            #     type: custom:button-card
-            #     entity: sensor.ps5_activity
-            #     name: 'PlayStation 5'
-            #     template:
-            #       - conditional_media
-            #       - icon_playstation
-            - type: conditional
-              conditions:
-                - entity: select.conditional_media
-                  state: Youtube Music Player
-              card: &YOUTUBEPLAYER
-                type: custom:button-card
-                entity: media_player.ytube_music_player
-                template:
-                  # - currently_playing
-                  - conditional_media
-                  - progress_bar
-                  - tpl_minicontrol_mass
-                variables:
-                  tilt_enable: >
-                    [[[ return false; ]]]
-                show_name: false
-                tap_action: block
-                styles:
-                  custom_fields:
-                    blur_overlay:
-                      - bottom: -4%
-                      - left: -7%
-                      - height: 110%
-                      - width: 112%
-                      - clip-path: >
-                          [[[
-                            return `inset(73% 0.0% 0% 0% round 0 0 calc(var(--button-card-border-radius) / 2) calc(var(--button-card-border-radius) / 2))`;
-                          ]]]
+
             - type: conditional
               conditions:
                 - entity: select.conditional_media
@@ -141,85 +99,6 @@
                   - universal_media_player
                   - icon_homepod
 
-            # - type: conditional
-            #   conditions:
-            #     - entity: select.conditional_media
-            #       state: Mass Universal Airplay
-            #   card: &MASSAIRPLAY
-            #     type: custom:button-card
-            #     entity: media_player.mass_universal_airplay
-            #     template:
-            #       # - currently_playing
-            #       - conditional_media
-            #       - progress_bar
-            #       - tpl_minicontrol_mass
-            #     variables:
-            #       tilt_enable: >
-            #         [[[ return false; ]]]
-            #     show_name: false
-            #     tap_action: block
-            #     styles:
-            #       custom_fields:
-            #         blur_overlay:
-            #           - bottom: -4%
-            #           - left: -7%
-            #           - height: 110%
-            #           - width: 112%
-            #           - clip-path: >
-            #               [[[
-            #                 return `inset(73% 0.0% 0% 0% round 0 0 calc(var(--button-card-border-radius) / 2) calc(var(--button-card-border-radius) / 2))`;
-            #               ]]]
-            #     double_tap_action:
-            #       action: fire-dom-event
-            #       browser_mod:
-            #         service: browser_mod.popup
-            #         data:
-            #           title: 'MASS'
-            #           size: wide
-            #           content:
-            #             type: iframe
-            #             # aspect_ratio: '100%'
-            #             url: /api/hassio_ingress/vY3Npsvoa2MxygW4H78Jr2ZEpMXsTJtX8DuZsXbT6mE/#/home
-
-        # YOUTUBE MUSIC Playlist
-        # - type: grid
-        #   columns: 1
-        #   cards: &YOUTUBEPLAYLIST
-        #     - type: custom:button-card
-        #       entity: media_player.ytube_music_player
-        #       template:
-        #         - tpl_ytube_music
-        # VN FEATURED Playlist
-        # - type: grid
-        #   columns: 1
-        #   cards: &SPOTIFYPLAYLIST
-        #     - type: custom:button-card
-        #       entity: media_player.spotify
-        #       template:
-        #         - tpl_spotify
-        #       variables:
-        #         playlist_type: default
-        #         country_code: vn
-
-        #Media Players
-        - type: grid
-          columns: 2
-          cards:
-            - &grid-atv-kodi
-              type: custom:button-card
-              entity: media_player.kodi_atv
-              name: Kodi ATV
-              template:
-                - media
-                - icon_apple_tv
-            - &grid-spotify-media
-              type: custom:button-card
-              entity: media_player.spotifyplus_ngoc_nguyen
-              name: Spotify
-              double_tap_action: !include ../../shared/popup/spotify_playlist.yaml
-              template:
-                - media
-                - icon_spotify
 #################################################
 #                                               #
 #                     MEDIA                     #
@@ -303,8 +182,3 @@
             #       state: Youtube Music Player
             #   card: *YOUTUBEPLAYER
           #Media Players
-        - type: grid
-          columns: 2
-          cards:
-            - *grid-atv-kodi
-            - *grid-spotify-media

@@ -28,6 +28,7 @@ grid_cam_kids:
     variables:
       battery: 'sensor.doorway_battery_percentage'
       stream_status: 'sensor.kids_room_stream_status'
+      snapshot: 'input_text.kids_camera_snapshot'
     double_tap_action:
       action: fire-dom-event
       browser_mod:

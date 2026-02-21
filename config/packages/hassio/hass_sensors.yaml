@@ -54,22 +54,15 @@ template:
       - unique_id: hass_update_available
         name: 'Hassio Updates Available'
         state: >
-          {{ this.attributes.total }}
+          {{ this.attributes.update_entities }}
         attributes:
           home_assistant: >-
             {% set installed = states('sensor.current_version') %}
             {% set latest = states('sensor.home_assistant_versions') %}
             {{ iif(version(latest) > version(installed) and '.' in installed and '.' in latest, 1, 0) }}
           update_entities: >-
-            {% set ignore_entities = device_entities("7353b70cac886bd0995d71776dfa49fb") | list %}
-            {{ states.update | selectattr('state','eq','on') | rejectattr('entity_id', 'in', ignore_entities) | list | count }}
-          total: >-
-            {% set installed = states('sensor.current_version') %}
-            {% set latest = states('sensor.home_assistant_versions') %}
-            {% set hassio = iif(version(latest) > version(installed) and '.' in installed and '.' in latest, 1, 0) %}
-            {% set ignore_entities = device_entities("7353b70cac886bd0995d71776dfa49fb") | list %}
-            {% set other = states.update | selectattr('state','eq','on') | rejectattr('entity_id', 'in', ignore_entities) | list | count %}
-            {{ hassio | int + other | int }}
+            {% set mqtt_ignores = integration_entities('mqtt')  | select('search', 'update.') | list %}
+            {{ states.update | selectattr('state','eq','on')  |  rejectattr('entity_id', 'in', mqtt_ignores ) | list | count }}
 
       # SENSOR - DOMAIN COUNTER
       # - unique_id: domain_counter

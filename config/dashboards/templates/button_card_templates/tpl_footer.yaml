@@ -117,7 +117,7 @@ base_updates:
       - white-space: normal
     card:
       - cursor: default !important
-      - padding: 0 0 1em
+      - padding: 0 0 0.5em 0
       - letter-spacing: var(--mdc-typography-body1-letter-spacing)
       - --button-card-ripple-color: none
   extra_styles: |
@@ -127,16 +127,27 @@ base_updates:
     #ripple {
       display: none;
     }
-    ha-icon {
-      width: 1.4em;
-      vertical-align: 12%;
-      opacity: 0.5;
-      padding-right: 2px;
+    #state {
+      width: 100%;
     }
+
     .title {
       font-size: 1.3em;
       font-weight: 500;
+      display: flex;
+      gap: 0.3em;
+      height: 100%;
+      justify-content: center;
+      width: max-content;
+      align-items: center;
+      line-height: 1;
     }
+    .title > ha-icon {
+      width: 1.4em;
+      opacity: 0.5;
+    }
+
+
     .subtitle {
       font-size: 0.95em;
       line-height: 0.7em;
@@ -150,36 +161,58 @@ base_updates:
       text-decoration: none;
     }
     ul {
-      padding-inline-start: 1em;
+      padding-inline: inherit;
       font-size: 0.88em;
-      line-height: 100%;
-    }
-    /*ul {
-      margin-top: -0.6em;
-      font-size: 0.88em;
-      letter-spacing: 0.5px;
-      line-height: 100%;
-      padding-inline-start: 1em;
-      width: 100%;
-    }*/
-    /*
-    li {
-      line-height: 100%;
-      width: 100%;
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
+      width: inherit;
+    }
+
+    ul#updateList li {
+      display: flex;
+      border-bottom: 1px solid var(--app-header-edit-background-color);
       flex-direction: row;
+      height: 100%;
+      align-items: stretch;
+    }
+
+    ul#updateList li img {
+      max-width: 40px;
+      object-fit: contain;
+      width: 100%;
+      margin: 11px 16px;
+      min-height: 40px;
+    }
+    ul#updateList li .infoNameBtn {
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+    ul#updateList li .infoNameBtn #infoName {
+      line-height: 2;
+    }
+
+    ul#updateList li .secondary {
+      --ha-button-height: 24px;
+      display: flex;
+      margin-top: 4px;
+      align-items: center;
+      flex: auto;
       justify-content: space-between;
-      gap: 0.5em;
-      align-items: anchor-center;
-    }*/
-    li {
-      display: block;
+      width: 100%;
     }
-    li span {
-      font-size: 0.9em;
-      opacity: 0.8;
+
+    ul#updateList li span {
+      font-size: 0.7em;
+      display: inline-flex;
+      gap: 1em;
+      background-color: #292929;
+      padding: 2px 8px;
+      border-radius: 4px;
+      color: var(--secondary-text-color);
     }
+
     code {
       background-color: var(--secondary-background-color);
     }
@@ -210,7 +243,9 @@ updates_hass:
               ? '<ul></ul>'
               : release_notes.replace(links, '<a href="#" onclick="window.open(\'$1\')"');
           return `
-            <ha-icon icon="mdi:home-assistant"></ha-icon> <span class="title">Home Assistant</span><br>
+            <div class="title">
+              <ha-icon icon="mdi:home-assistant"></ha-icon> <span>Home Assistant</span>
+            </div>
             <p class="subtitle">${subtitle}</p>
             ${output}
           `;
@@ -264,16 +299,18 @@ updates:
         if (e.includes('update.') && s.state === 'on') {
             output += `
             <li>
-              <div id="infoName" data-entity="${e}">
-                <b>
-                  <a href="#" data-entity="${e}">&middot; ${a.friendly_name.replace('update', '')}
-                  </a>
-                </b>
-                <span>${a.installed_version} <b>&rarr;</b> ${a.latest_version}</span>
-              </div>
-              <div>
-                <ha-button size="small" appearance="plain" id="buttonUpdate" data-entity="${e}">Install</ha-button>
-                <ha-button size="small" appearance="plain" id="buttonUpdateSkip" data-entity="${e}">Skip</ha-button>
+              <img src="${a.entity_picture || "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"}" alt="${a.friendly_name}">
+              <div class="infoNameBtn">
+                <div id="infoName" data-entity="${e}">
+                  <a href="#" data-entity="${e}"> ${a.friendly_name.replace('update', '')}</a>
+                </div>
+                <div class="secondary">
+                  <span>${a.installed_version} <b>&rarr;</b> ${a.latest_version}</span>
+                  <div class="buttonsUpdate">
+                    <ha-button size="small" appearance="plain" id="buttonUpdate" data-entity="${e}">Install</ha-button>
+                    <ha-button size="small" appearance="plain" id="buttonUpdateSkip" data-entity="${e}">Skip</ha-button>
+                  </div>
+                </div>
               </div>
             </li>`;
         }
@@ -339,9 +376,12 @@ updates:
 
 
       return `
-        <ha-icon icon="mdi:package-up"></ha-icon> <span class="title">Integrations</span><br>
+        <div class="title">
+          <ha-icon icon="mdi:package-up"></ha-icon>
+          <span> Integrations </span>
+        </div>
         <p class="subtitle">${subtitle}</p>
-        <ul>${output}</ul>
+        <ul id="updateList">${output}</ul>
       `;
 
 
