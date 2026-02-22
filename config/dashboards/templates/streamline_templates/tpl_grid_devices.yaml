@@ -3,7 +3,13 @@ grid_atv:
   card:
     type: custom:button-card
     entity: media_player.living_room_tv
-    name: Apple TV
+    name: >
+      [[[
+        if ( !entity || variables.state === 'off' ) return 'Apple TV';
+        let activeChild = entity.attributes.active_child;
+        return activeChild !== 'media_player.atv' ? 'Sony TV' : 'Apple TV';
+      ]]]
+
     # double_tap_action: !include ../../shared/popup/rooms/atv_remote.yaml
     double_tap_action: !include ../../shared/popup/rooms/apple_tv_card.yaml
     hold_action: !include ../../shared/honeycomb/atv.yaml
