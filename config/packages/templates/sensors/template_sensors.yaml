@@ -22,11 +22,6 @@ homeassistant:
 template:
   # SENSORS
   - sensor:
-      - unique_id: person_last_changed
-        name: 'Test person last changed'
-        state: >-
-          {{ states.person.viet_ngoc.last_changed | replace(" ", "T") }}
-
       # SENSOR CLIMATE
       - unique_id: climate_index
         name: Home Climate
@@ -36,7 +31,7 @@ template:
             Excellent
           {% elif 12.1 < aqi < 35.4 %}
             Good
-          {% elif 35.5 < aqi < 55.4%}
+          {% elif 35.5 < aqi < 55.4 %}
             Fair
           {% elif 55.5 < aqi < 150.4 %}
             Interior

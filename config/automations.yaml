@@ -1217,3 +1217,19 @@
     target:
       entity_id: button.kids_room_stop_rtsp_stream
   mode: single
+- id: '1771786266812'
+  alias: Disable vacuum camera update when docked
+  description: ''
+  triggers:
+  - entity_id: vacuum.roidmi_eve
+    trigger: state
+  conditions:
+  - condition: template
+    value_template: '{{ trigger.to_state.state != trigger.from_state.state }}'
+  actions:
+  - condition: trigger
+    id: 0
+  - entity_id: switch.roidmi_eve_update_map
+    action: "{% if trigger.to_state.state in [\"unavailable\", \"unknown\", \"docked\"]
+      %}\n  switch.turn_off\n{% else %}\n  switch.turn_on\n{% endif %}\n"
+  mode: restart

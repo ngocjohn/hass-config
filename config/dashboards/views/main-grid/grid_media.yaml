@@ -12,92 +12,76 @@
   columns: 1
   square: true
   cards:
-    #Conditional Media
-    - type: custom:swipe-card
-      start_card: 1
-      parameters: !include ../../shared/snippets/main-grid-swipe-params.yaml
-      cards:
-        - type: horizontal-stack
-          cards:
-            - type: conditional
-              conditions:
-                - entity: select.conditional_media
-                  state: Recently added
-              card:
-                type: custom:added-movie-card
-                entity: sensor.tmdb_movies_trending
+    - type: conditional
+      conditions:
+        - entity: select.conditional_media
+          state: Recently added
+      card:
+        type: custom:added-movie-card
+        entity: sensor.tmdb_movies_trending
 
-            - type: conditional
-              conditions:
-                - entity: select.conditional_media
-                  state: Living Room TV
-              card: &ATV
-                # type: custom:button-card
-                # entity: media_player.living_room_tv
-                # name: ' '
-                # triggers_update: sensor.youtube_thumbnail
-                # template:
-                #   - conditional_media
-                #   - progress_bar
-                #   - tpl_minicontrol
-                #   - icon_apple_tv
-                type: custom:button-card
-                entity: media_player.living_room_tv
-                name: ' '
-                triggers_update: sensor.youtube_thumbnail
-                template:
-                  - universal_media_player
-                  - icon_apple_tv
+    - type: conditional
+      conditions:
+        - entity: select.conditional_media
+          state: Living Room TV
+      card: &ATV
+        type: custom:button-card
+        entity: media_player.living_room_tv
+        name: ' '
+        triggers_update: sensor.youtube_thumbnail
+        template:
+          - universal_media_player
+          - icon_apple_tv
 
-            - type: conditional
-              conditions:
-                - entity: select.conditional_media
-                  state: Kodi ATV
-              card: &KODIATV
-                type: custom:button-card
-                entity: media_player.kodi_atv
-                name: ' '
-                triggers_update: sensor.kodi_picture
-                template:
-                  - conditional_media
-                  - progress_bar
-                  - tpl_minicontrol
-                  - icon_kodi
-            - type: conditional
-              conditions:
-                - entity: select.conditional_media
-                  state: Bedroom TV
-              card: &BEDROOMTV
-                type: custom:button-card
-                entity: media_player.shield
-                name: 'ShieldTV'
-                triggers_update: sensor.youtube_thumbnail
-                template:
-                  - conditional_media
-                  - icon_shieldtv_text
-                  - progress_bar
-            - type: conditional
-              conditions:
-                - entity: select.conditional_media
-                  state: 'PlayStation 5'
-              card: &PS5
-                type: custom:button-card
-                entity: media_player.playstation_5
-                name: ''
-                template:
-                  - conditional_media
-                  - icon_playstation
+    - type: conditional
+      conditions:
+        - entity: select.conditional_media
+          state: Kodi ATV
+      card: &KODIATV
+        type: custom:button-card
+        entity: media_player.kodi_atv
+        name: ' '
+        triggers_update: sensor.kodi_picture
+        template:
+          - conditional_media
+          - progress_bar
+          - tpl_minicontrol
+          - icon_kodi
+    - type: conditional
+      conditions:
+        - entity: select.conditional_media
+          state: Bedroom TV
+      card: &BEDROOMTV
+        type: custom:button-card
+        entity: media_player.shield
+        name: 'ShieldTV'
+        triggers_update: sensor.youtube_thumbnail
+        template:
+          - conditional_media
+          - icon_shieldtv_text
+          - progress_bar
+    - type: conditional
+      conditions:
+        - entity: select.conditional_media
+          state: 'PlayStation 5'
+      card: &PS5
+        type: custom:button-card
+        entity: media_player.playstation_5
+        name: ''
+        template:
+          - conditional_media
+          - icon_playstation
 
-            - type: conditional
-              conditions:
-                - entity: select.conditional_media
-                  state: Mass Universal Airplay
-              card: &MASSAIRPLAY
-                type: custom:button-card
-                entity: media_player.mass_universal_airplay
-                template:
-                  - universal_media_player
-                  - icon_homepod
+    - type: conditional
+      conditions:
+        - entity: select.conditional_media
+          state: Mass Universal Airplay
+      card: &MASSAIRPLAY
+        type: custom:button-card
+        entity: media_player.mass_universal_airplay
+        template:
+          - universal_media_player
+          - icon_homepod
 
 #################################################
 #                                               #
@@ -112,73 +96,223 @@
       mediaquery: '(min-height: 463px) and (max-width: 1440px)'
   columns: 1
   cards:
-    #Conditional Media
-    - type: custom:swipe-card
-      start_card: 1
-      parameters:
-        pagination:
-          type: bullets
-          clickable: true
-        direction: horizontal
-        roundLengths: true
-        effect: coverflow
-        speed: 650
-        spaceBetween: 20
-        threshold: 7
-        coverflowEffect:
-          rotate: 80
-          depth: 300
-      cards:
-        - type: horizontal-stack
-          cards:
-            - type: conditional
-              conditions:
-                - entity: select.conditional_media
-                  state: Recently added
-              card:
-                type: custom:added-movie-card
-                entity: sensor.kodi_all_movies
-                show_item_count: 10
-            - type: conditional
-              conditions:
-                - entity: select.conditional_media
-                  state: Living Room TV
-              card: *ATV
-            - type: conditional
-              conditions:
-                - entity: select.conditional_media
-                  state: Bedroom TV
-              card: *BEDROOMTV
-            - type: conditional
-              conditions:
-                - entity: select.conditional_media
-                  state: Kodi ATV
-              card: *KODIATV
-            - type: conditional
-              conditions:
-                - entity: select.conditional_media
-                  state: Spotify
-              card:
-                type: custom:button-card
-                entity: media_player.spotifyplus_ngoc_nguyen
-                name: ' '
-                double_tap_action: !include ../../shared/popup/spotify_playlist.yaml
-                template:
-                  - currently_playing
-                  # - conditional_media
-            - type: conditional
-              conditions:
-                - entity: select.conditional_media
-                  state: PlayStation 5
-              card: *PS5
-            - type: conditional
-              conditions:
-                - entity: select.conditional_media
-                  state: Mass Player Group
-              card: *MASSAIRPLAY
-            # - type: conditional
-            #   conditions:
-            #     - entity: select.conditional_media
-            #       state: Youtube Music Player
-            #   card: *YOUTUBEPLAYER
-          #Media Players
+    - type: conditional
+      conditions:
+        - entity: select.conditional_media
+          state: Recently added
+      card:
+        type: custom:added-movie-card
+        entity: sensor.kodi_all_movies
+        show_item_count: 10
+    - type: conditional
+      conditions:
+        - entity: select.conditional_media
+          state: Living Room TV
+      card: *ATV
+    - type: conditional
+      conditions:
+        - entity: select.conditional_media
+          state: Bedroom TV
+      card: *BEDROOMTV
+    - type: conditional
+      conditions:
+        - entity: select.conditional_media
+          state: Kodi ATV
+      card: *KODIATV
+    - type: conditional
+      conditions:
+        - entity: select.conditional_media
+          state: Spotify
+      card:
+        type: custom:button-card
+        entity: media_player.spotifyplus_ngoc_nguyen
+        name: ' '
+        double_tap_action: !include ../../shared/popup/spotify_playlist.yaml
+        template:
+          - currently_playing
+          # - conditional_media
+    - type: conditional
+      conditions:
+        - entity: select.conditional_media
+          state: PlayStation 5
+      card: *PS5
+    - type: conditional
+      conditions:
+        - entity: select.conditional_media
+          state: Mass Player Group
+      card: *MASSAIRPLAY
+# #################################################
+# #                                               #
+# #           GRID MEDIA MIN 1441px               #
+# #                                               #
+# #################################################
+# - type: grid
+#   title: Media
+#   view_layout:
+#     grid-area: media
+#     show:
+#       mediaquery: '(min-width: 1441px)'
+#   columns: 1
+#   square: true
+#   cards:
+#     #Conditional Media
+#     - type: custom:swipe-card
+#       start_card: 1
+#       parameters: !include ../../shared/snippets/main-grid-swipe-params.yaml
+#       cards:
+#         - type: horizontal-stack
+#           cards:
+#             - type: conditional
+#               conditions:
+#                 - entity: select.conditional_media
+#                   state: Recently added
+#               card:
+#                 type: custom:added-movie-card
+#                 entity: sensor.tmdb_movies_trending
+
+#             - type: conditional
+#               conditions:
+#                 - entity: select.conditional_media
+#                   state: Living Room TV
+#               card: &ATV
+#                 type: custom:button-card
+#                 entity: media_player.living_room_tv
+#                 name: ' '
+#                 triggers_update: sensor.youtube_thumbnail
+#                 template:
+#                   - universal_media_player
+#                   - icon_apple_tv
+
+#             - type: conditional
+#               conditions:
+#                 - entity: select.conditional_media
+#                   state: Kodi ATV
+#               card: &KODIATV
+#                 type: custom:button-card
+#                 entity: media_player.kodi_atv
+#                 name: ' '
+#                 triggers_update: sensor.kodi_picture
+#                 template:
+#                   - conditional_media
+#                   - progress_bar
+#                   - tpl_minicontrol
+#                   - icon_kodi
+#             - type: conditional
+#               conditions:
+#                 - entity: select.conditional_media
+#                   state: Bedroom TV
+#               card: &BEDROOMTV
+#                 type: custom:button-card
+#                 entity: media_player.shield
+#                 name: 'ShieldTV'
+#                 triggers_update: sensor.youtube_thumbnail
+#                 template:
+#                   - conditional_media
+#                   - icon_shieldtv_text
+#                   - progress_bar
+#             - type: conditional
+#               conditions:
+#                 - entity: select.conditional_media
+#                   state: 'PlayStation 5'
+#               card: &PS5
+#                 type: custom:button-card
+#                 entity: media_player.playstation_5
+#                 name: ''
+#                 template:
+#                   - conditional_media
+#                   - icon_playstation
+
+#             - type: conditional
+#               conditions:
+#                 - entity: select.conditional_media
+#                   state: Mass Universal Airplay
+#               card: &MASSAIRPLAY
+#                 type: custom:button-card
+#                 entity: media_player.mass_universal_airplay
+#                 template:
+#                   - universal_media_player
+#                   - icon_homepod
+
+# #################################################
+# #                                               #
+# #                     MEDIA                     #
+# #                                               #
+# #################################################
+# - type: grid
+#   title: Media
+#   view_layout:
+#     grid-area: media
+#     show:
+#       mediaquery: '(min-height: 463px) and (max-width: 1440px)'
+#   columns: 1
+#   cards:
+#     #Conditional Media
+#     - type: custom:swipe-card
+#       start_card: 1
+#       parameters:
+#         pagination:
+#           type: bullets
+#           clickable: true
+#         direction: horizontal
+#         roundLengths: true
+#         effect: coverflow
+#         speed: 650
+#         spaceBetween: 20
+#         threshold: 7
+#         coverflowEffect:
+#           rotate: 80
+#           depth: 300
+#       cards:
+#         - type: horizontal-stack
+#           cards:
+#             - type: conditional
+#               conditions:
+#                 - entity: select.conditional_media
+#                   state: Recently added
+#               card:
+#                 type: custom:added-movie-card
+#                 entity: sensor.kodi_all_movies
+#                 show_item_count: 10
+#             - type: conditional
+#               conditions:
+#                 - entity: select.conditional_media
+#                   state: Living Room TV
+#               card: *ATV
+#             - type: conditional
+#               conditions:
+#                 - entity: select.conditional_media
+#                   state: Bedroom TV
+#               card: *BEDROOMTV
+#             - type: conditional
+#               conditions:
+#                 - entity: select.conditional_media
+#                   state: Kodi ATV
+#               card: *KODIATV
+#             - type: conditional
+#               conditions:
+#                 - entity: select.conditional_media
+#                   state: Spotify
+#               card:
+#                 type: custom:button-card
+#                 entity: media_player.spotifyplus_ngoc_nguyen
+#                 name: ' '
+#                 double_tap_action: !include ../../shared/popup/spotify_playlist.yaml
+#                 template:
+#                   - currently_playing
+#                   # - conditional_media
+#             - type: conditional
+#               conditions:
+#                 - entity: select.conditional_media
+#                   state: PlayStation 5
+#               card: *PS5
+#             - type: conditional
+#               conditions:
+#                 - entity: select.conditional_media
+#                   state: Mass Player Group
+#               card: *MASSAIRPLAY
+#             # - type: conditional
+#             #   conditions:
+#             #     - entity: select.conditional_media
+#             #       state: Youtube Music Player
+#             #   card: *YOUTUBEPLAYER
+#           #Media Players
