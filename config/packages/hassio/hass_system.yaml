@@ -61,7 +61,8 @@ recorder:
       - sensor.*_speed_rpm
       - sensor.*_clients
       - sensor.*_containers_cpu_usage
-      - sensor.roidmi_eve_*
+      - sensor.roidmi_*
+      - binary_sensor.roidmi_*
   include:
     entities:
       - device_tracker.viet_ngoc_samsung

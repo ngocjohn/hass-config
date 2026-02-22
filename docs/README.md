@@ -47,15 +47,15 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>44,120 </td>
-              <td>27</td>
-              <td>196</td>
-              <td>59</td>
-              <td>72</td>
-              <td>31</td>
-              <td>1273</td>
-              <td>208</td>
-              <td>30</td>
+              <td>44,121 </td>
+              <td>unavailable</td>
+              <td>unavailable</td>
+              <td>unavailable</td>
+              <td>unavailable</td>
+              <td>unavailable</td>
+              <td>unavailable</td>
+              <td>unavailable</td>
+              <td>unavailable</td>
           </tr>
       </tbody>
   </table>
