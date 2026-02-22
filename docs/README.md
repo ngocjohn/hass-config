@@ -48,14 +48,14 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       <tbody>
           <tr>
               <td>44,121 </td>
-              <td>unavailable</td>
-              <td>unavailable</td>
-              <td>unavailable</td>
-              <td>unavailable</td>
-              <td>unavailable</td>
-              <td>unavailable</td>
-              <td>unavailable</td>
-              <td>unavailable</td>
+              <td>27</td>
+              <td>194</td>
+              <td>59</td>
+              <td>71</td>
+              <td>31</td>
+              <td>1258</td>
+              <td>208</td>
+              <td>30</td>
           </tr>
       </tbody>
   </table>
