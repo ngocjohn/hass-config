@@ -23,6 +23,7 @@ frontend:
     - /hacsfiles/lovelace-canary/canary.js?hacstag=245159052050
     - /hacsfiles/sidebar-organizer/sidebar-organizer.js?hacstag=932534411302
     - /local/dashboard-resources/customize-css-change.js?v1.0.3
+    - /local/dashboard-resources/quickbar-navigate-shortcut.js?v0.0.1
 
 # HTTP
 http:
