@@ -33,11 +33,6 @@ browser_mod:
         full_screen: true
         remote: remote.atv
         sources:
-          - source_name: Infuse
           - source_name: Disney+
           - source_name: Netflix
-          - source_name: Prime Video
-          - image: /local/community/Apple-Tv-Card/logo/Prime Video.png
-            source_name: YouTube
-          - image: /local/community/Apple-Tv-Card/logo/DAZN.png
-            source_name: DAZN
+          - source_name: YouTube

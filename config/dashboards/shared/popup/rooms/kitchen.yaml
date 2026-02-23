@@ -17,20 +17,14 @@ browser_mod:
                   template:
                     - tpl_popup_light
               - entity_id: fan.hood_power
-                options:
+                options: &popup_device_options
                   type: custom:button-card
                   template:
                     - tpl_popup_device
               - entity_id: switch.mycka_nadobi_power
-                options:
-                  type: custom:button-card
-                  template:
-                    - tpl_popup_device
+                options: *popup_device_options
               - entity_id: switch.hob_power
-                options:
-                  type: custom:button-card
-                  template:
-                    - tpl_popup_device
+                options: *popup_device_options
           card:
             type: grid
             columns: 3
