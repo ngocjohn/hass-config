@@ -5,7 +5,7 @@
 #################################################
 - elements:
     - input_boolean.office_mode
-    - light.office_lamp_bulb
+    # - light.office_lamp_bulb
     - area.office
   double_tap_action: more-info
   tap_action: toggle
@@ -65,7 +65,7 @@
     - light.vanesska_ceiling_light
     - light.bathroom_group
     - light.living_room_floor_lamp
-    - light.office_led_light_strip
+    # - light.office_led_light_strip
     - light.shelly_rgbw_kitchen_led_strip
   state_action:
     action: call-service
@@ -82,7 +82,7 @@
     - light.vanesska_ceiling_light
     - light.bathroom_group
     - light.living_room_floor_lamp
-    - light.office_led_light_strip
+    # - light.office_led_light_strip
     - light.shelly_rgbw_kitchen_led_strip
   tap_action: toggle
   double_tap_action: more-info
