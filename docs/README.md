@@ -47,13 +47,13 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>44,071 </td>
+              <td>44,078 </td>
               <td>28</td>
               <td>196</td>
               <td>59</td>
               <td>71</td>
               <td>30</td>
-              <td>1268</td>
+              <td>1267</td>
               <td>207</td>
               <td>30</td>
           </tr>
@@ -134,7 +134,6 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Bar Card](https://github.com/spacerokk/bar-card)
 - [Button Card](https://github.com/custom-cards/button-card)
 - [Canary](https://github.com/jcwillox/lovelace-canary)
-- [Card Mod](https://github.com/thomasloven/lovelace-card-mod)
 - [Clock Weather Card](https://github.com/pkissling/clock-weather-card)
 - [Custom Brand Icons](https://github.com/elax46/custom-brand-icons)
 - [Custom Icons](https://github.com/Mariusthvdb/custom-icons)
@@ -159,7 +158,6 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Multiple Entity Row](https://github.com/benct/lovelace-multiple-entity-row)
 - [Mushroom](https://github.com/piitaya/lovelace-mushroom)
 - [Polr Ytube Media Card](https://github.com/pathofleastresistor/polr-ytube-media-card)
-- [Purifier Card](https://github.com/denysdovhan/purifier-card)
 - [Rpi Monitor Card](https://github.com/ironsheep/lovelace-rpi-monitor-card)
 - [Sidebar Organizer](https://github.com/ngocjohn/sidebar-organizer)
 - [Slider Button Card](https://github.com/custom-cards/slider-button-card)

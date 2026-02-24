@@ -80,11 +80,13 @@
         style:
           .: |
             ha-card {
-              background: linear-gradient(to top, #2024349e 0%, transparent 100%);
+              background: linear-gradient(to bottom, #2024349e 0%, transparent 80%);
               padding: 0 8px;
+              height: auto;
             }
             ha-markdown {
               padding: 0 !important;
+              height: 100%;
             }
           ha-markdown$: |
             ha-markdown-element>p {
