@@ -59,7 +59,7 @@
         image: /local/hafloor/plan_opt.svg
         stylesheet: /local/hafloor/style.css
         log_level: debug
-        console_log_level: debug
+        console_log_level: error
         rules: !include_dir_merge_list /config/dashboards/floorplan/
     # - !include ../../shared/columns/nowplaying.yaml
 #################################################
