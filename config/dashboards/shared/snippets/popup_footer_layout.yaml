@@ -4,12 +4,10 @@ margin: 0
 padding: 0
 mediaquery:
   '(min-width: 1441.99px)':
-    grid-template-columns: repeat(var(--max-popup-column, auto-fit), minmax(560px, 1fr));
+    grid-template-columns: repeat(var(--max-popup-column, auto-fill), var(--max-popup-column-width, 550px))
     grid-template-rows: auto
-    grid-gap: 2px 1px
   '(min-width: 800px)':
     grid-template-columns: 550px
     grid-template-rows: auto
-    grid-gap: 2px 1px
     margin: 0
     padding: 0

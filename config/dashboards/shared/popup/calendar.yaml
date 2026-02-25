@@ -5,25 +5,14 @@ browser_mod:
     title: Calendar
     style: >
       --max-popup-column: 2;
-      --max-popup-width: 550px;
+      --max-popup-column-width: 550px;
     content:
       type: custom:mod-card
       card_mod: !include ../snippets/style_popup_footer.yaml
       card:
         type: custom:layout-card
         layout_type: custom:grid-layout
-        layout:
-          grid-template-columns: 550px 550px
-          grid-template-rows: auto
-          grid-gap: 2px 1px
-          margin: 0
-          padding: 0
-          mediaquery:
-            '(max-width: 800px)':
-              grid-template-columns: 100%
-              grid-gap: 2px 1px
-              margin: 0
-              padding: 0
+        layout: !include ../snippets/popup_footer_layout.yaml
         cards:
           - type: entities
             entities:
