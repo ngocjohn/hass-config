@@ -47,14 +47,14 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>44,064 </td>
+              <td>44,073 </td>
               <td>28</td>
-              <td>196</td>
+              <td>160</td>
               <td>59</td>
-              <td>71</td>
-              <td>30</td>
-              <td>1288</td>
-              <td>207</td>
+              <td>44</td>
+              <td>28</td>
+              <td>668</td>
+              <td>135</td>
               <td>30</td>
           </tr>
       </tbody>
@@ -136,7 +136,6 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Button Card](https://github.com/custom-cards/button-card)
 - [Canary](https://github.com/jcwillox/lovelace-canary)
 - [Clock Weather Card](https://github.com/pkissling/clock-weather-card)
-- [Custom Brand Icons](https://github.com/elax46/custom-brand-icons)
 - [Custom Icons](https://github.com/Mariusthvdb/custom-icons)
 - [Decluttering Card](https://github.com/custom-cards/decluttering-card)
 - [Flex Table   Highly Customizable, Data Visualization](https://github.com/custom-cards/flex-table-card)

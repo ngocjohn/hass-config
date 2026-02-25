@@ -4,7 +4,7 @@ honeycomb_menu:
   autoclose: true
   buttons:
     #0
-    - icon: phu:ceiling-adore-flush
+    - icon: custom:ceiling-adore-flush
       position: 0
       show: true
       entity: light.utility_room_light
@@ -15,7 +15,7 @@ honeycomb_menu:
         service_data:
           entity_id: entity
     #1
-    - icon: phu:roborock
+    - icon: custom:roborock
       position: 1
       show: true
       entity: vacuum.roidmi_eve

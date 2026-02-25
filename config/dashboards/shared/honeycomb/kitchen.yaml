@@ -4,7 +4,7 @@ honeycomb_menu:
   autoclose: true
   buttons:
     #0
-    - icon: phu:ensis-up
+    - icon: custom:ensis-up
       position: 0
       show: true
       entity: light.kitchen_table_light
@@ -15,7 +15,7 @@ honeycomb_menu:
         service_data:
           entity_id: entity
     #1
-    - icon: phu:ceiling-adore-flush
+    - icon: custom:ceiling-adore-flush
       show: true
       position: 1
       entity: light.kitchen_main_light
@@ -37,7 +37,7 @@ honeycomb_menu:
         service_data:
           entity_id: entity
     #3
-    - icon: phu:smoke-detector
+    - icon: custom:smoke-detector
       show: true
       position: 3
       entity: fan.hood_power

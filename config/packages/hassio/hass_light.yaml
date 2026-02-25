@@ -8,6 +8,76 @@
 #
 #- from github.com/ngocjohn/hass-config
 #
+
+homeassistant:
+  customize:
+    light.bathroom_main_light:
+      friendly_name: 'Bathroom Main Light'
+      icon: 'custom:recessed-ceiling'
+    light.bathroom_mirror_light:
+      friendly_name: 'Bathroom Mirror Light'
+      icon: 'custom:adore-mirror'
+    light.bedroom_bed_light:
+      friendly_name: 'Bedroom Bed Light'
+      icon: 'custom:light-strip'
+    light.bedroom_main_light:
+      friendly_name: 'Bedroom Ceiling Light'
+      icon: 'custom:ceiling-adore-flush'
+    light.bedroom_closet_light:
+      friendly_name: 'Bedroom Closet Light'
+      icon: 'custom:centura-two'
+    light.bedroom_ripple_mood_light:
+      friendly_name: 'Bedroom Mood Light'
+      icon: 'custom:table-wash'
+    light.aqara_hub:
+      friendly_name: 'Hallway Hub Light'
+      icon: 'custom:floor-spot'
+    light.hallway_light:
+      friendly_name: 'Hallway Light'
+      icon: 'custom:ceiling-adore-flush'
+    light.hood_lighting:
+      friendly_name: 'Kitchen Hood Light'
+      icon: 'custom:recessed-ceiling'
+    light.kitchen_main_light:
+      friendly_name: 'Kitchen Main Light'
+      icon: 'custom:recessed-ceiling'
+    light.kitchen_table_light:
+      friendly_name: 'Kitchen Table Light'
+      icon: 'custom:ensis-up'
+    light.shelly_dimmer:
+      friendly_name: 'Living Room Ceiling Light'
+      icon: 'custom:ceiling-adore-flush'
+    light.living_room_floor_lamp:
+      friendly_name: 'Living Room Floor Lamp'
+      icon: 'custom:floor-shade'
+    light.shelly_rgbw_kitchen_led_strip:
+      friendly_name: 'Living Room Light Strip'
+      icon: 'custom:light-strip'
+    light.office_lamp_bulb:
+      friendly_name: 'Office Floor Lamp'
+      icon: 'custom:floor-lamp'
+    light.office_led_light_strip:
+      friendly_name: 'Office Light Strip'
+      icon: 'custom:desk-lamp'
+    light.office_main_light:
+      friendly_name: 'Office Main Light'
+      icon: 'custom:ceiling-adore-flush'
+    light.office_ripple_mood_light:
+      friendly_name: 'Office Mood Light'
+      icon: 'custom:iris'
+    light.office_shelf_led:
+      friendly_name: 'Office Shelf Light'
+      icon: 'custom:light-strip'
+    light.shower_room_main_light:
+      friendly_name: 'Shower Room Main Light'
+      icon: 'custom:recessed-ceiling'
+    light.shower_room_mirror_light:
+      friendly_name: 'Shower Room Mirror Light'
+      icon: 'custom:adore-mirror'
+    light.utility_room_light:
+      friendly_name: 'Utility Room Light'
+      icon: 'custom:ceiling-adore-flush'
+
 light:
   # light:
   - platform: group
@@ -99,71 +169,3 @@ light:
       - light.bedroom_ripple_mood_light
       - light.sony_tv_backlight
       # - light.yeelink_bslamp2_409e_light
-homeassistant:
-  customize:
-    light.bathroom_main_light:
-      friendly_name: 'Bathroom Main Light'
-      icon: 'phu:recessed-ceiling'
-    light.bathroom_mirror_light:
-      friendly_name: 'Bathroom Mirror Light'
-      icon: 'phu:adore-mirror'
-    light.bedroom_bed_light:
-      friendly_name: 'Bedroom Bed Light'
-      icon: 'phu:light-strip'
-    light.bedroom_main_light:
-      friendly_name: 'Bedroom Ceiling Light'
-      icon: 'phu:ceiling-adore-flush'
-    light.bedroom_closet_light:
-      friendly_name: 'Bedroom Closet Light'
-      icon: 'phu:centura-two'
-    light.bedroom_ripple_mood_light:
-      friendly_name: 'Bedroom Mood Light'
-      icon: 'phu:table-wash'
-    light.aqara_hub:
-      friendly_name: 'Hallway Hub Light'
-      icon: 'phu:floor-spot'
-    light.hallway_light:
-      friendly_name: 'Hallway Light'
-      icon: 'phu:ceiling-adore-flush'
-    light.hood_lighting:
-      friendly_name: 'Kitchen Hood Light'
-      icon: 'phu:recessed-ceiling'
-    light.kitchen_main_light:
-      friendly_name: 'Kitchen Main Light'
-      icon: 'phu:recessed-ceiling'
-    light.kitchen_table_light:
-      friendly_name: 'Kitchen Table Light'
-      icon: 'phu:ensis-up'
-    light.shelly_dimmer:
-      friendly_name: 'Living Room Ceiling Light'
-      icon: 'phu:ceiling-adore-flush'
-    light.living_room_floor_lamp:
-      friendly_name: 'Living Room Floor Lamp'
-      icon: 'phu:floor-shade'
-    light.shelly_rgbw_kitchen_led_strip:
-      friendly_name: 'Living Room Light Strip'
-      icon: 'phu:light-strip'
-    light.office_lamp_bulb:
-      friendly_name: 'Office Floor Lamp'
-      icon: 'phu:floor-lamp'
-    light.office_led_light_strip:
-      friendly_name: 'Office Light Strip'
-      icon: 'phu:desk-lamp'
-    light.office_main_light:
-      friendly_name: 'Office Main Light'
-      icon: 'phu:ceiling-adore-flush'
-    light.office_ripple_mood_light:
-      friendly_name: 'Office Mood Light'
-      icon: 'phu:iris'
-    light.office_shelf_led:
-      friendly_name: 'Office Shelf Light'
-      icon: 'phu:light-strip'
-    light.shower_room_main_light:
-      friendly_name: 'Shower Room Main Light'
-      icon: 'phu:recessed-ceiling'
-    light.shower_room_mirror_light:
-      friendly_name: 'Shower Room Mirror Light'
-      icon: 'phu:adore-mirror'
-    light.utility_room_light:
-      friendly_name: 'Utility Room Light'
-      icon: 'phu:ceiling-adore-flush'

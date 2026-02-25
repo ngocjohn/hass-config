@@ -89,7 +89,7 @@ browser_mod:
             - type: custom:button-card
               entity: vacuum.robot_vacuum
               name: Roborock
-              icon: phu:roborock
+              icon: custom:roborock
               tap_action: !include footer/footer_vacuum.yaml
               hold_action: !include footer/footer_vacuum.yaml
               template:

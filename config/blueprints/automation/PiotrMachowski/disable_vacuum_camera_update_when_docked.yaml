@@ -9,14 +9,18 @@ blueprint:
       name: Vacuum device
       selector:
         entity:
-          domain: vacuum
+          domain:
+          - vacuum
           multiple: false
+          reorder: false
     camera:
       name: Vacuum camera
       selector:
         entity:
-          domain: camera
+          domain:
+          - camera
           multiple: false
+          reorder: false
 mode: restart
 trigger:
 - platform: state
@@ -27,6 +31,7 @@ condition:
 action:
 - condition: trigger
   id: 0
-- service: "{% if trigger.to_state.state in [\"unavailable\", \"unknown\", \"docked\"]
-    %}\n  camera.turn_off\n{% else %}\n  camera.turn_on\n{% endif %}\n"
+- service: "{% if trigger.to_state.state in [\"unavailable\", \"unknown\", \"docked\",
+    \"idle\", \"paused\", \"charging\"] %}\n  camera.turn_off\n{% else %}\n  camera.turn_on\n{%
+    endif %}\n"
   entity_id: !input camera

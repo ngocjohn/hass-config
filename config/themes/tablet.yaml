@@ -101,9 +101,9 @@ tablet:
   swiper-scrollbar-drag-bg-color: rgb(179, 179, 179)
   swiper-scrollbar-size: 4px
 
-  card-mod-theme: tablet
+  uix-theme: tablet
 
-  card-mod-view-yaml: |
+  uix-view-yaml: |
 
     #################################################
     #                                               #

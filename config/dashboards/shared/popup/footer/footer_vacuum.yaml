@@ -22,15 +22,12 @@ browser_mod:
             entities:
               - entity: vacuum.roidmi_eve
                 name: Roidmi EVE plus
-                icon: phu:roborock
+                icon: custom:roborock
                 secondary_info:
                   entity: sensor.roidmi_v60_029d_battery_level
                   postfix: ' %'
                   prefix: 'Battery: '
               - entity: sensor.roidmi_v60_029d_device_fault
-                secondary_info:
-                  entity: sensor.vacuum_position
-                  prefix: 'Position: '
               # - sensor.vacuum_fan_speed
               # - sensor.vacuum_sweep_mode
               - binary_sensor.vacuum_mop

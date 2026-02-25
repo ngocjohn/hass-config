@@ -3,7 +3,7 @@
 #      FLOORPLAN MAX RESOLUTION                 #
 #                                               #
 #################################################
-- type: 'custom:layout-card'
+- type: custom:layout-card
   layout_type: 'custom:grid-layout'
   view_layout:
     grid-area: floorplan
@@ -61,7 +61,7 @@
         # log_level: debug
         console_log_level: error
         rules: !include_dir_merge_list /config/dashboards/floorplan/
-    # - !include ../../shared/columns/nowplaying.yaml
+
 #################################################
 #                                               #
 #           FLOORPLAN PORTRAIT                  #

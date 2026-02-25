@@ -4,7 +4,7 @@ honeycomb_menu:
   size: 250
   buttons:
     #0
-    - icon: phu:light-strip
+    - icon: custom:light-strip
       position: 0
       show: true
       entity: light.bedroom_bed_light
@@ -26,7 +26,7 @@ honeycomb_menu:
         service_data:
           entity_id: entity
     #2
-    - icon: phu:arlo-baby
+    - icon: custom:arlo-baby
       show: true
       position: 2
       entity: switch.lidl_3_gang_socket_l3

@@ -5,7 +5,7 @@ honeycomb_menu:
   size: 250
   buttons:
     #0
-    - icon: phu:floor-shade
+    - icon: custom:floor-shade
       position: 0
       show: true
       entity: light.living_room_floor_lamp
@@ -16,7 +16,7 @@ honeycomb_menu:
         service_data:
           entity_id: entity
     #1
-    - icon: phu:light-strip
+    - icon: custom:light-strip
       show: true
       position: 1
       entity: light.shelly_rgbw_kitchen_led_strip
@@ -28,7 +28,7 @@ honeycomb_menu:
           entity_id: entity
       hold_action: more-info
     #2
-    - icon: phu:bulb-group-sultan-lightstrip
+    - icon: custom:bulb-group-sultan-lightstrip
       show: true
       position: 2
       entity: input_boolean.cozy_light

@@ -38,7 +38,7 @@ browser_mod:
                     template: icon_name
                   - type: custom:button-card
                     name: Unifi
-                    icon: phu:ubiquiti-logo
+                    icon: custom:ubiquiti-logo
                     template:
                       - icon_name
                       - >

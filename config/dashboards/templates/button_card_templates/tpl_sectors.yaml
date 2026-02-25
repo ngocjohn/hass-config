@@ -163,7 +163,7 @@ babycam:
     babycam: >
       [[[
         if (states[variables.babycam].state == 'on')
-          return '<ha-icon icon="phu:arlo-cam" style="width:100%;display:flex; ;"></ha-icon>'
+          return '<ha-icon icon="custom:arlo-cam" style="width:100%;display:flex; ;"></ha-icon>'
       ]]]
   styles:
     custom_fields:
@@ -411,7 +411,7 @@ fan_circle:
     fan_circle: >
       [[[
         return states[variables.fan_circle].state == 'on'
-          ? '<ha-icon icon="phu:smoke-detector" style="width:100%;display:flex;color:var(--state-icon-active-color);"></ha-icon>'
+          ? '<ha-icon icon="custom:smoke-detector" style="width:100%;display:flex;color:var(--state-icon-active-color);"></ha-icon>'
           : null;
       ]]]
   styles:
