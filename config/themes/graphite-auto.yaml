@@ -734,6 +734,7 @@ Graphite Auto:
       mush-rgb-disabled: var(--rgb-disabled-color)
 
   uix-theme: 'Graphite Auto'
+
   uix-root-yaml: |
     .: |
       * {
@@ -795,6 +796,11 @@ Graphite Auto:
         --popup-border-radius: 0 !important;
         --dialog-box-shadow: none !important;
       }
+    }
+    ha-dialog.type-browser-mod-popup {
+      --bar-card-border-radius: 12px !important;
+      --ha-card-border-radius: 0px !important;
+      --ha-card-background: none !important;
     }
   uix-browser-mod-popup-inner: *popup_card_mod
   uix-dialog: *popup_card_mod
