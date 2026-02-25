@@ -49,7 +49,6 @@ scene:
           latest_version: 537040419
           state: idle
         update_available:
-        icon: phu:floor-shade
         friendly_name: Office Floor Lamp
         supported_features: 44
         state: 'on'
@@ -68,7 +67,6 @@ scene:
         xy_color:
           - 0.677
           - 0.319
-        icon: phu:go
         friendly_name: Ofice Mood Light
         supported_features: 0
         state: 'on'
@@ -76,7 +74,6 @@ scene:
         supported_color_modes:
           - onoff
         color_mode: onoff
-        icon: phu:light-strip
         friendly_name: Office Shelf Led
         supported_features: 0
         state: 'on'
@@ -130,7 +127,6 @@ scene:
           - 0.37
         flowing: false
         music_mode: false
-        icon: phu:light-strip
         friendly_name: Office Light Stripe
         supported_features: 44
         state: 'on'
@@ -165,7 +161,6 @@ scene:
           - 0.645
           - 0.304
         effect: 'Off'
-        icon: phu:light-strip
         friendly_name: Living Room Led Strip
         supported_features: 36
         state: 'on'
@@ -173,7 +168,6 @@ scene:
         supported_color_modes:
           - onoff
         color_mode: onoff
-        icon: phu:floor-shade
         friendly_name: Living Room Floor Lamp
         supported_features: 0
         state: 'on'
