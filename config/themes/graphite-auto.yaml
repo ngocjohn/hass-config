@@ -756,11 +756,24 @@ Graphite Auto:
 
   card-mod-developer-tools: *config_header
 
+  card-mod-dialog: |
+    :host {
+      --dialog-box-shadow: 0 0px 16px 4px rgba(101,115,134, .15), 0 16px 64px 32px rgba(101,115,134, .5) !important;
+      --wa-shadow-l: var(--dialog-box-shadow);
+      --ha-dialog-surface-background: rgba(22, 24, 29, 0.7) !important;
+      --wa-color-overlay-modal: rgba(0, 0, 0, 0.7) !important;
+      --mdc-dialog-scrim-color: var(--dialog-scrim-color, rgba(0, 0, 0, 0.32)) !important;
+      --mdc-text-field-fill-color: rgb(50 50 50 / 22%) !important;
+      --mdc-select-fill-color: rgb(50 50 50 / 22%) !important;
+      --mdc-theme-surface: rgba(22, 24, 29, 1) !important;
+      --card-background-color: var(--mdc-theme-surface);
+    }
+
   card-mod-more-info: &popup_card_mod |
     :host([card]) .content .container {
       padding: 0px !important;
     }
-    :host,
+
     ha-dialog {
       --bar-card-border-radius: 12px !important;
       --ha-card-border-radius: 0px !important;
@@ -789,7 +802,6 @@ Graphite Auto:
       }
     }
   card-mod-browser-mod-popup-inner: *popup_card_mod
-  card-mod-dialog: *popup_card_mod
 
   # card-mod-dialog: |
   #   :host {
