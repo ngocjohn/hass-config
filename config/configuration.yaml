@@ -19,6 +19,7 @@ homeassistant:
 frontend:
   themes: !include_dir_merge_named themes
   extra_module_url:
+    - /hacsfiles/lovelace-card-mod/card-mod.js?hacstag=190927524421
     - /hacsfiles/lovelace-canary/canary.js?hacstag=245159052050
     - /hacsfiles/sidebar-organizer/sidebar-organizer.js?hacstag=9325344113101
     - /hacsfiles/ha-floorplan/floorplan.js?hacstag=188323494114
