@@ -80,7 +80,7 @@ browser_mod:
                   - entity: sensor.ha_system_data_disk_usage
                     name: Disk used
                     icon: mdi:harddisk
-
+              - type: section
               - type: custom:hui-horizontal-stack-card
                 cards:
                   - type: custom:button-card
@@ -137,7 +137,6 @@ browser_mod:
                       - sensor.rpi_monitor_docker_rpi_temp_pidocker
                       - sensor.rpi_monitor_docker_rpi_used_pidocker
                       - sensor.rpi_monitor_docker
-              - entity: switch.watchtower
               - type: attribute
                 entity: sensor.rpi_monitor_docker
                 attribute: up_time
@@ -167,6 +166,7 @@ browser_mod:
                     name: SD used 32GB
                     icon: mdi:content-save
                     unit_of_measurement: '%'
+
               - type: custom:hui-horizontal-stack-card
                 cards:
                   - type: custom:button-card
@@ -190,7 +190,6 @@ browser_mod:
           #                CONTAINERS                     #
           #                                               #
           #################################################
-
           - type: custom:auto-entities
             card:
               type: entities
@@ -203,32 +202,22 @@ browser_mod:
                 name: AppDaemon Server
                 state_color: true
                 secondary_info: last-changed
+              - type: section
             filter:
               template: |
-                {% set iconMap = {
-                "Watchtower": "cil:docker-watchtower",
-                "Homebridge": "si:homebridge",
-                "Unifi-controller": "si:ubiquiti",
-                "Cloudflare": "si:cloudflare",
-                "Portainer": "si:portainer",
-                "Ha-dockermon": "si:docker",
-                }
-                %}
-
-                {% for sensor in expand('group.docker_containers')-%}
-                {%- set name = sensor.name | regex_replace(find='Pidocker ', replace='') | capitalize -%}
-                {%- set iconEn = iconMap.get(name) -%}
-                {%- set color = 'var(--disabled-color)' if sensor.state == 'on' else 'var(--amber-color)' -%}
+                {%- set containers = label_devices('docker_containers') | list %}
+                {%- for con in containers -%}
+                {%- set name = device_name(con) -%}
+                {%- set icon = "si:ubiquiti" if name == 'unifi-controller' else "si:"+name|lower -%}
                 {{
-                  { 'entity': sensor.entity_id,
-                    'name': name,
-                    'icon': iconEn,
-                    'card_mod': {
-                      'style': {
-                        'hui-generic-entity-row': {
-                          '$': "state-badge { color: " + color + " !important; }"
-                        }
-                      }
+                  {
+                    'type': 'custom:streamline-card',
+                    'template': 'docker_container_base',
+                    'variables': {
+                      'con_name': name | replace('-','_') |lower,
+                      'icon': icon,
+                      'name': name | capitalize
                     }
-                  } }},
+                  }
+                }},
                 {%- endfor %}

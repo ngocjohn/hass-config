@@ -1,0 +1,27 @@
+docker_container_base:
+  default:
+    - con_name: ''
+    - icon: 'mdi:docker'
+    - name: ''
+  card:
+    type: custom:multiple-entity-row
+    entity: binary_sensor.[[con_name]]_status
+    name: '[[name]]'
+    icon: '[[icon]]'
+    show_state: false
+    state_color: true
+    secondary_info:
+      entity: sensor.[[con_name]]_state
+    entities:
+      - entity: sensor.[[con_name]]_memory_usage_percentage
+        name: MEM
+      - entity: sensor.[[con_name]]_cpu_usage_total
+        format: precision2
+        name: CPU
+      - icon: mdi:restart
+        tap_action:
+          action: call-service
+          confirmation: true
+          service: button.press
+          service_data:
+            entity_id: button.[[con_name]]_restart_container

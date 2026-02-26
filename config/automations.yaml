@@ -1223,16 +1223,29 @@
   triggers:
   - entity_id: vacuum.roidmi_eve
     trigger: state
+  - trigger: homeassistant
+    event: start
+    id: ha_started
   conditions:
   - condition: template
     value_template: '{{ trigger.to_state.state != trigger.from_state.state }}'
+    enabled: false
   actions:
-  - condition: trigger
-    id: 0
-  - entity_id: switch.roidmi_eve_update_map
-    action: "{% if trigger.to_state.state in [\"unavailable\", \"unknown\", \"docked\",
-      \"idle\", \"paused\", \"charging\"] %}\n  switch.turn_off\n{% else %}\n  switch.turn_on\n{%
-      endif %}\n"
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - ha_started
+      sequence:
+      - entity_id: switch.roidmi_eve_update_map
+        action: "{% if states('vacuum.roidmi_eve') in [\"unavailable\", \"unknown\",
+          \"docked\", \"idle\", \"paused\", \"charging\"] %}\n  switch.turn_off\n{%
+          else %}\n  switch.turn_on\n{% endif %}\n"
+    default:
+    - entity_id: switch.roidmi_eve_update_map
+      action: "{% if trigger.to_state.state in [\"unavailable\", \"unknown\", \"docked\",
+        \"idle\", \"paused\", \"charging\"] %}\n  switch.turn_off\n{% else %}\n  switch.turn_on\n{%
+        endif %}\n"
   mode: restart
 - id: '1772062903747'
   alias: shoutrr test

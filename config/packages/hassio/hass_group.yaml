@@ -192,16 +192,6 @@ group:
       - climate.living_room_thermostat
       - climate.kids_room_thermostat
 
-  ## DOCKER GROUP ##
-  docker_containers:
-    name: Docker Containers
-    icon: mdi:docker
-    entities:
-      - sensor.pidocker_cloudflare
-      - sensor.pidocker_homebridge
-      - sensor.pidocker_portainer
-      - sensor.pidocker_unifi_controller
-      - sensor.pidocker_watchtower
 notify:
   - platform: group
     name: ngoc_devices
