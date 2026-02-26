@@ -47,14 +47,14 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>44,073 </td>
-              <td>28</td>
-              <td>160</td>
+              <td>44,101 </td>
+              <td>29</td>
+              <td>196</td>
               <td>59</td>
-              <td>44</td>
-              <td>28</td>
-              <td>668</td>
-              <td>135</td>
+              <td>71</td>
+              <td>30</td>
+              <td>1259</td>
+              <td>207</td>
               <td>30</td>
           </tr>
       </tbody>
@@ -111,7 +111,6 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Mercedesme 2020](https://github.com/ReneNulschDE/mbapi2020)
 - [Node Red Companion](https://github.com/zachowj/hass-node-red)
 - [Nuki Lock](https://github.com/kvj/hass_nuki_ng)
-- [Portainer](https://github.com/tomaae/homeassistant-portainer)
 - [Simpleicons](https://github.com/vigonotion/hass-simpleicons)
 - [Spook 👻 Your Homie](https://github.com/frenck/spook)
 - [Spotifyplus](https://github.com/thlucas1/homeassistantcomponent_spotifyplus)

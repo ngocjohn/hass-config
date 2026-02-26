@@ -1234,3 +1234,25 @@
       \"idle\", \"paused\", \"charging\"] %}\n  switch.turn_off\n{% else %}\n  switch.turn_on\n{%
       endif %}\n"
   mode: restart
+- id: '1772062903747'
+  alias: shoutrr test
+  description: ''
+  triggers:
+  - trigger: webhook
+    allowed_methods:
+    - POST
+    - PUT
+    local_only: true
+    webhook_id: vehicle_update
+  conditions: []
+  actions:
+  - action: persistent_notification.create
+    metadata: {}
+    data:
+      title: '{{ trigger.json.title }}
+
+        '
+      message: '{{ trigger.json.message }}
+
+        '
+  mode: single
