@@ -768,12 +768,11 @@ Graphite Auto:
 
   uix-developer-tools: *config_header
 
-  uix-more-info: &popup_card_mod |
+  uix-dialog: &popup_card_mod |
     :host([card]) .content .container {
       padding: 0px !important;
     }
 
-    :host,
     ha-dialog {
       --vertical-align-dialog: unset !important;
       --dialog-surface-top: unset !important;
@@ -789,7 +788,6 @@ Graphite Auto:
 
 
     @media (max-width: 800px), (max-height: 500px) {
-      :host,
       ha-dialog {
         --mdc-dialog-min-width: 100vw !important;
         --mdc-dialog-min-height: 100vh !important;
@@ -803,7 +801,7 @@ Graphite Auto:
       --ha-card-background: none !important;
     }
   uix-browser-mod-popup-inner: *popup_card_mod
-  uix-dialog: *popup_card_mod
+  uix-more-info: *popup_card_mod
 
   # card-mod-dialog: |
   #   :host {
