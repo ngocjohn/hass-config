@@ -14,5 +14,5 @@
   square: true
   cards:
     - type: custom:added-movie-card
-      entity: sensor.tmdb_movies_yts_latest
+      entity: sensor.tmdb_movies_trending
       show_item_count: 10

@@ -102,7 +102,7 @@
           state: Recently added
       card:
         type: custom:added-movie-card
-        entity: sensor.kodi_all_movies
+        entity: sensor.tmdb_movies_trending
         show_item_count: 10
     - type: conditional
       conditions:
