@@ -251,6 +251,14 @@ updates_hass:
           `;
       }
     ]]]
+  styles:
+    card:
+      - display: >
+          [[[
+            return states[variables.available].attributes.home_assistant > 0
+              ? 'block'
+              : 'none';
+          ]]]
 updates_hass_icon_name:
   template: icon_name
   icon: mdi:update
