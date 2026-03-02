@@ -1269,3 +1269,24 @@
 
         '
   mode: single
+- id: '1772445703149'
+  alias: Turn off google cast
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - media_player.sony_bravia_tv
+    to:
+    - 'off'
+  conditions:
+  - condition: template
+    value_template: '{{ not is_state(''media_player.sony_google_cast_5'', ''off'')
+      }}'
+    alias: Cast not off
+  actions:
+  - action: media_player.turn_off
+    metadata: {}
+    target:
+      device_id: 815b71e96466e723e187e661cec79a4a
+    data: {}
+  mode: single
