@@ -47,13 +47,13 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>44,124 </td>
-              <td>29</td>
+              <td>44,145 </td>
+              <td>30</td>
               <td>206</td>
-              <td>59</td>
+              <td>60</td>
               <td>71</td>
               <td>30</td>
-              <td>1331</td>
+              <td>1309</td>
               <td>213</td>
               <td>30</td>
           </tr>
