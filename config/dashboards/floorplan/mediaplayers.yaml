@@ -39,7 +39,7 @@
             } else if (appState === "Stremio") {
               return stremioEntityPic;
             } else if (appState === "Netflix") {
-              return '/api/media_player_proxy/media_player.sony_bravia_tv/browse_media/app/com.sony.dtv.com.netflix.ninja.com.netflix.ninja.MainActivity?token=5cb3524cb2bb7ae39a8c4e60df2bfde8a6639f761145479d4bc28f5bcc055a2c'
+              return haUrlEntity;
             }
             return "/local/hafloor/transparent_idle.png";
           } else {

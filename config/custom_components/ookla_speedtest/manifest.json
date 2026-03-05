@@ -1,0 +1,13 @@
+{
+  "domain": "ookla_speedtest",
+  "name": "Ookla Speedtest",
+  "after_dependencies": ["lovelace"],
+  "codeowners": ["@soulripper13"],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/soulripper13/hass-speedtest-ookla",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/soulripper13/hass-speedtest-ookla/issues",
+  "requirements": [],
+  "version": "2.3.8"
+}

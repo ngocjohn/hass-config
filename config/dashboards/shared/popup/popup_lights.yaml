@@ -17,6 +17,7 @@ browser_mod:
       --card-background-color: 'rgb(19,19,19)';
       --h3-font-size: 2rem;
       --paper-item-icon-active-color: #ff8c00;
+      --max-popup-column: 3;
     content:
       type: 'custom:layout-card'
       layout_type: 'custom:grid-layout'
@@ -25,15 +26,17 @@ browser_mod:
         - type: 'custom:layout-card'
           layout_type: 'custom:grid-layout'
           layout:
-            grid-template-columns: 25vw 25vw
+            grid-template-columns: 1fr 1fr
             grid-template-rows: auto
-            grid-column-gap: 32px
+            grid-column-gap: 1em
             margin: -1px
+            padding: 1em
             mediaquery:
               '(max-width: 799.99px)':
                 grid-template-columns: 1fr
                 grid-template-rows: auto
-                margin: -1
+                margin: -1px
+                padding: 0
           view_layout:
             grid-area: cc
           cards:

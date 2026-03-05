@@ -10,7 +10,7 @@ Hey there! Welcome to my little corner of the tech world! 👨‍💻
 
 This is where I store all the cool configurations for my Home Assistant system. Well, it's a mix of awesome codes and setups I discovered from the Home Assistant community. Seriously, those folks are wizards! 🧙‍♂️ As a bit of an internet newbie turned tech enthusiast, I stumbled upon the magic of IT, and this repository is my way of sharing the joy and knowledge I've gained along the way. Dive in, explore, and let the tech magic begin! ✨
 
-I frequently refresh my configuration files. My current Home Assistant version is <b>2026.2.3</b>. If you find something you like, don't forget to give my repository a ⭐️!
+I frequently refresh my configuration files. My current Home Assistant version is <b>2026.3.0</b>. If you find something you like, don't forget to give my repository a ⭐️!
 
 ## Some of my projects for Home Assistant
 
@@ -47,14 +47,14 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>44,145 </td>
+              <td>44,125 </td>
               <td>30</td>
-              <td>206</td>
-              <td>60</td>
+              <td>221</td>
+              <td>61</td>
               <td>71</td>
               <td>30</td>
-              <td>1309</td>
-              <td>213</td>
+              <td>1349</td>
+              <td>222</td>
               <td>30</td>
           </tr>
       </tbody>
@@ -111,6 +111,8 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Mercedesme 2020](https://github.com/ReneNulschDE/mbapi2020)
 - [Node Red Companion](https://github.com/zachowj/hass-node-red)
 - [Nuki Lock](https://github.com/kvj/hass_nuki_ng)
+- [Ookla Speedtest](https://github.com/soulripper13/hass-speedtest-ookla)
+- [Rohlík.Cz Custom Integration](https://github.com/dvejsada/HA-RohlikCZ)
 - [Simpleicons](https://github.com/vigonotion/hass-simpleicons)
 - [Spook 👻 Your Homie](https://github.com/frenck/spook)
 - [Spotifyplus](https://github.com/thlucas1/homeassistantcomponent_spotifyplus)
@@ -217,6 +219,7 @@ The floorplan is crafted using the [Ha Floorplan](https://github.com/ExperienceL
   </tr>
 	<tr>
     <td><img src="screenshots/server.png" alt="Server Image"></td>
+    <td><img src="screenshots/updates.png" alt="Updates Image"></td>
 	</tr>
 </table>
 

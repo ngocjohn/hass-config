@@ -27,21 +27,10 @@ browser_mod:
               - entity: sensor.current_version
                 name: Installed
                 icon: mdi:home-assistant
-              # - entity: sensor.home_assistant_versions
-              #   name: Latest
               - entity: sensor.template_hass_next_release
               - entity: sensor.ha_db
                 name: Database
                 icon: mdi:database
-              # - entity: sensor.home_assistant_log_size
-              #   name: Logfile
-              #   icon: mdi:file-document
-              # - type: attribute
-              #   entity: sensor.backup_state
-              #   attribute: last_backup
-              #   name: Last backup
-              #   icon: mdi:cloud-upload
-              #   format: relative
               - type: custom:bar-card
                 card_mod: &bar_card_mod
                   class: barcard
