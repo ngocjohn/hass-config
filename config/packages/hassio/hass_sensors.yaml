@@ -108,7 +108,7 @@ template:
               {%- set identifiers = device_attr(dev, 'identifiers') | list -%}
               {%- set slug_name = identifiers[0][1] -%}
               {%- set conf_url = device_attr(dev, 'configuration_url') | replace('homeassistant://', '') -%}
-
+              {%- set path = "/config/app/" + slug_name -%}
               {%- set entities = device_entities(dev) | list -%}
               {%- set running_ent = entities | select('search', '_running$') | join(', ') -%}
               {%- set cpu_ent = entities | select('search', '_cpu_percent$') | join(', ') -%}
@@ -126,6 +126,7 @@ template:
                 'memory_ent': memory_ent,
                 'update_ent': update_ent,
                 'version_ent': version_ent,
+                'path': path
               } -%}
 
               {%- if is_state(running_ent, 'on') -%}

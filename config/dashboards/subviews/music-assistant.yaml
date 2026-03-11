@@ -4,4 +4,4 @@ title: Music Assistant
 icon: si:applemusic
 cards:
   - type: iframe
-    url: !secret mass_url
+    url: /api/hassio_ingress/DxjwvCHHhrKMJQKVZKPsf-69nPQW-hrXk4iJ09PqKgQ/

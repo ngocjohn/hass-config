@@ -1,0 +1,14 @@
+# MEDIA DEVICES STATUs
+###############################################
+# APPLE TV
+- type: custom:streamline-card
+  template: grid_atv
+# Samsung TV
+- type: custom:streamline-card
+  template: grid_samsung
+# PLAYSTATION
+- type: custom:streamline-card
+  template: grid_playstation
+# HOMEPODS
+- type: custom:streamline-card
+  template: grid_homepods

@@ -24,14 +24,13 @@ cards:
     tap_action: !include ./popup/footer/footer_vacuum.yaml
     template:
       - footer
-    # triggers_update:
-    #   - sensor.date
-    # variables:
-    #   notify: >
-    #     [[[
-    #       let id = states['sensor.robot_vacuum_last_clean_end'];
-    #       if (id) return (Date.now() - Date.parse(id.state)) > 6048e5;
-    #     ]]]
+    variables:
+      notify_icon: 'mdi:broom'
+      notify: >
+        [[[
+          let isCleaning = states['vacuum.roidmi_eve']?.state === 'cleaning';
+          return isCleaning;
+        ]]]
 
   - type: custom:button-card
     name: >

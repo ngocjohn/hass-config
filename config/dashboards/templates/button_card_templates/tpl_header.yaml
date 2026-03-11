@@ -50,6 +50,7 @@ header_clock:
               font-family: 'Raleway';
               color: #97989c;
             }
+
             @media screen and (min-width: 800px) {
               .time-wrapper.size-large .time-parts {
                 font-size: 5rem !important;

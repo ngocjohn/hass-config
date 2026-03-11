@@ -10,16 +10,4 @@
     show:
       mediaquery: '(max-width: 1440px) and (min-height: 463px)'
   columns: 2
-  cards:
-    # PERSON NGOC
-    - type: custom:streamline-card
-      template: grid_ngoc
-    # PERSON CHI
-    - type: custom:streamline-card
-      template: grid_chi
-    # WEATHER
-    - type: custom:streamline-card
-      template: grid_weather
-    # HOME MODE
-    - type: custom:streamline-card
-      template: grid_home_mode
+  cards: !include ../../shared/grid-cards/home-status.yaml

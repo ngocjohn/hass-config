@@ -10,16 +10,4 @@
     show:
       mediaquery: '(min-height: 463px)'
   columns: 2
-  cards:
-    # ALARM
-    - type: custom:streamline-card
-      template: grid_alarm
-    # FRONT DOOR
-    - type: custom:streamline-card
-      template: grid_front_door
-    # MOTION SENSORS
-    - type: custom:streamline-card
-      template: grid_motion_sensors
-    #  CONTACT SENSORS
-    - type: custom:streamline-card
-      template: grid_contact_sensors
+  cards: !include ../../shared/grid-cards/security-status.yaml

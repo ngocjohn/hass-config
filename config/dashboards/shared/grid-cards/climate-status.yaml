@@ -1,0 +1,13 @@
+# CLIMATE STATUS AND TEMPERATURES
+##########################################
+- type: custom:streamline-card
+  template: grid_air_purifier
+# THERMOSTAT
+- type: custom:streamline-card
+  template: grid_thermostat
+# LIVING ROOM COVERS
+- type: custom:streamline-card
+  template: grid_covers_living
+# BEDOOM COVERS
+- type: custom:streamline-card
+  template: grid_covers_bedroom

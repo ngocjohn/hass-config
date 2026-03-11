@@ -17,7 +17,7 @@ browser_mod:
       --card-background-color: 'rgb(19,19,19)';
       --h3-font-size: 2rem;
       --paper-item-icon-active-color: #ff8c00;
-      --max-popup-column: 3;
+      --max-popup-column: 2;
     content:
       type: 'custom:layout-card'
       layout_type: 'custom:grid-layout'

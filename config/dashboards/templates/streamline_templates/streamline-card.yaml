@@ -505,6 +505,7 @@ addon_cards:
                   'memory_ent': dev.memory_ent,
                   'update_ent': dev.update_ent,
                   'ver_ent': dev.version_ent,
+                  'nav_path': dev.path
                 },
             }
           }},

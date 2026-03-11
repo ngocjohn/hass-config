@@ -14,178 +14,50 @@
   cards:
     - type: horizontal-stack # HOME - SECURITY
       cards:
-        - type: grid
+        - &grid-card
+          type: grid
           square: true
           title: Home
           columns: 2
-          cards:
-            # PERSON NGOC
-            - type: custom:streamline-card
-              template: grid_ngoc
-            # PERSON ZUZU
-            - type: custom:streamline-card
-              template: grid_zuzu
-            # WEATHER
-            - type: custom:streamline-card
-              template: grid_weather
-            # HOME MODE
-            - type: custom:streamline-card
-              template: grid_home_mode
-        - type: grid
+          cards: !include ../../shared/grid-cards/home-status.yaml
+        - <<: *grid-card
           title: Security
-          square: true
-          columns: 2
-          cards:
-            # ALARM
-            - type: custom:streamline-card
-              template: grid_alarm
-            # FRONT DOOR
-            - type: custom:streamline-card
-              template: grid_front_door
-            # MOTION SENSORS
-            - type: custom:streamline-card
-              template: grid_motion_sensors
-            #  CONTACT SENSORS
-            - type: custom:streamline-card
-              template: grid_contact_sensors
+          cards: !include ../../shared/grid-cards/security-status.yaml
 
     - type: horizontal-stack # MASTERS - OTHER ROOMS
       cards:
-        - type: grid
+        - <<: *grid-card
           title: Masters
-          columns: 2
-          square: true
-          cards:
-            # Living Room
-            - type: custom:streamline-card
-              template: grid_living_room
-            # OFFICE
-            - type: custom:streamline-card
-              template: grid_office
-            # Kitchen
-            - type: conditional
-              conditions:
-                - entity: sensor.kitchen_active
-                  state_not: 'dishwashing'
-              card:
-                type: custom:streamline-card
-                template: grid_kitchen_normal
-
-            - type: conditional
-              conditions:
-                - entity: sensor.kitchen_active
-                  state: 'dishwashing'
-              card:
-                type: custom:streamline-card
-                template: grid_kitchen_dishwasing
-            # Bedroom
-            - type: custom:streamline-card
-              template: grid_bedroom
+          cards: !include ../../shared/grid-cards/main-rooms.yaml
           #################################################
           #                                               #
           #                    ROOMS 2                    #
           #                                               #
           #################################################
-        - type: grid
+        - <<: *grid-card
           title: Rooms
-          columns: 2
-          square: true
-          cards:
-            # SHOWER ROOM
-            - type: custom:streamline-card
-              template: grid_shower
-            # BATHROOM
-            - type: custom:streamline-card
-              template: grid_bathroom
-            # HALLWAY
-            - type: custom:streamline-card
-              template: grid_hallway
-            # UTILITY NORMAL
-            - type: conditional
-              conditions:
-                - entity: sensor.appliance_active
-                  state_not: 'cleaning'
-                - entity: sensor.appliance_active
-                  state_not: 'washing'
-              card:
-                type: custom:streamline-card
-                template: grid_utility_normal
-
-            # UTILITY VACUUM
-            - type: conditional
-              conditions:
-                - entity: sensor.appliance_active
-                  state: cleaning
-              card:
-                type: custom:streamline-card
-                template: grid_utility_vacuum
-            # WASHING
-            - type: conditional
-              conditions:
-                - entity: sensor.appliance_active
-                  state: washing
-              card:
-                type: custom:streamline-card
-                template: grid_utility_washing
+          cards: !include ../../shared/grid-cards/common-rooms.yaml
 
     - type: horizontal-stack # CLIMATE - CAMERA
       cards:
         # AIR PURIFIER
-        - type: grid
+        - <<: *grid-card
           title: Climate
-          columns: 2
-          square: true
-          cards:
-            - type: custom:streamline-card
-              template: grid_air_purifier
-            # THERMOSTAT
-            - type: custom:streamline-card
-              template: grid_thermostat
-            # LIVING ROOM COVERS
-            - type: custom:streamline-card
-              template: grid_covers_living
-            # BEDOOM COVERS
-            - type: custom:streamline-card
-              template: grid_covers_bedroom
-        - type: grid
+          cards: !include ../../shared/grid-cards/climate-status.yaml
+        - <<: *grid-card
           title: Devices
-          square: true
-          columns: 2
-          cards:
-            # APPLE TV
-            - type: custom:streamline-card
-              template: grid_atv
-            # Samsung TV
-            - type: custom:streamline-card
-              template: grid_samsung
-            # PLAYSTATION
-            - type: custom:streamline-card
-              template: grid_playstation
-            # HOMEPODS
-            - type: custom:streamline-card
-              template: grid_homepods
+          cards: !include ../../shared/grid-cards/devices.yaml
 
     - type: horizontal-stack # MEDIA - MOVIES
       cards:
-        - type: grid
+        - <<: *grid-card
           title: Cameras
-          columns: 2
-          cards:
-            # CAM DOOR
-            - type: custom:streamline-card
-              template: grid_cam_door
-            # CAM KIDS ROOM
-            - type: custom:streamline-card
-              template: grid_cam_kids
-            # CAM TERRACE
-            - type: custom:streamline-card
-              template: grid_cam_terrace
-            # CAM GARDEN
-            - type: custom:streamline-card
-              template: grid_cam_garden
+          cards: !include ../../shared/grid-cards/cameras.yaml
         - type: grid
           title: Media
           columns: 1
+          square: true
           cards:
             - type: custom:added-movie-card
-              entity: sensor.kodi_all_movies
+              entity: sensor.tmdb_movies_yts_latest
+              show_item_count: 10

@@ -1,5 +1,6 @@
 addons_base:
   template:
+    - addon_conf_url
     - extra_styles
     - settings
   show_label: true
@@ -26,41 +27,32 @@ addons_base:
       ]]]
   tap_action:
     action: block
-  # double_tap_action:
-  #   action: call-service
-  #   service: script.backup_addon
-  #   service_data:
-  #     addon_slug: >
+
+  # hold_action:
+  #   action: fire-dom-event
+  #   browser_mod:
+  #     service: >
   #       [[[
-  #         return variables.slug_name;
+  #         return variables.is_mobile ? 'browser_mod.javascript' : 'browser_mod.popup';
   #       ]]]
-  #     version: >
+  #     data: >
   #       [[[
-  #         return states[variables.ver_ent].state;
+
+  #         let addonUrl = `${hass.hassUrl()}${variables.nav_path.slice(1)}`; // Remove leading slash
+  #         console.log('Hold action triggered for addon:', variables.slug_name, 'Mobile:', variables.is_mobile, 'Nav Path:', variables.nav_path, 'Addon URL:', addonUrl);
+  #         return variables.is_mobile
+  #           ? { code: `window.location.href = '${addonUrl}';` }
+  #           : {
+  #               title: 'Addons Configuration',
+  #               style: '--max-popup-column: 1',
+  #               card_mod: { style: { '.': 'ha-dialog>ha-dialog-header { display: none; }' } }, content: {
+  #                 type: 'custom:layout-card', layout_type: 'custom:grid-layout', layout: { margin: 0, 'grid-template-columns': '80vw' }, cards: [
+  #                   { type: 'iframe', url: `${addonUrl}` }
+  #                 ]
+  #               }
+  #             };
   #       ]]]
-  #   haptic: success
-  hold_action:
-    action: fire-dom-event
-    browser_mod:
-      service: >
-        [[[
-          return window.navigator.userAgent.match(/iPhone/i) ? 'browser_mod.javascript' : 'browser_mod.popup';
-        ]]]
-      data: >
-        [[[
-          return window.navigator.userAgent.match(/iPhone/i)
-            ? { code: `window.location.href = '${hass.hassUrl()}${variables.conf_url}/config'` }
-            : {
-                title: 'Addons Configuration',
-                style: '--popup-max-width: calc(100vw); --popup-background-color: rgba(0, 0, 0, 0);',
-                card_mod: { style: { '.': 'ha-dialog>ha-dialog-header { display: none; }' } }, content: {
-                  type: 'custom:layout-card', layout_type: 'custom:grid-layout', layout: { margin: 0, 'grid-template-columns': '80vw' }, cards: [
-                    { type: 'iframe', url: `${hass.hassUrl()}${variables.conf_url}` }
-                  ]
-                }
-              };
-        ]]]
-    haptic: medium
+  #   haptic: medium
   label: >
     [[[
       return states[variables.ver_ent].state;
@@ -227,10 +219,7 @@ addon_conf_url:
     browser_mod:
       service: browser_mod.popup
       data:
-        style: |
-          --popup-max-width: calc(100vw);
-          --popup-background-color: rgba(0, 0, 0, 0);
-        title: 'Addons Configuration'
+        title: Addons Configuration
         card_mod:
           style:
             #popup header
@@ -244,20 +233,14 @@ addon_conf_url:
                 }
               }
         content:
-          type: custom:layout-card
-          layout_type: custom:grid-layout
-          layout:
-            margin: 0
-            grid-template-columns: 80vw
-          cards:
-            - type: iframe
-              url: >
-                [[[
-                  const hassUrl = hass.hassUrl();
-                  const confUrl = variables.conf_url;
-                  console.log(hassUrl + confUrl);
-                  return `${hassUrl}${confUrl}`;
-                ]]]
+          type: iframe
+          aspect_ratio: '9:16'
+          url: >
+            [[[
+              const confUrl = variables.nav_path;
+              console.log(confUrl);
+              return `${confUrl}`;
+            ]]]
 
 addon_ios_conf_url:
   hold_action:

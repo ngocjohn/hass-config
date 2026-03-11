@@ -1,0 +1,14 @@
+# CAMERAS CARDS
+##########################################
+# CAM DOOR
+- type: custom:streamline-card
+  template: grid_cam_door
+# CAM KIDS ROOM
+- type: custom:streamline-card
+  template: grid_cam_kids
+# CAM TERRACE
+- type: custom:streamline-card
+  template: grid_cam_terrace
+# CAM GARDEN
+- type: custom:streamline-card
+  template: grid_cam_garden

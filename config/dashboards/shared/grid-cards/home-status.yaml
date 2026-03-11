@@ -1,0 +1,15 @@
+# HOME STATUS GRID CARDS
+#################################################
+
+# PERSON NGOC
+- type: custom:streamline-card
+  template: grid_ngoc
+# PERSON ZUZU
+- type: custom:streamline-card
+  template: grid_chi
+# WEATHER
+- type: custom:streamline-card
+  template: grid_weather
+# HOME MODE
+- type: custom:streamline-card
+  template: grid_home_mode

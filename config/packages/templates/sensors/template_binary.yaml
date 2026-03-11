@@ -62,12 +62,21 @@ template:
         icon: mdi:home-import-outline
         state: >-
           {{
-            is_state('person.huong_giang', 'home')
+            is_state('input_boolean.z_occupacy', 'on')
             or is_state('person.phuong_chi', 'home')
             or is_state('device_tracker.phuong_chi_iphone', 'home')
             or is_state('input_boolean.guest_mode','on')
           }}
-
+      - name: 'People Away'
+        unique_id: away_occupancy
+        device_class: occupancy
+        icon: mdi:home-export-outline
+        state: >-
+          {{
+            is_state('person.viet_ngoc', 'not_home')
+            and is_state('input_boolean.z_occupacy', 'off')
+            and is_state('input_boolean.guest_mode','off')
+          }}
       - name: 'Zigbee Sensors Problem'
         unique_id: zigbee_sensors_problem
         device_class: problem

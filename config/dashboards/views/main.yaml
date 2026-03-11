@@ -58,6 +58,15 @@ layout:
         ". chips  chips  ."
         ". cover  cover  ."
         ". .      .      ."
+    # '(max-height: 462px)':
+    #   grid-gap: 0.5rem
+    #   grid-template-columns: 0 1fr 1fr 0
+    #   grid-template-rows: 0 min-content 1fr 0
+    #   grid-template-areas: |
+    #     ". .      .      ."
+    #     ". chips  chips  ."
+    #     ". cover  cover  ."
+    #     ". .      .      ."
 
 #################################################
 #                                               #

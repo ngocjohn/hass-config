@@ -97,7 +97,10 @@ grid_homepods:
             ? states[entity.attributes.active_child].attributes.friendly_name.split(' ')[0]
             : 'HomePods';
       ]]]
-    double_tap_action: !include ../../shared/popup/popup_mass.yaml
+    # double_tap_action: !include ../../shared/popup/popup_mass.yaml
+    double_tap_action:
+      action: navigate
+      navigation_path: /lovelace-yaml/mass-media
     hold_action:
       action: fire-dom-event
       honeycomb_menu:

@@ -190,10 +190,12 @@ template:
         name: 'Appliance Active'
         state: >-
           {% if not is_state('light.utility_room_light', 'off') %} on
-          {% elif not is_state('vacuum.roidmi_eve', 'docked') %} cleaning
+          {% elif not states('vacuum.roidmi_eve') in ["unavailable", "unknown", "docked",
+          "idle", "paused", "charging"] %} cleaning
           {% elif is_state('sensor.washer_dryer_operation_state', 'run') %} washing
           {% else %} no
           {% endif %}
+
         icon: "{{ iif (this.state == 'no', 'mdi:thumb-down', 'mdi:thumb-up') }}"
         attributes:
           washdryer_remain: >-

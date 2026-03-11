@@ -29,6 +29,7 @@ ingress:
       match: !secret external_url
       replace: !secret appdaemon_url
       default: http://192.168.0.231:5050/
+
   ## HA CONFIG PAGES ##
   link_areas:
     work_mode: iframe

@@ -2,10 +2,11 @@ action: fire-dom-event
 browser_mod:
   service: browser_mod.popup
   data:
-    style: |
-      --popup-max-width: calc(100vw);
+    style: >
+      --popup-width: 80vw;
       --popup-background-color: rgba(0, 0, 0, 0);
     title: 'MASS'
+    initial_style: wide
     card_mod:
       style:
         #popup header
@@ -42,11 +43,5 @@ browser_mod:
 
         cards:
           - type: iframe
-            # aspect_ratio: >
-            #   [[[
-            #     if (window.matchMedia('(max-width: 800px)').matches)
-            #       return '195%';
-            #     else return '16:9';
-            #   ]]]
             url: '/api/hassio_ingress/DxjwvCHHhrKMJQKVZKPsf-69nPQW-hrXk4iJ09PqKgQ/'
             # url: !secret mass_url

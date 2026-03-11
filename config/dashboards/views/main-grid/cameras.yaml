@@ -12,16 +12,4 @@
       mediaquery: '(min-height: 463px)'
   columns: 2
   square: true
-  cards:
-    # CAM DOOR
-    - type: custom:streamline-card
-      template: grid_cam_door
-    # CAM KIDS ROOM
-    - type: custom:streamline-card
-      template: grid_cam_kids
-    # CAM TERRACE
-    - type: custom:streamline-card
-      template: grid_cam_terrace
-    # CAM GARDEN
-    - type: custom:streamline-card
-      template: grid_cam_garden
+  cards: !include ../../shared/grid-cards/cameras.yaml

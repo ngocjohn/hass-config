@@ -24,3 +24,4 @@ homekit:
         - binary_sensor.bathroom_occupancy
         - binary_sensor.shower_room_occupancy
         - input_button.nuki_vchod
+        - lock.nuki_neklanka_byt_lock

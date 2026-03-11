@@ -1625,6 +1625,10 @@ settings:
     translate_no_updates: no updates
     translate_update_available: update available
     translate_updates_available: updates available
+    is_mobile: >
+      [[[
+        return /(?:iphone|android|ipad)/i.test(navigator.userAgent)
+      ]]]
 vibrant_colors:
   variables:
     vibrant_data: >

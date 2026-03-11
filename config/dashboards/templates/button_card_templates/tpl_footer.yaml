@@ -36,6 +36,10 @@ footer:
       ]]]
     hover_enable: >
       [[[ return true ]]]
+    notify_icon: >
+      [[[
+        return 'mdi:alert-rhombus';
+      ]]]
   size: 2vw
   show_icon: false
   color: '#9da0a2'
@@ -45,9 +49,9 @@ footer:
         if (Number.isInteger(variables.notify)) {
             return variables.notify;
         } else {
-          if (variables.notify) {
+          if (variables.notify || Boolean(variables.notify)) {
             //return `<span style="font-weight: 900;">!</span>`;
-            return `<ha-icon icon="mdi:alert-rhombus" style="padding: 0; margin: -2px; size: 1em;"></ha-icon>`;
+            return `<ha-icon icon=${variables.notify_icon} style="padding: 0; margin: -2px; size: 1em;"></ha-icon>`;
           }
         }
       ]]]
