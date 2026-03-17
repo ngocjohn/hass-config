@@ -1283,3 +1283,24 @@
       device_id: 815b71e96466e723e187e661cec79a4a
     data: {}
   mode: single
+- id: '1773334440037'
+  alias: C location occup
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - input_boolean.z_occupacy
+    to:
+    - 'on'
+    for:
+      hours: 0
+      minutes: 2
+      seconds: 0
+  conditions: []
+  actions:
+  - action: notify.ngoc_devices
+    metadata: {}
+    data:
+      message: C occup
+      title: C occup
+  mode: single
