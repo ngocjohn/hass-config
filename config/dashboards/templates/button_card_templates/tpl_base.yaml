@@ -199,9 +199,9 @@ extra_styles:
         * * * * * * * * * * * * * * * * * */
         svg {
           --light-color:
-          ${ variables.state_on && entity.attributes.brightness
+          ${ variables.state_on && entity?.attributes?.brightness
               ? light_color
-              : variables.state_on && !entity.attributes.brightness
+              : variables.state_on && !entity?.attributes?.brightness
                 ? 'var(--state-icon-active-color);'
                 : 'var(--state-icon-color);'
           }
