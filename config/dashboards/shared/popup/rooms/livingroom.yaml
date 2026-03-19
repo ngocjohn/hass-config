@@ -42,7 +42,7 @@
 
 action: fire-dom-event
 browser_mod:
-  service: popup
+  service: browser_mod.popup
   data:
     title: Sala
     size: wide
