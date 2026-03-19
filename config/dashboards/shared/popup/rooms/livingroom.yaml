@@ -46,6 +46,7 @@ browser_mod:
   data:
     title: Sala
     size: wide
+    # Se houver incompatibilidade em algum frontend/browser_mod, comentar a linha acima.
     content:
       type: custom:layout-card
       layout_type: custom:grid-layout
