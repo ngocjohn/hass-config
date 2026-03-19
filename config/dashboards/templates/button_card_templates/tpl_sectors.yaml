@@ -95,15 +95,25 @@ rooms_base:
         else if (variables.state == 'washing') {
           return entity.attributes.washdryer_remain;
         }
-        else if (variables.state_on || variables.state == 'yes' && variables.active !== undefined) {
-          let num = states[variables.active].attributes.lights_on.length;
-            if (num == '1') {
-              return '1 light';
-            } else {
-              return num === '0'
-                ? 'On'
-                : num + ' lights';
-            }
+        else if (variables.state_on || variables.state == 'yes') {
+          // Keep original logic for rooms that expose `attributes.lights_on`,
+          // but protect against undefined sensors while adapting entities.
+          const activeEntity = variables.active ? states[variables.active] : null;
+          const lightsOn = activeEntity?.attributes?.lights_on;
+          const num = Array.isArray(lightsOn)
+            ? lightsOn.length
+            : (Number.isFinite(lightsOn) ? lightsOn : null);
+
+          if (num === 1) {
+            return '1 light';
+          } else if (typeof num === 'number' && num > 1) {
+            return `${num} lights`;
+          } else if (typeof num === 'number' && num === 0) {
+            return 'On';
+          }
+
+          // Fallback for environments without the `active` room sensor.
+          return 'On';
         }
         else {
           return variables.state;
