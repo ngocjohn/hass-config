@@ -47,22 +47,9 @@ grid_living_room:
     entity: light.sala_switch_2
     name: Lounge
     double_tap_action: !include ../../shared/popup/rooms/livingroom.yaml
-    # double_tap_action:
-    #   action: fire-dom-event
-    #   browser_mod:
-    #     service: popup
-    #     data:
-    #       title: Sala
-    #       content:
-    #         type: markdown
-    #         content: |
-    #           ## Popup de teste (Lounge)
-    #           Se abriu no duplo toque, a ação está funcionando.
-    #           Próximo passo: recolocar o conteúdo completo do `livingroom.yaml`.
     # hold_action: !include ../../shared/honeycomb/living.yaml
-    # hold_action:
-    #   action: none
-    hold_action: !include ../../shared/popup/rooms/livingroom.yaml
+    hold_action:
+      action: none
     template:
       - rooms_base
       - icon_couch_lamp
