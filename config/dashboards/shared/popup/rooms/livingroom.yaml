@@ -1,40 +1,253 @@
+# Original ngocjohn block kept for future reactivation (do not delete):
+# action: fire-dom-event
+# browser_mod:
+#   service: browser_mod.popup
+#   data:
+#     title: Living Room
+#     content:
+#       type: custom:layout-card
+#       layout_type: custom:grid-layout
+#       layout: !include ../../snippets/layout_room_popup.yaml
+#       cards:
+#         - type: custom:auto-entities
+#           filter:
+#             include:
+#               - group: group.light_living_room
+#                 options:
+#                   type: custom:button-card
+#                   template:
+#                     - tpl_popup_light
+#               - entity_id: media_player.living_room_tv
+#                 options:
+#                   type: custom:button-card
+#                   name: Sony ATV
+#                   double_tap_action:
+#                     action: more-info
+#                   hold_action: !include ../../honeycomb/atv.yaml
+#                   template:
+#                     - mediaplayer
+#                     - icon_tv
+#               - entity_id: switch.ps5_power
+#                 options:
+#                   type: custom:button-card
+#                   name: Playstation
+#                   template:
+#                     - base
+#                     - icon_ps5
+#                     - loader
+#           card:
+#             type: grid
+#             columns: 3
+#           card_param: cards
+
 action: fire-dom-event
 browser_mod:
   service: browser_mod.popup
   data:
-    title: Living Room
+    title: Sala
+    # size: wide
     content:
       type: custom:layout-card
       layout_type: custom:grid-layout
-      layout: !include ../../snippets/layout_room_popup.yaml
+      layout:
+        grid-template-columns: 22vw 22vw 36vw
+        grid-template-areas: '"col_luzes col_extra col_camera"'
+        justify-content: center
+        align-content: center
+        grid-gap: 2.5vw
+        mediaquery:
+          "(max-width: 800px)":
+            grid-template-columns: 1fr
+            grid-template-areas: |
+              "col_luzes"
+              "col_extra"
+              "col_camera"
       cards:
-        - type: custom:auto-entities
-          filter:
-            include:
-              - group: group.light_living_room
-                options:
-                  type: custom:button-card
-                  template:
-                    - tpl_popup_light
-              - entity_id: media_player.living_room_tv
-                options:
-                  type: custom:button-card
-                  name: Sony ATV
+        # ======================================================================
+        # COLUNA 1 — ILUMINAÇÃO
+        # ======================================================================
+        - type: vertical-stack
+          view_layout:
+            grid-area: col_luzes
+          cards:
+            - type: grid
+              columns: 2
+              square: true
+              cards:
+                - type: custom:button-card
+                  entity: light.sala_switch_2
+                  name: Luz Principal
+                  icon: mdi:ceiling-light
+                  tap_action:
+                    action: toggle
+                - type: custom:button-card
+                  entity: light.sala_switch_1
+                  name: LED Direito
+                  icon: mdi:led-strip-variant
+                  tap_action:
+                    action: toggle
+                - type: custom:button-card
+                  entity: light.sala_switch_3
+                  name: LED Esquerdo
+                  icon: mdi:led-strip-variant
+                  tap_action:
+                    action: toggle
+                - type: custom:button-card
+                  entity: light.sala_2_switch_2
+                  name: VR Principal
+                  icon: mdi:ceiling-light
+                  tap_action:
+                    action: toggle
+                - type: custom:button-card
+                  entity: light.sala_2_switch_3
+                  name: VR Cristaleira
+                  icon: mdi:led-strip-variant
+                  tap_action:
+                    action: toggle
+                - type: custom:button-card
+                  entity: light.varanda_switch_1
+                  name: VR Gourmet
+                  icon: mdi:led-strip-variant
+                  tap_action:
+                    action: toggle
+                - type: custom:button-card
+                  entity: light.varanda_switch_2
+                  name: VR Pendente
+                  icon: mdi:vanity-light
+                  tap_action:
+                    action: toggle
+
+        # ======================================================================
+        # COLUNA 2 — MÍDIA / PLACEHOLDERS
+        # ======================================================================
+        - type: vertical-stack
+          view_layout:
+            grid-area: col_extra
+          cards:
+            - type: grid
+              columns: 2
+              square: true
+              cards:
+                # TV — reservar espaço para futura entidade real
+                - type: custom:button-card
+                  name: Smart TV
+                  icon: mdi:television
+                  tap_action:
+                    action: none
+                  hold_action:
+                    action: none
                   double_tap_action:
-                    action: more-info
-                  hold_action: !include ../../honeycomb/atv.yaml
-                  template:
-                    - mediaplayer
-                    - icon_tv
-              - entity_id: switch.ps5_power
-                options:
-                  type: custom:button-card
-                  name: Playstation
-                  template:
-                    - base
-                    - icon_ps5
-                    - loader
-          card:
-            type: grid
-            columns: 3
-          card_param: cards
+                    action: none
+                  styles:
+                    card:
+                      - opacity: "0.60"
+                      - cursor: "default"
+                  # Quando você gerar a entidade real da TV, descomente e adapte:
+                  # entity: media_player.COLOCAR_ENTIDADE_DA_TV_DA_SALA
+
+                # SPOTIFY — reservar espaço para futura entidade real
+                - type: custom:button-card
+                  name: Spotify
+                  icon: mdi:spotify
+                  tap_action:
+                    action: none
+                  hold_action:
+                    action: none
+                  double_tap_action:
+                    action: none
+                  styles:
+                    card:
+                      - opacity: "0.60"
+                      - cursor: "default"
+                  # Quando você gerar a entidade real do Spotify, descomente e adapte:
+                  # entity: media_player.COLOCAR_ENTIDADE_DO_SPOTIFY_DA_SALA
+
+                # PS5 — visível, mas inativo
+                - type: custom:button-card
+                  name: PS5
+                  icon: mdi:sony-playstation
+                  tap_action:
+                    action: none
+                  hold_action:
+                    action: none
+                  double_tap_action:
+                    action: none
+                  styles:
+                    card:
+                      - opacity: "0.45"
+                      - cursor: "default"
+
+                # PIONEER — visível, mas inativo
+                - type: custom:button-card
+                  name: Pioneer
+                  icon: mdi:speaker
+                  tap_action:
+                    action: none
+                  hold_action:
+                    action: none
+                  double_tap_action:
+                    action: none
+                  styles:
+                    card:
+                      - opacity: "0.45"
+                      - cursor: "default"
+
+            - type: custom:button-card
+              color_type: blank-card
+              styles:
+                card:
+                  - height: 1px
+                  - margin: 8px 12px
+                  - background: >
+                      linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,0.15) 50%,rgba(255,255,255,0) 100%)
+
+            # FUTURO — sensores ainda não existentes
+            - type: grid
+              columns: 2
+              square: true
+              cards:
+                - type: custom:button-card
+                  name: Sensor de Presença / Atividade
+                  icon: mdi:motion-sensor
+                  tap_action:
+                    action: none
+                  hold_action:
+                    action: none
+                  styles:
+                    card:
+                      - opacity: "0.35"
+                      - cursor: "default"
+                  # Quando você tiver sensor físico/helper, use algo como:
+                  # entity: binary_sensor.COLOCAR_SENSOR_DE_PRESENCA_DA_SALA
+
+                - type: custom:button-card
+                  name: Temperatura / Umidade
+                  icon: mdi:thermometer-water
+                  tap_action:
+                    action: none
+                  hold_action:
+                    action: none
+                  styles:
+                    card:
+                      - opacity: "0.35"
+                      - cursor: "default"
+                  # Quando você tiver sensor real, use algo como:
+                  # entity: sensor.COLOCAR_SENSOR_TEMPERATURA_UMIDADE_DA_SALA
+
+        # ======================================================================
+        # COLUNA 3 — CÂMERAS
+        # ======================================================================
+        - type: vertical-stack
+          view_layout:
+            grid-area: col_camera
+          cards:
+            - type: picture-entity
+              entity: camera.sl_camera
+              camera_view: live
+              show_name: false
+              show_state: false
+            - type: picture-entity
+              entity: camera.vr_camera
+              camera_view: live
+              show_name: false
+              show_state: false
