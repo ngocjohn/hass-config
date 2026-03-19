@@ -8,49 +8,73 @@
 grid_office:
   card:
     type: custom:button-card
-    entity: light.office_group
+    # entity: light.office_group
+    entity: light.grupo_luzes_office
     name: Office
     double_tap_action: !include ../../shared/popup/rooms/office.yaml
-    hold_action: !include ../../shared/honeycomb/office_mode.yaml
+    # hold_action: !include ../../shared/honeycomb/office_mode.yaml
+    hold_action:
+      action: more-info
     template:
       - rooms_base
-      - motion
-      - macbook
-      - server
+      # - motion
+      # - macbook
+      # - server
       - icon_office
       # - change_grid_title
       # - light
     variables:
-      state_on: >
-        [[[
-          let state = states['sensor.office_active'].state;
-          if (state == 'yes') return state;
-        ]]]
-      motion: input_boolean.brma
-      light_entity: light.office_group
-      server: binary_sensor.mbproserver_active
-      macbook: switch.macbook
-      active: sensor.office_active
-      tempsensor: sensor.office_temp_humid_temperature
-      humidsensor: sensor.office_temp_humid_humidity
+      # state_on: >
+      #   [[[
+      #     let state = states['sensor.office_active'].state;
+      #     if (state == 'yes') return state;
+      #   ]]]
+      # motion: input_boolean.brma
+      # light_entity: light.office_group
+      light_entity: light.office_switch_3
+      # server: binary_sensor.mbproserver_active
+      # macbook: switch.macbook
+      # active: sensor.office_active
+      active: ''
+      # tempsensor: sensor.office_temp_humid_temperature
+      # humidsensor: sensor.office_temp_humid_humidity
   # LIVING ROOM GRID
 grid_living_room:
   card:
     type: custom:button-card
-    entity: light.living_room_group
+    # entity: light.living_room_group
+    # entity: light.grupo_luzes_sala
+    entity: light.sala_switch_2
     name: Lounge
     double_tap_action: !include ../../shared/popup/rooms/livingroom.yaml
-    hold_action: !include ../../shared/honeycomb/living.yaml
+    # double_tap_action:
+    #   action: fire-dom-event
+    #   browser_mod:
+    #     service: popup
+    #     data:
+    #       title: Sala
+    #       content:
+    #         type: markdown
+    #         content: |
+    #           ## Popup de teste (Lounge)
+    #           Se abriu no duplo toque, a ação está funcionando.
+    #           Próximo passo: recolocar o conteúdo completo do `livingroom.yaml`.
+    # hold_action: !include ../../shared/honeycomb/living.yaml
+    # hold_action:
+    #   action: none
+    hold_action: !include ../../shared/popup/rooms/livingroom.yaml
     template:
       - rooms_base
       - icon_couch_lamp
     variables:
-      light_entity: light.living_room_group
-      active: sensor.living_room_active
+      # light_entity: light.living_room_group
+      light_entity: light.sala_switch_2
+      # active: sensor.living_room_active
+      active: ''
     card_mod:
       style: |
         #circle {
-        {%- if not is_state('light.shelly_rgbw_kitchen_led_strip', 'on') -%}
+        {%- if not is_state('light.grupo_luzes_sala', 'on') -%}
           display:none !important;
         {% endif %}
         }
