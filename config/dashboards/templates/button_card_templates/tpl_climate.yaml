@@ -512,32 +512,27 @@ cover:
             return !entity || entity.attributes.friendly_name;
           ]]]
         style: >
-          --tablet-popup-header-color: rgba(0, 0, 0, 0);
-          --popup-background-color: rgba(0, 0, 0, 0.4);
-          --popup-border-width: 0;
-          --popup-max-width: calc(405px + 515px);
-
+          --max-popup-column: 2;
         content:
           type: custom:layout-card
           layout_type: custom:grid-layout
           layout:
+            grid-template-columns: 1fr
+            grid-template-rows: auto
             margin: 0
-            grid-template-columns: 0 400px 400px 0
-            grid-template-rows: fit-content(100%)
-            grid-template-areas: |
-              ". main entity ."
+            padding: 0
             mediaquery:
-              #phone
-              '(max-width: 800px)':
-                grid-template-columns: 1fr
-                grid-template-rows: fit-content(100%) fit-content(100%)
-                grid-template-areas: |
-                  "main"
-                  "entity"
+              '(min-width: 1441.99px)':
+                grid-template-columns: repeat(var(--max-popup-column), var(--max-popup-column-width, 550px))
+                grid-template-rows: auto
+              '(min-width: 800px)':
+                grid-template-columns: 550px
+                grid-template-rows: auto
+                margin: 0
+                padding: 0
+
           cards:
             - type: custom:more-info-card
-              view_layout:
-                grid-area: main
               entity: >
                 [[[ return variables.entity_id ]]]
               card_mod:
@@ -568,8 +563,6 @@ cover:
                       display: none !important;
                     }
             - type: entities
-              view_layout:
-                grid-area: entity
               state_color: true
               show_header_toggle: false
               entities: >

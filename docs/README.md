@@ -47,14 +47,14 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>43,948 </td>
+              <td>43,940 </td>
               <td>31</td>
-              <td>222</td>
-              <td>64</td>
+              <td>223</td>
+              <td>65</td>
               <td>71</td>
               <td>30</td>
-              <td>1359</td>
-              <td>222</td>
+              <td>1366</td>
+              <td>223</td>
               <td>30</td>
           </tr>
       </tbody>
@@ -85,6 +85,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - phpMyAdmin
 - PS5 MQTT
 - Samba share
+- Speedtest
 - Xiaomi Mi Scale
 - Zigbee2MQTT
 </details>
