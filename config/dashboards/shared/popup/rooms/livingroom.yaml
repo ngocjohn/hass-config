@@ -77,45 +77,45 @@ browser_mod:
                 - type: custom:button-card
                   entity: light.sala_switch_2
                   name: Luz Principal
-                  icon: mdi:ceiling-light
-                  tap_action:
-                    action: toggle
+                  template:
+                    - tpl_popup_light
+                    - icon_light_flush
                 - type: custom:button-card
                   entity: light.sala_switch_1
                   name: LED Direito
-                  icon: mdi:led-strip-variant
-                  tap_action:
-                    action: toggle
+                  template:
+                    - tpl_popup_light
+                    - icon_ledstrip
                 - type: custom:button-card
                   entity: light.sala_switch_3
                   name: LED Esquerdo
-                  icon: mdi:led-strip-variant
-                  tap_action:
-                    action: toggle
+                  template:
+                    - tpl_popup_light
+                    - icon_ledstrip
                 - type: custom:button-card
                   entity: light.sala_2_switch_2
                   name: VR Principal
-                  icon: mdi:ceiling-light
-                  tap_action:
-                    action: toggle
+                  template:
+                    - tpl_popup_light
+                    - icon_light_flush
                 - type: custom:button-card
                   entity: light.sala_2_switch_3
                   name: VR Cristaleira
-                  icon: mdi:led-strip-variant
-                  tap_action:
-                    action: toggle
+                  template:
+                    - tpl_popup_light
+                    - icon_ledstrip
                 - type: custom:button-card
                   entity: light.varanda_switch_1
                   name: VR Gourmet
-                  icon: mdi:led-strip-variant
-                  tap_action:
-                    action: toggle
+                  template:
+                    - tpl_popup_light
+                    - icon_ledstrip
                 - type: custom:button-card
                   entity: light.varanda_switch_2
                   name: VR Pendente
-                  icon: mdi:vanity-light
-                  tap_action:
-                    action: toggle
+                  template:
+                    - tpl_popup_light
+                    - icon_pendant
 
         # ======================================================================
         # COLUNA 2 — MIDIA / PLACEHOLDERS
@@ -131,7 +131,8 @@ browser_mod:
                 # TV — reservar espaco para futura entidade real
                 - type: custom:button-card
                   name: Smart TV
-                  icon: mdi:television
+                  template:
+                    - icon_tv
                   tap_action:
                     action: none
                   hold_action:
@@ -148,7 +149,8 @@ browser_mod:
                 # SPOTIFY — reservar espaco para futura entidade real
                 - type: custom:button-card
                   name: Spotify
-                  icon: mdi:spotify
+                  template:
+                    - icon_spotify_color
                   tap_action:
                     action: none
                   hold_action:
@@ -165,7 +167,8 @@ browser_mod:
                 # PS5 — visivel, mas inativo
                 - type: custom:button-card
                   name: PS5
-                  icon: mdi:sony-playstation
+                  template:
+                    - icon_playstation
                   tap_action:
                     action: none
                   hold_action:
@@ -208,7 +211,8 @@ browser_mod:
               cards:
                 - type: custom:button-card
                   name: Sensor de Presenca / Atividade
-                  icon: mdi:motion-sensor
+                  template:
+                    - icon_motion
                   tap_action:
                     action: none
                   hold_action:
@@ -222,7 +226,8 @@ browser_mod:
 
                 - type: custom:button-card
                   name: Temperatura / Umidade
-                  icon: mdi:thermometer-water
+                  template:
+                    - icon_climate
                   tap_action:
                     action: none
                   hold_action:
