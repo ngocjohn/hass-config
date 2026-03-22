@@ -313,9 +313,7 @@ updates:
             <li>
               <img src="${a.entity_picture || "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"}" alt="${a.friendly_name}">
               <div class="infoNameBtn">
-                <div id="infoName" data-entity="${e}">
-                  <a href="#" data-entity="${e}"> ${a.friendly_name.replace('update', '')}</a>
-                </div>
+                <div id="infoName" data-entity="${e}">${a.friendly_name.replace('update', '')}</div>
                 <div class="secondary">
                   <span>${a.installed_version} <b>&rarr;</b> ${a.latest_version}</span>
                   <div class="buttonsUpdate">
@@ -374,6 +372,7 @@ updates:
                 entityId: entity
               }
             }));
+            console.log('Showing more info for', entity);
           });
         });
 
