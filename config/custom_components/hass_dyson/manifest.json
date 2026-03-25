@@ -1,0 +1,22 @@
+{
+  "domain": "hass_dyson",
+  "name": "Dyson",
+  "codeowners": [
+    "@cmgrayb"
+  ],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/cmgrayb/hass-dyson",
+  "homekit": {},
+  "integration_type": "hub",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/cmgrayb/hass-dyson/issues",
+  "loggers": [
+    "custom_components.hass_dyson"
+  ],
+  "quality_scale": "gold",
+  "requirements": [
+    "libdyson-rest==0.12.1"
+  ],
+  "version": "0.31.0"
+}

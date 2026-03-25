@@ -58,7 +58,7 @@ chips:
       - grid-template-areas: |
           "i n"
           "i s"
-      - grid-template-rows: min-content min-content
+      - grid-template-rows: auto auto
       - grid-template-columns: 0.5fr 1fr
       # - column-gap: 8px
     card:
@@ -79,6 +79,7 @@ chips:
       - padding: 0.3vw
       - box-sizing: border-box;
       - border: 1px solid transparent;
+      - height: 100%;
     state:
       # - padding: 0 0.4vw 0 0
       # - line-height: 100%

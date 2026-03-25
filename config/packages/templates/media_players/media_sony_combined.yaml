@@ -5,7 +5,7 @@ media_player:
     device_class: tv
     children:
       - media_player.sony_bravia_tv
-      - media_player.sony_google_cast_5
+      - media_player.sony_google_cast
     active_child_template: >
       {% if is_state('media_player.sony_bravia_tv', 'off') %}
         media_player.sony_bravia_tv
@@ -13,7 +13,7 @@ media_player:
         {% if state_attr('media_player.sony_bravia_tv', 'media_content_id') %}
           media_player.sony_bravia_tv
         {% else %}
-          media_player.sony_google_cast_5
+          media_player.sony_google_cast
         {% endif %}
       {% endif %}
     attributes:

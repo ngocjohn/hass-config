@@ -1279,9 +1279,9 @@
   actions:
   - action: media_player.turn_off
     metadata: {}
-    target:
-      device_id: 815b71e96466e723e187e661cec79a4a
     data: {}
+    target:
+      entity_id: media_player.sony_google_cast
   mode: single
 - id: '1773334440037'
   alias: C location occup
