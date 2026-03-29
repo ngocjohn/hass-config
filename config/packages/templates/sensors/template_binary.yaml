@@ -73,7 +73,7 @@ template:
         icon: mdi:home-export-outline
         state: >-
           {{
-            is_state('person.viet_ngoc', 'not_home')
+            not is_state('person.viet_ngoc', 'home')
             and is_state('input_boolean.z_occupacy', 'off')
             and is_state('input_boolean.guest_mode','off')
           }}

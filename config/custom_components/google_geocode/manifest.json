@@ -1,10 +1,12 @@
 {
   "domain": "google_geocode",
   "name": "Google Geocode",
-  "documentation": "https://github.com/gregoryduckworth/GoogleGeocode-HASS",
-  "issue_tracker": "https://github.com/gregoryduckworth/GoogleGeocode-HASS/issues",
-  "version": "0.1.9",
-  "dependencies": [],
   "codeowners": [],
-  "requirements": []
+  "dependencies": [],
+  "documentation": "https://github.com/gregoryduckworth/GoogleGeocode-HASS",
+  "integration_type": "hub",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/gregoryduckworth/GoogleGeocode-HASS/issues",
+  "requirements": [],
+  "version": "0.5.2"
 }

@@ -288,96 +288,13 @@ updates:
     [[[
       // variables
       let output = '',
-          el = this.shadowRoot,
-          await = setTimeout(getHacsUpdate, 1000),
           updates = states[variables.updates],
           hacs_installed = states[variables.hacs_installed]?.attributes.repositories,
           hacs_update = states['update.hacs_update']?.attributes.installed_version,
           no_updates = variables.translate_no_updates,
           update_available = variables.translate_update_available,
           updates_available = variables.translate_updates_available;
-      const rename = a => {
-          return a.release_url && a.release_url.indexOf('github.com') > -1
-              ? `${a.release_url.split('/')[3]}/${a.release_url.split('/')[4]}`
-              : a?.friendly_name;
-      };
 
-
-
-
-      // update entities
-      Object.keys(states).forEach(key => {
-        let s = states[key], e = s.entity_id, a = s.attributes;
-        if (e.includes('update.') && s.state === 'on') {
-            output += `
-            <li>
-              <img src="${a.entity_picture || "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"}" alt="${a.friendly_name}">
-              <div class="infoNameBtn">
-                <div id="infoName" data-entity="${e}">${a.friendly_name.replace('update', '')}</div>
-                <div class="secondary">
-                  <span>${a.installed_version} <b>&rarr;</b> ${a.latest_version}</span>
-                  <div class="buttonsUpdate">
-                    <ha-button size="small" appearance="plain" id="buttonUpdate" data-entity="${e}">Install</ha-button>
-                    <ha-button size="small" appearance="plain" id="buttonUpdateSkip" data-entity="${e}">Skip</ha-button>
-                  </div>
-                </div>
-              </div>
-            </li>`;
-        }
-      });
-
-      function getHacsUpdate() {
-        let buttons = el.querySelectorAll('#buttonUpdate'),
-            skip_buttons = el.querySelectorAll('#buttonUpdateSkip'),
-            info_name = el.querySelectorAll('#infoName');
-        // skip button
-        skip_buttons.forEach(button => {
-          button.addEventListener('click', function() {
-            console.log('Skipping update for', button.dataset.entity);
-            let entity = button.dataset.entity,
-                parrent = button.parentElement;
-                button.innerHTML = 'Skipping...';
-                hass.callService('update', 'skip', {
-                  entity_id: entity
-                });
-                setTimeout(() => {
-                    parrent.remove();
-                }, 2500);
-            })
-        });
-        // update button
-        buttons.forEach(button => {
-
-          button.addEventListener('click', function() {
-            let entity = button.dataset.entity,
-                parrent = button.parentElement;
-                button.innerHTML = 'Installing...';
-                hass.callService('update', 'install', {
-                  entity_id: entity
-                });
-                setTimeout(() => {
-                    parrent.remove();
-                }, 5000);
-            })
-        });
-
-        // info icon
-        info_name.forEach(info => {
-          info.addEventListener('click', function() {
-            let entity = info.dataset.entity;
-            info.dispatchEvent(new CustomEvent('hass-more-info', {
-              bubbles: true,
-              composed: true,
-              detail: {
-                entityId: entity
-              }
-            }));
-            console.log('Showing more info for', entity);
-          });
-        });
-
-        clearTimeout(await);
-      }
 
       // subtitle
       let count = updates?.attributes.update_entities,
@@ -392,12 +309,109 @@ updates:
           <span> Integrations </span>
         </div>
         <p class="subtitle">${subtitle}</p>
-        <ul id="updateList">${output}</ul>
       `;
-
-
-
     ]]]
+
+update_entity:
+  show_state: false
+  show_label: true
+  show_name: true
+  show_entity_picture: true
+  show_icon: true
+  show_ripple: false
+  icon: mdi:package-variant-plus
+  label: >
+    [[[
+      let attr = entity?.attributes;
+      return `
+        <span>${attr?.installed_version} <b>&rarr;</b> ${attr?.latest_version}</span>`;
+    ]]]
+  tap_action:
+    action: more-info
+
+  styles:
+    grid:
+      - grid-template-areas: |
+          "i n up_btn skip_btn"
+          "i l up_btn skip_btn"
+      - grid-template-columns: 40px 1fr max-content max-content
+      - grid-column-gap: 8px
+    card:
+      - padding: 0.5em
+      - background: none
+      - text-align: left
+      - height: auto
+  custom_fields:
+    up_btn:
+      card:
+        type: custom:button-card
+        entity: '[[[ return entity.entity_id ]]]'
+        variables:
+          service: update.install
+          button_label: Install
+        template: update_button
+    skip_btn:
+      card:
+        type: custom:button-card
+        entity: '[[[ return entity.entity_id ]]]'
+        variables:
+          service: update.skip
+          button_label: Skip
+        template: update_button
+  extra_styles: |
+    #name {
+      font-size: 1em !important;
+      place-self: flex-start !important;
+      max-width: 100%;
+      text-align: left !important;
+      padding-left: 2px;
+      line-height: 1.2em;
+      padding-bottom: 4px !important;
+    }
+    #label {
+      font-size: 0.7em !important;
+      display: inline-flex;
+      gap: 1em;
+      background-color: #292929;
+      padding: 2px 8px;
+      border-radius: 4px;
+      color: var(--secondary-text-color);
+      place-self: flex-start !important;
+      align-items: center;
+      height: fit-content;
+    }
+    #img-cell {
+      height: auto;
+      position: inherit;
+      background: none !important;
+      max-width: 40px;
+      object-fit: contain;
+      min-height: 40px;
+    }
+    #img-cell img {
+      width: 100% !important;
+      object-fit: contain;
+      position: relative !important;
+    }
+update_button:
+  show_state: true
+  show_label: false
+  show_name: false
+  show_icon: false
+  show_ripple: false
+  tap_action:
+    action: call-service
+    service: '[[[ return variables.service ]]]'
+    target:
+      entity_id: '[[[ return entity.entity_id ]]]'
+  state_display: |
+    [[[
+      let variant = variables.button_label.toLowerCase() === 'skip' ? 'warning' : 'brand';
+      return `
+        <ha-button size="small" appearance="plain" variant="${variant}">${variables.button_label}</ha-button>
+      `;
+    ]]]
+
 updates_icon_name:
   template: icon_name
   icon: mdi:open-in-new

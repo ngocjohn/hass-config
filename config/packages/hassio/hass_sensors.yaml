@@ -63,6 +63,9 @@ template:
           update_entities: >-
             {% set mqtt_ignores = integration_entities('mqtt')  | select('search', 'update.') | list %}
             {{ states.update | selectattr('state','eq','on')  |  rejectattr('entity_id', 'in', mqtt_ignores ) | list | count }}
+          update_entities_list: >-
+            {% set mqtt_ignores = integration_entities('mqtt')  | select('search', 'update.') | list %}
+            {{ states.update | selectattr('state','eq','on')  |  rejectattr('entity_id', 'in', mqtt_ignores ) | map(attribute='entity_id') | list }}
 
       # SENSOR - DOMAIN COUNTER
       # - unique_id: domain_counter

@@ -2,8 +2,8 @@ Graphite Auto:
   # POPUP MORE INFO
   # dialog-box-shadow: var(--rgb-accent-color)
   dialog-box-shadow: 0 0px 16px 4px rgba(101,115,134, .15), 0 16px 64px 32px rgba(101,115,134, .5) !important;
-  dialog-backdrop-filter: blur(12px)
-  dialog-scrim-color: rgba(0, 0, 0, 0.32)
+  dialog-backdrop-filter: blur(4px)
+  dialog-scrim-color: rgba(0, 0, 0, 0.7)
   popup-background-color: transparent
   ha-dialog-scrim-backdrop-filter: var(--dialog-backdrop-filter)
   # popup-background-color: rgba(34,38,39,0.7)
@@ -781,8 +781,8 @@ Graphite Auto:
       --dialog-surface-margin-top: unset !important;
       --dialog-box-shadow: 0 0px 16px 4px rgba(101,115,134, .15), 0 16px 64px 32px rgba(101,115,134, .5) !important;
       --ha-dialog-surface-background: rgba(22, 24, 29, 0.7) !important;
-      --wa-color-overlay-modal: rgba(0, 0, 0, 0.7) !important;
-      --mdc-dialog-scrim-color: var(--dialog-scrim-color, rgba(0, 0, 0, 0.32)) !important;
+      --wa-color-overlay-modal: var(--dialog-scrim-color, rgba(0, 0, 0, 0.7)) !important;
+      --mdc-dialog-scrim-color: var(--dialog-scrim-color, rgba(0, 0, 0, 0.7)) !important;
       --mdc-text-field-fill-color: rgb(50 50 50 / 22%) !important;
       --mdc-select-fill-color: rgb(50 50 50 / 22%) !important;
       --mdc-theme-surface: rgba(22, 24, 29, 1) !important;

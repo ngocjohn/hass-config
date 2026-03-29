@@ -1294,8 +1294,8 @@
     - 'on'
     for:
       hours: 0
-      minutes: 2
-      seconds: 0
+      minutes: 0
+      seconds: 10
   conditions: []
   actions:
   - action: notify.ngoc_devices

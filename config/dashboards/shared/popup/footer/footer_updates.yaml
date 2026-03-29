@@ -3,65 +3,70 @@ browser_mod:
   service: browser_mod.popup
   data:
     title: Updates
-
     content:
-      type: custom:mod-card
-      card_mod:
-        style:
-          hui-grid-card:
-            $: |
-              #root {
-                grid-gap: 0 !important;
-                padding: var(--tablet-popup-content-padding);
-                padding-top: 0 !important;
-                max-width: 700px;
-              }
+      type: entities
+      entities: >
+        [[[
+          const sensorUpdates = states['sensor.hassio_updates_available'];
+          const attributes = sensorUpdates?.attributes || {};
+          const haOSUpdates = attributes.home_assistant || 0;
+          const update_entities_list = attributes.update_entities_list || [];
 
-              #root hui-card:nth-child(2) {
-                margin-bottom: 1.5em !important;
-              }
-      card:
-        type: grid
-        columns: 1
-        square: false
-        cards:
-          - type: custom:button-card
-            entity: sensor.current_version
-            template: updates_hass
-            tap_action:
-              action: none
-            variables:
-              available: sensor.hassio_updates_available
-              latest: sensor.home_assistant_versions
-              latest_beta: sensor.docker_hub_beta
-              release_notes: sensor.hass_release_notes
-              release_notes_beta: sensor.hass_release_notes_beta
-          - type: custom:button-card
-            entity: sensor.current_version
-            name: Github Release
-            variables:
-              latest: sensor.home_assistant_versions
-            tap_action:
-              action: url
-              url_path: >
-                [[[
-                  return states['sensor.hass_release_notes'].attributes.html_url;
-                ]]]
-            template: updates_hass_icon_name
-          ############################################
-          - type: custom:button-card
-            variables:
-              updates: sensor.hassio_updates_available
-              hacs_installed: sensor.hacs_installed
-            template: updates
-          - type: custom:button-card
-            entity: sensor.hassio_updates_available
-            name: Updates
-            template:
-              - updates_icon_name
-              - >
-                [[[
-                  return window.navigator.userAgent.match(/iPhone/i)
-                    ? 'hacs_navigate_ios'
-                    : 'hacs_iframe';
-                ]]]
+          const updates = [];
+
+          // Hass OS / Supervised updates
+          if (haOSUpdates > 0) {
+            updates.push({
+              "type": "custom:button-card",
+              "entity": "sensor.current_version",
+              "template": "updates_hass",
+              "variables": {
+                "available": "sensor.hassio_updates_available",
+                "latest": "sensor.home_assistant_versions",
+                "latest_beta": "sensor.docker_hub_beta",
+                "release_notes": "sensor.hass_release_notes",
+                "release_notes_beta": "sensor.hass_release_notes_beta",
+              },
+            },
+            {
+              "type": "custom:button-card",
+              "entity": "sensor.current_version",
+              "name": "Github Release",
+              "variables": {
+                "latest": "sensor.home_assistant_versions",
+              },
+              "tap_action": {
+                "action": "url",
+                "url_path": `
+                  ${states['sensor.hass_release_notes']?.attributes?.html_url || 'https://www.home-assistant.io/blog/'}
+                `,
+              },
+              "template": "updates_hass_icon_name",
+            }
+            );
+          }
+          // HACS updates entities
+          updates.push({
+            "type": "custom:button-card",
+            "template": "updates",
+            "variables": {
+              "updates": "sensor.hassio_updates_available",
+              "hacs_installed": "sensor.hacs_installed",
+            },
+          });
+          if (update_entities_list.length > 0) {
+            for (let i = 0; i < update_entities_list.length; i++) {
+              updates.push({
+                "type": "custom:button-card",
+                "entity": update_entities_list[i],
+                "template": "update_entity",
+              });
+            }
+            updates.push({
+              "type": "custom:button-card",
+              "name": "Updates",
+              "template": ["updates_icon_name", (window.navigator.userAgent.match(/iPhone/i) ? 'hacs_navigate_ios' : 'hacs_iframe')],
+            });
+          }
+          return updates;
+        ]]]
