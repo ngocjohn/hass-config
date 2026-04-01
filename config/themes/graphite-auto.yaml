@@ -789,6 +789,7 @@ Graphite Auto:
     }
     ha-adaptive-dialog:not(.type-quick-bar) {
       --ha-bottom-sheet-height: auto !important;
+      --ha-card-background: none !important;
     }
     ha-dialog.type-browser-mod-popup {
       --ha-dialog-width-md: calc(var(--max-popup-column, 1) * var(--popup-width, 550px)) !important;

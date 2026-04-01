@@ -274,18 +274,7 @@ template:
       - name: 'vacuum_cleaning_count'
         state: "{{ state_attr('vacuum.roidmi_eve','custom.clean_counts') }}"
       - name: 'vacuum_position'
-        state: >
-          {% set room_dict = {
-            1: "Kitchen",
-            2: "Utility",
-            3: "Office",
-            4: "Bedroom",
-            5: "Kids Room",
-            6: "Living Room",
-            7: "Hallway",
-            8: "Bathroom"
-          } %}
-          {{ room_dict[state_attr('camera.roidmi_eve', 'vacuum_room')] }}
+        state: "{{states('sensor.roidmi_eve_vacuum_room_name')}}"
   - binary_sensor:
       - name: 'vacuum_mop'
         state: "{{ state_attr('vacuum.roidmi_eve','custom.mop') }}"

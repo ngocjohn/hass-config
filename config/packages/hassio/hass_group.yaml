@@ -18,7 +18,7 @@ group:
       - light.living_room_floor_lamp
       - light.shelly_dimmer
       - light.shelly_rgbw_kitchen_led_strip
-      # - light.sony_tv_backlight
+      - light.sony_tv_backlight
   light_kitchen:
     name: Lights Kitchen Group
     icon: mdi:lightbulb-group

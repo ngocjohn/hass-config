@@ -271,46 +271,6 @@
         action: input_boolean.turn_on
       - stop: ''
   mode: single
-- id: '1694721012171'
-  alias: Spotify Vibrant Color
-  description: ''
-  triggers:
-  - entity_id:
-    - sensor.vibrant_color
-    trigger: state
-  - trigger: state
-    entity_id:
-    - media_player.currently_playing
-    to:
-    - playing
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 5
-  conditions:
-  - condition: and
-    conditions:
-    - condition: state
-      entity_id: light.office_led_light_strip
-      state: 'on'
-    - condition: or
-      conditions:
-      - condition: device
-        device_id: d8496daf7e926630a7431da013a83590
-        domain: media_player
-        entity_id: 952057f8ccc2766d1d825168186a225a
-        type: is_playing
-      - condition: state
-        entity_id: media_player.mass_universal_airplay
-        state: playing
-  actions:
-  - data:
-      transition: 5
-      rgb_color: '{{states(''sensor.vibrant_color'')}}'
-    target:
-      entity_id: light.office_led_light_strip
-    action: light.turn_on
-  mode: single
 - id: '1695149693530'
   alias: Notify HA started
   description: ''
@@ -373,6 +333,7 @@
             device_id:
             - 4f43e0dc2e03b71c2e137f9696a04a2c
           action: browser_mod.notification
+    enabled: false
   mode: restart
 - id: '1696553366478'
   alias: 'Dishwasher Set Timer '
@@ -1272,10 +1233,9 @@
     to:
     - 'off'
   conditions:
-  - condition: template
-    value_template: '{{ not is_state(''media_player.sony_google_cast_5'', ''off'')
-      }}'
-    alias: Cast not off
+  - alias: Cast not off
+    condition: template
+    value_template: '{{ not is_state(''media_player.sony_google_cast'', ''off'') }}'
   actions:
   - action: media_player.turn_off
     metadata: {}
@@ -1303,4 +1263,50 @@
     data:
       message: C occup
       title: C occup
+  mode: single
+- id: '1774883741871'
+  alias: Update speedtest
+  description: ''
+  triggers:
+  - trigger: time_pattern
+    minutes: /30
+  - trigger: homeassistant
+    event: start
+  - trigger: state
+    entity_id:
+    - sensor.speedtest_download
+    to:
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+    id: state_change
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: not
+        conditions:
+        - condition: trigger
+          id:
+          - state_change
+      sequence:
+      - action: hassio.app_start
+        data:
+          app: 6b87c29e_speedtest_addon
+        alias: Start addon
+    - conditions:
+      - condition: trigger
+        id:
+        - state_change
+      sequence:
+      - alias: Info
+        action: persistent_notification.create
+        metadata: {}
+        data:
+          title: Speedtest update
+          message: "Download: {{ states('sensor.speedtest_download', with_unit=True)
+            }} \nUpload: {{ states('sensor.speedtest_upload', with_unit=True) }} \nPing:
+            {{ states('sensor.speedtest_ping', with_unit=True) }}"
+          notification_id: speedtest_update
   mode: single

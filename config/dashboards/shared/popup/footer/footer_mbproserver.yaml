@@ -3,6 +3,8 @@ browser_mod:
   service: browser_mod.popup
   data:
     title: MBPro Server
+    adaptive: true
+    adaptive_allow_mode_change: false
     content:
       type: custom:mod-card
       card_mod: !include ../../snippets/style_popup_footer.yaml

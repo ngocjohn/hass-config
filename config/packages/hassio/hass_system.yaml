@@ -67,8 +67,12 @@ recorder:
     entities:
       - device_tracker.viet_ngoc_samsung
       - sensor.motion_sensor_entrance_illuminance
-logger:
 logbook:
+
+# LOGGER https://www.home-assistant.io/integrations/system_log/
+logger:
+system_log:
+  fire_event: true
 
 # TTS
 tts:
