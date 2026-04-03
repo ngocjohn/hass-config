@@ -3,6 +3,7 @@ browser_mod:
   service: browser_mod.popup
   data:
     title: Sensors
+    adaptive: true
     style: >
       --max-popup-column: 2;
     content:
@@ -18,48 +19,13 @@ browser_mod:
           #                SECURITY SENSORS               #
           #                                               #
           #################################################
-          - type: custom:auto-entities
-            card:
-              type: entities
-              title: Motion Sensors
-              show_header_toggle: false
-            card_mod:
-              class: header
-            filter:
-              template: |
-                {% for sensor in expand('group.motion_sensors') -%}
-                  {%- set name = state_attr(sensor.entity_id, "friendly_name") | regex_replace('Motion Sensor| ?Occupancy','') | trim -%}
-                  {{
-                    { 'entity': sensor.entity_id,
-                      'name': name,
-                      'state_color': true,
-                      'secondary_info': 'last-changed'
-                    }
-                  }},
-                {%- endfor %}
-            sort:
-              method: last_changed
-              reverse: true
-
-          - type: custom:auto-entities
-            card:
-              type: entities
-              title: Contact Sensors
-              show_header_toggle: false
-              card_mod:
-                class: header
-            filter:
-              template: |
-                {% for sensor in expand('group.contact_sensors') -%}
-                  {%- set name = state_attr(sensor.entity_id, "friendly_name") | regex_replace('Contact Sensor| ?Occupancy','') | trim -%}
-                  {{
-                    { 'entity': sensor.entity_id,
-                      'name': name,
-                      'state_color': true,
-                      'secondary_info': 'last-changed'
-                    }
-                  }},
-                {%- endfor %}
-            sort:
-              method: last_changed
-              reverse: true
+          - type: custom:streamline-card
+            template: popup_security_sensors
+            variables:
+              title: Motion
+              group_entity_id: group.motion_sensors
+          - type: custom:streamline-card
+            template: popup_security_sensors
+            variables:
+              title: Contact
+              group_entity_id: group.contact_sensors

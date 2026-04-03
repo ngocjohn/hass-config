@@ -1,0 +1,6 @@
+title: popup-cards
+path: popup-cards
+subview: false
+theme: tablet
+
+cards: !include_dir_merge_list ../shared/popup/sub_footer/

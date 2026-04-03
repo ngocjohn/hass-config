@@ -3,6 +3,7 @@ browser_mod:
   service: browser_mod.popup
   data:
     title: System Information
+    adaptive: true
     style: >
       --max-popup-column: 3;
     content:

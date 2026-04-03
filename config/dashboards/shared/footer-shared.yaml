@@ -25,11 +25,16 @@ cards:
     template:
       - footer
     variables:
-      notify_icon: 'mdi:broom'
+      notify_icon: >
+        [[[
+          let isOffline = states['vacuum.roidmi_eve']?.state === 'unavailable';
+          return isOffline ? 'mdi:alert' : 'mdi:broom' ;
+        ]]]
       notify: >
         [[[
-          let isCleaning = states['vacuum.roidmi_eve']?.state === 'cleaning';
-          return isCleaning;
+          let isCleaning = states['vacuum.roidmi_eve']?.state === 'cleaning',
+              isOffline = states['vacuum.roidmi_eve']?.state === 'unavailable';
+          return isOffline ? 'alert' : isCleaning ? isCleaning : null;
         ]]]
 
   - type: custom:button-card
@@ -47,7 +52,13 @@ cards:
   - type: custom:button-card
     name: >
       <ha-icon icon="mdi:server"></ha-icon> Server
-    tap_action: !include ./popup/footer/footer_mbproserver.yaml
+    # tap_action: !include ./popup/footer/footer_mbproserver.yaml
+    tap_action:
+      action: fire-dom-event
+      browser_mod:
+        service: browser_mod.popup
+        data:
+          popup_card_id: footer_server
     template:
       - footer
   - type: custom:button-card

@@ -92,6 +92,8 @@ tablet:
   swiper-scrollbar-drag-bg-color: rgb(179, 179, 179)
   swiper-scrollbar-size: 4px
 
+  bar-card-border-radius: 12px
+
   uix-theme: tablet
 
   uix-view-yaml: |
@@ -105,7 +107,12 @@ tablet:
       $: |
         #root {
           min-height: 100%;
-          overflow: hidden !important;
+          overflow: auto !important;
+        }
+        @media screen and (max-width: 800px) {
+          #root {
+            overflow: hidden !important;
+          }
         }
       $swipe-card$:
         .: |

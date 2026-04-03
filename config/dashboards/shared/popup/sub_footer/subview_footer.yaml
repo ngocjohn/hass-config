@@ -1,0 +1,91 @@
+#################################################
+#                                               #
+#    FOOTER POPUP CARDS                         #
+#                                               #
+#################################################
+- &popup-footer-custom
+  type: custom:popup-card
+  dismissable: true
+  adaptive_force_bottom_sheet: false
+  adaptive: true
+  adaptive_allow_mode_change: false
+
+- popup_card_id: footer_server
+  <<: *popup-footer-custom
+  title: MacBook Pro
+  card: !include ../footer/footer_server.yaml
+
+- type: custom:popup-card
+  dismissable: true
+  adaptive_force_bottom_sheet: false
+  adaptive: true
+  adaptive_allow_mode_change: false
+  popup_card_id: footer_update
+  title: MacBook Pro
+  card:
+    type: entities
+    entities: >
+      [[[
+        const sensorUpdates = states['sensor.hassio_updates_available'];
+        const attributes = sensorUpdates?.attributes || {};
+        const haOSUpdates = attributes.home_assistant || 0;
+        const update_entities_list = attributes.update_entities_list || [];
+
+        const updates = [];
+
+        // Hass OS / Supervised updates
+        if (haOSUpdates > 0) {
+          updates.push({
+            "type": "custom:button-card",
+            "entity": "sensor.current_version",
+            "template": "updates_hass",
+            "variables": {
+              "available": "sensor.hassio_updates_available",
+              "latest": "sensor.home_assistant_versions",
+              "latest_beta": "sensor.docker_hub_beta",
+              "release_notes": "sensor.hass_release_notes",
+              "release_notes_beta": "sensor.hass_release_notes_beta",
+            },
+          },
+          {
+            "type": "custom:button-card",
+            "entity": "sensor.current_version",
+            "name": "Github Release",
+            "variables": {
+              "latest": "sensor.home_assistant_versions",
+            },
+            "tap_action": {
+              "action": "url",
+              "url_path": `
+                ${states['sensor.hass_release_notes']?.attributes?.html_url || 'https://www.home-assistant.io/blog/'}
+              `,
+            },
+            "template": "updates_hass_icon_name",
+          }
+          );
+        }
+        // HACS updates entities
+        updates.push({
+          "type": "custom:button-card",
+          "template": "updates",
+          "variables": {
+            "updates": "sensor.hassio_updates_available",
+            "hacs_installed": "sensor.hacs_installed",
+          },
+        });
+        if (update_entities_list.length > 0) {
+          for (let i = 0; i < update_entities_list.length; i++) {
+            updates.push({
+              "type": "custom:button-card",
+              "entity": update_entities_list[i],
+              "template": "update_entity",
+            });
+          }
+          updates.push({
+            "type": "custom:button-card",
+            "name": "Updates",
+            "template": ["updates_icon_name", (window.navigator.userAgent.match(/iPhone/i) ? 'hacs_navigate_ios' : 'hacs_iframe')],
+          });
+        }
+        return updates;
+      ]]]

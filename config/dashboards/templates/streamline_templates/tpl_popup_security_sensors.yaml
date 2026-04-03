@@ -1,0 +1,27 @@
+popup_security_sensors:
+  default:
+    - title: Sensors
+    - group_entity_id: group.motion_sensors
+  card:
+    type: custom:auto-entities
+    card:
+      type: entities
+      title: '[[title]]'
+      show_header_toggle: false
+      card_mod:
+        class: header
+    filter:
+      template: |
+        {% for sensor in expand('[[group_entity_id]]') -%}
+          {%- set name = state_attr(sensor.entity_id, "friendly_name") | regex_replace('Motion Sensor|Contact Sensor | ?Occupancy','') | trim -%}
+          {{
+            { 'entity': sensor.entity_id,
+              'name': name,
+              'state_color': true,
+              'secondary_info': 'last-changed'
+            }
+          }},
+        {%- endfor %}
+    sort:
+      method: last_changed
+      reverse: true

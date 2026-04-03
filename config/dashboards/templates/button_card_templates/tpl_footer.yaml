@@ -35,7 +35,7 @@ footer:
         };
       ]]]
     hover_enable: >
-      [[[ return true ]]]
+      [[[ return true; ]]]
     notify_icon: >
       [[[
         return 'mdi:alert-rhombus';
@@ -100,7 +100,7 @@ footer:
         - text-overflow: unset
         - z-index: 1
   tap_action:
-    haptic: medium
+    haptic: light
   hold_action:
     action: block
   double_tap_action:
@@ -154,11 +154,12 @@ base_updates:
 
     .subtitle {
       font-size: 0.95em;
-      line-height: 0.7em;
+      /* line-height: 2; */
       padding-left: 3px;
-      padding-bottom: 10px;
+      /* padding-bottom: 10px; */
       font-weight: 500;
       color: #828383;
+      margin-block: 0.5em 0;
     }
     a {
       color: var(--primary-color);
@@ -170,6 +171,8 @@ base_updates:
       display: flex;
       flex-direction: column;
       width: inherit;
+      max-height: 350px;
+      overflow: auto;
     }
 
     ul#updateList li {

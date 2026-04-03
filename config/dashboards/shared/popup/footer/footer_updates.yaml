@@ -3,6 +3,8 @@ browser_mod:
   service: browser_mod.popup
   data:
     title: Updates
+    adaptive: true
+    adaptive_allow_mode_change: false
     content:
       type: entities
       entities: >

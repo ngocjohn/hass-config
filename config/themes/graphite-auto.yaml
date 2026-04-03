@@ -2,9 +2,10 @@ Graphite Auto:
   # POPUP MORE INFO
   # dialog-box-shadow: var(--rgb-accent-color)
   dialog-box-shadow: 0 0px 16px 4px rgba(101,115,134, .15), 0 16px 64px 32px rgba(101,115,134, .5) !important;
-  dialog-backdrop-filter: blur(4px)
+  dialog-backdrop-filter: blur(12px)
   dialog-scrim-color: rgba(0, 0, 0, 0.7)
   popup-background-color: transparent
+  ha-dialog-surface-background: rgba(22, 24, 29, 0.7)
   ha-dialog-scrim-backdrop-filter: var(--dialog-backdrop-filter)
   # popup-background-color: rgba(34,38,39,0.7)
   # popup-background-color: rgba(30,30,45, 0.6)
@@ -33,8 +34,18 @@ Graphite Auto:
   ha-font-family-body: var(--primary-font-family)
   st-spacing: 0
 
+  # Input Form
+  ha-color-form-background: rgb(50 50 50 / 22%)
+  ha-color-form-background-hover: rgb(50 50 50 / 42%)
+  ha-color-form-background-disabled: rgb(50 50 50 / 12%)
+
   # Ha button
   ha-button-height: 32px
+
+  # Focus state
+  wa-focus-ring-width: 1px
+  wa-focus-ring-offset: 1px
+
   # mdc-theme-surface: var(--app-header-background-color)
   # Code mirror
   indent-marker-active-bg-color: var(--catppuccin-overlay0, '#6e738d')
@@ -571,8 +582,6 @@ Graphite Auto:
       # Navbar
       # app-header-background-color: var(--primary-background-color)
 
-      app-header-background-color: '#ffffff00'
-      app-header-backdrop-filter: 'blur(10px)'
       app-header-text-color: var(--token-color-icon-primary)
       app-header-edit-background-color: var(--token-color-background-card)
       # Sidebar
@@ -736,21 +745,15 @@ Graphite Auto:
   uix-theme: 'Graphite Auto'
 
   uix-root-yaml: |
-    .: |
 
+    .: |
       .header {
         z-index: 4 !important;
         --app-header-edit-background-color: #ffffff00;
         --app-header-background-color: #ffffff00;
         --app-header-backdrop-filter: blur(2em);
         --app-header-border-bottom: none;
-        backdrop-filter: blur(1em);
       }
-
-  # uix-drawer: |
-  #   :host aside.mdc-drawer {
-  #     background-color: #ffffff00 !important;
-  #   }
 
   uix-top-app-bar-fixed: &config_header |
     :host {
@@ -766,39 +769,103 @@ Graphite Auto:
 
   uix-developer-tools: *config_header
 
-  uix-dialog: &popup_card_mod |
-    :host([card]) .content .container {
-      padding: 0px !important;
-    }
-    :host {
-      font-family: Poppins, Raleway, SF Pro Text, sans-serif, system-ui !important;
-    }
+  uix-dialog-yaml: |
 
-    ha-adaptive-dialog,
-    ha-dialog {
-      --vertical-align-dialog: unset !important;
-      --dialog-surface-top: unset !important;
-      --dialog-surface-margin-top: unset !important;
-      --dialog-box-shadow: 0 0px 16px 4px rgba(101,115,134, .15), 0 16px 64px 32px rgba(101,115,134, .5) !important;
-      --ha-dialog-surface-background: rgba(22, 24, 29, 0.7) !important;
-      --wa-color-overlay-modal: var(--dialog-scrim-color, rgba(0, 0, 0, 0.7)) !important;
-      --mdc-dialog-scrim-color: var(--dialog-scrim-color, rgba(0, 0, 0, 0.7)) !important;
-      --mdc-text-field-fill-color: rgb(50 50 50 / 22%) !important;
-      --mdc-select-fill-color: rgb(50 50 50 / 22%) !important;
-      --mdc-theme-surface: rgba(22, 24, 29, 1) !important;
-    }
-    ha-adaptive-dialog:not(.type-quick-bar) {
-      --ha-bottom-sheet-height: auto !important;
-      --ha-card-background: none !important;
-    }
-    ha-dialog.type-browser-mod-popup {
-      --ha-dialog-width-md: calc(var(--max-popup-column, 1) * var(--popup-width, 550px)) !important;
-      --bar-card-border-radius: 12px !important;
-      --ha-card-border-radius: 0px !important;
-      --ha-card-background: none !important;
-      --ha-card-box-shadow: none !important;
-      --entities-divider-color: rgba(58, 69, 73, 0.2) !important;
-      --dialog-content-padding: 0 !important;
-    }
-  uix-browser-mod-popup-inner: *popup_card_mod
-  uix-more-info: *popup_card_mod
+    .: |
+      :host,
+      ha-adaptive-dialog,
+      ha-dialog  {
+        --vertical-align-dialog: unset !important;
+        --dialog-surface-top: unset !important;
+        --dialog-surface-margin-top: unset !important;
+        --mdc-dialog-scrim-color: var(--dialog-scrim-color, rgba(0, 0, 0, 0.7)) !important;
+        font-family: Poppins, Raleway, SF Pro Text, sans-serif, system-ui !important;
+      }
+      :host([card]) .content .container {
+        padding: 0px !important;
+        margin: 0 !important;
+      }
+      ha-dialog.type-dialog-edit-card {
+        --ha-dialog-surface-background: initial !important;
+      }
+
+      ha-dialog.type-browser-mod-popup-inner,
+      ha-dialog.type-browser-mod-popup,
+      ha-adaptive-dialog.type-browser-mod-popup {
+        --ha-dialog-width-md: calc(var(--max-popup-column, 1) * var(--popup-width, 550px)) !important;
+        --ha-card-border-radius: 0px !important;
+        --ha-card-background: none !important;
+        --ha-card-box-shadow: none !important;
+        --entities-divider-color: rgba(58, 69, 73, 0.2) !important;
+        --dialog-content-padding: 0 !important;
+        --dialog-box-shadow: 0 0px 16px 4px rgba(101,115,134, .15), 0 16px 64px 32px rgba(101,115,134, .5) !important;
+      }
+      @media (max-width: 500px) {
+        ha-adaptive-dialog.type-browser-mod-popup {
+          --ha-dialog-width-md: initial !important;
+        }
+      }
+
+  uix-more-info-yaml: |
+
+    .: |
+      :host, ha-adaptive-dialog {
+        --ha-bottom-sheet-height: auto !important;
+        --vertical-align-dialog: unset !important;
+        --dialog-surface-top: unset !important;
+        --dialog-surface-margin-top: unset !important;
+        --dialog-box-shadow: 0 0px 16px 4px rgba(101,115,134, .15), 0 16px 64px 32px rgba(101,115,134, .5) !important;
+        --mdc-dialog-scrim-color: var(--dialog-scrim-color, rgba(0, 0, 0, 0.7)) !important;
+        font-family: Poppins, Raleway, SF Pro Text, sans-serif, system-ui !important;
+      }
+
+  # uix-more-info-yaml: |
+
+  #   .: |
+  #     :host, ha-adaptive-dialog {
+  #       --vertical-align-dialog: unset !important;
+  #       --dialog-surface-top: unset !important;
+  #       --dialog-surface-margin-top: unset !important;
+  #       --mdc-dialog-scrim-color: var(--dialog-scrim-color, rgba(0, 0, 0, 0.7)) !important;
+  #       --mdc-theme-surface: rgba(22, 24, 29, 1) !important;
+  #     }
+
+  # uix-dialog: &popup_card_mod |
+  #   :host([card]) .content .container {
+  #     padding: 0px !important;
+  #   }
+  #   :host {
+  #     font-family: Poppins, Raleway, SF Pro Text, sans-serif, system-ui !important;
+  #   }
+
+  #   ha-adaptive-dialog,
+  #   ha-dialog {
+  #     --vertical-align-dialog: unset !important;
+  #     --dialog-surface-top: unset !important;
+  #     --dialog-surface-margin-top: unset !important;
+  #     --dialog-box-shadow: 0 0px 16px 4px rgba(101,115,134, .15), 0 16px 64px 32px rgba(101,115,134, .5) !important;
+  #     --ha-dialog-surface-background: rgba(22, 24, 29, 0.7) !important;
+  #     --wa-color-overlay-modal: var(--dialog-scrim-color, rgba(0, 0, 0, 0.7)) !important;
+  #     --mdc-dialog-scrim-color: var(--dialog-scrim-color, rgba(0, 0, 0, 0.7)) !important;
+  #     --mdc-text-field-fill-color: rgb(50 50 50 / 22%) !important;
+  #     --mdc-select-fill-color: rgb(50 50 50 / 22%) !important;
+  #     --mdc-theme-surface: rgba(22, 24, 29, 1) !important;
+  #   }
+
+  #   ha-adaptive-dialog:not(.type-quick-bar) {
+  #     --ha-bottom-sheet-height: auto !important;
+  #     --ha-card-background: none !important;
+  #     --bar-card-border-radius: 12px !important;
+  #     --ha-dialog-width-md: calc(var(--max-popup-column, 1) * var(--popup-width, 550px)) !important;
+  #   }
+  #   ha-dialog.type-browser-mod-popup {
+  #     --ha-dialog-width-md: calc(var(--max-popup-column, 1) * var(--popup-width, 550px)) !important;
+  #     --bar-card-border-radius: 12px !important;
+  #     --ha-card-border-radius: 0px !important;
+  #     --ha-card-background: none !important;
+  #     --ha-card-box-shadow: none !important;
+  #     --entities-divider-color: rgba(58, 69, 73, 0.2) !important;
+  #     --dialog-content-padding: 0 !important;
+  #   }
+  # uix-browser-mod-popup-inner: *popup_card_mod
+  # uix-more-info: *popup_card_mod
