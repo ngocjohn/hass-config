@@ -7,13 +7,16 @@
   cards:
     - type: custom:streamline-card
       template: github_heading_card
-      variables:
+      variables: &card_variables
         heading_title: 🗄️ Sidebar Organizer
-        total_entity: sensor.sidebar_organizer_total
-        latest_entity: sensor.sidebar_origanizer_latest_download
+        history_name: 'sidebar_organizer'
+        device_id: ngocjohn/sidebar-organizer
+        total_entity: sensor.repo_sidebar_organizer_total_download
+        latest_entity: sensor.repo_sidebar_organizer_latest_download
         stars_entity: sensor.sidebar_organizer_stargazers
         repo_link: https://github.com/ngocjohn/sidebar-organizer
         bar_color: 'rgba(241, 203, 79, 0.7)'
+        fill_color: 'rgba(241, 203, 79, 0.2)'
     - type: custom:mod-card
       card_mod:
         style:
@@ -29,9 +32,4 @@
         type: custom:streamline-card
         template: github_combined_graph
         variables:
-          history_name: 'sidebar_organizer'
-          total_entity: sensor.sidebar_organizer_total
-          latest_entity: sensor.sidebar_origanizer_latest_download
-          device_id: ngocjohn/sidebar-organizer
-          bar_color: 'rgba(241, 203, 79, 0.7)'
-          fill_color: 'rgba(241, 203, 79, 0.2)'
+          <<: *card_variables

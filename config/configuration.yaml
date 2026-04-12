@@ -20,10 +20,10 @@ frontend:
   themes: !include_dir_merge_named themes
   extra_module_url:
     - /hacsfiles/lovelace-canary/canary.js?hacstag=245159052050
-    # - /hacsfiles/sidebar-organizer/sidebar-organizer.js?hacstag=932534411330
-    - /local/dashboard-resources/sidebar-organizer.js
+    - /hacsfiles/sidebar-organizer/sidebar-organizer.js?hacstag=932534411340
     - /local/dashboard-resources/customize-css-change.js?v1.0.3
     - /local/dashboard-resources/quickbar-navigate-shortcut.js?v0.0.1
+    - /local/dashboard-resources/empty-quickbar-fix.js
     - /local/dashboard-resources/custom_ikonky.js?v0.0.1
 
 # HTTP

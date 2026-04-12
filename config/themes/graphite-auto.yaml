@@ -772,13 +772,7 @@ Graphite Auto:
   uix-dialog-yaml: |
 
     .: |
-      :host,
-      ha-adaptive-dialog,
       ha-dialog  {
-        --vertical-align-dialog: unset !important;
-        --dialog-surface-top: unset !important;
-        --dialog-surface-margin-top: unset !important;
-        --mdc-dialog-scrim-color: var(--dialog-scrim-color, rgba(0, 0, 0, 0.7)) !important;
         font-family: Poppins, Raleway, SF Pro Text, sans-serif, system-ui !important;
       }
       :host([card]) .content .container {
@@ -809,11 +803,8 @@ Graphite Auto:
   uix-more-info-yaml: |
 
     .: |
-      :host, ha-adaptive-dialog {
-        --ha-bottom-sheet-height: auto !important;
-        --vertical-align-dialog: unset !important;
-        --dialog-surface-top: unset !important;
-        --dialog-surface-margin-top: unset !important;
+      ha-adaptive-dialog {
+        --ha-bottom-sheet-height: unset !important;
         --dialog-box-shadow: 0 0px 16px 4px rgba(101,115,134, .15), 0 16px 64px 32px rgba(101,115,134, .5) !important;
         --mdc-dialog-scrim-color: var(--dialog-scrim-color, rgba(0, 0, 0, 0.7)) !important;
         font-family: Poppins, Raleway, SF Pro Text, sans-serif, system-ui !important;

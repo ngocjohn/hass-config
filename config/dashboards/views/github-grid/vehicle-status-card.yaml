@@ -9,7 +9,7 @@
       variables:
         - heading_title: 🚘 Vehicle status card
         - total_entity: sensor.vehicle_status_card_total
-        - latest_entity: sensor.vehicle_status_latest
+        - latest_entity: sensor.vehicle_status_card_latest_download
         - stars_entity: sensor.vehicle_status_card_stargazers
         - repo_link: https://github.com/ngocjohn/vehicle-status-card
         - bar_color: 'rgba(62, 149, 205, 1)'
@@ -32,7 +32,7 @@
         variables:
           - history_name: 'vehicle_status'
           - total_entity: sensor.vehicle_status_card_total
-          - latest_entity: sensor.vehicle_status_latest
+          - latest_entity: sensor.vehicle_status_card_latest_download
           - device_id: ngocjohn/vehicle-status-card
           - bar_color: 'rgba(62, 149, 205, 1)'
           - fill_color: 'rgba(62, 149, 205, 0.2)'

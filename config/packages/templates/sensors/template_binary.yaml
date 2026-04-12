@@ -67,15 +67,15 @@ template:
             or is_state('device_tracker.phuong_chi_iphone', 'home')
             or is_state('input_boolean.guest_mode','on')
           }}
-      - name: 'People Away'
-        unique_id: away_occupancy
+      - name: 'Home Presence'
+        unique_id: home_presence
         device_class: occupancy
         icon: mdi:home-export-outline
         state: >-
           {{
-            not is_state('person.viet_ngoc', 'home')
-            and is_state('input_boolean.z_occupacy', 'off')
-            and is_state('input_boolean.guest_mode','off')
+            is_state('person.viet_ngoc', 'home')
+            or is_state('input_boolean.z_occupacy', 'on')
+            or is_state('input_boolean.guest_mode','on')
           }}
       - name: 'Zigbee Sensors Problem'
         unique_id: zigbee_sensors_problem

@@ -102,6 +102,7 @@ github_graph_card:
         entities:
           - entity: '[[latest_entity]]'
             color: '[[bar_color]]'
+
 github_logbook_card:
   default:
     - latest_entity: ''
@@ -250,6 +251,163 @@ stargazer_list:
               margin: 0
         cards: []
 
+github_traffics_card:
+  default:
+    - traffic_entity: ''
+    - bar_color: 'rgba(62, 149, 205, 1)'
+    - fill_color: 'rgba(62, 150, 205, 0.2)'
+  card:
+    type: custom:apexcharts-card
+    graph_span: 15d
+    span:
+      end: day
+      offset: '-1d12h'
+    header:
+      show: false
+      show_states: false
+    yaxis:
+      - id: count
+        decimals: 0
+        apex_config:
+          tickAmount: 4
+        min: 0
+        max: 100
+      - id: uniques
+        opposite: true
+        decimals: 0
+        apex_config:
+          tickAmount: 4
+        min: 0
+        max: 100
+    apex_config:
+      legend:
+        floating: true
+        position: top
+        horizontalAlign: left
+      xaxis:
+        type: datetime
+        tooltip:
+          enabled: false
+        axisTicks:
+          show: false
+        axisBorder:
+          show: false
+        labels:
+          format: dd-MM
+      chart:
+        offsetY: 5
+        zoom:
+          enabled: true
+        toolbar:
+          show: true
+          tools:
+            zoom: false
+            zoomin: false
+            zoomout: false
+            pan: true
+            reset: false
+        height: 250
+      grid:
+        show: true
+        borderColor: '#90A4AE10'
+        strokeDashArray: 0
+        position: back
+        xaxis:
+          lines:
+            show: true
+        yaxis:
+          lines:
+            show: true
+        padding:
+          top: 0
+          right: -10
+          bottom: 0
+          left: -10
+      stroke:
+        curve: straight
+      fill:
+        type: gradient
+        gradient:
+          inverseColors: false
+          shade: light
+          type: vertical
+          opacityFrom: 0.9
+          opacityTo: 0.6
+          stops:
+            - 0
+            - 100
+            - 100
+            - 100
+      plotOptions:
+        bar:
+          borderRadius: 1
+          dataLabels:
+            position: top
+      tooltip:
+        theme: dark
+    all_series_config:
+      type: area
+      show:
+        in_header: true
+        legend_value: false
+        offset_in_name: false
+      data_generator: |
+        return Object.values(entity.attributes.data)
+    series:
+      - entity: sensor.repohistory_sidebar_organizer_clones_counts
+        name: Count
+        color: '#EE6D7A'
+        yaxis_id: count
+      - entity: sensor.repohistory_sidebar_organizer_clones_uniques
+        name: Uniques
+        type: column
+        yaxis_id: uniques
+
+github_traffic_heading:
+  default:
+    - traffic_entity: 'sensor.repo_sidebar_organizer'
+  card:
+    type: heading
+    heading: Traffics
+    badges:
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        show_entity_picture: false
+        entity: '[[traffic_entity]]_total_clones'
+
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        show_entity_picture: false
+        entity: '[[traffic_entity]]_total_visitors'
+    heading_style: title
+github_traffics_with_title:
+  default:
+    - traffic_entity: 'sensor.repo_sidebar_organizer'
+    - bar_color: 'rgba(62, 149, 205, 1)'
+    - fill_color: 'rgba(62, 150, 205, 0.2)'
+  card:
+    type: vertical-stack
+    cards:
+      - type: custom:streamline-card
+        template: github_traffic_heading
+        variables:
+          traffic_entity: '[[traffic_entity]]'
+      - type: custom:streamline-card
+        template: github_traffics_card
+        variables:
+          traffic_entity: '[[traffic_entity]]'
+          bar_color: '[[bar_color]]'
+          fill_color: '[[fill_color]]'
+      - type: custom:streamline-card
+        template: github_traffics_card
+        variables:
+          traffic_entity: '[[traffic_entity]]'
+          bar_color: '[[bar_color]]'
+          fill_color: '[[fill_color]]'
 github_combined_graph:
   default:
     - history_name: ''
@@ -270,6 +428,8 @@ github_combined_graph:
           latest_entity: '[[latest_entity]]'
           bar_color: '[[bar_color]]'
           fill_color: '[[fill_color]]'
+      - type: custom:streamline-card
+        template: github_traffics_with_title
       - type: custom:streamline-card
         template: github_logbook_card
         variables:

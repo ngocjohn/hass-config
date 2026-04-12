@@ -14,7 +14,7 @@
     "custom_components.mbapi2020"
   ],
   "requirements": [
-    "protobuf>=3.19.1"
+    "protobuf>=3.19.5"
   ],
-  "version": "v0.34.2"
+  "version": "v0.35.0"
 }

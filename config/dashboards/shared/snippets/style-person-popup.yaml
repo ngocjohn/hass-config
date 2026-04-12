@@ -2,9 +2,6 @@ style:
   .: |
     @media (max-width: 450px), (max-height: 500px) {
       ha-dialog {
-        --mdc-dialog-min-width: 100vw !important;
-        --mdc-dialog-min-height: 100vh !important;
-        --popup-border-radius: 0 !important;
       }
     }
   hui-vertical-stack-card:
@@ -15,12 +12,9 @@ style:
         position: relative;
         width: 100%;
         overflow: hidden;
+        flex: none !important;
       }
-      @media (max-width: 450px), (max-height: 500px) {
-        #root {
-          height: calc(100vh - 66px)!important;
-        }
-      }
+
     $hui-entities-card:
       $: |
         ha-card {

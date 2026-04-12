@@ -1299,6 +1299,7 @@
       - condition: trigger
         id:
         - state_change
+        enabled: false
       sequence:
       - alias: Info
         action: persistent_notification.create
@@ -1309,4 +1310,5 @@
             }} \nUpload: {{ states('sensor.speedtest_upload', with_unit=True) }} \nPing:
             {{ states('sensor.speedtest_ping', with_unit=True) }}"
           notification_id: speedtest_update
+        enabled: false
   mode: single

@@ -52,13 +52,7 @@ cards:
   - type: custom:button-card
     name: >
       <ha-icon icon="mdi:server"></ha-icon> Server
-    # tap_action: !include ./popup/footer/footer_mbproserver.yaml
-    tap_action:
-      action: fire-dom-event
-      browser_mod:
-        service: browser_mod.popup
-        data:
-          popup_card_id: footer_server
+    tap_action: !include ./popup/footer/footer_mbproserver.yaml
     template:
       - footer
   - type: custom:button-card

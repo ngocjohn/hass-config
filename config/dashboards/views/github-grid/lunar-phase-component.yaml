@@ -9,8 +9,8 @@
       template: github_heading_card
       variables:
         heading_title: 🌘 Lunar Phase Integration
-        total_entity: sensor.lunar_phase_integration_total
-        latest_entity: sensor.lunar_phase_integration_latest
+        total_entity: sensor.lunar_phase_integration_total_download
+        latest_entity: sensor.lunar_phase_integration_latest_download
         stars_entity: sensor.lunar_phase_stargazers
         repo_link: https://github.com/ngocjohn/lunar-phase
         bar_color: 'rgba(236, 79, 241, 0.7)'
@@ -30,8 +30,8 @@
         template: github_combined_graph
         variables:
           history_name: 'lunar_integration'
-          total_entity: sensor.lunar_phase_integration_total
-          latest_entity: sensor.lunar_phase_integration_latest
+          total_entity: sensor.lunar_phase_integration_total_download
+          latest_entity: sensor.lunar_phase_integration_latest_download
           device_id: ngocjohn/lunar-phase
           bar_color: 'rgba(236, 79, 241, 0.7)'
           fill_color: 'rgba(236, 79, 241, 0.2)'

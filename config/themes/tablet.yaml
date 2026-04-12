@@ -144,6 +144,9 @@ tablet:
               }
       $hui-grid-card:
         $: |
+          #root {
+            flex: inherit !important;
+          }
           /* default */
           h1 {
             font-size: 1.4vw !important;
@@ -248,7 +251,7 @@ tablet:
       $: |
         #root {
           flex-wrap: wrap;
-          justify-content: space-between;
+          justify-content: center !important;
           place-items: center;
         }
 
@@ -262,7 +265,6 @@ tablet:
         #root {
           justify-content: space-between;
           align-items: center;
-          //height: 100%;
           flex-wrap: wrap;
         }
         @media only screen and (max-width: 1440px) {

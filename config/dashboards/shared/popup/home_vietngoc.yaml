@@ -3,6 +3,7 @@ browser_mod:
   service: browser_mod.popup
   data:
     title: Viet Ngoc
+    adaptive: true
     content:
       type: custom:mod-card
       card_mod: !include ../snippets/style-person-popup.yaml

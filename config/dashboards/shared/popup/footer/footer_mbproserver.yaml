@@ -35,11 +35,11 @@ browser_mod:
                 height: 2em
                 decimal: 0
                 unit_of_measurement: '%'
-                positions: &bar_card_positions
+                positions:
                   icon: outside
                   indicator: 'off'
                   name: outside
-                severity: &bar_card_severity
+                severity:
                   - color: '#9da0a2'
                     from: 0
                     to: 59
