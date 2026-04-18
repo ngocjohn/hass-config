@@ -60,7 +60,7 @@ ingress:
     ui_mode: replace
     title: Addons
     icon: mdi:puzzle
-    url: hassio/dashboard
+    url: config/apps
   link_integrations:
     work_mode: iframe
     ui_mode: replace

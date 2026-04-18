@@ -438,33 +438,27 @@ hacs_iframe:
     browser_mod:
       service: browser_mod.popup
       data:
-        # card_mod:
-        #   style:
-        #     .: |
-        #       .header-bar {
-        #         display: none !important;
-        #       }
-        card_mod:
-          style:
-            .: |
-              ha-dialog>ha-dialog-header {
-                display: none !important;
-              }
         content:
           type: iframe
-          aspect_ratio: '9:16'
+          aspect_ratio: 9/16
           url: >
-            [[[ return `/${hass.panels.config.url_path}/updates` ]]]
+            [[[ return `/${hass.panels.config.url_path}/updates`; ]]]
   template: icon_name
 hacs_navigate_ios:
   tap_action:
-    action: fire-dom-event
-    browser_mod:
-      service: browser_mod.javascript
-      data:
-        code: >
-          window.location.href = `/${hass.panels.config.url_path}/updates`;
+    action: navigate
+    navigation_path: /config/updates
+
   template: icon_name
+# hacs_navigate_ios:
+#   tap_action:
+#     action: fire-dom-event
+#     browser_mod:
+#       service: browser_mod.javascript
+#       data:
+#         code: >
+#           window.location.href = `/${hass.panels.config.url_path}/updates`;
+#   template: icon_name
 unifi_ios:
   tap_action:
     action: url

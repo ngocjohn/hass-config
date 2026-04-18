@@ -102,43 +102,38 @@ template:
         icon: mdi:home-assistant
         attributes:
           addons: >
+            {% from 'device_tools.jinja' import get_device_attr, get_addon_entities %}
             {%- set data = namespace(active=[]) -%}
             {%- set dev_inactive = namespace(offline=[]) -%}
             {%- set devices = label_devices('addons') -%}
 
             {%- for dev in devices -%}
-              {%- set devname = device_attr(dev, 'name') -%}
-              {%- set identifiers = device_attr(dev, 'identifiers') | list -%}
-              {%- set slug_name = identifiers[0][1] -%}
-              {%- set conf_url = device_attr(dev, 'configuration_url') | replace('homeassistant://', '') -%}
-              {%- set path = "/config/app/" + slug_name -%}
-              {%- set entities = device_entities(dev) | list -%}
-              {%- set running_ent = entities | select('search', '_running$') | join(', ') -%}
-              {%- set cpu_ent = entities | select('search', '_cpu_percent$') | join(', ') -%}
-              {%- set memory_ent = entities | select('search', '_memory_percent$') | join(', ') -%}
-              {%- set update_ent = entities | select('search', '_update$') | join(', ') -%}
-              {%- set version_ent = entities | select('search', '_version$') | reject('search', '_newest_version$') | join(', ') -%}
-
+              {%- set dev_attr = get_device_attr(dev) | from_json  -%}
+              {%- set dev_entities = get_addon_entities(dev) | from_json -%}
+              {%- set conf_url = device_attr(dev, 'configuration_url') | replace('homeassistant:/', '') -%}
+              {%- set path = "/config/app/" + dev_attr.slug -%}
               {%- set addon_data = {
-                'name': devname,
                 'dev_id': dev,
+                'name': dev_attr.name,
+                'slug_name': dev_attr.slug,
                 'conf_url': conf_url,
-                'slug_name': slug_name,
-                'running_ent': running_ent,
-                'cpu_ent': cpu_ent,
-                'memory_ent': memory_ent,
-                'update_ent': update_ent,
-                'version_ent': version_ent,
+                'running_ent': dev_entities.get('running'),
+                'cpu_ent': dev_entities.get('cpu_percent'),
+                'memory_ent': dev_entities.get('memory_percent'),
+                'update_ent': dev_entities.get('update'),
+                'version_ent': dev_entities.get('version'),
                 'path': path
               } -%}
 
-              {%- if is_state(running_ent, 'on') -%}
+              {%- if is_state(dev_entities.running, 'on') -%}
                 {%- set data.active = data.active + [addon_data] -%}
               {%- else -%}
                 {%- set dev_inactive.offline = dev_inactive.offline + [addon_data] -%}
               {%- endif -%}
             {%- endfor -%}
-            {{ {'active':  data.active, 'inactive':  dev_inactive.offline} | tojson }}
+
+            {{ {'active':  data.active, 'inactive':  dev_inactive.offline}  }}
+
 command_line:
   - sensor:
       unique_id: hacs_installed

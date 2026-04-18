@@ -515,7 +515,7 @@ addon_cards:
       layout_type: custom:grid-layout
       layout:
         grid-template-columns: repeat(auto-fill, minmax(240px, 1fr))
-        grid-template-rows: auto
+        grid-auto-rows: '[[rows_auto]]'
         grid-gap: 0.5rem 0.8rem
         margin: 0
         padding: 0

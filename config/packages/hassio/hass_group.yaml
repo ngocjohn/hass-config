@@ -39,7 +39,7 @@ group:
       - light.bedroom_closet_light
       - light.bedroom_main_light
       - light.shower_room_main_light
-      - light.shower_room_mirror_light
+      # - light.shower_room_mirror_light
       - light.bedroom_bed_light
       - light.bedroom_ripple_mood_light
   light_hallway_utility:
@@ -73,7 +73,7 @@ group:
       - light.bedroom_closet_light
       - light.bedroom_main_light
       - light.shower_room_main_light
-      - light.shower_room_mirror_light
+      # - light.shower_room_mirror_light
       - light.bedroom_bed_light
       - light.aqara_hub
       - light.utility_room_light
@@ -148,7 +148,6 @@ group:
       # - media_player.spotify
       - media_player.living_room_tv
       # - media_player.bedroom_tv
-      - media_player.spotifyplus_ngoc_nguyen
   homepod_airplay:
     name: 'Homepod Airplay'
     icon: mdi:speaker

@@ -827,7 +827,7 @@ person:
     service: homeassistant.update_entity
     service_data:
       entity_id: >
-        [[[ return variables.entity_id ]]]
+        [[[ return variables.entity_id; ]]]
   styles:
     custom_fields:
       icon:

@@ -67,7 +67,7 @@ browser_mod:
             updates.push({
               "type": "custom:button-card",
               "name": "Updates",
-              "template": ["updates_icon_name", (window.navigator.userAgent.match(/iPhone/i) ? 'hacs_navigate_ios' : 'hacs_iframe')],
+              "template": ["updates_icon_name", (window.navigator.userAgent.match(/Macintosh/i) ? 'hacs_navigate_ios' : 'hacs_navigate_ios')],
             });
           }
           return updates;

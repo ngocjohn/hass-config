@@ -31,14 +31,11 @@ browser_mod:
                 show_toolbar: true
                 compact_view: false
                 aqi:
-                  entity_id: sensor.dyson_ph04_pm_2_5
+                  entity_id: sensor.dyson_ph04_pm2_5
                   unit: µg/m³
                 stats:
-                  - entity_id: sensor.dyson_ph04_filter_life
+                  - entity_id: sensor.dyson_ph04_hepa_filter_life
                     subtitle: Filter life
-                    unit: '%'
-                  - attribute: percentage
-                    subtitle: Level
                     unit: '%'
                   - entity_id: switch.dyson_ph04_night_mode
                     subtitle: Night Mode

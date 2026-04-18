@@ -113,7 +113,7 @@ light:
     unique_id: group_light_hower
     entities:
       - light.shower_room_main_light
-      - light.shower_room_mirror_light
+      # - light.shower_room_mirror_light
   - platform: group
     name: 'Hallway Group'
     unique_id: group_light_hallway

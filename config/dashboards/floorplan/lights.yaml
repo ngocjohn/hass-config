@@ -57,7 +57,7 @@
     - light.office_lamp_bulb
     - light.bedroom_bed_light
     - light.bedroom_closet_light
-    - light.shower_room_mirror_light
+    # - light.shower_room_mirror_light
     - light.kitchen_table_light
     - light.kitchen_main_light
     - light.hallway_group
@@ -74,7 +74,7 @@
 - entities:
     - light.office_lamp_bulb
     - light.bedroom_closet_light
-    - light.shower_room_mirror_light
+    # - light.shower_room_mirror_light
     - light.kitchen_table_light
     - light.kitchen_main_light
     - light.hallway_group

@@ -20,7 +20,7 @@
           align-content: flex-start;
           --total-rows: 5;
         }
-        @media screen and (max-width: 1710px) {
+        @media screen and (max-width: 1800px) {
           .card-header {
             padding: 0 !important;
             line-height: unset !important;
@@ -28,13 +28,13 @@
           .card-content {
             max-height: calc(calc(128px + 7px) * var(--total-rows, 5));
             overflow-y: auto;
-            overflow-x: hidden;
+            overflow-x: hidden !important;
             margin-top: 1rem !important;
           }
         }
         @media screen and (max-width: 800px) {
           .card-content {
-            --total-rows: 3;
+            --total-rows: 4;
           }
         }
   view_layout:
@@ -52,3 +52,4 @@
       variables:
         - addon_list: inactive
         - button_template: addons_base
+        - rows_auto: 70px

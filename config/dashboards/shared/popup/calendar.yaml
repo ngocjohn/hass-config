@@ -40,6 +40,7 @@ browser_mod:
                 compactMode: false
                 showMultiDayEventParts: true
                 showCurrentEventLine: true
+                language: en
           - type: entities
             title: Lunar Phase
             card_mod:

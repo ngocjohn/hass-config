@@ -1,0 +1,727 @@
+type: sections
+max_columns: 6
+title: System Monitoring
+path: system-monitoring
+icon: mdi:monitor-dashboard
+theme: tablet
+sections:
+  - type: grid
+    cards:
+      - type: heading
+        heading: Traffics
+        badges:
+          - type: entity
+            show_name: true
+            show_state: true
+            show_icon: true
+            entity: sensor.repo_sidebar_organizer_total_clones
+            name:
+              type: entity
+            show_entity_picture: false
+          - type: entity
+            show_name: true
+            show_state: true
+            show_icon: true
+            entity: sensor.repo_sidebar_organizer_total_visitors
+            name:
+              type: entity
+            show_entity_picture: false
+        heading_style: title
+      - type: custom:apexcharts-card
+        experimental:
+          brush: true
+        brush:
+          selection_span: 1week
+          apex_config:
+            xaxis:
+              type: datetime
+              tooltip:
+                enabled: false
+              axisTicks:
+                show: false
+              axisBorder:
+                show: false
+              labels:
+                format: dd-MM
+            yaxis:
+              tickAmount: 1
+            grid:
+              show: false
+        graph_span: 16d
+        span:
+          end: day
+          offset: '-1d12h'
+        header:
+          show: false
+          show_states: false
+        yaxis:
+          - id: count
+            decimals: 4
+            min: 0
+            max: 90
+            apex_config:
+              tickAmount: 4
+          - id: uniques
+            opposite: true
+            decimals: 0
+            min: 0
+            max: 50
+        apex_config:
+          legend:
+            floating: true
+            position: top
+            horizontalAlign: left
+          xaxis:
+            type: datetime
+            tooltip:
+              enabled: false
+            axisTicks:
+              show: false
+            axisBorder:
+              show: false
+            labels:
+              format: dd-MM
+          fill:
+            type: gradient
+            gradient:
+              shadeIntensity: 0.5
+              opacityFrom: 0.25
+              opacityTo: 1
+              inverseColors: false
+              stops:
+                - 0
+                - 90
+                - 100
+          chart:
+            offsetY: 5
+            zoom:
+              enabled: false
+            toolbar:
+              show: true
+            height: 300
+          grid:
+            show: true
+            borderColor: '#90A4AE10'
+            strokeDashArray: 0
+            position: back
+            xaxis:
+              lines:
+                show: true
+            yaxis:
+              lines:
+                show: true
+          stroke:
+            curve: straight
+          plotOptions:
+            bar:
+              borderRadius: 1
+              dataLabels:
+                position: top
+          tooltip:
+            theme: dark
+        all_series_config:
+          show:
+            in_header: true
+            legend_value: false
+            offset_in_name: false
+          data_generator: |
+            return Object.values(entity.attributes.data)
+        series:
+          - type: area
+            show:
+              in_header: true
+              legend_value: false
+              offset_in_name: false
+              in_legend: true
+              in_chart: true
+              name_in_header: true
+              null_in_header: true
+              zero_in_header: true
+            data_generator: |
+              return Object.values(entity.attributes.data)
+            entity: sensor.repohistory_sidebar_organizer_clones_counts
+            name: Count
+            color: fd8ff4
+            yaxis_id: count
+            stroke_width: 2
+          - type: column
+            show:
+              in_header: true
+              legend_value: false
+              offset_in_name: false
+              in_legend: true
+              in_chart: true
+              name_in_header: true
+              null_in_header: true
+              zero_in_header: true
+            data_generator: |
+              return Object.values(entity.attributes.data)
+            entity: sensor.repohistory_sidebar_organizer_clones_uniques
+            name: Uniques
+            yaxis_id: uniques
+            stroke_width: 1
+            color: '#c5b4e5'
+          - entity: sensor.repohistory_sidebar_organizer_clones_counts
+            type: column
+            color: green
+            show:
+              in_brush: true
+              in_chart: false
+            data_generator: |
+              return Object.values(entity.attributes.data)
+        grid_options:
+          columns: full
+      - type: custom:apexcharts-card
+        chart_type: radialBar
+        color_list:
+          - '#1F8EFA'
+          - '#8C54FF'
+          - '#E65F57'
+          - '#FFC738'
+          - '#19BC47'
+          - '#B5B8CB'
+        experimental:
+          disable_config_validation: true
+        apex_config:
+          chart:
+            height: 250
+            type: radialBar
+            foreColor: '#E6F7F5'
+            sparkline:
+              enabled: true
+            dropShadow:
+              enabled: true
+              top: 0
+              left: 0
+              blur: 4
+              color: rgba(92, 242, 214, 0.3)
+          plotOptions:
+            radialBar:
+              startAngle: -180
+              endAngle: 180
+              hollow:
+                size: 60%
+                background: transparent
+              track:
+                show: true
+                background: rgba(0,0,0,0.08)
+                strokeWidth: 80%
+              dataLabels:
+                name:
+                  show: true
+                  offsetY: 55
+                value:
+                  fontSize: 50
+                  fontWeight: 600
+                  color: '#379c55'
+                  offsetY: 0
+                total:
+                  show: true
+                  label: CPU Load
+                  color: '#a8a8a8'
+                  formatter: |
+                    EVAL:(w) => {
+                        const sum = w.globals.seriesTotals.reduce((a,b) => { return a + b },0);
+                        return Math.round(sum) + '%';
+                      }
+          stroke:
+            lineCap: butt
+            dashArray: 6
+            width: 2
+          fill:
+            type: gradient
+            gradient:
+              shade: dark
+              gradientToColors:
+                - '#3BE1C6'
+              shadeIntensity: 0.5
+              opacityFrom: 1
+              opacityTo: 0.7
+              stops:
+                - 0
+                - 100
+          legend:
+            show: true
+            position: right
+            fontSize: 14
+            itemMargin:
+              vertical: 10
+            markers:
+              shape: diamond
+              offsetX: -10
+              strokeWidth: 0
+              customHTML:
+                - |-
+                  EVAL:() => {
+                    return `<ha-icon icon="mdi:robot-angry" style="--mdc-icon-size: 14px;"></ha-icon>`
+                  }
+                - |-
+                  EVAL:() => {
+                    return `<ha-icon icon="mdi:chip" style="--mdc-icon-size: 18px;"></ha-icon>`
+                  }
+        series:
+          - entity: sensor.ha_system_containers_cpu_usage
+            name: Containers CPU
+          - entity: sensor.ha_system_cpu_usage
+            name: CPU Usage
+        grid_options:
+          columns: 12
+    column_span: 2
+  - type: grid
+    cards:
+      - type: custom:apexcharts-card
+        graph_span: 17d
+        span:
+          offset: '-1d12h'
+        header:
+          show: false
+          show_states: false
+        yaxis:
+          - id: count
+            decimals: 0
+            min: 0
+            max: 100
+          - id: uniques
+            opposite: true
+            decimals: 0
+            min: 0
+            max: 100
+            apex_config:
+              decimalsInFloat: 0
+              labels:
+                style:
+                  colors:
+                    - rgba(255, 255, 255, 0.5)
+                  fontSize: 10
+                  fontWeight: 400
+                offsetX: -15
+        apex_config:
+          legend:
+            floating: true
+            position: top
+            horizontalAlign: center
+          xaxis:
+            tooltip:
+              enabled: false
+            crosshairs:
+              show: false
+            axisTicks:
+              show: false
+            axisBorder:
+              show: true
+              color: rgba(112, 135, 164, 0.5)
+              height: 1
+          chart:
+            height: 400px
+            fontFamily: SF Pro Text
+          fill:
+            type: gradient
+            gradient:
+              type: vertical
+              shadeIntensity: 0.2
+              opacityFrom: 1
+              opacityTo: 0.7
+              stops:
+                - 0
+                - 70
+                - 100
+          grid:
+            show: true
+            borderColor: rgba(112, 135, 164, 0.1)
+          tooltip:
+            theme: dark
+            style:
+              fontSize: 14
+          title:
+            text: ⚡ kWh
+            style:
+              color: white
+              fontSize: 24
+              fontWeight: 700
+        all_series_config:
+          type: area
+          show:
+            in_header: true
+            legend_value: false
+            offset_in_name: false
+          data_generator: |
+            return Object.values(entity.attributes.data)
+        series:
+          - entity: sensor.repohistory_sidebar_organizer_clones_counts
+            name: Count
+            color: '#EE6D7A'
+            yaxis_id: count
+          - entity: sensor.repohistory_sidebar_organizer_clones_uniques
+            name: Uniques
+            type: column
+            yaxis_id: uniques
+        grid_options:
+          columns: full
+      - type: heading
+        heading: Traffics
+        badges:
+          - type: entity
+            show_name: true
+            show_state: true
+            show_icon: true
+            entity: sensor.repo_sidebar_organizer_total_clones
+            name:
+              type: entity
+            show_entity_picture: false
+          - type: entity
+            show_name: true
+            show_state: true
+            show_icon: true
+            entity: sensor.repo_sidebar_organizer_total_visitors
+            name:
+              type: entity
+            show_entity_picture: false
+        heading_style: title
+      - type: custom:apexcharts-card
+        graph_span: 15d
+        span:
+          end: day
+          offset: '-1d12h'
+        header:
+          show: false
+          show_states: false
+        yaxis:
+          - id: count
+            decimals: 0
+            apex_config:
+              tickAmount: 4
+            min: 0
+            max: 100
+          - id: uniques
+            opposite: true
+            decimals: 0
+            apex_config:
+              tickAmount: 4
+            min: 0
+            max: 100
+        apex_config:
+          legend:
+            floating: true
+            position: top
+            horizontalAlign: left
+          xaxis:
+            type: datetime
+            tooltip:
+              enabled: false
+            axisTicks:
+              show: false
+            axisBorder:
+              show: false
+            labels:
+              format: dd-MM
+          chart:
+            offsetY: 5
+            zoom:
+              enabled: true
+            toolbar:
+              show: true
+              tools:
+                zoom: false
+                zoomin: false
+                zoomout: false
+                pan: true
+                reset: false
+            height: 250
+          grid:
+            show: true
+            borderColor: '#90A4AE10'
+            strokeDashArray: 0
+            position: back
+            xaxis:
+              lines:
+                show: true
+            yaxis:
+              lines:
+                show: true
+            padding:
+              top: 0
+              right: -10
+              bottom: 0
+              left: -10
+          stroke:
+            curve: straight
+          fill:
+            type: gradient
+            gradient:
+              inverseColors: false
+              shade: light
+              type: vertical
+              opacityFrom: 0.9
+              opacityTo: 0.6
+              stops:
+                - 0
+                - 100
+                - 100
+                - 100
+          plotOptions:
+            bar:
+              borderRadius: 1
+              dataLabels:
+                position: top
+          tooltip:
+            theme: dark
+        all_series_config:
+          type: area
+          show:
+            in_header: true
+            legend_value: false
+            offset_in_name: false
+          data_generator: |
+            return Object.values(entity.attributes.data)
+        series:
+          - entity: sensor.repohistory_sidebar_organizer_clones_counts
+            name: Count
+            color: '#EE6D7A'
+            yaxis_id: count
+          - entity: sensor.repohistory_sidebar_organizer_clones_uniques
+            name: Uniques
+            type: column
+            yaxis_id: uniques
+        grid_options:
+          columns: full
+    column_span: 2
+  - type: grid
+    cards:
+      - type: custom:apexcharts-card
+        graph_span: 17d
+        span:
+          offset: '-1d12h'
+        header:
+          show: false
+          show_states: false
+        yaxis:
+          - id: count
+            decimals: 0
+            min: 0
+            max: 100
+          - id: uniques
+            opposite: true
+            decimals: 0
+            min: 0
+            max: 100
+            apex_config:
+              decimalsInFloat: 0
+              labels:
+                style:
+                  colors:
+                    - rgba(255, 255, 255, 0.5)
+                  fontSize: 10
+                  fontWeight: 400
+                offsetX: -15
+        apex_config:
+          legend:
+            floating: true
+            position: top
+            horizontalAlign: center
+          xaxis:
+            tooltip:
+              enabled: false
+            crosshairs:
+              show: false
+            axisTicks:
+              show: false
+            axisBorder:
+              show: true
+              color: rgba(112, 135, 164, 0.5)
+              height: 1
+          chart:
+            height: 400px
+            fontFamily: SF Pro Text
+          fill:
+            type: gradient
+            gradient:
+              type: vertical
+              shadeIntensity: 0.2
+              opacityFrom: 1
+              opacityTo: 0.7
+              stops:
+                - 0
+                - 70
+                - 100
+          grid:
+            show: true
+            borderColor: rgba(112, 135, 164, 0.1)
+          tooltip:
+            theme: dark
+            style:
+              fontSize: 14
+          title:
+            text: ⚡ kWh
+            style:
+              color: white
+              fontSize: 24
+              fontWeight: 700
+        all_series_config:
+          type: area
+          show:
+            in_header: true
+            legend_value: false
+            offset_in_name: false
+          data_generator: |
+            return Object.values(entity.attributes.data)
+        series:
+          - entity: sensor.repohistory_sidebar_organizer_clones_counts
+            name: Count
+            color: '#EE6D7A'
+            yaxis_id: count
+          - entity: sensor.repohistory_sidebar_organizer_clones_uniques
+            name: Uniques
+            type: column
+            yaxis_id: uniques
+        grid_options:
+          columns: full
+      - type: heading
+        heading: Traffics
+        badges:
+          - type: entity
+            show_name: true
+            show_state: true
+            show_icon: true
+            entity: sensor.repo_sidebar_organizer_total_clones
+            name:
+              type: entity
+            show_entity_picture: false
+          - type: entity
+            show_name: true
+            show_state: true
+            show_icon: true
+            entity: sensor.repo_sidebar_organizer_total_visitors
+            name:
+              type: entity
+            show_entity_picture: false
+        heading_style: title
+      - type: custom:apexcharts-card
+        graph_span: 15d
+        span:
+          end: day
+          offset: '-1d12h'
+        header:
+          show: false
+          show_states: false
+        yaxis:
+          - id: count
+            decimals: 0
+            apex_config:
+              tickAmount: 4
+            min: 0
+            max: 100
+          - id: uniques
+            opposite: true
+            decimals: 0
+            apex_config:
+              tickAmount: 4
+            min: 0
+            max: 100
+        apex_config:
+          legend:
+            floating: true
+            position: top
+            horizontalAlign: left
+          xaxis:
+            type: datetime
+            tooltip:
+              enabled: false
+            axisTicks:
+              show: false
+            axisBorder:
+              show: false
+            labels:
+              format: dd-MM
+          chart:
+            offsetY: 5
+            zoom:
+              enabled: true
+            toolbar:
+              show: true
+              tools:
+                zoom: false
+                zoomin: false
+                zoomout: false
+                pan: true
+                reset: false
+            height: 250
+          grid:
+            show: true
+            borderColor: '#90A4AE10'
+            strokeDashArray: 0
+            position: back
+            xaxis:
+              lines:
+                show: true
+            yaxis:
+              lines:
+                show: true
+            padding:
+              top: 0
+              right: -10
+              bottom: 0
+              left: -10
+          stroke:
+            curve: straight
+          fill:
+            type: gradient
+            gradient:
+              inverseColors: false
+              shade: light
+              type: vertical
+              opacityFrom: 0.9
+              opacityTo: 0.6
+              stops:
+                - 0
+                - 100
+                - 100
+                - 100
+          plotOptions:
+            bar:
+              borderRadius: 1
+              dataLabels:
+                position: top
+          tooltip:
+            theme: dark
+        all_series_config:
+          type: area
+          show:
+            in_header: true
+            legend_value: false
+            offset_in_name: false
+          data_generator: |
+            return Object.values(entity.attributes.data)
+        series:
+          - entity: sensor.repohistory_sidebar_organizer_clones_counts
+            name: Count
+            color: '#EE6D7A'
+            yaxis_id: count
+          - entity: sensor.repohistory_sidebar_organizer_clones_uniques
+            name: Uniques
+            type: column
+            yaxis_id: uniques
+        grid_options:
+          columns: full
+    column_span: 2
+badges:
+  - type: entity
+    show_name: true
+    show_state: true
+    show_icon: true
+    entity: sensor.ha_system_cpu_usage
+    name: Processor
+    show_entity_picture: false
+    state_content: state
+    tap_action:
+      action: none
+
+cards: []
+header:
+  layout: start
+  badges_position: top
+  badges_wrap: scroll
+# footer:
+#   max-width: 100%
+#   card: !include ../shared/footer-shared.yaml
+dense_section_placement: false
+top_margin: false

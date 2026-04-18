@@ -252,33 +252,50 @@ stargazer_list:
         cards: []
 
 github_traffics_card:
-  default:
-    - traffic_entity: ''
-    - bar_color: 'rgba(62, 149, 205, 1)'
-    - fill_color: 'rgba(62, 150, 205, 0.2)'
   card:
     type: custom:apexcharts-card
-    graph_span: 15d
+    graph_span: '[[graph_span]]'
     span:
       end: day
       offset: '-1d12h'
     header:
       show: false
       show_states: false
+    experimental:
+      brush: true
+    brush:
+      selection_span: 2week
+      apex_config:
+        xaxis:
+          type: datetime
+          tooltip:
+            enabled: false
+          axisTicks:
+            show: false
+          axisBorder:
+            show: false
+          labels:
+            format: dd-MM
+        yaxis:
+          tickAmount: 1
+        grid:
+          show: false
+        chart:
+          height: 200
     yaxis:
       - id: count
         decimals: 0
         apex_config:
           tickAmount: 4
         min: 0
-        max: 100
+        max: '[[traffic_max_count_value]]'
       - id: uniques
         opposite: true
         decimals: 0
         apex_config:
           tickAmount: 4
         min: 0
-        max: 100
+        max: '[[traffic_max_unique_value]]'
     apex_config:
       legend:
         floating: true
@@ -306,7 +323,7 @@ github_traffics_card:
             zoomout: false
             pan: true
             reset: false
-        height: 250
+        height: 300
       grid:
         show: true
         borderColor: '#90A4AE10'
@@ -318,25 +335,19 @@ github_traffics_card:
         yaxis:
           lines:
             show: true
-        padding:
-          top: 0
-          right: -10
-          bottom: 0
-          left: -10
+
       stroke:
         curve: straight
       fill:
         type: gradient
         gradient:
+          shadeIntensity: 0.5
+          opacityFrom: 0.25
+          opacityTo: 1
           inverseColors: false
-          shade: light
-          type: vertical
-          opacityFrom: 0.9
-          opacityTo: 0.6
           stops:
             - 0
-            - 100
-            - 100
+            - 90
             - 100
       plotOptions:
         bar:
@@ -346,26 +357,33 @@ github_traffics_card:
       tooltip:
         theme: dark
     all_series_config:
-      type: area
       show:
         in_header: true
         legend_value: false
         offset_in_name: false
       data_generator: |
         return Object.values(entity.attributes.data)
+    color_list: '[[color_list]]'
     series:
-      - entity: sensor.repohistory_sidebar_organizer_clones_counts
+      - entity: sensor.repohistory_[[traffic_history_repository]]_[[traffic_type]]_counts
         name: Count
-        color: '#EE6D7A'
+        type: area
         yaxis_id: count
-      - entity: sensor.repohistory_sidebar_organizer_clones_uniques
+      - entity: sensor.repohistory_[[traffic_history_repository]]_[[traffic_type]]_uniques
         name: Uniques
         type: column
         yaxis_id: uniques
-
+      - entity: sensor.repohistory_[[traffic_history_repository]]_[[traffic_type]]_counts
+        color: '[[bar_color]]'
+        type: column
+        show:
+          in_brush: true
+          in_chart: false
+        data_generator: |
+          return Object.values(entity.attributes.data)
 github_traffic_heading:
   default:
-    - traffic_entity: 'sensor.repo_sidebar_organizer'
+    - traffic_total_entity: 'sensor.repo_sidebar_organizer'
   card:
     type: heading
     heading: Traffics
@@ -375,18 +393,60 @@ github_traffic_heading:
         show_state: true
         show_icon: true
         show_entity_picture: false
-        entity: '[[traffic_entity]]_total_clones'
+        entity: '[[traffic_total_entity]]_total_clones'
 
       - type: entity
         show_name: true
         show_state: true
         show_icon: true
         show_entity_picture: false
-        entity: '[[traffic_entity]]_total_visitors'
+        entity: '[[traffic_total_entity]]_total_visitors'
     heading_style: title
+
+github_traffic_js_card:
+  default:
+    - traffic_history_repository: 'sidebar_organizer'
+    - traffic_total_entity: 'sensor.repo_sidebar_organizer'
+    - traffic_type: 'clones'
+    - bar_color: 'rgba(62, 149, 205, 1)'
+    - fill_color: 'rgba(62, 150, 205, 0.2)'
+  card:
+    type: custom:streamline-card
+    template: github_traffics_card
+    variables_javascript: |
+      const randomLightColor = () => {
+        const r = Math.floor(127 + Math.random() * 128); // Red: 127-255
+        const g = Math.floor(127 + Math.random() * 128); // Green: 127-255
+        const b = Math.floor(127 + Math.random() * 128); // Blue: 127-255
+        return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+      };
+      const historyEntity = states['sensor.repohistory_[[traffic_history_repository]]_[[traffic_type]]'];
+      const entries = Object.entries(historyEntity.attributes['[[traffic_type]]']).map(([_, value]) => value);
+      const counts = entries.map(entry => entry.count);
+      const uniques = entries.map(entry => entry.uniques);
+      const dataLength = entries.length;
+      const maxCountValue = Math.ceil(Math.max(...counts, 100) / 50) * 50;
+      const maxUniqueValue = Math.ceil(Math.max(...uniques, 100) / 50) * 50;
+      const fillColor = randomLightColor();
+      const colorList = [`${randomLightColor()}`, `${randomLightColor()}`];
+
+      return {
+        traffic_history_repository: '[[traffic_history_repository]]',
+        traffic_total_entity: '[[traffic_total_entity]]',
+        traffic_type: '[[traffic_type]]',
+        bar_color: '[[bar_color]]',
+        fill_color: fillColor,
+        graph_span: `${dataLength}d`,
+        color_list: colorList,
+        traffic_max_count_value: maxCountValue,
+        traffic_max_unique_value: maxUniqueValue
+      };
+
 github_traffics_with_title:
   default:
-    - traffic_entity: 'sensor.repo_sidebar_organizer'
+    - traffic_history_repository: 'sidebar_organizer'
+    - traffic_total_entity: 'sensor.repo_sidebar_organizer'
+    - traffic_type: 'clones'
     - bar_color: 'rgba(62, 149, 205, 1)'
     - fill_color: 'rgba(62, 150, 205, 0.2)'
   card:
@@ -395,19 +455,16 @@ github_traffics_with_title:
       - type: custom:streamline-card
         template: github_traffic_heading
         variables:
-          traffic_entity: '[[traffic_entity]]'
+          traffic_total_entity: '[[traffic_total_entity]]'
       - type: custom:streamline-card
-        template: github_traffics_card
+        template: github_traffic_js_card
         variables:
-          traffic_entity: '[[traffic_entity]]'
+          traffic_history_repository: '[[traffic_history_repository]]'
+          traffic_total_entity: '[[traffic_total_entity]]'
+          traffic_type: '[[traffic_type]]'
           bar_color: '[[bar_color]]'
           fill_color: '[[fill_color]]'
-      - type: custom:streamline-card
-        template: github_traffics_card
-        variables:
-          traffic_entity: '[[traffic_entity]]'
-          bar_color: '[[bar_color]]'
-          fill_color: '[[fill_color]]'
+
 github_combined_graph:
   default:
     - history_name: ''
@@ -430,6 +487,15 @@ github_combined_graph:
           fill_color: '[[fill_color]]'
       - type: custom:streamline-card
         template: github_traffics_with_title
+        variables:
+          bar_color: '[[bar_color]]'
+          fill_color: '[[fill_color]]'
+      - type: custom:streamline-card
+        template: github_traffics_with_title
+        variables:
+          bar_color: '[[bar_color]]'
+          fill_color: '[[fill_color]]'
+          traffic_type: 'views'
       - type: custom:streamline-card
         template: github_logbook_card
         variables:

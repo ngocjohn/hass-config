@@ -9,5 +9,6 @@ views:
   - !include subviews/movie-panel.yaml
   - !include subviews/music-assistant.yaml
   - !include subviews/floor-plan.yaml
+  - !include subviews/system-monitoring.yaml
   # - !include subviews/popup_cards.yaml
   # - !include subviews/ytube-music.yaml
