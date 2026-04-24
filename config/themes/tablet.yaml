@@ -107,9 +107,9 @@ tablet:
       $: |
         #root {
           min-height: 100%;
-          overflow: auto !important;
+          overflow: visible !important;
         }
-        @media screen and (max-width: 800px) {
+        @media screen and (min-width: 400px) and (max-width: 600px) {
           #root {
             overflow: hidden !important;
           }

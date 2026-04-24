@@ -20,7 +20,7 @@ grid_cam_door:
 grid_cam_kids:
   card:
     type: custom:button-card
-    entity: camera.kids_room
+    entity: camera.kids_room_camera
     name: ' '
     hold_action: !include ../../shared/popup/cameras.yaml
     template:
@@ -30,19 +30,28 @@ grid_cam_kids:
       battery: 'sensor.doorway_battery_percentage'
       stream_status: 'sensor.kids_room_stream_status'
       image_entity: 'image.kids_room_cam_snapshot'
-    double_tap_action:
-      action: fire-dom-event
-      browser_mod:
-        service: browser_mod.popup
-        data:
-          title: 'Kids Room'
-          content:
-            type: custom:webrtc-camera
-            entity: camera.kids_room
 
+    # double_tap_action:
+    #   action: fire-dom-event
+    #   browser_mod:
+    #     service: browser_mod.popup
+    #     data:
+    #       title: 'Kids Room'
+    #       content:
+    #         type: custom:webrtc-camera
+    #         entity: camera.kids_room_camera
     styles:
       card:
         - background-position: center
+
+grid_cam_kids_room:
+  card:
+    type: picture-entity
+    show_state: true
+    show_name: false
+    camera_view: auto
+    entity: camera.kids_room_camera
+    camera_image: camera.kids_room_camera
 
 # CAM TERRACE
 grid_cam_terrace:

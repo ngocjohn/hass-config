@@ -6,6 +6,7 @@
 # CAM KIDS ROOM
 - type: custom:streamline-card
   template: grid_cam_kids
+
 # CAM TERRACE
 - type: custom:streamline-card
   template: grid_cam_terrace

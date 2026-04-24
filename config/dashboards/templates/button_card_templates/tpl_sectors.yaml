@@ -74,6 +74,15 @@ rooms_base:
       [[[ return ['dishwashing'].indexOf(entity === undefined || entity.state) !== -1; ]]]
     cooking_on: >
       [[[ return ['cooking'].indexOf(entity === undefined || entity.state) !== -1; ]]]
+    vacuum_state: >
+      [[[
+        if (variables.vacuum_entity !== undefined) {
+          let vacumState = states[variables.vacuum_entity].state;
+          return vacumState;
+        } else {
+          return 'unavailable';
+        }
+      ]]]
   tap_action:
     action: call-service
     service: light.toggle
@@ -126,6 +135,7 @@ rooms_base:
                 : 'rgba(115, 115, 115, 0.2)';
             }
           ]]]
+      - border-radius: 10%
       # - --button-card-ripple-color: blue
       # - --mdc-ripple-press-opacity: 0.5
     state:
@@ -991,7 +1001,7 @@ camera:
   template:
     - base
     - circle
-    - icon_spot_cam
+    - icon_camera_rec
   variables:
     camera_on: >
       [[[ return !entity || ['streaming'].indexOf(entity.state) !== -1; ]]]
@@ -1053,10 +1063,17 @@ camera:
                   : variables.entity_picture;
               return `linear-gradient(0deg, rgba(0,0,0,.3) 0%, rgba(0,0,0,0) 100%), url(${picUrl})`;
           ]]]
-
     custom_fields:
       circle:
         - width: 50%
+      icon:
+        - display: >
+            [[[
+              return variables.camera_on
+                ? 'block'
+                : 'none';
+            ]]]
+
   custom_fields:
     circle: >
       [[[

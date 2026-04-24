@@ -226,7 +226,7 @@ stargazer_list:
               'variables': {
                 'avatar_url': '{{ user.avatar_url }}',
                 'html_url': '{{ user.html_url }}',
-                'follow_me': '{{ user.follow_me }}'
+                'follow_me': '{{ user.follow_me | default(false) }}'
               }
             }{%- if not loop.last %},{% endif %}
           {%- endfor %}
@@ -485,17 +485,6 @@ github_combined_graph:
           latest_entity: '[[latest_entity]]'
           bar_color: '[[bar_color]]'
           fill_color: '[[fill_color]]'
-      - type: custom:streamline-card
-        template: github_traffics_with_title
-        variables:
-          bar_color: '[[bar_color]]'
-          fill_color: '[[fill_color]]'
-      - type: custom:streamline-card
-        template: github_traffics_with_title
-        variables:
-          bar_color: '[[bar_color]]'
-          fill_color: '[[fill_color]]'
-          traffic_type: 'views'
       - type: custom:streamline-card
         template: github_logbook_card
         variables:

@@ -1,6 +1,8 @@
 action: fire-dom-event
 browser_mod:
   service: browser_mod.popup
+  style:
+    --button-card-border-radius: 10%
   data:
     title: Utility Room
     adaptive: true
@@ -20,10 +22,12 @@ browser_mod:
               - entity_id: vacuum.roidmi_eve
                 options:
                   type: custom:button-card
+                  name: Roidmi Eve
                   tap_action: !include ../footer/footer_vacuum.yaml
                   double_tap_action: !include ../footer/footer_vacuum.yaml
                   template:
                     - tpl_popup_device
+                    - icon_vacuum
               - entity_id: switch.washer_dryer_power
                 options:
                   type: custom:button-card

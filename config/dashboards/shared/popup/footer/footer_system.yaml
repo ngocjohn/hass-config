@@ -115,7 +115,7 @@ browser_mod:
             card_mod:
               class: header
             entities:
-              - entity: binary_sensor.192_168_0_146
+              - entity: binary_sensor.raspberry_pi_docker
                 icon: si:docker
                 state_color: true
                 name: Raspberry Docker

@@ -3679,3 +3679,426 @@ icon_blinds:
           </svg>
         `;
       ]]]
+icon_vacuum:
+  styles:
+    custom_fields:
+      icon:
+        - width: 100%
+        - --card-background-color: '#fff'
+        - --vacuum-color: '#1c1c1c'
+        - margin: -10px
+  custom_fields:
+    icon: >
+      [[[
+        let state = variables.vacuum_state || entity.state;
+        return `
+          <svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" class="vacuum-svg ${state}">
+            <style>
+              .vacuum-svg {
+                width: 100%;
+                height: 100%;
+                --card-background-color: ${state === 'docked' || state === 'idle' ? 'rgba(255, 255, 255, 0.3)' : 'inherit'};
+              }
+
+              /* -- Hide state-specific elements by default -- */
+              .particles,
+              .dock-indicator,
+              .return-path {
+                opacity: 0;
+                transition: opacity 400ms ease;
+              }
+
+              /* ======================== */
+              /* CLEANING                 */
+              /* ======================== */
+              .cleaning .vacuum-body {
+                animation: vacuum-wander 12s ease-in-out infinite;
+                transform-origin: 120px 120px;
+              }
+
+              .cleaning .brush-right .brush-spokes {
+                animation: brush-spin 0.6s linear infinite;
+                transform-origin: 174px 76px;
+              }
+
+              .cleaning .particles {
+                opacity: 1;
+              }
+
+              .cleaning .particle {
+                animation: particle-suck 2.4s ease-in infinite;
+                transform-origin: 120px 120px;
+              }
+
+              .cleaning .p1 {
+                animation-delay: 0s;
+              }
+              .cleaning .p2 {
+                animation-delay: -0.3s;
+              }
+              .cleaning .p3 {
+                animation-delay: -0.6s;
+              }
+              .cleaning .p4 {
+                animation-delay: -0.9s;
+              }
+              .cleaning .p5 {
+                animation-delay: -1.2s;
+              }
+              .cleaning .p6 {
+                animation-delay: -1.5s;
+              }
+              .cleaning .p7 {
+                animation-delay: -1.8s;
+              }
+              .cleaning .p8 {
+                animation-delay: -2.1s;
+              }
+
+              .cleaning .p1 {
+                --particle-x: -90px;
+                --particle-y: -25px;
+              }
+              .cleaning .p2 {
+                --particle-x: 90px;
+                --particle-y: 20px;
+              }
+              .cleaning .p3 {
+                --particle-x: -85px;
+                --particle-y: 40px;
+              }
+              .cleaning .p4 {
+                --particle-x: 85px;
+                --particle-y: -35px;
+              }
+              .cleaning .p5 {
+                --particle-x: -65px;
+                --particle-y: 70px;
+              }
+              .cleaning .p6 {
+                --particle-x: 70px;
+                --particle-y: -65px;
+              }
+              .cleaning .p7 {
+                --particle-x: -75px;
+                --particle-y: -55px;
+              }
+              .cleaning .p8 {
+                --particle-x: 80px;
+                --particle-y: 55px;
+              }
+
+              .cleaning .nav-lines {
+                animation: nav-pulse 2s ease-in-out infinite;
+              }
+
+              /* ======================== */
+              /* RETURNING                */
+              /* ======================== */
+              .vacuum-body-rotate {
+                transform-origin: 120px 120px;
+                transform: rotate(0deg);
+                transition: transform 600ms ease-in-out;
+              }
+
+              .returning .vacuum-body-rotate {
+                transform: rotate(180deg);
+              }
+
+              .returning .vacuum-body {
+                animation: returning-drift 3s ease-in-out infinite;
+              }
+
+              .returning .return-path {
+                opacity: 1;
+                animation: return-arrow 1.6s ease-in-out infinite;
+                transform-origin: 120px 210px;
+              }
+
+              .returning .brush-right {
+                opacity: 0.4;
+              }
+
+              /* ======================== */
+              /* DOCKED                   */
+              /* ======================== */
+              .docked .dock-indicator {
+                opacity: 1;
+              }
+
+              .docked .vacuum-body {
+                opacity: 0.75;
+              }
+
+              .docked .glow {
+                animation: docked-glow 4s ease-in-out infinite;
+              }
+
+              .docked .power-ring {
+                animation: charge-pulse 2.5s ease-in-out infinite;
+              }
+
+              .docked .brush-right {
+                opacity: 0.5;
+              }
+
+              /* ======================== */
+              /* ERROR                    */
+              /* ======================== */
+              .error .glow {
+                animation: error-glow 1.8s ease-in-out infinite;
+              }
+
+              /* ======================== */
+              /* IDLE                     */
+              /* ======================== */
+              .idle .vacuum-body {
+                opacity: 0.65;
+              }
+
+              .idle .brush-right {
+                opacity: 0.4;
+              }
+
+              /* ============================== */
+              /* KEYFRAME ANIMATIONS            */
+              /* ============================== */
+
+              @keyframes vacuum-wander {
+                0% {
+                  transform: rotate(0deg) translate(0, 0);
+                }
+                15% {
+                  transform: rotate(0deg) translate(0, -30px);
+                }
+                25% {
+                  transform: rotate(0deg) translate(0, 0);
+                }
+                32% {
+                  transform: rotate(-18deg) translate(0, 0);
+                }
+                47% {
+                  transform: rotate(-18deg) translate(0, -28px);
+                }
+                57% {
+                  transform: rotate(-18deg) translate(0, 0);
+                }
+                63% {
+                  transform: rotate(12deg) translate(0, 0);
+                }
+                78% {
+                  transform: rotate(12deg) translate(0, -25px);
+                }
+                88% {
+                  transform: rotate(12deg) translate(0, 0);
+                }
+                95% {
+                  transform: rotate(0deg) translate(0, 0);
+                }
+                100% {
+                  transform: rotate(0deg) translate(0, 0);
+                }
+              }
+
+              @keyframes brush-spin {
+                to {
+                  transform: rotate(360deg);
+                }
+              }
+
+              @keyframes particle-suck {
+                0% {
+                  opacity: 0;
+                  transform: translate(var(--particle-x), var(--particle-y)) scale(1.2);
+                }
+                25% {
+                  opacity: 0.8;
+                }
+                80% {
+                  opacity: 0;
+                  transform: translate(
+                      calc(var(--particle-x) * 0.82),
+                      calc(var(--particle-y) * 0.82)
+                    )
+                    scale(0.6);
+                }
+                100% {
+                  opacity: 0;
+                  transform: translate(
+                      calc(var(--particle-x) * 0.82),
+                      calc(var(--particle-y) * 0.82)
+                    )
+                    scale(0.6);
+                }
+              }
+
+              @keyframes nav-pulse {
+                0%,
+                100% {
+                  opacity: 0.15;
+                }
+                50% {
+                  opacity: 0.35;
+                }
+              }
+
+              @keyframes returning-drift {
+                0%,
+                100% {
+                  transform: translateY(-6px);
+                }
+                50% {
+                  transform: translateY(4px);
+                }
+              }
+
+              @keyframes return-arrow {
+                0%,
+                100% {
+                  transform: translateY(-6px);
+                  opacity: 0.3;
+                }
+                50% {
+                  transform: translateY(4px);
+                  opacity: 0.85;
+                }
+              }
+
+              @keyframes docked-glow {
+                0%,
+                100% {
+                  opacity: 0.06;
+                }
+                50% {
+                  opacity: 0.14;
+                }
+              }
+
+              @keyframes charge-pulse {
+                0%,
+                100% {
+                  opacity: 0.08;
+                }
+                50% {
+                  opacity: 0.25;
+                }
+              }
+
+              @keyframes error-glow {
+                0%,
+                100% {
+                  opacity: 0.08;
+                }
+                50% {
+                  opacity: 0.35;
+                }
+              }
+
+              /* Respect prefers-reduced-motion */
+              @media (prefers-reduced-motion: reduce) {
+                .cleaning .vacuum-body,
+                .cleaning .brush-right .brush-spokes,
+                .cleaning .particle,
+                .cleaning .nav-lines,
+                .returning .vacuum-body,
+                .returning .return-path,
+                .docked .glow,
+                .docked .power-ring,
+                .error .glow {
+                  animation: none;
+                }
+                .vacuum-body-rotate {
+                  transition: none;
+                }
+              }
+
+            </style>
+            <!-- Soft background glow -->
+            <circle cx="120" cy="120" r="110" class="glow" fill="var(--vacuum-color)" opacity="0.06" />
+
+            <!-- Robot body group -->
+            <g class="vacuum-body-rotate">
+              <g class="vacuum-body">
+                <!-- Side brush (front-right, rendered before body so body covers half) -->
+                <g class="brush brush-right">
+                  <g class="brush-spokes">
+                    <line x1="174" y1="76" x2="174" y2="64" stroke="var(--vacuum-color)" stroke-width="1.2" stroke-linecap="round"
+                      opacity="0.5" />
+                    <line x1="174" y1="76" x2="174" y2="88" stroke="var(--vacuum-color)" stroke-width="1.2" stroke-linecap="round"
+                      opacity="0.5" />
+                    <line x1="174" y1="76" x2="162" y2="76" stroke="var(--vacuum-color)" stroke-width="1.2" stroke-linecap="round"
+                      opacity="0.5" />
+                    <line x1="174" y1="76" x2="186" y2="76" stroke="var(--vacuum-color)" stroke-width="1.2" stroke-linecap="round"
+                      opacity="0.5" />
+                  </g>
+                  <circle cx="174" cy="76" r="2" fill="var(--vacuum-color)" opacity="0.5" />
+                </g>
+
+                <!-- Outer body shell -->
+                <circle cx="120" cy="120" r="72" fill="var(--card-background-color, #fff)" stroke="var(--vacuum-color)"
+                  stroke-width="2" />
+
+                <!-- Inner body ring -->
+                <circle cx="120" cy="120" r="66" fill="none" stroke="var(--vacuum-color)" stroke-width="0.8" opacity="0.2" />
+
+                <!-- Bumper arc (front half, prominent) -->
+                <path d="M 60 94 A 68 68 0 0 1 180 94" fill="none" stroke="var(--vacuum-color)" stroke-width="3"
+                  stroke-linecap="round" class="bumper" />
+
+                <!-- Direction indicator lines (navigation feel) -->
+                <g class="nav-lines" opacity="0.15">
+                  <line x1="120" y1="56" x2="120" y2="74" stroke="var(--vacuum-color)" stroke-width="1.5" />
+                  <line x1="88" y1="63" x2="96" y2="78" stroke="var(--vacuum-color)" stroke-width="1.5" />
+                  <line x1="152" y1="63" x2="144" y2="78" stroke="var(--vacuum-color)" stroke-width="1.5" />
+                </g>
+
+                <!-- LIDAR turret (static) -->
+                <circle cx="120" cy="108" r="14" fill="var(--card-background-color, #fff)" stroke="var(--vacuum-color)"
+                  stroke-width="2" class="lidar-housing" />
+                <circle cx="120" cy="108" r="9" fill="none" stroke="var(--vacuum-color)" stroke-width="0.8" opacity="0.25" />
+
+                <!-- Power button area (center) -->
+                <circle cx="120" cy="140" r="8" fill="var(--vacuum-color)" opacity="0.08" class="power-ring" />
+                <circle cx="120" cy="140" r="4" fill="var(--vacuum-color)" opacity="0.25" class="power-dot" />
+              </g>
+            </g>
+
+            <!-- Dust particles (cleaning state) - sucked toward vacuum -->
+            <g class="particles">
+              <circle class="particle p1" cx="120" cy="120" r="2" fill="var(--vacuum-color)" />
+              <circle class="particle p2" cx="120" cy="120" r="1.5" fill="var(--vacuum-color)" />
+              <circle class="particle p3" cx="120" cy="120" r="1.5" fill="var(--vacuum-color)" />
+              <circle class="particle p4" cx="120" cy="120" r="2" fill="var(--vacuum-color)" />
+              <circle class="particle p5" cx="120" cy="120" r="1.5" fill="var(--vacuum-color)" />
+              <circle class="particle p6" cx="120" cy="120" r="1.5" fill="var(--vacuum-color)" />
+              <circle class="particle p7" cx="120" cy="120" r="1" fill="var(--vacuum-color)" />
+              <circle class="particle p8" cx="120" cy="120" r="1" fill="var(--vacuum-color)" />
+            </g>
+
+            <!-- Dock station (docked state) -->
+            <g class="dock-indicator">
+              <!-- Dock base plate -->
+              <rect x="76" y="188" width="88" height="28" rx="8" fill="var(--card-background-color, #fff)"
+                stroke="var(--vacuum-color)" stroke-width="2" />
+            </g>
+
+            <!-- Return arrow (returning state) -->
+            <g class="return-path">
+              <polygon points="120,220 110,206 130,206" fill="var(--vacuum-color)" stroke="var(--vacuum-color)" stroke-width="2"
+                stroke-linejoin="round" opacity="0.55" />
+            </g>
+          </svg>
+        `
+      ]]]
+icon_camera_rec:
+  styles:
+    custom_fields:
+      icon:
+        - margin: 0
+  custom_fields:
+    icon: >
+      [[[
+        return `
+          <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" id="prefix__Layer_1" width="50" height="50" x="0" y="0" preserveAspectRatio="xMidYMid" style="margin:initial" version="1.1" viewBox="0 0 50 50"><g class="prefix__ldl-scale"><g class="prefix__ldl-ani" style="transform-box:view-box;animation:1s linear 0s infinite normal forwards running animate"><style>@keyframes animate{0%{transform:translate(0,0) rotate(0deg) scale(1,1) skew(0deg,0deg);opacity:1}14%{transform:translate(0,0) rotate(0deg);opacity:.93}38%{transform:translate(0,0) rotate(0deg);opacity:.81}48%{transform:translate(0,0) rotate(0deg);opacity:.76}50%{animation-timing-function:cubic-bezier(.31,.47,.49,.77);transform:translate(0,0) rotate(0deg);opacity:.96}56%{animation-timing-function:cubic-bezier(.68,.62,.35,.29);transform:translate(0,0) rotate(0deg);opacity:1.24}60%{animation-timing-function:cubic-bezier(.62,.81,.28,.49);transform:translate(0,0) rotate(0deg);opacity:.94}64%{animation-timing-function:cubic-bezier(.77,.38,.4,.09);transform:translate(0,0) rotate(0deg);opacity:.77}68%{animation-timing-function:cubic-bezier(.3,.5,.44,.81);transform:translate(0,0) rotate(0deg);opacity:1.01}74%{transform:translate(0,0) rotate(0deg);opacity:1.24}76%{animation-timing-function:cubic-bezier(.31,.47,.49,.77);transform:translate(0,0) rotate(0deg);opacity:1.04}82%{animation-timing-function:cubic-bezier(.68,.62,.35,.29);transform:translate(0,0) rotate(0deg);opacity:.76}86%{animation-timing-function:cubic-bezier(.62,.81,.28,.49);transform:translate(0,0) rotate(0deg);opacity:1.06}90%{animation-timing-function:cubic-bezier(.77,.38,.4,.09);transform:translate(0,0) rotate(0deg);opacity:1.23}94%{animation-timing-function:cubic-bezier(.63,.79,.29,.46);transform:translate(0,0) rotate(0deg);opacity:.99}to{animation-timing-function:cubic-bezier(.63,.79,.29,.46);transform:translate(0,0) rotate(0deg);opacity:.76}}.prefix__st0,.prefix__st1{fill:none;stroke:#000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10}.prefix__st1{stroke:#c1272d}</style><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><path stroke-width="2" d="M5 19v-5c0-1.4 1.1-2.5 2.5-2.5H15" class="prefix__st0"/></g></g><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><path stroke-width="2" d="M15 38.5H7.5C6.1 38.5 5 37.4 5 36v-5" class="prefix__st0"/></g></g><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><path stroke-width="2" d="M45 31v5c0 1.4-1.1 2.5-2.5 2.5H35" class="prefix__st0"/></g></g><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><path stroke-width="2" d="M35 11.5h7.5c1.4 0 2.5 1.1 2.5 2.5v4.75" class="prefix__st0"/></g></g></g></g><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><path stroke="#c1272d" stroke-width="2" d="M17.9 20.5v9" class="prefix__st1"/></g></g><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><path stroke="#c1272d" stroke-width="2" d="m20.6 25 1.8 4.5" class="prefix__st1"/></g></g><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><path stroke="#c1272d" stroke-width="2" d="M17.9 20.5h4.5V25h-4.5" class="prefix__st1"/></g></g></g></g><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><path stroke="#c1272d" d="M25.9 20.5v9" class="prefix__st1"/></g></g><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><path stroke="#c1272d" stroke-width="2" d="M25.9 29.5h4.5" class="prefix__st1"/></g></g><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><path stroke="#c1272d" stroke-width="2" d="M25.9 25h4.5" class="prefix__st1"/></g></g><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><path stroke="#c1272d" stroke-width="2" d="M25.9 20.5h4.5" class="prefix__st1"/></g></g></g></g><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><path stroke="#c1272d" d="M33.9 20.5v9" class="prefix__st1"/></g></g><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><path stroke="#c1272d" stroke-width="2" d="M33.9 29.5h4.5" class="prefix__st1"/></g></g><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><path stroke="#c1272d" stroke-width="2" d="M33.9 20.5h4.5" class="prefix__st1"/></g></g></g></g><g class="prefix__ldl-layer"><path fill="#ed1c24" stroke="#ed1c24" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2.5" d="M13.6 25a2.5 2.5 0 0 1-2.5 2.5A2.5 2.5 0 0 1 8.6 25a2.5 2.5 0 0 1 5 0" class="prefix__ldl-ani" style="transform-box:view-box"/></g></g></g></svg>
+        `
+      ]]]

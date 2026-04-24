@@ -13,7 +13,7 @@
 ingress:
   local_homebridge:
     work_mode: iframe
-    ui_mode: normal
+    ui_mode: toolbar
     title: Homebridge
     icon: si:homebridge
     url:

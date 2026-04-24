@@ -75,7 +75,7 @@ grid_utility_vacuum:
       browser_mod:
         service: browser_mod.more_info
         data:
-          entity: camera.roidmi_eve
+          entity: camera.roidmi_eve_live_map
     hold_action: !include ../../shared/honeycomb/utitlity.yaml
     state_display: >
       [[[
@@ -91,10 +91,11 @@ grid_utility_vacuum:
       ]]]
     template:
       - rooms_base
-      - icon_roborock
+      - icon_vacuum
     variables:
       light_entity: light.utility_room_light
       active: sensor.appliance_active
+      vacuum_entity: vacuum.roidmi_eve
   # UTILITY WASHING
 grid_utility_washing:
   card:

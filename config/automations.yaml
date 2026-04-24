@@ -17,159 +17,6 @@
     target:
       entity_id: input_boolean.door_lock
   mode: parallel
-- id: '1681905795903'
-  alias: camera snapshot
-  description: ''
-  triggers:
-  - at: 05:00:00
-    id: delete
-    trigger: time
-  - hours: /1
-    trigger: time_pattern
-  conditions:
-  - condition: time
-    after: 05:00:00
-    before: 00:00:00
-  actions:
-  - if:
-    - condition: trigger
-      id: delete
-    then:
-    - data:
-        folder: /config/www/tmp/snapshots/
-        time: 0
-        only_extensions:
-        - .png
-        - .jpg
-      action: delete.files_in_folder
-    - data:
-        folder: /config/www/tmp/kids/
-        time: 0
-        only_extensions:
-        - .png
-        - .jpg
-      action: delete.files_in_folder
-  - parallel:
-    - action: button.press
-      metadata: {}
-      data: {}
-      target:
-        entity_id: button.kids_room_start_rtsp_stream
-    - data: {}
-      target:
-        entity_id:
-        - camera.doorway
-        - camera.terasa
-        - camera.zahrada
-      action: camera.turn_on
-    - condition: state
-      entity_id: camera.doorway
-      state: streaming
-      for:
-        hours: 0
-        minutes: 0
-        seconds: 3
-    - condition: state
-      entity_id: camera.terasa
-      state: streaming
-      for:
-        hours: 0
-        minutes: 0
-        seconds: 3
-    - condition: state
-      entity_id: camera.kids_room
-      state: streaming
-      for:
-        hours: 0
-        minutes: 0
-        seconds: 3
-    - condition: state
-      entity_id: camera.zahrada
-      state: streaming
-      for:
-        hours: 0
-        minutes: 0
-        seconds: 3
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 2
-      milliseconds: 0
-  - parallel:
-    - data:
-        filename: /config/www/tmp/snapshots/camera.doorway{{ now().strftime("%Y%m%d-%H%M%S")
-          }}.jpg
-      target:
-        entity_id: camera.doorway
-      action: camera.snapshot
-    - data:
-        filename: /config/www/tmp/snapshots/camera.kids_room{{ now().strftime("%Y%m%d-%H%M%S")
-          }}.jpg
-      target:
-        entity_id: camera.kids_room
-      action: camera.snapshot
-    - data:
-        filename: /config/www/tmp/snapshots/camera.terasa{{ now().strftime("%Y%m%d-%H%M%S")
-          }}.jpg
-      target:
-        entity_id: camera.terasa
-      action: camera.snapshot
-    - data:
-        filename: /config/www/tmp/snapshots/camera.zahrada{{ now().strftime("%Y%m%d-%H%M%S")
-          }}.jpg
-      target:
-        entity_id: camera.zahrada
-      action: camera.snapshot
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 2
-      milliseconds: 0
-  - parallel:
-    - data:
-        filename: /config/www/tmp/camera.doorway-latest.jpg
-      target:
-        entity_id: camera.doorway
-      action: camera.snapshot
-    - data:
-        filename: /config/www/tmp/kids/camera.kids_room-latest{{now().strftime("%Y%m%d%H%M%S")}}.jpg
-      target:
-        entity_id: camera.kids_room
-      action: camera.snapshot
-    - action: input_text.set_value
-      metadata: {}
-      data:
-        value: kids_room-latest{{now().strftime("%Y%m%d%H%M%S")}}.jpg
-      target:
-        entity_id: input_text.kids_camera_snapshot
-    - data:
-        filename: /config/www/tmp/camera.terasa-latest.jpg
-      target:
-        entity_id: camera.terasa
-      action: camera.snapshot
-    - data:
-        filename: /config/www/tmp/camera.zahrada-latest.jpg
-      target:
-        entity_id: camera.zahrada
-      action: camera.snapshot
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 5
-      milliseconds: 0
-  - data: {}
-    target:
-      entity_id:
-      - camera.doorway
-      - camera.terasa
-      - camera.zahrada
-    action: camera.turn_off
-  - action: button.press
-    metadata: {}
-    data: {}
-    target:
-      entity_id: button.kids_room_stop_rtsp_stream
-  mode: single
 - id: '1683903230879'
   alias: Bedroom Cover Night
   description: ''
@@ -366,6 +213,11 @@
         | format(hours, minutes, secs) }}'
     target:
       entity_id: timer.dishwasher_remaining
+  - action: timer.start
+    metadata: {}
+    target:
+      entity_id: timer.dishwasher_remaining
+    data: {}
   initial_state: true
   mode: restart
 - id: 34ba1897-ec7a-4cb3-a12b-fb0a1e9e495e
@@ -774,66 +626,69 @@
 - id: '1716484803294'
   alias: Vacuum Get Property
   description: ''
-  trigger:
-  - platform: state
-    entity_id: vacuum.roidmi_eve
-  condition: []
-  action:
-  - service: "{% if is_state_attr('vacuum.roidmi_eve', 'custom.led_switch', 1) %}\n
-      \ input_boolean.turn_on\n{% else %}\n  input_boolean.turn_off\n{% endif %}\n"
-    data:
+  triggers:
+  - entity_id: vacuum.roidmi_eve
+    trigger: state
+  conditions: []
+  actions:
+  - data:
       entity_id: input_boolean.vacuum_led_switch
-  - service: "{% if is_state_attr('vacuum.roidmi_eve', 'custom.lidar_collision', 1)
+    action: "{% if is_state_attr('vacuum.roidmi_eve', 'custom.led_switch', 1) %}\n
+      \ input_boolean.turn_on\n{% else %}\n  input_boolean.turn_off\n{% endif %}\n"
+  - data:
+      entity_id: input_boolean.vacuum_lidar_collision
+    action: "{% if is_state_attr('vacuum.roidmi_eve', 'custom.lidar_collision', 1)
       %}\n  input_boolean.turn_on\n{% else %}\n  input_boolean.turn_off\n{% endif
       %}\n"
-    data:
-      entity_id: input_boolean.vacuum_lidar_collision
-  - service: "{% if is_state_attr('vacuum.roidmi_eve', 'custom.auto_boost', 1) %}\n
-      \ input_boolean.turn_on\n{% else %}\n  input_boolean.turn_off\n{% endif %}\n"
-    data:
+  - data:
       entity_id: input_boolean.vacuum_auto_boost
-  - service: input_number.set_value
-    entity_id: input_number.vacuum_volume
-    data_template:
-      value: '{{ state_attr("vacuum.roidmi_eve","speaker.volume") }}'
-  - service: "{% if is_state_attr('vacuum.roidmi_eve', 'custom.double_clean', 1) %}\n
+    action: "{% if is_state_attr('vacuum.roidmi_eve', 'custom.auto_boost', 1) %}\n
       \ input_boolean.turn_on\n{% else %}\n  input_boolean.turn_off\n{% endif %}\n"
-    data:
+  - action: input_number.set_value
+    data_template:
+      value: '{{ state_attr("vacuum.roidmi_eve","speaker.volume") | float(0) }}'
+    target:
+      entity_id: input_number.vacuum_volume
+  - data:
       entity_id: input_boolean.vacuum_double_clean
-  - service: "{% if is_state_attr('vacuum.roidmi_eve', 'map.path_type', 1) %}\n  input_boolean.turn_on\n{%
-      else %}\n  input_boolean.turn_off\n{% endif %}\n"
-    data:
+    action: "{% if is_state_attr('vacuum.roidmi_eve', 'custom.double_clean', 1) %}\n
+      \ input_boolean.turn_on\n{% else %}\n  input_boolean.turn_off\n{% endif %}\n"
+  - data:
       entity_id: input_boolean.vacuum_edge_sweep
-  - service: input_select.select_option
-    entity_id: input_select.vacuum_water_level
+    action: "{% if is_state_attr('vacuum.roidmi_eve', 'map.path_type', 1) %}\n  input_boolean.turn_on\n{%
+      else %}\n  input_boolean.turn_off\n{% endif %}\n"
+  - target:
+      entity_id: input_select.vacuum_water_level
     data_template:
       option: "{%- if is_state_attr('vacuum.roidmi_eve','custom.water_level',0) -%}\n
         \ No water\n{%- elif is_state_attr('vacuum.roidmi_eve','custom.water_level',1)
         -%}\n  Small\n{%- elif is_state_attr('vacuum.roidmi_eve','custom.water_level',2)
         -%}\n  Middle\n{%- elif is_state_attr('vacuum.roidmi_eve','custom.water_level',3)
         -%}\n  MAX\n{%- else -%} {%- endif -%}\n"
-  - service: "{% if is_state_attr('vacuum.roidmi_eve', 'custom.station_key', 1) %}\n
-      \ input_boolean.turn_on\n{% else %}\n  input_boolean.turn_off\n{% endif %}\n"
-    data:
+    action: input_select.select_option
+  - data:
       entity_id: input_boolean.vacuum_station_key
-  - service: "{% if is_state_attr('vacuum.roidmi_eve', 'custom.station_led', 1) %}\n
+    action: "{% if is_state_attr('vacuum.roidmi_eve', 'custom.station_key', 1) %}\n
       \ input_boolean.turn_on\n{% else %}\n  input_boolean.turn_off\n{% endif %}\n"
-    data:
+  - data:
       entity_id: input_boolean.vacuum_station_led
-  - service: "{% if is_state_attr('vacuum.roidmi_eve', 'speaker.mute', 1) %}\n  input_boolean.turn_on\n{%
-      else %}\n  input_boolean.turn_off\n{% endif %}\n"
-    data:
+    action: "{% if is_state_attr('vacuum.roidmi_eve', 'custom.station_led', 1) %}\n
+      \ input_boolean.turn_on\n{% else %}\n  input_boolean.turn_off\n{% endif %}\n"
+  - data:
       entity_id: input_boolean.vacuum_mute
-  - service: input_select.select_option
-    entity_id: input_select.vacuum_work_station_freq
+    action: "{% if is_state_attr('vacuum.roidmi_eve', 'speaker.mute', 1) %}\n  input_boolean.turn_on\n{%
+      else %}\n  input_boolean.turn_off\n{% endif %}\n"
+  - target:
+      entity_id: input_select.vacuum_work_station_freq
     data_template:
       option: "{%- if is_state_attr('vacuum.roidmi_eve','custom.work_station_freq',0)
         -%}\n  Not to throw away\n{%- elif is_state_attr('vacuum.roidmi_eve','custom.work_station_freq',1)
         -%}\n  Every time\n{%- elif is_state_attr('vacuum.roidmi_eve','custom.work_station_freq',2)
         -%}\n  Every second\n{%- elif is_state_attr('vacuum.roidmi_eve','custom.work_station_freq',3)
         -%}\n  Every third\n{%- else -%} {%- endif -%}\n"
-  - service: input_select.select_option
-    entity_id: input_select.vacuum_mode
+    action: input_select.select_option
+  - target:
+      entity_id: input_select.vacuum_mode
     data_template:
       option: "{%- if is_state_attr('vacuum.roidmi_eve','vacuum.mode',0) -%}\n  Sweep\n{%-
         elif is_state_attr('vacuum.roidmi_eve','vacuum.mode',1) -%}\n  Silent\n{%-
@@ -841,13 +696,15 @@
         elif is_state_attr('vacuum.roidmi_eve','vacuum.mode',3) -%}\n  Strong\n{%-
         elif is_state_attr('vacuum.roidmi_eve','vacuum.mode',4) -%}\n  Full Speed\n{%-
         else -%} {%- endif -%}\n"
-  - service: input_select.select_option
-    entity_id: input_select.vacuum_sweep_type
+    action: input_select.select_option
+  - target:
+      entity_id: input_select.vacuum_sweep_type
     data_template:
       option: "{%- if is_state_attr('vacuum.roidmi_eve','vacuum.sweep_type',0) -%}\n
         \ Sweep\n{%- elif is_state_attr('vacuum.roidmi_eve','vacuum.sweep_type',1)
         -%}\n  Mop\n{%- elif is_state_attr('vacuum.roidmi_eve','vacuum.sweep_type',2)
         -%}\n  Mop And Sweep\n{%- else -%} {%- endif -%}\n"
+    action: input_select.select_option
   mode: single
 - id: '1727802647185'
   alias: person_home_change
@@ -1250,19 +1107,22 @@
   - trigger: state
     entity_id:
     - input_boolean.z_occupacy
+    from:
+    - 'off'
+    - 'on'
     to:
     - 'on'
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 10
+    - 'off'
   conditions: []
   actions:
+  - variables:
+      occup_state: "{{ ' is comming \U0001F3C3‍♀️' if trigger.to_state.state == 'on'
+        else ' is leaving..\U0001F3C3‍♀️‍➡️' }}"
   - action: notify.ngoc_devices
     metadata: {}
     data:
-      message: C occup
-      title: C occup
+      title: C {{ occup_state }}
+      message: '  '
   mode: single
 - id: '1774883741871'
   alias: Update speedtest
@@ -1311,4 +1171,22 @@
             {{ states('sensor.speedtest_ping', with_unit=True) }}"
           notification_id: speedtest_update
         enabled: false
+  mode: single
+- id: '1776724845800'
+  alias: Plants cover
+  description: Open cover for plants get lights
+  triggers:
+  - trigger: sun
+    event: sunrise
+    offset: 01:00:00
+  conditions: []
+  actions:
+  - action: cover.open_cover
+    metadata: {}
+    target:
+      entity_id:
+      - cover.window
+      - cover.double
+      - cover.right
+    data: {}
   mode: single

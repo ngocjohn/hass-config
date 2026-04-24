@@ -10,7 +10,7 @@ Hey there! Welcome to my little corner of the tech world! 👨‍💻
 
 This is where I store all the cool configurations for my Home Assistant system. Well, it's a mix of awesome codes and setups I discovered from the Home Assistant community. Seriously, those folks are wizards! 🧙‍♂️ As a bit of an internet newbie turned tech enthusiast, I stumbled upon the magic of IT, and this repository is my way of sharing the joy and knowledge I've gained along the way. Dive in, explore, and let the tech magic begin! ✨
 
-I frequently refresh my configuration files. My current Home Assistant version is <b>2026.4.3</b>. If you find something you like, don't forget to give my repository a ⭐️!
+I frequently refresh my configuration files. My current Home Assistant version is <b>2026.4.4</b>. If you find something you like, don't forget to give my repository a ⭐️!
 
 ## Some of my projects for Home Assistant
 
@@ -47,15 +47,15 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>45,332 </td>
+              <td>45,694 </td>
               <td>31</td>
-              <td>242</td>
-              <td>54</td>
-              <td>69</td>
-              <td>29</td>
-              <td>1090</td>
-              <td>224</td>
-              <td>30</td>
+              <td>239</td>
+              <td>56</td>
+              <td>70</td>
+              <td>26</td>
+              <td>1190</td>
+              <td>221</td>
+              <td>31</td>
           </tr>
       </tbody>
   </table>
@@ -133,13 +133,14 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Apexcharts Card](https://github.com/RomRider/apexcharts-card)
 - [Apple Tv Remote Control](https://github.com/madmicio/Apple-Tv-Card)
 - [Atomic Calendar Revive](https://github.com/totaldebug/atomic-calendar-revive)
-- [Auto Entities](https://github.com/thomasloven/lovelace-auto-entities)
+- [Auto Entities](https://github.com/Lint-Free-Technology/lovelace-auto-entities)
 - [Bar Card](https://github.com/spacerokk/bar-card)
 - [Button Card](https://github.com/custom-cards/button-card)
 - [Canary](https://github.com/jcwillox/lovelace-canary)
 - [Clock Weather Card](https://github.com/pkissling/clock-weather-card)
 - [Custom Icons](https://github.com/Mariusthvdb/custom-icons)
 - [Decluttering Card](https://github.com/custom-cards/decluttering-card)
+- [Dual Axis Controller](https://github.com/mbb365/Dual-Axis-Controller-v4)
 - [Flex Table   Highly Customizable, Data Visualization](https://github.com/custom-cards/flex-table-card)
 - [Fold Entity Row](https://github.com/thomasloven/lovelace-fold-entity-row)
 - [Ha Floorplan 🖌🎨 | Your Imagination (Almost) Defines The Limits](https://github.com/ExperienceLovelace/ha-floorplan)
@@ -153,6 +154,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Logbook Card](https://github.com/royto/logbook-card)
 - [Lunar Phase Card](https://github.com/ngocjohn/lunar-phase-card)
 - [Mass Search Card](https://github.com/fastxl2024/mass-search-card)
+- [Maxi Media Player](https://github.com/punxaphil/maxi-media-player)
 - [Mediocre Hass Media Player Cards](https://github.com/antontanderup/mediocre-hass-media-player-cards)
 - [Mini Graph Card](https://github.com/kalkih/mini-graph-card)
 - [Mini Media Player](https://github.com/kalkih/mini-media-player)
