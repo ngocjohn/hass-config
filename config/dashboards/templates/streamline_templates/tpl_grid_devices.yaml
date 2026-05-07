@@ -68,11 +68,11 @@ grid_homepods:
       card:
         - overflow: hidden
         - --c-stroke-color-on: >
-            [[[ return `rgba(${variables.vibrant_data.Vibrant_RGB}, 1)`; ]]]
+            [[[ return `rgba(${variables.vibrant_data.Vibrant.rgb}, 1)`; ]]]
         - --bar-color-top: >
-            [[[ return variables.vibrant_data.LightVibrant_RGB; ]]]
+            [[[ return variables.vibrant_data.LightVibrant.rgb; ]]]
         - --bar-color-bottom: >
-            [[[ return variables.vibrant_data.DarkVibrant_RGB; ]]]
+            [[[ return variables.vibrant_data.DarkVibrant.rgb; ]]]
     variables:
       media_on: >
         [[[ return !entity || ['on', 'paused', 'idle'].indexOf(entity.state) !== -1; ]]]

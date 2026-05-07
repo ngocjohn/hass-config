@@ -1,0 +1,30 @@
+{
+  "domain": "philips_homeid",
+  "name": "Philips HomeID",
+  "codeowners": ["@renaudallard"],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/renaudallard/homeassistant_philips_homeid",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/renaudallard/homeassistant_philips_homeid/issues",
+  "requirements": [
+    "aiohttp>=3.8.0",
+    "cryptography>=41.0.0",
+    "paho-mqtt>=2.0.0"
+  ],
+  "ssdp": [
+    {
+      "st": "urn:philips-com:device:DiProduct:1"
+    }
+  ],
+  "version": "3.0.58",
+  "zeroconf": [
+    {
+      "type": "_philipscondor._tcp.local."
+    },
+    {
+      "type": "_http._tcp.local.",
+      "name": "philips_*"
+    }
+  ]
+}

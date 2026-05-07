@@ -10,11 +10,6 @@
 # xiaomi_vacuum:
 homeassistant:
   customize:
-    vacuum.roidmi_eve:
-      miot_local: true # Force to read and write data in LAN
-      miot_cloud: true # Enable miot cloud for entity (read, write, action)
-      miot_cloud_write: true # (Optional) Enable miot cloud (only write)
-      miot_cloud_action: true # (Optional) Enable miot cloud (only action)
     sensor.vacuum_cleaner_battery_level:
       friendly_name: 'Charge level'
       icon: 'mdi:battery'

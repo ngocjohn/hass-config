@@ -15,18 +15,18 @@ xiaomi_miot:
   server_country: de
   device_customizes:
     roidmi.vacuum.v60:
-      interval_seconds: 5
       exclude_miot_services: null
+      interval_seconds: 10
       chunk_coordinators:
-        - interval: 5
+        - interval: 10
           props: 'status,mode,sweep_type,charging_state'
           notify: true
-        - interval: 5
+        - interval: 10
           props: 'fault,mop,water_level'
-        - interval: 5
+        - interval: 10
           props: >-
             double_clean,edge_sweep,battery_level,clean_area,clean_time,work_station_freq
-        - interval: 5
+        - interval: 60
           props: 'auto_boost,led_switch,lidar_collision,station_key,station_led,volume,mute'
         - interval: 151
           props: 'total_clean_time,total_clean_areas,clean_counts,path_type'
@@ -34,7 +34,9 @@ xiaomi_miot:
           props: 'filter_l*,brush_l*'
         - interval: 610
           props: 'custom.uid,timing,forbid_mode,current_audio,map_memory,use_auto_area'
-
+    careli.fryer.maf02:
+      check_lan: false
+      exclude_miot_services: null
 favicon:
   tile: Neklanka
   icon_path: /local/favicons/

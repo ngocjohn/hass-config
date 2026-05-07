@@ -33,7 +33,7 @@ base:
     timeout: >
       [[[ return !entity || Date.now() - Date.parse(entity.last_changed); ]]]
     hover_enable: >
-      [[[ return true ]]]
+      [[[ return true; ]]]
   triggers_update: all
   aspect_ratio: 1/1
   show_state: true
@@ -1633,5 +1633,5 @@ vibrant_colors:
   variables:
     vibrant_data: >
       [[[
-        return states['sensor.art_colors'].attributes.data || {};
+        return states['sensor.art_colors'].attributes.palette || {};
       ]]]

@@ -56,8 +56,8 @@ template:
               {{ states.sensor.dyson_ph04_pm_2_5.state }} µg/m³
             {% endif %}
           bedroom_pm25: >-
-            {% if has_value('sensor.zhimi_mb3_8b86_pm25') %}
-              {{ states.sensor.zhimi_mb3_8b86_pm25.state }} µg/m³
+            {% if has_value('sensor.philips_air_purifier_pm2_5') %}
+              {{ states.sensor.philips_air_purifier_pm2_5.state }} µg/m³
             {% endif %}
           office_pm25: >-
             {% if has_value('sensor.zhimi_mb4_b008_pm25_density') %}
@@ -80,7 +80,7 @@ template:
             {% set purifiers = [
               states.fan.dyson_ph04,
               states.fan.office_xiaomi_air_purifier,
-              states.fan.zhimi_mb3_8b86_air_purifier ] %}
+              states.fan.philips_air_purifier ] %}
             {% set purifier_on = purifiers | selectattr('state','eq','on') | list | count %}
             {%- if (purifier_on != 0) -%}
               yes

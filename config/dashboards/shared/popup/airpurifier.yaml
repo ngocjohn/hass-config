@@ -62,36 +62,41 @@ browser_mod:
               class: header
             entities:
               - type: custom:purifier-card
-                entity: fan.zhimi_mb3_8b86_air_purifier
+                entity: fan.philips_air_purifier
                 stats:
-                  - entity_id: sensor.zhimi_mb3_8b86_filter_life_level
+                  - entity_id: sensor.philips_air_purifier_indoor_allergen_index
+                    subtitle: Indoor Allergen Index
+                  - entity_id: sensor.philips_air_purifier_water_level
                     unit: '%'
-                    subtitle: Filter Remaining
-                  - entity_id: sensor.zhimi_mb3_8b86_motor_speed
-                    unit: RPM
-                    subtitle: Motor Speed
+                    subtitle: Water Level
                 shortcuts:
+                  - name: Allergen
+                    icon: pap:allergen_mode
+                    preset_mode: allergen
                   - name: Sleep
-                    icon: mdi:weather-night
-                    preset_mode: Sleep
-                  - name: 33%
-                    icon: mdi:fan-speed-1
-                    percentage: 33
-                  - name: 66%
-                    icon: mdi:fan-speed-2
-                    percentage: 66
-                  - name: 100%
-                    icon: mdi:fan-speed-3
-                    percentage: 100
+                    icon: pap:sleep_mode
+                    preset_mode: sleep
+                  - name: 40%
+                    icon: pap:speed_1
+                    preset_mode: speed_1
+                  - name: 60%
+                    icon: pap:speed_2
+                    preset_mode: speed_2
+                  - name: 80%
+                    icon: pap:speed_3
+                    preset_mode: speed_3
+                  - name: Turbo
+                    icon: mdi:weather-tornado
+                    preset_mode: turbo
                   - name: Auto
-                    icon: mdi:fan-auto
-                    preset_mode: Auto
+                    icon: pap:auto_mode
+                    preset_mode: auto
                 show_name: false
                 show_state: true
                 show_toolbar: true
                 compact_view: false
                 aqi:
-                  entity_id: sensor.zhimi_mb3_8b86_pm25
+                  entity_id: sensor.philips_air_purifier_pm2_5
                   unit: µg/m³
           - type: entities
             title: Office

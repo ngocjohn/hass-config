@@ -1189,4 +1189,31 @@
       - cover.double
       - cover.right
     data: {}
+  mode: restart
+- id: '1777519494188'
+  alias: Samsung next alarm
+  description: ''
+  triggers:
+  - trigger: time
+    at: sensor.viet_ngoc_samsung_next_alarm
+  conditions:
+  - condition: state
+    entity_id: person.viet_ngoc
+    state:
+    - home
+  actions:
+  - action: script.samsung_alarm
+    metadata: {}
+    data:
+      target_player: media_player.bedroom
+  mode: restart
+- id: '1778001029775'
+  alias: YT Update Thumbnail
+  description: ''
+  triggers: []
+  conditions: []
+  actions:
+  - event: update_thumbnail
+    event_data:
+      msg: test data
   mode: single

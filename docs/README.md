@@ -10,7 +10,7 @@ Hey there! Welcome to my little corner of the tech world! 👨‍💻
 
 This is where I store all the cool configurations for my Home Assistant system. Well, it's a mix of awesome codes and setups I discovered from the Home Assistant community. Seriously, those folks are wizards! 🧙‍♂️ As a bit of an internet newbie turned tech enthusiast, I stumbled upon the magic of IT, and this repository is my way of sharing the joy and knowledge I've gained along the way. Dive in, explore, and let the tech magic begin! ✨
 
-I frequently refresh my configuration files. My current Home Assistant version is <b>2026.4.4</b>. If you find something you like, don't forget to give my repository a ⭐️!
+I frequently refresh my configuration files. My current Home Assistant version is <b>2026.5.0</b>. If you find something you like, don't forget to give my repository a ⭐️!
 
 ## Some of my projects for Home Assistant
 
@@ -47,15 +47,15 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>45,694 </td>
-              <td>31</td>
-              <td>239</td>
-              <td>56</td>
-              <td>70</td>
+              <td>45,773 </td>
+              <td>33</td>
+              <td>243</td>
+              <td>61</td>
+              <td>72</td>
+              <td>29</td>
+              <td>1364</td>
+              <td>219</td>
               <td>26</td>
-              <td>1190</td>
-              <td>221</td>
-              <td>31</td>
           </tr>
       </tbody>
   </table>
@@ -98,7 +98,6 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Adaptive Lighting](https://github.com/basnijholt/adaptive-lighting)
 - [Better Thermostat](https://github.com/KartoffelToby/better_thermostat)
 - [Browser Mod](https://github.com/thomasloven/hass-browser_mod)
-- [Dreame Vacuum](https://github.com/Tasshack/dreame-vacuum)
 - [Dyson](https://github.com/cmgrayb/hass-dyson)
 - [Eufy Security](https://github.com/fuatakgun/eufy_security)
 - [Extended Openai Conversation](https://github.com/jekalmin/extended_openai_conversation)
@@ -114,6 +113,8 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Mercedesme 2020](https://github.com/ReneNulschDE/mbapi2020)
 - [Node Red Companion](https://github.com/zachowj/hass-node-red)
 - [Ookla Speedtest](https://github.com/soulripper13/hass-speedtest-ookla)
+- [Philips Airpurifier (With Coap)](https://github.com/kongo09/philips-airpurifier-coap)
+- [Philips Homeid](https://github.com/renaudallard/homeassistant_philips_homeid)
 - [Rohlík.Cz Custom Integration](https://github.com/dvejsada/HA-RohlikCZ)
 - [Simpleicons](https://github.com/vigonotion/hass-simpleicons)
 - [Spook 👻 Your Homie](https://github.com/frenck/spook)

@@ -25,4 +25,4 @@ shell_command:
   appdaemon_start_ssh_mbpro: !secret appdaemon_start_ssh_mbpro
   appdaemon_stop_ssh_mbpro: !secret appdaemon_stop_ssh_mbpro
   appdaemon_restart_ssh_mbpro: !secret appdaemon_restart_ssh_mbpro
-  appdaemon_status_mbpro: ssh -F /config/.ssh/config MBProServer 'zsh -i -c "pipAppdaemon state"'
+  appdaemon_status_mbpro: !secret appdaemon_status_ssh_mbpro

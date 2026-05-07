@@ -1,0 +1,41 @@
+title: floor-plan-with-sidebar
+path: floorplan-with-sidebar
+type: sidebar
+icon: mdi:home-floor-0
+subview: false
+cards:
+  - show_name: false
+    show_icon: true
+    type: button
+    entity: input_boolean.test_floorplan_card_inside
+    show_state: true
+    icon_height: 15px
+    view_layout:
+      position: sidebar
+
+  - type: vertical-stack
+    view_layout:
+      position: main
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: custom:floorplan-card
+            card_mod:
+              style: |
+                ha-card {
+                  margin: 0;
+                  background: transparent;
+                  box-shadow: none;
+                  border-radius: none;
+                  border: none;
+                }
+                .content {
+                  padding: 0;
+                  background: radial-gradient(circle, rgba(255, 255, 255, 0.13) 0%, transparent 50%);
+                }
+            full_height: true
+            config:
+              # console_log_level: debug
+              image: /local/hafloor/plan_opt.svg
+              stylesheet: /local/hafloor/style.css
+              rules: !include_dir_merge_list /config/dashboards/floorplan/

@@ -21,6 +21,7 @@ homeassistant:
     sensor.fryer_status:
       friendly_name: 'Status'
       icon: 'mdi:chef-hat'
+
 template:
   - sensor:
       - name: 'fryer_status'

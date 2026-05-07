@@ -27,6 +27,9 @@ browser_mod:
                   template:
                     - mediaplayer
                     - icon_tv
+                  styles:
+                    card:
+                      - border-radius: 10%
               - entity_id: switch.ps5_power
                 options:
                   type: custom:button-card
@@ -35,6 +38,10 @@ browser_mod:
                     - base
                     - icon_ps5
                     - loader
+                  styles:
+                    card:
+                      - border-radius: 10%
+
           card:
             type: grid
             columns: 3

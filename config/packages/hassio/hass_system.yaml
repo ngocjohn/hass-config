@@ -34,6 +34,7 @@ recorder:
       - sensor.hassio_addons_use
       - sensor.zhimi_mb4_b008_moto_speed_rpm
       - script.fade_music
+      - sensor.motion_detected
     entity_globs:
       - sensor.*_motor_speed
       - sensor.browser_*
@@ -65,6 +66,15 @@ recorder:
       - binary_sensor.roidmi_*
       - sensor.unifi_*_stats
       - sensor.*_stargazers
+      - sensor.arris_*
+      - sensor.raspberry_pi_docker_*
+      - sensor.macbook_pro_server_*
+      - fan.philips_air_purifier_*
+      - sensor.philips_air_purifier_*
+      - sensor.*_device_temperature
+      - sensor.*_rssi
+      - sensor.prague_moon_*
+      - sensor.*_cpu_usage_total
   include:
     entities:
       - device_tracker.viet_ngoc_samsung

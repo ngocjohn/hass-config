@@ -335,11 +335,11 @@ g#areas>g:hover path:not(.touch-area) {
 	animation: ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
 }
 
-#motions>g.motion-on>circle:nth-child(2) {
+#motions>g.motion-on>circle:nth-child(1) {
 	animation-delay: -0.1s;
 }
 
-#motions>g.motion-on>circle:nth-child(3) {
+#motions>g.motion-on>circle:nth-child(2) {
 	animation-delay: -0.2s;
 }
 
@@ -392,4 +392,16 @@ g#areas>g:hover path:not(.touch-area) {
 g#temphumid text#sensor\.kids_room_temp_humid_temperature,
 g#temphumid text#sensor\.kids_room_temp_humid_humidity {
 	display: none !important;
+}
+
+foreignObject#CardTopLeft.card-on {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	animation: fade-in 300ms linear forwards;
+}
+
+foreignObject#CardTopLeft.card-off {
+	/* animation: fade-out 300ms linear forwards; */
+	display: none;
 }
