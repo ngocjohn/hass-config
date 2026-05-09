@@ -390,22 +390,21 @@
 - id: '1715819993809'
   alias: Kodi Update Picture Sensor
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
-    - media_player.kodi_atv
-    attribute: media_title
-  condition: []
-  action:
-  - service: kodi.call_method
-    target:
-      entity_id: media_player.kodi_atv
-    data:
+  triggers:
+  - entity_id:
+    - media_player.kodi_sony
+    trigger: state
+  conditions: []
+  actions:
+  - data:
       method: Player.GetItem
       playerid: 0
       properties:
       - title
       - art
+    action: kodi.call_method
+    target:
+      entity_id: media_player.kodi_sony
   mode: single
 - id: '1716484682108'
   alias: Vacum Set Property
@@ -1216,4 +1215,13 @@
   - event: update_thumbnail
     event_data:
       msg: test data
+  mode: single
+- id: '1778338204194'
+  alias: kodi_video_scan
+  description: ''
+  triggers: []
+  conditions: []
+  actions:
+  - event: kodi_video_scan
+    event_data: {}
   mode: single

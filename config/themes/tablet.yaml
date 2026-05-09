@@ -174,6 +174,13 @@ tablet:
             }
           }
 
+        $state-switch:
+          $: |
+            #root {
+              overflow: unset !important;
+              margin: unset !important;
+              padding: unset !important;
+            }
     #################################################
     #                                               #
     #               SWIPE CARD MARGIN               #
