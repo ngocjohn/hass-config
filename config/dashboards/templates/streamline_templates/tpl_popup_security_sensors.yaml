@@ -11,17 +11,20 @@ popup_security_sensors:
       card_mod:
         class: header
     filter:
-      template: |
-        {% for sensor in expand('[[group_entity_id]]') -%}
-          {%- set name = state_attr(sensor.entity_id, "friendly_name") | regex_replace('Motion Sensor|Contact Sensor | ?Occupancy','') | trim -%}
-          {{
-            { 'entity': sensor.entity_id,
-              'name': name,
-              'state_color': true,
-              'secondary_info': 'last-changed'
-            }
-          }},
-        {%- endfor %}
+      include:
+        - options:
+            secondary_info: last-changed
+            state_color: true
+          group_expanded:
+            group: '[[group_entity_id]]'
+            active_choice: group
+      exclude:
+        - options: {}
+          state: unavailable
+    rename:
+      find: Motion Sensor|Contact Sensor | ?Occupancy| ?Door
     sort:
-      method: last_changed
-      reverse: true
+      - method: state
+        reverse: true
+      - method: last_changed
+        reverse: true

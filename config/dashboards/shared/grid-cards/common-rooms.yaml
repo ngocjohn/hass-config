@@ -1,4 +1,5 @@
 # COMMON ROOMS GRID CARDS
+# TPL: dashboards/templates/streamline_templates/tpl_grid_room2.yaml
 #################################################
 # SHOWER ROOM
 - type: custom:streamline-card
@@ -13,7 +14,10 @@
 - type: custom:state-switch
   entity: sensor.appliance_active
   states:
-    default:
+    'no':
+      type: custom:streamline-card
+      template: grid_utility_normal
+    'on':
       type: custom:streamline-card
       template: grid_utility_normal
     washing:

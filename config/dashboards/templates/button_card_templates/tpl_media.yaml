@@ -2097,10 +2097,29 @@ new_media_player:
       height: 24px !important;
     }
 
+hui_player_color:
+  custom_fields:
+    player_color: >
+      [[[
+        setTimeout(() => {
+          let elt = this.shadowRoot,
+              card = elt.getElementById('card'),
+              iconEl = elt.getElementById('icon'),
+              player = elt.querySelector('hui-media-control-card');
+          if (elt && card && iconEl && player) {
+            const { _foregroundColor, _backgroundColor } = player;
+            if (_foregroundColor && _backgroundColor) {
+              iconEl.style.setProperty('--hui-foreground-color', _foregroundColor);
+              iconEl.style.setProperty('--hui-background-color', _backgroundColor);
+            }
+          };
+        }, 500);
+      ]]]
 universal_media_player:
   template:
     - base
     - base_media
+    - hui_player_color
   variables:
     vibrant_light_color: >
       [[[
@@ -2110,12 +2129,12 @@ universal_media_player:
     vibrant_color: >
       [[[
         let color = states['sensor.vibrant_color'].state;
-        return `rgb(${color})`;
+        return color;
       ]]]
     vibrant_dark_color: >
       [[[
         let color = states['sensor.dark_vibrant_color'].state;
-        return `rgb(${color})`;
+        return coolor;
       ]]]
     tilt_enable: >
       [[[
@@ -2190,6 +2209,7 @@ universal_media_player:
         - padding: 5%
         - padding-left: 10%
         - z-index: 0
+        - --fill-color: var(--hui-foreground-color)
 
 pause_icon_full:
   color_type: card

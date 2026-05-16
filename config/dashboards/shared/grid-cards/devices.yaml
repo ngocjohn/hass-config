@@ -1,4 +1,5 @@
 # MEDIA DEVICES STATUs
+# TPL: dashboards/templates/streamline_templates/tpl_grid_devices.yaml
 ###############################################
 # APPLE TV
 - type: custom:streamline-card

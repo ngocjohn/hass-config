@@ -10,10 +10,10 @@ media_player:
       {% if is_state('media_player.sony_bravia_tv', 'off') %}
         media_player.sony_bravia_tv
       {% else %}
-        {% if state_attr('media_player.sony_bravia_tv', 'media_content_id') %}
-          media_player.sony_bravia_tv
-        {% else %}
+        {% if state_attr('media_player.sony_google_cast', 'media_content_type') %}
           media_player.sony_google_cast
+        {% else %}
+          media_player.sony_bravia_tv
         {% endif %}
       {% endif %}
     attributes:

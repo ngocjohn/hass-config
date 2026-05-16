@@ -30,7 +30,6 @@
         type: custom:button-card
         entity: media_player.living_room_tv
         name: ' '
-        triggers_update: sensor.youtube_thumbnail
         template:
           - universal_media_player
           - icon_apple_tv

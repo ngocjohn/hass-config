@@ -1,4 +1,6 @@
 # SECURITY STATUS
+#
+# TPL: dashboards/templates/streamline_templates/tpl_grid_security.yaml
 ################################################
 # ALARM
 - type: custom:streamline-card
