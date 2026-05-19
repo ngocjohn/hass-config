@@ -191,6 +191,8 @@
     to: run
     trigger: state
   conditions:
+  - condition: template
+    value_template: '{{has_value(mycka_remaining)}}'
   - condition: or
     conditions:
     - condition: not
@@ -203,6 +205,7 @@
       - condition: state
         entity_id: sensor.mycka_nadobi_remaining_program_time
         state: unavailable
+    enabled: false
   actions:
   - action: timer.set_duration
     metadata: {}
@@ -218,6 +221,8 @@
     target:
       entity_id: timer.dishwasher_remaining
     data: {}
+  variables:
+    mycka_remaining: sensor.mycka_nadobi_remaining_program_time
   initial_state: true
   mode: restart
 - id: 34ba1897-ec7a-4cb3-a12b-fb0a1e9e495e
@@ -653,22 +658,6 @@
     data:
       message: '{{ trigger.to_state.name | lower }}'
   mode: parallel
-- id: '1739425730318'
-  alias: Samsung Alarm
-  description: ''
-  triggers:
-  - trigger: time
-    at: sensor.viet_ngoc_samsung_next_alarm
-  conditions:
-  - condition: state
-    entity_id: person.viet_ngoc
-    state:
-    - home
-  actions:
-  - action: script.homepod_alarm
-    metadata: {}
-    data: {}
-  mode: restart
 - id: '1741648805445'
   alias: ATV Force quit app
   description: 'Quit all ATV app with sony off timeout '
@@ -1061,6 +1050,12 @@
   alias: Samsung next alarm
   description: ''
   triggers:
+  - alias: Samsung Next Alarm Change Mode
+    trigger: time
+    at:
+      entity_id: sensor.viet_ngoc_samsung_next_alarm
+      offset: -00:01:00
+    id: change_ringe_mode
   - trigger: time
     at: sensor.viet_ngoc_samsung_next_alarm
   conditions:
@@ -1069,10 +1064,25 @@
     state:
     - home
   actions:
-  - action: script.samsung_alarm
-    metadata: {}
-    data:
-      target_player: media_player.living_room_2
+  - if:
+    - condition: trigger
+      id:
+      - change_ringe_mode
+    then:
+    - action: notify.mobile_app_viet_ngoc_samsung
+      metadata: {}
+      data:
+        message: command_ringer_mode
+        data:
+          command: normal
+      alias: Set Ringer Mode Normal
+    else:
+    - condition: template
+      value_template: '{{states("input_select.next_alarm_homepod") != "none"}}'
+    - action: script.samsung_alarm
+      metadata: {}
+      data:
+        target_player: '{{states.input_select.next_alarm_homepod.state}}'
   mode: restart
 - id: '1778338204194'
   alias: kodi_video_scan
@@ -1152,3 +1162,57 @@
           entity_id: button.youtube_thumbnail_fetch
         data: {}
   mode: single
+- id: '1779062484339'
+  alias: next alarm pick homepod
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - sensor.viet_ngoc_samsung_next_alarm
+    from:
+    - unavailable
+    - unknown
+    to:
+  conditions: []
+  actions:
+  - variables:
+      action_living: media_player.living_room_2
+      action_bed: media_player.bedroom
+      action_office: media_player.office_homepod
+    alias: Set up variables homepods
+  - alias: Ask to pick device
+    action: notify.mobile_app_viet_ngoc_samsung
+    metadata: {}
+    data:
+      data:
+        actions:
+        - action: '{{ action_living}}'
+          title: Living Room
+        - action: '{{ action_bed }}'
+          title: Bedroom
+        - action: '{{ action_office }}'
+          title: Office
+      title: Choose the homepod
+      message: '{% set current = states.input_select.next_alarm_homepod.state %}
+
+        Current: {{state_attr(current, "friendly_name")}}'
+  - wait_for_trigger:
+    - trigger: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: '{{ action_living }}'
+    - trigger: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: '{{ action_bed }}'
+    - trigger: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: '{{ action_office }}'
+  - action: input_select.select_option
+    metadata: {}
+    target:
+      entity_id: input_select.next_alarm_homepod
+    data:
+      option: '{{wait.trigger.event.data.action}}'
+  mode: restart
