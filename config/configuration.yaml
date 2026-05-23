@@ -23,7 +23,7 @@ frontend:
     - /hacsfiles/sidebar-organizer/sidebar-organizer.js?hacstag=932534411341
     - /local/dashboard-resources/customize-css-change.js?v1.0.3
     - /local/dashboard-resources/quickbar-navigate-shortcut.js?v0.0.1
-    # - /local/dashboard-resources/empty-quickbar-fix.js
+    - /hacsfiles/more-info-custom/more-info-custom.js?hacstag=1245053247100
     - /local/dashboard-resources/custom_ikonky.js?v0.0.1
 
 # HTTP

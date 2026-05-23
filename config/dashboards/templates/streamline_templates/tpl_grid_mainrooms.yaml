@@ -73,6 +73,7 @@ grid_kitchen_normal:
       light_entity: light.kitchen_table_light
       motion: binary_sensor.motion_sensor_kitchen_occupancy
       active: sensor.kitchen_active
+
   # KITCHEN DISHWASING
 grid_kitchen_dishwasing:
   card:
