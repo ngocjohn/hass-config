@@ -1,0 +1,1944 @@
+blueprint:
+  name: State Notifications & Actions
+  description: "# \U0001F4CD State Notifications & Actions\n**Version: 1.8**\n\nState
+    Your Trigger: Turn State Changes Into Notifications and Actions! \U0001F680\n\n**If
+    you like my blueprints, and would like to show your support or just say thank
+    you?** [Click Here](https://www.paypal.com/donate/?hosted_button_id=WAZS3QSDTPGA8)
+    \U0001F642\n<details> <summary><b>The Automation Process:</b> \U0001F448</summary>\n\n
+    \ - **State Triggers:**\n    - Define triggers based on entity state changes or
+    numeric state changes (above or below a specified value).\n    - Specify entities
+    for both \"Start Entities\" and \"End Entities.\" Both start and end entities
+    serve as triggers.\n\n  - **Notification Options:**\n    - Option to send notifications
+    to one or multiple devices when triggered.\n    - Action Buttons (Optional):\n
+    \       - Notifications can include up to 3 action buttons.\n        - Each action
+    button is linked to a designated custom action group.\n        - Option to send
+    a confirmation message when an action button is pressed.\n        - The automation
+    will continue after a specified time delay if an action button is not pressed.\n
+    \   - Compatible with Apple iOS and Android devices.\n\n  - **Custom Actions:**\n
+    \   - Option to define up to 3 different action groups when triggered.\n    -
+    Each action group can contain as many actions as desired.\n    - Each action group
+    can be linked to a notification action button or executed automatically when the
+    automation is triggered.\n\n  - **Custom Conditions:**\n      - Enter any custom
+    conditions to further customize the automation process\n</details>\n\nNeed help?
+    \n- FAQ: [Click Here](https://community.home-assistant.io/t/state-notifications-actions/612617/2?u=blacky)\n-
+    The Settings & Best Practice Guidelines: [Click Here](https://community.home-assistant.io/t/state-notifications-actions/612617/3?u=blacky)\n-
+    Community Support Including Updates: [Click Here](https://community.home-assistant.io/t/state-notifications-actions/612617?u=blacky)\n"
+  domain: automation
+  input:
+    start_trigger_settings:
+      name: Start Trigger
+      icon: mdi:cog-outline
+      collapsed: true
+      input:
+        start_trigger_state:
+          name: Start Trigger - State
+          description: 'Please select what state you would like for your trigger.
+            You can choose from ten options available in the dropdown menu. If your
+            option is not in the dropdown menu then just type the state you would
+            like to use in and click the save button.
+
+
+            1 - Button Or Any State
+
+            2 - ON
+
+            3 - OFF
+
+            4 - Unavailable
+
+            5 - Unknown
+
+            6 - Home
+
+            7 - Not Home
+
+            8 - Numeric State - Above
+
+            9 - Numeric State - Below
+
+            10 - Numeric State - Above & Below
+
+
+            A numbering system has been implemented to facilitate navigation within
+            the dropdown selections. Each number corresponds to a specific configuration,
+            aiding users in identifying and adjusting the settings used within each
+            selection. For instance, when selecting **8 - Numeric State - Above**
+            as a dropdown option, settings marked **Used in options 8, 9 or 10** are
+            required for that respective selection because number 8 is included in
+            those options.
+
+            '
+          default: button_any_state
+          selector:
+            select:
+              custom_value: true
+              mode: dropdown
+              options:
+              - label: 1 - Button Or Any State
+                value: button_any_state
+              - label: 2 - ON
+                value: 'on'
+              - label: 3 - OFF
+                value: 'off'
+              - label: 4 - Unavailable
+                value: unavailable
+              - label: 5 - Unknown
+                value: unknown
+              - label: 6 - Home
+                value: home
+              - label: 7 - Not Home
+                value: not_home
+              - label: 8 - Numeric State - Above
+                value: numeric_state_above
+              - label: 9 - Numeric State - Below
+                value: numeric_state_below
+              - label: 10 - Numeric State - Above & Below
+                value: numeric_state_above_below
+              multiple: false
+              sort: false
+        start_trigger_state_entity:
+          name: State Entities
+          description: '**Used in options 1, 2, 3, 4, 5, 6 or 7**. Enter the entities
+            that will trigger the automation on state change.
+
+            '
+          default: []
+          selector:
+            entity:
+              multiple: true
+              reorder: false
+        start_trigger_numeric_entity:
+          name: Numeric State Entities
+          description: '**Used in options 8, 9 or 10**. Enter the entities that will
+            trigger the automation numeric state change.
+
+            '
+          default: []
+          selector:
+            entity:
+              multiple: true
+              reorder: false
+        start_above_state:
+          name: Numeric State Above Option
+          description: '**Used in options 8, or 10**. Set the above value. The numeric
+            state trigger will be when the value crosses over to above the set value.
+
+            '
+          default: 0
+          selector:
+            number:
+              min: -20.0
+              max: 100.0
+              step: 1.0
+              unit_of_measurement: value
+              mode: slider
+        start_below_state:
+          name: Numeric State Below Option
+          description: '**Used in options 9 or 10**. Set the below value. The numeric
+            state trigger will be when the value crosses over to below the set value.
+
+            '
+          default: 0
+          selector:
+            number:
+              min: -20.0
+              max: 100.0
+              step: 1.0
+              unit_of_measurement: value
+              mode: slider
+        start_time_delay_state:
+          name: Time Delay
+          description: '**Used in options 1, 2, 3, 4, 5, 6, 7, 8, 9 or 10** Specifies
+            the duration that the trigger must maintain its state before the automation
+            is executed. The automation will only proceed if the trigger condition
+            is met continuously for this entire time delay.
+
+            '
+          default:
+            hours: 0
+            minutes: 0
+            seconds: 0
+          selector:
+            duration:
+              enable_second: true
+    start_notify_settings:
+      name: Start Notify
+      icon: mdi:bell-check-outline
+      collapsed: true
+      input:
+        include_start_notify:
+          name: Use The Start Notify Options (Optional)
+          description: "Select **Enable** if you would like to receive notifications
+            when the entity changes to its set state. \n"
+          default: disable_start_notify_options
+          selector:
+            select:
+              options:
+              - label: Enable Start Notify Options
+                value: enable_start_notify_options
+              - label: Disable Start Notify Options
+                value: disable_start_notify_options
+              multiple: false
+              sort: false
+              custom_value: false
+        start_notify_device:
+          name: Devices To Notify
+          description: 'Select the devices to receive notifications when the entity
+            changes to its set state.
+
+            '
+          default: []
+          selector:
+            device:
+              filter:
+              - integration: mobile_app
+              multiple: true
+        start_title:
+          name: Title
+          description: 'Specify the notification title for when the entity changes
+            to its set state.
+
+            '
+          default: None
+          selector:
+            text:
+              multiple: false
+              multiline: false
+        start_message:
+          name: Message
+          description: 'Specify the notification message for when the entity changes
+            to its set state.
+
+
+            For more information on including the sensor name that triggered the automation
+            in your message [Click Here](https://community.home-assistant.io/t/612617/63)
+
+            '
+          default: []
+          selector:
+            text:
+              multiple: false
+              multiline: false
+        start_notify_tag:
+          name: Notification Tag
+          description: 'Use a tag to keep your notifications organized. When a new
+            notification with the same tag is sent, it replaces the old one, so you
+            won''t get cluttered with multiple notifications for the same appliance.
+
+
+            You can use the same tag across start and end notifications to ensure
+            only one active notification remains throughout the automation.
+
+
+            If this input is left blank, no tag will be applied and each notification
+            will be treated as separate.
+
+
+            For best results, use short, unique tags for each automation - for example:
+            `water-leak`, `garage-door`, `back-door-motion`, etc.
+
+            '
+          default: []
+          selector:
+            text:
+              multiple: false
+              multiline: false
+        start_notify_interruption_level:
+          name: Interruption Level - iOS Only
+          description: 'On devices running iOS 15 and later, you can configure the
+            interruption level for your notifications to ensure they are delivered
+            according to your preferences. Choose the desired interruption level from
+            the dropdown list. Critical and time-sensitive notifications must be turned
+            ON within the Home Assistant App, and time-sensitive notifications must
+            be allowed in your Focus settings.
+
+
+            For more information on interruption levels [Click Here](https://community.home-assistant.io/t/612617/69)
+
+            '
+          default: active
+          selector:
+            select:
+              mode: dropdown
+              options:
+              - label: Default
+                value: active
+              - label: Critical Notifications
+                value: critical
+              - label: Time Sensitive Notifications
+                value: time-sensitive
+              - label: Quiet Notifications Without Waking Screen
+                value: passive
+              multiple: false
+              sort: false
+              custom_value: false
+        start_notify_sound:
+          name: Notification Sound - iOS Only
+          description: 'The Home Assistant app for iOS includes built-in notification
+            sounds, and you can import sounds from your iOS device into the app. Custom
+            sounds can also be added via iTunes or from your cloud storage. When entering
+            a sound, ensure you use the full filename, including the extension.
+
+
+            For more information on using sounds in the Home Assistant app, [Click
+            Here](https://community.home-assistant.io/t/612617/69)
+
+            '
+          default: []
+          selector:
+            text:
+              multiple: false
+              multiline: false
+        start_notify_data:
+          name: Android Only Options (Optional)
+          description: '**High Priority** notifications ensure that you receive important
+            alerts immediately. These notifications bypass normal delivery delays
+            and are delivered instantly to your device.
+
+
+            **Sticky Notification** ensure that important alerts are not dismissed
+            when selected. They remain on your notification screen until you actively
+            clear or swipe them away, ensuring that critical information stays visible
+            until addressed.
+
+
+            **Notification Channel** allow you to easily organize different notification
+            settings, including notification sounds, vibrations, and other device-specific
+            features. If you choose this option, please enter your desired channel
+            name below.
+
+
+            **Icon** allows you to replace the default Home Assistant icon with one
+            of your choice. If selected, choose your preferred icon using the **Icon
+            - Android Only** option below, and set the icon colour using **Icon Colour
+            - Android Only**.
+
+            '
+          default: []
+          selector:
+            select:
+              multiple: true
+              options:
+              - label: High Priority
+                value: high_priority
+              - label: Sticky Notification
+                value: sticky
+              - label: Notification Channel
+                value: channel
+              - label: Icon
+                value: icon
+              sort: false
+              custom_value: false
+        start_notify_channel:
+          name: Notification Channel - Android Only
+          description: 'If you have chosen to use a notification channel, simply enter
+            the name of an existing channel to apply its pre-configured settings.
+            If you don''t have a channel yet, you can create a new one by entering
+            a name here. When your automation sends the first notification, it will
+            create the channel on your device. After the channel is created, you can
+            customize its notification settings to your preference directly on your
+            device.
+
+
+            For more information on notification channels [Click Here](https://community.home-assistant.io/t/612617/69)
+
+            '
+          default: []
+          selector:
+            text:
+              multiple: false
+              multiline: false
+        start_notify_icon:
+          name: Icon - Android Only
+          description: 'Select a custom icon to replace the default Home Assistant
+            icon in the notification. This setting applies only if the **Icon** option
+            is selected in **Android Only Options** above.
+
+            '
+          default: mdi:emoticon-happy-outline
+          selector:
+            icon: {}
+        start_notify_icon_colour:
+          name: Icon Colour - Android Only
+          description: 'Choose a colour for your custom notification icon. This setting
+            applies only if the **Icon** option is selected in **Android Only Options**
+            above.
+
+            '
+          default:
+          - 41
+          - 121
+          - 255
+          selector:
+            color_rgb: {}
+    start_action_settings:
+      name: Start Actions Buttons
+      icon: mdi:gesture-tap
+      collapsed: true
+      input:
+        include_start_action_buttons:
+          name: Start Notify - Action Buttons Options (Optional)
+          description: 'Enable the action buttons you would like to use. These buttons
+            will be shown in the notification, allowing you to perform actions when
+            clicked.
+
+
+            **NOTE** - You do not need to select any notification action buttons to
+            execute a start action. If you prefer to run a start action without using
+            any action buttons, simply enable any **Start Auto Action** located in
+            the **Start Actions** section below.
+
+
+            ⚠️ Enter the names for all enabled **Action Buttons** below, including
+            the **Cancel Action Button**. Missing any button names may prevent the
+            automation from functioning correctly and could result in not receiving
+            the notification.
+
+            '
+          default: []
+          selector:
+            select:
+              options:
+              - label: Enable action button 1
+                value: enable_start_action_button_1
+              - label: Enable action button 2
+                value: enable_start_action_button_2
+              - label: Enable action button 3
+                value: enable_start_action_button_3
+              multiple: true
+              sort: false
+              custom_value: false
+        start_action_button_1:
+          name: Action Button 1
+          description: 'Enter the button name to be displayed in the notification.
+            This button will execute all actions entered into the **Start - Action
+            1** input located in the **Start Actions** section below.
+
+            '
+          default: []
+          selector:
+            text:
+              multiple: false
+              multiline: false
+        start_action_button_2:
+          name: Action Button 2
+          description: 'Enter the button name to be displayed in the notification.
+            This button will execute all actions entered into the **Start - Action
+            2** input located in the **Start Actions** section below.
+
+            '
+          default: []
+          selector:
+            text:
+              multiple: false
+              multiline: false
+        start_action_button_3:
+          name: Action Button 3
+          description: 'Enter the button name to be displayed in the notification.
+            This button will execute all actions entered into the **Start - Action
+            3** input located in the **Start Actions** section below.
+
+            '
+          default: []
+          selector:
+            text:
+              multiple: false
+              multiline: false
+        start_action_button_stop:
+          name: Cancel Action Button
+          description: 'Enter the Cancel button name to be displayed in the notification.
+            This button will cancel all actions and stop the automation. It will be
+            automatically included in the notification if you have enabled an action
+            button above.
+
+            '
+          default: Cancel
+          selector:
+            text:
+              multiple: false
+              multiline: false
+        start_time_delay:
+          name: Time Delay
+          description: 'Specify the time delay after which the automation will resume
+            its execution if an action button has not been pressed.
+
+            '
+          default:
+            hours: 0
+            minutes: 30
+            seconds: 0
+          selector:
+            duration:
+              enable_second: true
+        include_start_action_button_confirmation:
+          name: Action Button Confirmation Option (Optional)
+          description: 'Select **Enable** if you would like to notify all devices
+            when an action button has been pressed. This is useful when notifying
+            multiple devices, informing others that an action has been selected.
+
+
+            ⚠️ If Action Button Confirmation is enabled, you must include the **Confirmation
+            Title**, **Confirmation Message** for each enabled action button, **Cancel
+            Confirmation Message**, and **Time Delay Confirmation Message**. Missing
+            any of these may prevent the automation from functioning correctly and
+            could result in not receiving the notification.
+
+            '
+          default: disable_start_action_button_confirmation
+          selector:
+            select:
+              options:
+              - label: Enable Action Button Confirmation
+                value: enable_start_action_button_confirmation
+              - label: Disable Action Button Confirmation
+                value: disable_start_action_button_confirmation
+              multiple: false
+              sort: false
+              custom_value: false
+        start_action_button_confirmation_title:
+          name: Action Button Confirmation Title
+          description: 'Specify the notification title when an action button is pressed
+            or when the time delay has passed.
+
+            '
+          default: []
+          selector:
+            text:
+              multiple: false
+              multiline: false
+        start_action_button_confirmation_message:
+          name: Action Button 1 Confirmation Message
+          description: 'Specify the notification message when action button 1 is pressed.
+
+            '
+          default: []
+          selector:
+            text:
+              multiple: false
+              multiline: false
+        start_action_button_2_confirmation_message:
+          name: Action Button 2 Confirmation Message
+          description: 'Specify the notification message when action button 2 is pressed.
+
+            '
+          default: []
+          selector:
+            text:
+              multiple: false
+              multiline: false
+        start_action_button_3_confirmation_message:
+          name: Action Button 3 Confirmation Message
+          description: 'Specify the notification message when action button 3 is pressed.
+
+            '
+          default: []
+          selector:
+            text:
+              multiple: false
+              multiline: false
+        start_action_button_stop_confirmation_message:
+          name: Action Button Cancel Confirmation Message
+          description: 'Specify the notification message when the cancel button is
+            pressed.
+
+            '
+          default: []
+          selector:
+            text:
+              multiple: false
+              multiline: false
+        start_time_delay_confirmation_message:
+          name: Time Delay Confirmation Message
+          description: 'Specify the notification message when the time delay has passed.
+
+            '
+          default: []
+          selector:
+            text:
+              multiple: false
+              multiline: false
+    start_auto_action_settings:
+      name: Start Actions
+      icon: mdi:code-tags
+      collapsed: true
+      input:
+        include_start_auto_actions:
+          name: Use The Start Auto Action Options (Optional)
+          description: 'Enabling the auto option will trigger the **Start Actions**
+            below when the entity changes to its specified state.
+
+
+            When using action buttons in a notification, enabling an auto action is
+            not necessary for the start actions to work, as pressing an action button
+            will execute the selected action. However, if you miss the notification
+            and don''t press an action button, enabling the auto action option ensures
+            the start actions will still run after the specified time delay.
+
+            '
+          default: []
+          selector:
+            select:
+              options:
+              - label: Enable start auto action 1
+                value: enable_start_action_1
+              - label: Enable start auto action 2
+                value: enable_start_action_2
+              - label: Enable start auto action 3
+                value: enable_start_action_3
+              multiple: true
+              sort: false
+              custom_value: false
+        start_action_1:
+          name: Action 1
+          description: 'Enter the actions you want to run when the entity changes
+            state.
+
+
+            These actions are also linked to the **Start Notify - Action Button 1**
+            input located in the **Start Actions Buttons** section above.
+
+            '
+          default: []
+          selector:
+            action: {}
+        start_action_2:
+          name: Action 2
+          description: 'Enter the actions you want to run when the entity changes
+            state.
+
+
+            These actions are also linked to the **Start Notify - Action Button 2**
+            input located in the **Start Actions Buttons** section above.
+
+            '
+          default: []
+          selector:
+            action: {}
+        start_action_3:
+          name: Action 3
+          description: 'Enter the actions you want to run when the entity changes
+            state.
+
+
+            These actions are also linked to the **Start Notify - Action Button 3**
+            input located in the **Start Actions Buttons** section above.
+
+            '
+          default: []
+          selector:
+            action: {}
+    end_trigger_settings:
+      name: End Trigger
+      icon: mdi:cog-outline
+      collapsed: true
+      input:
+        end_trigger_state:
+          name: End Trigger - State
+          description: 'Please select what state you would like for your trigger.
+            You can choose from ten options available in the dropdown menu. If your
+            option is not in the dropdown menu then just type the state you would
+            like to use in and click the save button.
+
+
+            1 - Button Or Any State
+
+            2 - ON
+
+            3 - OFF
+
+            4 - Unavailable
+
+            5 - Unknown
+
+            6 - Home
+
+            7 - Not Home
+
+            8 - Numeric State - Above
+
+            9 - Numeric State - Below
+
+            10 - Numeric State - Above & Below
+
+
+            A numbering system has been implemented to facilitate navigation within
+            the dropdown selections. Each number corresponds to a specific configuration,
+            aiding users in identifying and adjusting the settings used within each
+            selection. For instance, when selecting **8 - Numeric State - Above**
+            as a dropdown option, settings marked **Used in options 8, 9 or 10** are
+            required for that respective selection because number 8 is included in
+            those options.
+
+            '
+          default: button_any_state
+          selector:
+            select:
+              custom_value: true
+              mode: dropdown
+              options:
+              - label: 1 - Button Or Any State
+                value: button_any_state
+              - label: 2 - ON
+                value: 'on'
+              - label: 3 - OFF
+                value: 'off'
+              - label: 4 - Unavailable
+                value: unavailable
+              - label: 5 - Unknown
+                value: unknown
+              - label: 6 - Home
+                value: home
+              - label: 7 - Not Home
+                value: not_home
+              - label: 8 - Numeric State - Above
+                value: numeric_state_above
+              - label: 9 - Numeric State - Below
+                value: numeric_state_below
+              - label: 10 - Numeric State - Above & Below
+                value: numeric_state_above_below
+              multiple: false
+              sort: false
+        end_trigger_state_entity:
+          name: State Entities
+          description: '**Used in options 1, 2, 3, 4, 5, 6 or 7**. Enter the entities
+            that will trigger the automation on state change.
+
+            '
+          default: []
+          selector:
+            entity:
+              multiple: true
+              reorder: false
+        end_trigger_numeric_entity:
+          name: Numeric State Entities
+          description: '**Used in options 8, 9 or 10**. Enter the entities that will
+            trigger the automation numeric state change.
+
+            '
+          default: []
+          selector:
+            entity:
+              multiple: true
+              reorder: false
+        end_above_state:
+          name: Numeric State Above Option
+          description: '**Used in options 8, or 10**. Set the above value. The numeric
+            state trigger will be when the value crosses over to above the set value.
+
+            '
+          default: 0
+          selector:
+            number:
+              min: -20.0
+              max: 100.0
+              step: 1.0
+              unit_of_measurement: value
+              mode: slider
+        end_below_state:
+          name: Numeric State Below Option
+          description: '**Used in options 9 or 10**. Set the below value. The numeric
+            state trigger will be when the value crosses over to below the set value.
+
+            '
+          default: 0
+          selector:
+            number:
+              min: -20.0
+              max: 100.0
+              step: 1.0
+              unit_of_measurement: value
+              mode: slider
+        end_time_delay_state:
+          name: Time Delay
+          description: '**Used in options 1, 2, 3, 4, 5, 6, 7, 8, 9 or 10** Specifies
+            the duration that the trigger must maintain its state before the automation
+            is executed. The automation will only proceed if the trigger condition
+            is met continuously for this entire time delay.
+
+            '
+          default:
+            hours: 0
+            minutes: 0
+            seconds: 0
+          selector:
+            duration:
+              enable_second: true
+    end_notify_settings:
+      name: End Notify
+      icon: mdi:bell-ring-outline
+      collapsed: true
+      input:
+        include_end_notify:
+          name: Use The End Notify Options (Optional)
+          description: "Select **Enable** if you would like to receive notifications
+            when the entity changes to its set state. \n"
+          default: disable_end_notify_options
+          selector:
+            select:
+              options:
+              - label: Enable End Notify Options
+                value: enable_end_notify_options
+              - label: Disable End Notify Options
+                value: disable_end_notify_options
+              multiple: false
+              sort: false
+              custom_value: false
+        end_notify_device:
+          name: Devices To Notify
+          description: 'Select the devices to receive notifications when the entity
+            changes to its set state.
+
+            '
+          default: []
+          selector:
+            device:
+              filter:
+              - integration: mobile_app
+              multiple: true
+        end_title:
+          name: Title
+          description: 'Specify the notification title for when the entity changes
+            to its set state.
+
+            '
+          default: []
+          selector:
+            text:
+              multiple: false
+              multiline: false
+        end_message:
+          name: Message
+          description: 'Specify the notification message for when the entity changes
+            to its set state.
+
+
+            For more information on including the sensor name that triggered the automation
+            in your message [Click Here](https://community.home-assistant.io/t/612617/63)
+
+            '
+          default: []
+          selector:
+            text:
+              multiple: false
+              multiline: false
+        end_notify_tag:
+          name: Notification Tag
+          description: 'Use a tag to keep your notifications organized. When a new
+            notification with the same tag is sent, it replaces the old one, so you
+            won''t get cluttered with multiple notifications for the same appliance.
+
+
+            You can use the same tag across start and end notifications to ensure
+            only one active notification remains throughout the automation.
+
+
+            If this input is left blank, no tag will be applied and each notification
+            will be treated as separate.
+
+
+            For best results, use short, unique tags for each automation - for example:
+            `water-leak`, `garage-door`, `back-door-motion`, etc.
+
+            '
+          default: []
+          selector:
+            text:
+              multiple: false
+              multiline: false
+        end_notify_interruption_level:
+          name: Interruption Level - iOS Only
+          description: 'On devices running iOS 15 and later, you can configure the
+            interruption level for your notifications to ensure they are delivered
+            according to your preferences. Choose the desired interruption level from
+            the dropdown list. Critical and time-sensitive notifications must be turned
+            ON within the Home Assistant App, and time-sensitive notifications must
+            be allowed in your Focus settings.
+
+
+            For more information on interruption levels [Click Here](https://community.home-assistant.io/t/612617/69)
+
+            '
+          default: active
+          selector:
+            select:
+              mode: dropdown
+              options:
+              - label: Default
+                value: active
+              - label: Critical Notifications
+                value: critical
+              - label: Time Sensitive Notifications
+                value: time-sensitive
+              - label: Quiet Notifications Without Waking Screen
+                value: passive
+              multiple: false
+              sort: false
+              custom_value: false
+        end_notify_sound:
+          name: Notification Sound - iOS Only
+          description: 'The Home Assistant app for iOS includes built-in notification
+            sounds, and you can import sounds from your iOS device into the app. Custom
+            sounds can also be added via iTunes or from your cloud storage. When entering
+            a sound, ensure you use the full filename, including the extension.
+
+
+            For more information on using sounds in the Home Assistant app, [Click
+            Here](https://community.home-assistant.io/t/612617/69)
+
+            '
+          default: []
+          selector:
+            text:
+              multiple: false
+              multiline: false
+        end_notify_data:
+          name: Android Only Options (Optional)
+          description: '**High Priority** notifications ensure that you receive important
+            alerts immediately. These notifications bypass normal delivery delays
+            and are delivered instantly to your device.
+
+
+            **Sticky Notification** ensure that important alerts are not dismissed
+            when selected. They remain on your notification screen until you actively
+            clear or swipe them away, ensuring that critical information stays visible
+            until addressed.
+
+
+            **Notification Channel** allow you to easily organize different notification
+            settings, including notification sounds, vibrations, and other device-specific
+            features. If you choose this option, please enter your desired channel
+            name below.
+
+
+            **Icon** allows you to replace the default Home Assistant icon with one
+            of your choice. If selected, choose your preferred icon using the **Icon
+            - Android Only** option below, and set the icon colour using **Icon Colour
+            - Android Only**.
+
+            '
+          default: []
+          selector:
+            select:
+              multiple: true
+              options:
+              - label: High Priority
+                value: high_priority
+              - label: Sticky Notification
+                value: sticky
+              - label: Notification Channel
+                value: channel
+              - label: Icon
+                value: icon
+              sort: false
+              custom_value: false
+        end_notify_channel:
+          name: Notification Channel - Android Only
+          description: 'If you have chosen to use a notification channel, simply enter
+            the name of an existing channel to apply its pre-configured settings.
+            If you don''t have a channel yet, you can create a new one by entering
+            a name here. When your automation sends the first notification, it will
+            create the channel on your device. After the channel is created, you can
+            customize its notification settings to your preference directly on your
+            device.
+
+
+            For more information on notification channels [Click Here](https://community.home-assistant.io/t/612617/69)
+
+            '
+          default: []
+          selector:
+            text:
+              multiple: false
+              multiline: false
+        end_notify_icon:
+          name: Icon - Android Only
+          description: 'Select a custom icon to replace the default Home Assistant
+            icon in the notification. This setting applies only if the **Icon** option
+            is selected in **Android Only Options** above.
+
+            '
+          default: mdi:emoticon-happy-outline
+          selector:
+            icon: {}
+        end_notify_icon_colour:
+          name: Icon Colour - Android Only
+          description: 'Choose a colour for your custom notification icon. This setting
+            applies only if the **Icon** option is selected in **Android Only Options**
+            above.
+
+            '
+          default:
+          - 0
+          - 200
+          - 83
+          selector:
+            color_rgb: {}
+    end_action_settings:
+      name: End Actions Buttons
+      icon: mdi:gesture-double-tap
+      collapsed: true
+      input:
+        include_end_action_buttons:
+          name: End Notify - Action Buttons Options (Optional)
+          description: 'Enable the action buttons you would like to use. These buttons
+            will be shown in the notification, allowing you to perform actions when
+            clicked.
+
+
+            **NOTE** - You do not need to select any notification action buttons to
+            execute an end action. If you prefer to run an end action without using
+            any action buttons, simply enable any **End Auto Action** located in the
+            **End Actions** section below.
+
+
+            ⚠️ Enter the names for all enabled **Action Buttons** below, including
+            the **Cancel Action Button**. Missing any button names may prevent the
+            automation from functioning correctly and could result in not receiving
+            the notification.
+
+            '
+          default: []
+          selector:
+            select:
+              options:
+              - label: Enable action button 1
+                value: enable_end_action_button_1
+              - label: Enable action button 2
+                value: enable_end_action_button_2
+              - label: Enable action button 3
+                value: enable_end_action_button_3
+              multiple: true
+              sort: false
+              custom_value: false
+        end_action_button_1:
+          name: Action Button 1
+          description: 'Enter the button name to be displayed in the notification.
+            This button will execute all actions entered into the **End - Action 1**
+            input located in the **End Actions** section below.
+
+            '
+          default: []
+          selector:
+            text:
+              multiple: false
+              multiline: false
+        end_action_button_2:
+          name: Action Button 2
+          description: 'Enter the button name to be displayed in the notification.
+            This button will execute all actions entered into the **End - Action 2**
+            input located in the **End Actions** section below.
+
+            '
+          default: []
+          selector:
+            text:
+              multiple: false
+              multiline: false
+        end_action_button_3:
+          name: Action Button 3
+          description: 'Enter the button name to be displayed in the notification.
+            This button will execute all actions entered into the **End - Action 3**
+            input located in the **End Actions** section below.
+
+            '
+          default: []
+          selector:
+            text:
+              multiple: false
+              multiline: false
+        end_action_button_stop:
+          name: Cancel Action Button
+          description: 'Enter the Cancel button name to be displayed in the notification.
+            This button will cancel all actions and stop the automation. It will be
+            automatically included in the notification if you have enabled an action
+            button above.
+
+            '
+          default: Cancel
+          selector:
+            text:
+              multiple: false
+              multiline: false
+        end_time_delay:
+          name: Time Delay
+          description: 'Specify the time delay after which the automation will resume
+            its execution if an action button has not been pressed.
+
+            '
+          default:
+            hours: 0
+            minutes: 30
+            seconds: 0
+          selector:
+            duration:
+              enable_second: true
+        include_end_action_button_confirmation:
+          name: Action Button Confirmation Option (Optional)
+          description: 'Select **Enable** if you would like to notify all devices
+            when an action button has been pressed. This is useful when notifying
+            multiple devices, informing others that an action has been selected.
+
+
+            ⚠️ If Action Button Confirmation is enabled, you must include the **Confirmation
+            Title**, **Confirmation Message** for each enabled action button, **Cancel
+            Confirmation Message**, and **Time Delay Confirmation Message**. Missing
+            any of these may prevent the automation from functioning correctly and
+            could result in not receiving the notification.
+
+            '
+          default: disable_end_action_button_confirmation
+          selector:
+            select:
+              options:
+              - label: Enable Action Button Confirmation
+                value: enable_end_action_button_confirmation
+              - label: Disable Action Button Confirmation
+                value: disable_end_action_button_confirmation
+              multiple: false
+              sort: false
+              custom_value: false
+        end_action_button_confirmation_title:
+          name: Action Button Confirmation Title
+          description: 'Specify the notification title when an action button is pressed
+            or when the time delay has passed.
+
+            '
+          default: []
+          selector:
+            text:
+              multiple: false
+              multiline: false
+        end_action_button_confirmation_message:
+          name: Action Button 1 Confirmation Message
+          description: 'Specify the notification message when action button 1 is pressed.
+
+            '
+          default: []
+          selector:
+            text:
+              multiple: false
+              multiline: false
+        end_action_button_2_confirmation_message:
+          name: Action Button 2 Confirmation Message
+          description: 'Specify the notification message when action button 2 is pressed.
+
+            '
+          default: []
+          selector:
+            text:
+              multiple: false
+              multiline: false
+        end_action_button_3_confirmation_message:
+          name: Action Button 3 Confirmation Message
+          description: 'Specify the notification message when action button 3 is pressed.
+
+            '
+          default: []
+          selector:
+            text:
+              multiple: false
+              multiline: false
+        end_action_button_stop_confirmation_message:
+          name: Action Button Cancel Confirmation Message
+          description: 'Specify the notification message when the cancel button is
+            pressed.
+
+            '
+          default: []
+          selector:
+            text:
+              multiple: false
+              multiline: false
+        end_time_delay_confirmation_message:
+          name: Time Delay Confirmation Message
+          description: 'Specify the notification message when the time delay has passed.
+
+            '
+          default: []
+          selector:
+            text:
+              multiple: false
+              multiline: false
+    end_auto_action_settings:
+      name: End Actions
+      icon: mdi:code-tags
+      collapsed: true
+      input:
+        include_end_auto_actions:
+          name: Use The End Auto Action Options (Optional)
+          description: 'Enabling the auto option will trigger the **End Actions**
+            below when the entity changes to its specified state.
+
+
+            When using action buttons in a notification, enabling an auto action is
+            not necessary for the end actions to work, as pressing an action button
+            will execute the selected action. However, if you miss the notification
+            and don''t press an action button, enabling the auto action option ensures
+            the end actions will still run after the specified time delay.
+
+            '
+          default: []
+          selector:
+            select:
+              options:
+              - label: Enable auto end action 1 option
+                value: enable_end_action_1
+              - label: Enable auto end action 2 option
+                value: enable_end_action_2
+              - label: Enable auto end action 3 option
+                value: enable_end_action_3
+              multiple: true
+              sort: false
+              custom_value: false
+        end_action_1:
+          name: Action 1
+          description: 'Enter the actions you want to run when the entity changes
+            state.
+
+
+            These actions are also linked to the **End Notify - Action Button 1**
+            input located in the **End Actions Buttons** section above.
+
+            '
+          default: []
+          selector:
+            action: {}
+        end_action_2:
+          name: Action 2
+          description: 'Enter the actions you want to run when the entity changes
+            state.
+
+
+            These actions are also linked to the **End Notify - Action Button 2**
+            input located in the **End Actions Buttons** section above.
+
+            '
+          default: []
+          selector:
+            action: {}
+        end_action_3:
+          name: Action 3
+          description: 'Enter the actions you want to run when the entity changes
+            state.
+
+
+            These actions are also linked to the **End Notify - Action Button 3**
+            input located in the **End Actions Buttons** section above.
+
+            '
+          default: []
+          selector:
+            action: {}
+    global_conditions_settings:
+      name: Global Conditions
+      icon: mdi:earth
+      collapsed: true
+      input:
+        global_conditions:
+          name: Global Conditions
+          description: 'Enter any global conditions you would like to apply to the
+            automation.
+
+            '
+          default: []
+          selector:
+            condition: {}
+  source_url: https://gist.github.com/Blackshome/06f6f28e76299267b813dac48608f549
+mode: parallel
+max: 10
+max_exceeded: silent
+trace:
+  stored_traces: 10
+variables:
+  start_trigger_state: !input start_trigger_state
+  start_trigger_state_entity: !input start_trigger_state_entity
+  start_trigger_numeric_entity: !input start_trigger_numeric_entity
+  start_above_state: !input start_above_state
+  start_below_state: !input start_below_state
+  start_time_delay_state: !input start_time_delay_state
+  include_start_notify: !input include_start_notify
+  start_notify_device: !input start_notify_device
+  start_title: !input start_title
+  start_message: !input start_message
+  start_notify_tag: !input start_notify_tag
+  start_notify_interruption_level: !input start_notify_interruption_level
+  start_notify_sound: !input start_notify_sound
+  start_notify_data: !input start_notify_data
+  start_notify_channel: !input start_notify_channel
+  start_notify_icon: !input start_notify_icon
+  start_notify_icon_colour: !input start_notify_icon_colour
+  include_start_action_buttons: !input include_start_action_buttons
+  start_action_button_1: !input start_action_button_1
+  start_action_button_2: !input start_action_button_2
+  start_action_button_3: !input start_action_button_3
+  start_action_button_stop: !input start_action_button_stop
+  start_time_delay: !input start_time_delay
+  include_start_action_button_confirmation: !input include_start_action_button_confirmation
+  start_action_button_confirmation_title: !input start_action_button_confirmation_title
+  start_action_button_confirmation_message: !input start_action_button_confirmation_message
+  start_action_button_2_confirmation_message: !input start_action_button_2_confirmation_message
+  start_action_button_3_confirmation_message: !input start_action_button_3_confirmation_message
+  start_action_button_stop_confirmation_message: !input start_action_button_stop_confirmation_message
+  start_time_delay_confirmation_message: !input start_time_delay_confirmation_message
+  include_start_auto_actions: !input include_start_auto_actions
+  start_action_1: !input start_action_1
+  start_action_2: !input start_action_2
+  start_action_3: !input start_action_3
+  end_trigger_state: !input end_trigger_state
+  end_trigger_state_entity: !input end_trigger_state_entity
+  end_trigger_numeric_entity: !input end_trigger_numeric_entity
+  end_above_state: !input end_above_state
+  end_below_state: !input end_below_state
+  end_time_delay_state: !input end_time_delay_state
+  include_end_notify: !input include_end_notify
+  end_notify_device: !input end_notify_device
+  end_title: !input end_title
+  end_message: !input end_message
+  end_notify_tag: !input end_notify_tag
+  end_notify_interruption_level: !input end_notify_interruption_level
+  end_notify_sound: !input end_notify_sound
+  end_notify_data: !input end_notify_data
+  end_notify_channel: !input end_notify_channel
+  end_notify_icon: !input end_notify_icon
+  end_notify_icon_colour: !input end_notify_icon_colour
+  include_end_action_buttons: !input include_end_action_buttons
+  end_action_button_1: !input end_action_button_1
+  end_action_button_2: !input end_action_button_2
+  end_action_button_3: !input end_action_button_3
+  end_action_button_stop: !input end_action_button_stop
+  end_time_delay: !input end_time_delay
+  include_end_action_button_confirmation: !input include_end_action_button_confirmation
+  end_action_button_confirmation_title: !input end_action_button_confirmation_title
+  end_action_button_confirmation_message: !input end_action_button_confirmation_message
+  end_action_button_2_confirmation_message: !input end_action_button_2_confirmation_message
+  end_action_button_3_confirmation_message: !input end_action_button_3_confirmation_message
+  end_action_button_stop_confirmation_message: !input end_action_button_stop_confirmation_message
+  end_time_delay_confirmation_message: !input end_time_delay_confirmation_message
+  include_end_auto_actions: !input include_end_auto_actions
+  end_action_1: !input end_action_1
+  end_action_2: !input end_action_2
+  end_action_3: !input end_action_3
+  global_conditions: !input global_conditions
+triggers:
+- trigger: state
+  id: t0
+  entity_id: !input start_trigger_state_entity
+  for: !input start_time_delay_state
+- trigger: state
+  id: t1
+  entity_id: !input start_trigger_state_entity
+  to: !input start_trigger_state
+  for: !input start_time_delay_state
+- trigger: numeric_state
+  id: t2
+  entity_id: !input start_trigger_numeric_entity
+  above: !input start_above_state
+  for: !input start_time_delay_state
+- trigger: numeric_state
+  id: t3
+  entity_id: !input start_trigger_numeric_entity
+  below: !input start_below_state
+  for: !input start_time_delay_state
+- trigger: state
+  id: t4
+  entity_id: !input end_trigger_state_entity
+  for: !input end_time_delay_state
+- trigger: state
+  id: t5
+  entity_id: !input end_trigger_state_entity
+  to: !input end_trigger_state
+  for: !input end_time_delay_state
+- trigger: numeric_state
+  id: t6
+  entity_id: !input end_trigger_numeric_entity
+  above: !input end_above_state
+  for: !input end_time_delay_state
+- trigger: numeric_state
+  id: t7
+  entity_id: !input end_trigger_numeric_entity
+  below: !input end_below_state
+  for: !input end_time_delay_state
+condition:
+- condition: or
+  conditions:
+  - condition: and
+    conditions:
+    - condition: trigger
+      id: t0
+    - '{{ start_trigger_state == ''button_any_state'' }}'
+  - condition: and
+    conditions:
+    - condition: trigger
+      id: t1
+    - '{{ (start_trigger_state != ''button_any_state'') or (start_trigger_state !=
+      ''numeric_state_above'') or (start_trigger_state != ''numeric_state_below'')
+      or (start_trigger_state != ''numeric_state_above_below'') }}'
+  - condition: and
+    conditions:
+    - condition: trigger
+      id: t2
+    - '{{ (start_trigger_state == ''numeric_state_above'') or (start_trigger_state
+      == ''numeric_state_above_below'') }}'
+  - condition: and
+    conditions:
+    - condition: trigger
+      id: t3
+    - '{{ (start_trigger_state == ''numeric_state_below'') or (start_trigger_state
+      == ''numeric_state_above_below'') }}'
+  - condition: and
+    conditions:
+    - condition: trigger
+      id: t4
+    - '{{ end_trigger_state == ''button_any_state'' }}'
+  - condition: and
+    conditions:
+    - condition: trigger
+      id: t5
+    - '{{ (end_trigger_state != ''button_any_state'') or (end_trigger_state != ''numeric_state_above'')
+      or (end_trigger_state != ''numeric_state_below'') or (end_trigger_state != ''numeric_state_above_below'')
+      }}'
+  - condition: and
+    conditions:
+    - condition: trigger
+      id: t6
+    - '{{ (end_trigger_state == ''numeric_state_above'') or (end_trigger_state ==
+      ''numeric_state_above_below'') }}'
+  - condition: and
+    conditions:
+    - condition: trigger
+      id: t7
+    - '{{ (end_trigger_state == ''numeric_state_below'') or (end_trigger_state ==
+      ''numeric_state_above_below'') }}'
+- condition: and
+  conditions: !input global_conditions
+action:
+- choose:
+  - alias: Start trigger
+    conditions:
+    - condition: trigger
+      id:
+      - t0
+      - t1
+      - t2
+      - t3
+    sequence:
+    - choose:
+      - alias: Check if the start of notification is enabled
+        conditions:
+        - condition: template
+          value_template: '{{ ''enable_start_notify_options'' in include_start_notify
+            }}'
+        sequence:
+        - variables:
+            action_button_1: '{{ ''BUTTON_1_'' ~ context.id }}'
+            action_button_2: '{{ ''BUTTON_2_'' ~ context.id }}'
+            action_button_3: '{{ ''BUTTON_3_'' ~ context.id }}'
+            action_button_stop: '{{ ''BUTTON_STOP_'' ~ context.id }}'
+            start_message_data: "{% set message = namespace(data={}) %} {% set push
+              = namespace(data={}) %} {% if start_notify_interruption_level in ['active',
+              'critical', 'time-sensitive', 'passive'] %}\n  {% set push.data = dict(push.data,
+              **{ 'interruption-level': start_notify_interruption_level }) %}\n{%
+              endif %} {% if start_notify_sound != [] %}\n  {% set push.data = dict(push.data,
+              **{ 'sound': start_notify_sound }) %}\n{% endif %} {% if push.data %}\n
+              \ {% set message.data = dict(message.data, **{ 'push': push.data })
+              %}\n{% endif %} {% if 'high_priority' in start_notify_data %}\n  {%
+              set message.data = dict(message.data, **{ 'ttl': 0, 'priority': 'high'
+              }) %}\n{% endif %} {% if 'channel' in start_notify_data %}\n  {% set
+              message.data = dict(message.data, **{ 'channel': start_notify_channel
+              }) %}\n{% endif %} {% if 'sticky' in start_notify_data %}\n  {% set
+              message.data = dict(message.data, **{ 'sticky': \"true\" }) %}\n{% endif
+              %} {% if 'icon' in start_notify_data %}\n  {% set message.data = dict(message.data,
+              **{ 'notification_icon': start_notify_icon }) %}\n  {% if start_notify_icon_colour
+              | length == 3 %}\n    {% set icon_colour = '#%02x%02x%02x' | format(start_notify_icon_colour[0],
+              start_notify_icon_colour[1], start_notify_icon_colour[2]) %}\n    {%
+              set message.data = dict(message.data, **{ 'color': icon_colour }) %}\n
+              \ {% endif %}\n{% endif %} {% if start_notify_tag != [] %}\n  {% set
+              message.data = dict(message.data, **{ 'tag': start_notify_tag }) %}\n{%
+              endif %} {{ message.data }}"
+            start_message_data_action_button: "{% set message = namespace(data={})
+              %} {% set push = namespace(data={}) %} {% set actions = [] %} {% if
+              start_notify_interruption_level in ['active', 'critical', 'time-sensitive',
+              'passive'] %}\n  {% set push.data = dict(push.data, **{ 'interruption-level':
+              start_notify_interruption_level }) %}\n{% endif %} {% if start_notify_sound
+              != [] %}\n  {% set push.data = dict(push.data, **{ 'sound': start_notify_sound
+              }) %}\n{% endif %} {% if push.data %}\n  {% set message.data = dict(message.data,
+              **{ 'push': push.data }) %}\n{% endif %} {% if 'high_priority' in start_notify_data
+              %}\n  {% set message.data = dict(message.data, **{ 'ttl': 0, 'priority':
+              'high' }) %}\n{% endif %} {% if 'channel' in start_notify_data %}\n
+              \ {% set message.data = dict(message.data, **{ 'channel': start_notify_channel
+              }) %}\n{% endif %} {% if 'sticky' in start_notify_data %}\n  {% set
+              message.data = dict(message.data, **{ 'sticky': \"true\" }) %}\n{% endif
+              %} {% if 'icon' in start_notify_data %}\n  {% set message.data = dict(message.data,
+              **{ 'notification_icon': start_notify_icon }) %}\n  {% if start_notify_icon_colour
+              | length == 3 %}\n    {% set icon_colour = '#%02x%02x%02x' | format(start_notify_icon_colour[0],
+              start_notify_icon_colour[1], start_notify_icon_colour[2]) %}\n    {%
+              set message.data = dict(message.data, **{ 'color': icon_colour }) %}\n
+              \ {% endif %}\n{% endif %} {% if start_notify_tag != [] %}\n  {% set
+              message.data = dict(message.data, **{ 'tag': start_notify_tag }) %}\n{%
+              endif %} {% if 'enable_start_action_button_1' in include_start_action_buttons
+              %}\n  {% set actions = actions + [{ 'action': action_button_1, 'title':
+              start_action_button_1 }] %}\n{% endif %} {% if 'enable_start_action_button_2'
+              in include_start_action_buttons %}\n  {% set actions = actions + [{
+              'action': action_button_2, 'title': start_action_button_2 }] %}\n{%
+              endif %} {% if 'enable_start_action_button_3' in include_start_action_buttons
+              %}\n  {% set actions = actions + [{ 'action': action_button_3, 'title':
+              start_action_button_3 }] %}\n{% endif %} {% if ('enable_start_action_button_1'
+              in include_start_action_buttons) or \n      ('enable_start_action_button_2'
+              in include_start_action_buttons) or \n      ('enable_start_action_button_3'
+              in include_start_action_buttons) %}\n  {% set actions = actions + [{
+              'action': action_button_stop, 'title': start_action_button_stop }] %}\n{%
+              endif %} {% if actions | length > 0 %}\n  {% set message.data = dict(message.data,
+              **{ 'actions': actions }) %}\n{% endif %} {{ message.data }}"
+        - alias: Send a notification to each device
+          repeat:
+            for_each: !input start_notify_device
+            sequence:
+            - action: notify.mobile_app_{{ device_attr(repeat.item, 'name') | slugify
+                }}
+              data:
+                title: !input start_title
+                message: !input start_message
+                data: '{{ start_message_data_action_button }}'
+        - choose:
+          - alias: Check if any start action buttons are enabled
+            conditions:
+            - condition: template
+              value_template: '{{ (''enable_start_action_button_1'' in include_start_action_buttons)
+                or (''enable_start_action_button_2'' in include_start_action_buttons)
+                or (''enable_start_action_button_3'' in include_start_action_buttons)
+                }}'
+            sequence:
+            - alias: Wait for a response from the action button
+              wait_for_trigger:
+              - trigger: event
+                event_type: mobile_app_notification_action
+                event_data:
+                  action: '{{ action_button_1 }}'
+              - trigger: event
+                event_type: mobile_app_notification_action
+                event_data:
+                  action: '{{ action_button_2 }}'
+              - trigger: event
+                event_type: mobile_app_notification_action
+                event_data:
+                  action: '{{ action_button_3 }}'
+              - trigger: event
+                event_type: mobile_app_notification_action
+                event_data:
+                  action: '{{ action_button_stop }}'
+              timeout: !input start_time_delay
+            - choose:
+              - alias: Check if confirmation message is enabled
+                conditions:
+                - condition: template
+                  value_template: '{{ ''enable_start_action_button_confirmation''
+                    in include_start_action_button_confirmation }}'
+                sequence:
+                - if:
+                  - alias: Confirmation from the actions buttons
+                    condition: template
+                    value_template: '{{ wait.trigger.idx is defined }}'
+                  then:
+                  - choose:
+                    - alias: Check if action button 1 is pressed
+                      conditions:
+                      - condition: template
+                        value_template: '{{ action_button_1 in wait.trigger.event.data.action
+                          }}'
+                      sequence:
+                      - alias: Send a notification to each device
+                        repeat:
+                          for_each: !input start_notify_device
+                          sequence:
+                          - action: notify.mobile_app_{{ device_attr(repeat.item,
+                              'name') | slugify }}
+                            data:
+                              title: !input start_action_button_confirmation_title
+                              message: !input start_action_button_confirmation_message
+                              data: '{{ start_message_data }}'
+                    - alias: Check if action button 2 is pressed
+                      conditions:
+                      - condition: template
+                        value_template: '{{ action_button_2 in wait.trigger.event.data.action
+                          }}'
+                      sequence:
+                      - alias: Send a notification to each device
+                        repeat:
+                          for_each: !input start_notify_device
+                          sequence:
+                          - action: notify.mobile_app_{{ device_attr(repeat.item,
+                              'name') | slugify }}
+                            data:
+                              title: !input start_action_button_confirmation_title
+                              message: !input start_action_button_2_confirmation_message
+                              data: '{{ start_message_data }}'
+                    - alias: Check if action button 3 is pressed
+                      conditions:
+                      - condition: template
+                        value_template: '{{ action_button_3 in wait.trigger.event.data.action
+                          }}'
+                      sequence:
+                      - alias: Send a notification to each device
+                        repeat:
+                          for_each: !input start_notify_device
+                          sequence:
+                          - action: notify.mobile_app_{{ device_attr(repeat.item,
+                              'name') | slugify }}
+                            data:
+                              title: !input start_action_button_confirmation_title
+                              message: !input start_action_button_3_confirmation_message
+                              data: '{{ start_message_data }}'
+                    - alias: Check if action stop button is pressed
+                      conditions:
+                      - condition: template
+                        value_template: '{{ action_button_stop in wait.trigger.event.data.action
+                          }}'
+                      sequence:
+                      - alias: Send a notification to each device
+                        repeat:
+                          for_each: !input start_notify_device
+                          sequence:
+                          - action: notify.mobile_app_{{ device_attr(repeat.item,
+                              'name') | slugify }}
+                            data:
+                              title: !input start_action_button_confirmation_title
+                              message: !input start_action_button_stop_confirmation_message
+                              data: '{{ start_message_data }}'
+                  - alias: Perform the action button selected action
+                    choose:
+                    - conditions: '{{ wait.trigger.event.data.action == action_button_1
+                        }}'
+                      sequence: !input start_action_1
+                    - conditions: '{{ wait.trigger.event.data.action == action_button_2
+                        }}'
+                      sequence: !input start_action_2
+                    - conditions: '{{ wait.trigger.event.data.action == action_button_3
+                        }}'
+                      sequence: !input start_action_3
+                    - conditions: '{{ wait.trigger.event.data.action == action_button_stop
+                        }}'
+                      sequence:
+                      - stop: Stop the automation
+                  else:
+                  - alias: Send a notification to each device
+                    repeat:
+                      for_each: !input start_notify_device
+                      sequence:
+                      - action: notify.mobile_app_{{ device_attr(repeat.item, 'name')
+                          | slugify }}
+                        data:
+                          title: !input start_action_button_confirmation_title
+                          message: !input start_time_delay_confirmation_message
+                          data: '{{ start_message_data }}'
+              - alias: Check if confirmation message is disabled
+                conditions:
+                - condition: template
+                  value_template: '{{ ''disable_start_action_button_confirmation''
+                    in include_start_action_button_confirmation }}'
+                sequence:
+                - if:
+                  - alias: Confirmation from the actions buttons
+                    condition: template
+                    value_template: '{{ wait.trigger.idx is defined }}'
+                  then:
+                  - alias: Perform the action button selected action
+                    choose:
+                    - conditions: '{{ wait.trigger.event.data.action == action_button_1
+                        }}'
+                      sequence: !input start_action_1
+                    - conditions: '{{ wait.trigger.event.data.action == action_button_2
+                        }}'
+                      sequence: !input start_action_2
+                    - conditions: '{{ wait.trigger.event.data.action == action_button_3
+                        }}'
+                      sequence: !input start_action_3
+                    - conditions: '{{ wait.trigger.event.data.action == action_button_stop
+                        }}'
+                      sequence:
+                      - stop: Stop the automation
+    - choose:
+      - alias: Check if auto action 1 is enabled
+        conditions:
+        - condition: template
+          value_template: '{{ ''enable_start_action_1'' in include_start_auto_actions
+            }}'
+        sequence: !input start_action_1
+    - choose:
+      - alias: Check if auto action 2 is enabled
+        conditions:
+        - condition: template
+          value_template: '{{ ''enable_start_action_2'' in include_start_auto_actions
+            }}'
+        sequence: !input start_action_2
+    - choose:
+      - alias: Check if auto action 3 is enabled
+        conditions:
+        - condition: template
+          value_template: '{{ ''enable_start_action_3'' in include_start_auto_actions
+            }}'
+        sequence: !input start_action_3
+  default:
+  - choose:
+    - alias: End Trigger
+      conditions:
+      - condition: trigger
+        id:
+        - t4
+        - t5
+        - t6
+        - t7
+      sequence:
+      - choose:
+        - alias: Check if end of notification is enabled
+          conditions:
+          - condition: template
+            value_template: '{{ include_end_notify == ''enable_end_notify_options''
+              }}'
+          sequence:
+          - variables:
+              action_button_1: '{{ ''BUTTON_1_'' ~ context.id }}'
+              action_button_2: '{{ ''BUTTON_2_'' ~ context.id }}'
+              action_button_3: '{{ ''BUTTON_3_'' ~ context.id }}'
+              action_button_stop: '{{ ''BUTTON_STOP_'' ~ context.id }}'
+              end_message_data: "{% set message = namespace(data={}) %} {% set push
+                = namespace(data={}) %} {% if end_notify_interruption_level in ['active',
+                'critical', 'time-sensitive', 'passive'] %}\n  {% set push.data =
+                dict(push.data, **{ 'interruption-level': end_notify_interruption_level
+                }) %}\n{% endif %} {% if end_notify_sound != [] %}\n  {% set push.data
+                = dict(push.data, **{ 'sound': end_notify_sound }) %}\n{% endif %}
+                {% if push.data %}\n  {% set message.data = dict(message.data, **{
+                'push': push.data }) %}\n{% endif %} {% if 'high_priority' in end_notify_data
+                %}\n  {% set message.data = dict(message.data, **{ 'ttl': 0, 'priority':
+                'high' }) %}\n{% endif %} {% if 'channel' in end_notify_data %}\n
+                \ {% set message.data = dict(message.data, **{ 'channel': end_notify_channel
+                }) %}\n{% endif %} {% if 'sticky' in end_notify_data %}\n  {% set
+                message.data = dict(message.data, **{ 'sticky': \"true\" }) %}\n{%
+                endif %} {% if 'icon' in end_notify_data %}\n  {% set message.data
+                = dict(message.data, **{ 'notification_icon': end_notify_icon }) %}\n
+                \ {% if end_notify_icon_colour | length == 3 %}\n    {% set icon_colour
+                = '#%02x%02x%02x' | format(end_notify_icon_colour[0], end_notify_icon_colour[1],
+                end_notify_icon_colour[2]) %}\n    {% set message.data = dict(message.data,
+                **{ 'color': icon_colour }) %}\n  {% endif %}\n{% endif %} {% if end_notify_tag
+                != [] %}\n  {% set message.data = dict(message.data, **{ 'tag': end_notify_tag
+                }) %}\n{% endif %} {{ message.data }}"
+              end_message_data_action_button: "{% set message = namespace(data={})
+                %} {% set push = namespace(data={}) %} {% set actions = [] %} {% if
+                end_notify_interruption_level in ['active', 'critical', 'time-sensitive',
+                'passive'] %}\n  {% set push.data = dict(push.data, **{ 'interruption-level':
+                end_notify_interruption_level }) %}\n{% endif %} {% if end_notify_sound
+                != [] %}\n  {% set push.data = dict(push.data, **{ 'sound': end_notify_sound
+                }) %}\n{% endif %} {% if push.data %}\n  {% set message.data = dict(message.data,
+                **{ 'push': push.data }) %}\n{% endif %} {% if 'high_priority' in
+                end_notify_data %}\n  {% set message.data = dict(message.data, **{
+                'ttl': 0, 'priority': 'high' }) %}\n{% endif %} {% if 'channel' in
+                end_notify_data %}\n  {% set message.data = dict(message.data, **{
+                'channel': end_notify_channel }) %}\n{% endif %} {% if 'sticky' in
+                end_notify_data %}\n  {% set message.data = dict(message.data, **{
+                'sticky': \"true\" }) %}\n{% endif %} {% if 'icon' in end_notify_data
+                %}\n  {% set message.data = dict(message.data, **{ 'notification_icon':
+                end_notify_icon }) %}\n  {% if end_notify_icon_colour | length ==
+                3 %}\n    {% set icon_colour = '#%02x%02x%02x' | format(end_notify_icon_colour[0],
+                end_notify_icon_colour[1], end_notify_icon_colour[2]) %}\n    {% set
+                message.data = dict(message.data, **{ 'color': icon_colour }) %}\n
+                \ {% endif %}\n{% endif %} {% if end_notify_tag != [] %}\n  {% set
+                message.data = dict(message.data, **{ 'tag': end_notify_tag }) %}\n{%
+                endif %} {% if 'enable_end_action_button_1' in include_end_action_buttons
+                %}\n  {% set actions = actions + [{ 'action': action_button_1, 'title':
+                end_action_button_1 }] %}\n{% endif %} {% if 'enable_end_action_button_2'
+                in include_end_action_buttons %}\n  {% set actions = actions + [{
+                'action': action_button_2, 'title': end_action_button_2 }] %}\n{%
+                endif %} {% if 'enable_end_action_button_3' in include_end_action_buttons
+                %}\n  {% set actions = actions + [{ 'action': action_button_3, 'title':
+                end_action_button_3 }] %}\n{% endif %} {% if ('enable_end_action_button_1'
+                in include_end_action_buttons) or \n      ('enable_end_action_button_2'
+                in include_end_action_buttons) or \n      ('enable_end_action_button_3'
+                in include_end_action_buttons) %}\n  {% set actions = actions + [{
+                'action': action_button_stop, 'title': end_action_button_stop }] %}\n{%
+                endif %} {% if actions | length > 0 %}\n  {% set message.data = dict(message.data,
+                **{ 'actions': actions }) %}\n{% endif %} {{ message.data }}"
+          - alias: Send a notification to each device
+            repeat:
+              for_each: !input end_notify_device
+              sequence:
+              - action: notify.mobile_app_{{ device_attr(repeat.item, 'name') | slugify
+                  }}
+                data:
+                  title: !input end_title
+                  message: !input end_message
+                  data: '{{ end_message_data_action_button }}'
+          - choose:
+            - alias: Check if any start action buttons are enabled
+              conditions:
+              - condition: template
+                value_template: '{{ (''enable_end_action_button_1'' in include_end_action_buttons)
+                  or (''enable_end_action_button_2'' in include_end_action_buttons)
+                  or (''enable_end_action_button_3'' in include_end_action_buttons)
+                  }}'
+              sequence:
+              - alias: Wait for a response from the action button
+                wait_for_trigger:
+                - trigger: event
+                  event_type: mobile_app_notification_action
+                  event_data:
+                    action: '{{ action_button_1 }}'
+                - trigger: event
+                  event_type: mobile_app_notification_action
+                  event_data:
+                    action: '{{ action_button_2 }}'
+                - trigger: event
+                  event_type: mobile_app_notification_action
+                  event_data:
+                    action: '{{ action_button_3 }}'
+                - trigger: event
+                  event_type: mobile_app_notification_action
+                  event_data:
+                    action: '{{ action_button_stop }}'
+                timeout: !input end_time_delay
+              - choose:
+                - alias: Check if confirmation message is enabled
+                  conditions:
+                  - condition: template
+                    value_template: '{{ ''enable_end_action_button_confirmation''
+                      in include_end_action_button_confirmation }}'
+                  sequence:
+                  - if:
+                    - alias: Confirmation from the actions buttons
+                      condition: template
+                      value_template: '{{ wait.trigger.idx is defined }}'
+                    then:
+                    - choose:
+                      - alias: Check if action button 1 is pressed
+                        conditions:
+                        - condition: template
+                          value_template: '{{ action_button_1 in wait.trigger.event.data.action
+                            }}'
+                        sequence:
+                        - alias: Send a notification to each device
+                          repeat:
+                            for_each: !input end_notify_device
+                            sequence:
+                            - action: notify.mobile_app_{{ device_attr(repeat.item,
+                                'name') | slugify }}
+                              data:
+                                title: !input end_action_button_confirmation_title
+                                message: !input end_action_button_confirmation_message
+                                data: '{{ end_message_data }}'
+                      - alias: Check if action button 2 is pressed
+                        conditions:
+                        - condition: template
+                          value_template: '{{ action_button_2 in wait.trigger.event.data.action  }}'
+                        sequence:
+                        - alias: Send a notification to each device
+                          repeat:
+                            for_each: !input end_notify_device
+                            sequence:
+                            - action: notify.mobile_app_{{ device_attr(repeat.item,
+                                'name') | slugify }}
+                              data:
+                                title: !input end_action_button_confirmation_title
+                                message: !input end_action_button_2_confirmation_message
+                                data: '{{ end_message_data }}'
+                      - alias: Check if action button 3 is pressed
+                        conditions:
+                        - condition: template
+                          value_template: '{{ action_button_3 in wait.trigger.event.data.action  }}'
+                        sequence:
+                        - alias: Send a notification to each device
+                          repeat:
+                            for_each: !input end_notify_device
+                            sequence:
+                            - action: notify.mobile_app_{{ device_attr(repeat.item,
+                                'name') | slugify }}
+                              data:
+                                title: !input end_action_button_confirmation_title
+                                message: !input end_action_button_3_confirmation_message
+                                data: '{{ end_message_data }}'
+                      - alias: Check if action stop button is pressed
+                        conditions:
+                        - condition: template
+                          value_template: '{{ action_button_stop in wait.trigger.event.data.action
+                            }}'
+                        sequence:
+                        - alias: Send a notification to each device
+                          repeat:
+                            for_each: !input end_notify_device
+                            sequence:
+                            - action: notify.mobile_app_{{ device_attr(repeat.item,
+                                'name') | slugify }}
+                              data:
+                                title: !input end_action_button_confirmation_title
+                                message: !input end_action_button_stop_confirmation_message
+                                data: '{{ end_message_data }}'
+                    - alias: Perform the action button selected action
+                      choose:
+                      - conditions: '{{ action_button_1 in wait.trigger.event.data.action
+                          }}'
+                        sequence: !input end_action_1
+                      - conditions: '{{ action_button_2 in wait.trigger.event.data.action
+                          }}'
+                        sequence: !input end_action_2
+                      - conditions: '{{ action_button_3 in wait.trigger.event.data.action
+                          }}'
+                        sequence: !input end_action_3
+                      - conditions: '{{ action_button_stop in wait.trigger.event.data.action
+                          }}'
+                        sequence:
+                        - stop: Stop the automation
+                    else:
+                    - alias: Send a notification to each device
+                      repeat:
+                        for_each: !input end_notify_device
+                        sequence:
+                        - action: notify.mobile_app_{{ device_attr(repeat.item, 'name')
+                            | slugify }}
+                          data:
+                            title: !input end_action_button_confirmation_title
+                            message: !input end_time_delay_confirmation_message
+                            data: '{{ end_message_data }}'
+                - alias: Check if confirmation message is disabled
+                  conditions:
+                  - condition: template
+                    value_template: '{{ ''disable_end_action_button_confirmation''
+                      in include_end_action_button_confirmation }}'
+                  sequence:
+                  - if:
+                    - alias: Perform the action button selected action
+                      condition: template
+                      value_template: '{{ wait.trigger.idx is defined }}'
+                    then:
+                    - alias: Perform the action
+                      choose:
+                      - conditions: '{{ action_button_1 in wait.trigger.event.data.action
+                          }}'
+                        sequence: !input end_action_1
+                      - conditions: '{{ action_button_2 in wait.trigger.event.data.action
+                          }}'
+                        sequence: !input end_action_2
+                      - conditions: '{{ action_button_3 in wait.trigger.event.data.action
+                          }}'
+                        sequence: !input end_action_3
+                      - conditions: '{{ action_button_stop in wait.trigger.event.data.action
+                          }}'
+                        sequence:
+                        - stop: Stop the automation
+      - choose:
+        - alias: Check if auto action 1 is enabled
+          conditions:
+          - condition: template
+            value_template: '{{ ''enable_end_action_1'' in include_end_auto_actions
+              }}'
+          sequence: !input end_action_1
+      - choose:
+        - alias: Check if auto action 2 is enabled
+          conditions:
+          - condition: template
+            value_template: '{{ ''enable_end_action_2'' in include_end_auto_actions
+              }}'
+          sequence: !input end_action_2
+      - choose:
+        - alias: Check if auto action 3 is enabled
+          conditions:
+          - condition: template
+            value_template: '{{ ''enable_end_action_3'' in include_end_auto_actions
+              }}'
+          sequence: !input end_action_3

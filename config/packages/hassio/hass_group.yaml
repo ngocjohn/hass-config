@@ -174,11 +174,10 @@ group:
     name: Conditional Media
     icon: mdi:play-circle
     entities:
-      - media_player.spotifyplus_ngoc_nguyen
       - media_player.mass_universal_airplay
-      - media_player.living_room_tv
-      - media_player.kodi_atv
+      - media_player.sony_apple_tv_mix
       - media_player.playstation_5
+      - media_player.living_room_tv
       # - sensor.ps5_activity
 
   ## CLIMATE GROUP ##

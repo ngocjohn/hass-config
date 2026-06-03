@@ -78,6 +78,7 @@ recorder:
   include:
     entities:
       - device_tracker.viet_ngoc_samsung
+      - device_tracker.phuong_chi
       - sensor.motion_sensor_entrance_illuminance
 logbook:
 

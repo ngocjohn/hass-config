@@ -24,3 +24,17 @@ media_player:
       turn_off:
         service: script.atv_sleep
         data: {}
+
+template:
+  - triggers:
+      - trigger: state
+        entity_id:
+          - sensor.youtube_current_playing
+    image:
+      - name: 'Youtube Current Thumbnail'
+        url: >
+          {% if state_attr("sensor.youtube_current_playing", "thumbnail") and state_attr("media_player.living_room_tv", "app_name") in ['HDMI 2', 'YouTube']  %}
+            {{state_attr("sensor.youtube_current_playing", "thumbnail")}}
+          {% else %}
+            https://1000logos.net/wp-content/uploads/2017/05/Youtube-Logo-500x281.png
+          {% endif %}

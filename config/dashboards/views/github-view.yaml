@@ -2,7 +2,6 @@ icon: mdi:github
 title: GITHUB STATS
 path: github-view
 theme: tablet
-
 type: custom:grid-layout
 layout:
   #desktop
@@ -45,3 +44,5 @@ layout:
         ". github-stats       ."
         ". .                  ."
 cards: !include_dir_merge_list github-grid/
+visible:
+  - !include ../shared/visibility_view.yaml

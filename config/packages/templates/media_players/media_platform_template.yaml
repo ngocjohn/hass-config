@@ -1,0 +1,105 @@
+# DOCS: https://github.com/Sennevds/media_player.template
+media_player:
+  - platform: media_player_template
+    media_players:
+      sony_apple_tv_mix:
+        friendly_name: 'Sony Apple Tv Mix'
+        unique_id: 'sony_apple_tv_mix'
+        device_class: 'tv'
+        value_template: >
+          {{ states('media_player.living_room_tv') }}
+        current_source_template: >
+          {% if state_attr("media_player.sony_bravia_tv", "source") in ['HDMI 2', 'Apple TV']  %}
+            Apple TV
+          {% else %}
+            TV
+          {% endif %}
+        current_volume_template: >
+          {{ state_attr('media_player.sony_bravia_tv', 'volume_level') }}
+        current_is_muted_template: >
+          {{ state_attr('media_player.living_room_tv', 'is_volume_muted') }}
+        title_template: >
+          {{ state_attr('media_player.living_room_tv', 'media_title') }}
+        album_template: >
+          {{ state_attr('media_player.living_room_tv', 'media_album_name') }}
+        artist_template: >
+          {% if state_attr('media_player.living_room_tv', 'media_artist') %}
+          {{ state_attr('media_player.living_room_tv', 'media_artist') }}
+            {% else %}
+          {{ state_attr('media_player.living_room_tv', 'app_name') }}
+          {% endif %}
+        app_id_template: >
+          {{ state_attr('media_player.living_room_tv', 'app_id') }}
+        app_name_template: >
+          {{ state_attr('media_player.living_room_tv', 'app_name') }}
+        current_position_template: >
+          {{ state_attr('media_player.living_room_tv', 'media_position') }}
+        media_duration_template: >
+          {{ state_attr('media_player.living_room_tv', 'media_duration') }}
+        media_content_type_template: >
+          {{ state_attr('media_player.living_room_tv', 'media_content_type') }}
+        media_image_url_template: >
+          {% if state_attr("media_player.living_room_tv", "app_name") in ['com.google.ios.youtube', 'YouTube']  %}
+            {{ state_attr("sensor.youtube_current_playing", "thumbnail") }}
+          {% else %}
+            {{ state_attr("media_player.living_room_tv", "entity_picture") }}
+          {% endif %}
+        inputs:
+          Apple TV:
+            service: media_player.select_source
+            target:
+              entity_id: media_player.sony_bravia_tv
+            data:
+              source: Apple TV
+          TV:
+            service: remote.send_command
+            target:
+              entity_id: media_player.sony_bravia_tv
+            data:
+              command: Home
+        turn_on:
+          service: media_player.turn_on
+          data:
+            entity_id: media_player.living_room_tv
+        turn_off:
+          service: media_player.turn_off
+          data:
+            entity_id: media_player.living_room_tv
+        volume_up:
+          service: media_player.volume_up
+          data:
+            entity_id: media_player.sony_bravia_tv
+        volume_down:
+          service: media_player.volume_down
+          data:
+            entity_id: media_player.sony_bravia_tv
+        mute:
+          service: media_player.volume_mute
+          data:
+            entity_id: media_player.living_room_tv
+        set_volume:
+          service: media_player.volume_set
+          target:
+            entity_id: media_player.sony_bravia_tv
+          data:
+            volume_level: '{{volume}}'
+        play:
+          service: media_player.media_play
+          data:
+            entity_id: media_player.living_room_tv
+        pause:
+          service: media_player.media_play_pause
+          data:
+            entity_id: media_player.living_room_tv
+        stop:
+          service: media_player.media_stop
+          data:
+            entity_id: media_player.living_room_tv
+        next:
+          service: media_player.media_next_track
+          data:
+            entity_id: media_player.living_room_tv
+        previous:
+          service: media_player.media_previous_track
+          data:
+            entity_id: media_player.living_room_tv

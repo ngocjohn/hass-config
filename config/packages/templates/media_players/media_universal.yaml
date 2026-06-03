@@ -5,7 +5,7 @@ media_player:
     children:
       - media_player.mass_universal_airplay
       - media_player.spotifyplus_ngoc_nguyen
-      - media_player.living_room_tv
+      - media_player.sony_apple_tv_mix
       - media_player.bedroom_tv
   - platform: universal ### CURRENTLY PLAYING ###
     name: Homepod Airplay Group

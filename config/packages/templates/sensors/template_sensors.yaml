@@ -277,7 +277,7 @@ template:
           {{ mode }}
         icon: >-
           {% set icon = {
-            'Guest': 'fas:person-circle-question',
+            'Guest': 'fa6-solid:person-circle-question',
             'Away': 'custom:ios-car',
             'Night': 'custom:ios-moon-stars-fill',
             'Normal': 'custom:ios-house-fill'

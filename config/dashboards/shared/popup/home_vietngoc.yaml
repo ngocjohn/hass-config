@@ -11,6 +11,10 @@ browser_mod:
         type: vertical-stack
         cards:
           - type: entities
+            visibility:
+              - condition: user
+                users:
+                  - c133973b11744db7a8f2afa0366b6aa3
             card_mod:
               class: content
             entities:
@@ -19,8 +23,15 @@ browser_mod:
           - type: history-graph
             entities:
               - entity: person.viet_ngoc
-
+            visibility:
+              - condition: user
+                users:
+                  - c133973b11744db7a8f2afa0366b6aa3
           - type: map
+            visibility:
+              - condition: user
+                users:
+                  - c133973b11744db7a8f2afa0366b6aa3
             default_zoom: 16
             auto_fit: true
             dark_mode: true

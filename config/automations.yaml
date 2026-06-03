@@ -740,31 +740,6 @@
       message: '{{ state_attr(''calendar.home_assistant_devs'', ''message'') }}'
       title: HA Calendar
   mode: restart
-- id: '1760899859441'
-  alias: Appdaemon Mb server
-  description: ''
-  triggers:
-  - trigger: state
-    entity_id:
-    - switch.appdaemon_mbpro
-    id: Appdaemon switch change
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 0
-  conditions: []
-  actions:
-  - action: homeassistant.update_entity
-    metadata: {}
-    data:
-      entity_id:
-      - binary_sensor.appdaemon_mbpro
-  - action: notify.mobile_app_viet_ngoc_samsung
-    metadata: {}
-    data:
-      title: Appdaemon
-      message: 'server: {{ states(''binary_sensor.appdaemon_mbpro'') | upper }}'
-  mode: single
 - id: '1767670564136'
   alias: Dyson night mode
   description: ''
@@ -1093,75 +1068,6 @@
   - event: update_thumbnail
     event_data: {}
   mode: single
-- id: '1778424770780'
-  alias: youtube change living room
-  description: ''
-  triggers:
-  - trigger: state
-    entity_id:
-    - media_player.living_room_tv
-    to:
-    - playing
-    from:
-    - paused
-    id: playing_changed
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 5
-  - trigger: state
-    entity_id:
-    - media_player.living_room_tv
-    attribute: media_duration
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 2
-    id: duration_change
-  conditions:
-  - condition: state
-    entity_id: media_player.living_room_tv
-    state:
-    - YouTube
-    attribute: app_name
-  actions:
-  - variables:
-      active_player: '{{ trigger.to_state.attributes.active_child}}'
-      thumb_entity: sensor.youtube_thumbnail_latest_youtube_thumbnail
-  - choose:
-    - conditions:
-      - condition: and
-        conditions:
-        - condition: trigger
-          id:
-          - playing_changed
-        - condition: template
-          value_template: "{% set thumb_state = states[thumb_entity].state %} \n{%
-            set tv_attr = states[active_player].attributes %}\n{% set same_title =
-            thumb_state|string() == tv_attr.media_title|string() %}\n{% set duration_long
-            = tv_attr.media_duration > 20 %}\n{% set no_picture = state_attr(active_player,
-            \"entity_picture\") is none %}\n{{ no_picture and same_title and duration_long
-            }}"
-      sequence:
-      - event: update_thumbnail_atv
-        event_data: {}
-    - conditions:
-      - condition: trigger
-        id:
-        - duration_change
-      - condition: template
-        value_template: '{% set thumb_state = states[thumb_entity].state %}
-
-          {% set tv_attr = states[active_player].attributes %}
-
-          {{tv_attr.media_duration > 20 and tv_attr.media_title != thumb_state}}'
-      sequence:
-      - action: button.press
-        metadata: {}
-        target:
-          entity_id: button.youtube_thumbnail_fetch
-        data: {}
-  mode: single
 - id: '1779062484339'
   alias: next alarm pick homepod
   description: ''
@@ -1216,3 +1122,107 @@
     data:
       option: '{{wait.trigger.event.data.action}}'
   mode: restart
+- id: '1779586729328'
+  alias: Youtube TV Content
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - media_player.living_room_tv
+    to:
+    - playing
+    from:
+    id: playing_changed
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+    enabled: true
+  - trigger: state
+    entity_id:
+    - media_player.living_room_tv
+    attribute: media_duration
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 2
+    id: duration_change
+  - trigger: state
+    entity_id:
+    - media_player.living_room_tv
+    attribute: media_title
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 2
+    id: duration_change
+  conditions:
+  - condition: state
+    entity_id: media_player.living_room_tv
+    state:
+    - YouTube
+    attribute: app_name
+  - condition: template
+    value_template: '{% set tv_attr = trigger.to_state.attributes %}
+
+      {% set duration_long = tv_attr.media_duration > 20 %}
+
+      {% set has_metadata = tv_attr.media_title|string() is defined and tv_attr.media_artist|string()
+      is defined  %}
+
+      {{ duration_long and has_metadata }}'
+  actions:
+  - variables:
+      active_player: '{{ trigger.to_state.attributes.active_child}}'
+      media_title: '{{ trigger.to_state.attributes.media_title}}'
+      media_artist: '{{ trigger.to_state.attributes.media_artist}}'
+  - event: compute_youtube_image
+    event_data:
+      media_title: '{{media_title}}'
+      media_artist: '{{media_artist}}'
+  mode: single
+- id: '1780342672863'
+  alias: Doorway motion snapshot
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.doorway_motion_detected
+    - binary_sensor.doorway_person_detected
+    to:
+    - 'on'
+    from:
+    - 'off'
+  conditions: []
+  actions:
+  - action: camera.snapshot
+    metadata: {}
+    target:
+      entity_id: camera.doorway
+    data:
+      filename: /config/www/tmp/doorway/camera-motion.jpg
+  - action: notify.mobile_app_viet_ngoc_samsung
+    metadata: {}
+    data:
+      message: Motion doorway
+  mode: single
+- id: '1780353611645'
+  alias: Telegram bot event triiger
+  description: Telegram bit
+  triggers:
+  - trigger: state
+    entity_id:
+    - event.habot_update_event
+  conditions:
+  - condition: state
+    entity_id: event.habot_update_event
+    attribute: event_type
+    state: telegram_attachment
+  actions:
+  - action: notify.persistent_notification
+    data:
+      message: 'Received a file. MIME type   : {{ trigger.to_state.attributes.file_mime_type
+        }} Size (bytes): {{ trigger.to_state.attributes.file_size }} File ID     :
+        {{ trigger.to_state.attributes.file_id }} File name   : {{ trigger.to_state.attributes.file_name
+        }}'
+  mode: single

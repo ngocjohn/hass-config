@@ -1754,7 +1754,7 @@ kodi_movie_card:
           <div class="title">${title}</div>
           <div class="rating">
           <span>${rating}</span>
-          <ha-icon icon="fas:star" style="display: flex;width: 1rem; height: auto; margin-left: 0.25rem; margin-right: 0.25rem; color: #fde047;"></ha-icon>
+          <ha-icon icon="fa6-solid:star" style="display: flex;width: 1rem; height: auto; margin-left: 0.25rem; margin-right: 0.25rem; color: #fde047;"></ha-icon>
           </div>`;
       return output;
     ]]]
@@ -2159,7 +2159,7 @@ universal_media_player:
       card:
         type: media-control
         entity: >
-          [[[ return entity.attributes.active_child; ]]]
+          [[[ return entity.entity_id; ]]]
         card_mod:
           style:
             .: |

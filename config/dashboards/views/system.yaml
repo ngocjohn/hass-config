@@ -63,3 +63,5 @@ layout:
 #                                               #
 #################################################
 cards: !include_dir_merge_list system-grid/
+visible:
+  - !include ../shared/visibility_view.yaml

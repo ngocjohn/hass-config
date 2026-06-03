@@ -25,14 +25,14 @@
       type: conditional
       conditions:
         - entity: select.conditional_media
-          state: Living Room TV
+          state: 'Sony Apple Tv Mix'
       card:
         type: custom:button-card
-        entity: media_player.living_room_tv
+        entity: media_player.sony_apple_tv_mix
         name: ' '
         template:
           - universal_media_player
-          - icon_apple_tv
+          - icon_sony_apple_tv
 
     - &KODIATV
       type: conditional

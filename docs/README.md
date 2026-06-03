@@ -10,7 +10,7 @@ Hey there! Welcome to my little corner of the tech world! 👨‍💻
 
 This is where I store all the cool configurations for my Home Assistant system. Well, it's a mix of awesome codes and setups I discovered from the Home Assistant community. Seriously, those folks are wizards! 🧙‍♂️ As a bit of an internet newbie turned tech enthusiast, I stumbled upon the magic of IT, and this repository is my way of sharing the joy and knowledge I've gained along the way. Dive in, explore, and let the tech magic begin! ✨
 
-I frequently refresh my configuration files. My current Home Assistant version is <b>2026.5.4</b>. If you find something you like, don't forget to give my repository a ⭐️!
+I frequently refresh my configuration files. My current Home Assistant version is <b>2026.6.0</b>. If you find something you like, don't forget to give my repository a ⭐️!
 
 ## Some of my projects for Home Assistant
 
@@ -47,14 +47,14 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>45,834 </td>
-              <td>32</td>
-              <td>244</td>
-              <td>34</td>
+              <td>45,955 </td>
+              <td>33</td>
+              <td>246</td>
+              <td>35</td>
               <td>73</td>
-              <td>28</td>
-              <td>1447</td>
-              <td>227</td>
+              <td>35</td>
+              <td>1555</td>
+              <td>232</td>
               <td>26</td>
           </tr>
       </tbody>
@@ -99,6 +99,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Better Thermostat](https://github.com/KartoffelToby/better_thermostat)
 - [Bravia Rest Api](https://github.com/cmos486/Bravia-REST-API)
 - [Browser Mod](https://github.com/thomasloven/hass-browser_mod)
+- [Custom Icons](https://github.com/thomasloven/hass-custom_icons)
 - [Dyson](https://github.com/cmgrayb/hass-dyson)
 - [Eufy Security](https://github.com/fuatakgun/eufy_security)
 - [Extended Openai Conversation](https://github.com/jekalmin/extended_openai_conversation)
@@ -115,7 +116,6 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Node Red Companion](https://github.com/zachowj/hass-node-red)
 - [Ookla Speedtest](https://github.com/soulripper13/hass-speedtest-ookla)
 - [Philips Airpurifier (With Coap)](https://github.com/kongo09/philips-airpurifier-coap)
-- [Philips Homeid](https://github.com/renaudallard/homeassistant_philips_homeid)
 - [Plex Recently Added](https://github.com/custom-components/sensor.plex_recently_added)
 - [Real Last Changed](https://github.com/HamletDuFromage/ha_real-last-changed)
 - [Rohlík.Cz Custom Integration](https://github.com/dvejsada/HA-RohlikCZ)
@@ -142,6 +142,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Button Card](https://github.com/custom-cards/button-card)
 - [Canary](https://github.com/jcwillox/lovelace-canary)
 - [Clock Weather Card](https://github.com/pkissling/clock-weather-card)
+- [Crow Media Player](https://github.com/jamesmcginnis/crow-media-player-card)
 - [Custom Icons](https://github.com/Mariusthvdb/custom-icons)
 - [Decluttering Card](https://github.com/custom-cards/decluttering-card)
 - [Dual Axis Controller](https://github.com/mbb365/Dual-Axis-Controller-v4)
@@ -182,7 +183,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Weather Card](https://github.com/bramkragten/weather-card)
 - [Weather Chart Card](https://github.com/mlamberts78/weather-chart-card)
 - [Weather Forecast Card](https://github.com/troinine/ha-weather-forecast-card)
-- [Weather Radar Card](https://github.com/Makin-Things/weather-radar-card)
+- [Weather Radar Card](https://github.com/jpettitt/weather-radar-card)
 - [Xiaomi Vacuum Map Card](https://github.com/PiotrMachowski/lovelace-xiaomi-vacuum-map-card)
 </details>
 

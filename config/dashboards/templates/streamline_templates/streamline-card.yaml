@@ -437,7 +437,7 @@ tailwind_movies:
                     {%- if movie.rating %}
                     <div class="flex">
                       <span class="text-slate-300 text-lg font-bold">{{-movie.rating | round(2)-}} </span>
-                      <ha-icon icon="fas:star" class="text-yellow-300 w-4 mx-1"></ha-icon>
+                      <ha-icon icon="fa6-solid:star" class="text-yellow-300 w-4 mx-1"></ha-icon>
                     </div>
                     {%endif%}
                   </div>

@@ -5,3 +5,5 @@ icon: si:applemusic
 cards:
   - type: iframe
     url: /api/hassio_ingress/DxjwvCHHhrKMJQKVZKPsf-69nPQW-hrXk4iJ09PqKgQ/
+visible:
+  - !include ../shared/visibility_view.yaml

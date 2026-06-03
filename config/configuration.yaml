@@ -20,7 +20,7 @@ frontend:
   themes: !include_dir_merge_named themes
   extra_module_url:
     - /hacsfiles/lovelace-canary/canary.js?hacstag=245159052050
-    - /hacsfiles/sidebar-organizer/sidebar-organizer.js?hacstag=932534411341
+    - /hacsfiles/sidebar-organizer/sidebar-organizer.js?hacstag=932534411400
     - /local/dashboard-resources/customize-css-change.js?v1.0.3
     - /local/dashboard-resources/quickbar-navigate-shortcut.js?v0.0.1
     - /hacsfiles/more-info-custom/more-info-custom.js?hacstag=1245053247100

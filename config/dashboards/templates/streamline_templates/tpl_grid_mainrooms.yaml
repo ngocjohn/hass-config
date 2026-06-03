@@ -15,7 +15,6 @@ grid_office:
     template:
       - rooms_base
       - motion
-      - macbook
       - server
       - icon_office
       # - change_grid_title
@@ -29,7 +28,6 @@ grid_office:
       motion: input_boolean.brma
       light_entity: light.office_group
       server: binary_sensor.mbproserver_active
-      macbook: switch.macbook
       active: sensor.office_active
       tempsensor: sensor.office_temp_humid_temperature
       humidsensor: sensor.office_temp_humid_humidity

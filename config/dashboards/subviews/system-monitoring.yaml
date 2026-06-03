@@ -725,3 +725,5 @@ header:
 #   card: !include ../shared/footer-shared.yaml
 dense_section_placement: false
 top_margin: false
+visible:
+  - !include ../shared/visibility_view.yaml
