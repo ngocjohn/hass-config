@@ -29,6 +29,7 @@ grid_office:
       light_entity: light.office_group
       server: binary_sensor.mbproserver_active
       active: sensor.office_active
+      occupancy: binary_sensor.office_occupancy
       tempsensor: sensor.office_temp_humid_temperature
       humidsensor: sensor.office_temp_humid_humidity
   # LIVING ROOM GRID

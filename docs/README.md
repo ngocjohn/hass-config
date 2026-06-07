@@ -10,7 +10,7 @@ Hey there! Welcome to my little corner of the tech world! 👨‍💻
 
 This is where I store all the cool configurations for my Home Assistant system. Well, it's a mix of awesome codes and setups I discovered from the Home Assistant community. Seriously, those folks are wizards! 🧙‍♂️ As a bit of an internet newbie turned tech enthusiast, I stumbled upon the magic of IT, and this repository is my way of sharing the joy and knowledge I've gained along the way. Dive in, explore, and let the tech magic begin! ✨
 
-I frequently refresh my configuration files. My current Home Assistant version is <b>2026.6.0</b>. If you find something you like, don't forget to give my repository a ⭐️!
+I frequently refresh my configuration files. My current Home Assistant version is <b>2026.6.1</b>. If you find something you like, don't forget to give my repository a ⭐️!
 
 ## Some of my projects for Home Assistant
 
@@ -47,14 +47,14 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>45,955 </td>
+              <td>45,961 </td>
               <td>33</td>
               <td>246</td>
-              <td>35</td>
+              <td>36</td>
               <td>73</td>
               <td>35</td>
-              <td>1555</td>
-              <td>232</td>
+              <td>1525</td>
+              <td>230</td>
               <td>26</td>
           </tr>
       </tbody>
@@ -157,6 +157,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Layout Card](https://github.com/thomasloven/lovelace-layout-card)
 - [Local Conditional Card](https://github.com/PiotrMachowski/Home-Assistant-Lovelace-Local-Conditional-card)
 - [Logbook Card](https://github.com/royto/logbook-card)
+- [Lovelace Touchpad Card](https://github.com/michalowskil/lovelace-touchpad-card)
 - [Lunar Phase Card](https://github.com/ngocjohn/lunar-phase-card)
 - [Mass Search Card](https://github.com/fastxl2024/mass-search-card)
 - [Maxi Media Player](https://github.com/punxaphil/maxi-media-player)
