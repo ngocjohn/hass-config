@@ -145,43 +145,6 @@
   - action: readme.generate
     data: {}
   mode: single
-- id: '1695935011647'
-  alias: dismiss_lovelace_updated
-  description: ''
-  triggers:
-  - event_type: lovelace_updated
-    trigger: event
-  conditions: []
-  actions:
-  - target:
-      entity_id: sensor.code_line_count
-    data: {}
-    action: homeassistant.update_entity
-  - parallel:
-    - repeat:
-        count: 3
-        sequence:
-        - delay:
-            hours: 0
-            minutes: 0
-            seconds: 0
-            milliseconds: 500
-        - data:
-            duration: 1
-            message: ' '
-          target:
-            device_id:
-            - e5211b8956d56a9d80b84665dfb8e957
-          action: browser_mod.notification
-        - data:
-            duration: 1
-            message: ' '
-          target:
-            device_id:
-            - 4f43e0dc2e03b71c2e137f9696a04a2c
-          action: browser_mod.notification
-    enabled: false
-  mode: restart
 - id: '1696553366478'
   alias: 'Dishwasher Set Timer '
   description: ''
@@ -207,6 +170,11 @@
         state: unavailable
     enabled: false
   actions:
+  - action: timer.cancel
+    metadata: {}
+    target:
+      entity_id: timer.dishwasher_remaining
+    data: {}
   - action: timer.set_duration
     metadata: {}
     data:

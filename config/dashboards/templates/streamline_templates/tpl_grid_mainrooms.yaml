@@ -102,7 +102,7 @@ grid_kitchen_dishwasing:
                     name: Power
                     icon: mdi:power
                     secondary_info: last-changed
-                  - entity: binary_sensor.mycka_nadobi_door
+                  - entity: sensor.dishwasher_door
                     name: Door
                   - entity: sensor.mycka_nadobi_operation_state
                     name: Operation State

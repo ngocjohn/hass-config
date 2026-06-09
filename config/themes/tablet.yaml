@@ -254,11 +254,12 @@ tablet:
     #                    CHIPS                      #
     #                                               #
     #################################################
+
     grid-layout$hui-horizontal-stack-card:
       $: |
         #root {
           flex-wrap: wrap;
-          justify-content: center !important;
+          justify-content: space-between;
           place-items: center;
         }
 
@@ -267,21 +268,21 @@ tablet:
     #                   FOOTER                      #
     #                                               #
     #################################################
-    grid-layout$hui-horizontal-stack-card:last-child:
-      $: |
-        #root {
-          justify-content: space-between;
-          align-items: center;
-          flex-wrap: wrap;
-        }
-        @media only screen and (max-width: 1440px) {
-          #root {
-            justify-content: space-evenly;
-          }
-        }
-        @media only screen and (max-width: 800px) {
-          #root {
-            justify-content: space-evenly;
-            //gap: 1.5rem !important
-          }
-        }
+    # grid-layout$hui-horizontal-stack-card:last-child:
+    #   $: |
+    #     #root {
+    #       justify-content: space-between;
+    #       align-items: center;
+    #       flex-wrap: wrap;
+    #     }
+    #     @media only screen and (max-width: 1440px) {
+    #       #root {
+    #         justify-content: space-evenly;
+    #       }
+    #     }
+    #     @media only screen and (max-width: 800px) {
+    #       #root {
+    #         justify-content: space-evenly;
+    #         //gap: 1.5rem !important
+    #       }
+    #     }

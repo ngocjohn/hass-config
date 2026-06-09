@@ -22,7 +22,7 @@ popup_security_sensors:
         - options: {}
           state: unavailable
     rename:
-      find: Motion Sensor|Contact Sensor | ?Occupancy| ?Door
+      find: Motion Sensor|Contact Sensor | ?Occupancy| ?Door| ?Room
     sort:
       - method: state
         reverse: true

@@ -65,6 +65,7 @@ grid_cam_terrace:
       - loader
     variables:
       battery: sensor.terasa_battery_percentage
+      image_entity: image.terasa_event_image
     styles:
       card:
         - background-position: center
@@ -80,3 +81,4 @@ grid_cam_garden:
       - loader
     variables:
       battery: sensor.zahrada_battery_percentage
+      image_entity: image.zahrada_event_image
