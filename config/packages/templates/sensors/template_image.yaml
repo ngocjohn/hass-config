@@ -1,0 +1,4 @@
+template:
+  - image:
+      - name: 'Kids Room Event Image'
+        url: 'http://192.168.0.73:8123/local/tmp/kids/camera.kids_room-latest20260611050007.jpg'

@@ -1194,3 +1194,27 @@
         {{ trigger.to_state.attributes.file_id }} File name   : {{ trigger.to_state.attributes.file_name
         }}'
   mode: single
+- id: '1781219655618'
+  alias: motion camera
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.kids_room_motion_detected
+    - binary_sensor.doorway_motion_detected
+    to:
+    - 'on'
+    from:
+    - 'off'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+  conditions: []
+  actions:
+  - action: notify.mobile_app_viet_ngoc_samsung
+    metadata: {}
+    data:
+      message: '"{{trigger.entity_id}}"'
+      title: Camera triigger
+  mode: single
