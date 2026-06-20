@@ -52,16 +52,20 @@ template:
           average_humidity: >-
             {{ states.sensor.average_humidity.state }}
           living_room_pm25: >-
-            {% if has_value('sensor.dyson_ph04_pm_2_5') %}
-              {{ states.sensor.dyson_ph04_pm_2_5.state }} µg/m³
+            {% if has_value('sensor.dyson_ph04_pm2_5') %}
+              {{ states('sensor.dyson_ph04_pm2_5', with_unit = true)}}
             {% endif %}
           bedroom_pm25: >-
             {% if has_value('sensor.philips_air_purifier_pm2_5') %}
-              {{ states.sensor.philips_air_purifier_pm2_5.state }} µg/m³
+              {{ states('sensor.philips_air_purifier_pm2_5', with_unit = true)}}
             {% endif %}
           office_pm25: >-
             {% if has_value('sensor.zhimi_mb4_b008_pm25_density') %}
-              {{ states.sensor.zhimi_mb4_b008_pm25_density.state }} µg/m³
+              {{ states('sensor.zhimi_mb4_b008_pm25_density', with_unit = true)}}
+            {% endif %}
+          kids_room_pm25: >-
+            {% if has_value('sensor.zhimi_mb3_8b86_pm25') %}
+              {{ states('sensor.zhimi_mb3_8b86_pm25', with_unit = true)}}
             {% endif %}
           heating: >-
             {% set heaters = [
@@ -78,6 +82,7 @@ template:
             {% endif %}
           purifier: >-
             {% set purifiers = [
+              states.fan.zhimi_mb3_8b86_air_purifier,
               states.fan.dyson_ph04,
               states.fan.office_xiaomi_air_purifier,
               states.fan.philips_air_purifier ] %}

@@ -10,7 +10,7 @@ Hey there! Welcome to my little corner of the tech world! 👨‍💻
 
 This is where I store all the cool configurations for my Home Assistant system. Well, it's a mix of awesome codes and setups I discovered from the Home Assistant community. Seriously, those folks are wizards! 🧙‍♂️ As a bit of an internet newbie turned tech enthusiast, I stumbled upon the magic of IT, and this repository is my way of sharing the joy and knowledge I've gained along the way. Dive in, explore, and let the tech magic begin! ✨
 
-I frequently refresh my configuration files. My current Home Assistant version is <b>2026.6.3</b>. If you find something you like, don't forget to give my repository a ⭐️!
+I frequently refresh my configuration files. My current Home Assistant version is <b>2026.6.4</b>. If you find something you like, don't forget to give my repository a ⭐️!
 
 ## Some of my projects for Home Assistant
 
@@ -47,15 +47,15 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>45,924 </td>
-              <td>33</td>
-              <td>248</td>
-              <td>39</td>
-              <td>73</td>
+              <td>45,946 </td>
+              <td>32</td>
+              <td>250</td>
+              <td>46</td>
+              <td>74</td>
               <td>35</td>
-              <td>1495</td>
-              <td>228</td>
-              <td>26</td>
+              <td>1646</td>
+              <td>238</td>
+              <td>24</td>
           </tr>
       </tbody>
   </table>
@@ -117,7 +117,6 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Ookla Speedtest](https://github.com/soulripper13/hass-speedtest-ookla)
 - [Philips Airpurifier (With Coap)](https://github.com/kongo09/philips-airpurifier-coap)
 - [Plex Recently Added](https://github.com/custom-components/sensor.plex_recently_added)
-- [Real Last Changed](https://github.com/HamletDuFromage/ha_real-last-changed)
 - [Rohlík.Cz Custom Integration](https://github.com/dvejsada/HA-RohlikCZ)
 - [Simpleicons](https://github.com/vigonotion/hass-simpleicons)
 - [Spook 👻 Your Homie](https://github.com/frenck/spook)

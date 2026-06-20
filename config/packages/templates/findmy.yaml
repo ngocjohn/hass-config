@@ -11,3 +11,39 @@ homeassistant:
   customize:
     device_tracker.viet_ngoc_samsung:
       entity_picture: /local/img/samsung-z-flip.png
+    device_tracker.amg_43_parking_location:
+      entity_picture: /local/img/benz_amg.png
+
+template:
+  - triggers:
+      - alias: 'Viet Ngoc disconnected from Android Auto'
+        trigger: state
+        entity_id: binary_sensor.viet_ngoc_samsung_android_auto
+        from: 'on'
+        to: 'off'
+        variables:
+          notify_action: notify.mobile_app_viet_ngoc_samsung
+          geocoded: sensor.viet_ngoc_samsung_geocoded_location
+          device_tracker: device_tracker.viet_ngoc_samsung
+    actions:
+      - action: '{{ notify_action }}'
+        data:
+          message: 'request_location_update'
+      - delay:
+          seconds: 3
+    sensor:
+      - unique_id: 9c9da226-77f1-4366-9d0a-c778941fd61b
+        name: AMG 43 Geocoded Location
+        state: '{{ states(geocoded) }}'
+        attributes:
+          latitude: "{{ state_attr(device_tracker, 'latitude') }}"
+          longitude: "{{ state_attr(device_tracker, 'longitude') }}"
+          gps_accuracy: "{{ state_attr(device_tracker, 'gps_accuracy') }}"
+  - device_tracker:
+      - unique_id: 4c9495e8-e731-4597-ba01-6e5318789e55
+        name: AMG 43 Parking Location
+        icon: mdi:car
+        latitude: "{{ state_attr('sensor.amg_43_geocoded_location', 'latitude') }}"
+        longitude: "{{ state_attr('sensor.amg_43_geocoded_location', 'longitude') }}"
+        location_accuracy: "{{ state_attr('sensor.amg_43_geocoded_location', 'gps_accuracy') }}"
+        availability: "{{ 'sensor.amg_43_geocoded_location' | has_value }}"

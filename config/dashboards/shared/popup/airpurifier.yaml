@@ -4,7 +4,7 @@ browser_mod:
   data:
     title: Air Purifier
     style: >
-      --max-popup-column: 3;
+      --max-popup-column: 2;
     content:
       type: custom:mod-card
       card_mod: !include ../snippets/style_popup_footer.yaml
@@ -147,4 +147,42 @@ browser_mod:
                 compact_view: false
                 aqi:
                   entity_id: sensor.zhimi_mb4_b008_pm25_density
+                  unit: µg/m³
+          - type: entities
+            title: Kids Room
+            show_header_toggle: false
+            card_mod:
+              class: header
+            entities:
+              - type: custom:purifier-card
+                entity: fan.zhimi_mb3_8b86_air_purifier
+                stats:
+                  - entity_id: sensor.zhimi_mb3_8b86_filter_life_level
+                    unit: '%'
+                    subtitle: Filter Remaining
+                  - entity_id: sensor.zhimi_mb3_8b86_motor_speed
+                    unit: RPM
+                    subtitle: Motor Speed
+                shortcuts:
+                  - name: Sleep
+                    icon: mdi:weather-night
+                    preset_mode: Sleep
+                  - name: 33%
+                    icon: mdi:fan-speed-1
+                    percentage: 33
+                  - name: 66%
+                    icon: mdi:fan-speed-2
+                    percentage: 66
+                  - name: 100%
+                    icon: mdi:fan-speed-3
+                    percentage: 100
+                  - name: Auto
+                    icon: mdi:fan-auto
+                    preset_mode: Auto
+                show_name: false
+                show_state: true
+                show_toolbar: true
+                compact_view: false
+                aqi:
+                  entity_id: sensor.zhimi_mb3_8b86_pm25
                   unit: µg/m³

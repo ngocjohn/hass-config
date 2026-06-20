@@ -75,6 +75,7 @@ recorder:
       - sensor.*_rssi
       - sensor.prague_moon_*
       - sensor.*_cpu_usage_total
+      - sensor.soccer_live_*
   include:
     entities:
       - device_tracker.viet_ngoc_samsung

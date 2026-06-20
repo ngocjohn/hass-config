@@ -461,6 +461,7 @@ Graphite Auto:
       token-color-text-sidebar: var(--token-color-text-secondary)
       token-color-text-label-badge: rgb(198, 203, 210)
       token-color-text-chip: var(--token-color-white)
+      # token-color-background-base: rgba(22, 24, 29, 1)
       token-color-background-base: rgba(22, 24, 29, 1)
       token-color-background-secondary: rgba(28, 29, 33, 1)
       token-color-background-sidebar: var(--token-color-background-base)

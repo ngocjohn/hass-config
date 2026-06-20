@@ -1,0 +1,16 @@
+title: Map Tracker
+path: map-tracker
+type: panel
+icon: mdi:map-marker-radius
+cards:
+  - type: custom:extra-map-card
+    entities:
+      - entity: person.viet_ngoc
+      - entity: person.phuong_chi
+    theme_mode: auto
+    use_more_info: false
+    api_key: !secret maptiler_api
+    history_period: today
+    show_history_control: false
+visible:
+  - !include ../shared/visibility_view.yaml

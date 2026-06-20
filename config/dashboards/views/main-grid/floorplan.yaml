@@ -22,7 +22,7 @@
         style: |
           ha-card {
             margin: 0;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.13) 0%, transparent 50%);
+            # background: radial-gradient(circle, rgba(255, 255, 255, 0.13) 0%, transparent 50%);
             box-shadow: none;
             position: relative;
             opacity: 0;
@@ -76,7 +76,7 @@
     style: |
       ha-card {
         margin: 0;
-        background: radial-gradient(circle, rgb(255 255 255 / 14%) 27%, rgba(57,14,14,0) 61%);
+        # background: radial-gradient(circle, rgb(255 255 255 / 14%) 27%, rgba(57,14,14,0) 61%);
         box-shadow: none;
       }
       @media screen and (max-width: 1440px) {

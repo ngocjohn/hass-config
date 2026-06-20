@@ -8,18 +8,19 @@
 #
 #- from github.com/ngocjohn/hass-config
 #
-# PANEL CUSTOM
+
+# PANEL CUSTOM https://github.com/lovelylain/hass_ingress
 
 ingress:
-  local_homebridge:
-    work_mode: iframe
-    ui_mode: toolbar
-    title: Homebridge
-    icon: si:homebridge
-    url:
-      match: !secret external_url
-      replace: !secret homebridge_url
-      default: http://192.168.0.146:8581/
+  # local_homebridge:
+  #   work_mode: iframe
+  #   ui_mode: toolbar
+  #   title: Homebridge
+  #   icon: si:homebridge
+  #   url:
+  #     match: !secret external_url
+  #     replace: !secret homebridge_url
+  #     default: http://192.168.0.146:8581/
   local_appdaemon:
     work_mode: iframe
     ui_mode: normal
@@ -43,12 +44,12 @@ ingress:
     title: Automations
     icon: mdi:robot
     url: /config/automation/dashboard
-  link_supervisor:
-    work_mode: iframe
-    ui_mode: replace
-    title: Supervisor
-    icon: mdi:information-variant
-    url: /hassio/system/info
+  # link_supervisor:
+  #   work_mode: iframe
+  #   ui_mode: replace
+  #   title: Supervisor
+  #   icon: mdi:information-variant
+  #   url: /hassio/system/info
   link_logs:
     work_mode: iframe
     ui_mode: replace
