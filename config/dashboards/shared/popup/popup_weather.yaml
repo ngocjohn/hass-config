@@ -16,23 +16,48 @@ browser_mod:
           - type: entities
             title: Prague
             entities:
-              - type: custom:layout-card
-                layout_type: custom:vertical-layout
-                cards:
-                  - type: weather-forecast
-                    show_current: true
-                    show_forecast: true
-                    entity: weather.prague
-                    name: ' '
-                    forecast_type: hourly
-              - type: divider
-              - type: custom:weather-chart-card
+              - type: custom:weather-forecast-card
+                show_current: true
+                show_forecast: true
+                default_forecast: hourly
+                tap_action:
+                  action: more-info
                 entity: weather.home
-                show_main: false
-                show_attributes: false
+                show_condition_effects: false
                 forecast:
-                  condition_icons: false
-                  show_wind_forecast: false
+                  mode: chart
+                  show_sun_times: true
+                  extra_attribute: wind_direction
+                  scroll_to_selected: false
+                  hourly_group_size: 1
+                  use_color_thresholds: true
+                forecast_action:
+                  tap_action:
+                    action: toggle-forecast
+                current:
+                  show_attributes:
+                    - wind_gust_speed
+                    - humidity
+                    - visibility
+                    - cloud_coverage
+
+              # - type: custom:layout-card
+              #   layout_type: custom:vertical-layout
+              #   cards:
+              #     - type: weather-forecast
+              #       show_current: true
+              #       show_forecast: true
+              #       entity: weather.prague
+              #       name: ' '
+              #       forecast_type: hourly
+              # - type: divider
+              # - type: custom:weather-chart-card
+              #   entity: weather.home
+              #   show_main: false
+              #   show_attributes: false
+              #   forecast:
+              #     condition_icons: false
+              #     show_wind_forecast: false
           - type: entities
             title: Radar
             card_mod:

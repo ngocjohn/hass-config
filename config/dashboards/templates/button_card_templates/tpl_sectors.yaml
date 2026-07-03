@@ -1292,3 +1292,25 @@ change_grid_title:
         }
       }
     ]]]
+climate_tooltip:
+  tooltip:
+    delay: 500ms
+    hide_delay: 150ms
+    content: >
+      [[[
+        if (variables.climate_sensors) {
+          const sensors = variables.climate_sensors;
+          let temp = helpers.localize(states[sensors.tempsensor], undefined, 1, true);
+          let humidity = helpers.localize(states[sensors.humidsensor], undefined, 1, true);
+          let baseContent = `🔥 ${temp} • 💧 ${humidity}`;
+          if (sensors.pm25_sensor) {
+            let pm25 = helpers.localize(states[sensors.pm25_sensor], undefined, 1, true);
+            baseContent += ` • 🦠 ${pm25}`;
+          }
+          return baseContent;
+        }
+      ]]]
+  styles:
+    tooltip:
+      - --button-card-tooltip-font-size: 1.5em
+      - --button-card-tooltip-max-width: none

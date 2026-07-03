@@ -523,6 +523,7 @@
     metadata: {}
     data:
       message: '{{ trigger.to_state.name | lower }}'
+    enabled: false
   mode: parallel
 - id: '1741648805445'
   alias: ATV Force quit app
@@ -562,6 +563,11 @@
   - trigger: state
     entity_id:
     - binary_sensor.contact_sensor_entrance_door
+    from:
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 1
   conditions: []
   actions:
   - choose:
@@ -877,8 +883,6 @@
   conditions: []
   actions:
   - variables:
-      is_comming:
-        '[object Object]':
       occup_state: "{{ ' is comming \U0001F3C3‍♀️' if trigger.to_state.state == 'on'
         else ' is leaving..\U0001F3C3‍♀️‍➡️' }}"
   - action: notify.ngoc_devices
@@ -898,10 +902,10 @@
       - home
   - action: music_assistant.play_announcement
     target:
-      entity_id: media_player.office_homepod
+      entity_id: media_player.office
     data:
       announce_volume: 100
-      url: http://192.168.0.73:8123/local/sound/timer.mp3
+      url: http://192.168.1.189:8123/local/sound/timer.mp3
   mode: single
 - id: '1774883741871'
   alias: Update speedtest
@@ -1219,3 +1223,61 @@
     data:
       addon: b9845f46_govee2mqtt
   mode: single
+- id: '1782236238605'
+  alias: C Geo Changed
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - sensor.phuong_chi_geocoded_location
+    attribute: Location
+  conditions:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.z_occupacy
+      state:
+      - 'off'
+    - condition: template
+      value_template: '{{ has_value(''sensor.phuong_chi_geocoded_location'')}}'
+  actions:
+  - variables:
+      ATTR: '{{states.sensor.phuong_chi_geocoded_location.attributes | to_json}}
+
+        '
+      latitude: '{{ATTR[''Location''][0]}}
+
+        '
+      longitude: '{{ATTR[''Location''][1]}}
+
+        '
+      street: '"{{ATTR[''Name'']}}, {{ATTR[''Thoroughfare'']}}."
+
+        '
+  - alias: Notify Mess
+    action: notify.mobile_app_viet_ngoc_samsung
+    metadata: {}
+    data:
+      message: '{{street}}
+
+        '
+      title: "\U0001F4CD C Geo Location"
+      data:
+        tag: chi-geo-location
+        actions:
+        - action: action_show
+          title: Open Map
+  - wait_for_trigger:
+    - trigger: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: action_show
+    timeout:
+      hours: 0
+      minutes: 5
+      seconds: 0
+      milliseconds: 0
+  - action: script.show_c_location
+    metadata: {}
+    data: {}
+  mode: restart

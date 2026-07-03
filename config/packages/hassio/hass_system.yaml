@@ -69,8 +69,9 @@ recorder:
       - sensor.arris_*
       - sensor.raspberry_pi_docker_*
       - sensor.macbook_pro_server_*
-      - fan.philips_air_purifier_*
-      - sensor.philips_air_purifier_*
+      - fan.philips_air_*
+      - humidifier.philips_air_*
+      - sensor.philips_air_*
       - sensor.*_device_temperature
       - sensor.*_rssi
       - sensor.prague_moon_*

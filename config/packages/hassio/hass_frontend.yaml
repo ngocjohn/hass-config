@@ -12,15 +12,15 @@
 # PANEL CUSTOM https://github.com/lovelylain/hass_ingress
 
 ingress:
-  # local_homebridge:
+  # local_unifi:
   #   work_mode: iframe
   #   ui_mode: toolbar
-  #   title: Homebridge
-  #   icon: si:homebridge
+  #   title: Unifi Network
+  #   icon: si:ubiquiti
   #   url:
   #     match: !secret external_url
-  #     replace: !secret homebridge_url
-  #     default: http://192.168.0.146:8581/
+  #     replace: !secret unifi_url
+  #     default: !secret unifi_url
   local_appdaemon:
     work_mode: iframe
     ui_mode: normal
@@ -29,7 +29,7 @@ ingress:
     url:
       match: !secret external_url
       replace: !secret appdaemon_url
-      default: http://192.168.0.231:5050/
+      default: http://192.168.1.16:5050/
 
   ## HA CONFIG PAGES ##
   link_areas:
@@ -80,9 +80,3 @@ ingress:
     title: Node-RED
     icon: si:nodered
     url: a0d7b954_nodered
-  # link_music_assistant:
-  #   ui_mode: normal
-  #   work_mode: hassio
-  #   title: Music Assistant
-  #   icon: si:applemusic
-  #   url: d5369777_music_assistant

@@ -74,28 +74,25 @@ browser_mod:
             card_mod:
               class: header
             entities:
-              - entity: binary_sensor.arris_tg3442de_wan_status
-                name: WAN Status
+              - type: custom:multiple-entity-row
+                entity: sensor.unifi_gateway
+                show_entity_picture: true
+                show_state: false
+                secondary_info:
+                  attribute: uptime
+                entities:
+                  - attribute: cpu
+                    name: CPU
+                    unit: '%'
+                  - attribute: mem
+                    name: MEM
+                    unit: '%'
               - type: custom:streamline-card
                 template: unifi_clients_total
                 variables:
                   controller_entity: 'sensor.unifi_controller_clients'
                   client_entity: 'sensor.unifi_controller_all_clients'
                   heading_title: 'Total Clients'
-              - type: custom:multiple-entity-row
-                entity: binary_sensor.unifi_controller_alert
-                name: 'Alert'
-                state_color: true
-                show_state: true
-                entities:
-                  - icon: mdi:archive-minus
-                    tap_action:
-                      action: call-service
-                      confirmation:
-                        text: Are you sure you want to archive?
-                      service: input_button.press
-                      service_data:
-                        entity_id: input_button.unifi_archive_alerts
             footer:
               type: custom:mini-graph-card
               name: Speedtest

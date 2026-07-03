@@ -17,10 +17,11 @@ browser_mod:
                   type: custom:button-card
                   template:
                     - tpl_popup_light
-              - entity_id: switch.macbook
+              - entity_id: switch.office_socket
                 options:
                   type: custom:button-card
-                  tap_action: none
+                  tap_action:
+                    action: toggle
                   double_tap_action: none
                   template:
                     - tpl_popup_device

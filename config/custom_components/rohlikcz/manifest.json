@@ -8,5 +8,5 @@
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/dvejsada/HA-RohlikCZ/issues",
   "requirements": [],
-  "version": "0.3.1"
+  "version": "0.5.0"
 }

@@ -70,6 +70,8 @@
       entity: sensor.home_climate
       template:
         - chip_air_new
+      tap_action:
+        action: more-info
       # type: custom:button-card
       # name: Air Quality
       # entity: sensor.home_climate

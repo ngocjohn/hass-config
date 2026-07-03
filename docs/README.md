@@ -10,7 +10,7 @@ Hey there! Welcome to my little corner of the tech world! 👨‍💻
 
 This is where I store all the cool configurations for my Home Assistant system. Well, it's a mix of awesome codes and setups I discovered from the Home Assistant community. Seriously, those folks are wizards! 🧙‍♂️ As a bit of an internet newbie turned tech enthusiast, I stumbled upon the magic of IT, and this repository is my way of sharing the joy and knowledge I've gained along the way. Dive in, explore, and let the tech magic begin! ✨
 
-I frequently refresh my configuration files. My current Home Assistant version is <b>2026.6.4</b>. If you find something you like, don't forget to give my repository a ⭐️!
+I frequently refresh my configuration files. My current Home Assistant version is <b>2026.7.0</b>. If you find something you like, don't forget to give my repository a ⭐️!
 
 ## Some of my projects for Home Assistant
 
@@ -47,15 +47,15 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>45,946 </td>
-              <td>32</td>
-              <td>250</td>
-              <td>46</td>
-              <td>74</td>
-              <td>35</td>
-              <td>1646</td>
-              <td>238</td>
-              <td>24</td>
+              <td>46,081 </td>
+              <td>33</td>
+              <td>251</td>
+              <td>72</td>
+              <td>62</td>
+              <td>39</td>
+              <td>1766</td>
+              <td>239</td>
+              <td>25</td>
           </tr>
       </tbody>
   </table>
@@ -101,6 +101,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Browser Mod](https://github.com/thomasloven/hass-browser_mod)
 - [Custom Icons](https://github.com/thomasloven/hass-custom_icons)
 - [Dyson](https://github.com/cmgrayb/hass-dyson)
+- [Electrolux](https://github.com/TTLucian/ha-electrolux)
 - [Eufy Security](https://github.com/fuatakgun/eufy_security)
 - [Extended Openai Conversation](https://github.com/jekalmin/extended_openai_conversation)
 - [Fontawesome](https://github.com/thomasloven/hass-fontawesome)
@@ -108,6 +109,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Google Cloud Speech To Text](https://github.com/chatziko/ha-google-cloud-stt)
 - [Googlegeocode Hass](https://github.com/gregoryduckworth/GoogleGeocode-HASS)
 - [Govee](https://github.com/LaggAt/hacs-govee)
+- [Greg](https://github.com/WHISTLER-Arc/Greg)
 - [HACS](https://github.com/hacs/integration)
 - [Hass Favicon](https://github.com/thomasloven/hass-favicon)
 - [Ingress](https://github.com/lovelylain/hass_ingress)
@@ -118,6 +120,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Philips Airpurifier (With Coap)](https://github.com/kongo09/philips-airpurifier-coap)
 - [Plex Recently Added](https://github.com/custom-components/sensor.plex_recently_added)
 - [Rohlík.Cz Custom Integration](https://github.com/dvejsada/HA-RohlikCZ)
+- [Samsungtv Tizen](https://github.com/jaruba/ha-samsungtv-tizen)
 - [Simpleicons](https://github.com/vigonotion/hass-simpleicons)
 - [Spook 👻 Your Homie](https://github.com/frenck/spook)
 - [Spotifyplus](https://github.com/thlucas1/homeassistantcomponent_spotifyplus)
@@ -143,6 +146,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Clock Weather Card](https://github.com/pkissling/clock-weather-card)
 - [Crow Media Player](https://github.com/jamesmcginnis/crow-media-player-card)
 - [Custom Icons](https://github.com/Mariusthvdb/custom-icons)
+- [Dashboard Hotkeys](https://github.com/t0m1o1/HA-hotkeys)
 - [Decluttering Card](https://github.com/custom-cards/decluttering-card)
 - [Dual Axis Controller](https://github.com/mbb365/Dual-Axis-Controller-v4)
 - [Flex Table   Highly Customizable, Data Visualization](https://github.com/custom-cards/flex-table-card)
@@ -168,6 +172,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Multiple Entity Row](https://github.com/benct/lovelace-multiple-entity-row)
 - [Mushroom](https://github.com/piitaya/lovelace-mushroom)
 - [Polr Ytube Media Card](https://github.com/pathofleastresistor/polr-ytube-media-card)
+- [Roscard](https://github.com/yyqclhy/RosCard)
 - [Rpi Monitor Card](https://github.com/ironsheep/lovelace-rpi-monitor-card)
 - [Sidebar Organizer](https://github.com/ngocjohn/sidebar-organizer)
 - [Slider Button Card](https://github.com/custom-cards/slider-button-card)

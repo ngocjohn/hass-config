@@ -470,7 +470,7 @@ Graphite Auto:
       token-color-background-label-badge: rgba(54, 55, 67, 1)
       token-color-background-card: rgba(37, 38, 45, 1)
       token-color-background-skrim: rgba(0, 0, 3, 0.9)
-      token-color-background-divider: var(--token-color-background-sidebar)
+      token-color-background-divider: rgba(94,94,94, 0.12)
       token-color-background-scrollbar-thumb: rgba(46, 48, 56, 1)
       token-color-background-label-badge-red: var(--token-color-feedback-error)
       token-color-background-label-badge-green: rgba(78, 183, 128, 1)

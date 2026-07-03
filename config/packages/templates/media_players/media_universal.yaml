@@ -6,15 +6,15 @@ media_player:
       - media_player.mass_universal_airplay
       - media_player.spotifyplus_ngoc_nguyen
       - media_player.sony_apple_tv_mix
-      - media_player.bedroom_tv
+      - media_player.bedroom_samsung_television
   - platform: universal ### CURRENTLY PLAYING ###
     name: Homepod Airplay Group
     unique_id: homepod_airplay_media
     children:
-      - media_player.office
+      - media_player.office_homepod
       - media_player.bathroom_homepod
       - media_player.bedroom_homepod
-      - media_player.living_room
+      - media_player.living_room_homepod
 
 template:
   - select:

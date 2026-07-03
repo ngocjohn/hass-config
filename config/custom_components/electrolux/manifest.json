@@ -1,0 +1,13 @@
+{
+    "domain": "electrolux",
+    "name": "Electrolux",
+    "codeowners": ["@TTLucian"],
+    "config_flow": true,
+    "documentation": "https://github.com/TTLucian/ha-electrolux",
+    "integration_type": "hub",
+    "iot_class": "cloud_push",
+    "issue_tracker": "https://github.com/TTLucian/ha-electrolux/issues",
+    "loggers": ["electrolux_group_developer_sdk"],
+    "requirements": ["electrolux-group-developer-sdk"],
+    "version": "3.6.8"
+}

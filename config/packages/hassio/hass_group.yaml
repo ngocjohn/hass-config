@@ -147,29 +147,29 @@ group:
     entities:
       # - media_player.spotify
       - media_player.living_room_tv
-      # - media_player.bedroom_tv
+      - media_player.bedroom_samsung_television
   homepod_airplay:
     name: 'Homepod Airplay'
     icon: mdi:speaker
     entities:
-      - media_player.office
+      - media_player.office_homepod
       - media_player.bathroom_homepod
       - media_player.bedroom_homepod
-      - media_player.living_room
+      - media_player.living_room_homepod
   homepod_mass_airplay:
     name: 'Homepod MASS Airplay'
     icon: mdi:speaker
     entities:
-      - media_player.office_homepod
+      - media_player.office
       - media_player.bathroom
       - media_player.bedroom
-      - media_player.living_room_2
+      - media_player.living_room
   television:
     name: Television
     icon: mdi:television
     entities:
       - media_player.living_room_tv
-      # - media_player.bedroom_tv
+      - media_player.bedroom_samsung_television
   conditional_media:
     name: Conditional Media
     icon: mdi:play-circle
@@ -178,6 +178,7 @@ group:
       - media_player.sony_apple_tv_mix
       - media_player.playstation_5
       - media_player.living_room_tv
+      - media_player.bedroom_samsung_television
       # - sensor.ps5_activity
 
   ## CLIMATE GROUP ##

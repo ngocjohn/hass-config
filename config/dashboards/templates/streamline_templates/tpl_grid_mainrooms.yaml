@@ -17,6 +17,7 @@ grid_office:
       - motion
       - server
       - icon_office
+      - climate_tooltip
       # - change_grid_title
       # - light
     variables:
@@ -30,8 +31,10 @@ grid_office:
       server: binary_sensor.mbproserver_active
       active: sensor.office_active
       occupancy: binary_sensor.office_occupancy
-      tempsensor: sensor.office_temp_humid_temperature
-      humidsensor: sensor.office_temp_humid_humidity
+      climate_sensors:
+        tempsensor: sensor.office_temp_humid_temperature
+        humidsensor: sensor.office_temp_humid_humidity
+        pm25_sensor: sensor.zhimi_mb4_b008_pm25_density
   # LIVING ROOM GRID
 grid_living_room:
   card:
@@ -42,10 +45,15 @@ grid_living_room:
     hold_action: !include ../../shared/honeycomb/living.yaml
     template:
       - rooms_base
+      - climate_tooltip
       - icon_couch_lamp
     variables:
       light_entity: light.living_room_group
       active: sensor.living_room_active
+      climate_sensors:
+        tempsensor: sensor.dyson_ph04_temperature
+        humidsensor: sensor.dyson_ph04_humidity
+        pm25_sensor: sensor.dyson_ph04_pm2_5
     card_mod:
       style: |
         #circle {
@@ -152,14 +160,19 @@ grid_bedroom:
     hold_action: !include ../../shared/honeycomb/bedroom.yaml
     template:
       - rooms_base
-      - icon_double_bed
       - babycam
+      - climate_tooltip
+      - icon_double_bed
       # - icon_bedroom
       # - icon_bed
     variables:
       babycam: switch.lidl_3_gang_socket_l3
       active: sensor.bedroom_active
       light_entity: light.bedroom_group
+      climate_sensors:
+        tempsensor: sensor.bedroom_tem_humid_temperature
+        humidsensor: sensor.bedroom_tem_humid_humidity
+        pm25_sensor: sensor.philips_air_purifier_pm2_5
       state_on: >
         [[[
           let state = states['sensor.bedroom_active'].state;
