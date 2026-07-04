@@ -10,7 +10,7 @@ Hey there! Welcome to my little corner of the tech world! 👨‍💻
 
 This is where I store all the cool configurations for my Home Assistant system. Well, it's a mix of awesome codes and setups I discovered from the Home Assistant community. Seriously, those folks are wizards! 🧙‍♂️ As a bit of an internet newbie turned tech enthusiast, I stumbled upon the magic of IT, and this repository is my way of sharing the joy and knowledge I've gained along the way. Dive in, explore, and let the tech magic begin! ✨
 
-I frequently refresh my configuration files. My current Home Assistant version is <b>2026.7.0</b>. If you find something you like, don't forget to give my repository a ⭐️!
+I frequently refresh my configuration files. My current Home Assistant version is <b>2026.7.1</b>. If you find something you like, don't forget to give my repository a ⭐️!
 
 ## Some of my projects for Home Assistant
 
@@ -49,12 +49,12 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
           <tr>
               <td>46,081 </td>
               <td>33</td>
-              <td>251</td>
-              <td>72</td>
-              <td>62</td>
-              <td>39</td>
+              <td>250</td>
+              <td>73</td>
+              <td>61</td>
+              <td>40</td>
               <td>1766</td>
-              <td>239</td>
+              <td>238</td>
               <td>25</td>
           </tr>
       </tbody>

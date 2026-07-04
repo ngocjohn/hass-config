@@ -73,7 +73,7 @@
         entity: media_player.playstation_5
         name: ''
         template:
-          - conditional_media
+          - universal_media_player
           - icon_playstation
 
     - &MASSAIRPLAY
