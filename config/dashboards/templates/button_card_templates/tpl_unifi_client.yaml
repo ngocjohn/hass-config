@@ -128,3 +128,119 @@ unifi_client_base:
         }
       `
     ]]]
+
+unifi_site_health:
+  show_label: true
+  show_name: true
+  show_state: false
+  show_icon: false
+  styles:
+    grid:
+      - grid-template-areas: |
+          "l l l l"
+    card:
+      - --tablet-primary-color: '#00acc1'
+  tap_action:
+    action: more-icon
+  label: |
+    [[[
+      const subsystems = ['wan', 'lan', 'wlan', 'clients'];
+      const entityState = (key) => states[`sensor.unifi_subsystem_${key}`]?.attributes?.num_adopted || 0;
+      const icons = {
+        wan: "mdi:wan",
+        lan: "mdi:lan-connect",
+        wlan: "mdi:access-point-network",
+        clients: "mdi:devices",
+      };
+      return `
+        <div class="lan-line"></div>
+        ${subsystems.map((key) => {
+          return `
+            <div class="network">
+              <div class="container">
+                <div class="info">
+                  <ha-icon icon=${icons[key]}></ha-icon>
+                  <span>${entityState(key)}</span>
+                </div>
+              </div>
+            </div>
+          `
+        }).join("")}
+        <div class="lines"></div>
+      `
+    ]]]
+  extra_styles: |
+    [[[
+      return `
+        #card {
+          border: 1px solid transparent;
+          position: relative;
+          padding: 0;
+        }
+        #card:hover {
+          background-color: rgba(0,111,255,.05);
+          border: 1px solid #006fff;
+          transform: border;
+        }
+        ha-icon {
+          --mdc-icon-size: 24px !important;
+          margin-bottom: 4px !important;
+          color: #006fff;
+        }
+        #label {
+          display: flex;
+          -webkit-box-align: center;
+          align-items: center;
+          -webkit-box-pack: justify;
+          justify-content: space-between;
+          overflow: hidden;
+          position: relative;
+          width: 100%
+        }
+        #label .lan-line {
+          display: flex;
+          height: 0px;
+          position: absolute;
+          border-bottom: 1px solid var(--primary-color);
+          width: 33%;
+          z-index: 3;
+        }
+        #label .lines {
+          display: flex;
+          height: 1px;
+          width: 100%;
+          z-index: 1;
+          position: absolute;
+          background-image: linear-gradient(to right, var(--primary-color) 33%, rgba(255, 255, 255, 0) 0%);
+          background-position: center bottom;
+          background-size: 4px 1px;
+          background-repeat: repeat-x;
+        }
+        #label .network {
+          z-index: 4;
+          background: rgba(0,0,0,0.15);
+          backdrop-filter: blur(8px);
+          padding-inline: 4px;
+          border-radius: 2px;
+        }
+        #label .network .container {
+          display: flex;
+          -webkit-box-align: center;
+          align-items: center;
+          gap: 4px;
+          position: relative;
+        }
+        #label .network .container .info {
+          display: inline-flex;
+          gap: 8px;
+          cursor: pointer;
+          -webkit-box-align: center;
+          align-items: center;
+          box-sizing: border-box;
+        }
+        #label .network .container .info span {
+          font-size: 14px;
+          font-weight: 500;
+        }
+      `
+    ]]]

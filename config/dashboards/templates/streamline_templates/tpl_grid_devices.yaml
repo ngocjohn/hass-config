@@ -87,6 +87,7 @@ grid_homepods:
           return states['sensor.currently_playing'].attributes.mass_homepods ;
         ]]]
       circle_input_unit: ' /4'
+      intercom_url_external: !secret intercom_url
     name: >
       [[[
         let master = states['sensor.mass_master_player'],
@@ -99,8 +100,15 @@ grid_homepods:
       ]]]
     # double_tap_action: !include ../../shared/popup/popup_mass.yaml
     double_tap_action:
-      action: navigate
-      navigation_path: /lovelace-yaml/mass-media
+      action: fire-dom-event
+      browser_mod:
+        service: browser_mod.popup
+        data:
+          content:
+            type: iframe
+            aspect_ratio: 100%
+            url: >
+              [[[ return variables.intercom_url_external; ]]]
     hold_action:
       action: fire-dom-event
       honeycomb_menu:
@@ -108,10 +116,10 @@ grid_homepods:
         size: 250
         variables:
           master_entity: sensor.mass_master_player
-          office_entity: media_player.office_homepod
+          office_entity: media_player.office
           bathroom_entity: media_player.bathroom
           bedroom_entity: media_player.bedroom
-          living_room_entity: media_player.living_room_2
+          living_room_entity: media_player.living_room
 
         buttons: !include ../../shared/honeycomb/homepods.yaml
 

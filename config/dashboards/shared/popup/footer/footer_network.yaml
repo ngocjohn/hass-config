@@ -6,6 +6,7 @@ browser_mod:
     adaptive: true
     style: >
       --max-popup-column: 2;
+      --bar-card-border-radius: 12px;
     content:
       type: custom:mod-card
       card_mod: !include ../../snippets/style_popup_footer.yaml
@@ -14,6 +15,110 @@ browser_mod:
         layout_type: custom:grid-layout
         layout: !include ../../snippets/popup_footer_layout.yaml
         cards:
+          #################################################
+          #                                               #
+          #                UNIFI CONTROLLER               #
+          #                                               #
+          #################################################
+          - type: entities
+            title: Router
+            show_header_toggle: false
+            card_mod:
+              class: header
+            entities:
+              - type: custom:multiple-entity-row
+                entity: sensor.unifi_gateway
+                show_entity_picture: true
+                name: WAN
+                show_state: false
+                secondary_info:
+                  attribute: wan_ip
+                entities:
+                  - entity: sensor.neklanka_gateway_google_wan_latency
+                    name: Google
+                    unit: 'ms'
+                  - entity: sensor.neklanka_gateway_microsoft_wan_latency
+                    name: Microsoft
+                    unit: 'ms'
+                  - entity: sensor.neklanka_gateway_cloudflare_wan_latency
+                    name: Cloudflare
+                    unit: 'ms'
+              - type: custom:streamline-card
+                template: unifi_clients_total
+                variables:
+                  controller_entity: 'sensor.unifi_controller_clients'
+                  client_entity: 'sensor.unifi_controller_all_clients'
+                  heading_title: 'Total Clients'
+              - type: custom:button-card
+                template: unifi_site_health
+              - type: custom:bar-card
+                card_mod:
+                  class: barcard
+                  style:
+                    .: |
+                      bar-card-name {
+                        padding-left: 0.25em;
+                        letter-spacing: normal;
+                      }
+                width: 55%
+                height: 2em
+                decimal: 0
+                # unit_of_measurement: '%'
+                positions:
+                  icon: outside
+                  indicator: 'off'
+                  name: outside
+                severity:
+                  - color: '#9da0a2'
+                    from: 0
+                    to: 59
+                  - color: '#6d2525'
+                    from: 60
+                    to: 100
+                entity_row: true
+                entities:
+                  - entity: sensor.neklanka_gateway_cpu_utilization
+                    name: Processor
+                    icon: mdi:cpu-64-bit
+                  - entity: sensor.neklanka_gateway_cpu_temperature
+                    name: Temperature
+                    icon: mdi:thermostat
+                  - entity: sensor.neklanka_gateway_memory_utilization
+                    name: Memory
+                    icon: mdi:memory
+            footer:
+              type: custom:mini-graph-card
+              name: Gateway Speed
+              entities:
+                - entity: sensor.neklanka_gateway_download
+                  name: Download
+                  color: '#00bb33'
+                - entity: sensor.neklanka_gateway_upload
+                  name: Upload
+                  show_state: false
+                  color: '#2196f3'
+                  y_axis: secondary
+              hours_to_show: 24
+              hour24: true
+              line_width: 3
+              animate: true
+              upper_bound_secondary: 100
+              show:
+                name: True
+                icon: false
+                state: true
+                legend: true
+                fill: fade
+                labels: true
+                labels_secondary: false
+                average: true
+                extrema: true
+                points: hover
+              card_mod:
+                style: |
+                  .info__item__time {
+                    display: none !important;
+                  }
           #################################################
           #                                               #
           #                UNIFI ACCES POINT              #
@@ -48,86 +153,3 @@ browser_mod:
                             ? 'unifi_ios'
                             : 'unifi_web';
                         ]]]
-                  - type: custom:button-card
-                    name: ZigBee
-                    icon: si:zigbee
-                    tap_action:
-                      action: fire-dom-event
-                      browser_mod:
-                        service: browser_mod.popup
-                        data:
-                          title: 'ZigBee map'
-                          size: fullscreen
-                          content:
-                            type: iframe
-                            url: /api/hassio_ingress/Ew2YSafnnerR2_NXuuOG-3KWDZvnNgFBSfdzoUmcR_Y/#/map
-                    template:
-                      - icon_name
-          #################################################
-          #                                               #
-          #                UNIFI CONTROLLER               #
-          #                                               #
-          #################################################
-          - type: entities
-            title: Router
-            show_header_toggle: false
-            card_mod:
-              class: header
-            entities:
-              - type: custom:multiple-entity-row
-                entity: sensor.unifi_gateway
-                show_entity_picture: true
-                show_state: false
-                secondary_info:
-                  attribute: uptime
-                entities:
-                  - attribute: cpu
-                    name: CPU
-                    unit: '%'
-                  - attribute: mem
-                    name: MEM
-                    unit: '%'
-              - type: custom:streamline-card
-                template: unifi_clients_total
-                variables:
-                  controller_entity: 'sensor.unifi_controller_clients'
-                  client_entity: 'sensor.unifi_controller_all_clients'
-                  heading_title: 'Total Clients'
-            footer:
-              type: custom:mini-graph-card
-              name: Speedtest
-              tap_action:
-                action: call-service
-                service: homeassistant.update_entity
-                service_data:
-                  entity_id: sensor.speedtest_download
-              entities:
-                - entity: sensor.speedtest_download
-                  name: Download
-                  color: '#00bb33'
-                - entity: sensor.speedtest_upload
-                  name: Upload
-                  show_state: false
-                  color: '#2196f3'
-                  y_axis: secondary
-              hours_to_show: 48
-              hour24: true
-              line_width: 3
-              animate: true
-              upper_bound_secondary: 100
-              show:
-                name: True
-                icon: false
-                state: true
-                legend: true
-                fill: fade
-                labels: true
-                labels_secondary: false
-                average: true
-                extrema: true
-                points: hover
-              card_mod:
-                style: |
-                  .info__item__time {
-                    display: none !important;
-                  }

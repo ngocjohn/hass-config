@@ -115,24 +115,17 @@ browser_mod:
             card_mod:
               class: header
             entities:
-              - entity: binary_sensor.raspberry_pi_docker
+              - entity: binary_sensor.pidocker_status_2
                 icon: si:docker
                 state_color: true
                 name: Raspberry Docker
-                hold_action:
-                  action: call-service
-                  service: homeassistant.update_entity
-                  service_data:
-                    entity_id:
-                      - sensor.rpi_monitor_docker_rpi_cpu_use_pidocker
-                      - sensor.rpi_monitor_docker_rpi_temp_pidocker
-                      - sensor.rpi_monitor_docker_rpi_used_pidocker
-                      - sensor.rpi_monitor_docker
-              - type: attribute
-                entity: sensor.rpi_monitor_docker
-                attribute: up_time
-                name: Uptime
-                icon: mdi:update
+              - entity: sensor.pidocker_local_ipv4_address
+                name: &name_type
+                  type: entity
+              - entity: sensor.pidocker_uptime
+                icon: mdi:clock
+                time_format: total
+                name: *name_type
               - type: custom:bar-card
                 card_mod: *bar_card_mod
                 width: 55%
@@ -142,22 +135,20 @@ browser_mod:
                 severity: *bar_card_severity
                 entity_row: true
                 entities:
-                  - entity: sensor.rpi_monitor_docker_rpi_cpu_use_pidocker
+                  - entity: sensor.pidocker_cpu_load
                     name: Processor
                     icon: mdi:chip
-                  - entity: sensor.rpi_monitor_docker_rpi_temp_pidocker
+                  - entity: sensor.pidocker_cpu_temperature
                     name: Temperature
                     icon: mdi:thermostat
-                  - entity: sensor.rpi_monitor_docker_rpi_used_pidocker
+                  - entity: sensor.pidocker_memory_usage
                     name: Memory 4GB
                     icon: mdi:memory
-                  - entity: sensor.rpi_monitor_docker
-                    type: attribute
-                    attribute: fs_free_prcnt
+                  - entity: sensor.pidocker_disk_usage
                     name: SD used 32GB
                     icon: mdi:content-save
                     unit_of_measurement: '%'
-
+              - type: section
               - type: custom:hui-horizontal-stack-card
                 cards:
                   - type: custom:button-card
@@ -167,7 +158,9 @@ browser_mod:
                       action: call-service
                       confirmation:
                         text: Are you sure you want to restart?
-                      service: script.restart_pi_docker
+                      service: button.press
+                      service_data:
+                        entity_id: button.pidocker_system_restart
                     template: icon_name
                   - type: custom:button-card
                     name: Purge logs

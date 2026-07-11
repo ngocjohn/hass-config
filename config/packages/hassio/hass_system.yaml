@@ -81,6 +81,7 @@ recorder:
     entities:
       - device_tracker.viet_ngoc_samsung
       - device_tracker.phuong_chi
+      - device_tracker.amg_43_parking_location
       - sensor.motion_sensor_entrance_illuminance
 logbook:
 
@@ -88,7 +89,7 @@ logbook:
 logger:
   filters:
     pyhap.hap_handler:
-      - "Client \\('192\\.168\\.0\\.231', \\d+\\) with uuid .* attempted pair verify without being paired first"
+      - "Client \\('192\\.168\\.1\\.16', \\d+\\) with uuid .* attempted pair verify without being paired first"
 system_log:
   fire_event: true
 

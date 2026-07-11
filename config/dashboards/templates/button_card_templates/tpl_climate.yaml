@@ -466,12 +466,10 @@ cover:
     circle_input_unit: '%'
   state_display: >
     [[[
-      if (variables.current_tilt_position == 100 && variables.current_position == 0)
-        return 'Open';
-      if (variables.current_tilt_position == 100 && variables.current_position == 100)
-        return 'Fully opened';
-      else
-          return variables.state;
+      let rawState = variables.current_position > 0 && variables.current_position < 100 ? 'Partially open' : entity.state;
+      let tiltState = variables.current_tilt_position > 0 && variables.current_tilt_position < 100 ? 'vented' : undefined;
+
+      return tiltState ? `${rawState} • ${tiltState}` : rawState;
     ]]]
   styles:
     state:
@@ -534,7 +532,7 @@ cover:
           cards:
             - type: custom:more-info-card
               entity: >
-                [[[ return variables.entity_id ]]]
+                [[[ return variables.entity_id; ]]]
               card_mod:
                 style:
                   $: |

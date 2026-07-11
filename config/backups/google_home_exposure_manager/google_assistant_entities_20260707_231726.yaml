@@ -1,0 +1,17 @@
+# Managed by Google Home Exposure Manager - DO NOT EDIT
+light.living_room_floor_lamp:
+  expose: true
+  name: Living Room Floor Lamp
+  room: Living Room
+  aliases:
+  - Floor Lamps
+  - Floor light
+  - Floor lamps
+  - the Floor Lamp
+light.shelly_rgbw_kitchen_led_strip:
+  expose: true
+  name: Kitchen Led Strip
+  room: Kitchen
+  aliases:
+  - Kitchen Led Strips
+  - the Kitchen Led Strip

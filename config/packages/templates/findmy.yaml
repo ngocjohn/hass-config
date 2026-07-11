@@ -21,11 +21,28 @@ template:
         entity_id: binary_sensor.viet_ngoc_samsung_android_auto
         from: 'on'
         to: 'off'
+        id: androidauto
+      - alias: 'MB Bluetooth disconnected'
+        trigger: state
+        entity_id: sensor.viet_ngoc_samsung_bluetooth_connection
+        to: '0'
         variables:
+          disconnect_from_mb: >
+            {% set mb_ble = "48:F0:7B:3A:E9:8B (MB Bluetooth 61471)" %}
+            {{ mb_ble is in trigger.from_state.attributes.connected_paired_devices }}
+    conditions:
+      - condition: or
+        conditions:
+          - condition: trigger
+            id:
+              - androidauto
+          - condition: template
+            value_template: '{{ disconnect_from_mb }}'
+    actions:
+      - variables:
           notify_action: notify.mobile_app_viet_ngoc_samsung
           geocoded: sensor.viet_ngoc_samsung_geocoded_location
           device_tracker: device_tracker.viet_ngoc_samsung
-    actions:
       - action: '{{ notify_action }}'
         data:
           message: 'request_location_update'
@@ -39,11 +56,3 @@ template:
           latitude: "{{ state_attr(device_tracker, 'latitude') }}"
           longitude: "{{ state_attr(device_tracker, 'longitude') }}"
           gps_accuracy: "{{ state_attr(device_tracker, 'gps_accuracy') }}"
-  - device_tracker:
-      - unique_id: 4c9495e8-e731-4597-ba01-6e5318789e55
-        name: AMG 43 Parking Location
-        icon: mdi:car
-        latitude: "{{ state_attr('sensor.amg_43_geocoded_location', 'latitude') }}"
-        longitude: "{{ state_attr('sensor.amg_43_geocoded_location', 'longitude') }}"
-        location_accuracy: "{{ state_attr('sensor.amg_43_geocoded_location', 'gps_accuracy') }}"
-        availability: "{{ 'sensor.amg_43_geocoded_location' | has_value }}"

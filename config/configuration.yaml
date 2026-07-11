@@ -35,3 +35,5 @@ http:
 # INCLUDES
 automation ui: !include automations.yaml
 script: !include scripts.yaml
+
+google_assistant: !include google_assistant.yaml

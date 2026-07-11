@@ -1,0 +1,189 @@
+# Managed by Google Home Exposure Manager - DO NOT EDIT
+light.aqara_hub:
+  expose: true
+  aliases:
+  - Aqara Hub Lights
+  - Aqara Hub lamp
+  - Aqara Hub lights
+  - the Aqara Hub Light
+light.bathroom_main_light:
+  expose: true
+  aliases:
+  - bathroom main lights
+  - bathroom main lamp
+  - bath main light
+  - washroom main light
+  - restroom main light
+light.bathroom_mirror_light:
+  expose: true
+  aliases:
+  - Bathoom Mirror Lights
+  - Bathoom Mirror lamp
+  - Bathoom Mirror lights
+  - bathroomoom Mirror Light
+  - the Bathoom Mirror Light
+light.bedroom_bed_light:
+  expose: true
+  aliases:
+  - Bedroom Bed Lights
+  - Bedroom Bed lamp
+  - Bedroom Bed lights
+  - bed room Bed Light
+  - the Bedroom Bed Light
+light.bedroom_closet_light:
+  expose: true
+  aliases:
+  - Bedroom Closet Lights
+  - Bedroom Closet lamp
+  - Bedroom Closet lights
+  - bed room Closet Light
+  - the Bedroom Closet Light
+light.bedroom_main_light:
+  expose: true
+  aliases:
+  - Bedroom Main Lights
+  - Bedroom Main lamp
+  - Bedroom Main lights
+  - bed room Main Light
+  - the Bedroom Main Light
+light.bedroom_ripple_mood_light:
+  expose: true
+  aliases:
+  - Bedroom Ripple Mood Lights
+  - Bedroom Ripple Mood lamp
+  - Bedroom Ripple Mood lights
+  - bed room Ripple Mood Light
+  - the Bedroom Ripple Mood Light
+light.hallway_light:
+  expose: true
+  aliases:
+  - Hallway Lights
+  - Hallway lamp
+  - Hallway lights
+  - the Hallway Light
+light.hood_lighting:
+  expose: true
+  aliases:
+  - Functional lights
+  - Functional lamp
+  - the Functional light
+light.kitchen_main_light:
+  expose: true
+  aliases:
+  - kitchen main lights
+  - kitchen main lamp
+  - the kitchen main light
+light.kitchen_table_light:
+  expose: true
+  aliases:
+  - Kitchen Table Lights
+  - Kitchen Table lamp
+  - Kitchen Table lights
+  - the Kitchen Table Light
+light.living_room_floor_lamp:
+  expose: true
+  name: Living Room Floor Lamp
+  room: Living Room
+  aliases:
+  - Floor Lamps
+  - Floor light
+  - Floor lamps
+  - the Floor Lamp
+light.living_room_light_strip:
+  expose: true
+  aliases:
+  - living room light strips
+  - living room lamp strip
+  - living room lights strip
+  - front room light strip
+  - lounge light strip
+light.living_room_yeelight_led_ceiling_light:
+  expose: true
+  aliases:
+  - living room yeelight led ceiling lights
+  - living room yeelamp led ceiling light
+  - living room yeelights led ceiling light
+  - front room yeelight led ceiling light
+  - lounge yeelight led ceiling light
+light.office_lamp_bulb:
+  expose: true
+  aliases:
+  - office lamp bulbs
+  - office light bulb
+  - office lamps bulb
+  - the office lamp bulb
+light.office_led_light_strip:
+  expose: true
+  aliases:
+  - office led light strips
+  - office led lamp strip
+  - office led lights strip
+  - the office led light strip
+light.office_main_light:
+  expose: true
+  aliases:
+  - Office Main Lights
+  - Office Main lamp
+  - Office Main lights
+  - the Office Main Light
+light.office_ripple_mood_light:
+  expose: true
+  aliases:
+  - Mood Lights
+  - Mood lamp
+  - Mood lights
+  - the Mood Light
+light.office_shelf_led:
+  expose: true
+  aliases:
+  - office shelf leds
+  - the office shelf led
+light.shelly_rgbw_kitchen_led_strip:
+  expose: true
+  name: Kitchen Led Strip
+  room: Kitchen
+  aliases:
+  - Kitchen Led Strips
+  - the Kitchen Led Strip
+light.shower_room_main_light:
+  expose: true
+  aliases:
+  - shower room main lights
+  - shower room main lamp
+  - the shower room main light
+light.sony_tv_backlight:
+  expose: true
+  aliases:
+  - sony tv backlights
+  - sony tv backlamp
+  - sony television backlight
+  - sony telly backlight
+  - sony screen backlight
+light.table_floor_lamp_led_strop:
+  expose: true
+  aliases:
+  - Table Floor Lamp Led Strops
+  - Table Floor light Led Strop
+  - Table Floor lamps Led Strop
+  - the Table Floor Lamp Led Strop
+light.utility_room_light:
+  expose: true
+  aliases:
+  - Shelly 1 Utility Room Lights
+  - Shelly 1 Utility Room lamp
+  - Shelly 1 Utility Room lights
+  - the Shelly 1 Utility Room Light
+light.vanesska_ceiling_light:
+  expose: true
+  aliases:
+  - KidsRoom Ceiling Lights
+  - KidsRoom Ceiling lamp
+  - KidsRoom Ceiling lights
+  - the KidsRoom Ceiling Light
+light.yeelink_bslamp2_409e_light:
+  expose: true
+  aliases:
+  - Lights
+  - lamp
+  - lights
+  - the Light

@@ -295,7 +295,14 @@ template:
         state: "{{ iif (is_state('group.motion_sensors', 'on'), 'Detected', 'Clear') }}"
         icon: "{{ iif (this.state == 'Detected', 'mdi:motion-sensor', 'mdi:motion-sensor-off') }}"
         attributes:
-          motion_detected: "{{ expand(states.group.motion_sensors) | selectattr('state', 'in', ['detected', 'on']) | map(attribute='name') | list | replace('Motion Sensor ', '') | replace(' Occupancy', '')}}"
+          motion_detected: |
+            {{ expand(states.group.motion_sensors)
+                | selectattr('state', 'in', ['detected', 'on'])
+                | map(attribute='name')
+                | map('regex_replace', 'Motion Sensor|Contact Sensor | ?Occupancy| ?Door| ?Room', '')
+                | map('trim')
+                | list
+            }}
       # SENSOR - WEATHER
       - unique_id: weather_humidity
         name: 'Weather Humidity'

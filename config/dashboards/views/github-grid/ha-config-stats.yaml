@@ -50,17 +50,17 @@
             separator: true
             duration: false
           title: ''
-          date_format: relative
+          # date_format: relative
           entities:
-            - entity: sensor.vehicle_latest_release_download
+            - entity: sensor.repo_vehicle_latest_download
               label: Vehicle Info
-            - entity: sensor.lunar_phase_integration_latest
+            - entity: sensor.lunar_phase_integration_latest_download
               label: Lunar Phase Integration
-            - entity: sensor.lunar_phase_card_latest
+            - entity: sensor.lunar_phase_card_latest_download
               label: Lunar Phase Card
-            - entity: sensor.vehicle_status_latest
+            - entity: sensor.vehicle_status_card_latest_download
               label: Vehicle Status
-            - entity: sensor.sidebar_organizer_latest_release
+            - entity: sensor.repo_sidebar_organizer_latest_download
               label: Sidebar Organizer
 - type: custom:layout-card
   layout_type: custom:grid-layout

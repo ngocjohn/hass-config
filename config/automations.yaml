@@ -232,18 +232,6 @@
         title: System
       action: notify.ngoc_devices
   mode: single
-- id: '1702444277863'
-  alias: 'Event_Unifi Archive Alert '
-  description: ''
-  trigger:
-  - platform: state
-    entity_id:
-    - input_button.unifi_archive_alerts
-  condition: []
-  action:
-  - event: archive_alerts
-    event_data: {}
-  mode: single
 - id: '1706827614119'
   alias: kodi_lib_scan
   description: ''
@@ -907,54 +895,6 @@
       announce_volume: 100
       url: http://192.168.1.189:8123/local/sound/timer.mp3
   mode: single
-- id: '1774883741871'
-  alias: Update speedtest
-  description: ''
-  triggers:
-  - trigger: time_pattern
-    minutes: /30
-  - trigger: homeassistant
-    event: start
-  - trigger: state
-    entity_id:
-    - sensor.speedtest_download
-    to:
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 5
-    id: state_change
-  conditions: []
-  actions:
-  - choose:
-    - conditions:
-      - condition: not
-        conditions:
-        - condition: trigger
-          id:
-          - state_change
-      sequence:
-      - action: hassio.app_start
-        data:
-          app: 6b87c29e_speedtest_addon
-        alias: Start addon
-    - conditions:
-      - condition: trigger
-        id:
-        - state_change
-        enabled: false
-      sequence:
-      - alias: Info
-        action: persistent_notification.create
-        metadata: {}
-        data:
-          title: Speedtest update
-          message: "Download: {{ states('sensor.speedtest_download', with_unit=True)
-            }} \nUpload: {{ states('sensor.speedtest_upload', with_unit=True) }} \nPing:
-            {{ states('sensor.speedtest_ping', with_unit=True) }}"
-          notification_id: speedtest_update
-        enabled: false
-  mode: single
 - id: '1776724845800'
   alias: Plants cover
   description: Open cover for plants get lights
@@ -1281,3 +1221,78 @@
     metadata: {}
     data: {}
   mode: restart
+- id: '1783287666542'
+  alias: Washer Dryer Standby Mode
+  description: 'Turn off washer dryer after finished. '
+  triggers:
+  - trigger: state
+    entity_id:
+    - sensor.washer_dryer_program_finished
+    from:
+    - present
+    - confirmed
+    to:
+    - 'off'
+    for:
+      hours: 0
+      minutes: 2
+      seconds: 0
+  conditions:
+  - condition: switch.is_on
+    target:
+      entity_id: switch.washer_dryer_power
+    options:
+      behavior: any
+      for:
+        hours: 0
+        minutes: 2
+        seconds: 0
+  actions:
+  - action: switch.turn_off
+    metadata: {}
+    target:
+      entity_id: switch.washer_dryer_power
+    data: {}
+  mode: single
+- id: '1783636325325'
+  alias: test_bluetooth
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - sensor.viet_ngoc_samsung_bluetooth_connection
+    to:
+    - '"0"'
+    - '0'
+    variables:
+      disconnect_from_mb: '{% set mb_ble = "48:F0:7B:3A:E9:8B (MB Bluetooth 61471)"
+        %} {{ mb_ble is in trigger.from_state.attributes.connected_paired_devices
+        }}
+
+        '
+  - alias: Viet Ngoc disconnected from Android Auto
+    trigger: state
+    entity_id: binary_sensor.viet_ngoc_samsung_android_auto
+    from: 'on'
+    to: 'off'
+    id: androidauto
+  conditions:
+  - condition: or
+    conditions:
+    - condition: trigger
+      id:
+      - androidauto
+    - condition: template
+      value_template: '{{ disconnect_from_mb }}'
+  actions:
+  - variables:
+      notify_action: notify.mobile_app_viet_ngoc_samsung
+      geocoded: sensor.viet_ngoc_samsung_geocoded_location
+      device_tracker: device_tracker.viet_ngoc_samsung
+  - action: notify.send_message
+    metadata: {}
+    target:
+      entity_id: notify.viet_ngoc_samsung
+    data:
+      message: "{{ disconnect_from_mb }} \n{{ states(geocoded) }}"
+  mode: single

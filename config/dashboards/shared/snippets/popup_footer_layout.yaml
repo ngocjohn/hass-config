@@ -3,11 +3,11 @@ grid-template-rows: auto
 margin: 0
 padding: 0
 mediaquery:
-  '(min-width: 1441.99px)':
+  '(min-width: 1000px)':
     grid-template-columns: repeat(var(--max-popup-column), minmax(var(--max-popup-column-width, 500px), 1fr))
     grid-template-rows: auto
-  '(min-width: 800px)':
-    grid-template-columns: 550px
+  '(min-width: 400px) and (max-width: 999px)':
+    grid-template-columns: 500px
     grid-template-rows: auto
     margin: 0
     padding: 0

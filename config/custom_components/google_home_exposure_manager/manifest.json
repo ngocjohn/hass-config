@@ -1,0 +1,15 @@
+{
+  "domain": "google_home_exposure_manager",
+  "name": "Google Home Exposure Manager",
+  "codeowners": ["@NathanMagnus"],
+  "config_flow": true,
+  "dependencies": ["http"],
+  "documentation": "https://github.com/NathanMagnus/GoogleHomeExposureManager",
+  "integration_type": "service",
+  "iot_class": "local_push",
+  "issue_tracker": "https://github.com/NathanMagnus/GoogleHomeExposureManager/issues",
+  "loggers": ["custom_components.google_home_exposure_manager"],
+  "requirements": ["ruamel.yaml>=0.18.0"],
+  "single_config_entry": true,
+  "version": "0.3.0b0"
+}
