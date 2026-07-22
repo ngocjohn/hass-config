@@ -74,6 +74,8 @@ card_mod:
       background-image: url(/local/img/roidme_plan.png);
       background-size: contain;
       background-repeat: no-repeat;
+      background-position-y: -7px;
+      background-position-x: -2px;
     }
 
 # - type: custom:state-switch

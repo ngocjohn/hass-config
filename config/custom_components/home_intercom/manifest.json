@@ -1,0 +1,17 @@
+{
+  "domain": "home_intercom",
+  "name": "Home Intercom",
+  "codeowners": [
+    "@mdj2812"
+  ],
+  "config_flow": true,
+  "dependencies": [
+    "http"
+  ],
+  "documentation": "https://github.com/mdj2812/home-intercom",
+  "integration_type": "service",
+  "iot_class": "local_push",
+  "issue_tracker": "https://github.com/mdj2812/home-intercom/issues",
+  "requirements": [],
+  "version": "2.0.0"
+}

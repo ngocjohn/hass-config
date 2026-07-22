@@ -136,16 +136,15 @@ template:
         name: 'Kitchen Active'
         state: >-
           {% if is_state('sensor.hob_operation_state', 'run') %} cooking
-          {% elif is_state('sensor.mycka_nadobi_operation_state', 'run') %} dishwashing
+          {% elif is_state('sensor.dishwasher_operation_state', 'run') %} dishwashing
           {% elif is_state('light.kitchen_group', 'on') %} on
           {% else %} no
           {% endif %}
         icon: "{{ iif (this.state == 'no', 'mdi:thumb-down', 'mdi:thumb-up') }}"
         attributes:
           dishwasher_remain: >-
-            {% if has_value('sensor.mycka_nadobi_remaining_program_time') %}
-            {% from 'easy_time.jinja' import easy_relative_time %}
-              {{ easy_relative_time(states('sensor.mycka_nadobi_remaining_program_time')) | string | replace(' minutes', ' min') }}
+            {% if has_value('sensor.dishwasher_remaining_program_time') %}
+            {{ states("sensor.dishwasher_remaining_program_time") }}
             {% endif %}
           lights_on: >-
             {%- set light = expand(states.light.kitchen_group) | selectattr( 'state', 'eq', 'on') | map(attribute='name') | list | replace('Kitchen ', '') %}
@@ -205,8 +204,7 @@ template:
         attributes:
           washdryer_remain: >-
             {% if has_value('sensor.washer_dryer_remaining_program_time') %}
-            {% from 'easy_time.jinja' import easy_relative_time %}
-              {{ easy_relative_time(states('sensor.washer_dryer_remaining_program_time')) | string | replace(' minutes', ' min') }}
+            {{ states("sensor.washer_dryer_remaining_program_time") }}
             {% endif %}
           lights_on: >-
             {%- if is_state('light.utility_room_light', 'on') %}
@@ -303,6 +301,15 @@ template:
                 | map('trim')
                 | list
             }}
+          last_motion_detected: |
+            {% set timeout = 30 %}
+            {% set detected = expand('group.motion_sensors')
+                | selectattr('state', 'eq', 'on')
+                | sort(attribute='last_changed')
+                | list %}
+            {% if detected and (now() - detected[-1].last_changed).total_seconds() < timeout %}
+              {{ detected[-1].entity_id }}
+            {% endif %}
       # SENSOR - WEATHER
       - unique_id: weather_humidity
         name: 'Weather Humidity'

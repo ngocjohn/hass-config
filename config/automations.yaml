@@ -150,25 +150,13 @@
   description: ''
   triggers:
   - entity_id:
-    - sensor.mycka_nadobi_operation_state
-    to: run
+    - sensor.dishwasher_operation_state
+    to:
+    - run
     trigger: state
   conditions:
   - condition: template
     value_template: '{{has_value(mycka_remaining)}}'
-  - condition: or
-    conditions:
-    - condition: not
-      conditions:
-      - condition: state
-        entity_id: sensor.mycka_nadobi_remaining_program_time
-        state: unknown
-    - condition: not
-      conditions:
-      - condition: state
-        entity_id: sensor.mycka_nadobi_remaining_program_time
-        state: unavailable
-    enabled: false
   actions:
   - action: timer.cancel
     metadata: {}
@@ -178,10 +166,9 @@
   - action: timer.set_duration
     metadata: {}
     data:
-      duration: '{% set seconds = (as_timestamp(states(''sensor.mycka_nadobi_remaining_program_time''))
-        - as_timestamp(now())) | int %} {% set hours = (seconds // 3600) %} {% set
-        minutes = (seconds % 3600) // 60 %} {% set secs = seconds % 60 %} {{ ''%02d:%02d:%02d''
-        | format(hours, minutes, secs) }}'
+      duration: "{% set seconds = (states('sensor.dishwasher_remaining_program_time')
+        | float * 3600) | int %}\n{{ '%02d:%02d:%02d' | format(\n    seconds // 3600,\n
+        \   (seconds % 3600) // 60,\n    seconds % 60\n) }}\n"
     target:
       entity_id: timer.dishwasher_remaining
   - action: timer.start
@@ -190,7 +177,7 @@
       entity_id: timer.dishwasher_remaining
     data: {}
   variables:
-    mycka_remaining: sensor.mycka_nadobi_remaining_program_time
+    mycka_remaining: sensor.dishwasher_remaining_program_time
   initial_state: true
   mode: restart
 - id: 34ba1897-ec7a-4cb3-a12b-fb0a1e9e495e
@@ -248,25 +235,6 @@
     event_data: {}
   - event: kodi_video_scan
     event_data: {}
-  mode: single
-- id: '1715819993809'
-  alias: Kodi Update Picture Sensor
-  description: ''
-  triggers:
-  - entity_id:
-    - media_player.kodi_sony
-    trigger: state
-  conditions: []
-  actions:
-  - data:
-      method: Player.GetItem
-      playerid: 0
-      properties:
-      - title
-      - art
-    action: kodi.call_method
-    target:
-      entity_id: media_player.kodi_sony
   mode: single
 - id: '1716484682108'
   alias: Vacum Set Property
@@ -601,7 +569,7 @@
       title: HA Calendar
   mode: restart
 - id: '1767670564136'
-  alias: Dyson night mode
+  alias: Dyson Philips night mode
   description: ''
   triggers:
   - trigger: state
@@ -626,6 +594,11 @@
         target:
           entity_id: switch.dyson_ph04_night_mode
         data: {}
+      - action: light.turn_off
+        metadata: {}
+        target:
+          entity_id: light.philips_air_purifier_light_brightness
+        data: {}
     - conditions:
       - condition: trigger
         id:
@@ -636,6 +609,13 @@
         target:
           entity_id: switch.dyson_ph04_night_mode
         data: {}
+      - action: light.turn_on
+        metadata: {}
+        target:
+          entity_id:
+          - light.philips_air_purifier_light_brightness
+        data:
+          brightness_pct: 100
   mode: single
 - id: '1771658836855'
   alias: Kids Cam Snapshot
@@ -1227,72 +1207,74 @@
   triggers:
   - trigger: state
     entity_id:
-    - sensor.washer_dryer_program_finished
-    from:
-    - present
-    - confirmed
+    - sensor.washer_dryer_operation_state
     to:
-    - 'off'
+    - finished
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+  conditions:
+  - condition: state
+    entity_id: sensor.washer_dryer_power_state
+    state:
+    - 'on'
+  actions:
+  - action: select.select_option
+    metadata: {}
+    target:
+      entity_id: select.washer_dryer_power_state
+    data:
+      option: standby
+  mode: single
+- id: '1783936988927'
+  alias: Vacuum collect dust
+  description: Collect dust after cleaning area > 20m2
+  triggers:
+  - trigger: state
+    entity_id:
+    - vacuum.roidmi_eve
+    from:
+    - returning
+    to:
+    - docked
     for:
       hours: 0
       minutes: 2
       seconds: 0
   conditions:
-  - condition: switch.is_on
-    target:
-      entity_id: switch.washer_dryer_power
-    options:
-      behavior: any
-      for:
-        hours: 0
-        minutes: 2
-        seconds: 0
+  - condition: template
+    value_template: '{{ states("sensor.roidmi_v60_029d_clean_area") | int > 20 }}'
   actions:
-  - action: switch.turn_off
+  - action: button.press
     metadata: {}
     target:
-      entity_id: switch.washer_dryer_power
+      entity_id: button.roidmi_v60_029d_start_dust
     data: {}
+    alias: Collect dust
   mode: single
-- id: '1783636325325'
-  alias: test_bluetooth
+- id: '1784214031287'
+  alias: Sony TV volume
   description: ''
   triggers:
   - trigger: state
     entity_id:
-    - sensor.viet_ngoc_samsung_bluetooth_connection
-    to:
-    - '"0"'
-    - '0'
-    variables:
-      disconnect_from_mb: '{% set mb_ble = "48:F0:7B:3A:E9:8B (MB Bluetooth 61471)"
-        %} {{ mb_ble is in trigger.from_state.attributes.connected_paired_devices
-        }}
-
-        '
-  - alias: Viet Ngoc disconnected from Android Auto
-    trigger: state
-    entity_id: binary_sensor.viet_ngoc_samsung_android_auto
-    from: 'on'
-    to: 'off'
-    id: androidauto
-  conditions:
-  - condition: or
-    conditions:
-    - condition: trigger
-      id:
-      - androidauto
-    - condition: template
-      value_template: '{{ disconnect_from_mb }}'
+    - media_player.sony_bravia_rest_api
+    attribute: volume_level
+  conditions: []
   actions:
-  - variables:
-      notify_action: notify.mobile_app_viet_ngoc_samsung
-      geocoded: sensor.viet_ngoc_samsung_geocoded_location
-      device_tracker: device_tracker.viet_ngoc_samsung
-  - action: notify.send_message
+  - action: notify.living_room_tv
     metadata: {}
-    target:
-      entity_id: notify.viet_ngoc_samsung
     data:
-      message: "{{ disconnect_from_mb }} \n{{ states(geocoded) }}"
-  mode: single
+      message: '{{ state_attr("media_player.sony_bravia_tv", "volume_level") * 100
+        | int }}'
+      title: Volume
+  mode: parallel
+  max: 10
+- id: '1784743597659'
+  alias: Music Assistant - Local(only) Voice Support Blueprint
+  description: ''
+  use_blueprint:
+    path: music-assistant/mass_assist_blueprint_en.yaml
+    input:
+      default_player_entity_id_input: media_player.office

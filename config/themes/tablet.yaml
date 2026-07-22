@@ -21,6 +21,9 @@ tablet:
   state-light-active-color: '#b68349'
 
   #button_card_templates
+  # button-card-background: rgba(115, 115, 115, 0.2)
+  button-card-background: '#222226'
+  button-card-background-active: rgba(250, 250, 250, 0.75)
   button-card-border-radius: 10%
   button-card-font-size: 0.9vw
   button-card-font-weight: 500
@@ -93,7 +96,8 @@ tablet:
   swiper-scrollbar-size: 4px
 
   bar-card-border-radius: 12px
-  view-background: 'radial-gradient(ellipse 50rem 40rem at 20% 10%, rgba(94, 200, 255, 0.18), transparent 60%), radial-gradient(ellipse 60rem 36rem at 82% 54%, rgba(94, 200, 255, 0.18), transparent 62%), radial-gradient(ellipse 50rem 12rem at 23% 100%, rgba(125, 90, 220, 0.14), transparent 32%, #07090f)'
+  view-background: 'radial-gradient(ellipse 50rem 40rem at 20% 10%, rgba(94, 200, 255, 0.18), transparent 60%), radial-gradient(ellipse 60rem 36rem at 82% 54%, rgba(94, 200, 255, 0.18), transparent 62%), radial-gradient(ellipse 50rem 12rem at 23% 100%, rgba(125, 90, 220, 0.14), transparent 32%, #151517)'
+  # view-background: 'radial-gradient(ellipse 50rem 40rem at 20% 10%, rgba(94, 200, 255, 0.18), transparent 60%), radial-gradient(ellipse 60rem 36rem at 82% 54%, rgba(94, 200, 255, 0.18), transparent 62%), radial-gradient(ellipse 50rem 12rem at 23% 100%, rgba(125, 90, 220, 0.14), transparent 32%, #07090f)'
   # view-background: 'radial-gradient(ellipse 60rem 40rem at 20% 10%, rgba(94, 200, 255, 0.18), transparent 60%), radial-gradient(ellipse 50rem 36rem at 80% 40%, rgba(125, 90, 220, 0.14), transparent 60%, #07090f)'
   uix-theme: tablet
 

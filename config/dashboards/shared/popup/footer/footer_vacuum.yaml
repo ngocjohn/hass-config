@@ -28,15 +28,27 @@ browser_mod:
                   postfix: ' %'
                   prefix: 'Battery: '
               - entity: sensor.roidmi_v60_029d_device_fault
-              # - sensor.vacuum_fan_speed
-              # - sensor.vacuum_sweep_mode
-              - binary_sensor.vacuum_mop
+                name: Device Fault
+                icon: mdi:alert-circle-outline
+              - entity: binary_sensor.roidmi_v60_029d_mop
+                name: In Mopping
+                icon: mdi:water
               - type: divider
-              - input_boolean.vacuum_double_clean
-              - input_boolean.vacuum_edge_sweep
-              - input_select.vacuum_mode
-              - input_select.vacuum_sweep_type
-              - input_select.vacuum_water_level
+              - entity: switch.roidmi_v60_029d_double_clean
+                name: 'Cleaning x2'
+                icon: 'mdi:map-marker-distance'
+              - entity: select.roidmi_v60_029d_path_type
+                name: 'Y-Mopping'
+                icon: 'mdi:transit-detour'
+              - entity: select.roidmi_v60_029d_mode
+                name: 'Cleaning power'
+                icon: 'mdi:wind-power-outline'
+              - entity: select.roidmi_v60_029d_sweep_type
+                name: 'Cleaning function'
+                icon: 'mdi:vacuum-outline'
+              - entity: select.roidmi_v60_029d_water_level
+                name: 'Water use'
+                icon: 'mdi:waves'
               - type: custom:mod-card
                 card_mod:
                   style:
@@ -106,14 +118,46 @@ browser_mod:
             title: Settings
             show_header_toggle: false
             entities:
-              - input_number.vacuum_volume
-              - input_boolean.vacuum_mute
-              - input_boolean.vacuum_lidar_collision
-              - input_boolean.vacuum_led_switch
-              - input_boolean.vacuum_auto_boost
-              - sensor.vacuum_on
-              - sensor.vacuum_cleaned_area
-              - sensor.vacuum_cleaning_time
-              - sensor.vacuum_total_cleaned_area
-              - sensor.vacuum_total_cleaning_time
-              - sensor.vacuum_cleaning_count
+              - entity: number.roidmi_v60_029d_volume
+                name: Volume
+                icon: mdi:volume-high
+              - entity: switch.roidmi_v60_029d_mute
+                name: Mute
+                icon: mdi:volume-off
+              - entity: switch.roidmi_v60_029d_lidar_collision
+                name: Lidar Collision
+                icon: 'mdi:radar'
+              - entity: switch.roidmi_v60_029d_led_switch
+                name: LED
+                icon: mdi:led-strip-variant
+              - entity: switch.roidmi_v60_029d_auto_boost
+                name: Auto Boost
+                icon: mdi:fan-auto
+              - type: section
+                label: Cleaning Stats
+              - entity: sensor.utility_room_roidmi_eve_cleaning_area
+                name:
+                  type: entity
+              - entity: sensor.utility_room_roidmi_eve_cleaning_time
+                name:
+                  type: entity
+              # Total Stats
+              - type: section
+                label: Total Stats
+              - type: attribute
+                entity: vacuum.roidmi_eve
+                attribute: 'custom.total_clean_areas'
+                suffix: ' m²'
+                name: Total Cleaning Area
+                icon: mdi:map-marker-distance
+              - type: attribute
+                entity: vacuum.roidmi_eve
+                attribute: 'custom.total_clean_time'
+                suffix: ' min'
+                name: Total Cleaning Time
+                icon: mdi:clock-outline
+              - type: attribute
+                entity: vacuum.roidmi_eve
+                attribute: 'custom.clean_counts'
+                name: Total Cleaning Counts
+                icon: mdi:counter

@@ -13,4 +13,12 @@
     - binary_sensor.motion_sensor_hallway_occupancy
   state_action:
     - service: floorplan.class_set
-      service_data: 'motion-${entity.state}'
+      service_data: |
+        >
+        let entityState = entity.state;
+        let latestEntity = states['sensor.motion_detected'].attributes.last_motion_detected;
+        if (latestEntity === entity.entity_id) {
+          return `motion-${entityState}-latest`;
+        } else {
+          return `motion-${entityState}`;
+        }

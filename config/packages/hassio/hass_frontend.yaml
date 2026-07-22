@@ -12,15 +12,6 @@
 # PANEL CUSTOM https://github.com/lovelylain/hass_ingress
 
 ingress:
-  # local_unifi:
-  #   work_mode: iframe
-  #   ui_mode: toolbar
-  #   title: Unifi Network
-  #   icon: si:ubiquiti
-  #   url:
-  #     match: !secret external_url
-  #     replace: !secret unifi_url
-  #     default: !secret unifi_url
   local_appdaemon:
     work_mode: iframe
     ui_mode: normal

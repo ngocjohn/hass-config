@@ -79,5 +79,9 @@ cards:
           let entityState = entity?.state;
             return entityState === 'on' ? 'alert' : null;
         ]]]
+      speedtest:
+        download: sensor.neklanka_gateway_download
+        upload: sensor.neklanka_gateway_upload
     template:
       - footer
+      - tooltip_speed

@@ -16,28 +16,22 @@ homeassistant:
 
 template:
   - triggers:
-      - alias: 'Viet Ngoc disconnected from Android Auto'
-        trigger: state
-        entity_id: binary_sensor.viet_ngoc_samsung_android_auto
-        from: 'on'
-        to: 'off'
-        id: androidauto
       - alias: 'MB Bluetooth disconnected'
         trigger: state
         entity_id: sensor.viet_ngoc_samsung_bluetooth_connection
         to: '0'
+        for:
+          hours: 0
+          minutes: 0
+          seconds: 30
         variables:
           disconnect_from_mb: >
             {% set mb_ble = "48:F0:7B:3A:E9:8B (MB Bluetooth 61471)" %}
-            {{ mb_ble is in trigger.from_state.attributes.connected_paired_devices }}
+            {% set aa_dongle = "62:FA:44:73:0A:B9 (AAWireless-addf8d0c)" %}
+            {{ mb_ble is in trigger.from_state.attributes.connected_paired_devices or aa_dongle is in trigger.from_state.attributes.connected_paired_devices }}
     conditions:
-      - condition: or
-        conditions:
-          - condition: trigger
-            id:
-              - androidauto
-          - condition: template
-            value_template: '{{ disconnect_from_mb }}'
+      - condition: template
+        value_template: '{{ disconnect_from_mb }}'
     actions:
       - variables:
           notify_action: notify.mobile_app_viet_ngoc_samsung

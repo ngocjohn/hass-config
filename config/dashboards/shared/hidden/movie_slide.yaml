@@ -8,7 +8,7 @@ card:
       chips:
         - type: template
           icon: mdi:close
-          icon_color: rgb(139, 51, 51)
+          icon_color: var(--button-card-state-color-active)
           tap_action:
             action: fire-dom-event
             local_conditional_card:

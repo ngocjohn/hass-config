@@ -328,6 +328,13 @@ g#areas>g:hover path:not(.touch-area) {
 
 /* Motions Group Styles */
 
+#motions>g.motion-on-latest>circle {
+	stroke: red;
+	stroke-width: 5px;
+	filter: drop-shadow(0px 0px 6px rgba(255, 0, 0, 1)) opacity(100%);
+	animation: ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
 #motions>g.motion-on>circle {
 	stroke: green;
 	stroke-width: 5px;

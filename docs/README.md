@@ -10,7 +10,7 @@ Hey there! Welcome to my little corner of the tech world! 👨‍💻
 
 This is where I store all the cool configurations for my Home Assistant system. Well, it's a mix of awesome codes and setups I discovered from the Home Assistant community. Seriously, those folks are wizards! 🧙‍♂️ As a bit of an internet newbie turned tech enthusiast, I stumbled upon the magic of IT, and this repository is my way of sharing the joy and knowledge I've gained along the way. Dive in, explore, and let the tech magic begin! ✨
 
-I frequently refresh my configuration files. My current Home Assistant version is <b>2026.7.2</b>. If you find something you like, don't forget to give my repository a ⭐️!
+I frequently refresh my configuration files. My current Home Assistant version is <b>2026.7.3</b>. If you find something you like, don't forget to give my repository a ⭐️!
 
 ## Some of my projects for Home Assistant
 
@@ -47,15 +47,15 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>46,524 </td>
-              <td>33</td>
-              <td>255</td>
-              <td>76</td>
-              <td>62</td>
-              <td>39</td>
-              <td>1785</td>
-              <td>241</td>
-              <td>25</td>
+              <td>46,398 </td>
+              <td>34</td>
+              <td>238</td>
+              <td>78</td>
+              <td>53</td>
+              <td>27</td>
+              <td>1251</td>
+              <td>211</td>
+              <td>24</td>
           </tr>
       </tbody>
   </table>
@@ -84,8 +84,10 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - Music Assistant
 - Node-RED
 - phpMyAdmin
+- Piper
 - PS5 MQTT
 - Samba share
+- Speech-to-Phrase
 - Xiaomi Mi Scale
 - Zigbee2MQTT
 </details>
@@ -110,9 +112,10 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Googlegeocode Hass](https://github.com/gregoryduckworth/GoogleGeocode-HASS)
 - [Govee](https://github.com/LaggAt/hacs-govee)
 - [Greg](https://github.com/WHISTLER-Arc/Greg)
-- [Ha Mcp Custom Component](https://github.com/homeassistant-ai/ha-mcp-integration)
 - [HACS](https://github.com/hacs/integration)
 - [Hass Favicon](https://github.com/thomasloven/hass-favicon)
+- [Home Connect Local](https://github.com/chris-mc1/homeconnect_local_hass)
+- [Home Intercom](https://github.com/mdj2812/home-intercom)
 - [Ingress](https://github.com/lovelylain/hass_ingress)
 - [Lunar Phase](https://github.com/ngocjohn/lunar-phase)
 - [Mercedesme 2020](https://github.com/ReneNulschDE/mbapi2020)
@@ -152,6 +155,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Dual Axis Controller](https://github.com/mbb365/Dual-Axis-Controller-v4)
 - [Flex Table   Highly Customizable, Data Visualization](https://github.com/custom-cards/flex-table-card)
 - [Fold Entity Row](https://github.com/thomasloven/lovelace-fold-entity-row)
+- [Geo Clock Card](https://github.com/jpettitt/geo-clock-card)
 - [Ha Floorplan 🖌🎨 | Your Imagination (Almost) Defines The Limits](https://github.com/ExperienceLovelace/ha-floorplan)
 - [History Explorer Card](https://github.com/SpangleLabs/history-explorer-card)
 - [Honeycomb Menu](https://github.com/Sian-Lee-SA/honeycomb-menu)

@@ -76,7 +76,7 @@ grid_kitchen_normal:
     double_tap_action: !include ../../shared/popup/rooms/kitchen.yaml
     hold_action: !include ../../shared/honeycomb/kitchen.yaml
     variables:
-      fan_circle: fan.hood_power
+      fan_circle: sensor.hood_operation_state
       light_entity: light.kitchen_table_light
       motion: binary_sensor.motion_sensor_kitchen_occupancy
       active: sensor.kitchen_active
@@ -106,23 +106,23 @@ grid_kitchen_dishwasing:
             cards:
               - type: entities
                 entities:
-                  - entity: switch.mycka_nadobi_power
+                  - entity: switch.dishwasher_power
                     name: Power
                     icon: mdi:power
                     secondary_info: last-changed
-                  - entity: sensor.dishwasher_door
+                  - entity: binary_sensor.dishwasher_door
                     name: Door
-                  - entity: sensor.mycka_nadobi_operation_state
+                  - entity: sensor.dishwasher_operation_state
                     name: Operation State
-                  - entity: sensor.mycka_nadobi_program_progress
+                  - entity: sensor.dishwasher_program_progress
                     name: Program Progress
-                  - entity: sensor.mycka_nadobi_remaining_program_time
+                  - entity: sensor.dishwasher_remaining_program_time
                     name: Remaining Program Time
     tap_action: !include ../../shared/popup/rooms/kitchen.yaml
     hold_action: !include ../../shared/honeycomb/kitchen.yaml
     variables:
       light_entity: light.kitchen_table_light
-      appliance: sensor.mycka_nadobi_program_progress
+      appliance: sensor.dishwasher_program_progress
     custom_fields:
       timer:
         card:

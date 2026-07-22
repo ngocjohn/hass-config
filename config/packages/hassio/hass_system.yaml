@@ -35,6 +35,7 @@ recorder:
       - sensor.zhimi_mb4_b008_moto_speed_rpm
       - script.fade_music
       - sensor.motion_detected
+      - sensor.tx
     entity_globs:
       - sensor.*_motor_speed
       - sensor.browser_*
@@ -77,6 +78,10 @@ recorder:
       - sensor.prague_moon_*
       - sensor.*_cpu_usage_total
       - sensor.soccer_live_*
+      - sensor.*_link_speed
+      - sensor.tx_*
+      - sensor.*_latency
+      - sensor.neklanka_gateway_*
   include:
     entities:
       - device_tracker.viet_ngoc_samsung

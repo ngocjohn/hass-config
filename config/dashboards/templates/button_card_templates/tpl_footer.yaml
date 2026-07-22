@@ -601,3 +601,21 @@ sidebar_icon_only:
       - width: 3.3em
       - border: 0.12vw solid rgba(115, 115, 115, 0.2)
       - background: '#FFFFFF10'
+tooltip_speed:
+  tooltip:
+    delay: 500ms
+    hide_delay: 150ms
+    content: >
+      [[[
+        if (variables.speedtest) {
+          const sensors = variables.speedtest;
+          let down = helpers.localize(states[sensors.download], undefined, 1, true);
+          let up = helpers.localize(states[sensors.upload], undefined, 1, true);
+          let baseContent = `<ha-icon icon="fluent:arrow-download-24-filled" style="color: cyan;"></ha-icon>${down} <ha-icon icon="fluent:arrow-upload-24-filled" style="color: purple;"></ha-icon>${up}`;
+          return baseContent;
+        }
+      ]]]
+  styles:
+    tooltip:
+      - --button-card-tooltip-font-size: 1.5em
+      - --button-card-tooltip-max-width: none
