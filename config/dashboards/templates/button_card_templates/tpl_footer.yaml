@@ -65,7 +65,7 @@ footer:
       #     ]]]
       - color: '#97989c'
       - width: fit-content
-      - border: 0.12vw solid rgba(115, 115, 115, 0.2)
+      - border: 0.12vw solid var(--button-card-background)
       - transition: none
       - padding: 0 0 0.05vw 0
       - overflow: visible
@@ -599,7 +599,7 @@ sidebar_icon_only:
       - border-radius: 20%
       - height: 3em
       - width: 3.3em
-      - border: 0.12vw solid rgba(115, 115, 115, 0.2)
+      - border: 0.12vw solid var(--button-card-background)
       - background: '#FFFFFF10'
 tooltip_speed:
   tooltip:

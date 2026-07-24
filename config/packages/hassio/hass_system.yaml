@@ -36,6 +36,7 @@ recorder:
       - script.fade_music
       - sensor.motion_detected
       - sensor.tx
+      - sensor.rx
     entity_globs:
       - sensor.*_motor_speed
       - sensor.browser_*
@@ -82,12 +83,15 @@ recorder:
       - sensor.tx_*
       - sensor.*_latency
       - sensor.neklanka_gateway_*
+      - sensor.rx_*
   include:
     entities:
       - device_tracker.viet_ngoc_samsung
       - device_tracker.phuong_chi
       - device_tracker.amg_43_parking_location
       - sensor.motion_sensor_entrance_illuminance
+      - sensor.neklanka_gateway_download
+      - sensor.neklanka_gateway_upload
 logbook:
 
 # LOGGER https://www.home-assistant.io/integrations/system_log/

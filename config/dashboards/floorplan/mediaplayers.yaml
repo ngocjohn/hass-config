@@ -114,10 +114,10 @@
             `;
         }
 
-# - entity:
-#     - media_player.bedroom_tv
-#   double_tap_action: more-info
-#   tap_action: !include ../shared/honeycomb/shield.yaml
-#   state_action:
-#     - service: floorplan.class_set
-#       service_data: 'media-player-tv media-player-${entity.state}'
+- entity:
+    - media_player.bedroom_tv
+  double_tap_action: more-info
+  tap_action: !include ../shared/honeycomb/shield.yaml
+  state_action:
+    - service: floorplan.class_set
+      service_data: 'media-player-tv media-player-${entity.state}'

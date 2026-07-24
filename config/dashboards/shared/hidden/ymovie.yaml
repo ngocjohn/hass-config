@@ -22,7 +22,7 @@ card:
       card_mod:
         style: |
           ha-card {
-            background: rgba(115, 115, 115, 0.2);
+            background: var(--button-card-background);
             border-start-start-radius: 1vw;
             border-start-end-radius: 1vw;
             overflow: hidden;

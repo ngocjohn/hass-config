@@ -16,7 +16,7 @@ group:
     icon: mdi:lightbulb-group
     entities:
       - light.living_room_floor_lamp
-      - light.shelly_dimmer
+      # - light.shelly_dimmer
       - light.shelly_rgbw_kitchen_led_strip
       - light.sony_tv_backlight
   light_kitchen:

@@ -105,9 +105,9 @@ rooms_base:
         }*/
         else if (variables.state == 'occupied') {
           return 'occupied';
-        }
-        else if (variables.state == 'washing') {
-          return entity.attributes.washdryer_remain;
+        } else if (variables.state == 'washing') {
+          let remainTime = hass.formatEntityState(hass.states[variables.remaining]);
+          return remainTime;
         }
         else if (variables.state_on || variables.state == 'yes' && variables.active !== undefined) {
           let num = states[variables.active].attributes.lights_on.length;
@@ -132,12 +132,12 @@ rooms_base:
 
             if (variables.washing_on) {
               return variables.washing_on
-                ? `linear-gradient(to top, rgba(250, 250, 250, 0.75) 0%, rgba(10,14,34,0.8) 100%)`
-                : 'rgba(115, 115, 115, 0.2)';
+                ? `linear-gradient(to top, var(--button-card-background-active) 0%, rgba(10,14,34,0.8) 100%)`
+                : 'var(--button-card-background)';
             } else {
               return variables.state_on
-                ? 'rgba(250, 250, 250, 0.75)'
-                : 'rgba(115, 115, 115, 0.2)';
+                ? 'var(--button-card-background-active)'
+                : 'var(--button-card-background)';
             }
           ]]]
       - border-radius: 10%
@@ -390,7 +390,7 @@ appliance_circle:
                 }
               </style>
               <circle cx="25" cy="25" r="${radius}" stroke="${color}" stroke-width="3" fill="none" stroke-linecap="round"/>
-              <text x="50%" y="54%" fill="#8d8e90" font-size="14" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle">${input}<tspan font-size="10">%</tspan></text>
+              <text x="50%" y="54%" fill="#8d8e90" font-size="14" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle">${parseInt(input)}<tspan font-size="10">%</tspan></text>
             </svg>
           `;
       ]]]
@@ -659,7 +659,7 @@ light_slider:
           [[[
               return variables.state_on
                 ? 'rgba(255, 218, 120, 0.75)'
-                : 'rgba(115, 115, 115, 0.2)';
+                : 'var(--button-card-background)';
           ]]]
       - --button-card-ripple-color: >
           [[[

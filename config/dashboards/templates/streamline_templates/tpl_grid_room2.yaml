@@ -101,7 +101,17 @@ grid_utility_washing:
   card:
     type: custom:button-card
     entity: sensor.appliance_active
-    name: Washdryer
+    name: >
+      [[[
+        if (entity) {
+          let phaseState = helpers.localize(states['sensor.washer_dryer_process_phase'])
+          if (phaseState !== undefined) {
+            return phaseState;
+          } else {
+            return 'Washer-Dryer';
+          }
+        }
+      ]]]
     hold_action: !include ../../shared/honeycomb/utitlity.yaml
     template:
       - rooms_base
@@ -111,6 +121,7 @@ grid_utility_washing:
       light_entity: light.utility_room_light
       active: sensor.appliance_active
       appliance: sensor.washer_dryer_program_progress
+      remaining: sensor.washer_dryer_remaining_program_time
     double_tap_action:
       action: fire-dom-event
       browser_mod:

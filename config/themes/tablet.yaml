@@ -21,8 +21,8 @@ tablet:
   state-light-active-color: '#b68349'
 
   #button_card_templates
-  # button-card-background: rgba(115, 115, 115, 0.2)
-  button-card-background: '#222226'
+  # button-card-background: '#222226'
+  button-card-background: rgba(115, 115, 115, 0.2)
   button-card-background-active: rgba(250, 250, 250, 0.75)
   button-card-border-radius: 10%
   button-card-font-size: 0.9vw

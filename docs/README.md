@@ -10,7 +10,7 @@ Hey there! Welcome to my little corner of the tech world! 👨‍💻
 
 This is where I store all the cool configurations for my Home Assistant system. Well, it's a mix of awesome codes and setups I discovered from the Home Assistant community. Seriously, those folks are wizards! 🧙‍♂️ As a bit of an internet newbie turned tech enthusiast, I stumbled upon the magic of IT, and this repository is my way of sharing the joy and knowledge I've gained along the way. Dive in, explore, and let the tech magic begin! ✨
 
-I frequently refresh my configuration files. My current Home Assistant version is <b>2026.7.3</b>. If you find something you like, don't forget to give my repository a ⭐️!
+I frequently refresh my configuration files. My current Home Assistant version is <b>2026.7.4</b>. If you find something you like, don't forget to give my repository a ⭐️!
 
 ## Some of my projects for Home Assistant
 
@@ -47,14 +47,14 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>46,398 </td>
-              <td>34</td>
-              <td>238</td>
-              <td>78</td>
-              <td>53</td>
-              <td>27</td>
-              <td>1251</td>
-              <td>211</td>
+              <td>46,491 </td>
+              <td>35</td>
+              <td>300</td>
+              <td>80</td>
+              <td>63</td>
+              <td>38</td>
+              <td>2076</td>
+              <td>269</td>
               <td>24</td>
           </tr>
       </tbody>
@@ -149,6 +149,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Canary](https://github.com/jcwillox/lovelace-canary)
 - [Clock Weather Card](https://github.com/pkissling/clock-weather-card)
 - [Crow Media Player](https://github.com/jamesmcginnis/crow-media-player-card)
+- [Custom Features For Home Assistant Cards](https://github.com/Nerwyn/custom-card-features)
 - [Custom Icons](https://github.com/Mariusthvdb/custom-icons)
 - [Dashboard Hotkeys](https://github.com/t0m1o1/HA-hotkeys)
 - [Decluttering Card](https://github.com/custom-cards/decluttering-card)

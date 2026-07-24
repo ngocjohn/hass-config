@@ -139,7 +139,7 @@ media:
                   : variables.media_on && variables.entity_picture === undefined
                     ? 'linear-gradient(0deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.8) 100%)'
                     : variables.media_off
-                        ? 'linear-gradient(0deg, rgba(115, 115, 115, 0.2) 0%, rgba(115, 115, 115, 0.2) 100%)'
+                        ? 'linear-gradient(0deg, var(--button-card-background) 0%, var(--button-card-background) 100%)'
                         : `linear-gradient(0deg, rgba(0,0,0,.8) 0%, rgba(0,0,0,0) 100%), url(${variables.entity_picture})`;
             }
           ]]]
@@ -256,14 +256,14 @@ conditional_media:
           [[[
             if (entity) {
               if (variables.is_youtube) {
-                  return `rgba(115, 115, 115, 0.2) center center/cover no-repeat`;
+                  return `var(--button-card-background) center center/cover no-repeat`;
               } else {
                 let data = entity.attributes.data;
                 return data && (data[variables.i].entity_picture)
-                    ? `rgba(115, 115, 115, 0.2) center center/cover no-repeat`
+                    ? `var(--button-card-background) center center/cover no-repeat`
                     :  data && (data[variables.i].fanart)
-                      ? `rgba(115, 115, 115, 0.2) top center/cover no-repeat`
-                      : `rgba(115, 115, 115, 0.2) center center/cover no-repeat`;
+                      ? `var(--button-card-background) top center/cover no-repeat`
+                      : `var(--button-card-background) center center/cover no-repeat`;
               }
             }
           ]]]
@@ -1448,12 +1448,12 @@ remote:
             if (variables.state_error) {
               return variables.state_error
                 ? 'rgba(139, 51, 51, 0.9)'
-                : 'rgba(115, 115, 115, 0.2)';
+                : 'var(--button-card-background)';
             }
             else {
               return variables.state_on
-                ? 'rgba(250, 250, 250, 0.75)'
-                : 'rgba(115, 115, 115, 0.2)';
+                ? 'var(--button-card-background-active)'
+                : 'var(--button-card-background)';
             }
           ]]]
     icon:

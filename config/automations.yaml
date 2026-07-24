@@ -1278,3 +1278,33 @@
     path: music-assistant/mass_assist_blueprint_en.yaml
     input:
       default_player_entity_id_input: media_player.office
+- id: '1784858057918'
+  alias: Dishwasher Pods Remaining
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - sensor.dishwasher_start_count
+    to:
+    id: start-count
+  conditions:
+  - condition: template
+    value_template: '{{has_value(pods) and not is_state(pods, "0")}}'
+  actions:
+  - action: counter.decrement
+    metadata: {}
+    target:
+      entity_id: counter.dishwasher_pods
+    data: {}
+  - if:
+    - condition: numeric_state
+      entity_id: counter.dishwasher_pods
+      below: 5
+    then:
+    - action: notify.mobile_app_viet_ngoc_samsung
+      metadata: {}
+      data:
+        message: Mycka tablety {{states(pods)}}
+  mode: single
+  variables:
+    pods: counter.dishwasher_pods

@@ -21,7 +21,7 @@ base:
     - extra_styles
   variables:
     state_on: >
-      [[[ return ['on', 'home', 'cool', 'fan_only', 'unlocked', 'open', 'streaming', 'yes', 'Blažičkova', 'Plzeňská', 'active' ].indexOf(!entity || entity.state) !== -1; ]]]
+      [[[ return ['on', 'home', 'cool', 'fan_only', 'unlocked', 'open', 'streaming', 'yes','active' ].indexOf(!entity || entity.state) !== -1; ]]]
     state_error: >
       [[[ return ['error', 'unavailable'].indexOf(entity === undefined || entity.state) !== -1; ]]]
     state: >
@@ -92,13 +92,14 @@ base:
             if (variables.state_error) {
               return variables.state_error
                 ? 'rgba(139, 51, 51, 0.9)'
-                : 'rgba(115, 115, 115, 0.2)';
+                : 'var(--button-card-background)';
             } else {
               return variables.state_on
-                ? 'rgba(250, 250, 250, 0.75)'
-                : 'rgba(115, 115, 115, 0.2)';
+                ? 'var(--button-card-background-active)'
+                : 'var(--button-card-background)';
             }
           ]]]
+
 #################################################
 #                                               #
 #                     TILT                      #
@@ -313,6 +314,9 @@ extra_styles:
           font-size: var(--button-card-font-size);
           font-weight: var(--button-card-font-weight);
           letter-spacing: var(--button-card-letter-spacing);
+        }
+        #name::first-letter {
+          text-transform: capitalize;
         }
         #state, #label, #detail {
           font-size: var(--button-card-state-size);

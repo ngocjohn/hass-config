@@ -16,11 +16,11 @@
 #   entity: sensor.motion_sensor_kitchen_illuminance_lux
 #   name: Light Level
 
-- type: 'custom:streamline-card'
-  template: light_card
-  variables:
-    - entity: light.shelly_dimmer
-    - name: Ceiling
+# - type: 'custom:streamline-card'
+#   template: light_card
+#   variables:
+#     - entity: light.shelly_dimmer
+#     - name: Ceiling
 
 - type: 'custom:streamline-card'
   template: light_card

@@ -81,7 +81,7 @@ github_graph_card:
     showCurrentValues: false
     legendVisible: false
     labelsVisible: false
-    defaultTimeRange: 3d
+    defaultTimeRange: 7d
     axisAddMarginMin: false
     axisAddMarginMax: false
     tooltip:
@@ -159,7 +159,7 @@ github_new_graph:
     showCurrentValues: false
     legendVisible: false
     labelsVisible: false
-    defaultTimeRange: 3d
+    defaultTimeRange: 2d
     tooltip:
       size: full
     uiLayout:
@@ -175,6 +175,8 @@ github_new_graph:
             fill: '[[fill_color]]'
       - type: bar
         title: Latest
+        options:
+          interval: hourly
         entities:
           - entity: '[[latest_entity]]'
             color: '[[bar_color]]'

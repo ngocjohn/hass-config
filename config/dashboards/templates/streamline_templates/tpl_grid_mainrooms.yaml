@@ -86,7 +86,17 @@ grid_kitchen_dishwasing:
   card:
     type: custom:button-card
     entity: timer.dishwasher_remaining
-    name: Dishwasher
+    name: >
+      [[[
+        if (entity) {
+          let phaseState = helpers.localize(states['sensor.dishwasher_program_phase'])
+          if (phaseState !== undefined) {
+            return phaseState;
+          } else {
+            return 'Dishwasher';
+          }
+        }
+      ]]]
     template:
       - base
       - appliance_circle

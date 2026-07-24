@@ -27,13 +27,13 @@ grid_atv:
 grid_samsung:
   card:
     type: custom:button-card
-    entity: media_player.bedroom_samsung_television
+    entity: media_player.bedroom_tv
     name: >
       [[[
         if ( !entity ) return 'Samsung';
-        let source = states['media_player.bedroom_samsung_television'].attributes.source;
-          if ( variables.state_on && source !==  'Android TV Launcher' )
-            return source;
+        let source = states[entity.entity_id].attributes.active_child;
+          if ( variables.state_on && source ===  'media_player.bedroom_shield_android_tv' )
+            return 'Shield TV';
           else
             return 'Samsung';
       ]]]

@@ -48,7 +48,12 @@ live_tile_card:
         label:
           - color: var(--primary-text-color)
           - opacity: 0.67
-  state_display: '[[[ if (entity != undefined) { return entity.state.replace("_", " ") } ]]]'
+  state_display: >
+    [[[
+      if (entity != undefined) {
+        return entity.state.replace("_", " ")
+      }
+    ]]]
   hold_action:
     action: more-info
   styles:
@@ -841,7 +846,7 @@ light_button_card_group:
       label: |
         [[[
           if (entity){
-          var lightsOn = entity.attributes.entity_id.filter(e => states[e].state == "on").length
+          var lightsOn = entity.attributes.entity_id.filter(e => states[e] !== undefined && states[e]?.state == "on").length;
           if (lightsOn > 1) { return lightsOn + " lights are on" } else { return "1 light is on" }}
         ]]]
   styles:
