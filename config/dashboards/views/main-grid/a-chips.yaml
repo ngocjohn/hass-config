@@ -105,7 +105,6 @@
                   'Night': '#003049'
                 }
                 return stateColor[variables.state] ;
-
               ]]]
     - *lights
     - *media

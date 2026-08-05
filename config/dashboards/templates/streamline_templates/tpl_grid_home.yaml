@@ -33,29 +33,7 @@ grid_chi:
           display:none !important;
         {% endif %}
         }
-  # PERSON ZUZU
-grid_zuzu:
-  card:
-    type: custom:button-card
-    entity: person.huong_giang
-    name: Zuz
-    double_tap_action: !include ../../shared/popup/home_zuzu.yaml
-    tap_action:
-      action: call-service
-      service: script.turn_on
-      service_data:
-        entity_id: script.zuzu_entities
-    triggers_update:
-      - sensor.waze_zuzu
-    template:
-      - person
-    state_display: >
-      [[[
-        if (entity)
-          return variables.state === 'not_home' || variables.state === 'away'
-            ? states['sensor.gle'].state
-            : variables.state;
-      ]]]
+
   # WEATHER
 grid_weather:
   card:

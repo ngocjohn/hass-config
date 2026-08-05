@@ -56,7 +56,6 @@ recorder:
       - sensor.*_current
       - sensor.*_rx
       - sensor.*_tx
-      - sensor.sun_*
       - sensor.*_active
       - sensor.hacs_*
       - sensor.motion_sensor_*

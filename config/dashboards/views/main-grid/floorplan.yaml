@@ -86,8 +86,7 @@
       }
       @media screen and (max-width: 800px) {
         ha-card  {
-          margin: 0 !important;
-          padding-top: 3vh;
+          margin: -10% 0 -20% !important;
         }
       }
   config:

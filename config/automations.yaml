@@ -884,14 +884,29 @@
     offset: 01:00:00
   conditions: []
   actions:
-  - action: cover.open_cover
-    metadata: {}
-    target:
-      entity_id:
-      - cover.window
-      - cover.double
-      - cover.right
-    data: {}
+  - parallel:
+    - action: overkiz.set_cover_position_and_tilt
+      metadata: {}
+      target:
+        entity_id:
+        - cover.window
+      data:
+        position: 100
+        tilt_position: 0
+    - action: overkiz.set_cover_position_and_tilt
+      metadata: {}
+      target:
+        entity_id: cover.right
+      data:
+        position: 100
+        tilt_position: 0
+    - action: overkiz.set_cover_position_and_tilt
+      metadata: {}
+      target:
+        entity_id: cover.double
+      data:
+        position: 100
+        tilt_position: 0
   mode: restart
 - id: '1777519494188'
   alias: Samsung next alarm
@@ -1053,31 +1068,6 @@
       media_title: '{{media_title}}'
       media_artist: '{{media_artist}}'
   mode: single
-- id: '1780342672863'
-  alias: Doorway motion snapshot
-  description: ''
-  triggers:
-  - trigger: state
-    entity_id:
-    - binary_sensor.doorway_motion_detected
-    - binary_sensor.doorway_person_detected
-    to:
-    - 'on'
-    from:
-    - 'off'
-  conditions: []
-  actions:
-  - action: camera.snapshot
-    metadata: {}
-    target:
-      entity_id: camera.doorway
-    data:
-      filename: /config/www/tmp/doorway/camera-motion.jpg
-  - action: notify.mobile_app_viet_ngoc_samsung
-    metadata: {}
-    data:
-      message: Motion doorway
-  mode: single
 - id: '1780353611645'
   alias: Telegram bot event triiger
   description: Telegram bit
@@ -1097,30 +1087,6 @@
         }} Size (bytes): {{ trigger.to_state.attributes.file_size }} File ID     :
         {{ trigger.to_state.attributes.file_id }} File name   : {{ trigger.to_state.attributes.file_name
         }}'
-  mode: single
-- id: '1781219655618'
-  alias: motion camera
-  description: ''
-  triggers:
-  - trigger: state
-    entity_id:
-    - binary_sensor.kids_room_motion_detected
-    - binary_sensor.doorway_motion_detected
-    to:
-    - 'on'
-    from:
-    - 'off'
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 5
-  conditions: []
-  actions:
-  - action: notify.mobile_app_viet_ngoc_samsung
-    metadata: {}
-    data:
-      message: '"{{trigger.entity_id}}"'
-      title: Camera triigger
   mode: single
 - id: '1781468512006'
   alias: Restart Govee Addon
@@ -1308,3 +1274,42 @@
   mode: single
   variables:
     pods: counter.dishwasher_pods
+- id: '1785444435162'
+  alias: custom cover mode
+  description: ''
+  triggers: []
+  conditions: []
+  actions:
+  - action: script.cover_away_mode
+    metadata: {}
+    data:
+      cover_targets: '{{ state_attr(''cover.living_room_cover'', ''entity_id'') }}'
+      action_mode: away
+  - action: script.cover_away_mode
+    metadata: {}
+    data:
+      action_mode: custom
+      position_val: 100
+      cover_targets:
+      - cover.double
+      - cover.right
+      - cover.window
+  mode: single
+- id: '1785964772026'
+  alias: Cam Motion Detected
+  description: ''
+  triggers:
+  - trigger: motion.detected
+    target:
+      entity_id:
+      - binary_sensor.doorway_person_detected
+      - binary_sensor.doorway_motion_detected
+    options:
+      behavior: all
+      for: 00:00:00
+  conditions: []
+  actions:
+  - action: script.cam_generate_image
+    metadata: {}
+    data: {}
+  mode: single

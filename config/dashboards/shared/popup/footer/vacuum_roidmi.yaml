@@ -4,32 +4,184 @@ map_source:
 calibration_source:
   camera: true
 entity: vacuum.roidmi_eve
-vacuum_platform: default
+vacuum_platform: al-one/hass-xiaomi-miot
 map_locked: true
 map_modes:
-  - template: vacuum_goto
   - template: vacuum_clean_zone
-    max_selections: 3
-    repeats_type: REPEAT
-    service_call_schema:
-      service: xiaomi_miot.call_action
-      evaluate_data_as_template: true
-      service_data:
-        entity_id: '[[entity_id]]'
-        siid: 14
-        aiid: 1
-        params:
-          - 2
-          - >-
-            {% set s_s = [[selection]] %}{"MapId":[[map_id]],"ExtraAreas":[{%for
-            s in s_s %}{"name":"[[name]]", "id":[[id]], "tag":"[[tag]]",
-            "vertexs":[[{{s[0]}},{{s[1]}}],[{{s[2]}},{{s[1]}}],[{{s[2]}},{{s[3]}}],[{{s[0]}},{{s[3]}}]],"active":"normal","mode":"area"}{%
-            if not loop.last%},{% endif%}{%endfor%}]}
-    variables:
-      map_id: 1696538829
-      name: hi
-      id: 300
-      tag: 4
+  - template: vacuum_clean_segment
+    predefined_selections:
+      - id: '1'
+        icon:
+          name: mdi:broom
+          x: -5425.000548362732
+          'y': -2224.9997258186336
+        label:
+          text: Shower
+          x: -5425.000548362732
+          'y': -2224.9997258186336
+          offset_y: 35
+        outline:
+          - - -6325.000561773777
+            - -3274.999741464853
+          - - -4525.000534951687
+            - -3274.999741464853
+          - - -4525.000534951687
+            - -1174.9997101724146
+          - - -6325.000561773777
+            - -1174.9997101724146
+      - id: '2'
+        icon:
+          name: mdi:broom
+          x: 2249.9995660036802
+          'y': 50.00030808150791
+        label:
+          text: Utility room
+          x: 2249.9995660036802
+          'y': 50.00030808150791
+          offset_y: 35
+        outline:
+          - - 1574.9995559453967
+            - -1274.9997116625307
+          - - 2924.999576061964
+            - -1274.9997116625307
+          - - 2924.999576061964
+            - 1375.0003278255465
+          - - 1574.9995559453967
+            - 1375.0003278255465
+      - id: '3'
+        icon:
+          name: mdi:broom
+          x: -3875.000525265932
+          'y': 4500.000374391675
+        label:
+          text: Living room
+          x: -3875.000525265932
+          'y': 4500.000374391675
+          offset_y: 35
+        outline:
+          - - -6375.000562518835
+            - 2625.000346451998
+          - - -1375.0004880130289
+            - 2625.000346451998
+          - - -1375.0004880130289
+            - 6375.000402331352
+          - - -6375.000562518835
+            - 6375.000402331352
+      - id: '4'
+        icon:
+          name: mdi:broom
+          x: -1350.0004876405
+          'y': -4849.999764934182
+        label:
+          text: Kids Room
+          x: -1350.0004876405
+          'y': -4849.999764934182
+          offset_y: 35
+        outline:
+          - - -2725.0005081295967
+            - -7274.999801069498
+          - - 24.99953284859671
+            - -7274.999801069498
+          - - 24.99953284859671
+            - -2424.999728798866
+          - - -2725.0005081295967
+            - -2424.999728798866
+      - id: '5'
+        icon:
+          name: mdi:broom
+          x: 199.99953545629992
+          'y': 75.00030845403694
+        label:
+          text: Bathroom
+          x: 199.99953545629992
+          'y': 75.00030845403694
+          offset_y: 35
+        outline:
+          - - -875.0004805624484
+            - -1224.9997109174726
+          - - 1274.9995514750483
+            - -1224.9997109174726
+          - - 1274.9995514750483
+            - 1375.0003278255465
+          - - -875.0004805624484
+            - 1375.0003278255465
+      - id: '6'
+        icon:
+          name: mdi:broom
+          x: 374.999538064003
+          'y': -1749.9997187405822
+        label:
+          text: Hallway
+          x: 374.999538064003
+          'y': -1749.9997187405822
+          offset_y: 35
+        outline:
+          - - -2825.000509619713
+            - -2624.999731779098
+          - - 3574.999585747719
+            - -2624.999731779098
+          - - 3574.999585747719
+            - -874.9997057020661
+          - - -2825.000509619713
+            - -874.9997057020661
+      - id: '7'
+        icon:
+          name: mdi:broom
+          x: -3925.00052601099
+          'y': 925.0003211200242
+        label:
+          text: Kitchen
+          x: -3925.00052601099
+          'y': 925.0003211200242
+          offset_y: 35
+        outline:
+          - - -6475.000564008951
+            - -824.999704957008
+          - - -1375.0004880130289
+            - -824.999704957008
+          - - -1375.0004880130289
+            - 2675.0003471970563
+          - - -6475.000564008951
+            - 2675.0003471970563
+      - id: '8'
+        icon:
+          name: mdi:broom
+          x: -4733.000535696745
+          'y': -5740.999753385782
+        label:
+          text: Bedroom
+          x: -4733.000535696745
+          'y': -5740.999753385782
+          offset_y: 35
+        outline:
+          - - -6325.000561773777
+            - -7124.999798834324
+          - - -2825.000509619713
+            - -7124.999798834324
+          - - -2825.000509619713
+            - -1024.9997079372404
+          - - -6325.000561773777
+            - -1024.9997079372404
+      - id: '9'
+        icon:
+          name: mdi:broom
+          x: 1824.9995596706867
+          'y': -4949.999766424298
+        label:
+          text: Office
+          x: 1824.9995596706867
+          'y': -4949.999766424298
+          offset_y: 35
+        outline:
+          - - 274.99953657388704
+            - -7274.999801069498
+          - - 3374.9995827674866
+            - -7274.999801069498
+          - - 3374.9995827674866
+            - -2624.999731779098
+          - - 274.99953657388704
+            - -2624.999731779098
+
 card_mod:
   style: |
     ha-card {
@@ -48,7 +200,7 @@ card_mod:
       --map-card-internal-big-radius: 0.6em !important;
     }
     div.map-wrapper {
-      padding: 2vw 0px 0.6vw !important;
+      padding: 1.7vw 0.5vw 0.5vw 0vw !important;
     }
     div.controls-wrapper {
       padding-top: 0;
@@ -62,19 +214,19 @@ card_mod:
     div.map-controls-wrapper {
       padding: var(--tablet-popup-button-padding);
     }
-    paper-button {
-      --mdc-icon-size: 1.5em;
-      color: #9da0a2 !important;
-      padding: 0.42em;
-    }
+    # paper-button {
+    #   --mdc-icon-size: 1.5em;
+    #   color: #9da0a2 !important;
+    #   padding: 0.42em;
+    # }
     #map-image {
       filter: brightness(0.7);
     }
     #map-zoomer-content {
       background-image: url(/local/img/roidme_plan.png);
-      background-size: contain;
+      background-size: cover;
       background-repeat: no-repeat;
-      background-position-y: -7px;
+      background-position-y: -5px;
       background-position-x: -2px;
     }
 

@@ -27,12 +27,6 @@ frontend:
     - /hacsfiles/more-info-custom/more-info-custom.js?hacstag=1245053247100
     - /local/dashboard-resources/custom_ikonky.js?v0.0.1
 
-# HTTP
-http:
-  use_x_forwarded_for: true
-  trusted_proxies:
-    - 172.30.33.0/24
-
 # INCLUDES
 automation ui: !include automations.yaml
 script: !include scripts.yaml

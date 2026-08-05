@@ -112,6 +112,11 @@ Graphite Auto:
   catppuccin-crust: '#181926'
   catppuccin-crust-rgb: 24, 25, 38
 
+  # Tablet popup theme
+
+  button-card-background: rgba(115, 115, 115, 0.2)
+  button-card-background-active: rgba(250, 250, 250, 0.75)
+
   modes:
     light:
       # Color tokens

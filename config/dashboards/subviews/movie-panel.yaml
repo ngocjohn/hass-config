@@ -1,11 +1,13 @@
 title: movie
 path: movie
 type: panel
-icon: mdi:kodi
+icon: mdi:plex
 subview: false
 cards:
-  - type: custom:movie-library-panel
-    # entity: sensor.kodi_movies_details
-    kodiwebsocket: 'ws://192.168.0.231:9090/jsonrpc'
-    players:
-      - media_player.kodi_mbproserver
+  # - type: custom:movie-library-panel
+  #   # entity: sensor.kodi_movies_details
+  #   kodiwebsocket: 'ws://192.168.0.231:9090/jsonrpc'
+  #   players:
+  #     - media_player.kodi_mbproserver
+  - type: iframe
+    url: /local_plex

@@ -4,6 +4,37 @@
 # CAM DOOR
 - type: custom:streamline-card
   template: grid_cam_door
+# - type: custom:webrtc-camera
+#   entity: camera.doorway
+#   media: video
+#   ui: true
+#   digital_ptz:
+#     mouse_drag_pan: true
+#     mouse_wheel_zoom: true
+#     mouse_double_click_zoom: true
+#     touch_drag_pan: true
+#     touch_pinch_zoom: true
+#     touch_tap_drag_zoom: true
+#     persist: true
+#   poster: https://home-assistant.io/images/cast/splash.png
+#   muted: true
+#   intersection: 0.75
+#   shortcuts:
+#     - name: play
+#       icon: mdi:play
+#       service: button.press
+#       service_data:
+#         entity_id: button.doorway_start_p2p_stream
+#     - name: stop
+#       icon: mdi:stop
+#       service: button.press
+#       service_data:
+#         entity_id: button.doorway_stop_p2p_stream
+#   style: >-
+#     .mode, .fullscreen, .screenshot, .pictureinpicture {display: none} video
+#     {aspect-ratio: 1; object-fit: cover;}  .shortcuts {left: unset; top: 25px;
+#     right: 5px; display: flex; flex-direction: column;}
+
 # CAM KIDS ROOM
 - type: custom:streamline-card
   template: grid_cam_kids

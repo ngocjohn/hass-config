@@ -21,6 +21,15 @@ ingress:
       match: !secret external_url
       replace: !secret appdaemon_url
       default: http://192.168.1.16:5050/
+  local_plex:
+    work_mode: iframe
+    ui_mode: replace
+    title: Plex
+    icon: si:plex
+    url:
+      match: !secret external_url
+      replace: !secret plex_url
+      default: http://mbproserver.local:32400
 
   ## HA CONFIG PAGES ##
   link_areas:

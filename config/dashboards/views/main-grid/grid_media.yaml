@@ -20,7 +20,7 @@
       card:
         type: custom:added-movie-card
         entity: sensor.tmdb_movies_trending
-
+        tmdb_api_key: !secret tmdb_api_key
     - &ATV
       type: conditional
       conditions:
@@ -56,13 +56,13 @@
           state: Bedroom TV
       card:
         type: custom:button-card
-        entity: media_player.shield
-        name: 'ShieldTV'
+        entity: media_player.bedroom_tv
+        name: ' '
         triggers_update: sensor.youtube_thumbnail
         template:
-          - conditional_media
+          - universal_media_player
           - icon_shieldtv_text
-          - progress_bar
+          # - progress_bar
     - &PS5
       type: conditional
       conditions:
