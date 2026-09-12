@@ -69,5 +69,5 @@ style:
             border-bottom: 1px solid #181818 !important;
           }
           .leaflet-pane.leaflet-tile-pane {
-            filter: invert(0.95) grayscale(0.95) contrast(95%);
+            filter: invert(0) grayscale(1) contrast(90%) brightness(0.9);
           }

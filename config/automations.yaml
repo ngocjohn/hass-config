@@ -774,6 +774,9 @@
     id: change_ringe_mode
   - trigger: time
     at: sensor.viet_ngoc_samsung_next_alarm
+  - trigger: time
+    at: 05:00:00
+    id: Ring_mode
   conditions:
   - condition: state
     entity_id: person.viet_ngoc
@@ -783,6 +786,7 @@
   - if:
     - condition: trigger
       id:
+      - Ring_mode
       - change_ringe_mode
     then:
     - action: notify.mobile_app_viet_ngoc_samsung
@@ -1073,24 +1077,6 @@
     data: {}
     alias: Collect dust
   mode: single
-- id: '1784214031287'
-  alias: Sony TV volume
-  description: ''
-  triggers:
-  - trigger: state
-    entity_id:
-    - media_player.sony_bravia_rest_api
-    attribute: volume_level
-  conditions: []
-  actions:
-  - action: notify.living_room_tv
-    metadata: {}
-    data:
-      message: '{{ state_attr("media_player.sony_bravia_tv", "volume_level") * 100
-        | int }}'
-      title: Volume
-  mode: parallel
-  max: 10
 - id: '1784858057918'
   alias: Dishwasher Pods Remaining
   description: ''
@@ -1190,6 +1176,15 @@
               minutes: 0
               seconds: 2
               milliseconds: 0
+      - action: delete.files_in_folder
+        metadata: {}
+        data:
+          folder: /config/www/tmp/snapshot/
+          time: 3600
+          no_warn: true
+          only_extensions:
+          - .png
+          - .jpg
     - conditions:
       - condition: trigger
         id:
@@ -1201,6 +1196,13 @@
         target:
           entity_id: '{{trigger.to_state.entity_id}}'
         data: {}
+        enabled: false
+      - action: script.turn_on
+        data:
+          variables:
+            camera_entity: '{{trigger.to_state.entity_id}}'
+        target:
+          entity_id: script.cam_snapshot_tmp
   mode: single
 - id: '1786319396113'
   alias: Feed Reminder
@@ -1220,3 +1222,118 @@
       message: feeding time
       title: "\U0001F37C  Feeding time"
   mode: single
+- id: '1788738472677'
+  alias: Air Purifier Aqi
+  description: ''
+  triggers:
+  - trigger: air_quality.pm25_crossed_threshold
+    target:
+      entity_id: sensor.zhimi_mb4_b008_pm25_density
+    options:
+      behavior: each
+      for:
+        hours: 0
+        minutes: 1
+        seconds: 0
+      threshold:
+        type: above
+        value:
+          active_choice: number
+          number: 50
+    id: level_above
+    alias: level obove 50
+  - trigger: air_quality.pm25_crossed_threshold
+    target:
+      entity_id: sensor.zhimi_mb4_b008_pm25_density
+    options:
+      behavior: each
+      for:
+        hours: 0
+        minutes: 5
+        seconds: 0
+      threshold:
+        type: below
+        value:
+          active_choice: number
+          number: 10
+    id: level_bellow
+    alias: level bellow 40
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - level_above
+      - condition: not
+        conditions:
+        - condition: state
+          entity_id: fan.zhimi_mb4_b008_air_purifier
+          state:
+          - Favorite
+          attribute: preset_mode
+      sequence:
+      - action: fan.set_preset_mode
+        metadata: {}
+        data:
+          preset_mode: Favorite
+        target:
+          entity_id: fan.zhimi_mb4_b008_air_purifier
+    - conditions:
+      - condition: trigger
+        id:
+        - level_bellow
+      sequence:
+      - action: fan.set_preset_mode
+        metadata: {}
+        target:
+          entity_id: fan.zhimi_mb4_b008_air_purifier
+        data:
+          preset_mode: Auto
+  mode: restart
+- id: '1789166611122'
+  alias: bedroom motion
+  description: ''
+  triggers:
+  - trigger: motion.detected
+    target:
+      entity_id: binary_sensor.motion_sensor_entrance_occupancy
+      device_id: 950a6647c7a21278c0056daf478d0114
+    options:
+      behavior: first
+  conditions: []
+  actions:
+  - action: scene.create
+    metadata: {}
+    data:
+      scene_id: office_strip_alert
+      snapshot_entities:
+      - light.office_led_light_strip
+  - action: light.turn_on
+    metadata: {}
+    target:
+      entity_id: light.office_led_light_strip
+    data:
+      effect: Police
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  - action: light.turn_on
+    metadata: {}
+    target:
+      entity_id: light.office_led_light_strip
+    data:
+      effect: Stop
+  - action: scene.turn_on
+    metadata: {}
+    target:
+      entity_id: scene.office_strip_alert
+    data: {}
+  - action: scene.delete
+    metadata: {}
+    target:
+      entity_id: scene.office_strip_alert
+    data: {}
+  mode: restart

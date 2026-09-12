@@ -10,7 +10,7 @@ Hey there! Welcome to my little corner of the tech world! 👨‍💻
 
 This is where I store all the cool configurations for my Home Assistant system. Well, it's a mix of awesome codes and setups I discovered from the Home Assistant community. Seriously, those folks are wizards! 🧙‍♂️ As a bit of an internet newbie turned tech enthusiast, I stumbled upon the magic of IT, and this repository is my way of sharing the joy and knowledge I've gained along the way. Dive in, explore, and let the tech magic begin! ✨
 
-I frequently refresh my configuration files. My current Home Assistant version is <b>2026.9.1</b>. If you find something you like, don't forget to give my repository a ⭐️!
+I frequently refresh my configuration files. My current Home Assistant version is <b>2026.9.2</b>. If you find something you like, don't forget to give my repository a ⭐️!
 
 ## Some of my projects for Home Assistant
 
@@ -47,7 +47,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>47,047 </td>
+              <td>47,225 </td>
               <td></td>
               <td></td>
               <td></td>
@@ -73,11 +73,10 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - ArgonOne Active Linear Cooling
 - Cloudflared
 - DbStats
-- eufy-security-ws
+- eufy-sdk bridge
 - File editor
 - Glances
 - Govee to MQTT Bridge
-- Log Viewer
 - MA Provider Watcher
 - MariaDB
 - Matter Server
@@ -104,6 +103,8 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Custom Icons](https://github.com/thomasloven/hass-custom_icons)
 - [Dyson](https://github.com/cmgrayb/hass-dyson)
 - [Electrolux](https://github.com/TTLucian/ha-electrolux)
+- [Eufy Mega Security](https://github.com/mscodemonkey/eufy-mega-security)
+- [Eufy Sdk](https://github.com/mega-yfue/ha-eufy-sdk)
 - [Eufy Security](https://github.com/fuatakgun/eufy_security)
 - [Extended Openai Conversation](https://github.com/jekalmin/extended_openai_conversation)
 - [Fontawesome](https://github.com/thomasloven/hass-fontawesome)
@@ -115,6 +116,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Hass Favicon](https://github.com/thomasloven/hass-favicon)
 - [Home Connect Local](https://github.com/chris-mc1/homeconnect_local_hass)
 - [Home Intercom](https://github.com/mdj2812/home-intercom)
+- [Home Weather](https://github.com/zodyking/home-weather)
 - [Ingress](https://github.com/lovelylain/hass_ingress)
 - [Lunar Phase](https://github.com/ngocjohn/lunar-phase)
 - [Mercedesme 2020](https://github.com/ReneNulschDE/mbapi2020)
@@ -133,7 +135,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Weather.Com](https://github.com/jaydeethree/Home-Assistant-weatherdotcom)
 - [Webrtc Camera](https://github.com/AlexxIT/WebRTC)
 - [Xiaomi Cloud Map Extractor](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor)
-- [Ytube Music Player](https://github.com/KoljaWindeler/ytube_music_player)
+- [Xiaomi Miot](https://github.com/al-one/hass-xiaomi-miot)
 </details>
 
 <details>

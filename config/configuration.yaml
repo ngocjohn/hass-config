@@ -11,6 +11,8 @@ homeassistant:
   allowlist_external_dirs:
     - /config
     - /config/www
+  allowlist_external_urls:
+    - http://192.168.1.189:8123
   media_dirs:
     movies: /media/movies
     local: /media

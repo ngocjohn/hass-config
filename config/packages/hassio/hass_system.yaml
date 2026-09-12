@@ -17,8 +17,8 @@ recorder:
   exclude:
     domains:
       # - alarm_control_panel
-      # - button
       # - camera
+      - button
       - media_player
       - switch
       - light

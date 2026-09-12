@@ -37,7 +37,8 @@ xiaomi_miot:
     careli.fryer.maf02:
       check_lan: false
       exclude_miot_services: null
+    zhimi.airpurifier.mb4:
+      select_properties: mode
 favicon:
   tile: Neklanka
   icon_path: /local/favicons/
-
