@@ -829,7 +829,7 @@
   - variables:
       action_living: media_player.living_room
       action_bed: media_player.bedroom
-      action_office: media_player.office_homepod
+      action_office: media_player.office
     alias: Set up variables homepods
   - alias: Ask to pick device
     action: notify.mobile_app_viet_ngoc_samsung
@@ -1139,18 +1139,29 @@
   triggers:
   - trigger: state
     entity_id:
-    - camera.doorway
-    - camera.terasa
+    - binary_sensor.doorway_streaming
+    - binary_sensor.terasa_streaming
+    - binary_sensor.kids_room_streaming
     to:
-    - streaming
+    - 'on'
     for:
       hours: 0
       minutes: 0
-      seconds: 5
+      seconds: 10
     id: streaming
+  - trigger: event.received
+    target:
+      device_id:
+      - 0b57f4d5d68e33cddd6f9cb6bca22a05
+      - b9a9ff4923b8ea90db2ead1f27e78239
+    options:
+      event_type:
+      - person
+      - motion
   - trigger: time_pattern
     hours: /1
     id: time_cron
+    enabled: true
   conditions: []
   actions:
   - choose:
@@ -1161,20 +1172,20 @@
       sequence:
       - repeat:
           for_each:
+          - camera.doorway
           - camera.kids_room
           - camera.terasa
-          - camera.doorway
           sequence:
           - action: script.turn_on
-            target:
-              entity_id: script.cam_generate_image
             data:
               variables:
                 camera_entity: '{{repeat.item}}'
+            target:
+              entity_id: script.cam_snapshot_tmp
           - delay:
               hours: 0
               minutes: 0
-              seconds: 2
+              seconds: 7
               milliseconds: 0
       - action: delete.files_in_folder
         metadata: {}
@@ -1189,20 +1200,15 @@
       - condition: trigger
         id:
         - streaming
-        enabled: false
+        enabled: true
       sequence:
-      - action: eufy_security.generate_image
-        metadata: {}
-        target:
-          entity_id: '{{trigger.to_state.entity_id}}'
-        data: {}
-        enabled: false
       - action: script.turn_on
         data:
           variables:
             camera_entity: '{{trigger.to_state.entity_id}}'
         target:
           entity_id: script.cam_snapshot_tmp
+    enabled: true
   mode: single
 - id: '1786319396113'
   alias: Feed Reminder
@@ -1300,7 +1306,7 @@
       entity_id: binary_sensor.motion_sensor_entrance_occupancy
       device_id: 950a6647c7a21278c0056daf478d0114
     options:
-      behavior: first
+      behavior: each
   conditions: []
   actions:
   - action: scene.create
@@ -1336,4 +1342,4 @@
     target:
       entity_id: scene.office_strip_alert
     data: {}
-  mode: restart
+  mode: single

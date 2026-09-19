@@ -10,7 +10,7 @@ Hey there! Welcome to my little corner of the tech world! 👨‍💻
 
 This is where I store all the cool configurations for my Home Assistant system. Well, it's a mix of awesome codes and setups I discovered from the Home Assistant community. Seriously, those folks are wizards! 🧙‍♂️ As a bit of an internet newbie turned tech enthusiast, I stumbled upon the magic of IT, and this repository is my way of sharing the joy and knowledge I've gained along the way. Dive in, explore, and let the tech magic begin! ✨
 
-I frequently refresh my configuration files. My current Home Assistant version is <b>2026.9.2</b>. If you find something you like, don't forget to give my repository a ⭐️!
+I frequently refresh my configuration files. My current Home Assistant version is <b>2026.9.3</b>. If you find something you like, don't forget to give my repository a ⭐️!
 
 ## Some of my projects for Home Assistant
 
@@ -47,7 +47,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>47,225 </td>
+              <td>48,817 </td>
               <td></td>
               <td></td>
               <td></td>
@@ -103,7 +103,6 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
 - [Custom Icons](https://github.com/thomasloven/hass-custom_icons)
 - [Dyson](https://github.com/cmgrayb/hass-dyson)
 - [Electrolux](https://github.com/TTLucian/ha-electrolux)
-- [Eufy Mega Security](https://github.com/mscodemonkey/eufy-mega-security)
 - [Eufy Sdk](https://github.com/mega-yfue/ha-eufy-sdk)
 - [Eufy Security](https://github.com/fuatakgun/eufy_security)
 - [Extended Openai Conversation](https://github.com/jekalmin/extended_openai_conversation)

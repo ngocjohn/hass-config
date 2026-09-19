@@ -26,19 +26,16 @@ cards:
         variables:
           title: Motion
           group_entity_id: group.motion_sensors
-      # - type: custom:webrtc-camera
-      #   url: kidsroom
-      #   poster: camera.kids_room
       - type: custom:streamline-card
-        template: popup_camera_webrtc
+        template: popup_camera_webrtc_local
         variables:
           camera_entity: camera.kids_room
       - type: custom:streamline-card
-        template: popup_camera_webrtc
+        template: popup_camera_webrtc_local
         variables:
           camera_entity: camera.doorway
       - type: custom:streamline-card
-        template: popup_camera_webrtc
+        template: popup_camera_webrtc_local
         variables:
           camera_entity: camera.terasa
     visibility:

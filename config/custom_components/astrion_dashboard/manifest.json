@@ -1,0 +1,9 @@
+{
+  "domain": "astrion_dashboard",
+  "name": "Astrion Dashboard",
+  "version": "1.0.0",
+  "documentation": "https://github.com/marcusadolfsson/1005-HomeAssistant",
+  "codeowners": ["@marcusadolfsson"],
+  "iot_class": "local_push",
+  "dependencies": ["http"]
+}

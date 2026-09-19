@@ -4152,3 +4152,37 @@ icon_camera_rec:
           <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" id="prefix__Layer_1" width="50" height="50" x="0" y="0" preserveAspectRatio="xMidYMid" style="margin:initial" version="1.1" viewBox="0 0 50 50"><g class="prefix__ldl-scale"><g class="prefix__ldl-ani" style="transform-box:view-box;animation:1s linear 0s infinite normal forwards running animate"><style>@keyframes animate{0%{transform:translate(0,0) rotate(0deg) scale(1,1) skew(0deg,0deg);opacity:1}14%{transform:translate(0,0) rotate(0deg);opacity:.93}38%{transform:translate(0,0) rotate(0deg);opacity:.81}48%{transform:translate(0,0) rotate(0deg);opacity:.76}50%{animation-timing-function:cubic-bezier(.31,.47,.49,.77);transform:translate(0,0) rotate(0deg);opacity:.96}56%{animation-timing-function:cubic-bezier(.68,.62,.35,.29);transform:translate(0,0) rotate(0deg);opacity:1.24}60%{animation-timing-function:cubic-bezier(.62,.81,.28,.49);transform:translate(0,0) rotate(0deg);opacity:.94}64%{animation-timing-function:cubic-bezier(.77,.38,.4,.09);transform:translate(0,0) rotate(0deg);opacity:.77}68%{animation-timing-function:cubic-bezier(.3,.5,.44,.81);transform:translate(0,0) rotate(0deg);opacity:1.01}74%{transform:translate(0,0) rotate(0deg);opacity:1.24}76%{animation-timing-function:cubic-bezier(.31,.47,.49,.77);transform:translate(0,0) rotate(0deg);opacity:1.04}82%{animation-timing-function:cubic-bezier(.68,.62,.35,.29);transform:translate(0,0) rotate(0deg);opacity:.76}86%{animation-timing-function:cubic-bezier(.62,.81,.28,.49);transform:translate(0,0) rotate(0deg);opacity:1.06}90%{animation-timing-function:cubic-bezier(.77,.38,.4,.09);transform:translate(0,0) rotate(0deg);opacity:1.23}94%{animation-timing-function:cubic-bezier(.63,.79,.29,.46);transform:translate(0,0) rotate(0deg);opacity:.99}to{animation-timing-function:cubic-bezier(.63,.79,.29,.46);transform:translate(0,0) rotate(0deg);opacity:.76}}.prefix__st0,.prefix__st1{fill:none;stroke:#000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10}.prefix__st1{stroke:#c1272d}</style><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><path stroke-width="2" d="M5 19v-5c0-1.4 1.1-2.5 2.5-2.5H15" class="prefix__st0"/></g></g><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><path stroke-width="2" d="M15 38.5H7.5C6.1 38.5 5 37.4 5 36v-5" class="prefix__st0"/></g></g><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><path stroke-width="2" d="M45 31v5c0 1.4-1.1 2.5-2.5 2.5H35" class="prefix__st0"/></g></g><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><path stroke-width="2" d="M35 11.5h7.5c1.4 0 2.5 1.1 2.5 2.5v4.75" class="prefix__st0"/></g></g></g></g><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><path stroke="#c1272d" stroke-width="2" d="M17.9 20.5v9" class="prefix__st1"/></g></g><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><path stroke="#c1272d" stroke-width="2" d="m20.6 25 1.8 4.5" class="prefix__st1"/></g></g><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><path stroke="#c1272d" stroke-width="2" d="M17.9 20.5h4.5V25h-4.5" class="prefix__st1"/></g></g></g></g><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><path stroke="#c1272d" d="M25.9 20.5v9" class="prefix__st1"/></g></g><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><path stroke="#c1272d" stroke-width="2" d="M25.9 29.5h4.5" class="prefix__st1"/></g></g><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><path stroke="#c1272d" stroke-width="2" d="M25.9 25h4.5" class="prefix__st1"/></g></g><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><path stroke="#c1272d" stroke-width="2" d="M25.9 20.5h4.5" class="prefix__st1"/></g></g></g></g><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><path stroke="#c1272d" d="M33.9 20.5v9" class="prefix__st1"/></g></g><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><path stroke="#c1272d" stroke-width="2" d="M33.9 29.5h4.5" class="prefix__st1"/></g></g><g class="prefix__ldl-layer"><g class="prefix__ldl-ani" style="transform-box:view-box"><path stroke="#c1272d" stroke-width="2" d="M33.9 20.5h4.5" class="prefix__st1"/></g></g></g></g><g class="prefix__ldl-layer"><path fill="#ed1c24" stroke="#ed1c24" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2.5" d="M13.6 25a2.5 2.5 0 0 1-2.5 2.5A2.5 2.5 0 0 1 8.6 25a2.5 2.5 0 0 1 5 0" class="prefix__ldl-ani" style="transform-box:view-box"/></g></g></g></svg>
         `
       ]]]
+icon_cam_dot:
+  styles:
+    custom_fields:
+      icon:
+        - background-color: var(--red-color, rgba(255, 82, 82, 1))
+        - border-radius: 50%
+        - animation: pulse-red 1.9s infinite
+        - aspect-ratio: 1
+        - width: 15%
+        - margin-top: 10%
+        - margin-left: 10%
+  custom_fields:
+    icon: >
+      [[[
+        return `
+          <style>
+            @keyframes pulse-red {
+              0% {
+                transform: scale(0.9) translate(-50%, -50%);
+                box-shadow: 0 0 0 0 rgba(255, 82, 82, 1);
+              }
+              80% {
+                transform: scale(1) translate(-50%, -50%);
+                box-shadow: 0 0 0 11px rgba(255, 82, 82, 0);
+              }
+              100% {
+                transform: scale(0.9) translate(-50%, -50%);
+                box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
+              }
+            }
+          </style>
+          <div class="circle"></div>
+        `;
+      ]]]

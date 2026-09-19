@@ -1,0 +1,275 @@
+# Astrion remote - layout for the custom app (com.custom.astrion).
+#
+# THIS FILE IS THE SOURCE OF TRUTH. The app fetches it as JSON from
+# /api/astrion_dashboard (custom_components/astrion_dashboard converts it), so
+# there is no generated .json to keep in sync - just edit here, then press Sync
+# on the remote (swipe up).
+#
+# Conventions worth knowing:
+#   startPage      index of the page shown at launch
+#   separator      a section header; its name is ALSO the anchor that a hotkey
+#                  scroll_to jumps to, so renaming one means updating hotkeys
+#   bubble_select  pill + dropdown; active_entity supplies the shown value, and
+#                  each option's active_value must match that entity's state
+#                  string EXACTLY (e.g. "Watch Apple TV", not "Apple TV")
+#   open_on        section name whose hotkey should also pop this dropdown open
+#                  (used where a section holds a single selector)
+#   conditional    shows its child card(s) only while entity_id == state
+#   monitor rows   optional "attribute" reads that attribute, not the state
+#   hotkeys        physical buttons: page and/or scroll_to and/or service, or
+#                  action: sync. Key names come from HardwareKeys.kt.
+#
+startPage: 0
+pages:
+  - name: Office
+    cards: !include pages/office.yaml
+    dock_cards:
+  - name: Living
+    cards: !include pages/living.yaml
+    dock_cards:
+
+# voice:
+#   # Where the VOICE key streams the mic (raw PCM16, 16 kHz mono, chunked). The
+#   # remote makes NO routing decision - this endpoint does. custom_components/
+#   # hap_remote sends it to Siri on the Apple TV while the AV activity is
+#   # "Watch Apple TV", and to HA Assist otherwise.
+#   # Names the Apple TV: there is no default, so an utterance always says
+#   # where it is going. Slug comes from the Apple TV's own name.
+#   path: /api/appletv_siri/audio/living_room_1
+#   max_ms: 10000        # hard cap on one utterance
+#   silence_ms: 1200     # quiet AFTER speech before it's considered finished
+#   no_speech_ms: 4000   # give up if you press the key and never speak
+
+#   # Shown while listening, at the moment you are deciding what to say. A mic
+#   # that says "Listening…" proves it works but not what it UNDERSTANDS, and an
+#   # undiscoverable vocabulary gets used for the two phrases you already know.
+#   # Gated to Kaleidescape: movie searches are useful advice in front of the
+#   # theater and noise in front of an Apple TV (where VOICE goes to Siri anyway).
+#   # Each line is a phrasing the sentence templates actually match -- keep them
+#   # in step with custom_sentences/en/kaleidescape_voice.yaml.
+#   suggest_entity: input_select.lr_av_activity
+#   suggest_state: Watch Kaleidescape
+#   suggest_title: Try saying
+#   suggestions:
+#     - play Air Force One
+#     - find james bond
+#     - show me my movies from the marvel universe
+#     - what Kubrick movies do I have
+#     - surprise me
+
+# Motion wake: light the screen when the remote is picked up.
+#
+# Per-remote because the assumption is not universal -- it assumes the remote
+# rests on something STILL. master_1 and master_2 live in a bed, where the
+# surface moves whenever its owner does; at the original fixed 0.9 threshold the
+# display re-lit within seconds of every timeout, all night. The living room unit
+# on a side table never had the problem.
+#
+# `hits` is what actually separates the two cases. Amplitude alone cannot:
+# rolling over can outweigh a gentle pick-up. But a pick-up is SUSTAINED -- the
+# remote keeps moving while it travels to a hand -- where a bed jolt is one spike
+# and over. Requiring consecutive samples discriminates on duration, not force.
+#
+# Tunable live: the app reads these on every sensor event, so a Sync re-tunes
+# without a reinstall. Only `enabled` needs a restart (it decides whether the
+# sensor is registered at all).
+motion_wake:
+  # Rewritten 2026-08-17 to detect a PICK-UP rather than a jolt.
+  #
+  # The old test was the change in the acceleration vector's MAGNITUDE. That
+  # responds to a knock -- someone shifting on a mattress -- but is nearly blind
+  # to the thing actually worth waking for: lifting a remote rotates it, and
+  # rotation leaves the magnitude at ~1 g while only the axis components move. So
+  # there was no threshold that both woke on a pick-up and ignored a bed, and
+  # every retune traded one against the other.
+  #
+  # It now watches the DIRECTION of the low-passed gravity vector and fires on a
+  # tilt of `tilt_degrees`, with `jerk_ratio` kept for a deliberate shake that
+  # does not turn the remote. Both are scale-free, which matters more than it
+  # sounds: master_2's accelerometer reads ~2x true (18.9 m/s2 at rest against
+  # 9.6 on its twin), so the same `threshold` number used to mean half as much on
+  # that unit as on the others. Angles and ratios finally mean the same thing on
+  # every remote.
+  tilt_degrees: 10
+  jerk_ratio: 0.25
+  hits: 2
+  settle_seconds: 8
+  cooldown_seconds: 2
+  # Off: a remote on a USB-C cable is usually in a hand, and this hardware cannot
+  # tell a cable from the dock -- both enumerate as Mains. Suppressing wake here
+  # would break the cable case to fix one that does not need fixing, since a
+  # docked remote already has its screen held on by dock_display.
+  ignore_while_charging: false
+  # devices:
+  #   # The bed pair. A body-shift translates the remote without turning it, so the
+  #   # tilt gate does most of the work here and these can now sit close to the
+  #   # global values instead of being cranked until a real pick-up failed too.
+  #   master_1:
+  #     tilt_degrees: 14
+  #     hits: 2
+  #     window_ms: 1000
+  #     settle_seconds: 10
+  #   master_2:
+  #     tilt_degrees: 14
+  #     hits: 2
+  #     window_ms: 1000
+  #     settle_seconds: 10
+  # living inherits the global values -- a side table does not move on its own.
+
+# Docked remotes stay awake as a dim status panel instead of sleeping: the dock
+# supplies mains power, so the timeout saves nothing there. Any touch or button
+# raises the backlight for `bright_seconds`, then it fades back.
+# Idle clock for a DOCKED remote. Off the dock nothing changes -- the display
+# still sleeps, so this cannot cost battery. Enabled only on the bedroom pair;
+# the living-room remote sits in a room where a lit clock is not wanted.
+screensaver:
+  enabled: true
+  idle_seconds: 20
+  clock_24h: false
+  # Not white: this faces a bed for eight hours a night, and white on black at
+  # full brightness is a lamp.
+  color: '#8A8A8A'
+  show_date: true
+  # US order: weekday, month, day.
+  date_format: 'EEEE MMMM d'
+  # Its own backlight, well above the dock's 1% dashboard dim -- at that level
+  # the clock renders perfectly and is invisible, which is exactly how it looked
+  # like it had never started.
+  brightness: 0.15
+  # Daytime is a different room: readable across it in sunlight. The house
+  # already decides when it is day for the lighting, so this follows that rather
+  # than inventing a second definition that would drift from the first.
+  day_brightness: 1.0
+  # day_entity: input_select.lighting_time_period
+  # day_states: ['day']
+
+# dock_display:
+#   enabled: true
+#   dim_level: 0.02
+#   bright_level: 0.6
+#   bright_seconds: 20
+#   devices:
+#     # Bedroom pair: dimmer still, and back down sooner. This is a light source
+#     # aimed at a bed for most of the night.
+#     master_1:
+#       dim_level: 0.01
+#       bright_seconds: 15
+#     master_2:
+#       dim_level: 0.01
+#       bright_seconds: 15
+
+# overlay:
+#   # Transient volume/mute OSD on the remote. volume_entity is the CACHE the
+#   # volume scripts step instantly on the button press (the same one that drives
+#   # the Envy OSD) - the Sonos's own volume_level lags too much to feel right.
+#   volume_entity: input_number.lr_sonos_volume_cache
+#   mute_entity: media_player.living_room
+#   # Turning the system off mutes the Sonos (turn_off does nothing in eARC
+#   # passthrough), and the app announced a mute nobody pressed. binary_sensor.
+#   # lr_osd_allowed is the gate: the system is on AND the AV engine is not
+#   # currently changing the Sonos itself. The engine raises timer.lr_osd_suppress
+#   # BEFORE it mutes, so the flag beats the state change to the remote instead of
+#   # racing it -- and it stays up long enough to cover the volume settling too.
+#   condition:
+#     entity_id: binary_sensor.lr_osd_allowed
+#     state: 'on'
+# Swipe DOWN on the status strip. The stock launcher used to own a swipe-down
+# panel here, so the gesture is already muscle memory -- this points it at the
+# App info screen for that launcher, which is where Force stop lives.
+#
+# Why that screen specifically: com.aiks.HaRemote holds a partial wake lock for
+# as long as it runs, so the CPU never deep-sleeps and the battery drains. A
+# force-stop clears it and costs nothing, but it comes back on every boot. This
+# makes repeating it two taps instead of a laptop and an adb cable.
+#
+# NOT `pm disable-user` on that package -- it is the launcher, and disabling it
+# bricks the HA100 into a bootloop that safe mode, recovery and factory reset
+# cannot reach (only SP Flash Tool). The same screen re-enables a package, so
+# this stays the way back if one is ever disabled by accident.
+gestures:
+  swipe_down:
+    title: Device
+    items:
+      # First because it is the one with a job: com.aiks.HaRemote holds a partial
+      # wake lock the whole time it runs, so the CPU never deep-sleeps. Force stop
+      # clears it, but the app is back after every boot -- this makes repeating it
+      # two taps rather than a laptop and an adb cable.
+      - name: Force stop HaRemote
+        action: app_info
+        package: com.aiks.HaRemote
+      # Wi-Fi / Display / Sound / Apps were removed: each is one tap deeper from
+      # Android Settings anyway, and the panel is more useful short. The `wifi`,
+      # `display`, `sound` and `apps` actions still exist in the app if wanted.
+      - name: Android Settings
+        action: settings
+# hotkeys:
+# - key: UP
+#   service: script.lr_av_nav_up
+# - key: DOWN
+#   service: script.lr_av_nav_down
+# - key: LEFT
+#   service: script.lr_av_nav_left
+# - key: RIGHT
+#   service: script.lr_av_nav_right
+# - key: CENTER
+#   service: script.lr_av_nav_select
+# - key: BACK
+#   service: script.lr_av_nav_back
+# - key: HOME
+#   service: script.lr_av_nav_home
+# - key: VOLUME_UP
+#   service: script.lr_sonos_volume_up
+# - key: VOLUME_DOWN
+#   service: script.lr_sonos_volume_down
+# - key: MUTE
+#   service: script.lr_sonos_mute_toggle
+# - key: PAGE_UP
+#   service: script.lr_av_channel_up
+# - key: PAGE_DOWN
+#   service: script.lr_av_channel_down
+# - key: LIGHT
+#   page: Living Room
+#   scroll_to: Lights
+# - key: CURTAIN
+#   page: Living Room
+#   scroll_to: Shades
+# - key: SCENE
+#   page: Living Room
+#   scroll_to: Watch
+# - key: AC
+#   page: Living Room
+#   scroll_to: Climate
+# - key: MENU
+#   service: script.lr_av_menu
+# - key: CUSTOM_1
+#   service: script.lr_av_watch_apple_tv
+# - key: CUSTOM_2
+#   service: script.lr_av_watch_kaleidescape
+# - key: CUSTOM_3
+#   service: script.lr_av_play_switch
+# - key: CUSTOM_4
+#   service: script.lr_av_off
+# # The physical Off button reports keycode 132 (POWER). Without a binding the app
+# # just toasts "Unmapped key: 132".
+# - key: POWER
+#   service: script.lr_av_off
+# Press and talk; it ends itself on ~1.2 s of silence (and gives up after 4 s if
+# you never speak). The remote makes NO routing decision - it streams the mic to
+# /api/hap_remote/audio and HA sends it to Siri on the Apple TV or to Assist,
+# depending on the AV activity.
+# - key: VOICE
+#   action: voice
+# No longHotkeys. CENTER used to carry script.lr_av_play_pause on a long press,
+# which was a SECOND play/pause toggle on the same key -- `select`, the short
+# press, already toggles playback. Verified on the Kaleidescape: two `select`
+# commands five seconds apart took a paused film to playing and back to paused.
+# (The Apple TV is the same by tvOS convention -- OK pauses during playback --
+# but that was not measured here.)
+#
+# A press held long enough to trip both bindings therefore toggled TWICE and
+# cancelled out, which is why the first press of a session appeared to do nothing
+# and needed a second one.
+#
+# This was script.lr_av_play_pause's last caller, so it is now unreferenced. Kept
+# anyway: it routes a toggle to whichever source is active, which is a useful
+# thing to have for an automation or a webhook. Delete it if that never happens.

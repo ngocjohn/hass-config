@@ -1,0 +1,146 @@
+haDevices:
+  - id: weather_neklanka
+    entityId: weather.home
+    domain: weather
+    name: Weather Neklanka
+  - id: office_homepod
+    entityId: media_player.office
+    domain: media_player
+    name: Office Homepod
+  - id: livng_window_cover
+    entityId: cover.window
+    domain: cover
+    name: Livng Window Cover
+  - id: sony_tv_backlight
+    entityId: light.sony_tv_backlight
+    domain: light
+    name: Sony TV Backlight
+  - id: bedroom_ripple_mood_light
+    entityId: light.bedroom_ripple_mood_light
+    domain: light
+    name: Bedroom Mood Light
+  - id: office_led_light_strip
+    entityId: light.office_led_light_strip
+    domain: light
+    name: Office Light Strip
+  - id: office_ripple_mood_light
+    entityId: light.office_ripple_mood_light
+    domain: light
+    name: Office Mood Light
+  - id: office_shelf_led
+    entityId: light.office_shelf_led
+    domain: light
+    name: Office Shelf Light
+  - id: office_main_light
+    entityId: light.office_main_light
+    domain: light
+    name: Office Main Light
+  - id: office_lamp_bulb
+    entityId: light.office_lamp_bulb
+    domain: light
+    name: Office Floor Lamp
+  - id: hallway_light
+    entityId: light.hallway_light
+    domain: light
+    name: Hallway Light
+  - id: utility_room_light
+    entityId: light.utility_room_light
+    domain: light
+    name: Utility Room Light
+  - id: aqara_hub
+    entityId: light.aqara_hub
+    domain: light
+    name: Hallway Hub Light
+  - id: bedroom_bed_light
+    entityId: light.bedroom_bed_light
+    domain: light
+    name: Bedroom Bed Light
+  - id: shower_room_main_light
+    entityId: light.shower_room_main_light
+    domain: light
+    name: Shower Room Main Light
+  - id: bedroom_main_light
+    entityId: light.bedroom_main_light
+    domain: light
+    name: Bedroom Ceiling Light
+  - id: bedroom_closet_light
+    entityId: light.bedroom_closet_light
+    domain: light
+    name: Bedroom Closet Light
+  - id: bathroom_mirror_light
+    entityId: light.bathroom_mirror_light
+    domain: light
+    name: Bathroom Mirror Light
+  - id: bathroom_main_light
+    entityId: light.bathroom_main_light
+    domain: light
+    name: Bathroom Main Light
+  - id: hood_lighting
+    entityId: light.hood_lighting
+    domain: light
+    name: Kitchen Hood Light
+  - id: kitchen_table_light
+    entityId: light.kitchen_table_light
+    domain: light
+    name: Kitchen Table Light
+  - id: kitchen_main_light
+    entityId: light.kitchen_main_light
+    domain: light
+    name: Kitchen Main Light
+  - id: shelly_rgbw_kitchen_led_strip
+    entityId: light.shelly_rgbw_kitchen_led_strip
+    domain: light
+    name: Living Room Light Strip
+  - id: living_room_floor_lamp
+    entityId: light.living_room_floor_lamp
+    domain: light
+    name: Living Room Floor Lamp
+pages:
+  - cards:
+      - type: clock_weather
+        options:
+          calendar_entity: calendar.ram_va_mung_mot
+          forecast_rows: 2
+          entity_id: weather.home
+          time_format: 24
+      - type: light
+        options:
+          show_color_temp_control: false
+          show_color_control: false
+          name: Office Floor Lamp
+          entity_id: light.office_lamp_bulb
+          show_brightness_control: true
+      - type: cover
+        options:
+          show_buttons_control: true
+          show_tilt_position_control: true
+          show_position_control: true
+          entity_id: cover.window
+          layout: vertical
+    name: Home
+
+  - cards:
+      - type: button_grid
+        options:
+          columns: 2
+          buttons:
+            - name: Office Mode
+              service: input_boolean.toggle
+              entity_id: input_boolean.office_mode
+            - name: Cozy Light
+              service: input_boolean.toggle
+              entity_id: input_boolean.cozy_light
+    name: Office
+
+theme:
+  accent: '#6EA8FE'
+  controlBackground: '#2C4C58'
+  insetSurface: '#152B33'
+  background: '#000000'
+  accentSecondary: '#697c90'
+  cardSurface: '#101215'
+  amber: '#FFC24B'
+startPage: 0
+longHotkeys:
+  - key: HOME
+    page: Home

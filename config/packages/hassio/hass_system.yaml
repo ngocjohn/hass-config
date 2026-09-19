@@ -33,11 +33,14 @@ recorder:
       - sensor.date
       - sensor.hassio_addons_use
       - sensor.zhimi_mb4_b008_moto_speed_rpm
+      - sensor.zhimi_mb4_b008_pm25_density
       - script.fade_music
       - sensor.motion_detected
       - sensor.tx
       - sensor.rx
       - camera.roidmi_eve_live_map
+      - sensor.unifi_gateway
+      - sensor.mbpro_uptime_usage
     entity_globs:
       - sensor.*_motor_speed
       - sensor.browser_*

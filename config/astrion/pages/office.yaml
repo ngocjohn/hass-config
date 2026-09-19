@@ -1,0 +1,29 @@
+- type: clock_weather
+  options:
+    calendar_entity: calendar.ram_va_mung_mot
+    forecast_rows: 2
+    entity_id: weather.home
+    time_format: 24
+- type: separator
+  options:
+    name: Watch
+    icon: tv
+- type: media_player
+  options:
+    entity_id: media_player.sony_apple_tv_mix
+    variant: strip
+- type: light
+  options:
+    entity_id: light.office_lamp_bulb
+    name: Office Floor Lamp
+- type: light
+  options:
+    entity_id: light.office_lamp_bulb
+    name: Office Floor Lamp
+- type: light
+  options:
+    show_color_temp_control: false
+    show_color_control: false
+    name: Office Floor Lamp
+    entity_id: light.office_lamp_bulb
+    show_brightness_control: true

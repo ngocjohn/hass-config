@@ -13,6 +13,7 @@ homeassistant:
     - /config/www
   allowlist_external_urls:
     - http://192.168.1.189:8123
+    - http://192.168.1.189:3000
   media_dirs:
     movies: /media/movies
     local: /media
@@ -28,6 +29,8 @@ frontend:
     - /local/dashboard-resources/change-create-card-dialog.js?v0.0.1
     - /hacsfiles/more-info-custom/more-info-custom.js?hacstag=1245053247100
     - /local/dashboard-resources/custom_ikonky.js?v0.0.1
+# ASTRION DASHBOARD CUSTOM
+astrion_dashboard:
 
 # INCLUDES
 automation ui: !include automations.yaml

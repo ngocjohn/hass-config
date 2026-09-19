@@ -875,11 +875,12 @@ doors:
 camera:
   template:
     - base
-    - circle
-    - icon_camera_rec
+    - icon_cam_dot
+    # - circle
+    # - icon_camera_rec
   variables:
     camera_on: >
-      [[[ return !entity || ['streaming'].indexOf(entity.state) !== -1; ]]]
+      [[[ return !entity || ['streaming'].indexOf(entity.state) !== -1 || variables.is_streaming; ]]]
     camera_off: >
       [[[ return !entity || ['off', 'standby', 'unknown', 'unavailable', 'idle'].indexOf(entity.state) !== -1; ]]]
     is_bellow_horrizon: >
@@ -889,14 +890,15 @@ camera:
         }
       ]]]
     battery: ''
-    stream_state: >
+    is_streaming: >
       [[[
-        return !entity || states[variables.stream_status].state;
+        let streamingEntity = `binary_sensor.${entity.entity_id.split(".")[1]}_streaming`;
+        return states[streamingEntity].state == 'on';
       ]]]
     camera_enabled: >
       [[[
         let camName = entity.entity_id.split(".")[1],
-            enabledEntity = `switch.${camName}_camera_enabled`,
+            enabledEntity = `switch.${camName}_enabled`,
             isOnline = states[enabledEntity].state == 'on';
             return isOnline;
       ]]]
@@ -904,12 +906,21 @@ camera:
     [[[
       return variables.camera_enabled ? variables.state : variables.translate_offline;
     ]]]
+  triggers_update:
+    - script.cam_snapshot_tmp
+    - >
+      [[[
+        return `binary_sensor.${entity.entity_id.split(".")[1]}_streaming`;
+      ]]]
+    - >
+      [[[
+        return variables.image_entity;
+      ]]]
+  # triggers_update: >
+  #   [[[
+  #     return `binary_sensor.${entity.entity_id.split(".")[1]}_streaming`;
+  #   ]]]
   show_name: false
-  # tap_action:
-  #   action: call-service
-  #   service: automation.trigger
-  #   service_data:
-  #     entity_id: automation.camera_snapshot
   tooltip: >
     [[[
       let batteryState = states[variables.battery].state+' %',
@@ -928,17 +939,20 @@ camera:
           ]]]
   tap_action:
     action: call-service
-    service: >
-      [[[
-        return variables.camera_on
-          ? 'camera.turn_off'
-          : 'camera.turn_on';
-      ]]]
+    service: script.turn_on
     service_data:
-      entity_id: >
-        [[[
-            return entity.entity_id;
-        ]]]
+      variables:
+        camera_entity: >
+          [[[return variables.entity_id;]]]
+    target:
+      entity_id: script.cam_snapshot_tmp
+    # action: call-service
+    # service: script.turn_on
+    # service_data:
+    #   entity_id: >
+    #     [[[
+    #         return entity.entity_id;
+    #     ]]]
 
   styles:
     card:
@@ -974,24 +988,24 @@ camera:
                 : 'none';
             ]]]
 
-  custom_fields:
-    circle: >
-      [[[
-        if (entity.state === 'streaming' || entity.state === 'idle') {
-            let last_changed = variables.compute_duration_time(Date.now() - Date.parse(entity.last_changed)),
-              stroke = variables.state === 'streaming' || variables.state === 'on'  ? '#000000' : 'rgba(255,255,255,0.1)',
-              fill = variables.is_bellow_horrizon && variables.state === 'idle' || variables.state === 'off' ? 'rgba(255,255,255,0.1)' : '#efefef95',
-              text = variables.is_bellow_horrizon && variables.state === 'idle' || variables.state === 'off' ? '#8d8e90' : '#000000';
-        if (entity) {
-          return variables.render_duration_circle(last_changed, stroke, fill, text);
-          }
-        }
-      ]]]
+  # custom_fields:
+  #   circle: >
+  #     [[[
+  #       if (entity.state === 'streaming' || entity.state === 'idle') {
+  #           let last_changed = variables.compute_duration_time(Date.now() - Date.parse(entity.last_changed)),
+  #             stroke = variables.state === 'streaming' || variables.state === 'on'  ? '#000000' : 'rgba(255,255,255,0.1)',
+  #             fill = variables.is_bellow_horrizon && variables.state === 'idle' || variables.state === 'off' ? 'rgba(255,255,255,0.1)' : '#efefef95',
+  #             text = variables.is_bellow_horrizon && variables.state === 'idle' || variables.state === 'off' ? '#8d8e90' : '#000000';
+  #       if (entity) {
+  #         return variables.render_duration_circle(last_changed, stroke, fill, text);
+  #         }
+  #       }
+  #     ]]]
 circle_state:
   template:
     - base
     - circle
-  update_timer: '500ms'
+  # update_timer: '500ms'
   triggers_update: sensor.time
   custom_fields:
     circle: >

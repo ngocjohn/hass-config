@@ -1,0 +1,1067 @@
+# Astrion remote - layout for the custom app (com.custom.astrion).
+#
+# THIS FILE IS THE SOURCE OF TRUTH. The app fetches it as JSON from
+# /api/astrion_dashboard (custom_components/astrion_dashboard converts it), so
+# there is no generated .json to keep in sync - just edit here, then press Sync
+# on the remote (swipe up).
+#
+# Conventions worth knowing:
+#   startPage      index of the page shown at launch
+#   separator      a section header; its name is ALSO the anchor that a hotkey
+#                  scroll_to jumps to, so renaming one means updating hotkeys
+#   bubble_select  pill + dropdown; active_entity supplies the shown value, and
+#                  each option's active_value must match that entity's state
+#                  string EXACTLY (e.g. "Watch Apple TV", not "Apple TV")
+#   open_on        section name whose hotkey should also pop this dropdown open
+#                  (used where a section holds a single selector)
+#   conditional    shows its child card(s) only while entity_id == state
+#   monitor rows   optional "attribute" reads that attribute, not the state
+#   hotkeys        physical buttons: page and/or scroll_to and/or service, or
+#                  action: sync. Key names come from HardwareKeys.kt.
+#
+startPage: 0
+pages:
+- name: Living Room
+  cards:
+  - type: conditional
+    options:
+      entity_id: input_select.lr_av_activity
+      state: Watch Apple TV
+      card:
+        type: media_player
+        options:
+          entity_id: media_player.living_room_apple_tv
+          variant: full
+  - type: conditional
+    options:
+      entity_id: input_select.lr_av_activity
+      state: Watch Kaleidescape
+      card:
+        type: media_player
+        options:
+          entity_id: media_player.kaleidescape_strato_e
+          variant: full
+          # CHAPTER skip, not scan. HA's kaleidescape integration whitelists
+          # only 11 zero-arg commands and chapter skip is not among them --
+          # scan_forward/scan_reverse are fast-forward/rewind. The real
+          # NEXT/PREVIOUS are top-level protocol commands, reached through
+          # scripts/kaleidescape_event.py (the same route the subtitle and
+          # audio-track actions use). `scan: false` gives them skip icons and
+          # stops them putting the card into its scanning state, which would
+          # otherwise flip the centre button to Play after a chapter jump.
+          reverse:
+            service: shell_command.kaleidescape_event
+            scan: false
+            data:
+              event: PREVIOUS
+          forward:
+            service: shell_command.kaleidescape_event
+            scan: false
+            data:
+              event: NEXT
+  # Kaleidescape Voice search results. The results are exposed as a media_player
+  # source_list (see custom_components/kaleidescape_voice/media_player.py)
+  # because that is the shape a live, unknown-at-config-time list can take.
+  #
+  # source_modal, not source_select: this list ARRIVES rather than being gone
+  # looking for, so it presents itself as a full-screen modal of large tappable
+  # titles the moment a search lands (`open_when: 'on'`), instead of hiding one
+  # tap deep behind a dropdown row. `subtitle_attr: media_title` shows the phrase
+  # that was actually heard, which is what tells you a bad match was a
+  # mis-hearing rather than a bad library.
+  #
+  # The conditional wrapper still gates the inline trigger row so nothing shows
+  # between searches; the modal itself is driven by open_when.
+  - type: conditional
+    options:
+      entity_id: media_player.kaleidescape_voice_search
+      state: 'on'
+      card:
+        type: source_modal
+        options:
+          entity_id: media_player.kaleidescape_voice_search
+          name: Search results
+          subtitle_attr: media_title
+          open_when: 'on'
+          # Modal only -- no inline pill on the main screen. The results are a
+          # transient answer to something just asked, not a control that should
+          # occupy the dashboard afterwards; the modal is the whole surface.
+          show_trigger: false
+          item_font_size: 20
+          item_height: 62
+  - type: separator
+    options:
+      name: Watch
+      icon: tv
+      # AV lock, on the right end of the divider. Locking is one tap; unlocking
+      # opens a PIN keypad that writes to the same scratchpad helper the wall
+      # dashboard's keypad uses, so Home Assistant does the checking and there
+      # is one definition of the PIN in the house.
+      lock:
+        entity: input_boolean.tv_wall_locked
+        pin_entry: input_text.tv_wall_lock_pin_entry
+  - type: bubble_select
+    options:
+      name: Activity
+      icon: tv
+      open_on: Watch
+      active_entity: input_select.lr_av_activity
+      options:
+      - name: Apple TV
+        service: script.lr_av_watch_apple_tv
+        active_value: Watch Apple TV
+      - name: Kaleidescape
+        service: script.lr_av_watch_kaleidescape
+        active_value: Watch Kaleidescape
+      - name: Nintendo
+        service: script.lr_av_play_switch
+        active_value: Play Switch
+      - name: 'Off'
+        service: script.lr_av_off
+        active_value: 'Off'
+  - type: conditional
+    options:
+      entity_id: input_select.lr_av_activity
+      state_not: 'Off'
+      cards:
+      - type: separator
+        options:
+          name: Display
+          icon: screen
+      - type: bubble_select
+        options:
+          name: Brightness
+          icon: brightness
+          active_entity: input_select.novastar_brightness_preset
+          options:
+          - name: Auto
+            service: script.novastar_brightness_auto
+            active_value: Auto
+          - name: Dim
+            service: script.novastar_brightness_dim
+            active_value: Dim
+          - name: Normal
+            service: script.novastar_brightness_normal
+            active_value: Normal
+          - name: Bright
+            service: script.novastar_brightness_bright
+            active_value: Bright
+      - type: bubble_select
+        options:
+          name: Screen Size
+          icon: aspect
+          active_entity: input_select.lr_screen_layout
+          options:
+          - name: Full
+            service: script.lr_screen_full
+            active_value: Full
+          - name: Compact
+            service: script.lr_screen_compact
+            active_value: Compact
+          # Labelled "Multi", but the engine's option string is "Multi View" --
+          # active_value has to be the engine's, the name is what fits the pill.
+          - name: Multi
+            service: script.lr_screen_multi
+            active_value: Multi View
+      # Multi-View, mirroring the TV Wall dashboard: how many panes, then one
+      # picker per additional pane. Only while the wall is actually in Multi
+      # View -- these controls mean nothing in Full or Compact.
+      #
+      # Each picker writes its input_select directly rather than going through a
+      # script, because unlike Screen Size there is nothing to wrap: the options
+      # ARE the entity's options. They are rebuilt at runtime by
+      # automation.lr_mv_restrict_source_options from the input-name helpers, so
+      # the list below is the full set and the engine refuses the impossible
+      # picks (the VRROOM can carry only two distinct sources at once).
+      - type: conditional
+        options:
+          entity_id: input_select.lr_screen_layout
+          state: Multi View
+          cards:
+          - type: bubble_select
+            options:
+              name: Panes
+              icon: layout
+              active_entity: input_select.lr_multiview_layout
+              options:
+              - name: 1 Source
+                service: input_select.select_option
+                entity_id: input_select.lr_multiview_layout
+                data: {option: 1 Source}
+                active_value: 1 Source
+              - name: 2 Sources
+                service: input_select.select_option
+                entity_id: input_select.lr_multiview_layout
+                data: {option: 2 Sources}
+                active_value: 2 Sources
+              - name: 3 Sources
+                service: input_select.select_option
+                entity_id: input_select.lr_multiview_layout
+                data: {option: 3 Sources}
+                active_value: 3 Sources
+              - name: 4 Sources
+                service: input_select.select_option
+                entity_id: input_select.lr_multiview_layout
+                data: {option: 4 Sources}
+                active_value: 4 Sources
+          # Pane 2 exists from "2 Sources" up, pane 3 from "3 Sources", pane 4
+          # only at "4 Sources" -- offering a picker for a pane that is not on
+          # screen is an instruction that silently does nothing.
+          - type: conditional
+            options:
+              entity_id: input_select.lr_multiview_layout
+              state_in: [2 Sources, 3 Sources, 4 Sources]
+              card:
+                type: bubble_select
+                options:
+                  name: Source 2
+                  icon: source
+                  active_entity: input_select.lr_mv_source_2
+                  # Latch the remote's physical keys onto THIS pane. One
+                  # shared entity holds the latch, so tapping another
+                  # pane's icon releases this one. Not drawn for Off or
+                  # Switch: neither has a remote entity to send to.
+                  toggle:
+                    icon: remote
+                    entity: input_select.lr_key_target
+                    on_value: Source 2
+                    off_value: Default
+                    hidden_for: ['Off', 'Switch']
+                  options:
+                  - name: 'Off'
+                    service: input_select.select_option
+                    entity_id: input_select.lr_mv_source_2
+                    data: {option: 'Off'}
+                    active_value: 'Off'
+                  - name: Apple TV
+                    service: input_select.select_option
+                    entity_id: input_select.lr_mv_source_2
+                    data: {option: ATV1}
+                    active_value: ATV1
+                  - name: Apple TV 2
+                    service: input_select.select_option
+                    entity_id: input_select.lr_mv_source_2
+                    data: {option: ATV2}
+                    active_value: ATV2
+                  - name: Apple TV 3
+                    service: input_select.select_option
+                    entity_id: input_select.lr_mv_source_2
+                    data: {option: ATV3}
+                    active_value: ATV3
+                  - name: Kaleidescape
+                    service: input_select.select_option
+                    entity_id: input_select.lr_mv_source_2
+                    data: {option: KScape}
+                    active_value: KScape
+                  - name: Switch
+                    service: input_select.select_option
+                    entity_id: input_select.lr_mv_source_2
+                    data: {option: Switch}
+                    active_value: Switch
+          - type: conditional
+            options:
+              entity_id: input_select.lr_multiview_layout
+              state_in: [3 Sources, 4 Sources]
+              card:
+                type: bubble_select
+                options:
+                  name: Source 3
+                  icon: source
+                  active_entity: input_select.lr_mv_source_3
+                  # Latch the remote's physical keys onto THIS pane. One
+                  # shared entity holds the latch, so tapping another
+                  # pane's icon releases this one. Not drawn for Off or
+                  # Switch: neither has a remote entity to send to.
+                  toggle:
+                    icon: remote
+                    entity: input_select.lr_key_target
+                    on_value: Source 3
+                    off_value: Default
+                    hidden_for: ['Off', 'Switch']
+                  options:
+                  - name: 'Off'
+                    service: input_select.select_option
+                    entity_id: input_select.lr_mv_source_3
+                    data: {option: 'Off'}
+                    active_value: 'Off'
+                  - name: Apple TV
+                    service: input_select.select_option
+                    entity_id: input_select.lr_mv_source_3
+                    data: {option: ATV1}
+                    active_value: ATV1
+                  - name: Apple TV 2
+                    service: input_select.select_option
+                    entity_id: input_select.lr_mv_source_3
+                    data: {option: ATV2}
+                    active_value: ATV2
+                  - name: Apple TV 3
+                    service: input_select.select_option
+                    entity_id: input_select.lr_mv_source_3
+                    data: {option: ATV3}
+                    active_value: ATV3
+                  - name: Kaleidescape
+                    service: input_select.select_option
+                    entity_id: input_select.lr_mv_source_3
+                    data: {option: KScape}
+                    active_value: KScape
+                  - name: Switch
+                    service: input_select.select_option
+                    entity_id: input_select.lr_mv_source_3
+                    data: {option: Switch}
+                    active_value: Switch
+          - type: conditional
+            options:
+              entity_id: input_select.lr_multiview_layout
+              state: 4 Sources
+              card:
+                type: bubble_select
+                options:
+                  name: Source 4
+                  icon: source
+                  active_entity: input_select.lr_mv_source_4
+                  # Latch the remote's physical keys onto THIS pane. One
+                  # shared entity holds the latch, so tapping another
+                  # pane's icon releases this one. Not drawn for Off or
+                  # Switch: neither has a remote entity to send to.
+                  toggle:
+                    icon: remote
+                    entity: input_select.lr_key_target
+                    on_value: Source 4
+                    off_value: Default
+                    hidden_for: ['Off', 'Switch']
+                  options:
+                  - name: 'Off'
+                    service: input_select.select_option
+                    entity_id: input_select.lr_mv_source_4
+                    data: {option: 'Off'}
+                    active_value: 'Off'
+                  - name: Apple TV
+                    service: input_select.select_option
+                    entity_id: input_select.lr_mv_source_4
+                    data: {option: ATV1}
+                    active_value: ATV1
+                  - name: Apple TV 2
+                    service: input_select.select_option
+                    entity_id: input_select.lr_mv_source_4
+                    data: {option: ATV2}
+                    active_value: ATV2
+                  - name: Apple TV 3
+                    service: input_select.select_option
+                    entity_id: input_select.lr_mv_source_4
+                    data: {option: ATV3}
+                    active_value: ATV3
+                  - name: Kaleidescape
+                    service: input_select.select_option
+                    entity_id: input_select.lr_mv_source_4
+                    data: {option: KScape}
+                    active_value: KScape
+                  - name: Switch
+                    service: input_select.select_option
+                    entity_id: input_select.lr_mv_source_4
+                    data: {option: Switch}
+                    active_value: Switch
+  - type: separator
+    options:
+      name: Lights
+      icon: light
+  - type: bubble_select
+    options:
+      name: Light Scenes
+      icon: scene
+      open_on: Lights
+      active_entity: input_select.living_room_active_scene
+      options:
+      - name: Bright
+        service: script.lr_lights_bright
+        active_value: Bright
+      - name: Entertain
+        service: script.lr_lights_entertain
+        active_value: Entertain
+      - name: Relax
+        service: script.lr_lights_relax
+        active_value: Relax
+      - name: Movie
+        service: script.lr_lights_movie
+        active_value: Movie
+      - name: 'Off'
+        service: script.lr_lights_off
+        active_value: 'Off'
+      # Last, like the bedroom's nightstands: a control rather than a choice, and
+      # the list reads as options until it stops being one. The fan's down-light
+      # is the one lamp in here no scene owns, so it is the one you end up
+      # reaching for the wall switch to adjust.
+      - type: light
+        entity_id: light.living_room_ceiling_fan_down_light
+        name: Fan Light
+  - type: separator
+    options:
+      name: Shades
+      icon: curtain
+  - type: shade_control
+    options:
+      name: Shades
+      target_entity: input_select.lr_shade_target
+      open:
+        service: script.lr_shade_target_open
+      stop:
+        service: script.lr_shade_target_stop
+      close:
+        service: script.lr_shade_target_close
+  - type: separator
+    options:
+      name: Climate
+      icon: thermostat
+  - type: bubble_climate
+    options:
+      entity_id: climate.living_room
+      step: 1
+      # Hold comes from custom_components/ecobee_hold, which reads the vendor
+      # HomeKit characteristic homekit_controller drops. Resume presses the
+      # thermostat's own clear-hold button -- a real resume, not a setpoint
+      # rewrite. See that component's docstring for why 3 == "holding".
+      hold_entity: binary_sensor.living_room_holding
+      clear_hold:
+        service: button.press
+        entity_id: button.living_room_clear_hold
+  # Four named speeds instead of +/- steppers. The fan has SIX levels, so the
+  # labels map onto every other one (33/67/100); the speed sensor buckets by
+  # range on the way back, so a level set from the wall remote still shows a
+  # label rather than blank.
+  - type: bubble_select
+    options:
+      name: Ceiling Fan
+      icon: fan
+      active_entity: sensor.living_room_ceiling_fan_speed
+      options:
+      - name: Fast
+        service: fan.set_percentage
+        entity_id: fan.living_room_ceiling_fan
+        data:
+          percentage: 100
+        active_value: Fast
+      - name: Medium
+        service: fan.set_percentage
+        entity_id: fan.living_room_ceiling_fan
+        data:
+          percentage: 67
+        active_value: Medium
+      - name: Low
+        service: fan.set_percentage
+        entity_id: fan.living_room_ceiling_fan
+        data:
+          percentage: 33
+        active_value: Low
+      - name: 'Off'
+        service: fan.turn_off
+        entity_id: fan.living_room_ceiling_fan
+        active_value: 'Off'
+- name: Master Bedroom
+  # This room drives its OWN Sonos, so it needs its own OSD: the page's volume
+  # keys call script.mb_sonos_volume_* and the global overlay watches the living
+  # room's cache, which never moves here -- the reason no OSD appeared at all.
+  # Whole-value override, not a merge: speaker, cache and gate only mean anything
+  # together.
+  overlay:
+    volume_entity: input_number.mb_sonos_volume_cache
+    mute_entity: media_player.master_bedroom
+    condition:
+      entity_id: binary_sensor.mb_osd_allowed
+      state: 'on'
+  # Replicates what the four bedside Picos do, in the order the room is used:
+  # what's on, the lights, the shades, the bed, the climate. Every binding here
+  # is the SAME service the Pico presses -- the keypad button entities, the same
+  # bed preset buttons -- so the touchscreen and the physical remotes cannot
+  # drift apart.
+  cards:
+  - type: separator
+    options:
+      name: Watch
+      icon: tv
+  - type: bubble_select
+    options:
+      name: Activity
+      icon: tv
+      open_on: Watch
+      active_entity: input_select.mb_av_activity
+      options:
+      - name: Apple TV
+        service: script.mb_av_watch_apple_tv
+        active_value: Watch Apple TV
+      - name: 'Off'
+        service: script.mb_av_off
+        active_value: 'Off'
+  - type: conditional
+    options:
+      entity_id: input_select.mb_av_activity
+      state: Watch Apple TV
+      card:
+        type: media_player
+        options:
+          entity_id: media_player.master_bedroom_2
+          variant: full
+  - type: separator
+    options:
+      name: Lights
+      icon: light
+  # Presses the Lutron keypad BUTTON entities, exactly as bedside pico 2 does,
+  # so the real hardware scene fires and every downstream automation (scene
+  # sync, scene invalidate) fires with it. active_entity highlights whichever
+  # scene is live; input_select.master_bedroom_active_scene is maintained by
+  # automation.master_bedroom_scene_sync.
+  #
+  # Romance and Good Night sit in this same list because from the bed they are
+  # the same kind of decision as a scene -- "make the room be like this". The
+  # one wrinkle: neither can HIGHLIGHT. bubble_select has a single active_entity
+  # per card, and the scene tracker knows nothing about romance mode or bedtime,
+  # so those two read as actions in a list that is otherwise showing state.
+  - type: bubble_select
+    options:
+      name: Lights
+      icon: light
+      open_on: Lights
+      active_entity: input_select.master_bedroom_active_scene
+      options:
+      - name: Bright
+        service: button.press
+        entity_id: button.master_bedroom_keypad_master_button_1
+        active_value: Bright
+      - name: Entertain
+        service: button.press
+        entity_id: button.master_bedroom_keypad_master_button_2
+        active_value: Entertain
+      - name: Relax
+        service: button.press
+        entity_id: button.master_bedroom_keypad_master_button_3
+        active_value: Relax
+      # Toggles the boolean that automation.master_romance_mode watches, so this
+      # behaves identically to the bedside pico's Off button.
+      - name: Romance
+        service: input_boolean.toggle
+        entity_id: input_boolean.master_romance_mode
+      - name: 'Off'
+        service: button.press
+        entity_id: button.master_bedroom_keypad_master_off
+        active_value: 'Off'
+      - name: Good Night
+        service: script.good_night
+      # The two nightstands live INSIDE this dropdown rather than as their own
+      # pill cards: from the bed they are the same decision as the scenes above
+      # ("make the room be like this"), and on a 3" screen two full-width slider
+      # pills cost more of the page than they earn when the usual answer is a
+      # scene. They are last because they are controls, not choices -- the list
+      # reads as options until it stops being one.
+      - type: light
+        entity_id: light.master_bedroom_nightstand_1
+        name: Nightstand His
+      - type: light
+        entity_id: light.master_bedroom_nightstand_2
+        name: Nightstand Hers
+  - type: separator
+    options:
+      name: Shades
+      icon: curtain
+  # Same card and same shape as the Living Room's: pick a target, then act on it.
+  # The scripts resolve the picker to a cover and call the TEMPLATE wrapper, not
+  # the _bond entity, which is what keeps the position trackers honest -- Bond is
+  # RF one-way, so those trackers are the source of truth for open/closed.
+  - type: shade_control
+    options:
+      name: Shades
+      target_entity: input_select.master_shade_target
+      open:
+        service: script.mb_shade_target_open
+      stop:
+        service: script.mb_shade_target_stop
+      close:
+        service: script.mb_shade_target_close
+  - type: separator
+    options:
+      name: Bed
+      icon: bed
+  - type: bubble_select
+    options:
+      name: Position
+      icon: bed
+      open_on: Bed
+      active_entity: input_select.bed_active_preset
+      options:
+      - name: TV
+        service: button.press
+        entity_id: button.bedroom_preset_tv
+        active_value: TV
+      - name: Zero G
+        service: button.press
+        entity_id: button.bedroom_preset_zero_g
+        active_value: Zero G
+      - name: Flat
+        service: button.press
+        entity_id: button.bedroom_preset_flat
+        active_value: Flat
+      # The bed enters this position on its own, via its built-in anti-snore --
+      # so this entry is as much a READOUT as a control. Without it the dropdown
+      # showed the previous preset (or nothing) while the bed had already moved,
+      # which is the thing that made the remote look wrong at 3am.
+      - name: Snore
+        service: button.press
+        entity_id: button.bedroom_preset_anti_snore
+        active_value: Snore
+  - type: separator
+    options:
+      name: Climate
+      icon: thermostat
+  # climate.bedrooms, not climate.new_master: the "New Master" ecobee exists but
+  # is not commissioned yet. Swap the entity_id here when it is.
+  - type: bubble_climate
+    options:
+      entity_id: climate.bedrooms
+      step: 1
+      hold_entity: binary_sensor.bedrooms_holding
+      clear_hold:
+        service: button.press
+        entity_id: button.bedrooms_clear_hold
+  # step 17 ~= the six discrete levels LocalTuya exposes (percentage_step 16.67),
+  # so one press moves exactly one level instead of landing between them.
+  - type: bubble_select
+    options:
+      name: Ceiling Fan
+      icon: fan
+      active_entity: sensor.master_ceiling_fan_speed
+      options:
+      - name: Fast
+        service: fan.set_percentage
+        entity_id: fan.master_ceiling
+        data:
+          percentage: 100
+        active_value: Fast
+      - name: Medium
+        service: fan.set_percentage
+        entity_id: fan.master_ceiling
+        data:
+          percentage: 67
+        active_value: Medium
+      - name: Low
+        service: fan.set_percentage
+        entity_id: fan.master_ceiling
+        data:
+          percentage: 33
+        active_value: Low
+      - name: 'Off'
+        service: fan.turn_off
+        entity_id: fan.master_ceiling
+        active_value: 'Off'
+  # Page-scoped hotkeys: while THIS page is showing, the physical keys drive the
+  # bedroom instead of the living room. Resolution is per key, page then global,
+  # so only the keys listed here change -- VOICE's action, SYNC and anything else
+  # is inherited from the global block untouched.
+  #
+  # This is what makes the page the room context, and it is why carrying a remote
+  # between rooms works: what the keys control follows what you are LOOKING at,
+  # not where the remote happens to be.
+  #
+  # NOT listed here, deliberately: LIGHT / CURTAIN / SCENE / AC. Those four are a
+  # per-REMOTE concern, not a per-page one -- the HA100A prints LIGHT/SHADE/
+  # MUSIC/AC on them and the HA100B prints SCAN/PLAY-PAUSE/STOP/SCAN FWD, so what
+  # they should do depends on the plastic, which no page can know.
+  hotkeys:
+  - key: UP
+    service: script.mb_av_nav_up
+  - key: DOWN
+    service: script.mb_av_nav_down
+  - key: LEFT
+    service: script.mb_av_nav_left
+  - key: RIGHT
+    service: script.mb_av_nav_right
+  - key: CENTER
+    service: script.mb_av_nav_select
+  - key: BACK
+    service: script.mb_av_nav_back
+  - key: HOME
+    service: script.mb_av_nav_home
+  - key: MENU
+    service: script.mb_av_menu
+  - key: VOLUME_UP
+    service: script.mb_sonos_volume_up
+  - key: VOLUME_DOWN
+    service: script.mb_sonos_volume_down
+  - key: MUTE
+    service: script.mb_sonos_mute_toggle
+  - key: PAGE_UP
+    service: script.mb_av_channel_up
+  - key: PAGE_DOWN
+    service: script.mb_av_channel_down
+  - key: CUSTOM_1
+    service: script.mb_av_watch_apple_tv
+  # CUSTOM_2 and CUSTOM_3 select the Kaleidescape and the Switch, neither of
+  # which exists in this room. Listed with no action so they resolve, are
+  # handled, and do nothing -- rather than inheriting and switching the LIVING
+  # ROOM's activity from the bedroom page.
+  - key: CUSTOM_2
+  - key: CUSTOM_3
+  - key: CUSTOM_4
+    service: script.mb_av_off
+  - key: POWER
+    service: script.mb_av_off
+  # The four shortcut keys, mapped to THIS page's sections -- the same job they
+  # do on the Living Room page, pointed at the bedroom's own sections. No
+  # `page:` clause: they scroll within whatever page is showing, so they stay
+  # useful if the page set ever changes.
+  #
+  # MUSIC (SCENE) goes to Watch rather than a music section: there is no audio
+  # section here, and scrolling back up to the activity selector is the more
+  # useful thing that key can do from anywhere on the page. Watch also carries
+  # `open_on: Watch`, so it pops the Activity dropdown open on arrival.
+  #
+  # These are NOT quiet: they move this display, so it has to be lit to be worth
+  # pressing -- the same reason the Living Room page leaves them loud.
+  - key: LIGHT          # A unit prints LIGHT
+    scroll_to: Lights
+  - key: CURTAIN        # A unit prints SHADE
+    scroll_to: Shades
+  - key: SCENE          # A unit prints MUSIC
+    scroll_to: Watch
+  - key: AC             # A unit prints AC
+    scroll_to: Climate
+  # The VOICE key streams to whichever Apple TV this page belongs to. The rest of
+  # the voice config (timings, prompts) is inherited.
+  voice:
+    path: /api/appletv_siri/audio/master_bedroom
+# Status lives OFF the pager, reached from the swipe-up panel's Status row.
+#
+# These readouts are reference material you go LOOKING for -- "what is the
+# chain actually doing right now" -- rather than something glanced at in
+# passing, so they do not earn a permanent dot beside the rooms used daily.
+# Same cards, same options; only the way in changed.
+status:
+  title: TV Wall Status
+  cards:
+  - type: separator
+    options:
+      name: Source
+      icon: tv
+  - type: monitor
+    options:
+      entities:
+      - entity_id: sensor.vrroom_tx0_source
+        name: Source
+      - entity_id: sensor.vrroom_tx0_video_plain
+        attribute: resolution
+        name: Resolution
+      - entity_id: sensor.vrroom_tx0_video_plain
+        attribute: dynamic_range
+        name: Dynamic Range
+      - entity_id: sensor.vrroom_tx0_video_plain
+        attribute: color_space
+        name: Color Space
+      - entity_id: sensor.vrroom_tx0_video_plain
+        attribute: bit_depth
+        name: Bit Depth
+      - entity_id: sensor.vrroom_tx0_video_plain
+        attribute: chroma
+        name: Chroma
+      - entity_id: sensor.vrroom_tx0_video_plain
+        attribute: hdcp
+        name: HDCP
+      - entity_id: sensor.vrroom_earc_audio_out
+        name: Audio (VRROOM)
+      - entity_id: sensor.living_room_audio_input_format
+        name: Audio (Sonos)
+  - type: separator
+    options:
+      name: Envy In
+      icon: remote
+  - type: monitor
+    options:
+      entities:
+      # First, because it changes how everything below it should be read: when
+      # the Envy is bypassed the wall is fed from VRROOM TX1 and these incoming
+      # -signal rows describe a path the picture is not currently taking.
+      - entity_id: binary_sensor.novastar_envy_bypassed
+        name: Envy Bypass
+      - entity_id: sensor.madvr_envy_10_10_10_167_incoming_signal_resolution
+        name: Resolution
+      - entity_id: sensor.madvr_envy_10_10_10_167_incoming_signal_frame_rate
+        name: Frame Rate
+      - entity_id: sensor.madvr_envy_10_10_10_167_incoming_signal_hdr_mode
+        name: HDR Mode
+      - entity_id: sensor.madvr_envy_10_10_10_167_incoming_signal_aspect_ratio
+        name: Signal Aspect
+      - entity_id: sensor.madvr_envy_10_10_10_167_aspect_ratio_name
+        name: Content AR
+  - type: separator
+    options:
+      name: Envy Out
+      icon: remote
+  - type: monitor
+    options:
+      entities:
+      - entity_id: sensor.madvr_envy_10_10_10_167_outgoing_signal_resolution
+        name: Resolution
+      - entity_id: sensor.madvr_envy_10_10_10_167_outgoing_signal_frame_rate
+        name: Frame Rate
+      - entity_id: sensor.madvr_envy_10_10_10_167_outgoing_signal_hdr_mode
+        name: HDR Mode
+  - type: separator
+    options:
+      name: Screen
+      icon: screen
+  - type: monitor
+    options:
+      entities:
+      - entity_id: sensor.novastar_output
+        attribute: frame_rate
+        name: Frame Rate
+      - entity_id: sensor.novastar_output
+        attribute: bit_depth
+        name: Bit Depth
+      - entity_id: input_select.novastar_brightness_preset
+        name: Mode
+      - entity_id: sensor.novastar_auto_hdr_nits_target
+        name: Auto target
+      - entity_id: sensor.fp2_lr_lux_smoothed
+        name: Ambient lux
+
+voice:
+  # Where the VOICE key streams the mic (raw PCM16, 16 kHz mono, chunked). The
+  # remote makes NO routing decision - this endpoint does. custom_components/
+  # hap_remote sends it to Siri on the Apple TV while the AV activity is
+  # "Watch Apple TV", and to HA Assist otherwise.
+  # Names the Apple TV: there is no default, so an utterance always says
+  # where it is going. Slug comes from the Apple TV's own name.
+  path: /api/appletv_siri/audio/living_room_1
+  max_ms: 10000        # hard cap on one utterance
+  silence_ms: 1200     # quiet AFTER speech before it's considered finished
+  no_speech_ms: 4000   # give up if you press the key and never speak
+
+  # Shown while listening, at the moment you are deciding what to say. A mic
+  # that says "Listening…" proves it works but not what it UNDERSTANDS, and an
+  # undiscoverable vocabulary gets used for the two phrases you already know.
+  # Gated to Kaleidescape: movie searches are useful advice in front of the
+  # theater and noise in front of an Apple TV (where VOICE goes to Siri anyway).
+  # Each line is a phrasing the sentence templates actually match -- keep them
+  # in step with custom_sentences/en/kaleidescape_voice.yaml.
+  suggest_entity: input_select.lr_av_activity
+  suggest_state: Watch Kaleidescape
+  suggest_title: Try saying
+  suggestions:
+    - play Air Force One
+    - find james bond
+    - show me my movies from the marvel universe
+    - what Kubrick movies do I have
+    - surprise me
+
+# Motion wake: light the screen when the remote is picked up.
+#
+# Per-remote because the assumption is not universal -- it assumes the remote
+# rests on something STILL. master_1 and master_2 live in a bed, where the
+# surface moves whenever its owner does; at the original fixed 0.9 threshold the
+# display re-lit within seconds of every timeout, all night. The living room unit
+# on a side table never had the problem.
+#
+# `hits` is what actually separates the two cases. Amplitude alone cannot:
+# rolling over can outweigh a gentle pick-up. But a pick-up is SUSTAINED -- the
+# remote keeps moving while it travels to a hand -- where a bed jolt is one spike
+# and over. Requiring consecutive samples discriminates on duration, not force.
+#
+# Tunable live: the app reads these on every sensor event, so a Sync re-tunes
+# without a reinstall. Only `enabled` needs a restart (it decides whether the
+# sensor is registered at all).
+motion_wake:
+  # Rewritten 2026-08-17 to detect a PICK-UP rather than a jolt.
+  #
+  # The old test was the change in the acceleration vector's MAGNITUDE. That
+  # responds to a knock -- someone shifting on a mattress -- but is nearly blind
+  # to the thing actually worth waking for: lifting a remote rotates it, and
+  # rotation leaves the magnitude at ~1 g while only the axis components move. So
+  # there was no threshold that both woke on a pick-up and ignored a bed, and
+  # every retune traded one against the other.
+  #
+  # It now watches the DIRECTION of the low-passed gravity vector and fires on a
+  # tilt of `tilt_degrees`, with `jerk_ratio` kept for a deliberate shake that
+  # does not turn the remote. Both are scale-free, which matters more than it
+  # sounds: master_2's accelerometer reads ~2x true (18.9 m/s2 at rest against
+  # 9.6 on its twin), so the same `threshold` number used to mean half as much on
+  # that unit as on the others. Angles and ratios finally mean the same thing on
+  # every remote.
+  tilt_degrees: 10
+  jerk_ratio: 0.25
+  hits: 2
+  settle_seconds: 8
+  cooldown_seconds: 2
+  # Off: a remote on a USB-C cable is usually in a hand, and this hardware cannot
+  # tell a cable from the dock -- both enumerate as Mains. Suppressing wake here
+  # would break the cable case to fix one that does not need fixing, since a
+  # docked remote already has its screen held on by dock_display.
+  ignore_while_charging: false
+  devices:
+    # The bed pair. A body-shift translates the remote without turning it, so the
+    # tilt gate does most of the work here and these can now sit close to the
+    # global values instead of being cranked until a real pick-up failed too.
+    master_1:
+      tilt_degrees: 14
+      hits: 2
+      window_ms: 1000
+      settle_seconds: 10
+    master_2:
+      tilt_degrees: 14
+      hits: 2
+      window_ms: 1000
+      settle_seconds: 10
+    # living inherits the global values -- a side table does not move on its own.
+
+# Docked remotes stay awake as a dim status panel instead of sleeping: the dock
+# supplies mains power, so the timeout saves nothing there. Any touch or button
+# raises the backlight for `bright_seconds`, then it fades back.
+# Idle clock for a DOCKED remote. Off the dock nothing changes -- the display
+# still sleeps, so this cannot cost battery. Enabled only on the bedroom pair;
+# the living-room remote sits in a room where a lit clock is not wanted.
+screensaver:
+  enabled: true
+  idle_seconds: 20
+  clock_24h: false
+  # Not white: this faces a bed for eight hours a night, and white on black at
+  # full brightness is a lamp.
+  color: '#8A8A8A'
+  show_date: true
+  # US order: weekday, month, day.
+  date_format: 'EEEE MMMM d'
+  # Its own backlight, well above the dock's 1% dashboard dim -- at that level
+  # the clock renders perfectly and is invisible, which is exactly how it looked
+  # like it had never started.
+  brightness: 0.15
+  # Daytime is a different room: readable across it in sunlight. The house
+  # already decides when it is day for the lighting, so this follows that rather
+  # than inventing a second definition that would drift from the first.
+  day_brightness: 1.0
+  day_entity: input_select.lighting_time_period
+  day_states: ['day']
+
+dock_display:
+  enabled: true
+  dim_level: 0.02
+  bright_level: 0.6
+  bright_seconds: 20
+  devices:
+    # Bedroom pair: dimmer still, and back down sooner. This is a light source
+    # aimed at a bed for most of the night.
+    master_1:
+      dim_level: 0.01
+      bright_seconds: 15
+    master_2:
+      dim_level: 0.01
+      bright_seconds: 15
+
+overlay:
+  # Transient volume/mute OSD on the remote. volume_entity is the CACHE the
+  # volume scripts step instantly on the button press (the same one that drives
+  # the Envy OSD) - the Sonos's own volume_level lags too much to feel right.
+  volume_entity: input_number.lr_sonos_volume_cache
+  mute_entity: media_player.living_room
+  # Turning the system off mutes the Sonos (turn_off does nothing in eARC
+  # passthrough), and the app announced a mute nobody pressed. binary_sensor.
+  # lr_osd_allowed is the gate: the system is on AND the AV engine is not
+  # currently changing the Sonos itself. The engine raises timer.lr_osd_suppress
+  # BEFORE it mutes, so the flag beats the state change to the remote instead of
+  # racing it -- and it stays up long enough to cover the volume settling too.
+  condition:
+    entity_id: binary_sensor.lr_osd_allowed
+    state: 'on'
+# Swipe DOWN on the status strip. The stock launcher used to own a swipe-down
+# panel here, so the gesture is already muscle memory -- this points it at the
+# App info screen for that launcher, which is where Force stop lives.
+#
+# Why that screen specifically: com.aiks.HaRemote holds a partial wake lock for
+# as long as it runs, so the CPU never deep-sleeps and the battery drains. A
+# force-stop clears it and costs nothing, but it comes back on every boot. This
+# makes repeating it two taps instead of a laptop and an adb cable.
+#
+# NOT `pm disable-user` on that package -- it is the launcher, and disabling it
+# bricks the HA100 into a bootloop that safe mode, recovery and factory reset
+# cannot reach (only SP Flash Tool). The same screen re-enables a package, so
+# this stays the way back if one is ever disabled by accident.
+gestures:
+  swipe_down:
+    title: Device
+    items:
+    # First because it is the one with a job: com.aiks.HaRemote holds a partial
+    # wake lock the whole time it runs, so the CPU never deep-sleeps. Force stop
+    # clears it, but the app is back after every boot -- this makes repeating it
+    # two taps rather than a laptop and an adb cable.
+    - name: Force stop HaRemote
+      action: app_info
+      package: com.aiks.HaRemote
+    # Wi-Fi / Display / Sound / Apps were removed: each is one tap deeper from
+    # Android Settings anyway, and the panel is more useful short. The `wifi`,
+    # `display`, `sound` and `apps` actions still exist in the app if wanted.
+    - name: Android Settings
+      action: settings
+hotkeys:
+- key: UP
+  service: script.lr_av_nav_up
+- key: DOWN
+  service: script.lr_av_nav_down
+- key: LEFT
+  service: script.lr_av_nav_left
+- key: RIGHT
+  service: script.lr_av_nav_right
+- key: CENTER
+  service: script.lr_av_nav_select
+- key: BACK
+  service: script.lr_av_nav_back
+- key: HOME
+  service: script.lr_av_nav_home
+- key: VOLUME_UP
+  service: script.lr_sonos_volume_up
+- key: VOLUME_DOWN
+  service: script.lr_sonos_volume_down
+- key: MUTE
+  service: script.lr_sonos_mute_toggle
+- key: PAGE_UP
+  service: script.lr_av_channel_up
+- key: PAGE_DOWN
+  service: script.lr_av_channel_down
+- key: LIGHT
+  page: Living Room
+  scroll_to: Lights
+- key: CURTAIN
+  page: Living Room
+  scroll_to: Shades
+- key: SCENE
+  page: Living Room
+  scroll_to: Watch
+- key: AC
+  page: Living Room
+  scroll_to: Climate
+- key: MENU
+  service: script.lr_av_menu
+- key: CUSTOM_1
+  service: script.lr_av_watch_apple_tv
+- key: CUSTOM_2
+  service: script.lr_av_watch_kaleidescape
+- key: CUSTOM_3
+  service: script.lr_av_play_switch
+- key: CUSTOM_4
+  service: script.lr_av_off
+# The physical Off button reports keycode 132 (POWER). Without a binding the app
+# just toasts "Unmapped key: 132".
+- key: POWER
+  service: script.lr_av_off
+# Press and talk; it ends itself on ~1.2 s of silence (and gives up after 4 s if
+# you never speak). The remote makes NO routing decision - it streams the mic to
+# /api/hap_remote/audio and HA sends it to Siri on the Apple TV or to Assist,
+# depending on the AV activity.
+- key: VOICE
+  action: voice
+# No longHotkeys. CENTER used to carry script.lr_av_play_pause on a long press,
+# which was a SECOND play/pause toggle on the same key -- `select`, the short
+# press, already toggles playback. Verified on the Kaleidescape: two `select`
+# commands five seconds apart took a paused film to playing and back to paused.
+# (The Apple TV is the same by tvOS convention -- OK pauses during playback --
+# but that was not measured here.)
+#
+# A press held long enough to trip both bindings therefore toggled TWICE and
+# cancelled out, which is why the first press of a session appeared to do nothing
+# and needed a second one.
+#
+# This was script.lr_av_play_pause's last caller, so it is now unreferenced. Kept
+# anyway: it routes a toggle to whichever source is active, which is a useful
+# thing to have for an automation or a webhook. Delete it if that never happens.
