@@ -9,5 +9,5 @@
     "issue_tracker": "https://github.com/TTLucian/ha-electrolux/issues",
     "loggers": ["electrolux_group_developer_sdk"],
     "requirements": ["electrolux-group-developer-sdk>=0.7.0"],
-    "version": "3.7.8"
+    "version": "3.8.1"
 }

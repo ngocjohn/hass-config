@@ -21,12 +21,140 @@
 #
 startPage: 0
 pages:
-  - name: Office
-    cards: !include pages/office.yaml
-    dock_cards:
-  - name: Living
-    cards: !include pages/living.yaml
-    dock_cards:
+  - name: Overview
+    cards:
+      - type: weather_header
+        dock_header: true
+        options:
+          entity_id: weather.home
+          forecast_rows: 2
+          calendar_entity: calendar.ram_va_mung_mot
+          time_format: 24
+      - type: separator
+        options:
+          name: Watch
+          icon: tv
+      - type: conditional
+        options:
+          entity_id: media_player.ma_master
+          state: 'on'
+          card:
+            type: conditional
+            options:
+              entity_id: media_player.ma_master
+              state_in: ['playing', 'paused', 'off']
+              card:
+                type: media_player
+                options:
+                  entity_id: media_player.ma_master
+                  variant: full
+  # - name: Living Room
+  #   cards:
+  #     - type: conditional
+  #       options:
+  #         entity_id: input_boolean.brma
+  #         state_in: ['off', 'on']
+  #         dock_header: false
+  #         card:
+  #           type: weather_header
+  #           options:
+  #             entity_id: weather.home
+  #             forecast_rows: 2
+  #             calendar_entity: calendar.ram_va_mung_mot
+  #             time_format: 24
+  #     - type: separator
+  #       options:
+  #         name: Watch
+  #         icon: tv
+  #     - type: media_player
+  #       options:
+  #         entity_id: media_player.ma_master
+  #         variant: strip
+  #     - type: separator
+  #       options:
+  #         name: Lights
+  #         icon: light
+  #     - type: light
+  #       options:
+  #         entity_id: light.office_lamp_bulb
+  #         name: Office Floor Lamp
+  #     - type: light
+  #       options:
+  #         entity_id: light.office_lamp_bulb
+  #         name: Office Floor Lamp
+  #     - type: light
+  #       options:
+  #         show_color_temp_control: false
+  #         show_color_control: false
+  #         name: Office Floor Lamp
+  #         entity_id: light.office_lamp_bulb
+  #         show_brightness_control: true
+
+  # cards: []
+
+  # cards: !include pages/living.yaml
+
+  # - type: conditional
+  #   options:
+  #     entity_id: input_boolean.brma
+  #     state: 'on'
+  #     dock_header: false
+  #     card:
+  #       type: clock_weather
+  #       options:
+  #         entity_id: weather.home
+  #         forecast_rows: 2
+  #         calendar_entity: calendar.ram_va_mung_mot
+  #         time_format: 24
+
+  # - name: Office
+  #   dock_cards:
+  #     - type: conditional
+  #       options:
+  #         entity_id: media_player.ma_master
+  #         state_in: ['playing', 'paused']
+  #         dock_header: true
+  #         card:
+  #           type: conditional
+  #           options:
+  #             entity_id: media_player.ma_master
+  #             state_in: ['playing', 'paused', 'off']
+  #             card:
+  #               type: media_player
+  #               options:
+  #                 entity_id: media_player.ma_master
+  #                 variant: header
+  #     - type: clock_weather
+  #       options:
+  #         calendar_entity: calendar.ram_va_mung_mot
+  #         forecast_rows: 2
+  #         entity_id: weather.home
+  #         time_format: 24
+  #     - type: separator
+  #       options:
+  #         name: Media
+  #         icon: tv
+  #     - type: media_player
+  #       options:
+  #         entity_id: media_player.sony_apple_tv_mix
+  #         variant: strip
+  #     - type: light
+  #       options:
+  #         entity_id: light.office_lamp_bulb
+  #         name: Office Floor Lamp
+  #     - type: light
+  #       options:
+  #         entity_id: light.office_lamp_bulb
+  #         name: Office Floor Lamp
+  #     - type: light
+  #       options:
+  #         show_color_temp_control: false
+  #         show_color_control: false
+  #         name: Office Floor Lamp
+  #         entity_id: light.office_lamp_bulb
+  #         show_brightness_control: true
+
+  # dock_cards: !include pages/office.yaml
 
 # voice:
 #   # Where the VOICE key streams the mic (raw PCM16, 16 kHz mono, chunked). The
@@ -202,74 +330,83 @@ gestures:
       # `display`, `sound` and `apps` actions still exist in the app if wanted.
       - name: Android Settings
         action: settings
-# hotkeys:
-# - key: UP
-#   service: script.lr_av_nav_up
-# - key: DOWN
-#   service: script.lr_av_nav_down
-# - key: LEFT
-#   service: script.lr_av_nav_left
-# - key: RIGHT
-#   service: script.lr_av_nav_right
-# - key: CENTER
-#   service: script.lr_av_nav_select
-# - key: BACK
-#   service: script.lr_av_nav_back
-# - key: HOME
-#   service: script.lr_av_nav_home
-# - key: VOLUME_UP
-#   service: script.lr_sonos_volume_up
-# - key: VOLUME_DOWN
-#   service: script.lr_sonos_volume_down
-# - key: MUTE
-#   service: script.lr_sonos_mute_toggle
-# - key: PAGE_UP
-#   service: script.lr_av_channel_up
-# - key: PAGE_DOWN
-#   service: script.lr_av_channel_down
-# - key: LIGHT
-#   page: Living Room
-#   scroll_to: Lights
-# - key: CURTAIN
-#   page: Living Room
-#   scroll_to: Shades
-# - key: SCENE
-#   page: Living Room
-#   scroll_to: Watch
-# - key: AC
-#   page: Living Room
-#   scroll_to: Climate
-# - key: MENU
-#   service: script.lr_av_menu
-# - key: CUSTOM_1
-#   service: script.lr_av_watch_apple_tv
-# - key: CUSTOM_2
-#   service: script.lr_av_watch_kaleidescape
-# - key: CUSTOM_3
-#   service: script.lr_av_play_switch
-# - key: CUSTOM_4
-#   service: script.lr_av_off
-# # The physical Off button reports keycode 132 (POWER). Without a binding the app
-# # just toasts "Unmapped key: 132".
-# - key: POWER
-#   service: script.lr_av_off
-# Press and talk; it ends itself on ~1.2 s of silence (and gives up after 4 s if
-# you never speak). The remote makes NO routing decision - it streams the mic to
-# /api/hap_remote/audio and HA sends it to Siri on the Apple TV or to Assist,
-# depending on the AV activity.
-# - key: VOICE
-#   action: voice
+hotkeys:
+  # - key: UP
+  #   service: script.lr_av_nav_up
+  # - key: DOWN
+  #   service: script.lr_av_nav_down
+  # - key: LEFT
+  #   service: script.lr_av_nav_left
+  # - key: RIGHT
+  #   service: script.lr_av_nav_right
+  # - key: CENTER
+  #   service: script.lr_av_nav_select
+  # - key: BACK
+  #   service: script.lr_av_nav_back
+  # - key: HOME
+  #   service: script.lr_av_nav_home
+  # - key: VOLUME_UP
+  #   service: script.lr_sonos_volume_up
+  # - key: VOLUME_DOWN
+  #   service: script.lr_sonos_volume_down
+  # - key: MUTE
+  #   service: script.lr_sonos_mute_toggle
+  # - key: PAGE_UP
+  #   service: script.lr_av_channel_up
+  # - key: PAGE_DOWN
+  #   service: script.lr_av_channel_down
+  - key: LIGHT
+    page: Living Room
+    scroll_to: Lights
+  - key: CURTAIN
+    page: Office
+    scroll_to: Media
+  - key: SCENE
+    page: Living Room
+    scroll_to: Watch
+  # - key: AC
+  #   page: Living Room
+  #   scroll_to: Climate
+  # - key: MENU
+  #   service: script.lr_av_menu
+  - key: CUSTOM_1
+    action: sync
+  # - key: CUSTOM_2
+  #   page: Office
+  #   scroll_to: Media
+  # - key: CUSTOM_3
+  #   page: Office
+  #   scroll_to: Media
+  # - key: custom_4
+  #   page: Office
+  #   scroll_to: Media
+  # - key: CUSTOM_2
+  #   service: script.lr_av_watch_kaleidescape
+  # - key: CUSTOM_3
+  #   service: script.lr_av_play_switch
+  # - key: CUSTOM_4
+  #   service: script.lr_av_off
+  # The physical Off button reports keycode 132 (POWER). Without a binding the app
+  # just toasts "Unmapped key: 132".
+  # - key: POWER
+  #   service: script.lr_av_off
+  # Press and talk; it ends itself on ~1.2 s of silence (and gives up after 4 s if
+  # you never speak). The remote makes NO routing decision - it streams the mic to
+  # /api/hap_remote/audio and HA sends it to Siri on the Apple TV or to Assist,
+  # depending on the AV activity.
+  - key: VOICE
+    action: voice
 # No longHotkeys. CENTER used to carry script.lr_av_play_pause on a long press,
 # which was a SECOND play/pause toggle on the same key -- `select`, the short
 # press, already toggles playback. Verified on the Kaleidescape: two `select`
 # commands five seconds apart took a paused film to playing and back to paused.
 # (The Apple TV is the same by tvOS convention -- OK pauses during playback --
 # but that was not measured here.)
-#
+
 # A press held long enough to trip both bindings therefore toggled TWICE and
 # cancelled out, which is why the first press of a session appeared to do nothing
 # and needed a second one.
-#
+
 # This was script.lr_av_play_pause's last caller, so it is now unreferenced. Kept
 # anyway: it routes a toggle to whichever source is active, which is a useful
 # thing to have for an automation or a webhook. Delete it if that never happens.

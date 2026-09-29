@@ -4,6 +4,7 @@ media_player:
     unique_id: mass_universal_airplay
     device_class: speaker
     children:
+      - media_player.ma_master
       - media_player.office
       - media_player.bathroom
       - media_player.bedroom

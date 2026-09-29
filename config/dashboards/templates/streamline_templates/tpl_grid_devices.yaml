@@ -115,7 +115,7 @@ grid_homepods:
         autoclose: true
         size: 250
         variables:
-          master_entity: sensor.mass_master_player
+          master_entity: media_player.ma_master
           office_entity: media_player.office
           bathroom_entity: media_player.bathroom
           bedroom_entity: media_player.bedroom

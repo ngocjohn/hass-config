@@ -13,15 +13,19 @@ browser_mod:
         layout_type: custom:grid-layout
         layout: !include ../snippets/popup_footer_layout.yaml
         cards:
-          - type: custom:webrtc-camera
-            url: kidsroom
-            poster: camera.kids_room
+          # - type: custom:webrtc-camera
+          #   url: kidsroom
+          #   poster: camera.kids_room
           - type: custom:streamline-card
-            template: popup_camera_webrtc
+            template: popup_camera_webrtc_local
+            variables:
+              camera_entity: camera.kids_room
+          - type: custom:streamline-card
+            template: popup_camera_webrtc_local
             variables:
               camera_entity: camera.doorway
           - type: custom:streamline-card
-            template: popup_camera_webrtc
+            template: popup_camera_webrtc_local
             variables:
               camera_entity: camera.terasa
 # action: fire-dom-event

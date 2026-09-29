@@ -5,21 +5,21 @@
     "file_upload"
   ],
   "codeowners": [
-    "@chris-mc1"
+    "@Asmir1975"
   ],
   "config_flow": true,
-  "documentation": "https://github.com/chris-mc1/homeconnect_local_hass",
+  "documentation": "https://github.com/Asmir1975/homeconnect_local_hass-UI",
   "integration_type": "device",
   "iot_class": "local_push",
-  "issue_tracker": "https://github.com/chris-mc1/homeconnect_local_hass/issues",
+  "issue_tracker": "https://github.com/Asmir1975/homeconnect_local_hass-UI/issues",
   "loggers": [
     "custom_components.homeconnect_ws",
     "homeconnect_websocket"
   ],
   "requirements": [
-    "homeconnect-websocket==1.5.4"
+    "homeconnect-websocket@git+https://github.com/Asmir1975/homeconnect_websocket.git@f1c74af2e6297c64b7ef9908dd2b88e33e96dd0c"
   ],
-  "version": "1.0.6",
+  "version": "1.12.3",
   "zeroconf": [
     "_homeconnect._tcp.local."
   ]

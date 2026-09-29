@@ -1,0 +1,28 @@
+- id: '1790206746102'
+  name: Feed Light
+  entities:
+    light.hood_lighting:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      supported_color_modes:
+      - color_temp
+      color_mode: color_temp
+      brightness: 75
+      color_temp_kelvin: 2000
+      hs_color:
+      - 30.601
+      - 94.547
+      rgb_color:
+      - 255
+      - 137
+      - 14
+      xy_color:
+      - 0.598
+      - 0.383
+      friendly_name: Kitchen Hood Light
+      supported_features: 0
+      icon: custom:recessed-ceiling
+      state: 'on'
+  metadata:
+    light.hood_lighting:
+      entity_only: true

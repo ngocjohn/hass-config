@@ -9,13 +9,9 @@ grid_cam_door:
     hold_action: !include ../../shared/popup/cameras.yaml
     variables:
       battery: sensor.doorway_battery
-      image_entity: image.doorway_snapshot_event_image
+      # image_entity: image.doorway_snapshot_event_image
     template:
       - camera
-      - loader
-    styles:
-      card:
-        - background-position: center
   # CAM KIDS ROOM
 grid_cam_kids:
   card:
@@ -25,34 +21,10 @@ grid_cam_kids:
     hold_action: !include ../../shared/popup/cameras.yaml
     template:
       - camera
-      - icon_cam_dot
-      - loader
     variables:
       battery: 'sensor.doorway_battery'
       # stream_status: 'sensor.kids_room_stream_status'
       image_entity: 'image.kids_room_snapshot_event_image'
-
-    # double_tap_action:
-    #   action: fire-dom-event
-    #   browser_mod:
-    #     service: browser_mod.popup
-    #     data:
-    #       title: 'Kids Room'
-    #       content:
-    #         type: custom:webrtc-camera
-    #         entity: camera.kids_room_camera
-    styles:
-      card:
-        - background-position: center
-
-grid_cam_kids_room:
-  card:
-    type: picture-entity
-    show_state: true
-    show_name: false
-    camera_view: auto
-    entity: camera.kids_room_camera
-    camera_image: camera.kids_room_camera
 
 # CAM TERRACE
 grid_cam_terrace:
@@ -63,13 +35,10 @@ grid_cam_terrace:
     hold_action: !include ../../shared/popup/cameras.yaml
     template:
       - camera
-      - loader
     variables:
       battery: sensor.terasa_battery
-      image_entity: image.terasa_snapshot_event_image
-    styles:
-      card:
-        - background-position: center
+      # image_entity: image.terasa_snapshot_event_image
+
   # CAM GARDEN
 grid_cam_garden:
   card:

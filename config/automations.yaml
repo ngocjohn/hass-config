@@ -1139,8 +1139,6 @@
   triggers:
   - trigger: state
     entity_id:
-    - binary_sensor.doorway_streaming
-    - binary_sensor.terasa_streaming
     - binary_sensor.kids_room_streaming
     to:
     - 'on'
@@ -1158,6 +1156,7 @@
       event_type:
       - person
       - motion
+    id: streaming
   - trigger: time_pattern
     hours: /1
     id: time_cron

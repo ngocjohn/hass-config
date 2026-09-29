@@ -902,20 +902,28 @@ camera:
             isOnline = states[enabledEntity].state == 'on';
             return isOnline;
       ]]]
+    image_timeout: >
+      [[[
+        return !variables.image_entity || Date.now() - Date.parse(states[variables.image_entity].last_changed);
+      ]]]
+    script_running: >
+      [[[
+        return states['script.cam_snapshot_tmp'].state == 'on';
+      ]]]
   state_display: >
     [[[
       return variables.camera_enabled ? variables.state : variables.translate_offline;
     ]]]
-  triggers_update:
-    - script.cam_snapshot_tmp
-    - >
-      [[[
-        return `binary_sensor.${entity.entity_id.split(".")[1]}_streaming`;
-      ]]]
-    - >
-      [[[
-        return variables.image_entity;
-      ]]]
+  # triggers_update:
+  #   - script.cam_snapshot_tmp
+  #   - >
+  #     [[[
+  #       return variables.image_entity;
+  #     ]]]
+  #   - >
+  #     [[[
+  #       return `binary_sensor.${entity.entity_id.split(".")[1]}_streaming`;
+  #     ]]]
   # triggers_update: >
   #   [[[
   #     return `binary_sensor.${entity.entity_id.split(".")[1]}_streaming`;
@@ -927,7 +935,7 @@ camera:
           stateStr = variables.camera_enabled ? 'online' : 'offline';
       return `${batteryState} - ${stateStr}`;
     ]]]
-  update_timer: '500ms'
+  update_timer: '1000ms'
   double_tap_action:
     action: fire-dom-event
     browser_mod:
@@ -943,23 +951,19 @@ camera:
     service_data:
       variables:
         camera_entity: >
-          [[[return variables.entity_id;]]]
+          [[[
+            console.log('script click');
+            return variables.entity_id;
+          ]]]
     target:
       entity_id: script.cam_snapshot_tmp
-    # action: call-service
-    # service: script.turn_on
-    # service_data:
-    #   entity_id: >
-    #     [[[
-    #         return entity.entity_id;
-    #     ]]]
 
   styles:
     card:
       - padding: 8%
       - background-color: none
       - background-size: cover
-      # - background-position: center
+      - background-position: center
       - background-repeat: no-repeat
       - background-image: >
           [[[
@@ -972,14 +976,6 @@ camera:
               return `radial-gradient(circle,rgba(0,0,0,.3) 15%, var(--button-card-background) 100%)`;
           ]]]
     custom_fields:
-      circle:
-        - width: 50%
-        - display: >
-            [[[
-              return variables.camera_enabled
-                ? 'block'
-                : 'none';
-            ]]]
       icon:
         - display: >
             [[[
@@ -987,7 +983,17 @@ camera:
                 ? 'block'
                 : 'none';
             ]]]
-
+      loading:
+        - display: >
+            [[[
+              return variables.script_running ? 'block' : 'none';
+            ]]]
+        - position: absolute
+        - filter: invert(1)
+        - opacity: 0.5
+  custom_fields:
+    loading: >
+      <img src="/local/img/loader.svg" width="100%">
   # custom_fields:
   #   circle: >
   #     [[[

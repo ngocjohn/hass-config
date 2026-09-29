@@ -1,3 +1,18 @@
+- type: conditional
+  options:
+    entity_id: media_player.ma_master
+    state: 'on'
+    dock_header: true
+    card:
+      type: conditional
+      options:
+        entity_id: media_player.ma_master
+        state_in: ['playing', 'paused', 'off']
+        card:
+          type: media_player
+          options:
+            entity_id: media_player.ma_master
+            variant: header
 - type: clock_weather
   options:
     calendar_entity: calendar.ram_va_mung_mot
@@ -6,7 +21,7 @@
     time_format: 24
 - type: separator
   options:
-    name: Watch
+    name: Media
     icon: tv
 - type: media_player
   options:
