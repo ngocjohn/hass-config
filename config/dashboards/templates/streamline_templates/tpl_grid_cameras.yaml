@@ -9,10 +9,10 @@ grid_cam_door:
     hold_action: !include ../../shared/popup/cameras.yaml
     variables:
       battery: sensor.doorway_battery
-      # image_entity: image.doorway_snapshot_event_image
+      image_entity: image.doorway_snapshot_event_image
     template:
       - camera
-  # CAM KIDS ROOM
+# CAM KIDS ROOM
 grid_cam_kids:
   card:
     type: custom:button-card
@@ -37,7 +37,7 @@ grid_cam_terrace:
       - camera
     variables:
       battery: sensor.terasa_battery
-      # image_entity: image.terasa_snapshot_event_image
+      image_entity: image.terasa_snapshot_event_image
 
   # CAM GARDEN
 grid_cam_garden:

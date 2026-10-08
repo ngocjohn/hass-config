@@ -39,7 +39,7 @@ media_player:
         media_content_type_template: >
           {{ state_attr('media_player.living_room_tv', 'media_content_type') }}
         media_image_url_template: >
-          {% if state_attr("media_player.living_room_tv", "app_name") in ['com.google.ios.youtube', 'YouTube']  %}
+          {% if state_attr("media_player.living_room_tv", "app_name") in ['com.google.ios.youtube', 'YouTube', 'TizenTube']  %}
             {{ state_attr("sensor.youtube_current_playing", "thumbnail") }}
           {% else %}
             {{ state_attr("media_player.living_room_tv", "entity_picture") }}

@@ -818,3 +818,24 @@ Graphite Auto:
         --dialog-box-shadow: 0 0px 16px 4px rgba(101,115,134, .15), 0 16px 64px 32px rgba(101,115,134, .5) !important;
         font-family: Poppins, Raleway, SF Pro Text, sans-serif, system-ui !important;
       }
+
+  uix-panel-custom-yaml: |
+    "bebe-panel $": |
+      .barra,
+      .tabs {
+        padding: 0 8px;
+        background: var(--primary-background-color);
+      }
+      .tabs button {
+        padding: 8px 4px;
+        font-size: 1rem;
+        border-bottom: 3px solid transparent;
+        cursor: pointer;
+        text-transform: uppercase;
+        font-weight: 600;
+        letter-spacing: 1px;
+        width: 100%;
+      }
+      button[data-tab='materna'] {
+        display: none !important;
+      }

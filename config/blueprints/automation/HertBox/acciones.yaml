@@ -1,0 +1,293 @@
+blueprint:
+  name: Baby Tracker – notification buttons
+  description: 'Handles the buttons in Baby Tracker notifications: Undo, Restore,
+    Edit amount, It was a new bottle, Undo new bottle, Discard bottle, reminder answers
+    ("finished what was left" / details by text) and breast milk stash actions. Create
+    ONE automation from this blueprint; it serves all babies.'
+  domain: automation
+  source_url: https://github.com/HertBox/ha-baby-tracker/blob/main/blueprints/automation/bebe/acciones.yaml
+  input:
+    celulares:
+      name: Phones to notify (confirmations)
+      default: []
+      selector:
+        device:
+          integration: mobile_app
+          multiple: true
+    idioma:
+      name: Notification language
+      default: en
+      selector:
+        select:
+          options:
+          - label: English
+            value: en
+          - label: Español
+            value: es
+          multiple: false
+          custom_value: false
+          sort: false
+mode: queued
+max: 20
+triggers:
+- trigger: event
+  event_type: mobile_app_notification_action
+conditions:
+- condition: template
+  value_template: '{{ trigger.event.data.action is string and trigger.event.data.action.startswith(''BEBE_'')
+    }}'
+variables:
+  idioma: !input idioma
+  es: '{{ idioma == ''es'' }}'
+  celulares: !input celulares
+  servicios: '{{ celulares | map(''device_attr'', ''name'') | map(''slugify'') | map(''regex_replace'',
+    ''^'', ''notify.mobile_app_'') | list }}'
+  base: '{{ trigger.event.data.action.split(''__'')[0] }}'
+  bebe: '{{ trigger.event.data.action.split(''__'')[1] if ''__'' in trigger.event.data.action
+    else '''' }}'
+  accion: '{{ base.split(''_'')[1] }}'
+  oid: '{{ (base.split(''_'')[2] if base.split(''_'') | count > 2 else 0) | int(0)
+    }}'
+  extra: '{{ base.split(''_'')[3] if base.split(''_'') | count > 3 else '''' }}'
+  texto: '{{ trigger.event.data.reply_text | default('''', true) }}'
+actions:
+- choose:
+  - conditions: '{{ accion == ''DESHACER'' }}'
+    sequence:
+    - action: bebe.borrar_toma
+      data:
+        id: '{{ oid }}'
+        bebe: '{{ bebe }}'
+      response_variable: r
+    - repeat:
+        for_each: '{{ servicios }}'
+        sequence:
+        - action: '{{ repeat.item }}'
+          continue_on_error: true
+          data:
+            title: ↩️ {{ 'Toma borrada' if es else 'Feeding deleted' }}
+            message: '{{ r.nombre }} · {{ as_timestamp(r.fin) | timestamp_custom(''%H:%M'')
+              }}'
+            data:
+              tag: bebe_toma_{{ r.bebe }}
+              actions:
+              - action: BEBE_RESTAURAR_{{ oid }}__{{ r.bebe }}
+                title: '{{ ''Restaurar'' if es else ''Restore'' }}'
+  - conditions: '{{ accion == ''RESTAURAR'' }}'
+    sequence:
+    - action: bebe.restaurar_toma
+      data:
+        id: '{{ oid }}'
+        bebe: '{{ bebe }}'
+  - conditions: '{{ accion == ''CORREGIR'' and (texto | replace('','', ''.'') | regex_findall(''\d+(?:\.\d+)?'')
+      | count > 0) }}'
+    sequence:
+    - variables:
+        v: '{{ (texto | replace('','', ''.'') | regex_findall(''\d+(?:\.\d+)?''))[0]
+          | float }}'
+        oz: '{{ (v / 29.5735) | round(2) if extra == ''ml'' else v }}'
+    - action: bebe.corregir_toma
+      data:
+        id: '{{ oid }}'
+        oz_tomadas: '{{ oz }}'
+        confianza: exacto
+        bebe: '{{ bebe }}'
+      response_variable: r
+    - variables:
+        u: '{{ r.unidad }}'
+        titulo_ok: '{{ ''Corregida:'' if es else ''Edited:'' }}'
+    - repeat:
+        for_each: '{{ servicios }}'
+        sequence:
+        - action: '{{ repeat.item }}'
+          continue_on_error: true
+          data:
+            title: "\U0001F37C {{ r.nombre }}"
+            message: '{%- macro c(v) -%}{{ ((v|float(0))*29.5735)|round(0)|int ~ ''
+              ml'' if u == ''ml'' else (''%g'' % (v|float(0))) ~ '' oz'' }}{%- endmacro
+              -%} {% set b = r.biberon if r.biberon is mapping else {} %} {{ titulo_ok
+              }} {{ c(r.oz_tomadas) }} · {{ as_timestamp(r.fin) | timestamp_custom(''%H:%M'')
+              }}. {%- if b %} {{ ''Biberón'' if es else ''Bottle'' }}: {{ c(b.consumido)
+              }} / {{ c(b.oz) }}{% endif %}'
+            data:
+              tag: bebe_toma_{{ r.bebe }}
+              actions:
+              - action: BEBE_DESHACER_{{ r.id }}__{{ r.bebe }}
+                title: '{{ ''Deshacer'' if es else ''Undo'' }}'
+              - action: BEBE_CORREGIR_{{ r.id }}_{{ r.unidad }}__{{ r.bebe }}
+                title: '{{ ''Corregir cantidad…'' if es else ''Edit amount…'' }}'
+                behavior: textInput
+                textInputButtonTitle: '{{ ''Guardar'' if es else ''Save'' }}'
+                textInputPlaceholder: '{{ r.unidad }}'
+  - conditions: '{{ accion == ''MOVERNUEVO'' }}'
+    sequence:
+    - action: bebe.corregir_toma
+      data:
+        id: '{{ oid }}'
+        mover: nuevo
+        bebe: '{{ bebe }}'
+      response_variable: r
+    - variables:
+        u: '{{ r.unidad }}'
+        titulo_ok: '{{ ''En biberón nuevo:'' if es else ''In a new bottle:'' }}'
+    - repeat:
+        for_each: '{{ servicios }}'
+        sequence:
+        - action: '{{ repeat.item }}'
+          continue_on_error: true
+          data:
+            title: "\U0001F37C {{ r.nombre }}"
+            message: '{%- macro c(v) -%}{{ ((v|float(0))*29.5735)|round(0)|int ~ ''
+              ml'' if u == ''ml'' else (''%g'' % (v|float(0))) ~ '' oz'' }}{%- endmacro
+              -%} {% set b = r.biberon if r.biberon is mapping else {} %} {{ titulo_ok
+              }} {{ c(r.oz_tomadas) }} · {{ as_timestamp(r.fin) | timestamp_custom(''%H:%M'')
+              }}. {%- if b %} {{ ''Biberón'' if es else ''Bottle'' }}: {{ c(b.consumido)
+              }} / {{ c(b.oz) }}{% endif %}'
+            data:
+              tag: bebe_toma_{{ r.bebe }}
+              actions:
+              - action: BEBE_DESHACER_{{ r.id }}__{{ r.bebe }}
+                title: '{{ ''Deshacer'' if es else ''Undo'' }}'
+              - action: BEBE_CORREGIR_{{ r.id }}_{{ r.unidad }}__{{ r.bebe }}
+                title: '{{ ''Corregir cantidad…'' if es else ''Edit amount…'' }}'
+                behavior: textInput
+                textInputButtonTitle: '{{ ''Guardar'' if es else ''Save'' }}'
+                textInputPlaceholder: '{{ r.unidad }}'
+  - conditions: '{{ accion == ''DESHACERBIB'' }}'
+    sequence:
+    - action: bebe.borrar_biberon
+      data:
+        id: '{{ oid }}'
+        bebe: '{{ bebe }}'
+  - conditions: '{{ accion == ''TIRAR'' }}'
+    sequence:
+    - action: bebe.cerrar_biberon
+      data:
+        id: '{{ oid }}'
+        bebe: '{{ bebe }}'
+  - conditions: '{{ accion == ''COMIO'' }}'
+    sequence:
+    - action: bebe.registrar_toma
+      data:
+        oz_sobrantes: 0
+        fuente: notificacion
+        bebe: '{{ bebe }}'
+      response_variable: r
+    - variables:
+        u: '{{ r.unidad }}'
+        titulo_ok: '{{ ''Tomó'' if es else ''Drank'' }}'
+    - repeat:
+        for_each: '{{ servicios }}'
+        sequence:
+        - action: '{{ repeat.item }}'
+          continue_on_error: true
+          data:
+            title: "\U0001F37C {{ r.nombre }}"
+            message: '{%- macro c(v) -%}{{ ((v|float(0))*29.5735)|round(0)|int ~ ''
+              ml'' if u == ''ml'' else (''%g'' % (v|float(0))) ~ '' oz'' }}{%- endmacro
+              -%} {% set b = r.biberon if r.biberon is mapping else {} %} {{ titulo_ok
+              }} {{ c(r.oz_tomadas) }} · {{ as_timestamp(r.fin) | timestamp_custom(''%H:%M'')
+              }}. {%- if b %} {{ ''Biberón'' if es else ''Bottle'' }}: {{ c(b.consumido)
+              }} / {{ c(b.oz) }}{% endif %}'
+            data:
+              tag: bebe_toma_{{ r.bebe }}
+              actions:
+              - action: BEBE_DESHACER_{{ r.id }}__{{ r.bebe }}
+                title: '{{ ''Deshacer'' if es else ''Undo'' }}'
+              - action: BEBE_CORREGIR_{{ r.id }}_{{ r.unidad }}__{{ r.bebe }}
+                title: '{{ ''Corregir cantidad…'' if es else ''Edit amount…'' }}'
+                behavior: textInput
+                textInputButtonTitle: '{{ ''Guardar'' if es else ''Save'' }}'
+                textInputPlaceholder: '{{ r.unidad }}'
+  - conditions: '{{ accion == ''DETALLE'' }}'
+    sequence:
+    - variables:
+        p: "{%- set t = (trigger.event.data.reply_text or '') | lower | replace(',',
+          '.') | trim -%} {%- set n = namespace(fin=none, oz=none) -%} {%- set nuevo
+          = 'nuev' in t or 'otro' in t or 'new' in t -%} {%- set hm = t | regex_findall('(\\\\d{1,2})[:.h](\\\\d{2})\\\\s*(am|pm|a\\\\.m\\\\.|p\\\\.m\\\\.)?')
+          -%} {%- set hace = (t | regex_findall('hace\\\\s*(\\\\d+(?:\\\\.\\\\d+)?)\\\\s*(h|hr|hora|horas|m|min|minutos)?'))
+          or (t | regex_findall('(\\\\d+(?:\\\\.\\\\d+)?)\\\\s*(h|hr|hours?|m|min|minutes?)\\\\s*ago'))
+          -%} {%- if hm -%}\n  {%- set h = hm[0][0] | int -%}{%- set mi = hm[0][1]
+          | int -%}{%- set ap = hm[0][2] | replace('.', '') -%}\n  {%- if ap == 'pm'
+          and h < 12 -%}{%- set h = h + 12 -%}{%- elif ap == 'am' and h == 12 -%}{%-
+          set h = 0 -%}{%- endif -%}\n  {%- if h <= 23 and mi <= 59 -%}\n    {%- set
+          base = now().replace(hour=h, minute=mi, second=0, microsecond=0) -%}\n    {%-
+          set horas = [0] if (ap or h == 0 or h > 12) else [0, 12] -%}\n    {%- for
+          extra in horas -%}{%- for dia in [0, 1] -%}\n      {%- set c = base + timedelta(hours=extra)
+          - timedelta(days=dia) -%}\n      {%- if c <= now() and (n.fin is none or
+          c > n.fin) -%}{%- set n.fin = c -%}{%- endif -%}\n    {%- endfor -%}{%-
+          endfor -%}\n  {%- endif -%}\n  {%- set resto = t | regex_replace('(\\\\d{1,2})[:.h](\\\\d{2})\\\\s*(am|pm|a\\\\.m\\\\.|p\\\\.m\\\\.)?',
+          '') -%}\n{%- elif hace -%}\n  {%- set v = hace[0][0] | float -%}\n  {%-
+          set min = v * 60 if hace[0][1] in ['h', 'hr', 'hora', 'horas', 'hour', 'hours']
+          else v -%}\n  {%- set n.fin = now() - timedelta(minutes=min) -%}\n  {%-
+          set resto = t | regex_replace('hace\\\\s*(\\\\d+(?:\\\\.\\\\d+)?)\\\\s*[a-z]*',
+          '') | regex_replace('(\\\\d+(?:\\\\.\\\\d+)?)\\\\s*[a-z]*\\\\s*ago', '')
+          -%}\n{%- else -%}{%- set resto = t -%}{%- endif -%} {%- set nums = resto
+          | regex_findall('(\\\\d+(?:\\\\.\\\\d+)?)') -%} {%- if nums and 0 < (nums[0]
+          | float) <= (360 if extra == 'ml' else 12) -%}{%- set n.oz = nums[0] | float
+          -%}{%- endif -%} {%- if n.fin is none and not hm and not hace and n.oz is
+          not none -%}{%- set n.fin = now() -%}{%- endif -%} {%- if n.fin is not none
+          and n.fin < now() - timedelta(hours=12) -%}{%- set n.fin = none -%}{%- endif
+          -%} {{ {'fin': n.fin.isoformat() if n.fin is not none else none, 'oz': n.oz,
+          'nuevo': nuevo} }}"
+    - choose:
+      - conditions: '{{ p.fin is not none }}'
+        sequence:
+        - action: bebe.registrar_toma
+          response_variable: r
+          data: "{{ {'fin': p.fin, 'fuente': 'notificacion', 'nuevo_biberon': p.nuevo,
+            'bebe': bebe, 'nota': texto}\n   | combine({'oz_tomadas': ((p.oz / 29.5735)
+            | round(2) if extra == 'ml' else p.oz)} if p.oz is not none else {'oz_sobrantes':
+            0}) }}"
+        - variables:
+            u: '{{ r.unidad }}'
+            titulo_ok: '{{ ''Tomó'' if es else ''Drank'' }}'
+        - repeat:
+            for_each: '{{ servicios }}'
+            sequence:
+            - action: '{{ repeat.item }}'
+              continue_on_error: true
+              data:
+                title: "\U0001F37C {{ r.nombre }}"
+                message: '{%- macro c(v) -%}{{ ((v|float(0))*29.5735)|round(0)|int
+                  ~ '' ml'' if u == ''ml'' else (''%g'' % (v|float(0))) ~ '' oz''
+                  }}{%- endmacro -%} {% set b = r.biberon if r.biberon is mapping
+                  else {} %} {{ titulo_ok }} {{ c(r.oz_tomadas) }} · {{ as_timestamp(r.fin)
+                  | timestamp_custom(''%H:%M'') }}. {%- if b %} {{ ''Biberón'' if
+                  es else ''Bottle'' }}: {{ c(b.consumido) }} / {{ c(b.oz) }}{% endif
+                  %}'
+                data:
+                  tag: bebe_toma_{{ r.bebe }}
+                  actions:
+                  - action: BEBE_DESHACER_{{ r.id }}__{{ r.bebe }}
+                    title: '{{ ''Deshacer'' if es else ''Undo'' }}'
+                  - action: BEBE_CORREGIR_{{ r.id }}_{{ r.unidad }}__{{ r.bebe }}
+                    title: '{{ ''Corregir cantidad…'' if es else ''Edit amount…''
+                      }}'
+                    behavior: textInput
+                    textInputButtonTitle: '{{ ''Guardar'' if es else ''Save'' }}'
+                    textInputPlaceholder: '{{ r.unidad }}'
+      - conditions: '{{ p.nuevo }}'
+        sequence:
+        - action: bebe.nuevo_biberon
+          data:
+            bebe: '{{ bebe }}'
+  - conditions: '{{ accion == ''USARRES'' }}'
+    sequence:
+    - action: bebe.usar_reserva
+      data:
+        id: '{{ oid }}'
+        bebe: '{{ bebe }}'
+  - conditions: '{{ accion == ''REFRI'' }}'
+    sequence:
+    - action: bebe.mover_reserva
+      data:
+        id: '{{ oid }}'
+        ubicacion: refrigerador
+        bebe: '{{ bebe }}'
+  - conditions: '{{ accion == ''DESCARTAR'' }}'
+    sequence:
+    - action: bebe.descartar_reserva
+      data:
+        id: '{{ oid }}'
+        bebe: '{{ bebe }}'

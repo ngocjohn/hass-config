@@ -824,48 +824,68 @@
     - unavailable
     - unknown
     to:
+  - trigger: state
+    entity_id:
+    - sensor.viet_ngoc_samsung_next_alarm
+    from:
+    to:
+    - unavailable
+    - unknown
+    id: alarm_clear
   conditions: []
   actions:
-  - variables:
-      action_living: media_player.living_room
-      action_bed: media_player.bedroom
-      action_office: media_player.office
-    alias: Set up variables homepods
-  - alias: Ask to pick device
-    action: notify.mobile_app_viet_ngoc_samsung
-    metadata: {}
-    data:
+  - if:
+    - condition: trigger
+      id:
+      - alarm_clear
+    then:
+    - action: input_select.select_option
+      metadata: {}
+      target:
+        entity_id: input_select.next_alarm_homepod
       data:
-        actions:
-        - action: '{{ action_living}}'
-          title: Living Room
-        - action: '{{ action_bed }}'
-          title: Bedroom
-        - action: '{{ action_office }}'
-          title: Office
-      title: Choose the homepod
-      message: '{% set current = states.input_select.next_alarm_homepod.state %}
+        option: none
+    else:
+    - variables:
+        action_living: media_player.living_room
+        action_bed: media_player.bedroom
+        action_office: media_player.office
+      alias: Set up variables homepods
+    - alias: Ask to pick device
+      action: notify.mobile_app_viet_ngoc_samsung
+      metadata: {}
+      data:
+        data:
+          actions:
+          - action: '{{ action_living}}'
+            title: Living Room
+          - action: '{{ action_bed }}'
+            title: Bedroom
+          - action: '{{ action_office }}'
+            title: Office
+        title: Choose the homepod
+        message: '{% set current = states.input_select.next_alarm_homepod.state %}
 
-        Current: {{state_attr(current, "friendly_name")}}'
-  - wait_for_trigger:
-    - trigger: event
-      event_type: mobile_app_notification_action
-      event_data:
-        action: '{{ action_living }}'
-    - trigger: event
-      event_type: mobile_app_notification_action
-      event_data:
-        action: '{{ action_bed }}'
-    - trigger: event
-      event_type: mobile_app_notification_action
-      event_data:
-        action: '{{ action_office }}'
-  - action: input_select.select_option
-    metadata: {}
-    target:
-      entity_id: input_select.next_alarm_homepod
-    data:
-      option: '{{wait.trigger.event.data.action}}'
+          Current: {{state_attr(current, "friendly_name")}}'
+    - wait_for_trigger:
+      - trigger: event
+        event_type: mobile_app_notification_action
+        event_data:
+          action: '{{ action_living }}'
+      - trigger: event
+        event_type: mobile_app_notification_action
+        event_data:
+          action: '{{ action_bed }}'
+      - trigger: event
+        event_type: mobile_app_notification_action
+        event_data:
+          action: '{{ action_office }}'
+    - action: input_select.select_option
+      metadata: {}
+      target:
+        entity_id: input_select.next_alarm_homepod
+      data:
+        option: '{{wait.trigger.event.data.action}}'
   mode: restart
 - id: '1779586729328'
   alias: Youtube TV Content
@@ -886,7 +906,7 @@
   - trigger: state
     entity_id:
     - media_player.living_room_tv
-    attribute: media_duration
+    attribute: media_title
     for:
       hours: 0
       minutes: 0
@@ -895,17 +915,18 @@
   - trigger: state
     entity_id:
     - media_player.living_room_tv
-    attribute: media_title
+    attribute: media_duration
+    id: duration_change
     for:
       hours: 0
       minutes: 0
       seconds: 2
-    id: duration_change
   conditions:
   - condition: state
     entity_id: media_player.living_room_tv
     state:
     - YouTube
+    - TizenTube
     attribute: app_name
   - condition: template
     value_template: '{% set tv_attr = trigger.to_state.attributes %}
@@ -921,6 +942,13 @@
       active_player: '{{ trigger.to_state.attributes.active_child}}'
       media_title: '{{ trigger.to_state.attributes.media_title}}'
       media_artist: '{{ trigger.to_state.attributes.media_artist}}'
+  - condition: template
+    value_template: '{% set has_metadata = (media_title|string()|trim != '''') and
+      (media_artist|string()|trim != '''') %}
+
+      {{ has_metadata }}
+
+      '
   - event: compute_youtube_image
     event_data:
       media_title: '{{media_title}}'
@@ -1140,6 +1168,8 @@
   - trigger: state
     entity_id:
     - binary_sensor.kids_room_streaming
+    - binary_sensor.doorway_streaming
+    - binary_sensor.terasa_streaming
     to:
     - 'on'
     for:
@@ -1157,6 +1187,7 @@
       - person
       - motion
     id: streaming
+    enabled: false
   - trigger: time_pattern
     hours: /1
     id: time_cron
@@ -1169,6 +1200,9 @@
         id:
         - time_cron
       sequence:
+      - action: shell_command.eufy_stream
+        metadata: {}
+        data: {}
       - repeat:
           for_each:
           - camera.doorway
@@ -1186,6 +1220,7 @@
               minutes: 0
               seconds: 7
               milliseconds: 0
+        enabled: false
       - action: delete.files_in_folder
         metadata: {}
         data:
@@ -1342,3 +1377,23 @@
       entity_id: scene.office_strip_alert
     data: {}
   mode: single
+- id: '1791159455493'
+  alias: Baby Tracker – feeding reminder
+  description: ''
+  use_blueprint:
+    path: HertBox/recordatorio.yaml
+    input:
+      proxima: sensor.nhat_minh_next_feeding
+      ultima: sensor.nhat_minh_last_feeding
+      celulares:
+      - 742d84d464b0f069998be385b3db2393
+      - c57bc06580e33e4dcb78e3e97d02b878
+- id: '1791166044303'
+  alias: Baby Tracker – notification buttons
+  description: ''
+  use_blueprint:
+    path: HertBox/acciones.yaml
+    input:
+      celulares:
+      - 742d84d464b0f069998be385b3db2393
+      - c57bc06580e33e4dcb78e3e97d02b878

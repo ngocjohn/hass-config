@@ -26,22 +26,28 @@ cards:
         variables:
           title: Motion
           group_entity_id: group.motion_sensors
-      - type: custom:streamline-card
-        template: popup_camera_webrtc_local
-        variables:
-          camera_entity: camera.kids_room
-      - type: custom:streamline-card
-        template: popup_camera_webrtc_local
-        variables:
-          camera_entity: camera.doorway
-      - type: custom:streamline-card
-        template: popup_camera_webrtc_local
-        variables:
-          camera_entity: camera.terasa
     visibility:
       - condition: state
         entity: input_boolean.brma
         state: 'on'
+      # - type: custom:streamline-card
+      #   template: popup_camera_webrtc_local
+      #   variables:
+      #     camera_entity: camera.kids_room
+      # visibility: &cam_visibility
+      #   - condition: state
+      #     entity: input_boolean.test_floorplan_card_inside
+      #     state: 'on'
+      # - type: custom:streamline-card
+      #   template: popup_camera_webrtc_local
+      #   variables:
+      #     camera_entity: camera.doorway
+      # visibility: *cam_visibility
+      # - type: custom:streamline-card
+      #   template: popup_camera_webrtc_local
+      #   variables:
+      #     camera_entity: camera.terasa
+      #   visibility: *cam_visibility
 
   - type: vertical-stack
     view_layout:
@@ -63,7 +69,7 @@ cards:
                   padding: 0;
                   background: radial-gradient(circle, rgba(255, 255, 255, 0.13) 0%, transparent 25%);
                 }
-            full_height: true
+            # full_height: true
             config:
               # console_log_level: debug
               image: /local/hafloor/plan_opt.svg

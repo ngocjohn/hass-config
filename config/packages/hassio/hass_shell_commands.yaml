@@ -26,3 +26,4 @@ shell_command:
   appdaemon_stop_ssh_mbpro: !secret appdaemon_stop_ssh_mbpro
   appdaemon_restart_ssh_mbpro: !secret appdaemon_restart_ssh_mbpro
   docker_restart_govee: 'docker restart addon_b9845f46_govee2mqtt'
+  eufy_stream: 'for id in T8140P6121032911 T8140P6121034D4F T8400P2021030E86; do curl -s --max-time 11 -o /dev/null "http://192.168.1.189:3000/stream/$id" & done'

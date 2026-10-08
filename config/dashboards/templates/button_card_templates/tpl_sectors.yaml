@@ -876,7 +876,7 @@ camera:
   template:
     - base
     - icon_cam_dot
-    # - circle
+    - circle
     # - icon_camera_rec
   variables:
     camera_on: >
@@ -910,24 +910,18 @@ camera:
       [[[
         return states['script.cam_snapshot_tmp'].state == 'on';
       ]]]
+    image_picture: >
+      [[[
+        let picUrl = variables.image_entity !== undefined
+            ? states[variables.image_entity].attributes.entity_picture
+            : variables.entity_picture;
+        return picUrl;
+      ]]]
   state_display: >
     [[[
       return variables.camera_enabled ? variables.state : variables.translate_offline;
     ]]]
-  # triggers_update:
-  #   - script.cam_snapshot_tmp
-  #   - >
-  #     [[[
-  #       return variables.image_entity;
-  #     ]]]
-  #   - >
-  #     [[[
-  #       return `binary_sensor.${entity.entity_id.split(".")[1]}_streaming`;
-  #     ]]]
-  # triggers_update: >
-  #   [[[
-  #     return `binary_sensor.${entity.entity_id.split(".")[1]}_streaming`;
-  #   ]]]
+
   show_name: false
   tooltip: >
     [[[
@@ -935,28 +929,64 @@ camera:
           stateStr = variables.camera_enabled ? 'online' : 'offline';
       return `${batteryState} - ${stateStr}`;
     ]]]
-  update_timer: '1000ms'
+  update_timer: '500ms'
   double_tap_action:
     action: fire-dom-event
-    browser_mod:
-      service: browser_mod.more_info
+    uix:
+      action: popover
       data:
-        entity: >
-          [[[
-            return variables.entity_id;
-          ]]]
+        width: large
+        without_header: true
+        card:
+          type: custom:streamline-card
+          template: popup_camera_webrtc_local
+          variables:
+            camera_entity: >
+              [[[ return variables.entity_id; ]]]
+        uix:
+          style:
+            $: |
+              .body {
+                padding: 0 !important;
+              }
+  # double_tap_action:
+  #   action: fire-dom-event
+  #   browser_mod:
+  #     service: browser_mod.more_info
+  #     data:
+  #       entity: >
+  #         [[[
+  #           return variables.entity_id;
+  #         ]]]
   tap_action:
-    action: call-service
-    service: script.turn_on
-    service_data:
-      variables:
-        camera_entity: >
-          [[[
-            console.log('script click');
-            return variables.entity_id;
-          ]]]
-    target:
-      entity_id: script.cam_snapshot_tmp
+    action: fire-dom-event
+    uix:
+      action: popover
+      data:
+        width: large
+        without_header: true
+        card:
+          type: picture
+          image_entity: >
+            [[[ return variables.image_entity; ]]]
+        uix:
+          style:
+            $: |
+              .body {
+                padding: 0 !important;
+              }
+  # tap_action:
+  #   action: call-service
+  #   service: script.turn_on
+  #   service_data:
+  #     variables:
+  #       camera_entity: >
+  #         [[[
+  #           console.log('script click');
+  #           return variables.entity_id;
+  #         ]]]
+  #   target:
+  #     entity_id: script.cam_snapshot_tmp
 
   styles:
     card:
@@ -968,10 +998,7 @@ camera:
       - background-image: >
           [[[
               if (variables.camera_enabled) {
-                let picUrl = variables.image_entity !== undefined
-                    ? states[variables.image_entity].attributes.entity_picture
-                    : variables.entity_picture;
-                return `linear-gradient(0deg, rgba(0,0,0,.3) 0%, rgba(0,0,0,0) 100%), url(${picUrl})`;
+                return `linear-gradient(0deg, rgba(0,0,0,.3) 0%, rgba(0,0,0,0) 100%), url(${variables.entity_picture})`;
               }
               return `radial-gradient(circle,rgba(0,0,0,.3) 15%, var(--button-card-background) 100%)`;
           ]]]
@@ -984,29 +1011,185 @@ camera:
                 : 'none';
             ]]]
       loading:
-        - display: >
-            [[[
-              return variables.script_running ? 'block' : 'none';
-            ]]]
         - position: absolute
+        - top: -5.8%
+        - right: -5.3%
+        - width: 40%
         - filter: invert(1)
         - opacity: 0.5
+      circle:
+        - width: 40%
   custom_fields:
     loading: >
-      <img src="/local/img/loader.svg" width="100%">
-  # custom_fields:
-  #   circle: >
-  #     [[[
-  #       if (entity.state === 'streaming' || entity.state === 'idle') {
-  #           let last_changed = variables.compute_duration_time(Date.now() - Date.parse(entity.last_changed)),
-  #             stroke = variables.state === 'streaming' || variables.state === 'on'  ? '#000000' : 'rgba(255,255,255,0.1)',
-  #             fill = variables.is_bellow_horrizon && variables.state === 'idle' || variables.state === 'off' ? 'rgba(255,255,255,0.1)' : '#efefef95',
-  #             text = variables.is_bellow_horrizon && variables.state === 'idle' || variables.state === 'off' ? '#8d8e90' : '#000000';
-  #       if (entity) {
-  #         return variables.render_duration_circle(last_changed, stroke, fill, text);
-  #         }
-  #       }
-  #     ]]]
+      [[[
+        if (variables.image_entity !== undefined && variables.image_timeout < 10000) {
+          let imageLastChanged = variables.image_timeout;
+          return `<img src="/local/img/loader.svg" width="100%">`;
+        }
+        return ``;
+      ]]]
+
+    circle: >
+      [[[
+        if (variables.image_entity !== undefined && (entity.state === 'streaming' || entity.state === 'idle')) {
+            let last_changed = variables.compute_duration_time(Date.now() - Date.parse(states[variables.image_entity].last_changed)),
+              stroke = variables.state === 'streaming' || variables.state === 'on'  ? '#000000' : 'rgba(255,255,255,0.1)',
+              fill = variables.is_bellow_horrizon && variables.state === 'idle' || variables.state === 'off' ? 'rgba(255,255,255,0.1)' : '#efefef95',
+              text = variables.is_bellow_horrizon && variables.state === 'idle' || variables.state === 'off' ? '#8d8e90' : '#000000';
+        if (entity) {
+          return variables.render_duration_circle(last_changed, stroke, fill, text);
+          }
+        }
+      ]]]
+camera_new:
+  template:
+    - base
+    - icon_cam_dot
+    - circle
+    # - icon_camera_rec
+  variables:
+    camera_on: >
+      [[[ return !entity || ['streaming', 'on'].indexOf(entity.state) !== -1; ]]]
+    camera_off: >
+      [[[ return !entity || ['off', 'standby', 'unknown', 'unavailable', 'idle'].indexOf(entity.state) !== -1; ]]]
+    is_bellow_horrizon: >
+      [[[
+        if (states['sun.sun'].state == 'below_horizon') {
+            return true;
+        }
+      ]]]
+    battery: ''
+    cam_id: >
+      [[[
+        return `${entity.entity_id.split(".")[1].replace("_streaming", "")}`;
+      ]]]
+    camera_entity: >
+      [[[
+        return `camera.${variables.cam_id}`;
+      ]]]
+    camera_enabled: >
+      [[[
+        let enabledEntity = `switch.${variables.cam_id}_enabled`;
+            return states[enabledEntity].state == 'on';
+      ]]]
+    image_timeout: >
+      [[[
+        return !variables.image_entity || Date.now() - Date.parse(states[variables.image_entity].last_changed);
+      ]]]
+    script_running: >
+      [[[
+        return states['script.cam_snapshot_tmp'].state == 'on';
+      ]]]
+    image_picture: >
+      [[[
+        let picUrl = variables.image_entity !== undefined
+            ? states[variables.image_entity].attributes.entity_picture
+            : states[variables.camera_entity].attributes.entity_picture
+        return picUrl;
+      ]]]
+  state_display: >
+    [[[
+      return variables.camera_enabled ? entity.attributes.friendly_nane : variables.translate_offline;
+    ]]]
+
+  show_name: false
+  tooltip: >
+    [[[
+      let batteryState = states[variables.battery].state+' %',
+          stateStr = variables.camera_enabled ? 'online' : 'offline';
+      return `${batteryState} - ${stateStr}`;
+    ]]]
+  # update_timer: '500ms'
+  double_tap_action:
+    action: fire-dom-event
+    uix:
+      action: popover
+      data:
+        width: large
+        without_header: true
+        card:
+          type: custom:streamline-card
+          template: popup_camera_webrtc_local
+          variables:
+            camera_entity: >
+              [[[ return variables.camera_entity; ]]]
+        uix:
+          style:
+            $: |
+              .body {
+                padding: 0 !important;
+              }
+
+  # tap_action:
+  #   action: fire-dom-event
+  #   uix:
+  #     action: popover
+  #     data:
+  #       width: large
+  #       without_header: true
+  #       card:
+  #         type: picture
+  #         image_entity: >
+  #           [[[ return variables.image_entity; ]]]
+  #       uix:
+  #         style:
+  #           $: |
+  #             .body {
+  #               padding: 0 !important;
+  #             }
+
+  styles:
+    card:
+      - padding: 8%
+      - background-color: none
+      - background-size: cover
+      - background-position: center
+      - background-repeat: no-repeat
+      - background-image: >
+          [[[
+              if (variables.camera_enabled) {
+                return `linear-gradient(0deg, rgba(0,0,0,.3) 0%, rgba(0,0,0,0) 100%), url(${variables.image_picture})`;
+              }
+              return `radial-gradient(circle,rgba(0,0,0,.3) 15%, var(--button-card-background) 100%)`;
+          ]]]
+    custom_fields:
+      icon:
+        - display: >
+            [[[
+              return variables.camera_on
+                ? 'block'
+                : 'none';
+            ]]]
+      loading:
+        - position: absolute
+        - top: -5.8%
+        - right: -5.3%
+        - width: 40%
+        - filter: invert(1)
+        - opacity: 0.5
+      circle:
+        - width: 40%
+  custom_fields:
+    loading: >
+      [[[
+        if (variables.image_entity !== undefined && variables.image_timeout < 10000) {
+          let imageLastChanged = variables.image_timeout;
+          return `<img src="/local/img/loader.svg" width="100%">`;
+        }
+        return ``;
+      ]]]
+    circle: >
+      [[[
+        if (variables.camera_enabled) {
+          let last_changed = variables.compute_duration_time(Date.now() - Date.parse(entity.last_changed.last_changed)),
+              stroke = variables.camera_on ? '#000000' : 'rgba(255,255,255,0.1)',
+              fill = variables.is_bellow_horrizon && !variables.camera_on ? 'rgba(255,255,255,0.1)' : '#efefef95',
+              text = variables.is_bellow_horrizon && !variables.camera_on ? '#8d8e90' : '#000000';
+          return variables.render_duration_circle(last_changed, stroke, fill, text);
+        }
+        return ``;
+      ]]]
+
 circle_state:
   template:
     - base

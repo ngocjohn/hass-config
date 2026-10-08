@@ -1,0 +1,19 @@
+{
+  "domain": "bebe",
+  "name": "Baby Tracker",
+  "codeowners": [
+    "@HertBox"
+  ],
+  "config_flow": true,
+  "dependencies": [
+    "frontend",
+    "http",
+    "panel_custom"
+  ],
+  "documentation": "https://github.com/HertBox/ha-baby-tracker",
+  "integration_type": "service",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/HertBox/ha-baby-tracker/issues",
+  "requirements": [],
+  "version": "1.0.0"
+}

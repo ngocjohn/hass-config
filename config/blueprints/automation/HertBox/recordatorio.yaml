@@ -1,0 +1,149 @@
+blueprint:
+  name: Baby Tracker – feeding reminder
+  description: 'When the next feeding time arrives with no new feeding logged, asks
+    on your phones whether the baby ate: "Yes, finished what was left" or "Yes, with
+    details…" (type the amount and/or the real time, e.g. "1.5", "20:15 1.5", "40
+    min ago", "new 2"). Repeats until a feeding is logged. Requires "Baby Tracker
+    – notification buttons" to handle the answers.'
+  domain: automation
+  source_url: https://github.com/HertBox/ha-baby-tracker/blob/main/blueprints/automation/bebe/recordatorio.yaml
+  input:
+    proxima:
+      name: Next feeding sensor
+      description: The baby's "Next feeding" sensor (e.g. sensor.<name>_next_feeding).
+      selector:
+        entity:
+          filter:
+          - integration: bebe
+            domain:
+            - sensor
+            device_class:
+            - timestamp
+          multiple: false
+          reorder: false
+    ultima:
+      name: Last feeding sensor
+      description: The baby's "Last feeding" sensor.
+      selector:
+        entity:
+          filter:
+          - integration: bebe
+            domain:
+            - sensor
+            device_class:
+            - timestamp
+          multiple: false
+          reorder: false
+    repetir_min:
+      name: Repeat every (minutes)
+      default: 30
+      selector:
+        number:
+          min: 10.0
+          max: 120.0
+          unit_of_measurement: min
+          step: 1.0
+          mode: slider
+    repeticiones:
+      name: Maximum reminders
+      default: 4
+      selector:
+        number:
+          min: 1.0
+          max: 10.0
+          step: 1.0
+          mode: slider
+    celulares:
+      name: Phones to notify
+      default: []
+      selector:
+        device:
+          integration: mobile_app
+          multiple: true
+    idioma:
+      name: Notification language
+      default: en
+      selector:
+        select:
+          options:
+          - label: English
+            value: en
+          - label: Español
+            value: es
+          multiple: false
+          custom_value: false
+          sort: false
+mode: restart
+triggers:
+- trigger: time
+  at: !input proxima
+variables:
+  ultima: !input ultima
+  idioma: !input idioma
+  es: '{{ idioma == ''es'' }}'
+  repetir_min: !input repetir_min
+  repeticiones: !input repeticiones
+  celulares: !input celulares
+  servicios: '{{ celulares | map(''device_attr'', ''name'') | map(''slugify'') | map(''regex_replace'',
+    ''^'', ''notify.mobile_app_'') | list }}'
+  ultima_id: '{{ state_attr(ultima, ''id'') }}'
+  bebe: '{{ state_attr(ultima, ''bebe_id'') or '''' }}'
+  nombre: '{{ state_attr(ultima, ''nombre'') or (''el bebé'' if es else ''the baby'')
+    }}'
+  u: '{{ state_attr(ultima, ''unidad'') or ''oz'' }}'
+conditions:
+- condition: template
+  value_template: '{{ ultima_id is not none }}'
+actions:
+- repeat:
+    sequence:
+    - repeat:
+        for_each: '{{ servicios }}'
+        sequence:
+        - action: '{{ repeat.item }}'
+          continue_on_error: true
+          data:
+            title: "\U0001F37C {{ ('¿Ya comió ' ~ nombre ~ '?') if es else ('Has '
+              ~ nombre ~ ' eaten?') }}"
+            message: '{%- macro c(v) -%}{{ ((v|float(0))*29.5735)|round(0)|int ~ ''
+              ml'' if u == ''ml'' else (''%g'' % (v|float(0))) ~ '' oz'' }}{%- endmacro
+              -%} {% set m = ((as_timestamp(now()) - as_timestamp(states(ultima)))
+              / 60) | int %} {{ ''Han pasado'' if es else ''It has been'' }} {{ m
+              // 60 }} h {{ ''%02d'' % (m % 60) }} min {{ ''desde la última toma''
+              if es else ''since the last feeding'' }} ({{ as_timestamp(states(ultima))
+              | timestamp_custom(''%H:%M'') }}, {{ c(state_attr(ultima, ''oz_tomadas''))
+              }}).'
+            data:
+              tag: bebe_recordatorio_{{ bebe }}
+              push:
+                interruption-level: time-sensitive
+              actions:
+              - action: BEBE_COMIO_0__{{ bebe }}
+                title: '{{ ''Sí, se acabó lo que quedaba'' if es else ''Yes, finished
+                  what was left'' }}'
+              - action: BEBE_DETALLE_0_{{ u }}__{{ bebe }}
+                title: '{{ ''Sí, con detalles…'' if es else ''Yes, with details…''
+                  }}'
+                behavior: textInput
+                textInputButtonTitle: '{{ ''Registrar'' if es else ''Log'' }}'
+                textInputPlaceholder: '{{ ''1.5 · 20:15 1.5 · hace 40 min · nuevo
+                  2'' if es else ''1.5 · 20:15 1.5 · 40 min ago · new 2'' }}'
+              - action: BEBE_AUNNO_0__{{ bebe }}
+                title: '{{ ''Todavía no'' if es else ''Not yet'' }}'
+    - wait_for_trigger:
+      - trigger: template
+        value_template: '{{ state_attr(ultima, ''id'') != ultima_id }}'
+      timeout:
+        minutes: '{{ repetir_min | int }}'
+      continue_on_timeout: true
+    until: '{{ state_attr(ultima, ''id'') != ultima_id or repeat.index >= (repeticiones
+      | int) }}'
+- repeat:
+    for_each: '{{ servicios }}'
+    sequence:
+    - action: '{{ repeat.item }}'
+      continue_on_error: true
+      data:
+        message: clear_notification
+        data:
+          tag: bebe_recordatorio_{{ bebe }}
