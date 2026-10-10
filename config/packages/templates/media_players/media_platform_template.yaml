@@ -39,10 +39,14 @@ media_player:
         media_content_type_template: >
           {{ state_attr('media_player.living_room_tv', 'media_content_type') }}
         media_image_url_template: >
-          {% if state_attr("media_player.living_room_tv", "app_name") in ['com.google.ios.youtube', 'YouTube', 'TizenTube']  %}
+          {% set tv_attr = states.media_player.living_room_tv.attributes %}
+          {% if tv_attr.app_name in ['com.google.ios.youtube', 'YouTube', 'TizenTube']  %}
             {{ state_attr("sensor.youtube_current_playing", "thumbnail") }}
+          {% elif tv_attr.active_child == "media_player.sony_tv_combined" and tv_attr.entity_picture_local == None %}
+            {% set current_app = tv_attr.app_name %}
+            /local/bravia-icons/{{current_app}}.png
           {% else %}
-            {{ state_attr("media_player.living_room_tv", "entity_picture") }}
+            {{ tv_attr.entity_picture }}
           {% endif %}
         inputs:
           Apple TV:

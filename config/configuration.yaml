@@ -23,7 +23,7 @@ frontend:
   themes: !include_dir_merge_named themes
   extra_module_url:
     # - /hacsfiles/lovelace-canary/canary.js?hacstag=245159052050
-    - /hacsfiles/sidebar-organizer/sidebar-organizer.js?hacstag=932534411420
+    - /hacsfiles/sidebar-organizer/sidebar-organizer.js?hacstag=932534411421
     - /local/dashboard-resources/customize-css-change.js?v1.0.3
     - /local/dashboard-resources/quickbar-navigate-shortcut.js?v0.0.1
     - /local/dashboard-resources/change-create-card-dialog.js?v0.0.1
