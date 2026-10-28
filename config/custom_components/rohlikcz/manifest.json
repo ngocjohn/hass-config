@@ -7,6 +7,6 @@
   "documentation": "https://github.com/dvejsada/HA-RohlikCZ",
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/dvejsada/HA-RohlikCZ/issues",
-  "requirements": [],
-  "version": "0.5.0"
+  "requirements": ["rohlik-api==0.3.0"],
+  "version": "1.0.0"
 }
