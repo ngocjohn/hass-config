@@ -98,6 +98,8 @@ group:
       - binary_sensor.motion_sensor_kitchen_occupancy
       - binary_sensor.motion_sensor_shower_room_occupancy
       - binary_sensor.motion_sensor_utility_room_occupancy
+      - binary_sensor.kids_room_motion
+      - binary_sensor.terasa_motion
   contact_sensors:
     name: Contact sensors
     icon: mdi:window-open-variant
@@ -127,7 +129,7 @@ group:
       - camera.doorway
       - camera.kids_room
       - camera.terasa
-      - camera.zahrada
+      # - camera.zahrada
   ## COVER GROUP ##
   shades_cover:
     name: Shades Cover Group

@@ -994,7 +994,7 @@
     metadata: {}
     data:
       addon: b9845f46_govee2mqtt
-  mode: single
+  mode: restart
 - id: '1782236238605'
   alias: C Geo Changed
   description: ''
@@ -1243,24 +1243,6 @@
         target:
           entity_id: script.cam_snapshot_tmp
     enabled: true
-  mode: single
-- id: '1786319396113'
-  alias: Feed Reminder
-  description: ''
-  triggers:
-  - trigger: time
-    at:
-      entity_id: sensor.baby_tracker_last_feed
-      offset: 03:00:00
-  conditions: []
-  actions:
-  - action: notify.send_message
-    metadata: {}
-    target:
-      entity_id: notify.viet_ngoc_samsung
-    data:
-      message: feeding time
-      title: "\U0001F37C  Feeding time"
   mode: single
 - id: '1788738472677'
   alias: Air Purifier Aqi

@@ -10,7 +10,7 @@ Hey there! Welcome to my little corner of the tech world! 👨‍💻
 
 This is where I store all the cool configurations for my Home Assistant system. Well, it's a mix of awesome codes and setups I discovered from the Home Assistant community. Seriously, those folks are wizards! 🧙‍♂️ As a bit of an internet newbie turned tech enthusiast, I stumbled upon the magic of IT, and this repository is my way of sharing the joy and knowledge I've gained along the way. Dive in, explore, and let the tech magic begin! ✨
 
-I frequently refresh my configuration files. My current Home Assistant version is <b>2026.10.4</b>. If you find something you like, don't forget to give my repository a ⭐️!
+I frequently refresh my configuration files. My current Home Assistant version is <b>2026.11.0</b>. If you find something you like, don't forget to give my repository a ⭐️!
 
 ## Some of my projects for Home Assistant
 
@@ -47,7 +47,7 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
       </thead>
       <tbody>
           <tr>
-              <td>49,955 </td>
+              <td>49,967 </td>
               <td></td>
               <td></td>
               <td></td>
@@ -96,111 +96,12 @@ https://github.com/ngocjohn/hass-config/assets/96962827/acc1a4db-b92e-4ab1-ac9d-
   <summary>Custom integrations</summary>
 
 ### Custom integrations
-- [Adaptive Lighting](https://github.com/basnijholt/adaptive-lighting)
-- [Baby Tracker](https://github.com/HertBox/ha-baby-tracker)
-- [Better Thermostat](https://github.com/KartoffelToby/better_thermostat)
-- [Bravia Rest Api](https://github.com/cmos486/Bravia-REST-API)
-- [Browser Mod](https://github.com/thomasloven/hass-browser_mod)
-- [Custom Icons](https://github.com/thomasloven/hass-custom_icons)
-- [Dyson](https://github.com/cmgrayb/hass-dyson)
-- [Electrolux](https://github.com/TTLucian/ha-electrolux)
-- [Eufy Sdk](https://github.com/mega-yfue/ha-eufy-sdk)
-- [Eufy Security](https://github.com/fuatakgun/eufy_security)
-- [Extended Openai Conversation](https://github.com/jekalmin/extended_openai_conversation)
-- [Fontawesome](https://github.com/thomasloven/hass-fontawesome)
-- [Generate Readme](https://github.com/custom-components/readme)
-- [Google Cloud Speech To Text](https://github.com/chatziko/ha-google-cloud-stt)
-- [Google Home Exposure Manager](https://github.com/NathanMagnus/GoogleHomeExposureManager)
-- [Govee](https://github.com/LaggAt/hacs-govee)
-- [HACS](https://github.com/hacs/integration)
-- [Hass Favicon](https://github.com/thomasloven/hass-favicon)
-- [Home Connect Local](https://github.com/Asmir1975/homeconnect_direct)
-- [Home Intercom](https://github.com/mdj2812/home-intercom)
-- [Home Weather](https://github.com/zodyking/home-weather)
-- [Ingress](https://github.com/lovelylain/hass_ingress)
-- [Lunar Phase](https://github.com/ngocjohn/lunar-phase)
-- [Mercedesme 2020](https://github.com/ReneNulschDE/mbapi2020)
-- [Node Red Companion](https://github.com/zachowj/hass-node-red)
-- [Ookla Speedtest](https://github.com/soulripper13/hass-speedtest-ookla)
-- [Philips Airpurifier (With Coap)](https://github.com/kongo09/philips-airpurifier-coap)
-- [Plex Recently Added](https://github.com/custom-components/sensor.plex_recently_added)
-- [Remote Home Assistant](https://github.com/custom-components/remote_homeassistant)
-- [Rohlík.Cz Custom Integration](https://github.com/dvejsada/HA-RohlikCZ)
-- [Samsungtv Smart](https://github.com/ollo69/ha-samsungtv-smart)
-- [Samsungtv Tizen](https://github.com/jaruba/ha-samsungtv-tizen)
-- [Simpleicons](https://github.com/vigonotion/hass-simpleicons)
-- [Spook 👻 Your Homie](https://github.com/frenck/spook)
-- [Spotifyplus](https://github.com/thlucas1/homeassistantcomponent_spotifyplus)
-- [Uix](https://github.com/Lint-Free-Technology/uix)
-- [Weather.Com](https://github.com/jaydeethree/Home-Assistant-weatherdotcom)
-- [Webrtc Camera](https://github.com/AlexxIT/WebRTC)
-- [Xiaomi Cloud Map Extractor](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor)
-- [Xiaomi Miot](https://github.com/al-one/hass-xiaomi-miot)
 </details>
 
 <details>
   <summary>Lovelace plugins</summary>
 
 ### Lovelace plugins
-- [Air Quality Card](https://github.com/firstof9/ha-air-quality-card)
-- [Apexcharts Card](https://github.com/RomRider/apexcharts-card)
-- [Apple Tv Remote Control](https://github.com/madmicio/Apple-Tv-Card)
-- [Atomic Calendar Revive](https://github.com/totaldebug/atomic-calendar-revive)
-- [Auto Entities](https://github.com/Lint-Free-Technology/lovelace-auto-entities)
-- [Bar Card](https://github.com/spacerokk/bar-card)
-- [Button Card](https://github.com/custom-cards/button-card)
-- [Clock Weather Card](https://github.com/pkissling/clock-weather-card)
-- [Crow Media Player](https://github.com/jamesmcginnis/crow-media-player-card)
-- [Custom Features For Home Assistant Cards](https://github.com/Nerwyn/custom-card-features)
-- [Custom Icons](https://github.com/Mariusthvdb/custom-icons)
-- [Dashboard Hotkeys](https://github.com/t0m1o1/HA-hotkeys)
-- [Decluttering Card](https://github.com/custom-cards/decluttering-card)
-- [Dual Axis Controller](https://github.com/mbb365/Dual-Axis-Controller-v4)
-- [Flex Table   Highly Customizable, Data Visualization](https://github.com/custom-cards/flex-table-card)
-- [Fold Entity Row](https://github.com/thomasloven/lovelace-fold-entity-row)
-- [Geo Clock Card](https://github.com/jpettitt/geo-clock-card)
-- [Ha Floorplan 🖌🎨 | Your Imagination (Almost) Defines The Limits](https://github.com/ExperienceLovelace/ha-floorplan)
-- [History Explorer Card](https://github.com/SpangleLabs/history-explorer-card)
-- [Honeycomb Menu](https://github.com/Sian-Lee-SA/honeycomb-menu)
-- [Horizon Card](https://github.com/rejuvenate/lovelace-horizon-card)
-- [Hui Element](https://github.com/thomasloven/lovelace-hui-element)
-- [Ingress Webpage Card](https://github.com/lovelylain/ha-addon-iframe-card)
-- [Layout Card](https://github.com/thomasloven/lovelace-layout-card)
-- [Local Conditional Card](https://github.com/PiotrMachowski/Home-Assistant-Lovelace-Local-Conditional-card)
-- [Logbook Card](https://github.com/royto/logbook-card)
-- [Lovelace Touchpad Card](https://github.com/michalowskil/lovelace-touchpad-card)
-- [Lunar Phase Card](https://github.com/ngocjohn/lunar-phase-card)
-- [M3 Cards](https://github.com/j0sp0r/m3-cards)
-- [Mass Search Card](https://github.com/fastxl2024/mass-search-card)
-- [Maxi Media Player](https://github.com/punxaphil/maxi-media-player)
-- [Mediocre Hass Media Player Cards](https://github.com/antontanderup/mediocre-hass-media-player-cards)
-- [Mini Graph Card](https://github.com/kalkih/mini-graph-card)
-- [Mini Media Player](https://github.com/kalkih/mini-media-player)
-- [Modern Circular Gauge](https://github.com/selvalt7/modern-circular-gauge)
-- [More Info Custom](https://github.com/ngocjohn/more-info-custom)
-- [Multiple Entity Row](https://github.com/benct/lovelace-multiple-entity-row)
-- [Mushroom](https://github.com/piitaya/lovelace-mushroom)
-- [Polr Ytube Media Card](https://github.com/pathofleastresistor/polr-ytube-media-card)
-- [Room Climate Card](https://github.com/hyperfelixations/room-climate-card)
-- [Roscard](https://github.com/yyqclhy/RosCard)
-- [Rpi Monitor Card](https://github.com/ironsheep/lovelace-rpi-monitor-card)
-- [Sidebar Organizer](https://github.com/ngocjohn/sidebar-organizer)
-- [Slider Button Card](https://github.com/custom-cards/slider-button-card)
-- [Stack In Card](https://github.com/custom-cards/stack-in-card)
-- [State Switch](https://github.com/thomasloven/lovelace-state-switch)
-- [Streamline Card](https://github.com/brunosabot/streamline-card)
-- [Swipe Card](https://github.com/bramkragten/swipe-card)
-- [Timer Bar Card](https://github.com/rianadon/timer-bar-card)
-- [Track History Card](https://github.com/sergon2000/lovelace-track-history-card)
-- [Tv Remote Card (With Touchpad And Haptic Feedback)](https://github.com/usernein/tv-card)
-- [Upcoming Media Card](https://github.com/xZetsubou/upcoming-media-card)
-- [Vehicle Info Card](https://github.com/ngocjohn/vehicle-info-card)
-- [Vehicle Status Card](https://github.com/ngocjohn/vehicle-status-card)
-- [Weather Card](https://github.com/bramkragten/weather-card)
-- [Weather Chart Card](https://github.com/mlamberts78/weather-chart-card)
-- [Weather Forecast Card](https://github.com/troinine/ha-weather-forecast-card)
-- [Weather Radar Card](https://github.com/jpettitt/weather-radar-card)
-- [Xiaomi Vacuum Map Card](https://github.com/PiotrMachowski/lovelace-xiaomi-vacuum-map-card)
 </details>
 
 

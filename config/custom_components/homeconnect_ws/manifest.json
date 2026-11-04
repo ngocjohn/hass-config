@@ -1,6 +1,6 @@
 {
   "domain": "homeconnect_ws",
-  "name": "Home Connect Local",
+  "name": "Home Connect Direct",
   "after_dependencies": [
     "file_upload"
   ],
@@ -8,10 +8,10 @@
     "@Asmir1975"
   ],
   "config_flow": true,
-  "documentation": "https://github.com/Asmir1975/homeconnect_local_hass-UI",
+  "documentation": "https://github.com/Asmir1975/homeconnect_direct",
   "integration_type": "device",
   "iot_class": "local_push",
-  "issue_tracker": "https://github.com/Asmir1975/homeconnect_local_hass-UI/issues",
+  "issue_tracker": "https://github.com/Asmir1975/homeconnect_direct/issues",
   "loggers": [
     "custom_components.homeconnect_ws",
     "homeconnect_websocket"
@@ -19,7 +19,7 @@
   "requirements": [
     "homeconnect-websocket@git+https://github.com/Asmir1975/homeconnect_websocket.git@ecc8b7a485734504865a22b1ad303f85b5f8fe05"
   ],
-  "version": "1.12.5",
+  "version": "1.13.0",
   "zeroconf": [
     "_homeconnect._tcp.local."
   ]

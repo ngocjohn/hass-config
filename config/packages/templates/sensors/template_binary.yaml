@@ -88,6 +88,21 @@ template:
             {%- set offline = (expand(states.group.contact_sensors) + expand(states.group.motion_sensors)) | selectattr( 'state', 'in', ['unknown', 'unavailable']) | map(attribute='name') | list -%}
             {{- offline }}
 
+      - name: 'Zigbee Offline Devices'
+        unique_id: zigbee_offline_devices
+        device_class: problem
+        icon: mdi:zigbee
+        state: >-
+          {{this.attributes.offline | count > 0}}
+        attributes:
+          offline: >
+            {% set offline = expand(integration_entities("mqtt") | select("contains", "_last_seen") | list) | selectattr("state", "in", ["unavailable", "unknown"]) | map(attribute="entity_id") | list %}
+            [
+            {% for e in offline %}
+            "{{device_name(e)}}",
+            {% endfor%}
+            ]
+
       # Docker containers problem
       - name: 'Pi Docker Containers Problem'
         unique_id: containers_problem
