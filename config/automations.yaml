@@ -1379,3 +1379,53 @@
       celulares:
       - 742d84d464b0f069998be385b3db2393
       - c57bc06580e33e4dcb78e3e97d02b878
+- id: '1794155584197'
+  alias: Dynamic Motor Speed
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - sensor.office_air_purifier_air_quality_category
+    for:
+      hours: 0
+      minutes: 2
+      seconds: 0
+    not_to:
+    - unavailable
+    - unknown
+  conditions: []
+  actions:
+  - variables:
+      targets:
+        good: 400
+        fair: 900
+        poor: 1400
+        very poor: 1900
+        extremly poor: 1900
+      to_value: '{{targets[trigger.to_state.state | lower] }}'
+  - action: number.set_value
+    metadata: {}
+    target:
+      entity_id: number.zhimi_mb4_b008_favorite_speed
+    data:
+      value: '{{to_value}}'
+  mode: single
+- id: '1794263321261'
+  alias: Sony YouTube TizenTube
+  description: Automatically switches the Sony Bravia TV to the TizenTube app when
+    the YouTube app is detected on the living room TV.
+  triggers:
+  - trigger: state
+    entity_id:
+    - media_player.living_room_tv_2
+    attribute: app_id
+    to:
+    - com.google.android.youtube.tv
+  conditions: []
+  actions:
+  - action: bravia_rest_api.open_app
+    metadata: {}
+    data:
+      entity_id: media_player.sony_bravia_rest_api
+      app_name: TizenTube
+  mode: single

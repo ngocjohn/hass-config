@@ -5,8 +5,9 @@
   "config_flow": true,
   "dependencies": [],
   "documentation": "https://github.com/jaydeethree/Home-Assistant-weatherdotcom",
+  "integration_type": "service",
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/jaydeethree/Home-Assistant-weatherdotcom/issues/",
   "requirements": [],
-  "version": "1.4.1"
+  "version": "2.0.1"
 }

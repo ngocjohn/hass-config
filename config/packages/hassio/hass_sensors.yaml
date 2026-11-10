@@ -142,7 +142,7 @@ command_line:
         python3 << EOF
         import os, json
         installed = {"repositories": []}
-        PATH = "/config/.storage/hacs.repositories"
+        PATH = "/config/.storage/marketplace.repositories"
         with open(PATH, "r", encoding="UTF-8") as file:
             data = json.load(file)["data"]
             for i in data:
