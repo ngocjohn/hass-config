@@ -297,7 +297,7 @@ template:
             {{ expand(states.group.motion_sensors)
                 | selectattr('state', 'in', ['detected', 'on'])
                 | map(attribute='name')
-                | map('regex_replace', 'Motion Sensor|Contact Sensor | ?Occupancy| ?Door| ?Room| ?Motion', '')
+                | map('regex_replace', 'Motion Sensor|Contact Sensor | ?Occupancy| ?Door| ?Room| ?Motion| ?Sensor', '')
                 | map('trim')
                 | list
             }}

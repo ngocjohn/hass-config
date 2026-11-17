@@ -156,6 +156,45 @@ command_line:
       json_attributes:
         - repositories
       scan_interval: 86400
+  - sensor:
+      unique_id: marketplace_installed
+      name: Marketplace installed
+      command: |-
+        python3 << EOF
+        import json
+
+        installed = {"repositories": []}
+        PATH = "/config/.storage/marketplace.repositories"
+
+        with open(PATH, "r", encoding="UTF-8") as file:
+            data = json.load(file).get("data", {})
+
+        for repo_id, repo_data in data.items():
+            if "installed" in repo_data:
+                manifest = repo_data.get("repository_manifest") or {}
+                name = manifest.get("name") or repo_data.get("full_name", "").split("/")[-1]
+
+                name = name.replace("-", " ").replace("_", " ").strip()
+
+                if not name.isupper():
+                    name = name.title()
+
+                installed["repositories"].append({
+                    "id": repo_id,
+                    "name": name,
+                    "full_name": repo_data.get("full_name", ""),
+                    "version_installed": repo_data.get("version_installed"),
+                    "category": repo_data.get("category"),
+                    "documentation": f"https://github.com/{repo_data.get("full_name", "")}",
+                })
+
+        print(json.dumps(installed))
+        EOF
+      value_template: >
+        {{ value_json.repositories | count }}
+      json_attributes:
+        - repositories
+      scan_interval: 86400
 
 ########################################
 

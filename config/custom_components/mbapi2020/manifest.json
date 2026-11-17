@@ -1,6 +1,10 @@
 {
   "domain": "mbapi2020",
   "name": "MercedesME 2020",
+  "categories": [
+    "vehicles_transport.cars_evs",
+    "energy.solar_batteries"
+  ],
   "codeowners": [
     "@ReneNulschDE"
   ],
@@ -16,5 +20,5 @@
   "requirements": [
     "protobuf>=3.19.5"
   ],
-  "version": "v0.43.0"
+  "version": "v0.44.0"
 }

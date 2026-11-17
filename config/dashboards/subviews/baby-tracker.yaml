@@ -4,6 +4,6 @@ title: Baby Tracker
 icon: mdi:baby
 cards:
   - type: iframe
-    url: /link_bebe
+    url: /bebe
 # visible:
 #   - !include ../shared/visibility_view.yaml

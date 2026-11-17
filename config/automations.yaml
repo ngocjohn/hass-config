@@ -804,15 +804,6 @@
       data:
         target_player: '{{states.input_select.next_alarm_homepod.state}}'
   mode: restart
-- id: '1778338204194'
-  alias: kodi_video_scan
-  description: ''
-  triggers: []
-  conditions: []
-  actions:
-  - event: update_thumbnail
-    event_data: {}
-  mode: single
 - id: '1779062484339'
   alias: next alarm pick homepod
   description: ''
@@ -1320,11 +1311,19 @@
   - trigger: motion.detected
     target:
       entity_id: binary_sensor.motion_sensor_entrance_occupancy
-      device_id: 950a6647c7a21278c0056daf478d0114
+      device_id: 403aaf4aa49f91c2cdd5436ce30948e7
     options:
-      behavior: each
+      behavior: first
   conditions: []
   actions:
+  - action: notify.mobile_app_viet_ngoc_samsung
+    metadata: {}
+    data:
+      message: Motion
+      title: '{{ entity_name(trigger.to_state.entity_id) }}'
+      data:
+        tag: motion_samsung_alert
+    enabled: false
   - action: scene.create
     metadata: {}
     data:
@@ -1358,7 +1357,13 @@
     target:
       entity_id: scene.office_strip_alert
     data: {}
-  mode: single
+  - action: notify.mobile_app_viet_ngoc_samsung
+    metadata: {}
+    data:
+      message: clear_notification
+      data:
+        tag: motion_samsung_alert
+  mode: restart
 - id: '1791159455493'
   alias: Baby Tracker – feeding reminder
   description: ''
@@ -1421,6 +1426,10 @@
     attribute: app_id
     to:
     - com.google.android.youtube.tv
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 2
   conditions: []
   actions:
   - action: bravia_rest_api.open_app

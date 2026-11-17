@@ -16,7 +16,7 @@ recorder:
   auto_repack: true
   exclude:
     event_types:
-     - system_log_event
+      - system_log_event
     domains:
       # - alarm_control_panel
       # - camera
